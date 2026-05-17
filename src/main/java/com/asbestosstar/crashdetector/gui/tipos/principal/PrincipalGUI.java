@@ -55,6 +55,7 @@ import com.asbestosstar.crashdetector.gui.tipos.modapi.CDModsEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlayers;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.TodosQuickFixesGUI;
+import com.asbestosstar.crashdetector.gui.tipos.rendimiento.AdministradorDeRendimientoNightcore;
 import com.asbestosstar.crashdetector.lanzer.CDLauncher;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 
@@ -134,6 +135,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 				() -> new LectadorDeDocumentosStudyJuche());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.IA, IAGUILuotianyi.ID, () -> new IAGUILuotianyi());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.JGIT_HUB, JGitHubIzzy.ID, () -> new JGitHubIzzy());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.ADMINISTRADOR_DE_RENDIMIENTO,
+				AdministradorDeRendimientoNightcore.ID, () -> new AdministradorDeRendimientoNightcore());
 
 	}
 

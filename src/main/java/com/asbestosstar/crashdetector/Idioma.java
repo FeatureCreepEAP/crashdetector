@@ -3588,4 +3588,408 @@ public interface Idioma {
 
 	public String nombreCrashProvocadoPorComando();
 
+	// --- Impactos y Riesgos ---
+	public String impactoAlto();
+
+	public String impactoMedio();
+
+	public String impactoBajo();
+
+	public String impactoBajoMedio();
+
+	public String riesgoAlto();
+
+	public String riesgoMedio();
+
+	public String riesgoBajo();
+
+	public String riesgoMedioAlto();
+
+	// --- Better Block Entities (BBE) ---
+	public String tituloCrearConfigBBE();
+
+	public String descripcionCrearConfigBBE();
+
+	public String sugerenciaCrearConfigBBE();
+
+	public String tituloActivarOptimizacionMaestraBBE();
+
+	public String descripcionActivarOptimizacionMaestraBBE();
+
+	public String sugerenciaActivarOptimizacionMaestraBBE();
+
+	public String tituloActivarCullingTextoCartelesBBE();
+
+	public String descripcionActivarCullingTextoCartelesBBE();
+
+	public String sugerenciaActivarCullingTextoCartelesBBE();
+
+	// --- EntityCulling ---
+	public String tituloAumentarSleepDelayEntityCulling();
+
+	public String descripcionAumentarSleepDelayEntityCulling();
+
+	public String sugerenciaAumentarSleepDelayEntityCulling();
+
+	public String tituloSubirLimiteHitboxEntityCulling();
+
+	public String descripcionSubirLimiteHitboxEntityCulling();
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling();
+
+	public String tituloDesactivarDatosF3EntityCulling();
+
+	public String descripcionDesactivarDatosF3EntityCulling();
+
+	public String sugerenciaDesactivarDatosF3EntityCulling();
+
+	// --- ImmediatelyFast ---
+	public String tituloActivarBufferingSignsImmediatelyFast();
+
+	public String descripcionActivarBufferingSignsImmediatelyFast();
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast();
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast();
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast();
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast();
+
+	// --- No Chat Reports (NCR) ---
+	public String tituloOcultarBotonNCR();
+
+	public String descripcionOcultarBotonNCR();
+
+	public String sugerenciaOcultarBotonNCR();
+
+	// --- Lithium ---
+	public String tituloActivarMixinsExperimentalesLithium();
+
+	public String descripcionActivarMixinsExperimentalesLithium();
+
+	public String sugerenciaActivarMixinsExperimentalesLithium();
+
+	// --- FerriteCore ---
+	public String tituloUsarDetectorThreadingPequenoFerriteCore();
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore();
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore();
+
+	// --- ModernFix ---
+	public String tituloModernFixRecursosDinamicos();
+
+	public String descripcionModernFixRecursosDinamicos();
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades();
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades();
+
+	public String tituloModernFixRenderizadoItemsRapido();
+
+	public String descripcionModernFixRenderizadoItemsRapido();
+
+	public String tituloModernFixWorldgenAllocation();
+
+	public String descripcionModernFixWorldgenAllocation();
+
+	public String tituloModernFixDeduplicacionIngredientes();
+
+	public String descripcionModernFixDeduplicacionIngredientes();
+
+	// --- Sodium ---
+	public String tituloSodiumRenderCielo();
+
+	public String descripcionSodiumRenderCielo();
+
+	// --- Lightmap Caching ---
+	public String tituloActivarLightmapCaching();
+
+	public String descripcionActivarLightmapCaching();
+
+	public String sugerenciaActivarLightmapCaching();
+
+	// --- BadOptimizations ---
+	public String tituloOcultarTextoF3BadOptimizations();
+
+	public String descripcionOcultarTextoF3BadOptimizations();
+
+	public String sugerenciaOcultarTextoF3BadOptimizations();
+
+	public String tituloDesactivarLogConfigBadOptimizations();
+
+	public String descripcionDesactivarLogConfigBadOptimizations();
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations();
+
+	// --- C2ME ---
+	public String tituloActivarSerializadorGCFreeC2ME();
+
+	public String descripcionActivarSerializadorGCFreeC2ME();
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME();
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME();
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME();
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME();
+
+	// --- MoreCulling ---
+	public String tituloUsarCullingHojasDepthMoreCulling();
+
+	public String descripcionUsarCullingHojasDepthMoreCulling();
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling();
+
+	public String tituloActivarEndGatewayCullingMoreCulling();
+
+	public String descripcionActivarEndGatewayCullingMoreCulling();
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling();
+
+	// --- ServerCore ---
+	public String tituloActivarActivationRangeServerCore();
+
+	public String descripcionActivarActivationRangeServerCore();
+
+	public String sugerenciaActivarActivationRangeServerCore();
+
+	public String tituloActivarRangoVerticalServerCore();
+
+	public String descripcionActivarRangoVerticalServerCore();
+
+	public String sugerenciaActivarRangoVerticalServerCore();
+
+	public String impactoNegativoAlto();
+
+	public String advertenciaModsCulling();
+
+	public String tituloModBadOptimizations();
+
+	public String descripcionModBadOptimizations();
+
+	public String tituloModBBE();
+
+	public String descripcionModBBE();
+
+	public String tituloModC2ME();
+
+	public String descripcionModC2ME();
+
+	public String tituloModEntityCulling();
+
+	public String descripcionModEntityCulling();
+
+	public String tituloModFerriteCore();
+
+	public String descripcionModFerriteCore();
+
+	public String tituloModImmediatelyFast();
+
+	public String descripcionModImmediatelyFast();
+
+	public String tituloModLithium();
+
+	public String descripcionModLithium();
+
+	public String tituloModModernFix();
+
+	public String descripcionModModernFix();
+
+	public String tituloModMoreCulling();
+
+	public String descripcionModMoreCulling();
+
+	public String tituloModScalableLux();
+
+	public String descripcionModScalableLux();
+
+	public String tituloModServerCore();
+
+	public String descripcionModServerCore();
+
+	public String tituloModSodium();
+
+	public String descripcionModSodium();
+
+	public String tituloModVMP();
+
+	public String descripcionModVMP();
+
+	public String tituloModMCMT();
+
+	public String descripcionModMCMT();
+
+	public String tituloLiabilityUranium();
+
+	public String descripcionLiabilityUranium();
+
+	public String tituloAmbientalSinXmx();
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro);
+
+	public String sugerenciaAmbientalSinXmx(String minimo);
+
+	public String tituloAmbientalDemasiadaMemoria();
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro);
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro);
+
+	public String tituloAmbientalMemoriaInsuficiente();
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo);
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo);
+
+	public String tituloAmbientalJava8GC();
+
+	public String descripcionAmbientalJava8GC();
+
+	public String sugerenciaAmbientalJava8GC();
+
+	public String tituloAmbientalZGC();
+
+	public String descripcionAmbientalZGC(String ramTotal);
+
+	public String sugerenciaAmbientalZGC();
+
+	public String tituloAmbientalAikar();
+
+	public String descripcionAmbientalAikar();
+
+	public String sugerenciaAmbientalAikar();
+
+	public String tituloAmbientalRedHatJDK();
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os);
+
+	public String sugerenciaAmbientalRedHatJDK();
+
+	public String tituloAmbientalAzulPrime();
+
+	public String descripcionAmbientalAzulPrime();
+
+	public String sugerenciaAmbientalAzulPrime();
+
+	public String tituloAmbientalGraalVM();
+
+	public String descripcionAmbientalGraalVM();
+
+	public String sugerenciaAmbientalGraalVM();
+
+	public String tituloAmbientalDiscoBajo();
+
+	public String descripcionAmbientalDiscoBajo(String libre);
+
+	public String sugerenciaAmbientalDiscoBajo();
+
+	public String tituloAmbientalWindowsRHEL9();
+
+	public String descripcionAmbientalWindowsRHEL9();
+
+	public String sugerenciaAmbientalWindowsRHEL9();
+
+	public String tituloAmbientalRaptorLake();
+
+	public String descripcionAmbientalRaptorLake();
+
+	public String sugerenciaAmbientalRaptorLake();
+
+	public String tituloAmbientalNeoForge1201Antiguo();
+
+	public String descripcionAmbientalNeoForge1201Antiguo();
+
+	public String sugerenciaAmbientalNeoForge1201Antiguo();
+
+	public String tituloAmbientalGPU();
+
+	public String descripcionAmbientalGPU();
+
+	public String sugerenciaAmbientalGPU();
+
+	public String gpuFixTitulo();
+
+	public String gpuFixBotonSidebar();
+
+	public String gpuFixBotonAplicar();
+
+	public String gpuFixBotonFuenteTLauncher();
+
+	public String gpuFixBotonVirusTotal();
+
+	public String gpuFixBotonOptimusLinux();
+
+	public String gpuFixTextoWindows();
+
+	public String gpuFixTextoLinux();
+
+	public String gpuFixTextoMac();
+
+	public String gpuFixTextoOtroSistema();
+
+	public String gpuFixLinuxManual();
+
+	public String gpuFixSistemaNoSoportado();
+
+	public String gpuFixJavaNoDetectado();
+
+	public String gpuFixWindowsAplicado(String ruta);
+
+	public String gpuFixErrorAplicando();
+
+	public String gpuFixMacAplicado();
+
+	public String gpuFixMacError();
+
+	public String rendimientoTitulo();
+
+	public String rendimientoBotonSidebar();
+
+	public String rendimientoBotonAnalizar();
+
+	public String rendimientoBotonAbrirGPU();
+
+	public String rendimientoDescripcion();
+
+	public String rendimientoNotaCompatibilidad();
+
+	public String rendimientoPestanaResumen();
+
+	public String rendimientoPestanaAmbiental();
+
+	public String rendimientoPestanaMods();
+
+	public String rendimientoPestanaConfigs();
+
+	public String rendimientoResumenTitulo();
+
+	public String rendimientoResumenAmbiental(int cantidad);
+
+	public String rendimientoResumenMods(int cantidad);
+
+	public String rendimientoResumenConfigs(int cantidad);
+
+	public String rendimientoResumenGPU();
+
+	public String rendimientoSinHallazgos();
+
+	public String rendimientoSugerencia();
+
+	public String rendimientoColorFondo();
+
+	public String rendimientoColorPanel();
+
+	public String rendimientoColorTexto();
+
+	public String rendimientoColorTextoSecundario();
+
+	public String rendimientoColorBoton();
+
+	public String rendimientoColorBotonTexto();
+
+	public String rendimientoColorSeleccion();
+
 }

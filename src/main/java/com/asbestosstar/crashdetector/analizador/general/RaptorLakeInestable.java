@@ -22,6 +22,8 @@ public class RaptorLakeInestable implements Verificaciones {
 	// 0x129 en hexadecimal = 297 en decimal
 	private static final int MICROCODE_FIX_VERSION = 0x129;
 
+	public static boolean hayProblema = false;
+
 	private boolean posibleRaptorLake = false;
 	private boolean activado = false;
 
@@ -80,6 +82,7 @@ public class RaptorLakeInestable implements Verificaciones {
 			this.cpuName = cpuDetectado;
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			this.mensaje = construirMensaje(cpuName, microcodeRaw) + " " + enlace;
+			hayProblema = true;
 			this.activado = true;
 		}
 	}

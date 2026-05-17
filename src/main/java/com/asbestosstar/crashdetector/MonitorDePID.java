@@ -55,6 +55,7 @@ import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaModioNoche;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaPredeterminado;
 import com.asbestosstar.crashdetector.gui.tipos.editorgui.CDSkinCape;
+import com.asbestosstar.crashdetector.gui.tipos.gpu.GPUFixOptimusPrime;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaSketchyVT;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
@@ -82,6 +83,7 @@ import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUIEstiloLanz
 import com.asbestosstar.crashdetector.gui.tipos.profiler.ProfilerGUIMinaly;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.ElementoQuickFixDemonSlayers;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlayers;
+import com.asbestosstar.crashdetector.gui.tipos.rendimiento.AdministradorDeRendimientoNightcore;
 import com.asbestosstar.crashdetector.gui.tipos.sampler.SamplerGUIEineLotta;
 
 public class MonitorDePID {
@@ -321,6 +323,9 @@ public class MonitorDePID {
 				Statics.carpeta.resolve("imagenes/mausleepsvt.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/illythedizzy.png",
 				Statics.carpeta.resolve("imagenes/illythedizzy.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/optimus_prime.png",
+				Statics.carpeta.resolve("imagenes/optimus_prime.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/nightcore.png", Statics.carpeta.resolve("imagenes/nightcore.png").toFile());
 
 //docs		
 
@@ -554,6 +559,10 @@ public class MonitorDePID {
 				DialogoConflictoImportacionYumeiriReyu::new);
 		TipoGUI.IMPORTADOR_MODPACK.registrarGUI(ImportadorModpackMausleepsVT.ID, ImportadorModpackMausleepsVT::new);
 		TipoGUI.JGIT_HUB.registrarGUI(JGitHubIzzy.ID, JGitHubIzzy::new);
+		TipoGUI.GPU_FIX.registrarGUI(GPUFixOptimusPrime.ID, GPUFixOptimusPrime::new);
+		TipoGUI.ADMINISTRADOR_DE_RENDIMIENTO.registrarGUI(AdministradorDeRendimientoNightcore.ID,
+				AdministradorDeRendimientoNightcore::new);
+
 	}
 
 	/**

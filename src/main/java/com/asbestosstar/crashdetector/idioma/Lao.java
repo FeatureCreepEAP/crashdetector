@@ -9796,28 +9796,874 @@ public class Lao implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "ມອດພະຍາຍາມຂຽນທັບເມທອດ final";
 	}
-	
-    @Override
-    public String errorCrashProvocadoPorComando(String comandoDetectado) {
-        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-                + "Minecraft ຖືກປິດໂດຍຄຳສັ່ງ crash.</b>"
-                + "<p>ບັນທຶກລະບຸວ່າຄຳສັ່ງ <code>" + comandoDetectado + "</code> ຖືກປະຕິບັດ.</p>"
-                + "<p>ສິ່ງນີ້ໝາຍຄວາມວ່າ ເກມບໍ່ໄດ້ປິດຍ້ອນຂໍ້ຜິດພາດຂອງ mod ທຳມະດາ, ແຕ່ເປັນເພາະມີຜູ້ໃຊ້ "
-                + "ຄຳສັ່ງທີ່ອອກແບບມາເພື່ອເຮັດໃຫ້ເກມ crash ໂດຍຈົງໃຈ.</p>"
-                + "<p><b>ສິ່ງທີ່ຄວນກວດສອບ:</b></p>"
-                + "<ul>"
-                + "<li>ກວດສອບວ່າໃຜເປັນຜູ້ປະຕິບັດຄຳສັ່ງໃນ console ຫຼື ໃນເກມ.</li>"
-                + "<li>ຖ້າເປັນການທົດສອບ, ທ່ານສາມາດລະເລີຍ crash ນີ້ໄດ້.</li>"
-                + "<li>ຖ້າເກີດຂຶ້ນໂດຍບໍ່ຕັ້ງໃຈ, ກວດສອບ command blocks, scripts, datapacks, mods ບໍລິຫານ ຫຼື ສິດທິຂອງ operator.</li>"
-                + "</ul>";
-    }
 
-    @Override
-    public String nombreCrashProvocadoPorComando() {
-        return "Crash ທີ່ເກີດຈາກຄຳສັ່ງ";
-    }
-	
-	
-	
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft ຖືກປິດໂດຍຄຳສັ່ງ crash.</b>" + "<p>ບັນທຶກລະບຸວ່າຄຳສັ່ງ <code>" + comandoDetectado
+				+ "</code> ຖືກປະຕິບັດ.</p>"
+				+ "<p>ສິ່ງນີ້ໝາຍຄວາມວ່າ ເກມບໍ່ໄດ້ປິດຍ້ອນຂໍ້ຜິດພາດຂອງ mod ທຳມະດາ, ແຕ່ເປັນເພາະມີຜູ້ໃຊ້ "
+				+ "ຄຳສັ່ງທີ່ອອກແບບມາເພື່ອເຮັດໃຫ້ເກມ crash ໂດຍຈົງໃຈ.</p>" + "<p><b>ສິ່ງທີ່ຄວນກວດສອບ:</b></p>" + "<ul>"
+				+ "<li>ກວດສອບວ່າໃຜເປັນຜູ້ປະຕິບັດຄຳສັ່ງໃນ console ຫຼື ໃນເກມ.</li>"
+				+ "<li>ຖ້າເປັນການທົດສອບ, ທ່ານສາມາດລະເລີຍ crash ນີ້ໄດ້.</li>"
+				+ "<li>ຖ້າເກີດຂຶ້ນໂດຍບໍ່ຕັ້ງໃຈ, ກວດສອບ command blocks, scripts, datapacks, mods ບໍລິຫານ ຫຼື ສິດທິຂອງ operator.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+		return "Crash ທີ່ເກີດຈາກຄຳສັ່ງ";
+	}
+
+	public String impactoAlto() {
+		return "ສູງ";
+	}
+
+	public String impactoMedio() {
+		return "ກາງ";
+	}
+
+	public String impactoBajo() {
+		return "ຕ່ຳ";
+	}
+
+	public String impactoBajoMedio() {
+		return "ຕ່ຳ/ກາງ";
+	}
+
+	public String riesgoAlto() {
+		return "ສູງ";
+	}
+
+	public String riesgoMedio() {
+		return "ກາງ";
+	}
+
+	public String riesgoBajo() {
+		return "ຕ່ຳ";
+	}
+
+	public String riesgoMedioAlto() {
+		return "ກາງ/ສູງ";
+	}
+
+	public String tituloCrearConfigBBE() {
+		return "ສ້າງການຕັ້ງຄ່າ Better Block Entities";
+	}
+
+	public String descripcionCrearConfigBBE() {
+		return "ບໍ່ມີໄຟລ໌ BBEConfig.json.";
+	}
+
+	public String sugerenciaCrearConfigBBE() {
+		return "ສ້າງ BBEConfig.json ພ້ອມການເພີ່ມປະສິດທິພາບສຳລັບຫີບເຄື່ອງ, shulkers, ປ້າຍ, ຕຽງນອນ, ລະຄັງ ແລະ ທຸງ.";
+	}
+
+	public String tituloActivarOptimizacionMaestraBBE() {
+		return "ເປີດໃຊ້ການເພີ່ມປະສິດທິພາບຫຼັກຂອງ BBE";
+	}
+
+	public String descripcionActivarOptimizacionMaestraBBE() {
+		return "Better Block Entities ບໍ່ຄືວ່າຈະເປີດໃຊ້ການເພີ່ມປະສິດທິພາບຫຼັກ.";
+	}
+
+	public String sugerenciaActivarOptimizacionMaestraBBE() {
+		return "ເພີ່ມ {\"option\":\"optimize.master\",\"value\":true}";
+	}
+
+	public String tituloActivarCullingTextoCartelesBBE() {
+		return "ເປີດໃຊ້ culling ຂໍ້ຄວາມປ້າຍ";
+	}
+
+	public String descripcionActivarCullingTextoCartelesBBE() {
+		return "ຫຼຸດການ render ຂໍ້ຄວາມປ້າຍໃນໄລຍະໄກ.";
+	}
+
+	public String sugerenciaActivarCullingTextoCartelesBBE() {
+		return "ເພີ່ມ {\"option\":\"misc.sign_text_culling\",\"value\":true}";
+	}
+
+	public String tituloAumentarSleepDelayEntityCulling() {
+		return "ເພີ່ມ sleepDelay ຂອງ EntityCulling";
+	}
+
+	public String descripcionAumentarSleepDelayEntityCulling() {
+		return "EntityCulling ຈະກວດສອບ entities ບ່ອຍລົງ.";
+	}
+
+	public String sugerenciaAumentarSleepDelayEntityCulling() {
+		return "\"sleepDelay\": 153";
+	}
+
+	public String tituloSubirLimiteHitboxEntityCulling() {
+		return "ເພີ່ມຂີດຈຳກັດ hitbox";
+	}
+
+	public String descripcionSubirLimiteHitboxEntityCulling() {
+		return "ອະນຸຍາດໃຫ້ culling ແບບກ້າວຮ້າວຂຶ້ນກ່ອນຈະຕົກໄປໃສ່ເສັ້ນທາງທີ່ຊ້າກວ່າ.";
+	}
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling() {
+		return "\"hitboxLimit\": 90";
+	}
+
+	public String tituloDesactivarDatosF3EntityCulling() {
+		return "ປິດຂໍ້ມູນ F3 ຂອງ EntityCulling";
+	}
+
+	public String descripcionDesactivarDatosF3EntityCulling() {
+		return "ລຶບຂໍ້ມູນ debug ເພີ່ມເຕີມຂອງ mod.";
+	}
+
+	public String sugerenciaDesactivarDatosF3EntityCulling() {
+		return "\"disableF3\": true";
+	}
+
+	public String tituloActivarBufferingSignsImmediatelyFast() {
+		return "ເປີດໃຊ້ buffering ທົດລອງສຳລັບປ້າຍ";
+	}
+
+	public String descripcionActivarBufferingSignsImmediatelyFast() {
+		return "ອາດຊ່ວຍໃຫ້ປະສິດທິພາບດີຂຶ້ນເມື່ອມີປ້າຍຫຼາຍ.";
+	}
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast() {
+		return "\"experimental_sign_text_buffering\": true";
+	}
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast() {
+		return "ຫຼຸດການຈັດການຄວາມຂັດແຍ້ງຂອງ resource packs";
+	}
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast() {
+		return "ອາດຫຼຸດວຽກເພີ່ມເຕີມ, ແຕ່ອາດເຮັດໃຫ້ເກີດບັນຫາພາບກັບ resource packs.";
+	}
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast() {
+		return "\"experimental_disable_resource_pack_conflict_handling\": true";
+	}
+
+	public String tituloOcultarBotonNCR() {
+		return "ປິດປ້າຍປຸ່ມ No Chat Reports";
+	}
+
+	public String descripcionOcultarBotonNCR() {
+		return "ປ່ຽນແປງ UI; ບໍ່ໄດ້ເພີ່ມ FPS ຫຼາຍ, ແຕ່ເຮັດໃຫ້ໜ້າຈໍສະອາດຂຶ້ນ.";
+	}
+
+	public String sugerenciaOcultarBotonNCR() {
+		return "\"showNCRButton\": false";
+	}
+
+	public String tituloActivarMixinsExperimentalesLithium() {
+		return "ເປີດໃຊ້ mixins ທົດລອງຂອງ Lithium";
+	}
+
+	public String descripcionActivarMixinsExperimentalesLithium() {
+		return "ເປີດໃຊ້ການເພີ່ມປະສິດທິພາບທົດລອງເພີ່ມເຕີມ.";
+	}
+
+	public String sugerenciaActivarMixinsExperimentalesLithium() {
+		return "mixin.experimental=true";
+	}
+
+	public String tituloUsarDetectorThreadingPequenoFerriteCore() {
+		return "ໃຊ້ detector threading ຂະໜາດນ້ອຍ";
+	}
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore() {
+		return "ຫຼຸດການໃຊ້ RAM, ແຕ່ອາດມີຄວາມສ່ຽງຫຼາຍກວ່າ.";
+	}
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore() {
+		return "useSmallThreadingDetector=true";
+	}
+
+	public String tituloModernFixRecursosDinamicos() {
+		return "ເປີດໃຊ້ຊັບພະຍາກອນແບບໄດນາມິກຂອງ ModernFix";
+	}
+
+	public String descripcionModernFixRecursosDinamicos() {
+		return "ອາດຫຼຸດການໃຊ້ RAM ແລະ ວຽກໂຫຼດຊັບພະຍາກອນໄດ້ມີປະສິດທິພາບຂຶ້ນ.";
+	}
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades() {
+		return "ເປີດໃຊ້ entity renderers ແບບໄດນາມິກ";
+	}
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades() {
+		return "ອາດເພີ່ມປະສິດທິພາບໃນການຈັດການ entity renderers ໄດ້ດີຂຶ້ນ.";
+	}
+
+	public String tituloModernFixRenderizadoItemsRapido() {
+		return "ເປີດໃຊ້ການ render ໄອເຕັມແບບໄວ";
+	}
+
+	public String descripcionModernFixRenderizadoItemsRapido() {
+		return "ອາດເພີ່ມປະສິດທິພາບເມື່ອ render ໄອເຕັມ.";
+	}
+
+	public String tituloModernFixWorldgenAllocation() {
+		return "ຫຼຸດການຈັດສັນໃນ worldgen";
+	}
+
+	public String descripcionModernFixWorldgenAllocation() {
+		return "ອາດຫຼຸດ memory garbage ໃນຂະນະສ້າງໂລກ.";
+	}
+
+	public String tituloModernFixDeduplicacionIngredientes() {
+		return "ເປີດໃຊ້ການລຶບສິ່ງຊ້ຳກັນຂອງ ingredients";
+	}
+
+	public String descripcionModernFixDeduplicacionIngredientes() {
+		return "ຫຼຸດວັດຖຸຊ້ຳກັນທີ່ກ່ຽວຂ້ອງກັບສູດ ແລະ ingredients.";
+	}
+
+	public String tituloSodiumRenderCielo() {
+		return "ເປີດໃຊ້ການເພີ່ມປະສິດທິພາບ/render ທ້ອງຟ້າໃນ Sodium";
+	}
+
+	public String descripcionSodiumRenderCielo() {
+		return "ອາດປັບພຶດຕິກຳການ render ທ້ອງຟ້າ.";
+	}
+
+	public String tituloActivarLightmapCaching() {
+		return "ເປີດໃຊ້ cache lightmap";
+	}
+
+	public String descripcionActivarLightmapCaching() {
+		return "ປ້ອງກັນການຄຳນວນແສງໃໝ່ເມື່ອບໍ່ຈຳເປັນ.";
+	}
+
+	public String sugerenciaActivarLightmapCaching() {
+		return "enable_lightmap_caching: true";
+	}
+
+	public String tituloOcultarTextoF3BadOptimizations() {
+		return "ປິດຂໍ້ຄວາມ F3 ຂອງ BadOptimizations";
+	}
+
+	public String descripcionOcultarTextoF3BadOptimizations() {
+		return "ຫຼຸດສິ່ງລົບກວນ debug ໃນໜ້າຈໍ F3.";
+	}
+
+	public String sugerenciaOcultarTextoF3BadOptimizations() {
+		return "show_f3_text: false";
+	}
+
+	public String tituloDesactivarLogConfigBadOptimizations() {
+		return "ປິດ log ການຕັ້ງຄ່າ";
+	}
+
+	public String descripcionDesactivarLogConfigBadOptimizations() {
+		return "ປ້ອງກັນການພິມການຕັ້ງຄ່າທັງໝົດຕອນເລີ່ມເກມ.";
+	}
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations() {
+		return "log_config: false";
+	}
+
+	public String tituloActivarSerializadorGCFreeC2ME() {
+		return "ເປີດໃຊ້ serializer GC-free ຂອງ C2ME";
+	}
+
+	public String descripcionActivarSerializadorGCFreeC2ME() {
+		return "ຫຼຸດການຈັດສັນ RAM ເມື່ອໂຫຼດ ຫຼື ບັນທຶກ chunks.";
+	}
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME() {
+		return "[ioSystem] gcFreeChunkSerializer = true";
+	}
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME() {
+		return "ປິດ syncPlayerTickets";
+	}
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME() {
+		return "ອາດເພີ່ມປະສິດທິພາບ chunks, ແຕ່ອາດສົ່ງຜົນຕໍ່ contraptions ດ້ານເຕັກນິກ.";
+	}
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME() {
+		return "[chunkSystem] syncPlayerTickets = false";
+	}
+
+	public String tituloUsarCullingHojasDepthMoreCulling() {
+		return "ໃຊ້ culling ໃບໄມ້ແບບ DEPTH";
+	}
+
+	public String descripcionUsarCullingHojasDepthMoreCulling() {
+		return "ໃຊ້ໂໝດ culling ໃບໄມ້ທີ່ກ້າວຮ້າວກວ່າໂໝດປົກກະຕິ.";
+	}
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling() {
+		return "leavesCullingMode = \"DEPTH\"";
+	}
+
+	public String tituloActivarEndGatewayCullingMoreCulling() {
+		return "ເປີດໃຊ້ culling ຂອງ End Gateway";
+	}
+
+	public String descripcionActivarEndGatewayCullingMoreCulling() {
+		return "ປ້ອງກັນການ render End Gateway ທີ່ບໍ່ຈຳເປັນ.";
+	}
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling() {
+		return "endGatewayCulling = true";
+	}
+
+	public String tituloActivarActivationRangeServerCore() {
+		return "ເປີດໃຊ້ activation range";
+	}
+
+	public String descripcionActivarActivationRangeServerCore() {
+		return "ຫຼຸດ ticks ຂອງ entities ທີ່ຢູ່ໄກຈາກຜູ້ຫຼິ້ນ.";
+	}
+
+	public String sugerenciaActivarActivationRangeServerCore() {
+		return "activation-range: enabled: true";
+	}
+
+	public String tituloActivarRangoVerticalServerCore() {
+		return "ເປີດໃຊ້ vertical range";
+	}
+
+	public String descripcionActivarRangoVerticalServerCore() {
+		return "ຫຼຸດ ticks ຂອງ entities ທີ່ຢູ່ສູງ ຫຼື ຕ່ຳກວ່າຜູ້ຫຼິ້ນຫຼາຍ.";
+	}
+
+	public String sugerenciaActivarRangoVerticalServerCore() {
+		return "use-vertical-range: true";
+	}
+
+	public String impactoNegativoAlto() {
+		return "ສົ່ງຜົນກະທົບລົບສູງ";
+	}
+
+	public String advertenciaModsCulling() {
+		return "ມອດປະເພດ culling ອາດເຮັດໃຫ້ເກີດຄວາມບໍ່ເຂົ້າກັນກັບບາງມອດ, ເຮັດໃຫ້ເກມ crash, ເກີດຂໍ້ຜິດພາດທີ່ເກມຢຸດ tick ບໍ່ຖືກຕ້ອງ ແລະ ອາດເຮັດໃຫ້ຟາມອັດຕະໂນມັດ ຫຼື ໂຮງງານຢຸດເຮັດວຽກ.";
+	}
+
+	public String tituloModBadOptimizations() {
+		return "ເພີ່ມ BadOptimizations";
+	}
+
+	public String descripcionModBadOptimizations() {
+		return "ເພີ່ມການເພີ່ມປະສິດທິພາບຂະໜາດນ້ອຍສຳລັບ client ເຊັ່ນ: ການ cache lightmap, cache ທ້ອງຟ້າ ແລະ ຫຼຸດການເອີ້ນໃຊ້ທີ່ບໍ່ຈຳເປັນ.";
+	}
+
+	public String tituloModBBE() {
+		return "ເພີ່ມ Better Block Entities";
+	}
+
+	public String descripcionModBBE() {
+		return "ເພີ່ມປະສິດທິພາບການ render ຂອງ block entities ເຊັ່ນ: ຫີບເຄື່ອງ, shulkers, ຕຽງນອນ, ລະຄັງ, ທຸງ ແລະ ປ້າຍ.";
+	}
+
+	public String tituloModC2ME() {
+		return "ເພີ່ມ Concurrent Chunk Management Engine";
+	}
+
+	public String descripcionModC2ME() {
+		return "ປັບປຸງການໂຫຼດ, ການສ້າງ ແລະ ການຈັດການ chunks ໂດຍໃຊ້ການປະມວນຜົນແບບ concurrent. ສາມາດມີພະລັງຫຼາຍ, ແຕ່ກໍອາດເຮັດໃຫ້ເກີດຄວາມບໍ່ເຂົ້າກັນໃນ modpack ຂະໜາດໃຫຍ່.";
+	}
+
+	public String tituloModEntityCulling() {
+		return "ເພີ່ມ EntityCulling";
+	}
+
+	public String descripcionModEntityCulling() {
+		return "ຫຼີກເວັ້ນການ render entities ທີ່ບໍ່ສາມາດເບິ່ງເຫັນໄດ້. " + advertenciaModsCulling();
+	}
+
+	public String tituloModFerriteCore() {
+		return "ເພີ່ມ FerriteCore";
+	}
+
+	public String descripcionModFerriteCore() {
+		return "ຫຼຸດການໃຊ້ RAM ຜ່ານການ deduplication ແລະ ໂຄງສ້າງພາຍໃນທີ່ມີປະສິດທິພາບກວ່າ.";
+	}
+
+	public String tituloModImmediatelyFast() {
+		return "ເພີ່ມ ImmediatelyFast";
+	}
+
+	public String descripcionModImmediatelyFast() {
+		return "ເພີ່ມປະສິດທິພາບການ render ແບບ immediate mode, ຂໍ້ຄວາມ, buffers, ແຜນທີ່ ແລະ UI.";
+	}
+
+	public String tituloModLithium() {
+		return "ເພີ່ມ Lithium";
+	}
+
+	public String descripcionModLithium() {
+		return "ເພີ່ມປະສິດທິພາບ logic ເກມ, entities, ບລ໋ອກ, ຟີຊິກ ແລະ ລະບົບອື່ນໆ ໂດຍບໍ່ປ່ຽນແປງ vanilla ຫຼາຍເກີນໄປ.";
+	}
+
+	public String tituloModModernFix() {
+		return "ເພີ່ມ ModernFix";
+	}
+
+	public String descripcionModModernFix() {
+		return "ເພີ່ມການເພີ່ມປະສິດທິພາບຫຼາຍດ້ານກ່ຽວກັບ RAM, ການໂຫຼດ, ຊັບພະຍາກອນ ແລະ ປະສິດທິພາບໂດຍລວມ. ເຄື່ອງມືທີ່ກ່ຽວຂ້ອງກັບ atlas ອາດຂັດແຍ້ງກັບມອດທີ່ເຮັດໃຫ້ atlas ນ້ອຍລົງ.";
+	}
+
+	public String tituloModMoreCulling() {
+		return "ເພີ່ມ More Culling";
+	}
+
+	public String descripcionModMoreCulling() {
+		return "ເພີ່ມ culling ສຳລັບບລ໋ອກ, ໃບໄມ້, item frames, ຮູບແຕ້ມ, ຝົນ, beacons ແລະ ອົງປະກອບອື່ນໆ. "
+				+ advertenciaModsCulling();
+	}
+
+	public String tituloModScalableLux() {
+		return "ເພີ່ມ ScalableLux";
+	}
+
+	public String descripcionModScalableLux() {
+		return "ເພີ່ມປະສິດທິພາບການຄຳນວນແສງ ແລະ ອາດຊ່ວຍໃຫ້ປະສິດທິພາບດີຂຶ້ນໃນໂລກທີ່ມີການປ່ຽນແປງແສງຫຼາຍ.";
+	}
+
+	public String tituloModServerCore() {
+		return "ເພີ່ມ ServerCore";
+	}
+
+	public String descripcionModServerCore() {
+		return "ເພີ່ມການເພີ່ມປະສິດທິພາບດ້ານ server, activation range, ການຄວບຄຸມ mobcaps, ຫຼຸດ ticks ແລະ ປັບປຸງການໂຫຼດ.";
+	}
+
+	public String tituloModSodium() {
+		return "ເພີ່ມ Sodium";
+	}
+
+	public String descripcionModSodium() {
+		return "ມອດຫຼັກສຳລັບເພີ່ມປະສິດທິພາບການ render. ປົກກະຕິແລ້ວແມ່ນໜຶ່ງໃນການປັບປຸງທີ່ສຳຄັນທີ່ສຸດສຳລັບ FPS.";
+	}
+
+	public String tituloModVMP() {
+		return "ເພີ່ມ Very Many Players";
+	}
+
+	public String descripcionModVMP() {
+		return "ເພີ່ມປະສິດທິພາບລະບົບ server ເພື່ອຈັດການຜູ້ຫຼິ້ນຈຳນວນຫຼາຍ. mod id ທີ່ຄາດຫວັງແມ່ນ vmp.";
+	}
+
+	public String tituloModMCMT() {
+		return "ເພີ່ມ MCMT";
+	}
+
+	public String descripcionModMCMT() {
+		return "ພະຍາຍາມເຮັດ multithread ບາງສ່ວນຂອງ server Minecraft. ອາດຊ່ວຍເພີ່ມປະສິດທິພາບໃນບາງກໍລະນີ, ແຕ່ມີຄວາມສ່ຽງສູງທີ່ຈະເກີດຄວາມບໍ່ເຂົ້າກັນ, ຂໍ້ຜິດພາດ tick ແລະ ພຶດຕິກຳແປກປະຫຼາດ.";
+	}
+
+	public String tituloLiabilityUranium() {
+		return "ລຶບ Uranium";
+	}
+
+	public String descripcionLiabilityUranium() {
+		return "Uranium ແມ່ນມອດທີ່ອອກແບບມາເພື່ອເຮັດໃຫ້ເກມ lag ໂດຍເຈດຕະນາ. ບໍ່ຄວນຕິດຕັ້ງຖ້າຕ້ອງການປະສິດທິພາບ.";
+	}
+
+	public String tituloAmbientalSinXmx() {
+		return "ຕັ້ງຄ່າຂີດຈຳກັດຄວາມຈຳສູງສຸດຂອງ Java";
+	}
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro) {
+		return "ບໍ່ພົບ -Xmx ໃນອາກິວເມັນ. ສຳລັບ " + mods + " ມອດ, ຄ່າຕ່ຳສຸດທີ່ແນະນຳແມ່ນ " + minimo + ", ບໍ່ຄວນເກີນປະມານ "
+				+ maximoSeguro + ".";
+	}
+
+	public String sugerenciaAmbientalSinXmx(String minimo) {
+		return "ເພີ່ມ -Xmx" + minimo.replace(" ", "");
+	}
+
+	public String tituloAmbientalDemasiadaMemoria() {
+		return "ຫຼຸດປະລິມານຄວາມຈຳທີ່ຈັດສັນ";
+	}
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro) {
+		return "Instance ຖືກຈັດສັນ " + xmx + " ຈາກທັງໝົດ " + total + ". ບໍ່ແນະນຳໃຫ້ຈັດສັນເກີນ 80% ຂອງ RAM ທີ່ມີຢູ່.";
+	}
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro) {
+		return "ຫຼຸດ -Xmx ລົງເປັນ " + maximoSeguro + " ຫຼື ໜ້ອຍກວ່ານັ້ນ.";
+	}
+
+	public String tituloAmbientalMemoriaInsuficiente() {
+		return "ເພີ່ມປະລິມານຄວາມຈຳທີ່ຈັດສັນ";
+	}
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo) {
+		return "Instance ມີຄວາມຈຳ " + xmx + " ຖືກຈັດສັນ. ສຳລັບ " + mods + " ມອດ, ຄ່າຕ່ຳສຸດທີ່ແນະນຳແມ່ນ " + minimo + ".";
+	}
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo) {
+		return "ເພີ່ມ -Xmx ໃຫ້ຢ່າງໜ້ອຍ " + minimo + ".";
+	}
+
+	public String tituloAmbientalJava8GC() {
+		return "ໃຊ້ G1GC ຫຼື Shenandoah ໃນ Java 8";
+	}
+
+	public String descripcionAmbientalJava8GC() {
+		return "ໃນ Java 8, ແນະນຳໃຫ້ໃຊ້ G1GC ຫຼື Shenandoah ເພື່ອຫຼຸດການຢຸດຊົ່ວຄາວ ແລະ ເພີ່ມຄວາມໝັ້ນຄົງ.";
+	}
+
+	public String sugerenciaAmbientalJava8GC() {
+		return "ເພີ່ມ -XX:+UseG1GC ຫຼື -XX:+UseShenandoahGC.";
+	}
+
+	public String tituloAmbientalZGC() {
+		return "ໃຊ້ ZGC";
+	}
+
+	public String descripcionAmbientalZGC(String ramTotal) {
+		return "ເຄື່ອງມີ RAM ຫຼາຍກວ່າ 12 GB (" + ramTotal
+				+ "). ຖ້າ Java distribution ຮອງຮັບ, ZGC ສາມາດຫຼຸດການຢຸດຊົ່ວຄາວຂອງ garbage collector.";
+	}
+
+	public String sugerenciaAmbientalZGC() {
+		return "ໃນ Java 17 ຫຼື ສູງກວ່າ, ລອງໃຊ້ -XX:+UseZGC.";
+	}
+
+	public String tituloAmbientalAikar() {
+		return "ເພີ່ມ flags ຂອງ Aikar";
+	}
+
+	public String descripcionAmbientalAikar() {
+		return "ໃນ Java 17 ຫຼື ຕ່ຳກວ່າ, flags ຂອງ Aikar ມັກຈະຊ່ວຍປັບປຸງພຶດຕິກຳຂອງ G1GC ສຳລັບ Minecraft.";
+	}
+
+	public String sugerenciaAmbientalAikar() {
+		return "ໃຊ້ flags ຂອງ Aikar, ລວມທັງ -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200.";
+	}
+
+	public String tituloAmbientalRedHatJDK() {
+		return "ໃຊ້ Red Hat JDK";
+	}
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os) {
+		return "ສຳລັບ Java " + javaMayor + " ໃນ " + os
+				+ ", ແນະນຳໃຫ້ໃຊ້ Red Hat JDK ເພື່ອຄວາມໝັ້ນຄົງ ແລະ ຄວາມເຂົ້າກັນໄດ້.";
+	}
+
+	public String sugerenciaAmbientalRedHatJDK() {
+		return "ຕິດຕັ້ງ Red Hat JDK ສຳລັບ Java 8 ຫຼື Java 11.";
+	}
+
+	public String tituloAmbientalAzulPrime() {
+		return "ພິຈາລະນາ Azul Prime";
+	}
+
+	public String descripcionAmbientalAzulPrime() {
+		return "ໃນ Linux ກັບ Java 16 ຫຼື ສູງກວ່າ ແລະ ມີ RAM ຫຼາຍກວ່າ 16 GB, Azul Prime ອາດເປັນທາງເລືອກທີ່ດີສຳລັບປະສິດທິພາບ.";
+	}
+
+	public String sugerenciaAmbientalAzulPrime() {
+		return "ລອງໃຊ້ Azul Prime ຖ້າເຄື່ອງມີ RAM ຫຼາຍກວ່າ 16 GB.";
+	}
+
+	public String tituloAmbientalGraalVM() {
+		return "ພິຈາລະນາ GraalVM";
+	}
+
+	public String descripcionAmbientalGraalVM() {
+		return "ກັບ Java 16 ຫຼື ສູງກວ່າ ແລະ ມີ RAM ຫຼາຍກວ່າ 16 GB, GraalVM ອາດເປັນທາງເລືອກທີ່ມີປະໂຫຍດນອກເໜືອຈາກ Linux.";
+	}
+
+	public String sugerenciaAmbientalGraalVM() {
+		return "ລອງໃຊ້ GraalVM ຖ້າເຄື່ອງມີ RAM ຫຼາຍກວ່າ 16 GB.";
+	}
+
+	public String tituloAmbientalDiscoBajo() {
+		return "ກວດສອບພື້ນທີ່ວ່າງໃນດິສ";
+	}
+
+	public String descripcionAmbientalDiscoBajo(String libre) {
+		return "ດິສມີພື້ນທີ່ວ່າງໜ້ອຍ: " + libre + ". Minecraft ອາດລົ້ມເຫຼວ, ບັນທຶກຊ້າ ຫຼື ຂໍ້ມູນເສຍຫາຍຖ້າພື້ນທີ່ໝົດ.";
+	}
+
+	public String sugerenciaAmbientalDiscoBajo() {
+		return "ປ່ອຍພື້ນທີ່ໃຫ້ມີຢ່າງໜ້ອຍ 20 GB.";
+	}
+
+	public String tituloAmbientalWindowsRHEL9() {
+		return "ພິຈາລະນາ RHEL 9 ສຳລັບການທົດສອບ";
+	}
+
+	public String descripcionAmbientalWindowsRHEL9() {
+		return "ໃນ Windows, ແນະນຳໃຫ້ພິຈາລະນາ RHEL 9 ເພາະມັນມາພ້ອມ Red Hat JDK, ມີຄວາມໝັ້ນຄົງ, ດາວໂຫຼດຟຣີສຳລັບບຸคคล ແລະ ເປັນສະຖານທີ່ທີ່ໃຊ້ທົດສອບສ່ວນໃຫຍ່.";
+	}
+
+	public String sugerenciaAmbientalWindowsRHEL9() {
+		return "ລອງທົດສອບ instance ໃນ RHEL 9 ຖ້າຕ້ອງການຄວາມໝັ້ນຄົງສູງສຸດ.";
+	}
+
+	public String tituloAmbientalRaptorLake() {
+		return "ຄຳເຕືອນ Intel Raptor Lake";
+	}
+
+	public String descripcionAmbientalRaptorLake() {
+		return "ກວດພົບບັນຫາ Raptor Lake ຕາມການກວດສອບທີ່ມີຢູ່. ສິ່ງນີ້ອາດເຮັດໃຫ້ເກີດຄວາມບໍ່ໝັ້ນຄົງ, crash ແລະ ຂໍ້ຜິດພາດທີ່ເບິ່ງຄືວ່າເກີດຈາກ modpack.";
+	}
+
+	public String sugerenciaAmbientalRaptorLake() {
+		return "ອັບເດດ BIOS/microcode ແລະ ກວດສອບຄຳເຕືອນ Raptor Lake ກ່ອນຈະໂທດ modpack.";
+	}
+
+	@Override
+	public String tituloAmbientalNeoForge1201Antiguo() {
+		return "ກວດພົບ NeoForge 1.20.1 ເວີຊັນເກົ່າ";
+	}
+
+	@Override
+	public String descripcionAmbientalNeoForge1201Antiguo() {
+		return "ກວດພົບ FancyModLoader 47 ຫຼື ເສັ້ນທາງທີ່ເຂົ້າກັນໄດ້ກັບ NeoForge 1.20.1. "
+				+ "NeoForge 1.20.1 ແມ່ນສາຂາໜຶ່ງຂອງ MinecraftForge 1.20.1 ແລະ ມັກຈະເຂົ້າກັນໄດ້ໃນລະດັບ binary, "
+				+ "ແຕ່ສາຍນີ້ຖືກຢຸດພັດທະນາໄວກວ່າ ແລະ ອາດຂາດການເພີ່ມປະສິດທິພາບຫຼາຍຢ່າງທີ່ມີຢູ່ໃນ Forge.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalNeoForge1201Antiguo() {
+		return "ສຳລັບ 1.20.1, ຖ້າ modpack ອະນຸຍາດ, ພິຈາລະນາໃຊ້ MinecraftForge 1.20.1 ແທນ NeoForge 1.20.1.";
+	}
+
+	@Override
+	public String tituloAmbientalGPU() {
+		return "ກວດພົບບັນຫາ GPU";
+	}
+
+	@Override
+	public String descripcionAmbientalGPU() {
+		return "ການກວດສອບອື່ນໆໄດ້ກວດພົບບັນຫາທີ່ອາດເກີດຂຶ້ນກັບ GPU, OpenGL ຫຼື ການເລືອກກາດຈໍ.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalGPU() {
+		return "ກວດສອບໃຫ້ແນ່ໃຈວ່າ Minecraft ໃຊ້ GPU ທີ່ຖືກຕ້ອງ, ອັບເດດ drivers ແລະ ຫຼີກເວັ້ນການຕັ້ງຄ່າແບບ hybrid ທີ່ບໍ່ໝັ້ນຄົງ.";
+	}
+
+	@Override
+	public String gpuFixTitulo() {
+		return "ການຕັ້ງຄ່າ GPU";
+	}
+
+	@Override
+	public String gpuFixBotonSidebar() {
+		return "GPU";
+	}
+
+	@Override
+	public String gpuFixBotonAplicar() {
+		return "ນຳໃຊ້ການຕັ້ງຄ່າ";
+	}
+
+	@Override
+	public String gpuFixBotonFuenteTLauncher() {
+		return "ເປີດຄູ່ມື TLauncher";
+	}
+
+	@Override
+	public String gpuFixBotonVirusTotal() {
+		return "ເປີດການວິເຄາະ VirusTotal";
+	}
+
+	@Override
+	public String gpuFixBotonOptimusLinux() {
+		return "ເປີດຄູ່ມື NVIDIA Optimus";
+	}
+
+	@Override
+	public String gpuFixTextoWindows() {
+		return "CrashDetector ກວດພົບວ່າ Minecraft ອາດຈະບໍ່ໄດ້ໃຊ້ GPU ປະສິດທິພາບສູງ.\n\n"
+				+ "ໃນ Windows ສາມາດຕັ້ງຄ່າ Registry Keys ໃນ "
+				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
+				+ "ເພື່ອບັງຄັບໃຫ້ javaw.exe ໃຊ້ GPU ແຍກ.\n\n" + "GpuPreference=0 = ການຕັດສິນໃຈອັດຕະໂນມັດຂອງ Windows.\n"
+				+ "GpuPreference=1 = ປະຢັດພະລັງງານ / GPU ຝັງໃນ.\n" + "GpuPreference=2 = GPU ປະສິດທິພາບສູງ.\n\n"
+				+ "ຂໍ້ມູນສ່ວນໜຶ່ງໄດ້ຮັບຈາກການຄົ້ນຄວ້າທີ່ເຜີຍແຜ່ໂດຍ TLauncher ແລະ ການວິເຄາະ "
+				+ "ພຶດຕິກຳທີ່ມີຢູ່ໃນ VirusTotal.";
+	}
+
+	@Override
+	public String gpuFixTextoLinux() {
+		return "CrashDetector ກວດພົບບັນຫາທີ່ອາດກ່ຽວຂ້ອງກັບ NVIDIA Optimus ຫຼື PRIME.\n\n"
+				+ "ຂຶ້ນກັບການແຈກຢາຍ Linux ທີ່ໃຊ້, ອາດຈຳເປັນຕ້ອງຕັ້ງຄ່າ NVIDIA Optimus, "
+				+ "nvidia-prime, switcheroo-control ຫຼື ລະບົບແບບ Hybrid ອື່ນໆ.\n\n"
+				+ "ໃນ Fedora/RHEL ແລະ ສາຂາຍ່ອຍ ມັກແນະນຳໃຫ້ຕິດຕາມເອກະສານຂອງ RPMFusion.\n\n"
+				+ "ປຸ່ມດ້ານລຸ່ມຈະເປີດເອກະສານທາງການທີ່ແນະນຳ.";
+	}
+
+	@Override
+	public String gpuFixTextoMac() {
+		return "CrashDetector ກວດພົບບັນຫາການເລືອກ GPU ທີ່ອາດເກີດຂຶ້ນ.\n\n"
+				+ "ໃນບາງລະບົບ macOS ທີ່ມີ GPU ແບບ Hybrid ສາມາດບັງຄັບໃຊ້ GPU ແຍກ " + "ຜ່ານການຕັ້ງຄ່າຂັ້ນສູງຂອງລະບົບ.\n\n"
+				+ "ປຸ່ມນຳໃຊ້ຈະພະຍາຍາມເຮັດວຽກຄຳສັ່ງເພື່ອໃຫ້ຄວາມສຳຄັນກັບ GPU ປະສິດທິພາບສູງ.";
+	}
+
+	@Override
+	public String gpuFixTextoOtroSistema() {
+		return "CrashDetector ກວດພົບບັນຫາທີ່ອາດກ່ຽວຂ້ອງກັບ GPU, " + "ແຕ່ບໍ່ມີການນຳໃຊ້ສະເພາະສຳລັບລະບົບປະຕິບັດການນີ້.";
+	}
+
+	@Override
+	public String gpuFixLinuxManual() {
+		return "ໃນ Linux ປົກກະຕິແລ້ວການຕັ້ງຄ່າຕ້ອງເຮັດດ້ວຍຕົນເອງຂຶ້ນກັບການແຈກຢາຍ, "
+				+ "driver NVIDIA ແລະ ລະບົບ Optimus/PRIME ທີ່ໃຊ້.";
+	}
+
+	@Override
+	public String gpuFixSistemaNoSoportado() {
+		return "ລະບົບປະຕິບັດການບໍ່ຮອງຮັບສຳລັບການຕັ້ງຄ່າ GPU ແບບອັດຕະໂນມັດ.";
+	}
+
+	@Override
+	public String gpuFixJavaNoDetectado() {
+		return "ບໍ່ສາມາດກວດພົບເສັ້ນທາງປັດຈຸບັນຂອງ javaw.exe ໄດ້.";
+	}
+
+	@Override
+	public String gpuFixWindowsAplicado(String ruta) {
+		return "ການຕັ້ງຄ່າ GPU ຖືກນຳໃຊ້ຢ່າງຖືກຕ້ອງສຳລັບ:\n\n" + ruta + "\n\n"
+				+ "GpuPreference=2 ຊີ້ບອກ GPU ປະສິດທິພາບສູງ.";
+	}
+
+	@Override
+	public String gpuFixErrorAplicando() {
+		return "ເກີດຂໍ້ຜິດພາດໃນຂະນະພະຍາຍາມນຳໃຊ້ການຕັ້ງຄ່າ GPU";
+	}
+
+	@Override
+	public String gpuFixMacAplicado() {
+		return "ການຕັ້ງຄ່າ GPU ປະສິດທິພາບສູງຖືກນຳໃຊ້ແລ້ວ.";
+	}
+
+	@Override
+	public String gpuFixMacError() {
+		return "ບໍ່ສາມາດນຳໃຊ້ການຕັ້ງຄ່າ GPU ໃນ macOS ໄດ້";
+	}
+
+	@Override
+	public String rendimientoTitulo() {
+		return "ຜູ້ຈັດການປະສິດທິພາບ";
+	}
+
+	@Override
+	public String rendimientoBotonSidebar() {
+		return "ປະສິດທິພາບ";
+	}
+
+	@Override
+	public String rendimientoBotonAnalizar() {
+		return "ວິເຄາະປະສິດທິພາບ";
+	}
+
+	@Override
+	public String rendimientoBotonAbrirGPU() {
+		return "ເປີດການຕັ້ງຄ່າ GPU";
+	}
+
+	@Override
+	public String rendimientoDescripcion() {
+		return "ແຜງນີ້ກວດສອບບັນຫາສະພາບແວດລ້ອມ, ມອດທີ່ແນະນຳ ຫຼື ມີຄວາມສ່ຽງ, ແລະ ຕົວເລືອກການຕັ້ງຄ່າ "
+				+ "ທີ່ສາມາດປັບປຸງປະສິດທິພາບໄດ້. ບໍ່ແມ່ນທຸກຕົວເລືອກທີ່ຈະໃຊ້ງານຮ່ວມກັນໄດ້, ບໍ່ແມ່ນທຸກຢ່າງທີ່ໃຊ້ໄດ້ກັບທຸກ "
+				+ "ເວີຊັນຂອງ Minecraft ແລະ ບໍ່ແມ່ນທຸກຢ່າງທີ່ເຂົ້າກັນໄດ້ກັບທຸກ modloader. ສິ່ງນີ້ບໍ່ເປັນຫຍັງ: ທ່ານບໍ່ຈຳເປັນຕ້ອງໄດ້ "
+				+ "ຄະແນນການເພີ່ມປະສິດທິພາບທີ່ສົມບູນແບບ.";
+	}
+
+	@Override
+	public String rendimientoNotaCompatibilidad() {
+		return "ໝາຍເຫດ: ຄຳແນະນຳເຫຼົ່ານີ້ແມ່ນຄວາມເປັນໄປໄດ້, ບໍ່ແມ່ນຄຳສັ່ງໃຫ້ນຳໃຊ້ທຸກຢ່າງ. ບາງຕົວເລືອກອາດຂັດແຍ້ງ "
+				+ "ກັນ ຫຼື ບໍ່ເໝາະສົມກັບເວີຊັນ, launcher, modloader ຫຼື modpack ຂອງທ່ານ.";
+	}
+
+	@Override
+	public String rendimientoPestanaResumen() {
+		return "ສະຫຼຸບ";
+	}
+
+	@Override
+	public String rendimientoPestanaAmbiental() {
+		return "ບັນຫາສະພາບແວດລ້ອມ";
+	}
+
+	@Override
+	public String rendimientoPestanaMods() {
+		return "ມອດທີ່ແນະນຳ ແລະ ຄວາມສ່ຽງ";
+	}
+
+	@Override
+	public String rendimientoPestanaConfigs() {
+		return "ຕົວເລືອກການຕັ້ງຄ່າ";
+	}
+
+	@Override
+	public String rendimientoResumenTitulo() {
+		return "ສະຫຼຸບການວິເຄາະ";
+	}
+
+	@Override
+	public String rendimientoResumenAmbiental(int cantidad) {
+		return "ບັນຫາສະພາບແວດລ້ອມທີ່ພົບ: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenMods(int cantidad) {
+		return "ຄຳແນະນຳ ຫຼື ຄວາມສ່ຽງຂອງມອດທີ່ພົບ: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenConfigs(int cantidad) {
+		return "ຄຳແນະນຳການຕັ້ງຄ່າທີ່ພົບ: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenGPU() {
+		return "ກວດພົບບັນຫາ GPU. ດັ່ງນັ້ນ, ປຸ່ມເພື່ອເປີດການຕັ້ງຄ່າ GPU ຈຶ່ງຖືກເປີດໃຊ້ງານ.";
+	}
+
+	@Override
+	public String rendimientoSinHallazgos() {
+		return "ບໍ່ພົບຄຳແນະນຳໃນສ່ວນນີ້.";
+	}
+
+	@Override
+	public String rendimientoSugerencia() {
+		return "ຄຳແນະນຳ";
+	}
+
+	@Override
+	public String rendimientoColorFondo() {
+		return "ປະສິດທິພາບ - ພື້ນຫຼັງ";
+	}
+
+	@Override
+	public String rendimientoColorPanel() {
+		return "ປະສິດທິພາບ - ແຜງ";
+	}
+
+	@Override
+	public String rendimientoColorTexto() {
+		return "ປະສິດທິພາບ - ຂໍ້ຄວາມ";
+	}
+
+	@Override
+	public String rendimientoColorTextoSecundario() {
+		return "ປະສິດທິພາບ - ຂໍ້ຄວາມຮອງ";
+	}
+
+	@Override
+	public String rendimientoColorBoton() {
+		return "ປະສິດທິພາບ - ປຸ່ມ";
+	}
+
+	@Override
+	public String rendimientoColorBotonTexto() {
+		return "ປະສິດທິພາບ - ຂໍ້ຄວາມປຸ່ມ";
+	}
+
+	@Override
+	public String rendimientoColorSeleccion() {
+		return "ປະສິດທິພາບ - ການເລືອກ";
+	}
 
 }

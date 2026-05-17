@@ -8,9 +8,8 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Detecta crashes provocados manualmente usando comandos como:
- * /crash_assistant crash
- * /crash_assistant *
+ * Detecta crashes provocados manualmente usando comandos como: /crash_assistant
+ * crash /crash_assistant *
  */
 public class CrashProvocadoPorComando implements Verificaciones {
 
@@ -47,8 +46,8 @@ public class CrashProvocadoPorComando implements Verificaciones {
 
 		String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-		mensaje = MonitorDePID.idioma.errorCrashProvocadoPorComando(comandoDetectado)
-				+ Verificaciones.nl_html + enlaceHtml;
+		mensaje = MonitorDePID.idioma.errorCrashProvocadoPorComando(comandoDetectado) + Verificaciones.nl_html
+				+ enlaceHtml;
 
 		activado = true;
 	}

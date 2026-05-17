@@ -9343,33 +9343,882 @@ public class Esperanto implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "Modo provas superskribi finan metodon";
 	}
-	
+
 	// Esperanto (Esperanto)
 	@Override
 	public String errorCrashProvocadoPorComando(String comandoDetectado) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Minecraft estis fermita pro komando de kraŝo.</b>"
-	            + "<p>La protokolo indikas, ke la komando <code>" + comandoDetectado + "</code> estis plenumita.</p>"
-	            + "<p>Ĉi tio kutime signifas, ke la ludo ne fermiĝis pro normala eraro de modoj, sed ĉar iu "
-	            + "uzis komandon dizajnitan por provoki kraŝon mane.</p>"
-	            + "<p><b>Kion kontroli:</b></p>"
-	            + "<ul>"
-	            + "<li>Kontrolu, kiu plenumis la komandon en la konzolo aŭ ene de la ludo.</li>"
-	            + "<li>Se ĝi estis testo, vi povas ignori ĉi tiun kraŝon.</li>"
-	            + "<li>Se ĝi okazis senintence, kontrolu komandoblokojn, skriptojn, datumplakojn, administrajn modojn aŭ permesojn de operaciistoj.</li>"
-	            + "</ul>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft estis fermita pro komando de kraŝo.</b>" + "<p>La protokolo indikas, ke la komando <code>"
+				+ comandoDetectado + "</code> estis plenumita.</p>"
+				+ "<p>Ĉi tio kutime signifas, ke la ludo ne fermiĝis pro normala eraro de modoj, sed ĉar iu "
+				+ "uzis komandon dizajnitan por provoki kraŝon mane.</p>" + "<p><b>Kion kontroli:</b></p>" + "<ul>"
+				+ "<li>Kontrolu, kiu plenumis la komandon en la konzolo aŭ ene de la ludo.</li>"
+				+ "<li>Se ĝi estis testo, vi povas ignori ĉi tiun kraŝon.</li>"
+				+ "<li>Se ĝi okazis senintence, kontrolu komandoblokojn, skriptojn, datumplakojn, administrajn modojn aŭ permesojn de operaciistoj.</li>"
+				+ "</ul>";
 	}
 
 	@Override
 	public String nombreCrashProvocadoPorComando() {
-	    return "Kraŝo provokita de komando";
+		return "Kraŝo provokita de komando";
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	// Esperanto (Esperanto)
+	public String impactoAlto() {
+		return "Alta";
+	}
+
+	public String impactoMedio() {
+		return "Meza";
+	}
+
+	public String impactoBajo() {
+		return "Malalta";
+	}
+
+	public String impactoBajoMedio() {
+		return "Malalta/Meza";
+	}
+
+	public String riesgoAlto() {
+		return "Alta";
+	}
+
+	public String riesgoMedio() {
+		return "Meza";
+	}
+
+	public String riesgoBajo() {
+		return "Malalta";
+	}
+
+	public String riesgoMedioAlto() {
+		return "Meza/Alta";
+	}
+
+	public String tituloCrearConfigBBE() {
+		return "Krei agordon de Better Block Entities";
+	}
+
+	public String descripcionCrearConfigBBE() {
+		return "La dosiero BBEConfig.json ne ekzistas.";
+	}
+
+	public String sugerenciaCrearConfigBBE() {
+		return "Krei BBEConfig.json kun optimumigoj por kestoj, ŝulker-kompletoj, signoj, litoj, sonoriloj kaj standardoj.";
+	}
+
+	public String tituloActivarOptimizacionMaestraBBE() {
+		return "Aktivigi ĉefan optimumigon de BBE";
+	}
+
+	public String descripcionActivarOptimizacionMaestraBBE() {
+		return "Ŝajnas, ke Better Block Entities ne havas aktivigitan la ĉefan optimumigon.";
+	}
+
+	public String sugerenciaActivarOptimizacionMaestraBBE() {
+		return "Aldoni {\"option\":\"optimize.master\",\"value\":true}";
+	}
+
+	public String tituloActivarCullingTextoCartelesBBE() {
+		return "Aktivigi forviŝadon (culling) de signa teksto";
+	}
+
+	public String descripcionActivarCullingTextoCartelesBBE() {
+		return "Malpliigas la bildigon de signa teksto je distanco.";
+	}
+
+	public String sugerenciaActivarCullingTextoCartelesBBE() {
+		return "Aldoni {\"option\":\"misc.sign_text_culling\",\"value\":true}";
+	}
+
+	public String tituloAumentarSleepDelayEntityCulling() {
+		return "Pliigi sleepDelay de EntityCulling";
+	}
+
+	public String descripcionAumentarSleepDelayEntityCulling() {
+		return "EntityCulling kontrolos estaĵojn malpli ofte.";
+	}
+
+	public String sugerenciaAumentarSleepDelayEntityCulling() {
+		return "\"sleepDelay\": 153";
+	}
+
+	public String tituloSubirLimiteHitboxEntityCulling() {
+		return "Levi limon de kolizia skatolo (hitbox)";
+	}
+
+	public String descripcionSubirLimiteHitboxEntityCulling() {
+		return "Permesas pli agreseman forviŝadon antaŭ transiri al pli malrapidaj vojoj.";
+	}
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling() {
+		return "\"hitboxLimit\": 90";
+	}
+
+	public String tituloDesactivarDatosF3EntityCulling() {
+		return "Malaktivigi F3-datumojn de EntityCulling";
+	}
+
+	public String descripcionDesactivarDatosF3EntityCulling() {
+		return "Forigas kromajn sencimigajn informojn de la mod.";
+	}
+
+	public String sugerenciaDesactivarDatosF3EntityCulling() {
+		return "\"disableF3\": true";
+	}
+
+	public String tituloActivarBufferingSignsImmediatelyFast() {
+		return "Aktivigi eksperimentan bufroregon de signoj";
+	}
+
+	public String descripcionActivarBufferingSignsImmediatelyFast() {
+		return "Povas plibonigi rendimenton kiam estas multaj signoj.";
+	}
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast() {
+		return "\"experimental_sign_text_buffering\": true";
+	}
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast() {
+		return "Malpliigi konflikto-traktadon de rimedpakoj";
+	}
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast() {
+		return "Povas forigi kroman laboron, sed ankaŭ povas kaŭzi vidajn problemojn kun rimedpakoj.";
+	}
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast() {
+		return "\"experimental_disable_resource_pack_conflict_handling\": true";
+	}
+
+	public String tituloOcultarBotonNCR() {
+		return "Kaŝi butonon de No Chat Reports";
+	}
+
+	public String descripcionOcultarBotonNCR() {
+		return "Interfaca ŝanĝo; ne multe plibonigas FPS, sed purigas la ekranon.";
+	}
+
+	public String sugerenciaOcultarBotonNCR() {
+		return "\"showNCRButton\": false";
+	}
+
+	public String tituloActivarMixinsExperimentalesLithium() {
+		return "Aktivigi eksperimentajn mixins de Lithium";
+	}
+
+	public String descripcionActivarMixinsExperimentalesLithium() {
+		return "Ebligas kromajn eksperimentajn optimumigojn.";
+	}
+
+	public String sugerenciaActivarMixinsExperimentalesLithium() {
+		return "mixin.experimental=true";
+	}
+
+	public String tituloUsarDetectorThreadingPequenoFerriteCore() {
+		return "Uzi malgrandan detektilon de fadenado";
+	}
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore() {
+		return "Malpliigas memoron, sed povas esti pli riska.";
+	}
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore() {
+		return "useSmallThreadingDetector=true";
+	}
+
+	public String tituloModernFixRecursosDinamicos() {
+		return "Aktivigi dinamikajn rimedojn de ModernFix";
+	}
+
+	public String descripcionModernFixRecursosDinamicos() {
+		return "Povas malpliigi memoruzon kaj laboron per pli efika ŝargado de rimedoj.";
+	}
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades() {
+		return "Aktivigi dinamikajn bildigilojn de estaĵoj";
+	}
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades() {
+		return "Povas plibonigi rendimenton per pli efika administrado de estaĵbildigiloj.";
+	}
+
+	public String tituloModernFixRenderizadoItemsRapido() {
+		return "Aktivigi rapidan bildigon de objektoj";
+	}
+
+	public String descripcionModernFixRenderizadoItemsRapido() {
+		return "Povas plibonigi rendimenton dum bildigo de objektoj.";
+	}
+
+	public String tituloModernFixWorldgenAllocation() {
+		return "Malpliigi asignojn dum mondgreado";
+	}
+
+	public String descripcionModernFixWorldgenAllocation() {
+		return "Povas malpliigi memoran rubon dum mondgreado.";
+	}
+
+	public String tituloModernFixDeduplicacionIngredientes() {
+		return "Aktivigi deduplikigon de ingrediencoj";
+	}
+
+	public String descripcionModernFixDeduplicacionIngredientes() {
+		return "Malpliigas duplikitajn objektojn rilatajn al receptoj kaj ingrediencoj.";
+	}
+
+	public String tituloSodiumRenderCielo() {
+		return "Aktivigi optimumigon/bildigon de ĉielo en Sodium";
+	}
+
+	public String descripcionSodiumRenderCielo() {
+		return "Povas ĝustigi la bildig-konduton de la ĉielo.";
+	}
+
+	public String tituloActivarLightmapCaching() {
+		return "Aktivigi kaŝmemoron de lummapo";
+	}
+
+	public String descripcionActivarLightmapCaching() {
+		return "Evitas rekalkuli lumigon kiam ĝi ne necesas.";
+	}
+
+	public String sugerenciaActivarLightmapCaching() {
+		return "enable_lightmap_caching: true";
+	}
+
+	public String tituloOcultarTextoF3BadOptimizations() {
+		return "Kaŝi F3-tekston de BadOptimizations";
+	}
+
+	public String descripcionOcultarTextoF3BadOptimizations() {
+		return "Malpliigas sencimigan bruon sur la F3-ekrano.";
+	}
+
+	public String sugerenciaOcultarTextoF3BadOptimizations() {
+		return "show_f3_text: false";
+	}
+
+	public String tituloDesactivarLogConfigBadOptimizations() {
+		return "Malaktivigi agordan protokolon";
+	}
+
+	public String descripcionDesactivarLogConfigBadOptimizations() {
+		return "Evitas presi tutan agordon dum startado.";
+	}
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations() {
+		return "log_config: false";
+	}
+
+	public String tituloActivarSerializadorGCFreeC2ME() {
+		return "Aktivigi GC-liberan seriigilon de C2ME";
+	}
+
+	public String descripcionActivarSerializadorGCFreeC2ME() {
+		return "Malpliigas memorasignojn dum ŝargado aŭ konservado de pecoj.";
+	}
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME() {
+		return "[ioSystem] gcFreeChunkSerializer = true";
+	}
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME() {
+		return "Malaktivigi syncPlayerTickets";
+	}
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME() {
+		return "Povas plibonigi pecrendimenton, sed povas influi teknikajn aparatojn.";
+	}
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME() {
+		return "[chunkSystem] syncPlayerTickets = false";
+	}
+
+	public String tituloUsarCullingHojasDepthMoreCulling() {
+		return "Uzi folian forviŝadon per DEPTH";
+	}
+
+	public String descripcionUsarCullingHojasDepthMoreCulling() {
+		return "Uzas pli agreseman folian forviŝadon ol la normala reĝimo.";
+	}
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling() {
+		return "leavesCullingMode = \"DEPTH\"";
+	}
+
+	public String tituloActivarEndGatewayCullingMoreCulling() {
+		return "Aktivigi forviŝadon de Fina Portalo";
+	}
+
+	public String descripcionActivarEndGatewayCullingMoreCulling() {
+		return "Evitas nebezonan bildigon de Finaj Portaloj.";
+	}
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling() {
+		return "endGatewayCulling = true";
+	}
+
+	public String tituloActivarActivationRangeServerCore() {
+		return "Aktivigi aktivigan rangon";
+	}
+
+	public String descripcionActivarActivationRangeServerCore() {
+		return "Malpliigas tikojn de estaĵoj malproksimaj de la ludanto.";
+	}
+
+	public String sugerenciaActivarActivationRangeServerCore() {
+		return "activation-range: enabled: true";
+	}
+
+	public String tituloActivarRangoVerticalServerCore() {
+		return "Aktivigi vertikan rangon";
+	}
+
+	public String descripcionActivarRangoVerticalServerCore() {
+		return "Malpliigas tikojn de estaĵoj tre super aŭ sub la ludanto.";
+	}
+
+	public String sugerenciaActivarRangoVerticalServerCore() {
+		return "use-vertical-range: true";
+	}
+
+	// Esperanto (Esperanto)
+	public String impactoNegativoAlto() {
+		return "Alta negativa efiko";
+	}
+
+	public String advertenciaModsCulling() {
+		return "Forviŝaj (culling) modoj povas kaŭzi malkongruecojn kun kelkaj modoj, kraŝojn, erarojn kie la ludo ĉesas ĝuste tiki, kaj ankaŭ povas igi aŭtomatajn farmojn aŭ fabrikojn ĉesi funkcii.";
+	}
+
+	public String tituloModBadOptimizations() {
+		return "Aldoni BadOptimizations";
+	}
+
+	public String descripcionModBadOptimizations() {
+		return "Aldonas klientajn mikro-optimumigojn kiel kaŝmemoron de lummapo, kaŝmemoron de ĉielo kaj reduktadon de nebezonaj alvokoj.";
+	}
+
+	public String tituloModBBE() {
+		return "Aldoni Better Block Entities";
+	}
+
+	public String descripcionModBBE() {
+		return "Optimumigas la bildigon de blokaĵoj kiel kestoj, ŝulker-kompletoj, litoj, sonoriloj, standardoj kaj signoj.";
+	}
+
+	public String tituloModC2ME() {
+		return "Aldoni Concurrent Chunk Management Engine";
+	}
+
+	public String descripcionModC2ME() {
+		return "Plibonigas ŝargadon, generadon kaj administradon de pecoj per samtempa prilaborado. Povas esti tre potenca, sed ankaŭ povas kaŭzi malkongruecojn en grandaj modpakoj.";
+	}
+
+	public String tituloModEntityCulling() {
+		return "Aldoni EntityCulling";
+	}
+
+	public String descripcionModEntityCulling() {
+		return "Evitas bildigi nevideblajn estaĵojn. " + advertenciaModsCulling();
+	}
+
+	public String tituloModFerriteCore() {
+		return "Aldoni FerriteCore";
+	}
+
+	public String descripcionModFerriteCore() {
+		return "Malpliigas memoruzon per deduplikigo kaj pli efikaj internaj strukturoj.";
+	}
+
+	public String tituloModImmediatelyFast() {
+		return "Aldoni ImmediatelyFast";
+	}
+
+	public String descripcionModImmediatelyFast() {
+		return "Optimumigas diversajn partojn de tuja bildigo, teksto, bufroj, mapoj kaj interfaco.";
+	}
+
+	public String tituloModLithium() {
+		return "Aldoni Lithium";
+	}
+
+	public String descripcionModLithium() {
+		return "Optimumigas ludlogikon, estaĵojn, blokojn, fizikon kaj aliajn sistemojn sen multe ŝanĝi la vanilan konduton.";
+	}
+
+	public String tituloModModernFix() {
+		return "Aldoni ModernFix";
+	}
+
+	public String descripcionModModernFix() {
+		return "Aldonas multajn optimumigojn de memoro, ŝargado, rimedoj kaj ĝenerala rendimento. Ĝiaj iloj rilataj al atlaso povas kolizii kun modoj, kiuj faras la atlason pli malgranda.";
+	}
+
+	public String tituloModMoreCulling() {
+		return "Aldoni More Culling";
+	}
+
+	public String descripcionModMoreCulling() {
+		return "Aldonas forviŝadon por blokoj, folioj, kadroj de objektoj, pentraĵoj, pluvo, lumturoj kaj aliaj elementoj. "
+				+ advertenciaModsCulling();
+	}
+
+	public String tituloModScalableLux() {
+		return "Aldoni ScalableLux";
+	}
+
+	public String descripcionModScalableLux() {
+		return "Optimumigas kalkulojn rilatajn al lumigado kaj povas plibonigi rendimenton en mondoj kun multaj lumŝanĝoj.";
+	}
+
+	public String tituloModServerCore() {
+		return "Aldoni ServerCore";
+	}
+
+	public String descripcionModServerCore() {
+		return "Aldonas serverflankajn optimumigojn, aktivigan rangon, kontrolojn de limoj de estaĵoj, reduktadon de tikoj kaj plibonigojn de ŝargado.";
+	}
+
+	public String tituloModSodium() {
+		return "Aldoni Sodium";
+	}
+
+	public String descripcionModSodium() {
+		return "Ĉefa mod de bildig-optimumigo. Kutime estas unu el la plej gravaj plibonigoj por FPS.";
+	}
+
+	public String tituloModVMP() {
+		return "Aldoni Very Many Players";
+	}
+
+	public String descripcionModVMP() {
+		return "Optimumigas serversistemojn por trakti multajn ludantojn. La atendata modo-ID estas vmp.";
+	}
+
+	public String tituloModMCMT() {
+		return "Aldoni MCMT";
+	}
+
+	public String descripcionModMCMT() {
+		return "Provas multfadenigi partojn de la Minecraft-servilo. Povas plibonigi rendimenton en kelkaj kazoj, sed havas altan riskon de malkongruecoj, tik-eraroj kaj stranga konduto.";
+	}
+
+	public String tituloLiabilityUranium() {
+		return "Forigi Uranium";
+	}
+
+	public String descripcionLiabilityUranium() {
+		return "Uranium estas modo desegnita por intence malrapidigi la ludon. Ĝi ne devus esti instalita se oni volas rendimenton.";
+	}
+
+	// Esperanto (Esperanto)
+	public String tituloAmbientalSinXmx() {
+		return "Agordi maksimuman memoron de Java";
+	}
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro) {
+		return "-Xmx ne estis detektita en la donitaj argumentoj. Por " + mods + " modoj, la sugestita minimumo estas "
+				+ minimo + ", ne superante proksimume " + maximoSeguro + ".";
+	}
+
+	public String sugerenciaAmbientalSinXmx(String minimo) {
+		return "Aldoni -Xmx" + minimo.replace(" ", "");
+	}
+
+	public String tituloAmbientalDemasiadaMemoria() {
+		return "Malpliigi asignitan memoron";
+	}
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro) {
+		return "La instanco havas asignitajn " + xmx + " el " + total
+				+ ". Ne rekomendas asigni pli ol 80% de la disponebla RAM.";
+	}
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro) {
+		return "Malpliigi -Xmx al " + maximoSeguro + " aŭ malpli.";
+	}
+
+	public String tituloAmbientalMemoriaInsuficiente() {
+		return "Pliigi asignitan memoron";
+	}
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo) {
+		return "La instanco havas " + xmx + " asignitajn. Por " + mods + " modoj, la sugestita minimumo estas " + minimo
+				+ ".";
+	}
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo) {
+		return "Pliigi -Xmx al almenaŭ " + minimo + ".";
+	}
+
+	public String tituloAmbientalJava8GC() {
+		return "Uzi G1GC aŭ Shenandoah en Java 8";
+	}
+
+	public String descripcionAmbientalJava8GC() {
+		return "En Java 8 oni rekomendas uzi G1GC aŭ Shenandoah por redukti paŭzojn kaj plibonigi stabilecon.";
+	}
+
+	public String sugerenciaAmbientalJava8GC() {
+		return "Aldoni -XX:+UseG1GC aŭ -XX:+UseShenandoahGC.";
+	}
+
+	public String tituloAmbientalZGC() {
+		return "Uzi ZGC";
+	}
+
+	public String descripcionAmbientalZGC(String ramTotal) {
+		return "La komputilo havas pli ol 12 GB da RAM (" + ramTotal
+				+ "). Se la Java-distribuo subtenas ĝin, ZGC povas redukti paŭzojn de la rubkolektisto.";
+	}
+
+	public String sugerenciaAmbientalZGC() {
+		return "En Java 17 aŭ supera, provu -XX:+UseZGC.";
+	}
+
+	public String tituloAmbientalAikar() {
+		return "Aldoni flagojn de Aikar";
+	}
+
+	public String descripcionAmbientalAikar() {
+		return "En Java 17 aŭ antaŭa, la flagoj de Aikar kutime plibonigas la konduton de G1GC por Minecraft.";
+	}
+
+	public String sugerenciaAmbientalAikar() {
+		return "Uzi flagojn de Aikar, inkluzive -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200.";
+	}
+
+	public String tituloAmbientalRedHatJDK() {
+		return "Uzi Red Hat JDK";
+	}
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os) {
+		return "Por Java " + javaMayor + " en " + os + ", oni rekomendas Red Hat JDK pro stabileco kaj kongrueco.";
+	}
+
+	public String sugerenciaAmbientalRedHatJDK() {
+		return "Instali Red Hat JDK por Java 8 aŭ Java 11.";
+	}
+
+	public String tituloAmbientalAzulPrime() {
+		return "Konsideri Azul Prime";
+	}
+
+	public String descripcionAmbientalAzulPrime() {
+		return "En Linux kun Java 16 aŭ supera kaj pli ol 16 GB da RAM, Azul Prime povas esti bona elekto de rendimento.";
+	}
+
+	public String sugerenciaAmbientalAzulPrime() {
+		return "Provi Azul Prime se la komputilo havas pli ol 16 GB da RAM.";
+	}
+
+	public String tituloAmbientalGraalVM() {
+		return "Konsideri GraalVM";
+	}
+
+	public String descripcionAmbientalGraalVM() {
+		return "Kun Java 16 aŭ supera kaj pli ol 16 GB da RAM, GraalVM povas esti utila alternativo ekster Linux.";
+	}
+
+	public String sugerenciaAmbientalGraalVM() {
+		return "Provi GraalVM se la komputilo havas pli ol 16 GB da RAM.";
+	}
+
+	public String tituloAmbientalDiscoBajo() {
+		return "Kontroli liberan spacon sur disko";
+	}
+
+	public String descripcionAmbientalDiscoBajo(String libre) {
+		return "La disko havas malmultan liberan spacon: " + libre
+				+ ". Minecraft povas malsukcesi, malrapide konservi aŭ korupti datumojn se ĝi elĉerpiĝas.";
+	}
+
+	public String sugerenciaAmbientalDiscoBajo() {
+		return "Liberigu spacon ĝis havi almenaŭ 20 GB disponeblajn.";
+	}
+
+	public String tituloAmbientalWindowsRHEL9() {
+		return "Konsideri RHEL 9 por testado";
+	}
+
+	public String descripcionAmbientalWindowsRHEL9() {
+		return "En Windows, oni rekomendas konsideri RHEL 9 ĉar ĝi inkluzivas Red Hat JDK, estas stabila, estas elŝutebla senpage por individuoj kaj estas kie la plej multaj testoj faratas.";
+	}
+
+	public String sugerenciaAmbientalWindowsRHEL9() {
+		return "Provi la instancon en RHEL 9 se oni serĉas maksimuman stabilecon de testado.";
+	}
+
+	public String tituloAmbientalRaptorLake() {
+		return "Averto pri Intel Raptor Lake";
+	}
+
+	public String descripcionAmbientalRaptorLake() {
+		return "Estis detektita la problemo de Raptor Lake markita de la ekzistanta kontrolo. Ĉi tio povas kaŭzi nestabilecon, kraŝojn kaj erarojn kiuj ŝajnas esti de la modpako.";
+	}
+
+	public String sugerenciaAmbientalRaptorLake() {
+		return "Ĝisdatigu BIOS/mikrokodon kaj kontrolu la averton de Raptor Lake antaŭ kulpigi la modpakon.";
+	}
+
+	// Esperanto (Esperanto)
+	@Override
+	public String tituloAmbientalNeoForge1201Antiguo() {
+		return "Malnova NeoForge 1.20.1 detektita";
+	}
+
+	@Override
+	public String descripcionAmbientalNeoForge1201Antiguo() {
+		return "FancyModLoader 47 aŭ vojo kongrua kun NeoForge 1.20.1 estis detektita. "
+				+ "NeoForge 1.20.1 estis forko de MinecraftForge 1.20.1 kaj kutime estas binare kongrua, "
+				+ "sed tiu linio establas frue forlasita kaj povas manki pluraj optimumigoj disponeblaj en Forge.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalNeoForge1201Antiguo() {
+		return "Por 1.20.1, se la modpako permesas, konsideru uzi MinecraftForge 1.20.1 anstataŭ NeoForge 1.20.1.";
+	}
+
+	@Override
+	public String tituloAmbientalGPU() {
+		return "Problemo de GPU detektita";
+	}
+
+	@Override
+	public String descripcionAmbientalGPU() {
+		return "Alia kontrolo jam detektis eblan problemon de GPU, OpenGL aŭ elekto de grafika karto.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalGPU() {
+		return "Kontrolu, ke Minecraft uzas la ĝustan GPU, ĝisdatigu pelilojn kaj evitu nestabilajn hibridajn agordojn.";
+	}
+
+	// Esperanto (Esperanto)
+	@Override
+	public String gpuFixTitulo() {
+		return "Agordo de GPU";
+	}
+
+	@Override
+	public String gpuFixBotonSidebar() {
+		return "GPU";
+	}
+
+	@Override
+	public String gpuFixBotonAplicar() {
+		return "Apliki agordon";
+	}
+
+	@Override
+	public String gpuFixBotonFuenteTLauncher() {
+		return "Malfermi gvidilon de TLauncher";
+	}
+
+	@Override
+	public String gpuFixBotonVirusTotal() {
+		return "Malfermi analizon de VirusTotal";
+	}
+
+	@Override
+	public String gpuFixBotonOptimusLinux() {
+		return "Malfermi gvidilon de NVIDIA Optimus";
+	}
+
+	@Override
+	public String gpuFixTextoWindows() {
+		return "CrashDetector detektis, ke Minecraft eble ne uzas la altrendimentan GPU.\n\n"
+				+ "En Windows oni povas starigi ŝlosilojn de registro en "
+				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
+				+ "por devigi, ke javaw.exe uzu la dedikitan GPU.\n\n"
+				+ "GpuPreference=0 = aŭtomata decido de Windows.\n"
+				+ "GpuPreference=1 = ŝparo de energio / integrita GPU.\n" + "GpuPreference=2 = altrendimenta GPU.\n\n"
+				+ "Parto de ĉi tiu informo estis akirita dank' al la esploro publikigita de TLauncher kaj al la analizo "
+				+ "de konduto disponebla en VirusTotal.";
+	}
+
+	@Override
+	public String gpuFixTextoLinux() {
+		return "CrashDetector detektis eblan problemon rilatan al NVIDIA Optimus aŭ PRIME.\n\n"
+				+ "Depende de la uzata Linux-distribuo, povas esti necese agordi NVIDIA Optimus, "
+				+ "nvidia-prime, switcheroo-control aŭ aliajn hibridajn sistemojn.\n\n"
+				+ "En Fedora/RHEL kaj derivaĵoj kutime rekomendas sekvi la dokumentaron de RPMFusion.\n\n"
+				+ "La suba butono malfermos la rekomenditan oficialan dokumentaron.";
+	}
+
+	@Override
+	public String gpuFixTextoMac() {
+		return "CrashDetector detektis eblan problemon de selektado de GPU.\n\n"
+				+ "En kelkaj sistemoj macOS kun hibrida GPU eblas devigi la uzon de la dedikita GPU "
+				+ "per avancitaj sistemaj agordoj.\n\n"
+				+ "La butono de apliki provos ekzekuti komandon por prioritatigi la altrendimentan GPU.";
+	}
+
+	@Override
+	public String gpuFixTextoOtroSistema() {
+		return "CrashDetector detektis eblan problemon rilatan al la GPU, "
+				+ "sed ne ekzistas specifa implemento por ĉi tiu operaciumo.";
+	}
+
+	@Override
+	public String gpuFixLinuxManual() {
+		return "En Linux kutime la agordo devas esti farita mane depende de la distribuo, "
+				+ "pelilo NVIDIA kaj sistemo Optimus/PRIME uzata.";
+	}
+
+	@Override
+	public String gpuFixSistemaNoSoportado() {
+		return "Operaciumo ne subtenata por la aŭtomata agordo de GPU.";
+	}
+
+	@Override
+	public String gpuFixJavaNoDetectado() {
+		return "Ne eblis detekti la nunan vojon de javaw.exe.";
+	}
+
+	@Override
+	public String gpuFixWindowsAplicado(String ruta) {
+		return "La agordo de GPU estis aplikita sukcese por:\n\n" + ruta + "\n\n"
+				+ "GpuPreference=2 indikas altrendimentan GPU.";
+	}
+
+	@Override
+	public String gpuFixErrorAplicando() {
+		return "Okazis eraro dum la provo apliki la agordon de GPU";
+	}
+
+	@Override
+	public String gpuFixMacAplicado() {
+		return "La agordo de altrendimenta GPU estis aplikita.";
+	}
+
+	@Override
+	public String gpuFixMacError() {
+		return "Ne eblis apliki la agordon de GPU en macOS";
+	}
+
+	// Esperanto (Esperanto)
+	@Override
+	public String rendimientoTitulo() {
+		return "Administrilo de rendimento";
+	}
+
+	@Override
+	public String rendimientoBotonSidebar() {
+		return "Rendimento";
+	}
+
+	@Override
+	public String rendimientoBotonAnalizar() {
+		return "Analizi rendimenton";
+	}
+
+	@Override
+	public String rendimientoBotonAbrirGPU() {
+		return "Malfermi agordon de GPU";
+	}
+
+	@Override
+	public String rendimientoDescripcion() {
+		return "Ĉi tiu panelo kontrolas mediajn problemojn, rekomenditajn aŭ riskajn modojn, kaj agordajn opciojn kiuj povas plibonigi rendimenton. Ne ĉiuj opcioj funkcias kune, ne ĉiuj taŭgas por ĉiu versio de Minecraft kaj ne ĉiuj estas kongruaj kun ĉiu modŝargilo. Tio estas bone: vi ne bezonas perfektan optimumigan poenton.";
+	}
+
+	@Override
+	public String rendimientoNotaCompatibilidad() {
+		return "Noto: ĉi tiuj sugestoj estas eblecoj, ne ordono apliki ĉion. Iuj opcioj povas kolizii inter si aŭ ne esti taŭgaj por via versio, lanĉilo, modŝargilo aŭ modpako.";
+	}
+
+	@Override
+	public String rendimientoPestanaResumen() {
+		return "Resumo";
+	}
+
+	@Override
+	public String rendimientoPestanaAmbiental() {
+		return "Mediaj problemoj";
+	}
+
+	@Override
+	public String rendimientoPestanaMods() {
+		return "Rekomenditaj modoj kaj riskoj";
+	}
+
+	@Override
+	public String rendimientoPestanaConfigs() {
+		return "Agordaj opcioj";
+	}
+
+	@Override
+	public String rendimientoResumenTitulo() {
+		return "Resumo de la analizo";
+	}
+
+	@Override
+	public String rendimientoResumenAmbiental(int cantidad) {
+		return "Mediaj problemoj trovitaj: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenMods(int cantidad) {
+		return "Sugestoj aŭ riskoj de modoj trovitaj: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenConfigs(int cantidad) {
+		return "Agordaj sugestoj trovitaj: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenGPU() {
+		return "Problemo de GPU estis detektita. Pro tio la butono por malfermi la agordon de GPU estis aktivigita.";
+	}
+
+	@Override
+	public String rendimientoSinHallazgos() {
+		return "Neniuj sugestoj trovitaj en ĉi tiu sekcio.";
+	}
+
+	@Override
+	public String rendimientoSugerencia() {
+		return "Sugesto";
+	}
+
+	@Override
+	public String rendimientoColorFondo() {
+		return "Rendimento - fono";
+	}
+
+	@Override
+	public String rendimientoColorPanel() {
+		return "Rendimento - panelo";
+	}
+
+	@Override
+	public String rendimientoColorTexto() {
+		return "Rendimento - teksto";
+	}
+
+	@Override
+	public String rendimientoColorTextoSecundario() {
+		return "Rendimento - dua teksto";
+	}
+
+	@Override
+	public String rendimientoColorBoton() {
+		return "Rendimento - butono";
+	}
+
+	@Override
+	public String rendimientoColorBotonTexto() {
+		return "Rendimento - teksto de butono";
+	}
+
+	@Override
+	public String rendimientoColorSeleccion() {
+		return "Rendimento - selekto";
+	}
 
 }

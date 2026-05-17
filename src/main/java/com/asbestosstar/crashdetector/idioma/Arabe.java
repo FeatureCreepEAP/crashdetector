@@ -9256,31 +9256,882 @@ public class Arabe implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "يحاول أحد الـ mods تجاوز أسلوب نهائي";
 	}
+
 	// Arabic (العربية)
 	@Override
 	public String errorCrashProvocadoPorComando(String comandoDetectado) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "تم إغلاق Minecraft بسبب أمر تسبب في انهيار اللعبة.</b>"
-	            + "<p>يشير السجل إلى أنه تم تنفيذ الأمر <code>" + comandoDetectado + "</code>.</p>"
-	            + "<p>هذا يعني عادةً أن اللعبة لم تغلق بسبب خطأ عادي في الـ mods، بل لأن شخصاً ما "
-	            + "استخدم أمراً مصمماً لإحداث انهيار يدوياً.</p>"
-	            + "<p><b>ما يجب مراجعته:</b></p>"
-	            + "<ul>"
-	            + "<li>راجع من نفذ الأمر في وحدة التحكم أو داخل اللعبة.</li>"
-	            + "<li>إذا كان ذلك اختباراً، يمكنك تجاهل هذا الانهيار.</li>"
-	            + "<li>إذا حدث دون قصد، راجع كتل الأوامر (command blocks)، النصوص البرمجية، حزم البيانات (datapacks)، mods الإدارة، أو صلاحيات المشغلين.</li>"
-	            + "</ul>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم إغلاق Minecraft بسبب أمر تسبب في انهيار اللعبة.</b>"
+				+ "<p>يشير السجل إلى أنه تم تنفيذ الأمر <code>" + comandoDetectado + "</code>.</p>"
+				+ "<p>هذا يعني عادةً أن اللعبة لم تغلق بسبب خطأ عادي في الـ mods، بل لأن شخصاً ما "
+				+ "استخدم أمراً مصمماً لإحداث انهيار يدوياً.</p>" + "<p><b>ما يجب مراجعته:</b></p>" + "<ul>"
+				+ "<li>راجع من نفذ الأمر في وحدة التحكم أو داخل اللعبة.</li>"
+				+ "<li>إذا كان ذلك اختباراً، يمكنك تجاهل هذا الانهيار.</li>"
+				+ "<li>إذا حدث دون قصد، راجع كتل الأوامر (command blocks)، النصوص البرمجية، حزم البيانات (datapacks)، mods الإدارة، أو صلاحيات المشغلين.</li>"
+				+ "</ul>";
 	}
 
 	@Override
 	public String nombreCrashProvocadoPorComando() {
-	    return "انهيار ناتج عن أمر";
+		return "انهيار ناتج عن أمر";
 	}
-	
-	
-	
-	
-	
-	
+
+	// Arabic (العربية)
+	public String impactoAlto() {
+		return "مرتفع";
+	}
+
+	public String impactoMedio() {
+		return "متوسط";
+	}
+
+	public String impactoBajo() {
+		return "منخفض";
+	}
+
+	public String impactoBajoMedio() {
+		return "منخفض/متوسط";
+	}
+
+	public String riesgoAlto() {
+		return "مرتفع";
+	}
+
+	public String riesgoMedio() {
+		return "متوسط";
+	}
+
+	public String riesgoBajo() {
+		return "منخفض";
+	}
+
+	public String riesgoMedioAlto() {
+		return "متوسط/مرتفع";
+	}
+
+	public String tituloCrearConfigBBE() {
+		return "إنشاء تكوين Better Block Entities";
+	}
+
+	public String descripcionCrearConfigBBE() {
+		return "ملف BBEConfig.json غير موجود.";
+	}
+
+	public String sugerenciaCrearConfigBBE() {
+		return "إنشاء BBEConfig.json مع تحسينات للصناديق، الشالكر، اللافتات، الأسرة، الأجراس، والأعلام.";
+	}
+
+	public String tituloActivarOptimizacionMaestraBBE() {
+		return "تفعيل التحسين الرئيسي لـ BBE";
+	}
+
+	public String descripcionActivarOptimizacionMaestraBBE() {
+		return "لا يبدو أن Better Block Entities لديه التحسين الرئيسي مفعلاً.";
+	}
+
+	public String sugerenciaActivarOptimizacionMaestraBBE() {
+		return "إضافة {\"option\":\"optimize.master\",\"value\":true}";
+	}
+
+	public String tituloActivarCullingTextoCartelesBBE() {
+		return "تفعيل إخفاء نص اللافتات (Culling)";
+	}
+
+	public String descripcionActivarCullingTextoCartelesBBE() {
+		return "يقلل من عرض نص اللافتات عن بُعد.";
+	}
+
+	public String sugerenciaActivarCullingTextoCartelesBBE() {
+		return "إضافة {\"option\":\"misc.sign_text_culling\",\"value\":true}";
+	}
+
+	public String tituloAumentarSleepDelayEntityCulling() {
+		return "زيادة sleepDelay لـ EntityCulling";
+	}
+
+	public String descripcionAumentarSleepDelayEntityCulling() {
+		return "سيقوم EntityCulling بمراجعة الكيانات بشكل أقل تكراراً.";
+	}
+
+	public String sugerenciaAumentarSleepDelayEntityCulling() {
+		return "\"sleepDelay\": 153";
+	}
+
+	public String tituloSubirLimiteHitboxEntityCulling() {
+		return "رفع حد صندوق التصادم (Hitbox)";
+	}
+
+	public String descripcionSubirLimiteHitboxEntityCulling() {
+		return "يسمح بسلوك إخفاء أكثر عدوانية قبل الانتقال إلى مسارات أبطأ.";
+	}
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling() {
+		return "\"hitboxLimit\": 90";
+	}
+
+	public String tituloDesactivarDatosF3EntityCulling() {
+		return "تعطيل بيانات F3 لـ EntityCulling";
+	}
+
+	public String descripcionDesactivarDatosF3EntityCulling() {
+		return "يزيل معلومات التصحيح الإضافية من الـ mod.";
+	}
+
+	public String sugerenciaDesactivarDatosF3EntityCulling() {
+		return "\"disableF3\": true";
+	}
+
+	public String tituloActivarBufferingSignsImmediatelyFast() {
+		return "تفعيل التخزين المؤقت التجريبي للافتات";
+	}
+
+	public String descripcionActivarBufferingSignsImmediatelyFast() {
+		return "قد يحسن الأداء عند وجود الكثير من اللافتات.";
+	}
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast() {
+		return "\"experimental_sign_text_buffering\": true";
+	}
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast() {
+		return "تقليل التعامل مع تعارضات حزم الموارد";
+	}
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast() {
+		return "قد يزيل العمل الإضافي، ولكنه قد يسبب أيضاً مشاكل بصرية مع حزم الموارد.";
+	}
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast() {
+		return "\"experimental_disable_resource_pack_conflict_handling\": true";
+	}
+
+	public String tituloOcultarBotonNCR() {
+		return "إخفاء زر No Chat Reports";
+	}
+
+	public String descripcionOcultarBotonNCR() {
+		return "تغيير في الواجهة؛ لا يحسن إطارات الشاشة كثيراً، لكنه ينظف الشاشة.";
+	}
+
+	public String sugerenciaOcultarBotonNCR() {
+		return "\"showNCRButton\": false";
+	}
+
+	public String tituloActivarMixinsExperimentalesLithium() {
+		return "تفعيل mixins التجريبية لـ Lithium";
+	}
+
+	public String descripcionActivarMixinsExperimentalesLithium() {
+		return "يفعّل تحسينات تجريبية إضافية.";
+	}
+
+	public String sugerenciaActivarMixinsExperimentalesLithium() {
+		return "mixin.experimental=true";
+	}
+
+	public String tituloUsarDetectorThreadingPequenoFerriteCore() {
+		return "استخدام مكتشف التفرع الصغير (Small Threading Detector)";
+	}
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore() {
+		return "يقلل استهلاك الذاكرة، لكنه قد يكون أكثر خطورة.";
+	}
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore() {
+		return "useSmallThreadingDetector=true";
+	}
+
+	public String tituloModernFixRecursosDinamicos() {
+		return "تفعيل الموارد الديناميكية لـ ModernFix";
+	}
+
+	public String descripcionModernFixRecursosDinamicos() {
+		return "قد يقلل استخدام الذاكرة والعمل من خلال تحميل الموارد بشكل أكثر كفاءة.";
+	}
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades() {
+		return "تفعيل عارضات الكيانات الديناميكية";
+	}
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades() {
+		return "قد يحسن الأداء من خلال التعامل مع عارضات الكيانات بشكل أكثر كفاءة.";
+	}
+
+	public String tituloModernFixRenderizadoItemsRapido() {
+		return "تفعيل العرض السريع للعناصر";
+	}
+
+	public String descripcionModernFixRenderizadoItemsRapido() {
+		return "قد يحسن الأداء عند عرض العناصر.";
+	}
+
+	public String tituloModernFixWorldgenAllocation() {
+		return "تقليل التخصيصات في توليد العالم (Worldgen)";
+	}
+
+	public String descripcionModernFixWorldgenAllocation() {
+		return "قد يقلل من نفايات الذاكرة أثناء توليد العالم.";
+	}
+
+	public String tituloModernFixDeduplicacionIngredientes() {
+		return "تفعيل إزالة تكرار المكونات";
+	}
+
+	public String descripcionModernFixDeduplicacionIngredientes() {
+		return "يقلل الكائنات المكررة المتعلقة بالوصفات والمكونات.";
+	}
+
+	public String tituloSodiumRenderCielo() {
+		return "تفعيل تحسين/عرض السماء في Sodium";
+	}
+
+	public String descripcionSodiumRenderCielo() {
+		return "قد يضبط سلوك عرض السماء.";
+	}
+
+	public String tituloActivarLightmapCaching() {
+		return "تفعيل تخزين خريطة الإضاءة مؤقتاً";
+	}
+
+	public String descripcionActivarLightmapCaching() {
+		return "يتجنب إعادة حساب الإضاءة عندما لا تكون ضرورية.";
+	}
+
+	public String sugerenciaActivarLightmapCaching() {
+		return "enable_lightmap_caching: true";
+	}
+
+	public String tituloOcultarTextoF3BadOptimizations() {
+		return "إخفاء نص F3 لـ BadOptimizations";
+	}
+
+	public String descripcionOcultarTextoF3BadOptimizations() {
+		return "يقلل ضجيج التصحيح في شاشة F3.";
+	}
+
+	public String sugerenciaOcultarTextoF3BadOptimizations() {
+		return "show_f3_text: false";
+	}
+
+	public String tituloDesactivarLogConfigBadOptimizations() {
+		return "تعطيل سجل التكوين";
+	}
+
+	public String descripcionDesactivarLogConfigBadOptimizations() {
+		return "يتجنب طباعة كامل التكوين عند البدء.";
+	}
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations() {
+		return "log_config: false";
+	}
+
+	public String tituloActivarSerializadorGCFreeC2ME() {
+		return "تفعيل المسلسل الخالي من جامع القمامة لـ C2ME";
+	}
+
+	public String descripcionActivarSerializadorGCFreeC2ME() {
+		return "يقلل تخصيصات الذاكرة عند تحميل أو حفظ القطع (chunks).";
+	}
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME() {
+		return "[ioSystem] gcFreeChunkSerializer = true";
+	}
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME() {
+		return "تعطيل syncPlayerTickets";
+	}
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME() {
+		return "قد يحسن أداء القطع، لكنه قد يؤثر على الأجهزة التقنية (contraptions).";
+	}
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME() {
+		return "[chunkSystem] syncPlayerTickets = false";
+	}
+
+	public String tituloUsarCullingHojasDepthMoreCulling() {
+		return "استخدام إخفاء الأوراق بوضع DEPTH";
+	}
+
+	public String descripcionUsarCullingHojasDepthMoreCulling() {
+		return "يستخدم وضع إخفاء أوراق أكثر عدوانية من الوضع العادي.";
+	}
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling() {
+		return "leavesCullingMode = \"DEPTH\"";
+	}
+
+	public String tituloActivarEndGatewayCullingMoreCulling() {
+		return "تفعيل إخفاء بوابة النهاية (End Gateway)";
+	}
+
+	public String descripcionActivarEndGatewayCullingMoreCulling() {
+		return "يتجنب العرض غير الضروري لبوابات النهاية.";
+	}
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling() {
+		return "endGatewayCulling = true";
+	}
+
+	public String tituloActivarActivationRangeServerCore() {
+		return "تفعيل نطاق التنشيط (Activation Range)";
+	}
+
+	public String descripcionActivarActivationRangeServerCore() {
+		return "يقلل تحديثات (ticks) الكيانات البعيدة عن اللاعب.";
+	}
+
+	public String sugerenciaActivarActivationRangeServerCore() {
+		return "activation-range: enabled: true";
+	}
+
+	public String tituloActivarRangoVerticalServerCore() {
+		return "تفعيل النطاق العمودي";
+	}
+
+	public String descripcionActivarRangoVerticalServerCore() {
+		return "يقلل تحديثات الكيانات التي تكون عالية جداً أو منخفضة جداً عن اللاعب.";
+	}
+
+	public String sugerenciaActivarRangoVerticalServerCore() {
+		return "use-vertical-range: true";
+	}
+
+	// Arabic (العربية)
+	public String impactoNegativoAlto() {
+		return "تأثير سلبي مرتفع";
+	}
+
+	public String advertenciaModsCulling() {
+		return "قد تسبب مودات الإخفاء (culling) تعارضات مع بعض المودات، أو انهيار اللعبة، أو أخطاء توقف تحديث (tick) اللعبة بشكل صحيح، كما قد تعطل عمل المزارع الآلية أو المصانع.";
+	}
+
+	public String tituloModBadOptimizations() {
+		return "إضافة BadOptimizations";
+	}
+
+	public String descripcionModBadOptimizations() {
+		return "يضيف تحسينات مصغرة للعميل مثل تخزين خريطة الإضاءة مؤقتاً، وتخزين السماء مؤقتاً، وتقليل الاستدعاءات غير الضرورية.";
+	}
+
+	public String tituloModBBE() {
+		return "إضافة Better Block Entities";
+	}
+
+	public String descripcionModBBE() {
+		return "يحسن عرض الكيانات الكتلية (block entities) مثل الصناديق، الشالكر، الأسرة، الأجراس، الأعلام، واللافتات.";
+	}
+
+	public String tituloModC2ME() {
+		return "إضافة Concurrent Chunk Management Engine";
+	}
+
+	public String descripcionModC2ME() {
+		return "يحسن تحميل وتوليد وإدارة القطع (chunks) باستخدام المعالجة المتزامنة. قد يكون قوياً جداً، لكنه قد يسبب أيضاً تعارضات في حزم المودات الكبيرة.";
+	}
+
+	public String tituloModEntityCulling() {
+		return "إضافة EntityCulling";
+	}
+
+	public String descripcionModEntityCulling() {
+		return "يمنع عرض الكيانات غير المرئية. " + advertenciaModsCulling();
+	}
+
+	public String tituloModFerriteCore() {
+		return "إضافة FerriteCore";
+	}
+
+	public String descripcionModFerriteCore() {
+		return "يقلل استخدام الذاكرة من خلال إزالة التكرار وهياكل داخلية أكثر كفاءة.";
+	}
+
+	public String tituloModImmediatelyFast() {
+		return "إضافة ImmediatelyFast";
+	}
+
+	public String descripcionModImmediatelyFast() {
+		return "يحسن أجزاء مختلفة من العرض الفوري، النصوص، المخازن المؤقتة، الخرائط، والواجهة.";
+	}
+
+	public String tituloModLithium() {
+		return "إضافة Lithium";
+	}
+
+	public String descripcionModLithium() {
+		return "يحسن منطق اللعبة، الكيانات، الكتل، الفيزياء، وأنظمة أخرى دون تغيير سلوك اللعبة الأساسي (vanilla) كثيراً.";
+	}
+
+	public String tituloModModernFix() {
+		return "إضافة ModernFix";
+	}
+
+	public String descripcionModModernFix() {
+		return "يضيف العديد من تحسينات الذاكرة، التحميل، الموارد، والأداء العام. قد تتعارض أدواته المتعلقة بـ atlas مع المودات التي تصغر حجم atlas.";
+	}
+
+	public String tituloModMoreCulling() {
+		return "إضافة More Culling";
+	}
+
+	public String descripcionModMoreCulling() {
+		return "يضيف إخفاء (culling) للكتل، الأوراق، إطارات العناصر، اللوحات، المطر، المنارات، وعناصر أخرى. "
+				+ advertenciaModsCulling();
+	}
+
+	public String tituloModScalableLux() {
+		return "إضافة ScalableLux";
+	}
+
+	public String descripcionModScalableLux() {
+		return "يحسن حسابات الإضاءة وقد يعزز الأداء في العوالم ذات التغييرات الكثيرة في الإضاءة.";
+	}
+
+	public String tituloModServerCore() {
+		return "إضافة ServerCore";
+	}
+
+	public String descripcionModServerCore() {
+		return "يضيف تحسينات من جانب الخادم، نطاق التنشيط، ضوابط حد المخلوقات (mobcaps)، تقليل التحديثات (ticks)، وتحسينات التحميل.";
+	}
+
+	public String tituloModSodium() {
+		return "إضافة Sodium";
+	}
+
+	public String descripcionModSodium() {
+		return "المود الرئيسي لتحسين العرض. عادةً ما يكون من أهم التحسينات لمعدل الإطارات (FPS).";
+	}
+
+	public String tituloModVMP() {
+		return "إضافة Very Many Players";
+	}
+
+	public String descripcionModVMP() {
+		return "يحسن أنظمة الخادم للتعامل مع عدد كبير من اللاعبين. معرف المود المتوقع هو vmp.";
+	}
+
+	public String tituloModMCMT() {
+		return "إضافة MCMT";
+	}
+
+	public String descripcionModMCMT() {
+		return "يحاول استخدام تعدد الأنوية (multi-threading) لأجزاء من خادم Minecraft. قد يحسن الأداء في بعض الحالات، لكنه يحمل خطراً عالياً للتعارضات، أخطاء التحديث، وسلوك غريب.";
+	}
+
+	public String tituloLiabilityUranium() {
+		return "إزالة Uranium";
+	}
+
+	public String descripcionLiabilityUranium() {
+		return "Uranium هو مود مصمم عمدًا لإبطاء اللعبة. لا ينبغي تثبيته إذا كنت تريد أداءً أفضل.";
+	}
+
+	// Arabic (العربية)
+	public String tituloAmbientalSinXmx() {
+		return "تعيين الحد الأقصى لذاكرة Java";
+	}
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro) {
+		return "لم يتم اكتشاف -Xmx في الوسائط المقدمة. بالنسبة لـ " + mods + " مودات، الحد الأدنى المقترح هو " + minimo
+				+ "، دون تجاوز حوالي " + maximoSeguro + ".";
+	}
+
+	public String sugerenciaAmbientalSinXmx(String minimo) {
+		return "إضافة -Xmx" + minimo.replace(" ", "");
+	}
+
+	public String tituloAmbientalDemasiadaMemoria() {
+		return "تقليل الذاكرة المخصصة";
+	}
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro) {
+		return "تم تخصيص " + xmx + " من أصل " + total
+				+ ". لا ينصح بتخصيص أكثر من 80% من ذاكرة الوصول العشوائي (RAM) المتاحة.";
+	}
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro) {
+		return "تقليل -Xmx إلى " + maximoSeguro + " أو أقل.";
+	}
+
+	public String tituloAmbientalMemoriaInsuficiente() {
+		return "زيادة الذاكرة المخصصة";
+	}
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo) {
+		return "تم تخصيص " + xmx + " للنسخة. بالنسبة لـ " + mods + " مودات، الحد الأدنى المقترح هو " + minimo + ".";
+	}
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo) {
+		return "زيادة -Xmx إلى " + minimo + " على الأقل.";
+	}
+
+	public String tituloAmbientalJava8GC() {
+		return "استخدام G1GC أو Shenandoah في Java 8";
+	}
+
+	public String descripcionAmbientalJava8GC() {
+		return "في Java 8، يوصى باستخدام G1GC أو Shenandoah لتقليل فترات التوقف وتحسين الاستقرار.";
+	}
+
+	public String sugerenciaAmbientalJava8GC() {
+		return "إضافة -XX:+UseG1GC أو -XX:+UseShenandoahGC.";
+	}
+
+	public String tituloAmbientalZGC() {
+		return "استخدام ZGC";
+	}
+
+	public String descripcionAmbientalZGC(String ramTotal) {
+		return "يحتوي الجهاز على أكثر من 12 جيجابايت من ذاكرة الوصول العشوائي (" + ramTotal
+				+ "). إذا كانت توزيعة Java تدعم ذلك، يمكن لـ ZGC تقليل فترات توقف جامع القمامة.";
+	}
+
+	public String sugerenciaAmbientalZGC() {
+		return "في Java 17 أو أعلى، جرب -XX:+UseZGC.";
+	}
+
+	public String tituloAmbientalAikar() {
+		return "إضافة معلمات Aikar";
+	}
+
+	public String descripcionAmbientalAikar() {
+		return "في Java 17 أو الإصدارات الأقدم، تحسن معلمات Aikar عادةً سلوك G1GC لمinecraft.";
+	}
+
+	public String sugerenciaAmbientalAikar() {
+		return "استخدم معلمات Aikar، بما في ذلك -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200.";
+	}
+
+	public String tituloAmbientalRedHatJDK() {
+		return "استخدام Red Hat JDK";
+	}
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os) {
+		return "بالنسبة لـ Java " + javaMayor + " على " + os + "، يوصى بـ Red Hat JDK للاستقرار والتوافق.";
+	}
+
+	public String sugerenciaAmbientalRedHatJDK() {
+		return "تثبيت Red Hat JDK لـ Java 8 أو Java 11.";
+	}
+
+	public String tituloAmbientalAzulPrime() {
+		return "النظر في Azul Prime";
+	}
+
+	public String descripcionAmbientalAzulPrime() {
+		return "على Linux مع Java 16 أو أعلى وأكثر من 16 جيجابايت من ذاكرة الوصول العشوائي، قد يكون Azul Prime خياراً جيداً للأداء.";
+	}
+
+	public String sugerenciaAmbientalAzulPrime() {
+		return "جرب Azul Prime إذا كان الجهاز يحتوي على أكثر من 16 جيجابايت من ذاكرة الوصول العشوائي.";
+	}
+
+	public String tituloAmbientalGraalVM() {
+		return "النظر في GraalVM";
+	}
+
+	public String descripcionAmbientalGraalVM() {
+		return "مع Java 16 أو أعلى وأكثر من 16 جيجابايت من ذاكرة الوصول العشوائي، يمكن أن يكون GraalVM بديلاً مفيداً خارج Linux.";
+	}
+
+	public String sugerenciaAmbientalGraalVM() {
+		return "جرب GraalVM إذا كان الجهاز يحتوي على أكثر من 16 جيجابايت من ذاكرة الوصول العشوائي.";
+	}
+
+	public String tituloAmbientalDiscoBajo() {
+		return "مراجعة المساحة الحرة على القرص";
+	}
+
+	public String descripcionAmbientalDiscoBajo(String libre) {
+		return "القرص لديه مساحة حرة قليلة: " + libre
+				+ ". قد يفشل Minecraft، أو يصبح الحفظ بطيئاً، أو تتلف البيانات إذا نفدت المساحة.";
+	}
+
+	public String sugerenciaAmbientalDiscoBajo() {
+		return "تحرير مساحة حتى يتوفر 20 جيجابايت على الأقل.";
+	}
+
+	public String tituloAmbientalWindowsRHEL9() {
+		return "النظر في RHEL 9 للاختبار";
+	}
+
+	public String descripcionAmbientalWindowsRHEL9() {
+		return "على Windows، يوصى بالنظر في RHEL 9 لأنه يتضمن Red Hat JDK، وهو مستقر، ويمكن تنزيله مجاناً للأفراد، وهو حيث تتم معظم الاختبارات.";
+	}
+
+	public String sugerenciaAmbientalWindowsRHEL9() {
+		return "جرب النسخة على RHEL 9 إذا كنت تبحث عن أقصى استقرار للاختبار.";
+	}
+
+	public String tituloAmbientalRaptorLake() {
+		return "تحذير Intel Raptor Lake";
+	}
+
+	public String descripcionAmbientalRaptorLake() {
+		return "تم اكتشاف مشكلة Raptor Lake المحددة بواسطة التحقق الحالي. قد يسبب هذا عدم استقرار، وانهيارات، وأخطاء تبدو وكأنها ناتجة عن حزمة المودات.";
+	}
+
+	public String sugerenciaAmbientalRaptorLake() {
+		return "قم بتحديث BIOS/الكود الدقيق (microcode) وراجع تحذير Raptor Lake قبل إلقاء اللوم على حزمة المودات.";
+	}
+
+	// Arabic (العربية)
+	@Override
+	public String tituloAmbientalNeoForge1201Antiguo() {
+		return "تم اكتشاف نسخة قديمة من NeoForge 1.20.1";
+	}
+
+	@Override
+	public String descripcionAmbientalNeoForge1201Antiguo() {
+		return "تم اكتشاف FancyModLoader 47 أو مسار متوافق مع NeoForge 1.20.1. "
+				+ "كان NeoForge 1.20.1 تفرعاً من MinecraftForge 1.20.1 وعادة ما يكون متوافقاً على مستوى الثنائيات (binary)، "
+				+ "لكن هذا الفرع تم التخلي عنه مبكراً وقد تفتقر إلى العديد من التحسينات المتاحة في Forge.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalNeoForge1201Antiguo() {
+		return "بالنسبة للإصدار 1.20.1، إذا سمحت حزمة المودات بذلك، فكر في استخدام MinecraftForge 1.20.1 بدلاً من NeoForge 1.20.1.";
+	}
+
+	@Override
+	public String tituloAmbientalGPU() {
+		return "تم اكتشاف مشكلة في وحدة معالجة الرسومات (GPU)";
+	}
+
+	@Override
+	public String descripcionAmbientalGPU() {
+		return "كشف فحص آخر بالفعل عن مشكلة محتملة في وحدة معالجة الرسومات، أو OpenGL، أو اختيار بطاقة الرسومات.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalGPU() {
+		return "تأكد من أن Minecraft يستخدم بطاقة الرسومات الصحيحة، وقم بتحديث التعريفات، وتجنب الإعدادات الهجينة غير المستقرة.";
+	}
+
+	// Arabic (العربية)
+	@Override
+	public String gpuFixTitulo() {
+		return "إعدادات وحدة معالجة الرسومات (GPU)";
+	}
+
+	@Override
+	public String gpuFixBotonSidebar() {
+		return "وحدة معالجة الرسومات";
+	}
+
+	@Override
+	public String gpuFixBotonAplicar() {
+		return "تطبيق الإعدادات";
+	}
+
+	@Override
+	public String gpuFixBotonFuenteTLauncher() {
+		return "فتح دليل TLauncher";
+	}
+
+	@Override
+	public String gpuFixBotonVirusTotal() {
+		return "فتح تحليل VirusTotal";
+	}
+
+	@Override
+	public String gpuFixBotonOptimusLinux() {
+		return "فتح دليل NVIDIA Optimus";
+	}
+
+	@Override
+	public String gpuFixTextoWindows() {
+		return "اكتشف CrashDetector أن Minecraft قد لا يستخدم وحدة معالجة الرسومات عالية الأداء.\n\n"
+				+ "في Windows، يمكن تعيين مفاتيح التسجيل في "
+				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
+				+ "لفرض استخدام javaw.exe لوحدة معالجة الرسومات المخصصة.\n\n"
+				+ "GpuPreference=0 = قرار تلقائي من Windows.\n"
+				+ "GpuPreference=1 = توفير الطاقة / وحدة معالجة رسومات مدمجة.\n"
+				+ "GpuPreference=2 = وحدة معالجة رسومات عالية الأداء.\n\n"
+				+ "تم الحصول على جزء من هذه المعلومات بفضل البحث المنشور بواسطة TLauncher والتحليل "
+				+ "المتاح للسلوك في VirusTotal.";
+	}
+
+	@Override
+	public String gpuFixTextoLinux() {
+		return "اكتشف CrashDetector مشكلة محتملة تتعلق بـ NVIDIA Optimus أو PRIME.\n\n"
+				+ "اعتماداً على توزيعة Linux المستخدمة، قد يكون من الضروري إعداد NVIDIA Optimus، "
+				+ "أو nvidia-prime، أو switcheroo-control، أو أنظمة هجينة أخرى.\n\n"
+				+ "في Fedora/RHEL والمشتقات منها، يوصى عادةً باتباع وثائق RPMFusion.\n\n"
+				+ "سيقوم الزر السفلي بفتح الوثائق الرسمية الموصى بها.";
+	}
+
+	@Override
+	public String gpuFixTextoMac() {
+		return "اكتشف CrashDetector مشكلة محتملة في اختيار وحدة معالجة الرسومات.\n\n"
+				+ "في بعض أنظمة macOS ذات الرسوميات الهجينة، من الممكن فرض استخدام وحدة معالجة الرسومات المخصصة "
+				+ "من خلال إعدادات النظام المتقدمة.\n\n"
+				+ "سيحاول زر التطبيق تنفيذ أمر لإعطاء الأولوية لوحدة معالجة الرسومات عالية الأداء.";
+	}
+
+	@Override
+	public String gpuFixTextoOtroSistema() {
+		return "اكتشف CrashDetector مشكلة محتملة تتعلق بوحدة معالجة الرسومات، "
+				+ "ولكن لا يوجد تنفيذ خاص لهذا النظام التشغيل.";
+	}
+
+	@Override
+	public String gpuFixLinuxManual() {
+		return "في Linux، عادةً ما يجب إجراء الإعداد يدوياً اعتماداً على التوزيعة، "
+				+ "وتعريف NVIDIA، ونظام Optimus/PRIME المستخدم.";
+	}
+
+	@Override
+	public String gpuFixSistemaNoSoportado() {
+		return "نظام التشغيل غير مدعوم للإعداد التلقائي لوحدة معالجة الرسومات.";
+	}
+
+	@Override
+	public String gpuFixJavaNoDetectado() {
+		return "تعذر اكتشاف المسار الحالي لـ javaw.exe.";
+	}
+
+	@Override
+	public String gpuFixWindowsAplicado(String ruta) {
+		return "تم تطبيق إعدادات وحدة معالجة الرسومات بنجاح لـ:\n\n" + ruta + "\n\n"
+				+ "تشير GpuPreference=2 إلى وحدة معالجة رسومات عالية الأداء.";
+	}
+
+	@Override
+	public String gpuFixErrorAplicando() {
+		return "حدث خطأ أثناء محاولة تطبيق إعدادات وحدة معالجة الرسومات";
+	}
+
+	@Override
+	public String gpuFixMacAplicado() {
+		return "تم تطبيق إعدادات وحدة معالجة الرسومات عالية الأداء.";
+	}
+
+	@Override
+	public String gpuFixMacError() {
+		return "تعذر تطبيق إعدادات وحدة معالجة الرسومات في macOS";
+	}
+
+	// Arabic (العربية)
+	@Override
+	public String rendimientoTitulo() {
+		return "مدير الأداء";
+	}
+
+	@Override
+	public String rendimientoBotonSidebar() {
+		return "الأداء";
+	}
+
+	@Override
+	public String rendimientoBotonAnalizar() {
+		return "تحليل الأداء";
+	}
+
+	@Override
+	public String rendimientoBotonAbrirGPU() {
+		return "فتح إعدادات وحدة معالجة الرسومات (GPU)";
+	}
+
+	@Override
+	public String rendimientoDescripcion() {
+		return "تراجع هذه اللوحة المشكلات البيئية، والـ mods الموصى بها أو الخطرة، وخيارات التكوين التي يمكن أن تحسن الأداء. لا تعمل جميع الخيارات معاً، ولا تناسب جميع إصدارات Minecraft، وليست متوافقة مع كل محمل mods. هذا أمر طبيعي: لست بحاجة إلى درجة مثالية في التحسين.";
+	}
+
+	@Override
+	public String rendimientoNotaCompatibilidad() {
+		return "ملاحظة: هذه الاقتراحات هي احتمالات وليست أمراً بتطبيق كل شيء. قد تتعارض بعض الخيارات مع بعضها البعض أو لا تكون مناسبة لإصدارك، أو المشغل، أو محمل mods، أو حزمة mods الخاصة بك.";
+	}
+
+	@Override
+	public String rendimientoPestanaResumen() {
+		return "الملخص";
+	}
+
+	@Override
+	public String rendimientoPestanaAmbiental() {
+		return "المشكلات البيئية";
+	}
+
+	@Override
+	public String rendimientoPestanaMods() {
+		return "الـ mods الموصى بها والمخاطر";
+	}
+
+	@Override
+	public String rendimientoPestanaConfigs() {
+		return "خيارات التكوين";
+	}
+
+	@Override
+	public String rendimientoResumenTitulo() {
+		return "ملخص التحليل";
+	}
+
+	@Override
+	public String rendimientoResumenAmbiental(int cantidad) {
+		return "المشكلات البيئية المكتشفة: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenMods(int cantidad) {
+		return "الاقتراحات أو المخاطر المتعلقة بالـ mods المكتشفة: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenConfigs(int cantidad) {
+		return "اقتراحات التكوين المكتشفة: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenGPU() {
+		return "تم اكتشاف مشكلة في وحدة معالجة الرسومات (GPU). لذلك تم تفعيل الزر لفتح إعدادات GPU.";
+	}
+
+	@Override
+	public String rendimientoSinHallazgos() {
+		return "لم يتم العثور على اقتراحات في هذا القسم.";
+	}
+
+	@Override
+	public String rendimientoSugerencia() {
+		return "اقتراح";
+	}
+
+	@Override
+	public String rendimientoColorFondo() {
+		return "الأداء - الخلفية";
+	}
+
+	@Override
+	public String rendimientoColorPanel() {
+		return "الأداء - اللوحة";
+	}
+
+	@Override
+	public String rendimientoColorTexto() {
+		return "الأداء - النص";
+	}
+
+	@Override
+	public String rendimientoColorTextoSecundario() {
+		return "الأداء - النص الثانوي";
+	}
+
+	@Override
+	public String rendimientoColorBoton() {
+		return "الأداء - الزر";
+	}
+
+	@Override
+	public String rendimientoColorBotonTexto() {
+		return "الأداء - نص الزر";
+	}
+
+	@Override
+	public String rendimientoColorSeleccion() {
+		return "الأداء - التحديد";
+	}
 
 }

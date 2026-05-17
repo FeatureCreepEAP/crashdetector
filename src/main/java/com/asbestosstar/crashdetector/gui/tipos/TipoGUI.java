@@ -29,6 +29,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.LectadorDeDocumentosGUI;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorFirmasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla;
 import com.asbestosstar.crashdetector.gui.tipos.editorgui.EditorGUI;
+import com.asbestosstar.crashdetector.gui.tipos.gpu.GPUFixGUI;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.GrepRGUI;
 import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaDeModsGUI;
@@ -51,6 +52,7 @@ import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 import com.asbestosstar.crashdetector.gui.tipos.profiler.ProfilerGUI;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.QuickFixGUI;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.TodosQuickFixesGUI;
+import com.asbestosstar.crashdetector.gui.tipos.rendimiento.AdministradorDeRendimientoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.sampler.SamplerGUI;
 
 public abstract class TipoGUI<T extends CrashDetectorGUI> {
@@ -1058,6 +1060,50 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+	public static TipoGUI<GPUFixGUI> GPU_FIX = new TipoGUI<GPUFixGUI>() {
+		@Override
+		public String id() {
+			return "gpu_fix";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.gpuFixBotonSidebar();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<GPUFixGUI> gui) {
+			GPUFixGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<GPUFixGUI>> obtenerGUIs() {
+			return GPUFixGUI.GUIS;
+		}
+	};
+
+	public static TipoGUI<AdministradorDeRendimientoGUI> ADMINISTRADOR_DE_RENDIMIENTO = new TipoGUI<AdministradorDeRendimientoGUI>() {
+		@Override
+		public String id() {
+			return "administrador_de_rendimiento";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.rendimientoBotonSidebar();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<AdministradorDeRendimientoGUI> gui) {
+			AdministradorDeRendimientoGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<AdministradorDeRendimientoGUI>> obtenerGUIs() {
+			return AdministradorDeRendimientoGUI.GUIS;
+		}
+	};
+
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
@@ -1103,6 +1149,8 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(IMPORTADOR_CONFLICTO);
 		TIPOS_DE_GUI.add(IMPORTADOR_MODPACK);
 		TIPOS_DE_GUI.add(JGIT_HUB);
+		TIPOS_DE_GUI.add(GPU_FIX);
+		TIPOS_DE_GUI.add(ADMINISTRADOR_DE_RENDIMIENTO);
 
 	}
 }

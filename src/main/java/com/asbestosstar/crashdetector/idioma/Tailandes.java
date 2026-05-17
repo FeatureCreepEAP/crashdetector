@@ -9558,31 +9558,876 @@ public class Tailandes implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "มอดพยายามเขียนทับเมธอด final";
 	}
-    @Override
-    public String errorCrashProvocadoPorComando(String comandoDetectado) {
-        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-                + "Minecraft ถูกปิดโดยคำสั่ง crash</b>"
-                + "<p>บันทึกระบุว่ามีการดำเนินการคำสั่ง <code>" + comandoDetectado + "</code></p>"
-                + "<p>สิ่งนี้มักหมายความว่าเกมไม่ได้ปิดเนื่องจากข้อผิดพลาดของมอดทั่วไป แต่เพราะมีใครบางคน "
-                + "ใช้คำสั่งที่ออกแบบมาเพื่อทำให้เกิด crash โดยเจตนา</p>"
-                + "<p><b>สิ่งที่ควรตรวจสอบ:</b></p>"
-                + "<ul>"
-                + "<li>ตรวจสอบว่าใครเป็นผู้ดำเนินการคำสั่งในคอนโซลหรือในเกม</li>"
-                + "<li>หากเป็นการทดสอบ คุณสามารถละเว้น crash นี้ได้</li>"
-                + "<li>หากเกิดขึ้นโดยไม่ตั้งใจ ให้ตรวจสอบ command blocks, สคริปต์, datapacks, มอดดูแลระบบ หรือสิทธิ์ของผู้ปฏิบัติการ</li>"
-                + "</ul>";
-    }
 
-    @Override
-    public String nombreCrashProvocadoPorComando() {
-        return "Crash ที่เกิดจากคำสั่ง";
-    }
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft ถูกปิดโดยคำสั่ง crash</b>" + "<p>บันทึกระบุว่ามีการดำเนินการคำสั่ง <code>"
+				+ comandoDetectado + "</code></p>"
+				+ "<p>สิ่งนี้มักหมายความว่าเกมไม่ได้ปิดเนื่องจากข้อผิดพลาดของมอดทั่วไป แต่เพราะมีใครบางคน "
+				+ "ใช้คำสั่งที่ออกแบบมาเพื่อทำให้เกิด crash โดยเจตนา</p>" + "<p><b>สิ่งที่ควรตรวจสอบ:</b></p>" + "<ul>"
+				+ "<li>ตรวจสอบว่าใครเป็นผู้ดำเนินการคำสั่งในคอนโซลหรือในเกม</li>"
+				+ "<li>หากเป็นการทดสอบ คุณสามารถละเว้น crash นี้ได้</li>"
+				+ "<li>หากเกิดขึ้นโดยไม่ตั้งใจ ให้ตรวจสอบ command blocks, สคริปต์, datapacks, มอดดูแลระบบ หรือสิทธิ์ของผู้ปฏิบัติการ</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+		return "Crash ที่เกิดจากคำสั่ง";
+	}
+
+	public String impactoAlto() {
+		return "สูง";
+	}
+
+	public String impactoMedio() {
+		return "ปานกลาง";
+	}
+
+	public String impactoBajo() {
+		return "ต่ำ";
+	}
+
+	public String impactoBajoMedio() {
+		return "ต่ำ/ปานกลาง";
+	}
+
+	public String riesgoAlto() {
+		return "สูง";
+	}
+
+	public String riesgoMedio() {
+		return "ปานกลาง";
+	}
+
+	public String riesgoBajo() {
+		return "ต่ำ";
+	}
+
+	public String riesgoMedioAlto() {
+		return "ปานกลาง/สูง";
+	}
+
+	public String tituloCrearConfigBBE() {
+		return "สร้างการตั้งค่า Better Block Entities";
+	}
+
+	public String descripcionCrearConfigBBE() {
+		return "ไฟล์ BBEConfig.json ไม่มีอยู่";
+	}
+
+	public String sugerenciaCrearConfigBBE() {
+		return "สร้าง BBEConfig.json พร้อมการปรับปรุงประสิทธิภาพสำหรับกล่อง, shulkers, ป้าย, เตียง, ระฆัง และธง";
+	}
+
+	public String tituloActivarOptimizacionMaestraBBE() {
+		return "เปิดใช้งานการเพิ่มประสิทธิภาพหลักของ BBE";
+	}
+
+	public String descripcionActivarOptimizacionMaestraBBE() {
+		return "Better Block Entities ดูเหมือนไม่ได้เปิดใช้งานการเพิ่มประสิทธิภาพหลัก";
+	}
+
+	public String sugerenciaActivarOptimizacionMaestraBBE() {
+		return "เพิ่ม {\"option\":\"optimize.master\",\"value\":true}";
+	}
+
+	public String tituloActivarCullingTextoCartelesBBE() {
+		return "เปิดใช้งาน culling ข้อความป้าย";
+	}
+
+	public String descripcionActivarCullingTextoCartelesBBE() {
+		return "ลดการเรนเดอร์ข้อความป้ายในระยะไกล";
+	}
+
+	public String sugerenciaActivarCullingTextoCartelesBBE() {
+		return "เพิ่ม {\"option\":\"misc.sign_text_culling\",\"value\":true}";
+	}
+
+	public String tituloAumentarSleepDelayEntityCulling() {
+		return "เพิ่ม sleepDelay ของ EntityCulling";
+	}
+
+	public String descripcionAumentarSleepDelayEntityCulling() {
+		return "EntityCulling จะตรวจสอบ entities บ่อยน้อยลง";
+	}
+
+	public String sugerenciaAumentarSleepDelayEntityCulling() {
+		return "\"sleepDelay\": 153";
+	}
+
+	public String tituloSubirLimiteHitboxEntityCulling() {
+		return "เพิ่มขีดจำกัด hitbox";
+	}
+
+	public String descripcionSubirLimiteHitboxEntityCulling() {
+		return "อนุญาตให้ใช้ culling ที่ก้าวร้าวมากขึ้นก่อนจะเปลี่ยนไปใช้เส้นทางที่ช้ากว่า";
+	}
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling() {
+		return "\"hitboxLimit\": 90";
+	}
+
+	public String tituloDesactivarDatosF3EntityCulling() {
+		return "ปิดข้อมูล F3 ของ EntityCulling";
+	}
+
+	public String descripcionDesactivarDatosF3EntityCulling() {
+		return "ลบข้อมูล debug เพิ่มเติมของมอด";
+	}
+
+	public String sugerenciaDesactivarDatosF3EntityCulling() {
+		return "\"disableF3\": true";
+	}
+
+	public String tituloActivarBufferingSignsImmediatelyFast() {
+		return "เปิดใช้งาน buffering ทดลองสำหรับป้าย";
+	}
+
+	public String descripcionActivarBufferingSignsImmediatelyFast() {
+		return "อาจช่วยเพิ่มประสิทธิภาพเมื่อมีป้ายจำนวนมาก";
+	}
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast() {
+		return "\"experimental_sign_text_buffering\": true";
+	}
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast() {
+		return "ลดการจัดการความขัดแย้งของ resource packs";
+	}
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast() {
+		return "อาจลบลดงานพิเศษออก แต่อาจทำให้เกิดปัญหาภาพกับ resource packs";
+	}
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast() {
+		return "\"experimental_disable_resource_pack_conflict_handling\": true";
+	}
+
+	public String tituloOcultarBotonNCR() {
+		return "ซ่อนปุ่ม No Chat Reports";
+	}
+
+	public String descripcionOcultarBotonNCR() {
+		return "การเปลี่ยนแปลง UI; ไม่ได้เพิ่ม FPS มากนัก แต่ทำให้หน้าจอสะอาดขึ้น";
+	}
+
+	public String sugerenciaOcultarBotonNCR() {
+		return "\"showNCRButton\": false";
+	}
+
+	public String tituloActivarMixinsExperimentalesLithium() {
+		return "เปิดใช้งาน mixins ทดลองของ Lithium";
+	}
+
+	public String descripcionActivarMixinsExperimentalesLithium() {
+		return "เปิดใช้งานการเพิ่มประสิทธิภาพทดลองเพิ่มเติม";
+	}
+
+	public String sugerenciaActivarMixinsExperimentalesLithium() {
+		return "mixin.experimental=true";
+	}
+
+	public String tituloUsarDetectorThreadingPequenoFerriteCore() {
+		return "ใช้ตัวตรวจจับ threading ขนาดเล็ก";
+	}
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore() {
+		return "ลดการใช้หน่วยความจำ แต่อาจมีความเสี่ยงมากขึ้น";
+	}
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore() {
+		return "useSmallThreadingDetector=true";
+	}
+
+	public String tituloModernFixRecursosDinamicos() {
+		return "เปิดใช้งานทรัพยากรแบบไดนามิกของ ModernFix";
+	}
+
+	public String descripcionModernFixRecursosDinamicos() {
+		return "อาจลดการใช้หน่วยความจำและงานโดยโหลดทรัพยากรได้อย่างมีประสิทธิภาพมากขึ้น";
+	}
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades() {
+		return "เปิดใช้งานตัวเรนเดอร์ entities แบบไดนามิก";
+	}
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades() {
+		return "อาจเพิ่มประสิทธิภาพด้วยการจัดการตัวเรนเดอร์ entities อย่างมีประสิทธิภาพมากขึ้น";
+	}
+
+	public String tituloModernFixRenderizadoItemsRapido() {
+		return "เปิดใช้งานการเรนเดอร์ไอเทมแบบเร็ว";
+	}
+
+	public String descripcionModernFixRenderizadoItemsRapido() {
+		return "อาจเพิ่มประสิทธิภาพเมื่อเรนเดอร์ไอเทม";
+	}
+
+	public String tituloModernFixWorldgenAllocation() {
+		return "ลดการจัดสรรใน worldgen";
+	}
+
+	public String descripcionModernFixWorldgenAllocation() {
+		return "อาจลดขยะหน่วยความจำระหว่างการสร้างโลก";
+	}
+
+	public String tituloModernFixDeduplicacionIngredientes() {
+		return "เปิดใช้งานการลบบันทึกซ้ำของ ingredients";
+	}
+
+	public String descripcionModernFixDeduplicacionIngredientes() {
+		return "ลดวัตถุซ้ำที่เกี่ยวข้องกับสูตรและ ingredients";
+	}
+
+	public String tituloSodiumRenderCielo() {
+		return "เปิดใช้งานการเพิ่มประสิทธิภาพ/เรนเดอร์ท้องฟ้าใน Sodium";
+	}
+
+	public String descripcionSodiumRenderCielo() {
+		return "อาจปรับพฤติกรรม การเรนเดอร์ท้องฟ้า";
+	}
+
+	public String tituloActivarLightmapCaching() {
+		return "เปิดใช้งาน cache lightmap";
+	}
+
+	public String descripcionActivarLightmapCaching() {
+		return "ป้องกันการคำนวณแสงใหม่เมื่อไม่จำเป็น";
+	}
+
+	public String sugerenciaActivarLightmapCaching() {
+		return "enable_lightmap_caching: true";
+	}
+
+	public String tituloOcultarTextoF3BadOptimizations() {
+		return "ซ่อนข้อความ F3 ของ BadOptimizations";
+	}
+
+	public String descripcionOcultarTextoF3BadOptimizations() {
+		return "ลดสัญญาณรบกวน debug บนหน้าจอ F3";
+	}
+
+	public String sugerenciaOcultarTextoF3BadOptimizations() {
+		return "show_f3_text: false";
+	}
+
+	public String tituloDesactivarLogConfigBadOptimizations() {
+		return "ปิด log การตั้งค่า";
+	}
+
+	public String descripcionDesactivarLogConfigBadOptimizations() {
+		return "ป้องกันการพิมพ์การตั้งค่าทั้งหมดเมื่อเริ่มต้น";
+	}
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations() {
+		return "log_config: false";
+	}
+
+	public String tituloActivarSerializadorGCFreeC2ME() {
+		return "เปิดใช้งาน serializer แบบ GC-free ของ C2ME";
+	}
+
+	public String descripcionActivarSerializadorGCFreeC2ME() {
+		return "ลดการจัดสรรหน่วยความจำเมื่อโหลดหรือบันทึก chunks";
+	}
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME() {
+		return "[ioSystem] gcFreeChunkSerializer = true";
+	}
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME() {
+		return "ปิด syncPlayerTickets";
+	}
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME() {
+		return "อาจเพิ่มประสิทธิภาพ chunks แต่อาจส่งผลต่อ contraptions ด้านเทคนิค";
+	}
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME() {
+		return "[chunkSystem] syncPlayerTickets = false";
+	}
+
+	public String tituloUsarCullingHojasDepthMoreCulling() {
+		return "ใช้ culling ใบไม้แบบ DEPTH";
+	}
+
+	public String descripcionUsarCullingHojasDepthMoreCulling() {
+		return "ใช้โหมด culling ใบไม้ที่ก้าวร้าวมากกว่าโหมดปกติ";
+	}
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling() {
+		return "leavesCullingMode = \"DEPTH\"";
+	}
+
+	public String tituloActivarEndGatewayCullingMoreCulling() {
+		return "เปิดใช้งาน culling ของ End Gateway";
+	}
+
+	public String descripcionActivarEndGatewayCullingMoreCulling() {
+		return "ป้องกันการเรนเดอร์ End Gateway ที่ไม่จำเป็น";
+	}
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling() {
+		return "endGatewayCulling = true";
+	}
+
+	public String tituloActivarActivationRangeServerCore() {
+		return "เปิดใช้งาน activation range";
+	}
+
+	public String descripcionActivarActivationRangeServerCore() {
+		return "ลด ticks ของ entities ที่อยู่ไกลจากผู้เล่น";
+	}
+
+	public String sugerenciaActivarActivationRangeServerCore() {
+		return "activation-range: enabled: true";
+	}
+
+	public String tituloActivarRangoVerticalServerCore() {
+		return "เปิดใช้งานระยะแนวตั้ง";
+	}
+
+	public String descripcionActivarRangoVerticalServerCore() {
+		return "ลด ticks ของ entities ที่อยู่สูงหรือต่ำกว่าผู้เล่นมาก";
+	}
+
+	public String sugerenciaActivarRangoVerticalServerCore() {
+		return "use-vertical-range: true";
+	}
+
+	public String impactoNegativoAlto() {
+		return "ส่งผลกระทบเชิงลบสูง";
+	}
+
+	public String advertenciaModsCulling() {
+		return "มอดประเภท culling อาจทำให้เกิดความไม่เข้ากันกับมอดบางตัว, เกม crash, เกิดข้อผิดพลาดที่เกมหยุด tick อย่างถูกต้อง และอาจทำให้ฟาร์มอัตโนมัติหรือโรงงานหยุดทำงาน";
+	}
+
+	public String tituloModBadOptimizations() {
+		return "เพิ่ม BadOptimizations";
+	}
+
+	public String descripcionModBadOptimizations() {
+		return "เพิ่มการเพิ่มประสิทธิภาพขนาดเล็กสำหรับ client เช่น การ cache lightmap, cache ท้องฟ้า และลดการเรียกใช้ที่ไม่จำเป็น";
+	}
+
+	public String tituloModBBE() {
+		return "เพิ่ม Better Block Entities";
+	}
+
+	public String descripcionModBBE() {
+		return "เพิ่มประสิทธิภาพการ render ของ block entities เช่น หีบ, shulkers, เตียง, ระฆัง, ธง และป้าย";
+	}
+
+	public String tituloModC2ME() {
+		return "เพิ่ม Concurrent Chunk Management Engine";
+	}
+
+	public String descripcionModC2ME() {
+		return "ปรับปรุงการโหลด, การสร้าง และการจัดการ chunks โดยใช้การประมวลผลแบบ concurrent สามารถทรงพลังมาก แต่อาจทำให้เกิดความไม่เข้ากันในเกมแพ็กขนาดใหญ่";
+	}
+
+	public String tituloModEntityCulling() {
+		return "เพิ่ม EntityCulling";
+	}
+
+	public String descripcionModEntityCulling() {
+		return "หลีกเลี่ยงการ render entities ที่มองไม่เห็น " + advertenciaModsCulling();
+	}
+
+	public String tituloModFerriteCore() {
+		return "เพิ่ม FerriteCore";
+	}
+
+	public String descripcionModFerriteCore() {
+		return "ลดการใช้หน่วยความจำผ่านการ deduplication และโครงสร้างภายในที่มีประสิทธิภาพมากขึ้น";
+	}
+
+	public String tituloModImmediatelyFast() {
+		return "เพิ่ม ImmediatelyFast";
+	}
+
+	public String descripcionModImmediatelyFast() {
+		return "เพิ่มประสิทธิภาพการ render แบบ immediate mode, ข้อความ, buffers, แผนที่ และ UI";
+	}
+
+	public String tituloModLithium() {
+		return "เพิ่ม Lithium";
+	}
+
+	public String descripcionModLithium() {
+		return "เพิ่มประสิทธิภาพ logic เกม, entities, บล็อก, ฟิสิกส์ และระบบอื่นๆ โดยไม่เปลี่ยนพฤติกรรม vanilla มากนัก";
+	}
+
+	public String tituloModModernFix() {
+		return "เพิ่ม ModernFix";
+	}
+
+	public String descripcionModModernFix() {
+		return "เพิ่มการเพิ่มประสิทธิภาพหลายด้านเกี่ยวกับหน่วยความจำ, การโหลด, ทรัพยากร และประสิทธิภาพโดยรวม เครื่องมือที่เกี่ยวข้องกับ atlas อาจขัดแย้งกับมอดที่ทำให้ atlas เล็กลง";
+	}
+
+	public String tituloModMoreCulling() {
+		return "เพิ่ม More Culling";
+	}
+
+	public String descripcionModMoreCulling() {
+		return "เพิ่ม culling สำหรับบล็อก, ใบไม้, กรอบไอเทม, ภาพวาด, ฝน, beacon และองค์ประกอบอื่นๆ "
+				+ advertenciaModsCulling();
+	}
+
+	public String tituloModScalableLux() {
+		return "เพิ่ม ScalableLux";
+	}
+
+	public String descripcionModScalableLux() {
+		return "เพิ่มประสิทธิภาพการคำนวณที่เกี่ยวข้องกับแสง และอาจช่วยเพิ่มประสิทธิภาพในโลกที่มีการเปลี่ยนแปลงของแสงมาก";
+	}
+
+	public String tituloModServerCore() {
+		return "เพิ่ม ServerCore";
+	}
+
+	public String descripcionModServerCore() {
+		return "เพิ่มการเพิ่มประสิทธิภาพด้าน server, activation range, การควบคุม mobcaps, ลด tick และปรับปรุงการโหลด";
+	}
+
+	public String tituloModSodium() {
+		return "เพิ่ม Sodium";
+	}
+
+	public String descripcionModSodium() {
+		return "มอดหลักสำหรับการเพิ่มประสิทธิภาพการ render โดยปกติเป็นการปรับปรุงที่สำคัญที่สุดสำหรับ FPS";
+	}
+
+	public String tituloModVMP() {
+		return "เพิ่ม Very Many Players";
+	}
+
+	public String descripcionModVMP() {
+		return "เพิ่มประสิทธิภาพระบบ server เพื่อจัดการผู้เล่นจำนวนมาก mod id ที่คาดหวังคือ vmp";
+	}
+
+	public String tituloModMCMT() {
+		return "เพิ่ม MCMT";
+	}
+
+	public String descripcionModMCMT() {
+		return "พยายามทำ multithread บางส่วนของ server Minecraft อาจช่วยเพิ่มประสิทธิภาพในบางกรณี แต่มีความเสี่ยงสูงที่จะเกิดความไม่เข้ากัน, ข้อผิดพลาด tick และพฤติกรรมแปลกๆ";
+	}
+
+	public String tituloLiabilityUranium() {
+		return "ลบ Uranium";
+	}
+
+	public String descripcionLiabilityUranium() {
+		return "Uranium เป็นมอดที่ออกแบบมาเพื่อให้เกม lag โดยเจตนา ไม่ควรติดตั้งหากต้องการประสิทธิภาพ";
+	}
+
+	public String tituloAmbientalSinXmx() {
+		return "ตั้งค่าหน่วยความจำสูงสุดของ Java";
+	}
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro) {
+		return "ไม่พบ -Xmx ในอาร์กิวเมนต์ที่ให้มา สำหรับ " + mods + " มอด ค่าต่ำสุดที่แนะนำคือ " + minimo
+				+ " โดยไม่ควรเกินประมาณ " + maximoSeguro + ".";
+	}
+
+	public String sugerenciaAmbientalSinXmx(String minimo) {
+		return "เพิ่ม -Xmx" + minimo.replace(" ", "");
+	}
+
+	public String tituloAmbientalDemasiadaMemoria() {
+		return "ลดหน่วยความจำที่จัดสรร";
+	}
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro) {
+		return "อินสแตนซ์มีการจัดสรร " + xmx + " จากทั้งหมด " + total
+				+ ". ไม่แนะนำให้จัดสรรเกิน 80% ของ RAM ที่มีอยู่.";
+	}
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro) {
+		return "ลด -Xmx ลงเป็น " + maximoSeguro + " หรือน้อยกว่า.";
+	}
+
+	public String tituloAmbientalMemoriaInsuficiente() {
+		return "เพิ่มหน่วยความจำที่จัดสรร";
+	}
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo) {
+		return "อินสแตนซ์มีการจัดสรร " + xmx + ". สำหรับ " + mods + " มอด ค่าต่ำสุดที่แนะนำคือ " + minimo + ".";
+	}
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo) {
+		return "เพิ่ม -Xmx เป็นอย่างน้อย " + minimo + ".";
+	}
+
+	public String tituloAmbientalJava8GC() {
+		return "ใช้ G1GC หรือ Shenandoah ใน Java 8";
+	}
+
+	public String descripcionAmbientalJava8GC() {
+		return "ใน Java 8 แนะนำให้ใช้ G1GC หรือ Shenandoah เพื่อลดการหยุดชั่วคราวและเพิ่มความเสถียร.";
+	}
+
+	public String sugerenciaAmbientalJava8GC() {
+		return "เพิ่ม -XX:+UseG1GC หรือ -XX:+UseShenandoahGC.";
+	}
+
+	public String tituloAmbientalZGC() {
+		return "ใช้ ZGC";
+	}
+
+	public String descripcionAmbientalZGC(String ramTotal) {
+		return "เครื่องมี RAM มากกว่า 12 GB (" + ramTotal
+				+ "). หากการแจกจ่าย Java รองรับ ZGC สามารถลดการหยุดชั่วคราวของ garbage collector ได้.";
+	}
+
+	public String sugerenciaAmbientalZGC() {
+		return "ใน Java 17 หรือสูงกว่า ลองใช้ -XX:+UseZGC.";
+	}
+
+	public String tituloAmbientalAikar() {
+		return "เพิ่มแฟลกของ Aikar";
+	}
+
+	public String descripcionAmbientalAikar() {
+		return "ใน Java 17 หรือเก่ากว่า แฟลกของ Aikar มักจะช่วยปรับปรุงพฤติกรรมของ G1GC สำหรับ Minecraft.";
+	}
+
+	public String sugerenciaAmbientalAikar() {
+		return "ใช้แฟลกของ Aikar รวมถึง -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200.";
+	}
+
+	public String tituloAmbientalRedHatJDK() {
+		return "ใช้ Red Hat JDK";
+	}
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os) {
+		return "สำหรับ Java " + javaMayor + " ใน " + os
+				+ " แนะนำให้ใช้ Red Hat JDK เนื่องจากมีความเสถียรและความเข้ากันได้.";
+	}
+
+	public String sugerenciaAmbientalRedHatJDK() {
+		return "ติดตั้ง Red Hat JDK สำหรับ Java 8 หรือ Java 11.";
+	}
+
+	public String tituloAmbientalAzulPrime() {
+		return "พิจารณา Azul Prime";
+	}
+
+	public String descripcionAmbientalAzulPrime() {
+		return "ใน Linux กับ Java 16 หรือสูงกว่า และมี RAM มากกว่า 16 GB Azul Prime อาจเป็นตัวเลือกที่ดีสำหรับประสิทธิภาพ.";
+	}
+
+	public String sugerenciaAmbientalAzulPrime() {
+		return "ลองใช้ Azul Prime หากเครื่องมี RAM มากกว่า 16 GB.";
+	}
+
+	public String tituloAmbientalGraalVM() {
+		return "พิจารณา GraalVM";
+	}
+
+	public String descripcionAmbientalGraalVM() {
+		return "กับ Java 16 หรือสูงกว่า และมี RAM มากกว่า 16 GB GraalVM อาจเป็นทางเลือกที่มีประโยชน์นอกเหนือจาก Linux.";
+	}
+
+	public String sugerenciaAmbientalGraalVM() {
+		return "ลองใช้ GraalVM หากเครื่องมี RAM มากกว่า 16 GB.";
+	}
+
+	public String tituloAmbientalDiscoBajo() {
+		return "ตรวจสอบพื้นที่ว่างในดิสก์";
+	}
+
+	public String descripcionAmbientalDiscoBajo(String libre) {
+		return "ดิสก์มีพื้นที่ว่างน้อย: " + libre + ". Minecraft อาจล้มเหลว บันทึกช้า หรือข้อมูลเสียหายหากพื้นที่หมด.";
+	}
+
+	public String sugerenciaAmbientalDiscoBajo() {
+		return "ปล่อยพื้นที่ให้มีอย่างน้อย 20 GB.";
+	}
+
+	public String tituloAmbientalWindowsRHEL9() {
+		return "พิจารณา RHEL 9 สำหรับการทดสอบ";
+	}
+
+	public String descripcionAmbientalWindowsRHEL9() {
+		return "ใน Windows แนะนำให้พิจารณา RHEL 9 เพราะมี Red Hat JDK มีความเสถียร ดาวน์โหลดฟรีสำหรับบุคคล และเป็นสถานที่ที่ใช้ทดสอบส่วนใหญ่.";
+	}
+
+	public String sugerenciaAmbientalWindowsRHEL9() {
+		return "ลองทดสอบอินสแตนซ์ใน RHEL 9 หากต้องการความเสถียรในการทดสอบสูงสุด.";
+	}
+
+	public String tituloAmbientalRaptorLake() {
+		return "คำเตือน Intel Raptor Lake";
+	}
+
+	public String descripcionAmbientalRaptorLake() {
+		return "ตรวจพบปัญหา Raptor Lake ตามการตรวจสอบที่มีอยู่ สิ่งนี้อาจทำให้เกิดความไม่เสถียร crash และข้อผิดพลาดที่ดูเหมือนเกิดจากมอดแพ็ก.";
+	}
+
+	public String sugerenciaAmbientalRaptorLake() {
+		return "อัปเดต BIOS/microcode และตรวจสอบคำเตือน Raptor Lake ก่อนที่จะโทษมอดแพ็ก.";
+	}
+
+	@Override
+	public String tituloAmbientalNeoForge1201Antiguo() {
+		return "ตรวจพบ NeoForge 1.20.1 เวอร์ชันเก่า";
+	}
+
+	@Override
+	public String descripcionAmbientalNeoForge1201Antiguo() {
+		return "ตรวจพบ FancyModLoader 47 หรือเส้นทางที่เข้ากันได้กับ NeoForge 1.20.1 "
+				+ "NeoForge 1.20.1 เป็นสาขาหนึ่งของ MinecraftForge 1.20.1 และมักจะเข้ากันได้ในระดับไบนารี "
+				+ "แต่สายนี้ถูกทิ้งเร็วกว่าและอาจขาดการเพิ่มประสิทธิภาพหลายอย่างที่มีใน Forge";
+	}
+
+	@Override
+	public String sugerenciaAmbientalNeoForge1201Antiguo() {
+		return "สำหรับ 1.20.1 หากมอดแพ็กอนุญาต ให้พิจารณาใช้ MinecraftForge 1.20.1 แทน NeoForge 1.20.1";
+	}
+
+	@Override
+	public String tituloAmbientalGPU() {
+		return "ตรวจพบปัญหา GPU";
+	}
+
+	@Override
+	public String descripcionAmbientalGPU() {
+		return "การตรวจสอบอื่นได้ตรวจพบปัญหาที่เป็นไปได้กับ GPU, OpenGL หรือการเลือกการ์ดจอแล้ว";
+	}
+
+	@Override
+	public String sugerenciaAmbientalGPU() {
+		return "ตรวจสอบให้แน่ใจว่า Minecraft ใช้ GPU ที่ถูกต้อง อัปเดตไดรเวอร์ และหลีกเลี่ยงการตั้งค่าแบบไฮบริดที่ไม่เสถียร";
+	}
+
+	@Override
+	public String gpuFixTitulo() {
+		return "การตั้งค่า GPU";
+	}
+
+	@Override
+	public String gpuFixBotonSidebar() {
+		return "GPU";
+	}
+
+	@Override
+	public String gpuFixBotonAplicar() {
+		return "ใช้การตั้งค่า";
+	}
+
+	@Override
+	public String gpuFixBotonFuenteTLauncher() {
+		return "เปิดคู่มือ TLauncher";
+	}
+
+	@Override
+	public String gpuFixBotonVirusTotal() {
+		return "เปิดการวิเคราะห์ VirusTotal";
+	}
+
+	@Override
+	public String gpuFixBotonOptimusLinux() {
+		return "เปิดคู่มือ NVIDIA Optimus";
+	}
+
+	@Override
+	public String gpuFixTextoWindows() {
+		return "CrashDetector ตรวจพบว่า Minecraft อาจไม่ได้ใช้ GPU ประสิทธิภาพสูง\n\n"
+				+ "ใน Windows สามารถตั้งค่าคีย์รีจิสทรีใน "
+				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
+				+ "เพื่อบังคับให้ javaw.exe ใช้ GPU แยก\n\n" + "GpuPreference=0 = การตัดสินใจอัตโนมัติของ Windows\n"
+				+ "GpuPreference=1 = ประหยัดพลังงาน / GPU ในตัว\n" + "GpuPreference=2 = GPU ประสิทธิภาพสูง\n\n"
+				+ "ข้อมูลส่วนนี้ได้มาจากการวิจัยที่เผยแพร่โดย TLauncher และการวิเคราะห์ "
+				+ "พฤติกรรมที่มีอยู่ใน VirusTotal";
+	}
+
+	@Override
+	public String gpuFixTextoLinux() {
+		return "CrashDetector ตรวจพบปัญหาที่อาจเกี่ยวข้องกับ NVIDIA Optimus หรือ PRIME\n\n"
+				+ "ขึ้นอยู่กับดิสโทร Linux ที่ใช้ อาจจำเป็นต้องกำหนดค่า NVIDIA Optimus, "
+				+ "nvidia-prime, switcheroo-control หรือระบบไฮบริดอื่นๆ\n\n"
+				+ "ใน Fedora/RHEL และสายพันธุ์ที่เกี่ยวข้อง มักแนะนำให้ปฏิบัติตามเอกสารของ RPMFusion\n\n"
+				+ "ปุ่มด้านล่างจะเปิดเอกสารทางการที่แนะนำ";
+	}
+
+	@Override
+	public String gpuFixTextoMac() {
+		return "CrashDetector ตรวจพบปัญหาการเลือก GPU ที่อาจเกิดขึ้น\n\n"
+				+ "ในระบบ macOS บางระบบที่มี GPU ไฮบริด สามารถบังคับให้ใช้ GPU แยก "
+				+ "ผ่านการตั้งค่าขั้นสูงของระบบ\n\n"
+				+ "ปุ่มใช้จะพยายามเรียกใช้คำสั่งเพื่อจัดลำดับความสำคัญให้กับ GPU ประสิทธิภาพสูง";
+	}
+
+	@Override
+	public String gpuFixTextoOtroSistema() {
+		return "CrashDetector ตรวจพบปัญหาที่อาจเกี่ยวข้องกับ GPU, " + "แต่ไม่มีการใช้งานเฉพาะสำหรับระบบปฏิบัติการนี้";
+	}
+
+	@Override
+	public String gpuFixLinuxManual() {
+		return "ใน Linux โดยปกติการกำหนดค่าต้องทำด้วยตนเองขึ้นอยู่กับดิสโทร, "
+				+ "ไดรเวอร์ NVIDIA และระบบ Optimus/PRIME ที่ใช้";
+	}
+
+	@Override
+	public String gpuFixSistemaNoSoportado() {
+		return "ระบบปฏิบัติการไม่รองรับสำหรับการตั้งค่า GPU อัตโนมัติ";
+	}
+
+	@Override
+	public String gpuFixJavaNoDetectado() {
+		return "ไม่สามารถตรวจพบเส้นทางปัจจุบันของ javaw.exe ได้";
+	}
+
+	@Override
+	public String gpuFixWindowsAplicado(String ruta) {
+		return "การตั้งค่า GPU ถูกใช้อย่างถูกต้องสำหรับ:\n\n" + ruta + "\n\n"
+				+ "GpuPreference=2 บ่งชี้ถึง GPU ประสิทธิภาพสูง";
+	}
+
+	@Override
+	public String gpuFixErrorAplicando() {
+		return "เกิดข้อผิดพลาดขณะพยายามใช้การตั้งค่า GPU";
+	}
+
+	@Override
+	public String gpuFixMacAplicado() {
+		return "การตั้งค่า GPU ประสิทธิภาพสูงถูกใช้แล้ว";
+	}
+
+	@Override
+	public String gpuFixMacError() {
+		return "ไม่สามารถใช้การตั้งค่า GPU ใน macOS ได้";
+	}
+
+	@Override
+	public String rendimientoTitulo() {
+		return "ตัวจัดการประสิทธิภาพ";
+	}
+
+	@Override
+	public String rendimientoBotonSidebar() {
+		return "ประสิทธิภาพ";
+	}
+
+	@Override
+	public String rendimientoBotonAnalizar() {
+		return "วิเคราะห์ประสิทธิภาพ";
+	}
+
+	@Override
+	public String rendimientoBotonAbrirGPU() {
+		return "เปิดการตั้งค่า GPU";
+	}
+
+	@Override
+	public String rendimientoDescripcion() {
+		return "แผงนี้ตรวจสอบปัญหาสภาพแวดล้อม มอดที่แนะนำหรือมีความเสี่ยง และตัวเลือกการตั้งค่า "
+				+ "ที่สามารถปรับปรุงประสิทธิภาพได้ ไม่ใช่ทุกตัวเลือกที่จะทำงานร่วมกันได้ ไม่ใช่ทุกตัวเลือกที่ใช้ได้กับทุก "
+				+ "เวอร์ชันของ Minecraft และไม่ใช่ทุกตัวเลือกที่เข้ากันได้กับ modloader ทุกตัว ไม่เป็นไร: คุณไม่จำเป็นต้องมี "
+				+ "คะแนนการเพิ่มประสิทธิภาพที่สมบูรณ์แบบ";
+	}
+
+	@Override
+	public String rendimientoNotaCompatibilidad() {
+		return "หมายเหตุ: คำแนะนำเหล่านี้เป็นความเป็นไปได้ ไม่ใช่คำสั่งให้ใช้ทุกอย่าง บางตัวเลือกอาจขัดแย้ง "
+				+ "กันหรือไม่เหมาะสมสำหรับเวอร์ชัน ตัวเปิดเกม modloader หรือมอดแพ็กของคุณ";
+	}
+
+	@Override
+	public String rendimientoPestanaResumen() {
+		return "สรุป";
+	}
+
+	@Override
+	public String rendimientoPestanaAmbiental() {
+		return "ปัญหาสภาพแวดล้อม";
+	}
+
+	@Override
+	public String rendimientoPestanaMods() {
+		return "มอดที่แนะนำและความเสี่ยง";
+	}
+
+	@Override
+	public String rendimientoPestanaConfigs() {
+		return "ตัวเลือกการตั้งค่า";
+	}
+
+	@Override
+	public String rendimientoResumenTitulo() {
+		return "สรุปการวิเคราะห์";
+	}
+
+	@Override
+	public String rendimientoResumenAmbiental(int cantidad) {
+		return "พบปัญหาสภาพแวดล้อม: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenMods(int cantidad) {
+		return "พบคำแนะนำหรือความเสี่ยงของมอด: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenConfigs(int cantidad) {
+		return "พบคำแนะนำการตั้งค่า: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenGPU() {
+		return "ตรวจพบปัญหา GPU ดังนั้นปุ่มเพื่อเปิดการตั้งค่า GPU จึงถูกเปิดใช้งาน";
+	}
+
+	@Override
+	public String rendimientoSinHallazgos() {
+		return "ไม่พบคำแนะนำในส่วนนี้";
+	}
+
+	@Override
+	public String rendimientoSugerencia() {
+		return "คำแนะนำ";
+	}
+
+	@Override
+	public String rendimientoColorFondo() {
+		return "ประสิทธิภาพ - พื้นหลัง";
+	}
+
+	@Override
+	public String rendimientoColorPanel() {
+		return "ประสิทธิภาพ - แผง";
+	}
+
+	@Override
+	public String rendimientoColorTexto() {
+		return "ประสิทธิภาพ - ข้อความ";
+	}
+
+	@Override
+	public String rendimientoColorTextoSecundario() {
+		return "ประสิทธิภาพ - ข้อความรอง";
+	}
+
+	@Override
+	public String rendimientoColorBoton() {
+		return "ประสิทธิภาพ - ปุ่ม";
+	}
+
+	@Override
+	public String rendimientoColorBotonTexto() {
+		return "ประสิทธิภาพ - ข้อความปุ่ม";
+	}
+
+	@Override
+	public String rendimientoColorSeleccion() {
+		return "ประสิทธิภาพ - การเลือก";
+	}
 
 }

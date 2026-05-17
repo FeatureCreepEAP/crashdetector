@@ -8791,30 +8791,860 @@ public class Chino implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "某个 mod 试图覆盖 final 方法";
 	}
+
 	// Chinese (Simplified) (中文)
 	@Override
 	public String errorCrashProvocadoPorComando(String comandoDetectado) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Minecraft 因崩溃命令而关闭。</b>"
-	            + "<p>日志表明执行了命令 <code>" + comandoDetectado + "</code>。</p>"
-	            + "<p>这通常意味着游戏并非因普通的 mod 错误而关闭，而是有人 "
-	            + "使用了旨在手动引发崩溃的命令。</p>"
-	            + "<p><b>需要检查的内容：</b></p>"
-	            + "<ul>"
-	            + "<li>检查是谁在控制台或游戏内执行了该命令。</li>"
-	            + "<li>如果是测试，您可以忽略此次崩溃。</li>"
-	            + "<li>如果是无意发生的，请检查命令方块、脚本、数据包、管理类 mod 或操作员权限。</li>"
-	            + "</ul>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "Minecraft 因崩溃命令而关闭。</b>"
+				+ "<p>日志表明执行了命令 <code>" + comandoDetectado + "</code>。</p>" + "<p>这通常意味着游戏并非因普通的 mod 错误而关闭，而是有人 "
+				+ "使用了旨在手动引发崩溃的命令。</p>" + "<p><b>需要检查的内容：</b></p>" + "<ul>" + "<li>检查是谁在控制台或游戏内执行了该命令。</li>"
+				+ "<li>如果是测试，您可以忽略此次崩溃。</li>" + "<li>如果是无意发生的，请检查命令方块、脚本、数据包、管理类 mod 或操作员权限。</li>" + "</ul>";
 	}
 
 	@Override
 	public String nombreCrashProvocadoPorComando() {
-	    return "由命令引发的崩溃";
+		return "由命令引发的崩溃";
 	}
-	
-	
-	
-	
-	
+
+	// Chinese (Simplified) (中文)
+	public String impactoAlto() {
+		return "高";
+	}
+
+	public String impactoMedio() {
+		return "中";
+	}
+
+	public String impactoBajo() {
+		return "低";
+	}
+
+	public String impactoBajoMedio() {
+		return "低/中";
+	}
+
+	public String riesgoAlto() {
+		return "高";
+	}
+
+	public String riesgoMedio() {
+		return "中";
+	}
+
+	public String riesgoBajo() {
+		return "低";
+	}
+
+	public String riesgoMedioAlto() {
+		return "中/高";
+	}
+
+	public String tituloCrearConfigBBE() {
+		return "创建 Better Block Entities 配置";
+	}
+
+	public String descripcionCrearConfigBBE() {
+		return "BBEConfig.json 文件不存在。";
+	}
+
+	public String sugerenciaCrearConfigBBE() {
+		return "创建 BBEConfig.json 并针对箱子、潜影盒、告示牌、床、钟和旗帜进行优化。";
+	}
+
+	public String tituloActivarOptimizacionMaestraBBE() {
+		return "启用 BBE 主优化";
+	}
+
+	public String descripcionActivarOptimizacionMaestraBBE() {
+		return "Better Block Entities 似乎未启用主要优化。";
+	}
+
+	public String sugerenciaActivarOptimizacionMaestraBBE() {
+		return "添加 {\"option\":\"optimize.master\",\"value\":true}";
+	}
+
+	public String tituloActivarCullingTextoCartelesBBE() {
+		return "启用告示牌文本剔除 (Culling)";
+	}
+
+	public String descripcionActivarCullingTextoCartelesBBE() {
+		return "减少远处告示牌文本的渲染。";
+	}
+
+	public String sugerenciaActivarCullingTextoCartelesBBE() {
+		return "添加 {\"option\":\"misc.sign_text_culling\",\"value\":true}";
+	}
+
+	public String tituloAumentarSleepDelayEntityCulling() {
+		return "增加 EntityCulling 的 sleepDelay";
+	}
+
+	public String descripcionAumentarSleepDelayEntityCulling() {
+		return "EntityCulling 将降低实体检查频率。";
+	}
+
+	public String sugerenciaAumentarSleepDelayEntityCulling() {
+		return "\"sleepDelay\": 153";
+	}
+
+	public String tituloSubirLimiteHitboxEntityCulling() {
+		return "提高 hitbox 限制";
+	}
+
+	public String descripcionSubirLimiteHitboxEntityCulling() {
+		return "允许在回退到较慢路径前使用更积极的剔除行为。";
+	}
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling() {
+		return "\"hitboxLimit\": 90";
+	}
+
+	public String tituloDesactivarDatosF3EntityCulling() {
+		return "禁用 EntityCulling 的 F3 数据";
+	}
+
+	public String descripcionDesactivarDatosF3EntityCulling() {
+		return "移除 mod 的额外调试信息。";
+	}
+
+	public String sugerenciaDesactivarDatosF3EntityCulling() {
+		return "\"disableF3\": true";
+	}
+
+	public String tituloActivarBufferingSignsImmediatelyFast() {
+		return "启用告示牌实验性缓冲";
+	}
+
+	public String descripcionActivarBufferingSignsImmediatelyFast() {
+		return "在告示牌较多时可提升性能。";
+	}
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast() {
+		return "\"experimental_sign_text_buffering\": true";
+	}
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast() {
+		return "减少资源包冲突处理";
+	}
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast() {
+		return "可减少额外负载，但也可能导致资源包出现视觉问题。";
+	}
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast() {
+		return "\"experimental_disable_resource_pack_conflict_handling\": true";
+	}
+
+	public String tituloOcultarBotonNCR() {
+		return "隐藏 No Chat Reports 按钮";
+	}
+
+	public String descripcionOcultarBotonNCR() {
+		return "界面调整；对 FPS 提升不大，但能清理屏幕。";
+	}
+
+	public String sugerenciaOcultarBotonNCR() {
+		return "\"showNCRButton\": false";
+	}
+
+	public String tituloActivarMixinsExperimentalesLithium() {
+		return "启用 Lithium 实验性 mixins";
+	}
+
+	public String descripcionActivarMixinsExperimentalesLithium() {
+		return "启用额外的实验性优化。";
+	}
+
+	public String sugerenciaActivarMixinsExperimentalesLithium() {
+		return "mixin.experimental=true";
+	}
+
+	public String tituloUsarDetectorThreadingPequenoFerriteCore() {
+		return "使用小型线程检测器";
+	}
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore() {
+		return "减少内存占用，但风险略高。";
+	}
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore() {
+		return "useSmallThreadingDetector=true";
+	}
+
+	public String tituloModernFixRecursosDinamicos() {
+		return "启用 ModernFix 动态资源";
+	}
+
+	public String descripcionModernFixRecursosDinamicos() {
+		return "通过更高效地加载资源，可能降低内存占用和工作负载。";
+	}
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades() {
+		return "启用实体动态渲染器";
+	}
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades() {
+		return "通过更高效地管理实体渲染器，可能提升性能。";
+	}
+
+	public String tituloModernFixRenderizadoItemsRapido() {
+		return "启用物品快速渲染";
+	}
+
+	public String descripcionModernFixRenderizadoItemsRapido() {
+		return "在渲染物品时可能提升性能。";
+	}
+
+	public String tituloModernFixWorldgenAllocation() {
+		return "减少 worldgen 分配";
+	}
+
+	public String descripcionModernFixWorldgenAllocation() {
+		return "可能减少世界生成期间的内存垃圾。";
+	}
+
+	public String tituloModernFixDeduplicacionIngredientes() {
+		return "启用餐具去重";
+	}
+
+	public String descripcionModernFixDeduplicacionIngredientes() {
+		return "减少与配方和食材相关的重复对象。";
+	}
+
+	public String tituloSodiumRenderCielo() {
+		return "在 Sodium 中启用天空优化/渲染";
+	}
+
+	public String descripcionSodiumRenderCielo() {
+		return "可能调整天空的渲染行为。";
+	}
+
+	public String tituloActivarLightmapCaching() {
+		return "启用光照贴图缓存";
+	}
+
+	public String descripcionActivarLightmapCaching() {
+		return "避免在不必要时光重新计算。";
+	}
+
+	public String sugerenciaActivarLightmapCaching() {
+		return "enable_lightmap_caching: true";
+	}
+
+	public String tituloOcultarTextoF3BadOptimizations() {
+		return "隐藏 BadOptimizations 的 F3 文本";
+	}
+
+	public String descripcionOcultarTextoF3BadOptimizations() {
+		return "减少 F3 屏幕的调试信息干扰。";
+	}
+
+	public String sugerenciaOcultarTextoF3BadOptimizations() {
+		return "show_f3_text: false";
+	}
+
+	public String tituloDesactivarLogConfigBadOptimizations() {
+		return "禁用配置日志";
+	}
+
+	public String descripcionDesactivarLogConfigBadOptimizations() {
+		return "避免启动时打印完整配置。";
+	}
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations() {
+		return "log_config: false";
+	}
+
+	public String tituloActivarSerializadorGCFreeC2ME() {
+		return "启用 C2ME 的无 GC 序列化器";
+	}
+
+	public String descripcionActivarSerializadorGCFreeC2ME() {
+		return "减少加载或保存区块时的内存分配。";
+	}
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME() {
+		return "[ioSystem] gcFreeChunkSerializer = true";
+	}
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME() {
+		return "禁用 syncPlayerTickets";
+	}
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME() {
+		return "可能提升区块性能，但可能影响技术性装置。";
+	}
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME() {
+		return "[chunkSystem] syncPlayerTickets = false";
+	}
+
+	public String tituloUsarCullingHojasDepthMoreCulling() {
+		return "使用 DEPTH 树叶剔除模式";
+	}
+
+	public String descripcionUsarCullingHojasDepthMoreCulling() {
+		return "使用比普通模式更激进的树叶剔除模式。";
+	}
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling() {
+		return "leavesCullingMode = \"DEPTH\"";
+	}
+
+	public String tituloActivarEndGatewayCullingMoreCulling() {
+		return "启用末地传送门剔除";
+	}
+
+	public String descripcionActivarEndGatewayCullingMoreCulling() {
+		return "避免不必要的末地传送门渲染。";
+	}
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling() {
+		return "endGatewayCulling = true";
+	}
+
+	public String tituloActivarActivationRangeServerCore() {
+		return "启用 activation range";
+	}
+
+	public String descripcionActivarActivationRangeServerCore() {
+		return "减少远离玩家的实体 tick。";
+	}
+
+	public String sugerenciaActivarActivationRangeServerCore() {
+		return "activation-range: enabled: true";
+	}
+
+	public String tituloActivarRangoVerticalServerCore() {
+		return "启用垂直范围";
+	}
+
+	public String descripcionActivarRangoVerticalServerCore() {
+		return "减少玩家正上方或正下方实体的 tick。";
+	}
+
+	public String sugerenciaActivarRangoVerticalServerCore() {
+		return "use-vertical-range: true";
+	}
+
+	// Chinese (Simplified) (中文)
+	public String impactoNegativoAlto() {
+		return "高负面影响";
+	}
+
+	public String advertenciaModsCulling() {
+		return "剔除（culling）类 mod 可能会导致与其他 mod 不兼容、游戏崩溃、游戏 tick 更新异常等错误，还可能使自动农场或工厂停止工作。";
+	}
+
+	public String tituloModBadOptimizations() {
+		return "添加 BadOptimizations";
+	}
+
+	public String descripcionModBadOptimizations() {
+		return "添加客户端微优化，如光照贴图缓存、天空缓存以及减少不必要的调用。";
+	}
+
+	public String tituloModBBE() {
+		return "添加 Better Block Entities";
+	}
+
+	public String descripcionModBBE() {
+		return "优化方块实体（block entities）的渲染，如箱子、潜影盒、床、钟、旗帜和告示牌。";
+	}
+
+	public String tituloModC2ME() {
+		return "添加 Concurrent Chunk Management Engine";
+	}
+
+	public String descripcionModC2ME() {
+		return "通过并发处理改进区块的加载、生成和管理。功能强大，但在大型整合包中可能引发不兼容问题。";
+	}
+
+	public String tituloModEntityCulling() {
+		return "添加 EntityCulling";
+	}
+
+	public String descripcionModEntityCulling() {
+		return "避免渲染不可见的实体。" + advertenciaModsCulling();
+	}
+
+	public String tituloModFerriteCore() {
+		return "添加 FerriteCore";
+	}
+
+	public String descripcionModFerriteCore() {
+		return "通过去重和更高效的内部结构来减少内存使用。";
+	}
+
+	public String tituloModImmediatelyFast() {
+		return "添加 ImmediatelyFast";
+	}
+
+	public String descripcionModImmediatelyFast() {
+		return "优化即时渲染的多个部分、文本、缓冲区、地图和界面。";
+	}
+
+	public String tituloModLithium() {
+		return "添加 Lithium";
+	}
+
+	public String descripcionModLithium() {
+		return "优化游戏逻辑、实体、方块、物理及其他系统，且几乎不改变原版行为。";
+	}
+
+	public String tituloModModernFix() {
+		return "添加 ModernFix";
+	}
+
+	public String descripcionModModernFix() {
+		return "添加大量内存、加载、资源和通用性能优化。其图集（atlas）相关工具可能与缩小图集的 mod 冲突。";
+	}
+
+	public String tituloModMoreCulling() {
+		return "添加 More Culling";
+	}
+
+	public String descripcionModMoreCulling() {
+		return "为方块、树叶、物品展示框、画、雨、信标等元素添加剔除功能。" + advertenciaModsCulling();
+	}
+
+	public String tituloModScalableLux() {
+		return "添加 ScalableLux";
+	}
+
+	public String descripcionModScalableLux() {
+		return "优化光照计算，可在光照变化频繁的世界中提升性能。";
+	}
+
+	public String tituloModServerCore() {
+		return "添加 ServerCore";
+	}
+
+	public String descripcionModServerCore() {
+		return "添加服务器端优化、激活范围、生物上限控制、tick 减少和加载改进。";
+	}
+
+	public String tituloModSodium() {
+		return "添加 Sodium";
+	}
+
+	public String descripcionModSodium() {
+		return "主要的渲染优化 mod。通常是对 FPS 提升最大的 mod 之一。";
+	}
+
+	public String tituloModVMP() {
+		return "添加 Very Many Players";
+	}
+
+	public String descripcionModVMP() {
+		return "优化服务器系统以支持大量玩家。预期 mod ID 为 vmp。";
+	}
+
+	public String tituloModMCMT() {
+		return "添加 MCMT";
+	}
+
+	public String descripcionModMCMT() {
+		return "尝试对 Minecraft 服务器部分进行多线程处理。在某些情况下可提升性能，但极易引发不兼容、tick 错误和异常行为。";
+	}
+
+	public String tituloLiabilityUranium() {
+		return "移除 Uranium";
+	}
+
+	public String descripcionLiabilityUranium() {
+		return "Uranium 是一款故意让游戏卡顿的 mod。若追求性能，不应安装它。";
+	}
+
+	// Chinese (Simplified) (中文)
+	public String tituloAmbientalSinXmx() {
+		return "设置 Java 最大内存";
+	}
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro) {
+		return "在提供的参数中未检测到 -Xmx。对于 " + mods + " 个 mod，建议的最小值为 " + minimo + "，不要超过大约 " + maximoSeguro + "。";
+	}
+
+	public String sugerenciaAmbientalSinXmx(String minimo) {
+		return "添加 -Xmx" + minimo.replace(" ", "");
+	}
+
+	public String tituloAmbientalDemasiadaMemoria() {
+		return "减少分配的内存";
+	}
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro) {
+		return "实例分配了 " + xmx + "（总共 " + total + "）。不建议分配超过可用 RAM 的 80%。";
+	}
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro) {
+		return "将 -Xmx 减少到 " + maximoSeguro + " 或更低。";
+	}
+
+	public String tituloAmbientalMemoriaInsuficiente() {
+		return "增加分配的内存";
+	}
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo) {
+		return "实例分配了 " + xmx + "。对于 " + mods + " 个 mod，建议的最小值为 " + minimo + "。";
+	}
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo) {
+		return "将 -Xmx 增加到至少 " + minimo + "。";
+	}
+
+	public String tituloAmbientalJava8GC() {
+		return "在 Java 8 中使用 G1GC 或 Shenandoah";
+	}
+
+	public String descripcionAmbientalJava8GC() {
+		return "在 Java 8 中，建议使用 G1GC 或 Shenandoah 以减少停顿并提高稳定性。";
+	}
+
+	public String sugerenciaAmbientalJava8GC() {
+		return "添加 -XX:+UseG1GC 或 -XX:+UseShenandoahGC。";
+	}
+
+	public String tituloAmbientalZGC() {
+		return "使用 ZGC";
+	}
+
+	public String descripcionAmbientalZGC(String ramTotal) {
+		return "设备拥有超过 12 GB 的 RAM（" + ramTotal + "）。如果 Java 发行版支持，ZGC 可以减少垃圾回收器的停顿。";
+	}
+
+	public String sugerenciaAmbientalZGC() {
+		return "在 Java 17 或更高版本中，尝试 -XX:+UseZGC。";
+	}
+
+	public String tituloAmbientalAikar() {
+		return "添加 Aikar 参数";
+	}
+
+	public String descripcionAmbientalAikar() {
+		return "在 Java 17 或更早版本中，Aikar 参数通常能改善 Minecraft 的 G1GC 行为。";
+	}
+
+	public String sugerenciaAmbientalAikar() {
+		return "使用 Aikar 参数，包括 -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200。";
+	}
+
+	public String tituloAmbientalRedHatJDK() {
+		return "使用 Red Hat JDK";
+	}
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os) {
+		return "对于 " + os + " 上的 Java " + javaMayor + "，出于稳定性和兼容性考虑，推荐使用 Red Hat JDK。";
+	}
+
+	public String sugerenciaAmbientalRedHatJDK() {
+		return "为 Java 8 或 Java 11 安装 Red Hat JDK。";
+	}
+
+	public String tituloAmbientalAzulPrime() {
+		return "考虑 Azul Prime";
+	}
+
+	public String descripcionAmbientalAzulPrime() {
+		return "在 Linux 上使用 Java 16 或更高版本且拥有超过 16 GB RAM 时，Azul Prime 可能是一个良好的性能选择。";
+	}
+
+	public String sugerenciaAmbientalAzulPrime() {
+		return "如果设备拥有超过 16 GB RAM，请尝试 Azul Prime。";
+	}
+
+	public String tituloAmbientalGraalVM() {
+		return "考虑 GraalVM";
+	}
+
+	public String descripcionAmbientalGraalVM() {
+		return "使用 Java 16 或更高版本且拥有超过 16 GB RAM 时，GraalVM 在 Linux 之外可能是一个有用的替代方案。";
+	}
+
+	public String sugerenciaAmbientalGraalVM() {
+		return "如果设备拥有超过 16 GB RAM，请尝试 GraalVM。";
+	}
+
+	public String tituloAmbientalDiscoBajo() {
+		return "检查磁盘剩余空间";
+	}
+
+	public String descripcionAmbientalDiscoBajo(String libre) {
+		return "磁盘剩余空间不足：" + libre + "。如果空间耗尽，Minecraft 可能会失败、保存缓慢或数据损坏。";
+	}
+
+	public String sugerenciaAmbientalDiscoBajo() {
+		return "释放空间，直到至少有 20 GB 可用。";
+	}
+
+	public String tituloAmbientalWindowsRHEL9() {
+		return "考虑使用 RHEL 9 进行测试";
+	}
+
+	public String descripcionAmbientalWindowsRHEL9() {
+		return "在 Windows 上，建议考虑 RHEL 9，因为它包含 Red Hat JDK，稳定，个人可免费下载，并且是大多数测试进行的平台。";
+	}
+
+	public String sugerenciaAmbientalWindowsRHEL9() {
+		return "如果追求最高的测试稳定性，请在 RHEL 9 上尝试该实例。";
+	}
+
+	public String tituloAmbientalRaptorLake() {
+		return "Intel Raptor Lake 警告";
+	}
+
+	public String descripcionAmbientalRaptorLake() {
+		return "检测到现有检查标记的 Raptor Lake 问题。这可能导致不稳定、崩溃以及看似由 modpack 引起的错误。";
+	}
+
+	public String sugerenciaAmbientalRaptorLake() {
+		return "在归咎于 modpack 之前，请更新 BIOS/微代码并查看 Raptor Lake 警告。";
+	}
+
+	// Chinese (Simplified) (中文)
+	@Override
+	public String tituloAmbientalNeoForge1201Antiguo() {
+		return "检测到旧版 NeoForge 1.20.1";
+	}
+
+	@Override
+	public String descripcionAmbientalNeoForge1201Antiguo() {
+		return "检测到 FancyModLoader 47 或与 NeoForge 1.20.1 兼容的路径。"
+				+ "NeoForge 1.20.1 是 MinecraftForge 1.20.1 的一个分支，通常在二进制层面兼容，" + "但该分支较早被放弃，可能缺少 Forge 中可用的许多优化。";
+	}
+
+	@Override
+	public String sugerenciaAmbientalNeoForge1201Antiguo() {
+		return "对于 1.20.1，如果 modpack 允许，请考虑使用 MinecraftForge 1.20.1 而不是 NeoForge 1.20.1。";
+	}
+
+	@Override
+	public String tituloAmbientalGPU() {
+		return "检测到 GPU 问题";
+	}
+
+	@Override
+	public String descripcionAmbientalGPU() {
+		return "另一项检查已经检测到可能的 GPU、OpenGL 或显卡选择问题。";
+	}
+
+	@Override
+	public String sugerenciaAmbientalGPU() {
+		return "检查 Minecraft 是否使用了正确的 GPU，更新驱动程序，并避免不稳定的混合配置。";
+	}
+
+	// Chinese (Simplified) (中文)
+	@Override
+	public String gpuFixTitulo() {
+		return "GPU 设置";
+	}
+
+	@Override
+	public String gpuFixBotonSidebar() {
+		return "GPU";
+	}
+
+	@Override
+	public String gpuFixBotonAplicar() {
+		return "应用设置";
+	}
+
+	@Override
+	public String gpuFixBotonFuenteTLauncher() {
+		return "打开 TLauncher 指南";
+	}
+
+	@Override
+	public String gpuFixBotonVirusTotal() {
+		return "打开 VirusTotal 分析";
+	}
+
+	@Override
+	public String gpuFixBotonOptimusLinux() {
+		return "打开 NVIDIA Optimus 指南";
+	}
+
+	@Override
+	public String gpuFixTextoWindows() {
+		return "CrashDetector 检测到 Minecraft 可能未使用高性能 GPU。\n\n" + "在 Windows 中，可以在 "
+				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
+				+ "中设置注册表键，以强制 javaw.exe 使用独立 GPU。\n\n" + "GpuPreference=0 = Windows 自动决定。\n"
+				+ "GpuPreference=1 = 节能 / 集成 GPU。\n" + "GpuPreference=2 = 高性能 GPU。\n\n"
+				+ "部分信息来源于 TLauncher 发布的研究以及 VirusTotal 上可用的行为分析。";
+	}
+
+	@Override
+	public String gpuFixTextoLinux() {
+		return "CrashDetector 检测到与 NVIDIA Optimus 或 PRIME 相关的潜在问题。\n\n" + "根据使用的 Linux 发行版，可能需要配置 NVIDIA Optimus、"
+				+ "nvidia-prime、switcheroo-control 或其他混合系统。\n\n" + "在 Fedora/RHEL 及其衍生版本中，通常建议遵循 RPMFusion 文档。\n\n"
+				+ "下方按钮将打开推荐的官方文档。";
+	}
+
+	@Override
+	public String gpuFixTextoMac() {
+		return "CrashDetector 检测到潜在的 GPU 选择问题。\n\n" + "在某些具有混合 GPU 的 macOS 系统上，可以通过高级系统设置强制使用独立 GPU。\n\n"
+				+ "应用按钮将尝试执行命令以优先使用高性能 GPU。";
+	}
+
+	@Override
+	public String gpuFixTextoOtroSistema() {
+		return "CrashDetector 检测到潜在的 GPU 相关问题，" + "但此操作系统没有特定的实现。";
+	}
+
+	@Override
+	public String gpuFixLinuxManual() {
+		return "在 Linux 中，通常需要根据发行版、" + "NVIDIA 驱动程序以及使用的 Optimus/PRIME 系统手动进行配置。";
+	}
+
+	@Override
+	public String gpuFixSistemaNoSoportado() {
+		return "不支持自动 GPU 配置的操作系统。";
+	}
+
+	@Override
+	public String gpuFixJavaNoDetectado() {
+		return "无法检测到 javaw.exe 的当前路径。";
+	}
+
+	@Override
+	public String gpuFixWindowsAplicado(String ruta) {
+		return "GPU 设置已成功应用于：\n\n" + ruta + "\n\n" + "GpuPreference=2 表示高性能 GPU。";
+	}
+
+	@Override
+	public String gpuFixErrorAplicando() {
+		return "尝试应用 GPU 设置时发生错误";
+	}
+
+	@Override
+	public String gpuFixMacAplicado() {
+		return "已应用高性能 GPU 设置。";
+	}
+
+	@Override
+	public String gpuFixMacError() {
+		return "无法在 macOS 上应用 GPU 设置";
+	}
+
+	// Chinese (Simplified) (中文)
+	@Override
+	public String rendimientoTitulo() {
+		return "性能管理器";
+	}
+
+	@Override
+	public String rendimientoBotonSidebar() {
+		return "性能";
+	}
+
+	@Override
+	public String rendimientoBotonAnalizar() {
+		return "分析性能";
+	}
+
+	@Override
+	public String rendimientoBotonAbrirGPU() {
+		return "打开 GPU 设置";
+	}
+
+	@Override
+	public String rendimientoDescripcion() {
+		return "此面板检查环境问题、推荐或有风险的 mod，以及可以提高性能的配置选项。并非所有选项都能同时工作，并非所有选项都适用于每个 Minecraft 版本，也并非所有选项都与每个 mod 加载器兼容。这没关系：你不需要完美的优化评分。";
+	}
+
+	@Override
+	public String rendimientoNotaCompatibilidad() {
+		return "注意：这些建议只是可能性，并非要求应用所有内容。某些选项可能会相互冲突，或者不适合你的版本、启动器、mod 加载器或 modpack。";
+	}
+
+	@Override
+	public String rendimientoPestanaResumen() {
+		return "摘要";
+	}
+
+	@Override
+	public String rendimientoPestanaAmbiental() {
+		return "环境问题";
+	}
+
+	@Override
+	public String rendimientoPestanaMods() {
+		return "推荐的 mod 和风险项";
+	}
+
+	@Override
+	public String rendimientoPestanaConfigs() {
+		return "配置选项";
+	}
+
+	@Override
+	public String rendimientoResumenTitulo() {
+		return "分析摘要";
+	}
+
+	@Override
+	public String rendimientoResumenAmbiental(int cantidad) {
+		return "发现的环境问题：" + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenMods(int cantidad) {
+		return "发现的 mod 建议或风险项：" + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenConfigs(int cantidad) {
+		return "发现的配置建议：" + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenGPU() {
+		return "检测到 GPU 问题。因此启用了打开 GPU 设置的按钮。";
+	}
+
+	@Override
+	public String rendimientoSinHallazgos() {
+		return "在此部分未找到建议。";
+	}
+
+	@Override
+	public String rendimientoSugerencia() {
+		return "建议";
+	}
+
+	@Override
+	public String rendimientoColorFondo() {
+		return "性能 - 背景";
+	}
+
+	@Override
+	public String rendimientoColorPanel() {
+		return "性能 - 面板";
+	}
+
+	@Override
+	public String rendimientoColorTexto() {
+		return "性能 - 文本";
+	}
+
+	@Override
+	public String rendimientoColorTextoSecundario() {
+		return "性能 - 次要文本";
+	}
+
+	@Override
+	public String rendimientoColorBoton() {
+		return "性能 - 按钮";
+	}
+
+	@Override
+	public String rendimientoColorBotonTexto() {
+		return "性能 - 按钮文本";
+	}
+
+	@Override
+	public String rendimientoColorSeleccion() {
+		return "性能 - 选中";
+	}
 
 }

@@ -9324,30 +9324,879 @@ public class Persa implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "یک ماد سعی در بازنویسی یک متد final دارد";
 	}
-	
-    @Override
-    public String errorCrashProvocadoPorComando(String comandoDetectado) {
-        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-                + "ماینکرفت توسط یک دستور crash بسته شد.</b>"
-                + "<p>گزارش نشان می‌دهد که دستور <code>" + comandoDetectado + "</code> اجرا شده است.</p>"
-                + "<p>این معمولاً به این معنی است که بازی به دلیل یک خطای عادی مادها بسته نشده، بلکه کسی "
-                + "از دستوری استفاده کرده که عمداً برای ایجاد crash طراحی شده است.</p>"
-                + "<p><b>چه چیزی را بررسی کنید:</b></p>"
-                + "<ul>"
-                + "<li>بررسی کنید چه کسی دستور را در کنسول یا داخل بازی اجرا کرده است.</li>"
-                + "<li>اگر این یک آزمایش بود، می‌توانید این crash را نادیده بگیرید.</li>"
-                + "<li>اگر بدون قصد رخ داده است، command blocks، اسکریپت‌ها، datapackها، مادهای مدیریتی یا دسترسی‌های اپراتور را بررسی کنید.</li>"
-                + "</ul>";
-    }
 
-    @Override
-    public String nombreCrashProvocadoPorComando() {
-        return "Crash ایجاد شده توسط دستور";
-    }
-	
-	
-	
-	
-	
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ماینکرفت توسط یک دستور crash بسته شد.</b>" + "<p>گزارش نشان می‌دهد که دستور <code>"
+				+ comandoDetectado + "</code> اجرا شده است.</p>"
+				+ "<p>این معمولاً به این معنی است که بازی به دلیل یک خطای عادی مادها بسته نشده، بلکه کسی "
+				+ "از دستوری استفاده کرده که عمداً برای ایجاد crash طراحی شده است.</p>"
+				+ "<p><b>چه چیزی را بررسی کنید:</b></p>" + "<ul>"
+				+ "<li>بررسی کنید چه کسی دستور را در کنسول یا داخل بازی اجرا کرده است.</li>"
+				+ "<li>اگر این یک آزمایش بود، می‌توانید این crash را نادیده بگیرید.</li>"
+				+ "<li>اگر بدون قصد رخ داده است، command blocks، اسکریپت‌ها، datapackها، مادهای مدیریتی یا دسترسی‌های اپراتور را بررسی کنید.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+		return "Crash ایجاد شده توسط دستور";
+	}
+
+	public String impactoAlto() {
+		return "بالا";
+	}
+
+	public String impactoMedio() {
+		return "متوسط";
+	}
+
+	public String impactoBajo() {
+		return "پایین";
+	}
+
+	public String impactoBajoMedio() {
+		return "پایین/متوسط";
+	}
+
+	public String riesgoAlto() {
+		return "بالا";
+	}
+
+	public String riesgoMedio() {
+		return "متوسط";
+	}
+
+	public String riesgoBajo() {
+		return "پایین";
+	}
+
+	public String riesgoMedioAlto() {
+		return "متوسط/بالا";
+	}
+
+	public String tituloCrearConfigBBE() {
+		return "ایجاد پیکربندی Better Block Entities";
+	}
+
+	public String descripcionCrearConfigBBE() {
+		return "فایل BBEConfig.json وجود ندارد.";
+	}
+
+	public String sugerenciaCrearConfigBBE() {
+		return "ایجاد BBEConfig.json با بهینه‌سازی برای صندوق‌ها، shulkers، تابلوها، تخت‌ها، زنگ‌ها و پرچم‌ها.";
+	}
+
+	public String tituloActivarOptimizacionMaestraBBE() {
+		return "فعال‌سازی بهینه‌سازی اصلی BBE";
+	}
+
+	public String descripcionActivarOptimizacionMaestraBBE() {
+		return "به نظر می‌رسد Better Block Entities بهینه‌سازی اصلی را فعال ندارد.";
+	}
+
+	public String sugerenciaActivarOptimizacionMaestraBBE() {
+		return "افزودن {\"option\":\"optimize.master\",\"value\":true}";
+	}
+
+	public String tituloActivarCullingTextoCartelesBBE() {
+		return "فعال‌سازی culling متن تابلوها";
+	}
+
+	public String descripcionActivarCullingTextoCartelesBBE() {
+		return "رندر متن تابلوها را در فاصله دور کاهش می‌دهد.";
+	}
+
+	public String sugerenciaActivarCullingTextoCartelesBBE() {
+		return "افزودن {\"option\":\"misc.sign_text_culling\",\"value\":true}";
+	}
+
+	public String tituloAumentarSleepDelayEntityCulling() {
+		return "افزایش sleepDelay در EntityCulling";
+	}
+
+	public String descripcionAumentarSleepDelayEntityCulling() {
+		return "EntityCulling موجودیت‌ها را با فرکانس کمتری بررسی می‌کند.";
+	}
+
+	public String sugerenciaAumentarSleepDelayEntityCulling() {
+		return "\"sleepDelay\": 153";
+	}
+
+	public String tituloSubirLimiteHitboxEntityCulling() {
+		return "افزایش محدودیت hitbox";
+	}
+
+	public String descripcionSubirLimiteHitboxEntityCulling() {
+		return "اجازه می‌دهد قبل از افت به مسیرهای کندتر، culling تهاجمی‌تری داشته باشد.";
+	}
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling() {
+		return "\"hitboxLimit\": 90";
+	}
+
+	public String tituloDesactivarDatosF3EntityCulling() {
+		return "غیرفعال کردن داده‌های F3 در EntityCulling";
+	}
+
+	public String descripcionDesactivarDatosF3EntityCulling() {
+		return "اطلاعات اضافی دیباگ ماد را حذف می‌کند.";
+	}
+
+	public String sugerenciaDesactivarDatosF3EntityCulling() {
+		return "\"disableF3\": true";
+	}
+
+	public String tituloActivarBufferingSignsImmediatelyFast() {
+		return "فعال‌سازی بافرینگ آزمایشی تابلوها";
+	}
+
+	public String descripcionActivarBufferingSignsImmediatelyFast() {
+		return "می‌تواند عملکرد را زمانی که تابلوهای زیادی وجود دارند بهبود بخشد.";
+	}
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast() {
+		return "\"experimental_sign_text_buffering\": true";
+	}
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast() {
+		return "کاهش مدیریت تداخل resource packها";
+	}
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast() {
+		return "می‌تواند کار اضافی را حذف کند، اما ممکن است باعث مشکلات بصری با resource packها شود.";
+	}
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast() {
+		return "\"experimental_disable_resource_pack_conflict_handling\": true";
+	}
+
+	public String tituloOcultarBotonNCR() {
+		return "پنهان کردن دکمه No Chat Reports";
+	}
+
+	public String descripcionOcultarBotonNCR() {
+		return "تغییر رابط کاربری؛ FPS را خیلی افزایش نمی‌دهد، اما صفحه را تمیزتر می‌کند.";
+	}
+
+	public String sugerenciaOcultarBotonNCR() {
+		return "\"showNCRButton\": false";
+	}
+
+	public String tituloActivarMixinsExperimentalesLithium() {
+		return "فعال‌سازی mixinهای آزمایشی Lithium";
+	}
+
+	public String descripcionActivarMixinsExperimentalesLithium() {
+		return "بهینه‌سازی‌های آزمایشی اضافی را فعال می‌کند.";
+	}
+
+	public String sugerenciaActivarMixinsExperimentalesLithium() {
+		return "mixin.experimental=true";
+	}
+
+	public String tituloUsarDetectorThreadingPequenoFerriteCore() {
+		return "استفاده از شناسگر threading کوچک";
+	}
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore() {
+		return "حافظه را کاهش می‌دهد، اما ممکن است پرریسک‌تر باشد.";
+	}
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore() {
+		return "useSmallThreadingDetector=true";
+	}
+
+	public String tituloModernFixRecursosDinamicos() {
+		return "فعال‌سازی منابع پویای ModernFix";
+	}
+
+	public String descripcionModernFixRecursosDinamicos() {
+		return "می‌تواند مصرف حافظه و بار پردازشی را با بارگذاری کارآمدتر منابع کاهش دهد.";
+	}
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades() {
+		return "فعال‌سازی رندرکننده‌های پویای موجودیت‌ها";
+	}
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades() {
+		return "می‌تواند عملکرد را با مدیریت کارآمدتر رندرکننده‌های موجودیت بهبود بخشد.";
+	}
+
+	public String tituloModernFixRenderizadoItemsRapido() {
+		return "فعال‌سازی رندر سریع آیتم‌ها";
+	}
+
+	public String descripcionModernFixRenderizadoItemsRapido() {
+		return "می‌تواند عملکرد را هنگام رندر آیتم‌ها بهبود بخشد.";
+	}
+
+	public String tituloModernFixWorldgenAllocation() {
+		return "کاهش تخصیص‌ها در worldgen";
+	}
+
+	public String descripcionModernFixWorldgenAllocation() {
+		return "می‌تواند زباله حافظه را در حین تولید جهان کاهش دهد.";
+	}
+
+	public String tituloModernFixDeduplicacionIngredientes() {
+		return "فعال‌سازی حذف تکرار مواد اولیه";
+	}
+
+	public String descripcionModernFixDeduplicacionIngredientes() {
+		return "اشیاء تکراری مرتبط با دستورالعمل‌ها و مواد اولیه را کاهش می‌دهد.";
+	}
+
+	public String tituloSodiumRenderCielo() {
+		return "فعال‌سازی بهینه‌سازی/رندر آسمان در Sodium";
+	}
+
+	public String descripcionSodiumRenderCielo() {
+		return "می‌تواند رفتار رندر آسمان را تنظیم کند.";
+	}
+
+	public String tituloActivarLightmapCaching() {
+		return "فعال‌سازی کش lightmap";
+	}
+
+	public String descripcionActivarLightmapCaching() {
+		return "از محاسبه مجدد نورپردازی در صورت عدم نیاز جلوگیری می‌کند.";
+	}
+
+	public String sugerenciaActivarLightmapCaching() {
+		return "enable_lightmap_caching: true";
+	}
+
+	public String tituloOcultarTextoF3BadOptimizations() {
+		return "پنهان کردن متن F3 در BadOptimizations";
+	}
+
+	public String descripcionOcultarTextoF3BadOptimizations() {
+		return "نویز دیباگ را در صفحه F3 کاهش می‌دهد.";
+	}
+
+	public String sugerenciaOcultarTextoF3BadOptimizations() {
+		return "show_f3_text: false";
+	}
+
+	public String tituloDesactivarLogConfigBadOptimizations() {
+		return "غیرفعال کردن log پیکربندی";
+	}
+
+	public String descripcionDesactivarLogConfigBadOptimizations() {
+		return "از چاپ کل پیکربندی هنگام شروع جلوگیری می‌کند.";
+	}
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations() {
+		return "log_config: false";
+	}
+
+	public String tituloActivarSerializadorGCFreeC2ME() {
+		return "فعال‌سازی سریالایزر GC-free در C2ME";
+	}
+
+	public String descripcionActivarSerializadorGCFreeC2ME() {
+		return "تخصیص حافظه هنگام بارگذاری یا ذخیره chunkها را کاهش می‌دهد.";
+	}
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME() {
+		return "[ioSystem] gcFreeChunkSerializer = true";
+	}
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME() {
+		return "غیرفعال کردن syncPlayerTickets";
+	}
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME() {
+		return "می‌تواند عملکرد chunkها را بهبود بخشد، اما ممکن است بر contraptionهای فنی تأثیر بگذارد.";
+	}
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME() {
+		return "[chunkSystem] syncPlayerTickets = false";
+	}
+
+	public String tituloUsarCullingHojasDepthMoreCulling() {
+		return "استفاده از culling برگ‌ها با حالت DEPTH";
+	}
+
+	public String descripcionUsarCullingHojasDepthMoreCulling() {
+		return "از حالت culling برگ‌های تهاجمی‌تری نسبت به حالت عادی استفاده می‌کند.";
+	}
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling() {
+		return "leavesCullingMode = \"DEPTH\"";
+	}
+
+	public String tituloActivarEndGatewayCullingMoreCulling() {
+		return "فعال‌سازی culling در End Gateway";
+	}
+
+	public String descripcionActivarEndGatewayCullingMoreCulling() {
+		return "از رندر غیرضروری End Gatewayها جلوگیری می‌کند.";
+	}
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling() {
+		return "endGatewayCulling = true";
+	}
+
+	public String tituloActivarActivationRangeServerCore() {
+		return "فعال‌سازی activation range";
+	}
+
+	public String descripcionActivarActivationRangeServerCore() {
+		return "تیک‌های موجودیت‌های دور از بازیکن را کاهش می‌دهد.";
+	}
+
+	public String sugerenciaActivarActivationRangeServerCore() {
+		return "activation-range: enabled: true";
+	}
+
+	public String tituloActivarRangoVerticalServerCore() {
+		return "فعال‌سازی محدوده عمودی";
+	}
+
+	public String descripcionActivarRangoVerticalServerCore() {
+		return "تیک‌های موجودیت‌های بسیار بالا یا پایین بازیکن را کاهش می‌دهد.";
+	}
+
+	public String sugerenciaActivarRangoVerticalServerCore() {
+		return "use-vertical-range: true";
+	}
+
+	public String impactoNegativoAlto() {
+		return "تأثیر منفی بالا";
+	}
+
+	public String advertenciaModsCulling() {
+		return "مادهای culling می‌توانند باعث ناسازگاری با برخی مادها، کرش‌ها، خطاهایی که بازی دیگر به درستی تیک نمی‌زند و همچنین از کار افتادن مزارع خودکار یا کارخانه‌ها شوند.";
+	}
+
+	public String tituloModBadOptimizations() {
+		return "افزودن BadOptimizations";
+	}
+
+	public String descripcionModBadOptimizations() {
+		return "بهینه‌سازی‌های ریز سمت کلاینت مانند کش lightmap، کش آسمان و کاهش فراخوانی‌های غیرضروری را اضافه می‌کند.";
+	}
+
+	public String tituloModBBE() {
+		return "افزودن Better Block Entities";
+	}
+
+	public String descripcionModBBE() {
+		return "رندر entityهای بلوکی مانند صندوق‌ها، shulkers، تخت‌ها، زنگ‌ها، پرچم‌ها و تابلوها را بهینه می‌کند.";
+	}
+
+	public String tituloModC2ME() {
+		return "افزودن Concurrent Chunk Management Engine";
+	}
+
+	public String descripcionModC2ME() {
+		return "بارگذاری، تولید و مدیریت چانک‌ها را با پردازش همزمان بهبود می‌بخشد. می‌تواند بسیار قدرتمند باشد، اما ممکن است در مادپک‌های بزرگ باعث ناسازگاری شود.";
+	}
+
+	public String tituloModEntityCulling() {
+		return "افزودن EntityCulling";
+	}
+
+	public String descripcionModEntityCulling() {
+		return "از رندر entityهایی که قابل مشاهده نیستند جلوگیری می‌کند. " + advertenciaModsCulling();
+	}
+
+	public String tituloModFerriteCore() {
+		return "افزودن FerriteCore";
+	}
+
+	public String descripcionModFerriteCore() {
+		return "استفاده از حافظه را از طریق ددوپلیکیشن و ساختارهای داخلی کارآمدتر کاهش می‌دهد.";
+	}
+
+	public String tituloModImmediatelyFast() {
+		return "افزودن ImmediatelyFast";
+	}
+
+	public String descripcionModImmediatelyFast() {
+		return "بخش‌های مختلفی از رندر immediate mode، متن، بافرها، نقشه‌ها و رابط کاربری را بهینه می‌کند.";
+	}
+
+	public String tituloModLithium() {
+		return "افزودن Lithium";
+	}
+
+	public String descripcionModLithium() {
+		return "منطق بازی، entityها، بلوک‌ها، فیزیک و سایر سیستم‌ها را بدون تغییر زیاد در رفتار اصلی بازی بهینه می‌کند.";
+	}
+
+	public String tituloModModernFix() {
+		return "افزودن ModernFix";
+	}
+
+	public String descripcionModModernFix() {
+		return "بهینه‌سازی‌های زیادی برای حافظه، بارگذاری، منابع و عملکرد کلی اضافه می‌کند. ابزارهای مربوط به atlas آن ممکن است با مادهایی که atlas را کوچک‌تر می‌کنند تداخل داشته باشد.";
+	}
+
+	public String tituloModMoreCulling() {
+		return "افزودن More Culling";
+	}
+
+	public String descripcionModMoreCulling() {
+		return "culling را برای بلوک‌ها، برگ‌ها، قاب آیتم، تابلوهای نقاشی، باران، beaconها و سایر عناصر اضافه می‌کند. "
+				+ advertenciaModsCulling();
+	}
+
+	public String tituloModScalableLux() {
+		return "افزودن ScalableLux";
+	}
+
+	public String descripcionModScalableLux() {
+		return "محاسبات مربوط به نورپردازی را بهینه می‌کند و می‌تواند عملکرد را در جهان‌های با تغییرات نوری زیاد بهبود بخشد.";
+	}
+
+	public String tituloModServerCore() {
+		return "افزودن ServerCore";
+	}
+
+	public String descripcionModServerCore() {
+		return "بهینه‌سازی‌های سمت سرور، محدوده فعال‌سازی، کنترل mobcapها، کاهش تیک‌ها و بهبود بارگذاری را اضافه می‌کند.";
+	}
+
+	public String tituloModSodium() {
+		return "افزودن Sodium";
+	}
+
+	public String descripcionModSodium() {
+		return "ماد اصلی بهینه‌سازی رندر. معمولاً یکی از مهم‌ترین بهبودها برای FPS است.";
+	}
+
+	public String tituloModVMP() {
+		return "افزودن Very Many Players";
+	}
+
+	public String descripcionModVMP() {
+		return "سیستم‌های سرور را برای مدیریت بازیکنان زیاد بهینه می‌کند. شناسه مورد انتظار ماد vmp است.";
+	}
+
+	public String tituloModMCMT() {
+		return "افزودن MCMT";
+	}
+
+	public String descripcionModMCMT() {
+		return "سعی می‌کند بخش‌هایی از سرور ماینکرفت را چندرشته‌ای کند. در برخی موارد می‌تواند عملکرد را بهبود بخشد، اما خطر بالایی برای ناسازگاری، خطاهای تیک و رفتارهای عجیب دارد.";
+	}
+
+	public String tituloLiabilityUranium() {
+		return "حذف Uranium";
+	}
+
+	public String descripcionLiabilityUranium() {
+		return "Uranium مادی است که عمداً برای ایجاد لگ در بازی طراحی شده است. اگر به دنبال عملکرد بهتر هستید، نباید نصب شود.";
+	}
+
+	public String tituloAmbientalSinXmx() {
+		return "تنظیم حداکثر حافظه جاوا";
+	}
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro) {
+		return "-Xmx در آرگومان‌ها شناسایی نشد. برای " + mods + " ماد، حداقل پیشنهادی " + minimo
+				+ " است، بدون اینکه از حدود " + maximoSeguro + " فراتر رود.";
+	}
+
+	public String sugerenciaAmbientalSinXmx(String minimo) {
+		return "افزودن -Xmx" + minimo.replace(" ", "");
+	}
+
+	public String tituloAmbientalDemasiadaMemoria() {
+		return "کاهش حافظه اختصاص یافته";
+	}
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro) {
+		return "اینستنس " + xmx + " از " + total
+				+ " را اختصاص داده است. توصیه نمی‌شود بیش از ۸۰٪ از RAM موجود اختصاص دهید.";
+	}
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro) {
+		return "کاهش -Xmx به " + maximoSeguro + " یا کمتر.";
+	}
+
+	public String tituloAmbientalMemoriaInsuficiente() {
+		return "افزایش حافظه اختصاص یافته";
+	}
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo) {
+		return "اینستنس " + xmx + " حافظه دارد. برای " + mods + " ماد، حداقل پیشنهادی " + minimo + " است.";
+	}
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo) {
+		return "افزایش -Xmx به حداقل " + minimo + ".";
+	}
+
+	public String tituloAmbientalJava8GC() {
+		return "استفاده از G1GC یا Shenandoah در جاوا ۸";
+	}
+
+	public String descripcionAmbientalJava8GC() {
+		return "در جاوا ۸، استفاده از G1GC یا Shenandoah برای کاهش مکث‌ها و بهبود پایداری توصیه می‌شود.";
+	}
+
+	public String sugerenciaAmbientalJava8GC() {
+		return "افزودن -XX:+UseG1GC یا -XX:+UseShenandoahGC.";
+	}
+
+	public String tituloAmbientalZGC() {
+		return "استفاده از ZGC";
+	}
+
+	public String descripcionAmbientalZGC(String ramTotal) {
+		return "سیستم بیش از ۱۲ گیگابایت RAM دارد (" + ramTotal
+				+ "). اگر توزیع جاوا پشتیبانی کند، ZGC می‌تواند مکث‌های جمع‌آوری زباله را کاهش دهد.";
+	}
+
+	public String sugerenciaAmbientalZGC() {
+		return "در جاوا ۱۷ یا بالاتر، -XX:+UseZGC را امتحان کنید.";
+	}
+
+	public String tituloAmbientalAikar() {
+		return "افزودن فلگ‌های Aikar";
+	}
+
+	public String descripcionAmbientalAikar() {
+		return "در جاوا ۱۷ یا قدیمی‌تر، فلگ‌های Aikar معمولاً رفتار G1GC را برای ماینکرفت بهبود می‌بخشند.";
+	}
+
+	public String sugerenciaAmbientalAikar() {
+		return "استفاده از فلگ‌های Aikar، شامل -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200.";
+	}
+
+	public String tituloAmbientalRedHatJDK() {
+		return "استفاده از Red Hat JDK";
+	}
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os) {
+		return "برای جاوا " + javaMayor + " در " + os + "، Red Hat JDK به دلیل پایداری و سازگاری توصیه می‌شود.";
+	}
+
+	public String sugerenciaAmbientalRedHatJDK() {
+		return "نصب Red Hat JDK برای جاوا ۸ یا جاوا ۱۱.";
+	}
+
+	public String tituloAmbientalAzulPrime() {
+		return "در نظر گرفتن Azul Prime";
+	}
+
+	public String descripcionAmbientalAzulPrime() {
+		return "در لینوکس با جاوا ۱۶ یا بالاتر و بیش از ۱۶ گیگابایت RAM، Azul Prime می‌تواند گزینه خوبی برای عملکرد باشد.";
+	}
+
+	public String sugerenciaAmbientalAzulPrime() {
+		return "اگر سیستم بیش از ۱۶ گیگابایت RAM دارد، Azul Prime را امتحان کنید.";
+	}
+
+	public String tituloAmbientalGraalVM() {
+		return "در نظر گرفتن GraalVM";
+	}
+
+	public String descripcionAmbientalGraalVM() {
+		return "با جاوا ۱۶ یا بالاتر و بیش از ۱۶ گیگابایت RAM، GraalVM می‌تواند جایگزین مفیدی خارج از لینوکس باشد.";
+	}
+
+	public String sugerenciaAmbientalGraalVM() {
+		return "اگر سیستم بیش از ۱۶ گیگابایت RAM دارد، GraalVM را امتحان کنید.";
+	}
+
+	public String tituloAmbientalDiscoBajo() {
+		return "بررسی فضای خالی دیسک";
+	}
+
+	public String descripcionAmbientalDiscoBajo(String libre) {
+		return "دیسک فضای خالی کمی دارد: " + libre
+				+ ". اگر فضا تمام شود، ماینکرفت ممکن است کرش کند، کند ذخیره شود یا داده‌ها خراب شوند.";
+	}
+
+	public String sugerenciaAmbientalDiscoBajo() {
+		return "آزادسازی فضا تا داشتن حداقل ۲۰ گیگابایت فضای خالی.";
+	}
+
+	public String tituloAmbientalWindowsRHEL9() {
+		return "در نظر گرفتن RHEL 9 برای تست";
+	}
+
+	public String descripcionAmbientalWindowsRHEL9() {
+		return "در ویندوز، توصیه می‌شود RHEL 9 را در نظر بگیرید زیرا شامل Red Hat JDK است، پایدار است، برای افراد رایگان قابل دانلود است و اکثر تست‌ها در آن انجام می‌شود.";
+	}
+
+	public String sugerenciaAmbientalWindowsRHEL9() {
+		return "اگر به دنبال حداکثر پایداری تست هستید، اینستنس را در RHEL 9 امتحان کنید.";
+	}
+
+	public String tituloAmbientalRaptorLake() {
+		return "هشدار Intel Raptor Lake";
+	}
+
+	public String descripcionAmbientalRaptorLake() {
+		return "مشکل Raptor Lake توسط بررسی موجود شناسایی شد. این می‌تواند باعث بی‌ثباتی، کرش و خطاهایی شود که به نظر می‌رسد مربوط به مادپک هستند.";
+	}
+
+	public String sugerenciaAmbientalRaptorLake() {
+		return "قبل از مقصر دانستن مادپک، BIOS/microcode را به‌روزرسانی کرده و هشدار Raptor Lake را بررسی کنید.";
+	}
+
+	@Override
+	public String tituloAmbientalNeoForge1201Antiguo() {
+		return "نسخه قدیمی NeoForge 1.20.1 شناسایی شد";
+	}
+
+	@Override
+	public String descripcionAmbientalNeoForge1201Antiguo() {
+		return "FancyModLoader 47 یا مسیری سازگار با NeoForge 1.20.1 شناسایی شد. "
+				+ "NeoForge 1.20.1 انشعابی از MinecraftForge 1.20.1 بود و معمولاً از نظر باینری سازگار است، "
+				+ "اما این خط زودتر رها شد و ممکن است چندین بهینه‌سازی موجود در Forge را نداشته باشد.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalNeoForge1201Antiguo() {
+		return "برای 1.20.1، اگر مادپک اجازه می‌دهد، استفاده از MinecraftForge 1.20.1 را به جای NeoForge 1.20.1 در نظر بگیرید.";
+	}
+
+	@Override
+	public String tituloAmbientalGPU() {
+		return "مشکل GPU شناسایی شد";
+	}
+
+	@Override
+	public String descripcionAmbientalGPU() {
+		return "بررسی دیگری قبلاً یک مشکل احتمالی در GPU، OpenGL یا انتخاب کارت گرافیک را شناسایی کرده است.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalGPU() {
+		return "بررسی کنید که Minecraft از GPU صحیح استفاده می‌کند، درایورها را به‌روز کنید و از پیکربندی‌های هیبریدی ناپایدار اجتناب کنید.";
+	}
+
+	@Override
+	public String gpuFixTitulo() {
+		return "تنظیمات GPU";
+	}
+
+	@Override
+	public String gpuFixBotonSidebar() {
+		return "GPU";
+	}
+
+	@Override
+	public String gpuFixBotonAplicar() {
+		return "اعمال تنظیمات";
+	}
+
+	@Override
+	public String gpuFixBotonFuenteTLauncher() {
+		return "باز کردن راهنمای TLauncher";
+	}
+
+	@Override
+	public String gpuFixBotonVirusTotal() {
+		return "باز کردن تحلیل VirusTotal";
+	}
+
+	@Override
+	public String gpuFixBotonOptimusLinux() {
+		return "باز کردن راهنمای NVIDIA Optimus";
+	}
+
+	@Override
+	public String gpuFixTextoWindows() {
+		return "CrashDetector تشخیص داد که ممکن است Minecraft از GPU با عملکرد بالا استفاده نکند.\n\n"
+				+ "در ویندوز می‌توان کلیدهای رجیستری را در "
+				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
+				+ "تنظیم کرد تا javaw.exe مجبور به استفاده از GPU اختصاصی شود.\n\n"
+				+ "GpuPreference=0 = تصمیم‌گیری خودکار ویندوز.\n"
+				+ "GpuPreference=1 = صرفه‌جویی در انرژی / GPU داخلی.\n" + "GpuPreference=2 = GPU با عملکرد بالا.\n\n"
+				+ "بخشی از این اطلاعات berkat تحقیقات منتشر شده توسط TLauncher و تحلیل "
+				+ "رفتار موجود در VirusTotal به دست آمده است.";
+	}
+
+	@Override
+	public String gpuFixTextoLinux() {
+		return "CrashDetector یک مشکل احتمالی مربوط به NVIDIA Optimus یا PRIME را تشخیص داد.\n\n"
+				+ "بسته به توزیع لینوکس مورد استفاده، ممکن است نیاز به پیکربندی NVIDIA Optimus، "
+				+ "nvidia-prime، switcheroo-control یا سایر سیستم‌های هیبریدی باشد.\n\n"
+				+ "در Fedora/RHEL و مشتقات آن، معمولاً پیروی از مستندات RPMFusion توصیه می‌شود.\n\n"
+				+ "دکمه پایین مستندات رسمی توصیه شده را باز خواهد کرد.";
+	}
+
+	@Override
+	public String gpuFixTextoMac() {
+		return "CrashDetector یک مشکل احتمالی در انتخاب GPU را تشخیص داد.\n\n"
+				+ "در برخی سیستم‌های macOS با GPU هیبریدی، می‌توان استفاده از GPU اختصاصی را "
+				+ "از طریق تنظیمات پیشرفته سیستم اجباری کرد.\n\n"
+				+ "دکمه اعمال سعی می‌کند فرمانی را اجرا کند تا اولویت با GPU با عملکرد بالا باشد.";
+	}
+
+	@Override
+	public String gpuFixTextoOtroSistema() {
+		return "CrashDetector یک مشکل احتمالی مربوط به GPU را تشخیص داد، "
+				+ "اما پیاده‌سازی خاصی برای این سیستم عامل وجود ندارد.";
+	}
+
+	@Override
+	public String gpuFixLinuxManual() {
+		return "در لینوکس معمولاً پیکربندی باید به صورت دستی و بسته به توزیع، "
+				+ "درایور NVIDIA و سیستم Optimus/PRIME مورد استفاده انجام شود.";
+	}
+
+	@Override
+	public String gpuFixSistemaNoSoportado() {
+		return "سیستم عامل برای پیکربندی خودکار GPU پشتیبانی نمی‌شود.";
+	}
+
+	@Override
+	public String gpuFixJavaNoDetectado() {
+		return "مسیر فعلی javaw.exe شناسایی نشد.";
+	}
+
+	@Override
+	public String gpuFixWindowsAplicado(String ruta) {
+		return "تنظیمات GPU با موفقیت برای موارد زیر اعمال شد:\n\n" + ruta + "\n\n"
+				+ "GpuPreference=2 نشان‌دهنده GPU با عملکرد بالا است.";
+	}
+
+	@Override
+	public String gpuFixErrorAplicando() {
+		return "هنگام تلاش برای اعمال تنظیمات GPU خطایی رخ داد";
+	}
+
+	@Override
+	public String gpuFixMacAplicado() {
+		return "تنظیمات GPU با عملکرد بالا اعمال شد.";
+	}
+
+	@Override
+	public String gpuFixMacError() {
+		return "اعمال تنظیمات GPU در macOS امکان‌پذیر نبود";
+	}
+
+	@Override
+	public String rendimientoTitulo() {
+		return "مدیریت عملکرد";
+	}
+
+	@Override
+	public String rendimientoBotonSidebar() {
+		return "عملکرد";
+	}
+
+	@Override
+	public String rendimientoBotonAnalizar() {
+		return "تحلیل عملکرد";
+	}
+
+	@Override
+	public String rendimientoBotonAbrirGPU() {
+		return "باز کردن تنظیمات GPU";
+	}
+
+	@Override
+	public String rendimientoDescripcion() {
+		return "این پنل مشکلات محیطی، مادهای توصیه‌شده یا پرخطر، و گزینه‌های پیکربندی "
+				+ "که می‌توانند عملکرد را بهبود بخشند، بررسی می‌کند. همه گزینه‌ها با هم کار نمی‌کنند، همه برای هر "
+				+ "نسخه‌ای از ماینکرفت مناسب نیستند و همه با هر modloader سازگار نیستند. اشکالی ندارد: شما نیاز به "
+				+ "امتیاز کامل بهینه‌سازی ندارید.";
+	}
+
+	@Override
+	public String rendimientoNotaCompatibilidad() {
+		return "توجه: این پیشنهادات امکانات هستند، نه دستوری برای اعمال همه چیز. برخی گزینه‌ها ممکن است با هم تداخل داشته باشند "
+				+ "یا برای نسخه، لانچر، modloader یا مادپک شما مناسب نباشند.";
+	}
+
+	@Override
+	public String rendimientoPestanaResumen() {
+		return "خلاصه";
+	}
+
+	@Override
+	public String rendimientoPestanaAmbiental() {
+		return "مشکلات محیطی";
+	}
+
+	@Override
+	public String rendimientoPestanaMods() {
+		return "مادهای توصیه‌شده و ریسک‌ها";
+	}
+
+	@Override
+	public String rendimientoPestanaConfigs() {
+		return "گزینه‌های پیکربندی";
+	}
+
+	@Override
+	public String rendimientoResumenTitulo() {
+		return "خلاصه تحلیل";
+	}
+
+	@Override
+	public String rendimientoResumenAmbiental(int cantidad) {
+		return "مشکلات محیطی یافت‌شده: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenMods(int cantidad) {
+		return "پیشنهادات یا ریسک‌های مادی یافت‌شده: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenConfigs(int cantidad) {
+		return "پیشنهادات پیکربندی یافت‌شده: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenGPU() {
+		return "یک مشکل GPU تشخیص داده شد. به همین دلیل دکمه باز کردن تنظیمات GPU فعال شده است.";
+	}
+
+	@Override
+	public String rendimientoSinHallazgos() {
+		return "در این بخش پیشنهادی یافت نشد.";
+	}
+
+	@Override
+	public String rendimientoSugerencia() {
+		return "پیشنهاد";
+	}
+
+	@Override
+	public String rendimientoColorFondo() {
+		return "عملکرد - پس‌زمینه";
+	}
+
+	@Override
+	public String rendimientoColorPanel() {
+		return "عملکرد - پنل";
+	}
+
+	@Override
+	public String rendimientoColorTexto() {
+		return "عملکرد - متن";
+	}
+
+	@Override
+	public String rendimientoColorTextoSecundario() {
+		return "عملکرد - متن ثانویه";
+	}
+
+	@Override
+	public String rendimientoColorBoton() {
+		return "عملکرد - دکمه";
+	}
+
+	@Override
+	public String rendimientoColorBotonTexto() {
+		return "عملکرد - متن دکمه";
+	}
+
+	@Override
+	public String rendimientoColorSeleccion() {
+		return "عملکرد - انتخاب";
+	}
 
 }

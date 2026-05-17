@@ -9374,32 +9374,880 @@ public class Portuges implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "Um mod tenta sobrescrever um método final";
 	}
-	
-    @Override
-    public String errorCrashProvocadoPorComando(String comandoDetectado) {
-        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-                + "O Minecraft foi fechado por um comando de crash.</b>"
-                + "<p>O log indica que o comando <code>" + comandoDetectado + "</code> foi executado.</p>"
-                + "<p>Isso normalmente significa que o jogo não fechou devido a um erro normal de mods, mas porque alguém "
-                + "usou um comando projetado para provocar um crash manualmente.</p>"
-                + "<p><b>O que verificar:</b></p>"
-                + "<ul>"
-                + "<li>Verifique quem executou o comando no console ou dentro do jogo.</li>"
-                + "<li>Se foi um teste, você pode ignorar este crash.</li>"
-                + "<li>Se ocorreu sem intenção, verifique command blocks, scripts, datapacks, mods de administração ou permissões de operadores.</li>"
-                + "</ul>";
-    }
 
-    @Override
-    public String nombreCrashProvocadoPorComando() {
-        return "Crash provocado por comando";
-    }
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "O Minecraft foi fechado por um comando de crash.</b>" + "<p>O log indica que o comando <code>"
+				+ comandoDetectado + "</code> foi executado.</p>"
+				+ "<p>Isso normalmente significa que o jogo não fechou devido a um erro normal de mods, mas porque alguém "
+				+ "usou um comando projetado para provocar um crash manualmente.</p>" + "<p><b>O que verificar:</b></p>"
+				+ "<ul>" + "<li>Verifique quem executou o comando no console ou dentro do jogo.</li>"
+				+ "<li>Se foi um teste, você pode ignorar este crash.</li>"
+				+ "<li>Se ocorreu sem intenção, verifique command blocks, scripts, datapacks, mods de administração ou permissões de operadores.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+		return "Crash provocado por comando";
+	}
+
+	public String impactoAlto() {
+		return "Alto";
+	}
+
+	public String impactoMedio() {
+		return "Médio";
+	}
+
+	public String impactoBajo() {
+		return "Baixo";
+	}
+
+	public String impactoBajoMedio() {
+		return "Baixo/Médio";
+	}
+
+	public String riesgoAlto() {
+		return "Alto";
+	}
+
+	public String riesgoMedio() {
+		return "Médio";
+	}
+
+	public String riesgoBajo() {
+		return "Baixo";
+	}
+
+	public String riesgoMedioAlto() {
+		return "Médio/Alto";
+	}
+
+	public String tituloCrearConfigBBE() {
+		return "Criar configuração do Better Block Entities";
+	}
+
+	public String descripcionCrearConfigBBE() {
+		return "O arquivo BBEConfig.json não existe.";
+	}
+
+	public String sugerenciaCrearConfigBBE() {
+		return "Criar BBEConfig.json com otimizações para baús, shulkers, placas, camas, sinos e estandartes.";
+	}
+
+	public String tituloActivarOptimizacionMaestraBBE() {
+		return "Ativar otimização mestre do BBE";
+	}
+
+	public String descripcionActivarOptimizacionMaestraBBE() {
+		return "O Better Block Entities não parece ter a otimização principal ativada.";
+	}
+
+	public String sugerenciaActivarOptimizacionMaestraBBE() {
+		return "Adicionar {\"option\":\"optimize.master\",\"value\":true}";
+	}
+
+	public String tituloActivarCullingTextoCartelesBBE() {
+		return "Ativar culling de texto de placas";
+	}
+
+	public String descripcionActivarCullingTextoCartelesBBE() {
+		return "Reduz a renderização de texto de placas à distância.";
+	}
+
+	public String sugerenciaActivarCullingTextoCartelesBBE() {
+		return "Adicionar {\"option\":\"misc.sign_text_culling\",\"value\":true}";
+	}
+
+	public String tituloAumentarSleepDelayEntityCulling() {
+		return "Aumentar o sleepDelay do EntityCulling";
+	}
+
+	public String descripcionAumentarSleepDelayEntityCulling() {
+		return "O EntityCulling verificará entidades com menos frequência.";
+	}
+
+	public String sugerenciaAumentarSleepDelayEntityCulling() {
+		return "\"sleepDelay\": 153";
+	}
+
+	public String tituloSubirLimiteHitboxEntityCulling() {
+		return "Aumentar o limite de hitbox";
+	}
+
+	public String descripcionSubirLimiteHitboxEntityCulling() {
+		return "Permite um comportamento de culling mais agressivo antes de cair em rotas mais lentas.";
+	}
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling() {
+		return "\"hitboxLimit\": 90";
+	}
+
+	public String tituloDesactivarDatosF3EntityCulling() {
+		return "Desativar dados F3 do EntityCulling";
+	}
+
+	public String descripcionDesactivarDatosF3EntityCulling() {
+		return "Remove informações extras de depuração do mod.";
+	}
+
+	public String sugerenciaDesactivarDatosF3EntityCulling() {
+		return "\"disableF3\": true";
+	}
+
+	public String tituloActivarBufferingSignsImmediatelyFast() {
+		return "Ativar buffering experimental de placas";
+	}
+
+	public String descripcionActivarBufferingSignsImmediatelyFast() {
+		return "Pode melhorar o desempenho quando há muitas placas.";
+	}
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast() {
+		return "\"experimental_sign_text_buffering\": true";
+	}
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast() {
+		return "Reduzir o gerenciamento de conflitos de resource packs";
+	}
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast() {
+		return "Pode remover trabalho extra, mas também pode causar problemas visuais com resource packs.";
+	}
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast() {
+		return "\"experimental_disable_resource_pack_conflict_handling\": true";
+	}
+
+	public String tituloOcultarBotonNCR() {
+		return "Ocultar botão do No Chat Reports";
+	}
+
+	public String descripcionOcultarBotonNCR() {
+		return "Mudança de interface; não melhora muito os FPS, mas limpa a tela.";
+	}
+
+	public String sugerenciaOcultarBotonNCR() {
+		return "\"showNCRButton\": false";
+	}
+
+	public String tituloActivarMixinsExperimentalesLithium() {
+		return "Ativar mixins experimentais do Lithium";
+	}
+
+	public String descripcionActivarMixinsExperimentalesLithium() {
+		return "Habilita otimizações experimentais adicionais.";
+	}
+
+	public String sugerenciaActivarMixinsExperimentalesLithium() {
+		return "mixin.experimental=true";
+	}
+
+	public String tituloUsarDetectorThreadingPequenoFerriteCore() {
+		return "Usar detector de threading pequeno";
+	}
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore() {
+		return "Reduz memória, mas pode ser mais arriscado.";
+	}
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore() {
+		return "useSmallThreadingDetector=true";
+	}
+
+	public String tituloModernFixRecursosDinamicos() {
+		return "Ativar recursos dinâmicos do ModernFix";
+	}
+
+	public String descripcionModernFixRecursosDinamicos() {
+		return "Pode reduzir o uso de memória e trabalho carregando recursos de forma mais eficiente.";
+	}
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades() {
+		return "Ativar renderizadores dinâmicos de entidades";
+	}
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades() {
+		return "Pode melhorar o desempenho ao gerenciar renderizadores de entidades de forma mais eficiente.";
+	}
+
+	public String tituloModernFixRenderizadoItemsRapido() {
+		return "Ativar renderização rápida de itens";
+	}
+
+	public String descripcionModernFixRenderizadoItemsRapido() {
+		return "Pode melhorar o desempenho ao renderizar itens.";
+	}
+
+	public String tituloModernFixWorldgenAllocation() {
+		return "Reduzir alocações no worldgen";
+	}
+
+	public String descripcionModernFixWorldgenAllocation() {
+		return "Pode reduzir lixo de memória durante a geração de mundo.";
+	}
+
+	public String tituloModernFixDeduplicacionIngredientes() {
+		return "Ativar deduplicação de ingredientes";
+	}
+
+	public String descripcionModernFixDeduplicacionIngredientes() {
+		return "Reduz objetos duplicados relacionados a receitas e ingredientes.";
+	}
+
+	public String tituloSodiumRenderCielo() {
+		return "Ativar otimização/render de céu no Sodium";
+	}
+
+	public String descripcionSodiumRenderCielo() {
+		return "Pode ajustar o comportamento de renderização do céu.";
+	}
+
+	public String tituloActivarLightmapCaching() {
+		return "Ativar cache do lightmap";
+	}
+
+	public String descripcionActivarLightmapCaching() {
+		return "Evita recalcular iluminação quando não é necessário.";
+	}
+
+	public String sugerenciaActivarLightmapCaching() {
+		return "enable_lightmap_caching: true";
+	}
+
+	public String tituloOcultarTextoF3BadOptimizations() {
+		return "Ocultar texto F3 do BadOptimizations";
+	}
+
+	public String descripcionOcultarTextoF3BadOptimizations() {
+		return "Reduz ruído de depuração na tela F3.";
+	}
+
+	public String sugerenciaOcultarTextoF3BadOptimizations() {
+		return "show_f3_text: false";
+	}
+
+	public String tituloDesactivarLogConfigBadOptimizations() {
+		return "Desativar log de configuração";
+	}
+
+	public String descripcionDesactivarLogConfigBadOptimizations() {
+		return "Evita imprimir toda a configuração ao iniciar.";
+	}
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations() {
+		return "log_config: false";
+	}
+
+	public String tituloActivarSerializadorGCFreeC2ME() {
+		return "Ativar serializador GC-free do C2ME";
+	}
+
+	public String descripcionActivarSerializadorGCFreeC2ME() {
+		return "Reduz alocações de memória ao carregar ou salvar chunks.";
+	}
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME() {
+		return "[ioSystem] gcFreeChunkSerializer = true";
+	}
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME() {
+		return "Desativar syncPlayerTickets";
+	}
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME() {
+		return "Pode melhorar o desempenho de chunks, mas pode afetar contraptions técnicas.";
+	}
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME() {
+		return "[chunkSystem] syncPlayerTickets = false";
+	}
+
+	public String tituloUsarCullingHojasDepthMoreCulling() {
+		return "Usar culling de folhas DEPTH";
+	}
+
+	public String descripcionUsarCullingHojasDepthMoreCulling() {
+		return "Usa um modo de culling de folhas mais agressivo que o modo normal.";
+	}
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling() {
+		return "leavesCullingMode = \"DEPTH\"";
+	}
+
+	public String tituloActivarEndGatewayCullingMoreCulling() {
+		return "Ativar culling de End Gateway";
+	}
+
+	public String descripcionActivarEndGatewayCullingMoreCulling() {
+		return "Evita renderização desnecessária de End Gateways.";
+	}
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling() {
+		return "endGatewayCulling = true";
+	}
+
+	public String tituloActivarActivationRangeServerCore() {
+		return "Ativar activation range";
+	}
+
+	public String descripcionActivarActivationRangeServerCore() {
+		return "Reduz ticks de entidades longe do jogador.";
+	}
+
+	public String sugerenciaActivarActivationRangeServerCore() {
+		return "activation-range: enabled: true";
+	}
+
+	public String tituloActivarRangoVerticalServerCore() {
+		return "Ativar alcance vertical";
+	}
+
+	public String descripcionActivarRangoVerticalServerCore() {
+		return "Reduz ticks de entidades que estão muito acima ou abaixo do jogador.";
+	}
+
+	public String sugerenciaActivarRangoVerticalServerCore() {
+		return "use-vertical-range: true";
+	}
+
+	public String impactoNegativoAlto() {
+		return "Impacto negativo alto";
+	}
+
+	public String advertenciaModsCulling() {
+		return "Mods de culling podem causar incompatibilidades com alguns mods, crashes, erros onde o jogo para de ticar corretamente e também podem fazer com que fazendas automáticas ou fábricas parem de funcionar.";
+	}
+
+	public String tituloModBadOptimizations() {
+		return "Adicionar BadOptimizations";
+	}
+
+	public String descripcionModBadOptimizations() {
+		return "Adiciona micro-otimizações do cliente como cache de lightmap, cache de céu e redução de chamadas desnecessárias.";
+	}
+
+	public String tituloModBBE() {
+		return "Adicionar Better Block Entities";
+	}
+
+	public String descripcionModBBE() {
+		return "Otimiza a renderização de block entities como baús, shulkers, camas, sinos, estandartes e placas.";
+	}
+
+	public String tituloModC2ME() {
+		return "Adicionar Concurrent Chunk Management Engine";
+	}
+
+	public String descripcionModC2ME() {
+		return "Melhora o carregamento, geração e gerenciamento de chunks usando processamento concorrente. Pode ser muito poderoso, mas também pode causar incompatibilidades em modpacks grandes.";
+	}
+
+	public String tituloModEntityCulling() {
+		return "Adicionar EntityCulling";
+	}
+
+	public String descripcionModEntityCulling() {
+		return "Evita renderizar entidades que não estão visíveis. " + advertenciaModsCulling();
+	}
+
+	public String tituloModFerriteCore() {
+		return "Adicionar FerriteCore";
+	}
+
+	public String descripcionModFerriteCore() {
+		return "Reduz o uso de memória por meio de deduplicação e estruturas internas mais eficientes.";
+	}
+
+	public String tituloModImmediatelyFast() {
+		return "Adicionar ImmediatelyFast";
+	}
+
+	public String descripcionModImmediatelyFast() {
+		return "Otimiza várias partes da renderização imediata, texto, buffers, mapas e interface.";
+	}
+
+	public String tituloModLithium() {
+		return "Adicionar Lithium";
+	}
+
+	public String descripcionModLithium() {
+		return "Otimiza a lógica do jogo, entidades, blocos, física e outros sistemas sem alterar muito o comportamento vanilla.";
+	}
+
+	public String tituloModModernFix() {
+		return "Adicionar ModernFix";
+	}
+
+	public String descripcionModModernFix() {
+		return "Adiciona muitas otimizações de memória, carregamento, recursos e desempenho geral. Suas ferramentas relacionadas ao atlas podem entrar em conflito com mods que deixam o atlas menor.";
+	}
+
+	public String tituloModMoreCulling() {
+		return "Adicionar More Culling";
+	}
+
+	public String descripcionModMoreCulling() {
+		return "Adiciona culling para blocos, folhas, molduras de itens, pinturas, chuva, beacons e outros elementos. "
+				+ advertenciaModsCulling();
+	}
+
+	public String tituloModScalableLux() {
+		return "Adicionar ScalableLux";
+	}
+
+	public String descripcionModScalableLux() {
+		return "Otimiza cálculos relacionados à iluminação e pode melhorar o desempenho em mundos com muitas mudanças de luz.";
+	}
+
+	public String tituloModServerCore() {
+		return "Adicionar ServerCore";
+	}
+
+	public String descripcionModServerCore() {
+		return "Adiciona otimizações do lado do servidor, activation range, controles de mobcaps, redução de ticks e melhorias de carregamento.";
+	}
+
+	public String tituloModSodium() {
+		return "Adicionar Sodium";
+	}
+
+	public String descripcionModSodium() {
+		return "Mod principal de otimização de renderização. Normalmente é uma das melhorias mais importantes para o FPS.";
+	}
+
+	public String tituloModVMP() {
+		return "Adicionar Very Many Players";
+	}
+
+	public String descripcionModVMP() {
+		return "Otimiza sistemas do servidor para lidar com muitos jogadores. O mod id esperado é vmp.";
+	}
+
+	public String tituloModMCMT() {
+		return "Adicionar MCMT";
+	}
+
+	public String descripcionModMCMT() {
+		return "Tenta multithrear partes do servidor do Minecraft. Pode melhorar o desempenho em alguns casos, mas tem alto risco de incompatibilidades, erros de ticking e comportamento estranho.";
+	}
+
+	public String tituloLiabilityUranium() {
+		return "Remover Uranium";
+	}
+
+	public String descripcionLiabilityUranium() {
+		return "Uranium é um mod projetado para lagar intencionalmente o jogo. Não deve ser instalado se o objetivo é desempenho.";
+	}
+
+	public String tituloAmbientalSinXmx() {
+		return "Configurar memória máxima do Java";
+	}
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro) {
+		return "-Xmx não foi detectado nos argumentos fornecidos. Para " + mods + " mods, o mínimo sugerido é " + minimo
+				+ ", sem ultrapassar aproximadamente " + maximoSeguro + ".";
+	}
+
+	public String sugerenciaAmbientalSinXmx(String minimo) {
+		return "Adicionar -Xmx" + minimo.replace(" ", "");
+	}
+
+	public String tituloAmbientalDemasiadaMemoria() {
+		return "Reduzir memória alocada";
+	}
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro) {
+		return "A instância tem " + xmx + " alocados de " + total
+				+ ". Não é recomendado alocar mais de 80% da RAM disponível.";
+	}
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro) {
+		return "Reduzir -Xmx para " + maximoSeguro + " ou menos.";
+	}
+
+	public String tituloAmbientalMemoriaInsuficiente() {
+		return "Aumentar memória alocada";
+	}
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo) {
+		return "A instância tem " + xmx + " alocados. Para " + mods + " mods, o mínimo sugerido é " + minimo + ".";
+	}
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo) {
+		return "Aumentar -Xmx para pelo menos " + minimo + ".";
+	}
+
+	public String tituloAmbientalJava8GC() {
+		return "Usar G1GC ou Shenandoah no Java 8";
+	}
+
+	public String descripcionAmbientalJava8GC() {
+		return "No Java 8, recomenda-se usar G1GC ou Shenandoah para reduzir pausas e melhorar a estabilidade.";
+	}
+
+	public String sugerenciaAmbientalJava8GC() {
+		return "Adicionar -XX:+UseG1GC ou -XX:+UseShenandoahGC.";
+	}
+
+	public String tituloAmbientalZGC() {
+		return "Usar ZGC";
+	}
+
+	public String descripcionAmbientalZGC(String ramTotal) {
+		return "O equipamento tem mais de 12 GB de RAM (" + ramTotal
+				+ "). Se a distribuição Java suportar, o ZGC pode reduzir as pausas do coletor de lixo.";
+	}
+
+	public String sugerenciaAmbientalZGC() {
+		return "No Java 17 ou superior, tente -XX:+UseZGC.";
+	}
+
+	public String tituloAmbientalAikar() {
+		return "Adicionar flags do Aikar";
+	}
+
+	public String descripcionAmbientalAikar() {
+		return "No Java 17 ou anterior, as flags do Aikar geralmente melhoram o comportamento do G1GC para o Minecraft.";
+	}
+
+	public String sugerenciaAmbientalAikar() {
+		return "Usar flags do Aikar, incluindo -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200.";
+	}
+
+	public String tituloAmbientalRedHatJDK() {
+		return "Usar Red Hat JDK";
+	}
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os) {
+		return "Para Java " + javaMayor + " no " + os
+				+ ", recomenda-se o Red Hat JDK pela estabilidade e compatibilidade.";
+	}
+
+	public String sugerenciaAmbientalRedHatJDK() {
+		return "Instalar Red Hat JDK para Java 8 ou Java 11.";
+	}
+
+	public String tituloAmbientalAzulPrime() {
+		return "Considerar Azul Prime";
+	}
+
+	public String descripcionAmbientalAzulPrime() {
+		return "No Linux com Java 16 ou superior e mais de 16 GB de RAM, o Azul Prime pode ser uma boa opção de desempenho.";
+	}
+
+	public String sugerenciaAmbientalAzulPrime() {
+		return "Testar o Azul Prime se o equipamento tiver mais de 16 GB de RAM.";
+	}
+
+	public String tituloAmbientalGraalVM() {
+		return "Considerar GraalVM";
+	}
+
+	public String descripcionAmbientalGraalVM() {
+		return "Com Java 16 ou superior e mais de 16 GB de RAM, o GraalVM pode ser uma alternativa útil fora do Linux.";
+	}
+
+	public String sugerenciaAmbientalGraalVM() {
+		return "Testar o GraalVM se o equipamento tiver mais de 16 GB de RAM.";
+	}
+
+	public String tituloAmbientalDiscoBajo() {
+		return "Verificar espaço livre em disco";
+	}
+
+	public String descripcionAmbientalDiscoBajo(String libre) {
+		return "O disco tem pouco espaço livre: " + libre
+				+ ". O Minecraft pode falhar, salvar lentamente ou corromper dados se ficar sem espaço.";
+	}
+
+	public String sugerenciaAmbientalDiscoBajo() {
+		return "Liberar espaço até ter pelo menos 20 GB disponíveis.";
+	}
+
+	public String tituloAmbientalWindowsRHEL9() {
+		return "Considerar RHEL 9 para testes";
+	}
+
+	public String descripcionAmbientalWindowsRHEL9() {
+		return "No Windows, recomenda-se considerar o RHEL 9 porque inclui o Red Hat JDK, é estável, pode ser baixado gratuitamente por indivíduos e é onde a maioria dos testes é feita.";
+	}
+
+	public String sugerenciaAmbientalWindowsRHEL9() {
+		return "Testar a instância no RHEL 9 se buscar máxima estabilidade de teste.";
+	}
+
+	public String tituloAmbientalRaptorLake() {
+		return "Aviso do Intel Raptor Lake";
+	}
+
+	public String descripcionAmbientalRaptorLake() {
+		return "Foi detectado o problema do Raptor Lake marcado pela verificação existente. Isso pode causar instabilidade, crashes e erros que parecem ser do modpack.";
+	}
+
+	public String sugerenciaAmbientalRaptorLake() {
+		return "Atualizar BIOS/microcódigo e revisar o aviso do Raptor Lake antes de culpar o modpack.";
+	}
+
+	@Override
+	public String tituloAmbientalNeoForge1201Antiguo() {
+		return "NeoForge 1.20.1 antigo detectado";
+	}
+
+	@Override
+	public String descripcionAmbientalNeoForge1201Antiguo() {
+		return "Foi detectado o FancyModLoader 47 ou um caminho compatível com o NeoForge 1.20.1. "
+				+ "O NeoForge 1.20.1 foi uma bifurcação do MinecraftForge 1.20.1 e geralmente é compatível a nível binário, "
+				+ "mas essa linha foi abandonada mais cedo e pode faltar várias otimizações disponíveis no Forge.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalNeoForge1201Antiguo() {
+		return "Para a versão 1.20.1, se o modpack permitir, considere usar o MinecraftForge 1.20.1 em vez do NeoForge 1.20.1.";
+	}
+
+	@Override
+	public String tituloAmbientalGPU() {
+		return "Problema de GPU detectado";
+	}
+
+	@Override
+	public String descripcionAmbientalGPU() {
+		return "Outra verificação já detectou um possível problema de GPU, OpenGL ou seleção de placa gráfica.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalGPU() {
+		return "Verifique se o Minecraft está usando a GPU correta, atualize os drivers e evite configurações híbridas instáveis.";
+	}
+
+	@Override
+	public String gpuFixTitulo() {
+		return "Configuração de GPU";
+	}
+
+	@Override
+	public String gpuFixBotonSidebar() {
+		return "GPU";
+	}
+
+	@Override
+	public String gpuFixBotonAplicar() {
+		return "Aplicar configuração";
+	}
+
+	@Override
+	public String gpuFixBotonFuenteTLauncher() {
+		return "Abrir guia do TLauncher";
+	}
+
+	@Override
+	public String gpuFixBotonVirusTotal() {
+		return "Abrir análise do VirusTotal";
+	}
+
+	@Override
+	public String gpuFixBotonOptimusLinux() {
+		return "Abrir guia NVIDIA Optimus";
+	}
+
+	@Override
+	public String gpuFixTextoWindows() {
+		return "O CrashDetector detectou que o Minecraft pode não estar usando a GPU de alto desempenho.\n\n"
+				+ "No Windows, é possível definir chaves de registro em "
+				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
+				+ "para forçar o javaw.exe a usar a GPU dedicada.\n\n"
+				+ "GpuPreference=0 = decisão automática do Windows.\n"
+				+ "GpuPreference=1 = economia de energia / GPU integrada.\n"
+				+ "GpuPreference=2 = GPU de alto desempenho.\n\n"
+				+ "Parte dessas informações foi obtida graças à pesquisa publicada pelo TLauncher e à análise "
+				+ "de comportamento disponível no VirusTotal.";
+	}
+
+	@Override
+	public String gpuFixTextoLinux() {
+		return "O CrashDetector detectou um possível problema relacionado ao NVIDIA Optimus ou PRIME.\n\n"
+				+ "Dependendo da distribuição Linux utilizada, pode ser necessário configurar o NVIDIA Optimus, "
+				+ "nvidia-prime, switcheroo-control ou outros sistemas híbridos.\n\n"
+				+ "No Fedora/RHEL e derivados, geralmente é recomendado seguir a documentação do RPMFusion.\n\n"
+				+ "O botão inferior abrirá a documentação oficial recomendada.";
+	}
+
+	@Override
+	public String gpuFixTextoMac() {
+		return "O CrashDetector detectou um possível problema de seleção de GPU.\n\n"
+				+ "Em alguns sistemas macOS com GPU híbrida, é possível forçar o uso da GPU dedicada "
+				+ "por meio de configurações avançadas do sistema.\n\n"
+				+ "O botão de aplicar tentará executar um comando para priorizar a GPU de alto desempenho.";
+	}
+
+	@Override
+	public String gpuFixTextoOtroSistema() {
+		return "O CrashDetector detectou um possível problema relacionado à GPU, "
+				+ "mas não há uma implementação específica para este sistema operacional.";
+	}
+
+	@Override
+	public String gpuFixLinuxManual() {
+		return "No Linux, normalmente a configuração deve ser feita manualmente dependendo da distribuição, "
+				+ "driver NVIDIA e sistema Optimus/PRIME utilizado.";
+	}
+
+	@Override
+	public String gpuFixSistemaNoSoportado() {
+		return "Sistema operacional não suportado para a configuração automática de GPU.";
+	}
+
+	@Override
+	public String gpuFixJavaNoDetectado() {
+		return "Não foi possível detectar o caminho atual do javaw.exe.";
+	}
+
+	@Override
+	public String gpuFixWindowsAplicado(String ruta) {
+		return "A configuração de GPU foi aplicada corretamente para:\n\n" + ruta + "\n\n"
+				+ "GpuPreference=2 indica GPU de alto desempenho.";
+	}
+
+	@Override
+	public String gpuFixErrorAplicando() {
+		return "Ocorreu um erro ao tentar aplicar a configuração de GPU";
+	}
+
+	@Override
+	public String gpuFixMacAplicado() {
+		return "A configuração de GPU de alto desempenho foi aplicada.";
+	}
+
+	@Override
+	public String gpuFixMacError() {
+		return "Não foi possível aplicar a configuração de GPU no macOS";
+	}
+
+	@Override
+	public String rendimientoTitulo() {
+		return "Gerenciador de desempenho";
+	}
+
+	@Override
+	public String rendimientoBotonSidebar() {
+		return "Desempenho";
+	}
+
+	@Override
+	public String rendimientoBotonAnalizar() {
+		return "Analisar desempenho";
+	}
+
+	@Override
+	public String rendimientoBotonAbrirGPU() {
+		return "Abrir configuração de GPU";
+	}
+
+	@Override
+	public String rendimientoDescripcion() {
+		return "Este painel verifica problemas ambientais, mods recomendados ou arriscados e opções de configuração "
+				+ "que podem melhorar o desempenho. Nem todas as opções funcionam juntas, nem todas servem para cada "
+				+ "versão do Minecraft e nem todas são compatíveis com cada modloader. Tudo bem: você não precisa de uma "
+				+ "pontuação perfeita de otimização.";
+	}
+
+	@Override
+	public String rendimientoNotaCompatibilidad() {
+		return "Nota: estas sugestões são possibilidades, não uma ordem para aplicar tudo. Algumas opções podem conflitar "
+				+ "entre si ou não serem adequadas para sua versão, launcher, modloader ou modpack.";
+	}
+
+	@Override
+	public String rendimientoPestanaResumen() {
+		return "Resumo";
+	}
+
+	@Override
+	public String rendimientoPestanaAmbiental() {
+		return "Problemas ambientais";
+	}
+
+	@Override
+	public String rendimientoPestanaMods() {
+		return "Mods recomendados e riscos";
+	}
+
+	@Override
+	public String rendimientoPestanaConfigs() {
+		return "Opções de config";
+	}
+
+	@Override
+	public String rendimientoResumenTitulo() {
+		return "Resumo da análise";
+	}
+
+	@Override
+	public String rendimientoResumenAmbiental(int cantidad) {
+		return "Problemas ambientais encontrados: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenMods(int cantidad) {
+		return "Sugestões ou riscos de mods encontrados: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenConfigs(int cantidad) {
+		return "Sugestões de configuração encontradas: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenGPU() {
+		return "Foi detectado um problema de GPU. Por isso, o botão para abrir a configuração de GPU foi habilitado.";
+	}
+
+	@Override
+	public String rendimientoSinHallazgos() {
+		return "Nenhuma sugestão foi encontrada nesta seção.";
+	}
+
+	@Override
+	public String rendimientoSugerencia() {
+		return "Sugestão";
+	}
+
+	@Override
+	public String rendimientoColorFondo() {
+		return "Desempenho - fundo";
+	}
+
+	@Override
+	public String rendimientoColorPanel() {
+		return "Desempenho - painel";
+	}
+
+	@Override
+	public String rendimientoColorTexto() {
+		return "Desempenho - texto";
+	}
+
+	@Override
+	public String rendimientoColorTextoSecundario() {
+		return "Desempenho - texto secundário";
+	}
+
+	@Override
+	public String rendimientoColorBoton() {
+		return "Desempenho - botão";
+	}
+
+	@Override
+	public String rendimientoColorBotonTexto() {
+		return "Desempenho - texto do botão";
+	}
+
+	@Override
+	public String rendimientoColorSeleccion() {
+		return "Desempenho - seleção";
+	}
 
 }

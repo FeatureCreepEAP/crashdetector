@@ -9817,33 +9817,881 @@ public class Suajili implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "Mod inajarikuandika upya njia ya final";
 	}
-	
-    @Override
-    public String errorCrashProvocadoPorComando(String comandoDetectado) {
-        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-                + "Minecraft ilifungwa na amri ya crash.</b>"
-                + "<p>Logi inaonyesha kwamba amri <code>" + comandoDetectado + "</code> ilitumika.</p>"
-                + "<p>Hii kwa kawaida inamaanisha kwamba mchezo haukufungwa kwa sababu ya hitilafu ya kawaida ya mod, bali kwa sababu mtu "
-                + "alitumia amri iliyoundwa kusababisha crash kwa makusudi.</p>"
-                + "<p><b>Nini cha kukagua:</b></p>"
-                + "<ul>"
-                + "<li>Kagua ni nani aliyetekeleza amri hiyo kwenye konsole au ndani ya mchezo.</li>"
-                + "<li>Ikiwa ilikuwa jaribio, unaweza kupuuza crash hii.</li>"
-                + "<li>Ikiwa ilitokea bila kukusudia, kagua command blocks, hati (scripts), datapacks, mod za utawala au ruhusa za wasimamizi.</li>"
-                + "</ul>";
-    }
 
-    @Override
-    public String nombreCrashProvocadoPorComando() {
-        return "Crash iliyosababishwa na amri";
-    }
-	
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft ilifungwa na amri ya crash.</b>" + "<p>Logi inaonyesha kwamba amri <code>"
+				+ comandoDetectado + "</code> ilitumika.</p>"
+				+ "<p>Hii kwa kawaida inamaanisha kwamba mchezo haukufungwa kwa sababu ya hitilafu ya kawaida ya mod, bali kwa sababu mtu "
+				+ "alitumia amri iliyoundwa kusababisha crash kwa makusudi.</p>" + "<p><b>Nini cha kukagua:</b></p>"
+				+ "<ul>" + "<li>Kagua ni nani aliyetekeleza amri hiyo kwenye konsole au ndani ya mchezo.</li>"
+				+ "<li>Ikiwa ilikuwa jaribio, unaweza kupuuza crash hii.</li>"
+				+ "<li>Ikiwa ilitokea bila kukusudia, kagua command blocks, hati (scripts), datapacks, mod za utawala au ruhusa za wasimamizi.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+		return "Crash iliyosababishwa na amri";
+	}
+
+	public String impactoAlto() {
+		return "Juu";
+	}
+
+	public String impactoMedio() {
+		return "Wastani";
+	}
+
+	public String impactoBajo() {
+		return "Chini";
+	}
+
+	public String impactoBajoMedio() {
+		return "Chini/Wastani";
+	}
+
+	public String riesgoAlto() {
+		return "Juu";
+	}
+
+	public String riesgoMedio() {
+		return "Wastani";
+	}
+
+	public String riesgoBajo() {
+		return "Chini";
+	}
+
+	public String riesgoMedioAlto() {
+		return "Wastani/Juu";
+	}
+
+	public String tituloCrearConfigBBE() {
+		return "Unda usanidi wa Better Block Entities";
+	}
+
+	public String descripcionCrearConfigBBE() {
+		return "Faili BBEConfig.json haipo.";
+	}
+
+	public String sugerenciaCrearConfigBBE() {
+		return "Unda BBEConfig.json na uboreshaji kwa masanduku, shulkers, alama, vitanda, kengele na bendera.";
+	}
+
+	public String tituloActivarOptimizacionMaestraBBE() {
+		return "Washa uboreshaji mkuu wa BBE";
+	}
+
+	public String descripcionActivarOptimizacionMaestraBBE() {
+		return "Inaonekana Better Block Entities haijawasha uboreshaji mkuu.";
+	}
+
+	public String sugerenciaActivarOptimizacionMaestraBBE() {
+		return "Ongeza {\"option\":\"optimize.master\",\"value\":true}";
+	}
+
+	public String tituloActivarCullingTextoCartelesBBE() {
+		return "Washa culling ya maandishi ya alama";
+	}
+
+	public String descripcionActivarCullingTextoCartelesBBE() {
+		return "Inapunguza uchoraji wa maandishi ya alama kwa mbali.";
+	}
+
+	public String sugerenciaActivarCullingTextoCartelesBBE() {
+		return "Ongeza {\"option\":\"misc.sign_text_culling\",\"value\":true}";
+	}
+
+	public String tituloAumentarSleepDelayEntityCulling() {
+		return "Ongeza sleepDelay ya EntityCulling";
+	}
+
+	public String descripcionAumentarSleepDelayEntityCulling() {
+		return "EntityCulling itaangalia viumbe mara chache zaidi.";
+	}
+
+	public String sugerenciaAumentarSleepDelayEntityCulling() {
+		return "\"sleepDelay\": 153";
+	}
+
+	public String tituloSubirLimiteHitboxEntityCulling() {
+		return "Panda kikomo cha hitbox";
+	}
+
+	public String descripcionSubirLimiteHitboxEntityCulling() {
+		return "Inaruhusu tabia ya culling yenye nguvu zaidi kabla ya kushuka njia za polepole.";
+	}
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling() {
+		return "\"hitboxLimit\": 90";
+	}
+
+	public String tituloDesactivarDatosF3EntityCulling() {
+		return "Zima data ya F3 ya EntityCulling";
+	}
+
+	public String descripcionDesactivarDatosF3EntityCulling() {
+		return "Inaondoa habari ya ziada ya debug ya mod.";
+	}
+
+	public String sugerenciaDesactivarDatosF3EntityCulling() {
+		return "\"disableF3\": true";
+	}
+
+	public String tituloActivarBufferingSignsImmediatelyFast() {
+		return "Washa buffering ya majaribio ya alama";
+	}
+
+	public String descripcionActivarBufferingSignsImmediatelyFast() {
+		return "Inaweza kuboresha utendaji wakati kuna alama nyingi.";
+	}
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast() {
+		return "\"experimental_sign_text_buffering\": true";
+	}
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast() {
+		return "Punguza usimamizi wa migogoro ya resource packs";
+	}
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast() {
+		return "Inaweza kuondoa kazi ya ziada, lakini pia inaweza kusababisha matatizo ya kuona na resource packs.";
+	}
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast() {
+		return "\"experimental_disable_resource_pack_conflict_handling\": true";
+	}
+
+	public String tituloOcultarBotonNCR() {
+		return "Ficha kitufe cha No Chat Reports";
+	}
+
+	public String descripcionOcultarBotonNCR() {
+		return "Mabadiliko ya kiolesura; haiboreshi FPS sana, lakini inasafisha skrini.";
+	}
+
+	public String sugerenciaOcultarBotonNCR() {
+		return "\"showNCRButton\": false";
+	}
+
+	public String tituloActivarMixinsExperimentalesLithium() {
+		return "Washa mixins za majaribio za Lithium";
+	}
+
+	public String descripcionActivarMixinsExperimentalesLithium() {
+		return "Inawasha uboreshaji wa ziada wa majaribio.";
+	}
+
+	public String sugerenciaActivarMixinsExperimentalesLithium() {
+		return "mixin.experimental=true";
+	}
+
+	public String tituloUsarDetectorThreadingPequenoFerriteCore() {
+		return "Tumia kigunduzi cha threading kidogo";
+	}
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore() {
+		return "Inapunguza kumbukumbu, lakini inaweza kuwa na hatari zaidi.";
+	}
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore() {
+		return "useSmallThreadingDetector=true";
+	}
+
+	public String tituloModernFixRecursosDinamicos() {
+		return "Washa rasilimali za kisasa za ModernFix";
+	}
+
+	public String descripcionModernFixRecursosDinamicos() {
+		return "Inaweza kupunguza matumizi ya kumbukumbu na kazi kwa kupakia rasilimali kwa ufanisi zaidi.";
+	}
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades() {
+		return "Washa vichoraji vya kisasa vya viumbe";
+	}
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades() {
+		return "Inaweza kuboresha utendaji kwa kudhibiti vichoraji vya viumbe kwa ufanisi zaidi.";
+	}
+
+	public String tituloModernFixRenderizadoItemsRapido() {
+		return "Washa uchoraji wa haraka wa vitu";
+	}
+
+	public String descripcionModernFixRenderizadoItemsRapido() {
+		return "Inaweza kuboresha utendaji wakati wa kuchora vitu.";
+	}
+
+	public String tituloModernFixWorldgenAllocation() {
+		return "Punguza mgao katika worldgen";
+	}
+
+	public String descripcionModernFixWorldgenAllocation() {
+		return "Inaweza kupunguza taka ya kumbukumbu wakati wa uzalishaji wa ulimwengu.";
+	}
+
+	public String tituloModernFixDeduplicacionIngredientes() {
+		return "Washa uondoaji wa nakala za viungo";
+	}
+
+	public String descripcionModernFixDeduplicacionIngredientes() {
+		return "Inapunguza vitu vinavyorudiwa vinavyohusiana na mapishi na viungo.";
+	}
+
+	public String tituloSodiumRenderCielo() {
+		return "Washa uboreshaji/uchoraji wa anga katika Sodium";
+	}
+
+	public String descripcionSodiumRenderCielo() {
+		return "Inaweza kurekebisha tabia ya uchoraji wa anga.";
+	}
+
+	public String tituloActivarLightmapCaching() {
+		return "Washa cache ya lightmap";
+	}
+
+	public String descripcionActivarLightmapCaching() {
+		return "Inazuia kukokotoa upya mwanga wakati haihitajiki.";
+	}
+
+	public String sugerenciaActivarLightmapCaching() {
+		return "enable_lightmap_caching: true";
+	}
+
+	public String tituloOcultarTextoF3BadOptimizations() {
+		return "Ficha maandishi ya F3 ya BadOptimizations";
+	}
+
+	public String descripcionOcultarTextoF3BadOptimizations() {
+		return "Inapunguza kelele ya debug kwenye skrini ya F3.";
+	}
+
+	public String sugerenciaOcultarTextoF3BadOptimizations() {
+		return "show_f3_text: false";
+	}
+
+	public String tituloDesactivarLogConfigBadOptimizations() {
+		return "Zima logi ya usanidi";
+	}
+
+	public String descripcionDesactivarLogConfigBadOptimizations() {
+		return "Inazuia kuchapa usanidi wote wakati wa kuanza.";
+	}
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations() {
+		return "log_config: false";
+	}
+
+	public String tituloActivarSerializadorGCFreeC2ME() {
+		return "Washa serializer ya GC-free ya C2ME";
+	}
+
+	public String descripcionActivarSerializadorGCFreeC2ME() {
+		return "Inapunguza mgao wa kumbukumbu wakati wa kupakia au kuhifadhi chunks.";
+	}
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME() {
+		return "[ioSystem] gcFreeChunkSerializer = true";
+	}
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME() {
+		return "Zima syncPlayerTickets";
+	}
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME() {
+		return "Inaweza kuboresha utendaji wa chunks, lakini inaweza kuathiri contraptions za kiufundi.";
+	}
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME() {
+		return "[chunkSystem] syncPlayerTickets = false";
+	}
+
+	public String tituloUsarCullingHojasDepthMoreCulling() {
+		return "Tumia culling ya majani DEPTH";
+	}
+
+	public String descripcionUsarCullingHojasDepthMoreCulling() {
+		return "Inatumia hali ya culling ya majani yenye nguvu zaidi kuliko hali ya kawaida.";
+	}
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling() {
+		return "leavesCullingMode = \"DEPTH\"";
+	}
+
+	public String tituloActivarEndGatewayCullingMoreCulling() {
+		return "Washa culling ya End Gateway";
+	}
+
+	public String descripcionActivarEndGatewayCullingMoreCulling() {
+		return "Inazuia uchoraji usiohitajika wa End Gateways.";
+	}
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling() {
+		return "endGatewayCulling = true";
+	}
+
+	public String tituloActivarActivationRangeServerCore() {
+		return "Washa activation range";
+	}
+
+	public String descripcionActivarActivationRangeServerCore() {
+		return "Inapunguza ticks za viumbe mbali na mchezaji.";
+	}
+
+	public String sugerenciaActivarActivationRangeServerCore() {
+		return "activation-range: enabled: true";
+	}
+
+	public String tituloActivarRangoVerticalServerCore() {
+		return "Washa safu ya wima";
+	}
+
+	public String descripcionActivarRangoVerticalServerCore() {
+		return "Inapunguza ticks za viumbe vilivyo juu sana au chini sana ya mchezaji.";
+	}
+
+	public String sugerenciaActivarRangoVerticalServerCore() {
+		return "use-vertical-range: true";
+	}
+
+	public String impactoNegativoAlto() {
+		return "Athari kubwa hasi";
+	}
+
+	public String advertenciaModsCulling() {
+		return "Mods za culling zinaweza kusababisha kutolingana na mod zingine, kufungwa ghafla (crashes), makosa ambapo mchezo husimama kutikita vizuri na pia zinaweza kufanya mashamba ya otomatiki au viwanda vusisimame kufanya kazi.";
+	}
+
+	public String tituloModBadOptimizations() {
+		return "Ongeza BadOptimizations";
+	}
+
+	public String descripcionModBadOptimizations() {
+		return "Inaongeza uboreshaji mdogo wa upande wa mteja kama cache ya lightmap, cache ya anga na kupunguza wito usiohitajika.";
+	}
+
+	public String tituloModBBE() {
+		return "Ongeza Better Block Entities";
+	}
+
+	public String descripcionModBBE() {
+		return "Inaboresha uchoraji wa block entities kama masanduku, shulkers, vitanda, kengele, bendera na alama.";
+	}
+
+	public String tituloModC2ME() {
+		return "Ongeza Concurrent Chunk Management Engine";
+	}
+
+	public String descripcionModC2ME() {
+		return "Inaboresha upakiaji, uzalishaji na usimamizi wa vipande (chunks) kwa kutumia usindiki sambamba. Inaweza kuwa yenye nguvu sana, lakini pia inaweza kusababisha kutolingana katika modpacks kubwa.";
+	}
+
+	public String tituloModEntityCulling() {
+		return "Ongeza EntityCulling";
+	}
+
+	public String descripcionModEntityCulling() {
+		return "Inazuia uchoraji wa viumbe ambavyo havionekani. " + advertenciaModsCulling();
+	}
+
+	public String tituloModFerriteCore() {
+		return "Ongeza FerriteCore";
+	}
+
+	public String descripcionModFerriteCore() {
+		return "Inapunguza matumizi ya kumbukumbu kupitia kuondoa nakala na miundo ya ndani yenye ufanisi zaidi.";
+	}
+
+	public String tituloModImmediatelyFast() {
+		return "Ongeza ImmediatelyFast";
+	}
+
+	public String descripcionModImmediatelyFast() {
+		return "Inaboresha sehemu mbalimbali za uchoraji wa papo hapo, maandishi, buffers, ramani na kiolesura.";
+	}
+
+	public String tituloModLithium() {
+		return "Ongeza Lithium";
+	}
+
+	public String descripcionModLithium() {
+		return "Inaboresha mantiki ya mchezo, viumbe, bloku, fizikia na mifumo mingine bila kubadilisha sana tabia ya vanilla.";
+	}
+
+	public String tituloModModernFix() {
+		return "Ongeza ModernFix";
+	}
+
+	public String descripcionModModernFix() {
+		return "Inaongeza uboreshaji mwingi wa kumbukumbu, upakiaji, rasilimali na utendaji wa jumla. Zana zake zinazohusiana na atlas zinaweza kugongana na mod zinazofanya atlas kuwa ndogo.";
+	}
+
+	public String tituloModMoreCulling() {
+		return "Ongeza More Culling";
+	}
+
+	public String descripcionModMoreCulling() {
+		return "Inaongeza culling kwa bloku, majani, fremu za vitu, michoro, mvua, beacons na vipengele vingine. "
+				+ advertenciaModsCulling();
+	}
+
+	public String tituloModScalableLux() {
+		return "Ongeza ScalableLux";
+	}
+
+	public String descripcionModScalableLux() {
+		return "Inaboresha hesabu zinazohusiana na mwanga na inaweza kuboresha utendaji katika ulimwengu wenye mabadiliko mengi ya mwanga.";
+	}
+
+	public String tituloModServerCore() {
+		return "Ongeza ServerCore";
+	}
+
+	public String descripcionModServerCore() {
+		return "Inaongeza uboreshaji upande wa seva, activation range, udhibiti wa mobcaps, kupunguza tiki na uboreshaji wa upakiaji.";
+	}
+
+	public String tituloModSodium() {
+		return "Ongeza Sodium";
+	}
+
+	public String descripcionModSodium() {
+		return "Mod kuu ya uboreshaji uchoraji. Kwa kawaida ni moja ya maboresho muhimu zaidi kwa FPS.";
+	}
+
+	public String tituloModVMP() {
+		return "Ongeza Very Many Players";
+	}
+
+	public String descripcionModVMP() {
+		return "Inaboresha mifumo ya seva ili kushughulikia wachezaji wengi. Kitambulisho cha mod kinachotarajiwa ni vmp.";
+	}
+
+	public String tituloModMCMT() {
+		return "Ongeza MCMT";
+	}
+
+	public String descripcionModMCMT() {
+		return "Inajaribu kufanya sehemu za seva ya Minecraft ziwe na nyuzi nyingi. Inaweza kuboresha utendaji katika hali fulani, lakini ina hatari kubwa ya kutolingana, makosa ya kutikita na tabia ya ajabu.";
+	}
+
+	public String tituloLiabilityUranium() {
+		return "Ondoa Uranium";
+	}
+
+	public String descripcionLiabilityUranium() {
+		return "Uranium ni mod iliyoundwa kusababisha lagg kwa makusudi mchezo. Haipaswi kusakinishwa ikiwa unataka utendaji bora.";
+	}
+
+	public String tituloAmbientalSinXmx() {
+		return "Weka kumbukumbu ya juu zaidi ya Java";
+	}
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro) {
+		return "-Xmx haigunduliwa katika hoja zilizotolewa. Kwa " + mods + " mod, kiwango cha chini kinapendekezwa ni "
+				+ minimo + ", usizidi takriban " + maximoSeguro + ".";
+	}
+
+	public String sugerenciaAmbientalSinXmx(String minimo) {
+		return "Ongeza -Xmx" + minimo.replace(" ", "");
+	}
+
+	public String tituloAmbientalDemasiadaMemoria() {
+		return "Punguza kumbukumbu iliyogawiwa";
+	}
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro) {
+		return "Instansi imegawiwa " + xmx + " kati ya " + total
+				+ ". Haipendekezwi kugawa zaidi ya 80% ya RAM inayopatikana.";
+	}
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro) {
+		return "Punguza -Xmx hadi " + maximoSeguro + " au chini.";
+	}
+
+	public String tituloAmbientalMemoriaInsuficiente() {
+		return "Ongeza kumbukumbu iliyogawiwa";
+	}
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo) {
+		return "Instansi ina " + xmx + " iliyogawiwa. Kwa " + mods + " mod, kiwango cha chini kinapendekezwa ni "
+				+ minimo + ".";
+	}
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo) {
+		return "Ongeza -Xmx hadi angalau " + minimo + ".";
+	}
+
+	public String tituloAmbientalJava8GC() {
+		return "Tumia G1GC au Shenandoah katika Java 8";
+	}
+
+	public String descripcionAmbientalJava8GC() {
+		return "Katika Java 8, inapendekezwa kutumia G1GC au Shenandoah ili kupunguza mapumziko na kuimarisha utulivu.";
+	}
+
+	public String sugerenciaAmbientalJava8GC() {
+		return "Ongeza -XX:+UseG1GC au -XX:+UseShenandoahGC.";
+	}
+
+	public String tituloAmbientalZGC() {
+		return "Tumia ZGC";
+	}
+
+	public String descripcionAmbientalZGC(String ramTotal) {
+		return "Kompyuta ina zaidi ya GB 12 za RAM (" + ramTotal
+				+ "). Ikiwa usambazaji wa Java unaunga mkono, ZGC inaweza kupunguza mapumziko ya mkusanyaji taka.";
+	}
+
+	public String sugerenciaAmbientalZGC() {
+		return "Katika Java 17 au juu zaidi, jaribu -XX:+UseZGC.";
+	}
+
+	public String tituloAmbientalAikar() {
+		return "Ongeza bendera za Aikar";
+	}
+
+	public String descripcionAmbientalAikar() {
+		return "Katika Java 17 au zamani, bendera za Aikar mara nyingi huboresha tabia ya G1GC kwa Minecraft.";
+	}
+
+	public String sugerenciaAmbientalAikar() {
+		return "Tumia bendera za Aikar, ikiwa ni pamoja na -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200.";
+	}
+
+	public String tituloAmbientalRedHatJDK() {
+		return "Tumia Red Hat JDK";
+	}
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os) {
+		return "Kwa Java " + javaMayor + " katika " + os
+				+ ", Red Hat JDK inapendekezwa kwa sababu ya utulivu na ulinganifu.";
+	}
+
+	public String sugerenciaAmbientalRedHatJDK() {
+		return "Sakinisha Red Hat JDK kwa Java 8 au Java 11.";
+	}
+
+	public String tituloAmbientalAzulPrime() {
+		return "Fikiria Azul Prime";
+	}
+
+	public String descripcionAmbientalAzulPrime() {
+		return "Katika Linux na Java 16 au juu zaidi na zaidi ya GB 16 za RAM, Azul Prime inaweza kuwa chaguo nzuri la utendaji.";
+	}
+
+	public String sugerenciaAmbientalAzulPrime() {
+		return "Jaribu Azul Prime ikiwa kompyuta ina zaidi ya GB 16 za RAM.";
+	}
+
+	public String tituloAmbientalGraalVM() {
+		return "Fikiria GraalVM";
+	}
+
+	public String descripcionAmbientalGraalVM() {
+		return "Na Java 16 au juu zaidi na zaidi ya GB 16 za RAM, GraalVM inaweza kuwa mbadala muhimu nje ya Linux.";
+	}
+
+	public String sugerenciaAmbientalGraalVM() {
+		return "Jaribu GraalVM ikiwa kompyuta ina zaidi ya GB 16 za RAM.";
+	}
+
+	public String tituloAmbientalDiscoBajo() {
+		return "Angalia nafasi iliyoachwa kwenye diski";
+	}
+
+	public String descripcionAmbientalDiscoBajo(String libre) {
+		return "Diski ina nafasi kidogo iliyoachwa: " + libre
+				+ ". Minecraft inaweza kushindwa, kuhifadhi polepole au kuharibu data ikiwa itakosa nafasi.";
+	}
+
+	public String sugerenciaAmbientalDiscoBajo() {
+		return "Ondoa data hadi uwe na angalau GB 20 zinazopatikana.";
+	}
+
+	public String tituloAmbientalWindowsRHEL9() {
+		return "Fikiria RHEL 9 kwa majaribio";
+	}
+
+	public String descripcionAmbientalWindowsRHEL9() {
+		return "Katika Windows, inapendekezwa kufikiria RHEL 9 kwa sababu inajumuisha Red Hat JDK, ni thabiti, inaweza kupakuliwa bure kwa watu binafsi na ndipo majaribio mengi yanafanywa.";
+	}
+
+	public String sugerenciaAmbientalWindowsRHEL9() {
+		return "Jaribu instansi katika RHEL 9 ikiwa unatafuta utulivu wa juu zaidi wa majaribio.";
+	}
+
+	public String tituloAmbientalRaptorLake() {
+		return "Onyo la Intel Raptor Lake";
+	}
+
+	public String descripcionAmbientalRaptorLake() {
+		return "Tatizo la Raptor Lake limegunduliwa na ukaguzi uliopo. Hii inaweza kusababisha kutokuwa na utulivu, kufungwa ghafla na makosa ambayo yanaonekana kuwa ya modpack.";
+	}
+
+	public String sugerenciaAmbientalRaptorLake() {
+		return "Sasisha BIOS/microcode na angalia onyo la Raptor Lake kabla ya kulaumu modpack.";
+	}
+
+	@Override
+	public String tituloAmbientalNeoForge1201Antiguo() {
+		return "NeoForge 1.20.1 ya zamani imegunduliwa";
+	}
+
+	@Override
+	public String descripcionAmbientalNeoForge1201Antiguo() {
+		return "FancyModLoader 47 au njia inayolingana na NeoForge 1.20.1 imegunduliwa. "
+				+ "NeoForge 1.20.1 ilikuwa tawi la MinecraftForge 1.20.1 na kwa kawaida inalingana kiwango cha binary, "
+				+ "lakini mstari huo uliachwa mapema na unaweza kukosa uboreshaji kadhaa uliopo katika Forge.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalNeoForge1201Antiguo() {
+		return "Kwa 1.20.1, ikiwa modpack inaruhusu, fikiria kutumia MinecraftForge 1.20.1 badala ya NeoForge 1.20.1.";
+	}
+
+	@Override
+	public String tituloAmbientalGPU() {
+		return "Tatizo la GPU limegunduliwa";
+	}
+
+	@Override
+	public String descripcionAmbientalGPU() {
+		return "Ukaguzi mwingine tayari umegundua tatizo linalowezekana la GPU, OpenGL au uchaguzi wa kadi ya grafiki.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalGPU() {
+		return "Hakikisha Minecraft inatumia GPU sahihi, sasisha dereva na epuka usanidi usio thabiti wa hibridi.";
+	}
+
+	@Override
+	public String gpuFixTitulo() {
+		return "Usanidi wa GPU";
+	}
+
+	@Override
+	public String gpuFixBotonSidebar() {
+		return "GPU";
+	}
+
+	@Override
+	public String gpuFixBotonAplicar() {
+		return "Tumia usanidi";
+	}
+
+	@Override
+	public String gpuFixBotonFuenteTLauncher() {
+		return "Fungua mwongozo wa TLauncher";
+	}
+
+	@Override
+	public String gpuFixBotonVirusTotal() {
+		return "Fungua uchambuzi wa VirusTotal";
+	}
+
+	@Override
+	public String gpuFixBotonOptimusLinux() {
+		return "Fungua mwongozo wa NVIDIA Optimus";
+	}
+
+	@Override
+	public String gpuFixTextoWindows() {
+		return "CrashDetector imegundua kwamba Minecraft huenda isitumii GPU yenye utendaji wa juu.\n\n"
+				+ "Katika Windows unaweza kuweka funguo za rejista katika "
+				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
+				+ "kulazimisha javaw.exe kutumia GPU iliyojitolea.\n\n"
+				+ "GpuPreference=0 = uamuzi wa kiotomatiki wa Windows.\n"
+				+ "GpuPreference=1 = kuokoa nishati / GPU iliyojengewa ndani.\n"
+				+ "GpuPreference=2 = GPU yenye utendaji wa juu.\n\n"
+				+ "Sehemu ya habari hii ilipatikana shukrani kwa utafiti uliochapishwa na TLauncher na uchambuzi "
+				+ "wa tabia unaopatikana kwenye VirusTotal.";
+	}
+
+	@Override
+	public String gpuFixTextoLinux() {
+		return "CrashDetector imegundua tatizo linalowezekana kuhusiana na NVIDIA Optimus au PRIME.\n\n"
+				+ "Kulingana na usambazaji wa Linux unatumia, inaweza kuhitajika kusanidi NVIDIA Optimus, "
+				+ "nvidia-prime, switcheroo-control au mifumo mingine hibridi.\n\n"
+				+ "Katika Fedora/RHEL na vitohozi, mara nyingi inapendekezwa kufuata nyaraka za RPMFusion.\n\n"
+				+ "Kitufe cha chini kitafungua nyaraka rasmi zinazopendekezwa.";
+	}
+
+	@Override
+	public String gpuFixTextoMac() {
+		return "CrashDetector imegundua tatizo linalowezekana la uteuzi wa GPU.\n\n"
+				+ "Katika baadhi ya mifumo ya macOS yenye GPU hibridi inawezekana kulazimisha matumizi ya GPU iliyojitolea "
+				+ "kupitia mipangilio ya juu ya mfumo.\n\n"
+				+ "Kitufe cha kutumia kitajaribu kutekeleza amri ili kupatia kipaumbele GPU yenye utendaji wa juu.";
+	}
+
+	@Override
+	public String gpuFixTextoOtroSistema() {
+		return "CrashDetector imegundua tatizo linalowezekana kuhusiana na GPU, "
+				+ "lakini hakuna utekelezaji maalum kwa mfumo huu wa uendeshaji.";
+	}
+
+	@Override
+	public String gpuFixLinuxManual() {
+		return "Katika Linux kawaida usanidi lazima ufanywe kwa mikono kulingana na usambazaji, "
+				+ "dereva wa NVIDIA na mfumo wa Optimus/PRIME unatumika.";
+	}
+
+	@Override
+	public String gpuFixSistemaNoSoportado() {
+		return "Mfumo wa uendeshaji hauungwi mkono kwa usanidi wa kiotomatiki wa GPU.";
+	}
+
+	@Override
+	public String gpuFixJavaNoDetectado() {
+		return "Haikuweza kugundua njia ya sasa ya javaw.exe.";
+	}
+
+	@Override
+	public String gpuFixWindowsAplicado(String ruta) {
+		return "Usanidi wa GPU ulitumika vizuri kwa:\n\n" + ruta + "\n\n"
+				+ "GpuPreference=2 inaonyesha GPU yenye utendaji wa juu.";
+	}
+
+	@Override
+	public String gpuFixErrorAplicando() {
+		return "Hitilafu ilitokea wakati wa kujaribu kutumia usanidi wa GPU";
+	}
+
+	@Override
+	public String gpuFixMacAplicado() {
+		return "Usanidi wa GPU yenye utendaji wa juu ulitumika.";
+	}
+
+	@Override
+	public String gpuFixMacError() {
+		return "Haikuweza kutumia usanidi wa GPU katika macOS";
+	}
+
+	@Override
+	public String rendimientoTitulo() {
+		return "Msimamizi wa utendaji";
+	}
+
+	@Override
+	public String rendimientoBotonSidebar() {
+		return "Utendaji";
+	}
+
+	@Override
+	public String rendimientoBotonAnalizar() {
+		return "Chambua utendaji";
+	}
+
+	@Override
+	public String rendimientoBotonAbrirGPU() {
+		return "Fungua usanidi wa GPU";
+	}
+
+	@Override
+	public String rendimientoDescripcion() {
+		return "Paneli hii inakagua matatizo ya mazingira, mod zinazopendekezwa au zenye hatari, na chaguzi za usanidi "
+				+ "ambazo zinaweza kuboresha utendaji. Si chaguzi zote hufanya kazi pamoja, si zote zinafaa kwa kila "
+				+ "toleo la Minecraft na si zote zinalingana na kila modloader. Hiyo ni sawa: huhitaji "
+				+ "alama kamili ya uboreshaji.";
+	}
+
+	@Override
+	public String rendimientoNotaCompatibilidad() {
+		return "Kumbuka: mapendekezo haya ni uwezekano, si amri ya kutumia yote. Chaguzi zingine zinaweza kugongana "
+				+ "na nyingine au hazifai kwa toleo lako, lanzisha, modloader au modpack.";
+	}
+
+	@Override
+	public String rendimientoPestanaResumen() {
+		return "Muhtasari";
+	}
+
+	@Override
+	public String rendimientoPestanaAmbiental() {
+		return "Matatizo ya mazingira";
+	}
+
+	@Override
+	public String rendimientoPestanaMods() {
+		return "Mod zinazopendekezwa na hatari";
+	}
+
+	@Override
+	public String rendimientoPestanaConfigs() {
+		return "Chaguzi za usanidi";
+	}
+
+	@Override
+	public String rendimientoResumenTitulo() {
+		return "Muhtasari wa uchambuzi";
+	}
+
+	@Override
+	public String rendimientoResumenAmbiental(int cantidad) {
+		return "Matatizo ya mazingira yaliyopatikana: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenMods(int cantidad) {
+		return "Mapendekezo au hatari za mod zilizopatikana: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenConfigs(int cantidad) {
+		return "Mapendekezo ya usanidi yaliyopatikana: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenGPU() {
+		return "Tatizo la GPU limegunduliwa. Kwa sababu hiyo, kitufe cha kufungua usanidi wa GPU kimewezeshwa.";
+	}
+
+	@Override
+	public String rendimientoSinHallazgos() {
+		return "Hakuna mapendekezo yaliyopatikana katika sehemu hii.";
+	}
+
+	@Override
+	public String rendimientoSugerencia() {
+		return "Pendekezo";
+	}
+
+	@Override
+	public String rendimientoColorFondo() {
+		return "Utendaji - mandhari nyuma";
+	}
+
+	@Override
+	public String rendimientoColorPanel() {
+		return "Utendaji - paneli";
+	}
+
+	@Override
+	public String rendimientoColorTexto() {
+		return "Utendaji - maandishi";
+	}
+
+	@Override
+	public String rendimientoColorTextoSecundario() {
+		return "Utendaji - maandishi ya sekondari";
+	}
+
+	@Override
+	public String rendimientoColorBoton() {
+		return "Utendaji - kitufe";
+	}
+
+	@Override
+	public String rendimientoColorBotonTexto() {
+		return "Utendaji - maandishi ya kitufe";
+	}
+
+	@Override
+	public String rendimientoColorSeleccion() {
+		return "Utendaji - uteuzi";
+	}
 
 }

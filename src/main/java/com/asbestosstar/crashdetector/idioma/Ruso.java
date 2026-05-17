@@ -9370,30 +9370,880 @@ public class Ruso implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "Мод пытается переопределить final-метод";
 	}
-	
-	
-    @Override
-    public String errorCrashProvocadoPorComando(String comandoDetectado) {
-        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-                + "Minecraft был закрыт командой краша.</b>"
-                + "<p>Лог указывает, что была выполнена команда <code>" + comandoDetectado + "</code>.</p>"
-                + "<p>Это обычно означает, что игра закрылась не из-за обычной ошибки модов, а потому что кто-то "
-                + "использовал команду, предназначенную для намеренного вызова краша.</p>"
-                + "<p><b>Что проверить:</b></p>"
-                + "<ul>"
-                + "<li>Проверьте, кто выполнил команду в консоли или внутри игры.</li>"
-                + "<li>Если это было тестирование, вы можете игнорировать этот краш.</li>"
-                + "<li>Если это произошло непреднамеренно, проверьте командные блоки, скрипты, датапаки, административные моды или права операторов.</li>"
-                + "</ul>";
-    }
 
-    @Override
-    public String nombreCrashProvocadoPorComando() {
-        return "Краш, вызванный командой";
-    }
-	
-	
-	
-	
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft был закрыт командой краша.</b>" + "<p>Лог указывает, что была выполнена команда <code>"
+				+ comandoDetectado + "</code>.</p>"
+				+ "<p>Это обычно означает, что игра закрылась не из-за обычной ошибки модов, а потому что кто-то "
+				+ "использовал команду, предназначенную для намеренного вызова краша.</p>"
+				+ "<p><b>Что проверить:</b></p>" + "<ul>"
+				+ "<li>Проверьте, кто выполнил команду в консоли или внутри игры.</li>"
+				+ "<li>Если это было тестирование, вы можете игнорировать этот краш.</li>"
+				+ "<li>Если это произошло непреднамеренно, проверьте командные блоки, скрипты, датапаки, административные моды или права операторов.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+		return "Краш, вызванный командой";
+	}
+
+	public String impactoAlto() {
+		return "Высокий";
+	}
+
+	public String impactoMedio() {
+		return "Средний";
+	}
+
+	public String impactoBajo() {
+		return "Низкий";
+	}
+
+	public String impactoBajoMedio() {
+		return "Низкий/Средний";
+	}
+
+	public String riesgoAlto() {
+		return "Высокий";
+	}
+
+	public String riesgoMedio() {
+		return "Средний";
+	}
+
+	public String riesgoBajo() {
+		return "Низкий";
+	}
+
+	public String riesgoMedioAlto() {
+		return "Средний/Высокий";
+	}
+
+	public String tituloCrearConfigBBE() {
+		return "Создать конфигурацию Better Block Entities";
+	}
+
+	public String descripcionCrearConfigBBE() {
+		return "Файл BBEConfig.json отсутствует.";
+	}
+
+	public String sugerenciaCrearConfigBBE() {
+		return "Создать BBEConfig.json с оптимизациями для сундуков, shulkers, табличек, кроватей, колоколов и флагов.";
+	}
+
+	public String tituloActivarOptimizacionMaestraBBE() {
+		return "Включить основную оптимизацию BBE";
+	}
+
+	public String descripcionActivarOptimizacionMaestraBBE() {
+		return "Похоже, в Better Block Entities не включена основная оптимизация.";
+	}
+
+	public String sugerenciaActivarOptimizacionMaestraBBE() {
+		return "Добавить {\"option\":\"optimize.master\",\"value\":true}";
+	}
+
+	public String tituloActivarCullingTextoCartelesBBE() {
+		return "Включить отсечение (culling) текста табличек";
+	}
+
+	public String descripcionActivarCullingTextoCartelesBBE() {
+		return "Снижает рендер текста табличек на расстоянии.";
+	}
+
+	public String sugerenciaActivarCullingTextoCartelesBBE() {
+		return "Добавить {\"option\":\"misc.sign_text_culling\",\"value\":true}";
+	}
+
+	public String tituloAumentarSleepDelayEntityCulling() {
+		return "Увеличить sleepDelay в EntityCulling";
+	}
+
+	public String descripcionAumentarSleepDelayEntityCulling() {
+		return "EntityCulling будет проверять сущности реже.";
+	}
+
+	public String sugerenciaAumentarSleepDelayEntityCulling() {
+		return "\"sleepDelay\": 153";
+	}
+
+	public String tituloSubirLimiteHitboxEntityCulling() {
+		return "Увеличить лимит hitbox";
+	}
+
+	public String descripcionSubirLimiteHitboxEntityCulling() {
+		return "Позволяет использовать более агрессивное отсечение до перехода на медленные пути.";
+	}
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling() {
+		return "\"hitboxLimit\": 90";
+	}
+
+	public String tituloDesactivarDatosF3EntityCulling() {
+		return "Отключить данные F3 в EntityCulling";
+	}
+
+	public String descripcionDesactivarDatosF3EntityCulling() {
+		return "Убирает лишнюю отладочную информацию мода.";
+	}
+
+	public String sugerenciaDesactivarDatosF3EntityCulling() {
+		return "\"disableF3\": true";
+	}
+
+	public String tituloActivarBufferingSignsImmediatelyFast() {
+		return "Включить экспериментальную буферизацию табличек";
+	}
+
+	public String descripcionActivarBufferingSignsImmediatelyFast() {
+		return "Может улучшить производительность при большом количестве табличек.";
+	}
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast() {
+		return "\"experimental_sign_text_buffering\": true";
+	}
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast() {
+		return "Уменьшить обработку конфликтов resource pack";
+	}
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast() {
+		return "Может убрать лишнюю нагрузку, но также может вызвать визуальные проблемы с resource pack.";
+	}
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast() {
+		return "\"experimental_disable_resource_pack_conflict_handling\": true";
+	}
+
+	public String tituloOcultarBotonNCR() {
+		return "Скрыть кнопку No Chat Reports";
+	}
+
+	public String descripcionOcultarBotonNCR() {
+		return "Изменение интерфейса; не сильно повышает FPS, но очищает экран.";
+	}
+
+	public String sugerenciaOcultarBotonNCR() {
+		return "\"showNCRButton\": false";
+	}
+
+	public String tituloActivarMixinsExperimentalesLithium() {
+		return "Включить экспериментальные миксины Lithium";
+	}
+
+	public String descripcionActivarMixinsExperimentalesLithium() {
+		return "Включает дополнительные экспериментальные оптимизации.";
+	}
+
+	public String sugerenciaActivarMixinsExperimentalesLithium() {
+		return "mixin.experimental=true";
+	}
+
+	public String tituloUsarDetectorThreadingPequenoFerriteCore() {
+		return "Использовать малый детектор многопоточности";
+	}
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore() {
+		return "Снижает потребление памяти, но может быть рискованнее.";
+	}
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore() {
+		return "useSmallThreadingDetector=true";
+	}
+
+	public String tituloModernFixRecursosDinamicos() {
+		return "Включить динамические ресурсы ModernFix";
+	}
+
+	public String descripcionModernFixRecursosDinamicos() {
+		return "Может снизить потребление памяти и нагрузку за счёт более эффективной загрузки ресурсов.";
+	}
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades() {
+		return "Включить динамические рендереры сущностей";
+	}
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades() {
+		return "Может улучшить производительность за счёт более эффективного управления рендерерами сущностей.";
+	}
+
+	public String tituloModernFixRenderizadoItemsRapido() {
+		return "Включить быстрый рендер предметов";
+	}
+
+	public String descripcionModernFixRenderizadoItemsRapido() {
+		return "Может улучшить производительность при рендере предметов.";
+	}
+
+	public String tituloModernFixWorldgenAllocation() {
+		return "Уменьшить выделения памяти в worldgen";
+	}
+
+	public String descripcionModernFixWorldgenAllocation() {
+		return "Может снизить сборку мусора в памяти при генерации мира.";
+	}
+
+	public String tituloModernFixDeduplicacionIngredientes() {
+		return "Включить дедупликацию ингредиентов";
+	}
+
+	public String descripcionModernFixDeduplicacionIngredientes() {
+		return "Уменьшает количество дубликатов объектов, связанных с рецептами и ингредиентами.";
+	}
+
+	public String tituloSodiumRenderCielo() {
+		return "Включить оптимизацию/рендер неба в Sodium";
+	}
+
+	public String descripcionSodiumRenderCielo() {
+		return "Может настроить поведение рендера неба.";
+	}
+
+	public String tituloActivarLightmapCaching() {
+		return "Включить кэширование lightmap";
+	}
+
+	public String descripcionActivarLightmapCaching() {
+		return "Предотвращает пересчёт освещения, когда это не нужно.";
+	}
+
+	public String sugerenciaActivarLightmapCaching() {
+		return "enable_lightmap_caching: true";
+	}
+
+	public String tituloOcultarTextoF3BadOptimizations() {
+		return "Скрыть текст F3 в BadOptimizations";
+	}
+
+	public String descripcionOcultarTextoF3BadOptimizations() {
+		return "Уменьшает отладочный шум на экране F3.";
+	}
+
+	public String sugerenciaOcultarTextoF3BadOptimizations() {
+		return "show_f3_text: false";
+	}
+
+	public String tituloDesactivarLogConfigBadOptimizations() {
+		return "Отключить лог конфигурации";
+	}
+
+	public String descripcionDesactivarLogConfigBadOptimizations() {
+		return "Предотвращает вывод всей конфигурации при запуске.";
+	}
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations() {
+		return "log_config: false";
+	}
+
+	public String tituloActivarSerializadorGCFreeC2ME() {
+		return "Включить сериализатор без GC в C2ME";
+	}
+
+	public String descripcionActivarSerializadorGCFreeC2ME() {
+		return "Снижает выделения памяти при загрузке или сохранении чанков.";
+	}
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME() {
+		return "[ioSystem] gcFreeChunkSerializer = true";
+	}
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME() {
+		return "Отключить syncPlayerTickets";
+	}
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME() {
+		return "Может улучшить производительность чанков, но может повлиять на технические конструкции.";
+	}
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME() {
+		return "[chunkSystem] syncPlayerTickets = false";
+	}
+
+	public String tituloUsarCullingHojasDepthMoreCulling() {
+		return "Использовать отсечение листвы DEPTH";
+	}
+
+	public String descripcionUsarCullingHojasDepthMoreCulling() {
+		return "Использует более агрессивный режим отсечения листвы по сравнению с обычным.";
+	}
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling() {
+		return "leavesCullingMode = \"DEPTH\"";
+	}
+
+	public String tituloActivarEndGatewayCullingMoreCulling() {
+		return "Включить отсечение End Gateway";
+	}
+
+	public String descripcionActivarEndGatewayCullingMoreCulling() {
+		return "Предотвращает ненужный рендер End Gateway.";
+	}
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling() {
+		return "endGatewayCulling = true";
+	}
+
+	public String tituloActivarActivationRangeServerCore() {
+		return "Включить activation range";
+	}
+
+	public String descripcionActivarActivationRangeServerCore() {
+		return "Снижает тики сущностей вдали от игрока.";
+	}
+
+	public String sugerenciaActivarActivationRangeServerCore() {
+		return "activation-range: enabled: true";
+	}
+
+	public String tituloActivarRangoVerticalServerCore() {
+		return "Включить вертикальный диапазон";
+	}
+
+	public String descripcionActivarRangoVerticalServerCore() {
+		return "Снижает тики сущностей, находящихся далеко выше или ниже игрока.";
+	}
+
+	public String sugerenciaActivarRangoVerticalServerCore() {
+		return "use-vertical-range: true";
+	}
+
+	public String impactoNegativoAlto() {
+		return "Высокое негативное влияние";
+	}
+
+	public String advertenciaModsCulling() {
+		return "Моды на culling могут вызывать несовместимость с некоторыми модами, краши, ошибки, при которых игра перестаёт корректно тикать, а также могут ломать автоматические фермы или фабрики.";
+	}
+
+	public String tituloModBadOptimizations() {
+		return "Добавить BadOptimizations";
+	}
+
+	public String descripcionModBadOptimizations() {
+		return "Добавляет микрооптимизации для клиента, такие как кэш lightmap, кэш неба и сокращение ненужных вызовов.";
+	}
+
+	public String tituloModBBE() {
+		return "Добавить Better Block Entities";
+	}
+
+	public String descripcionModBBE() {
+		return "Оптимизирует рендер block entities: сундуков, shulkers, кроватей, колоколов, флагов и табличек.";
+	}
+
+	public String tituloModC2ME() {
+		return "Добавить Concurrent Chunk Management Engine";
+	}
+
+	public String descripcionModC2ME() {
+		return "Улучшает загрузку, генерацию и управление чанками с помощью многопоточной обработки. Может быть очень мощным, но также вызывать несовместимости в больших сборках.";
+	}
+
+	public String tituloModEntityCulling() {
+		return "Добавить EntityCulling";
+	}
+
+	public String descripcionModEntityCulling() {
+		return "Предотвращает рендер невидимых сущностей. " + advertenciaModsCulling();
+	}
+
+	public String tituloModFerriteCore() {
+		return "Добавить FerriteCore";
+	}
+
+	public String descripcionModFerriteCore() {
+		return "Снижает потребление памяти за счёт дедупликации и более эффективных внутренних структур.";
+	}
+
+	public String tituloModImmediatelyFast() {
+		return "Добавить ImmediatelyFast";
+	}
+
+	public String descripcionModImmediatelyFast() {
+		return "Оптимизирует различные аспекты рендера в immediate mode, текста, буферов, карт и интерфейса.";
+	}
+
+	public String tituloModLithium() {
+		return "Добавить Lithium";
+	}
+
+	public String descripcionModLithium() {
+		return "Оптимизирует игровую логику, сущностей, блоки, физику и другие системы, не сильно меняя ванильное поведение.";
+	}
+
+	public String tituloModModernFix() {
+		return "Добавить ModernFix";
+	}
+
+	public String descripcionModModernFix() {
+		return "Добавляет множество оптимизаций памяти, загрузки, ресурсов и общей производительности. Его инструменты, связанные с atlas, могут конфликтовать с модами, уменьшающими размер atlas.";
+	}
+
+	public String tituloModMoreCulling() {
+		return "Добавить More Culling";
+	}
+
+	public String descripcionModMoreCulling() {
+		return "Добавляет culling для блоков, листвы, рамок для предметов, картин, дождя, маяков и других элементов. "
+				+ advertenciaModsCulling();
+	}
+
+	public String tituloModScalableLux() {
+		return "Добавить ScalableLux";
+	}
+
+	public String descripcionModScalableLux() {
+		return "Оптимизирует расчёты, связанные с освещением, и может улучшить производительность в мирах с частыми изменениями света.";
+	}
+
+	public String tituloModServerCore() {
+		return "Добавить ServerCore";
+	}
+
+	public String descripcionModServerCore() {
+		return "Добавляет оптимизации на стороне сервера: activation range, контроль лимитов мобов, снижение тиков и улучшение загрузки.";
+	}
+
+	public String tituloModSodium() {
+		return "Добавить Sodium";
+	}
+
+	public String descripcionModSodium() {
+		return "Основной мод для оптимизации рендера. Обычно это одно из самых важных улучшений для FPS.";
+	}
+
+	public String tituloModVMP() {
+		return "Добавить Very Many Players";
+	}
+
+	public String descripcionModVMP() {
+		return "Оптимизирует серверные системы для обработки большого количества игроков. Ожидаемый ID мода: vmp.";
+	}
+
+	public String tituloModMCMT() {
+		return "Добавить MCMT";
+	}
+
+	public String descripcionModMCMT() {
+		return "Пытается распараллелить части сервера Minecraft. Может улучшить производительность в некоторых случаях, но несёт высокий риск несовместимости, ошибок тиков и странного поведения.";
+	}
+
+	public String tituloLiabilityUranium() {
+		return "Удалить Uranium";
+	}
+
+	public String descripcionLiabilityUranium() {
+		return "Uranium — это мод, специально разработанный для создания лагов в игре. Не должен быть установлен, если важна производительность.";
+	}
+
+	public String tituloAmbientalSinXmx() {
+		return "Настроить максимальную память Java";
+	}
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro) {
+		return "-Xmx не обнаружен в переданных аргументах. Для " + mods + " модов рекомендуемый минимум составляет "
+				+ minimo + ", не превышая примерно " + maximoSeguro + ".";
+	}
+
+	public String sugerenciaAmbientalSinXmx(String minimo) {
+		return "Добавить -Xmx" + minimo.replace(" ", "");
+	}
+
+	public String tituloAmbientalDemasiadaMemoria() {
+		return "Уменьшить выделенную память";
+	}
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro) {
+		return "Инстансу выделено " + xmx + " из " + total
+				+ ". Не рекомендуется выделять более 80% доступной оперативной памяти.";
+	}
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro) {
+		return "Уменьшить -Xmx до " + maximoSeguro + " или меньше.";
+	}
+
+	public String tituloAmbientalMemoriaInsuficiente() {
+		return "Увеличить выделенную память";
+	}
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo) {
+		return "Инстансу выделено " + xmx + ". Для " + mods + " модов рекомендуемый минимум составляет " + minimo + ".";
+	}
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo) {
+		return "Увеличить -Xmx как минимум до " + minimo + ".";
+	}
+
+	public String tituloAmbientalJava8GC() {
+		return "Использовать G1GC или Shenandoah в Java 8";
+	}
+
+	public String descripcionAmbientalJava8GC() {
+		return "В Java 8 рекомендуется использовать G1GC или Shenandoah для снижения пауз и повышения стабильности.";
+	}
+
+	public String sugerenciaAmbientalJava8GC() {
+		return "Добавить -XX:+UseG1GC или -XX:+UseShenandoahGC.";
+	}
+
+	public String tituloAmbientalZGC() {
+		return "Использовать ZGC";
+	}
+
+	public String descripcionAmbientalZGC(String ramTotal) {
+		return "На компьютере более 12 ГБ ОЗУ (" + ramTotal
+				+ "). Если дистрибутив Java поддерживает, ZGC может снизить паузы сборщика мусора.";
+	}
+
+	public String sugerenciaAmbientalZGC() {
+		return "В Java 17 или выше попробуйте -XX:+UseZGC.";
+	}
+
+	public String tituloAmbientalAikar() {
+		return "Добавить флаги Aikar";
+	}
+
+	public String descripcionAmbientalAikar() {
+		return "В Java 17 или ниже флаги Aikar обычно улучшают поведение G1GC для Minecraft.";
+	}
+
+	public String sugerenciaAmbientalAikar() {
+		return "Использовать флаги Aikar, включая -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200.";
+	}
+
+	public String tituloAmbientalRedHatJDK() {
+		return "Использовать Red Hat JDK";
+	}
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os) {
+		return "Для Java " + javaMayor + " в " + os + " рекомендуется Red Hat JDK из-за стабильности и совместимости.";
+	}
+
+	public String sugerenciaAmbientalRedHatJDK() {
+		return "Установить Red Hat JDK для Java 8 или Java 11.";
+	}
+
+	public String tituloAmbientalAzulPrime() {
+		return "Рассмотреть Azul Prime";
+	}
+
+	public String descripcionAmbientalAzulPrime() {
+		return "В Linux с Java 16 или выше и более чем 16 ГБ ОЗУ Azul Prime может быть хорошим выбором для производительности.";
+	}
+
+	public String sugerenciaAmbientalAzulPrime() {
+		return "Попробовать Azul Prime, если на компьютере более 16 ГБ ОЗУ.";
+	}
+
+	public String tituloAmbientalGraalVM() {
+		return "Рассмотреть GraalVM";
+	}
+
+	public String descripcionAmbientalGraalVM() {
+		return "С Java 16 или выше и более чем 16 ГБ ОЗУ GraalVM может быть полезной альтернативой вне Linux.";
+	}
+
+	public String sugerenciaAmbientalGraalVM() {
+		return "Попробовать GraalVM, если на компьютере более 16 ГБ ОЗУ.";
+	}
+
+	public String tituloAmbientalDiscoBajo() {
+		return "Проверить свободное место на диске";
+	}
+
+	public String descripcionAmbientalDiscoBajo(String libre) {
+		return "На диске мало свободного места: " + libre
+				+ ". Minecraft может вылетать, медленно сохраняться или повреждать данные, если место закончится.";
+	}
+
+	public String sugerenciaAmbientalDiscoBajo() {
+		return "Освободить место, чтобы было доступно как минимум 20 ГБ.";
+	}
+
+	public String tituloAmbientalWindowsRHEL9() {
+		return "Рассмотреть RHEL 9 для тестирования";
+	}
+
+	public String descripcionAmbientalWindowsRHEL9() {
+		return "В Windows рекомендуется рассмотреть RHEL 9, так как он включает Red Hat JDK, стабилен, бесплатен для частных лиц и является основной платформой для тестирования.";
+	}
+
+	public String sugerenciaAmbientalWindowsRHEL9() {
+		return "Протестировать инстанс в RHEL 9, если требуется максимальная стабильность тестирования.";
+	}
+
+	public String tituloAmbientalRaptorLake() {
+		return "Предупреждение Intel Raptor Lake";
+	}
+
+	public String descripcionAmbientalRaptorLake() {
+		return "Обнаружена проблема Raptor Lake, отмеченная существующей проверкой. Это может вызывать нестабильность, вылеты и ошибки, которые кажутся связанными с модпаком.";
+	}
+
+	public String sugerenciaAmbientalRaptorLake() {
+		return "Обновите BIOS/микрокод и изучите предупреждение о Raptor Lake, прежде чем винить модпак.";
+	}
+
+	@Override
+	public String tituloAmbientalNeoForge1201Antiguo() {
+		return "Обнаружена старая версия NeoForge 1.20.1";
+	}
+
+	@Override
+	public String descripcionAmbientalNeoForge1201Antiguo() {
+		return "Обнаружен FancyModLoader 47 или путь, совместимый с NeoForge 1.20.1. "
+				+ "NeoForge 1.20.1 был форком MinecraftForge 1.20.1 и обычно бинарно совместим, "
+				+ "но эта ветка была заброшена раньше и может не иметь нескольких оптимизаций, доступных в Forge.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalNeoForge1201Antiguo() {
+		return "Для версии 1.20.1, если модпак позволяет, рассмотрите использование MinecraftForge 1.20.1 вместо NeoForge 1.20.1.";
+	}
+
+	@Override
+	public String tituloAmbientalGPU() {
+		return "Обнаружена проблема с GPU";
+	}
+
+	@Override
+	public String descripcionAmbientalGPU() {
+		return "Другая проверка уже выявила возможную проблему с GPU, OpenGL или выбором видеокарты.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalGPU() {
+		return "Убедитесь, что Minecraft использует правильную видеокарту, обновите драйверы и избегайте нестабильных гибридных конфигураций.";
+	}
+
+	@Override
+	public String gpuFixTitulo() {
+		return "Настройка GPU";
+	}
+
+	@Override
+	public String gpuFixBotonSidebar() {
+		return "GPU";
+	}
+
+	@Override
+	public String gpuFixBotonAplicar() {
+		return "Применить настройки";
+	}
+
+	@Override
+	public String gpuFixBotonFuenteTLauncher() {
+		return "Открыть руководство TLauncher";
+	}
+
+	@Override
+	public String gpuFixBotonVirusTotal() {
+		return "Открыть анализ VirusTotal";
+	}
+
+	@Override
+	public String gpuFixBotonOptimusLinux() {
+		return "Открыть руководство NVIDIA Optimus";
+	}
+
+	@Override
+	public String gpuFixTextoWindows() {
+		return "CrashDetector обнаружил, что Minecraft, возможно, не использует высокопроизводительный GPU.\n\n"
+				+ "В Windows можно установить ключи реестра в "
+				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
+				+ "чтобы заставить javaw.exe использовать дискретную видеокарту.\n\n"
+				+ "GpuPreference=0 = автоматическое решение Windows.\n"
+				+ "GpuPreference=1 = энергосбережение / встроенная графика.\n"
+				+ "GpuPreference=2 = высокопроизводительный GPU.\n\n"
+				+ "Часть этой информации была получена благодаря исследованию, опубликованному TLauncher, и анализу "
+				+ "поведения, доступному на VirusTotal.";
+	}
+
+	@Override
+	public String gpuFixTextoLinux() {
+		return "CrashDetector обнаружил возможную проблему, связанную с NVIDIA Optimus или PRIME.\n\n"
+				+ "В зависимости от используемого дистрибутива Linux может потребоваться настройка NVIDIA Optimus, "
+				+ "nvidia-prime, switcheroo-control или других гибридных систем.\n\n"
+				+ "В Fedora/RHEL и производных обычно рекомендуется следовать документации RPMFusion.\n\n"
+				+ "Нижняя кнопка откроет рекомендуемую официальную документацию.";
+	}
+
+	@Override
+	public String gpuFixTextoMac() {
+		return "CrashDetector обнаружил возможную проблему выбора GPU.\n\n"
+				+ "В некоторых системах macOS с гибридной графикой можно принудительно использовать дискретную видеокарту "
+				+ "через расширенные настройки системы.\n\n"
+				+ "Кнопка применения попытается выполнить команду для приоритизации высокопроизводительного GPU.";
+	}
+
+	@Override
+	public String gpuFixTextoOtroSistema() {
+		return "CrashDetector обнаружил возможную проблему, связанную с GPU, "
+				+ "но для этой операционной системы нет конкретной реализации.";
+	}
+
+	@Override
+	public String gpuFixLinuxManual() {
+		return "В Linux настройка обычно должна выполняться вручную в зависимости от дистрибутива, "
+				+ "драйвера NVIDIA и используемой системы Optimus/PRIME.";
+	}
+
+	@Override
+	public String gpuFixSistemaNoSoportado() {
+		return "Операционная система не поддерживается для автоматической настройки GPU.";
+	}
+
+	@Override
+	public String gpuFixJavaNoDetectado() {
+		return "Не удалось обнаружить текущий путь к javaw.exe.";
+	}
+
+	@Override
+	public String gpuFixWindowsAplicado(String ruta) {
+		return "Настройки GPU были успешно применены для:\n\n" + ruta + "\n\n"
+				+ "GpuPreference=2 указывает на высокопроизводительный GPU.";
+	}
+
+	@Override
+	public String gpuFixErrorAplicando() {
+		return "Произошла ошибка при попытке применить настройки GPU";
+	}
+
+	@Override
+	public String gpuFixMacAplicado() {
+		return "Настройки высокопроизводительного GPU были применены.";
+	}
+
+	@Override
+	public String gpuFixMacError() {
+		return "Не удалось применить настройки GPU в macOS";
+	}
+
+	@Override
+	public String rendimientoTitulo() {
+		return "Менеджер производительности";
+	}
+
+	@Override
+	public String rendimientoBotonSidebar() {
+		return "Производительность";
+	}
+
+	@Override
+	public String rendimientoBotonAnalizar() {
+		return "Анализ производительности";
+	}
+
+	@Override
+	public String rendimientoBotonAbrirGPU() {
+		return "Открыть настройки GPU";
+	}
+
+	@Override
+	public String rendimientoDescripcion() {
+		return "Эта панель проверяет проблемы окружения, рекомендуемые или рискованные моды и параметры конфигурации, "
+				+ "которые могут улучшить производительность. Не все опции работают вместе, не все подходят для каждой "
+				+ "версии Minecraft и не все совместимы с каждым загрузчиком модов. Это нормально: вам не нужно "
+				+ "идеального счета оптимизации.";
+	}
+
+	@Override
+	public String rendimientoNotaCompatibilidad() {
+		return "Примечание: эти предложения являются возможностями, а не приказом применять всё. Некоторые опции могут конфликтовать "
+				+ "друг с другом или не подходить для вашей версии, лаунчера, загрузчика модов или модпака.";
+	}
+
+	@Override
+	public String rendimientoPestanaResumen() {
+		return "Сводка";
+	}
+
+	@Override
+	public String rendimientoPestanaAmbiental() {
+		return "Проблемы окружения";
+	}
+
+	@Override
+	public String rendimientoPestanaMods() {
+		return "Рекомендуемые моды и риски";
+	}
+
+	@Override
+	public String rendimientoPestanaConfigs() {
+		return "Параметры конфигурации";
+	}
+
+	@Override
+	public String rendimientoResumenTitulo() {
+		return "Сводка анализа";
+	}
+
+	@Override
+	public String rendimientoResumenAmbiental(int cantidad) {
+		return "Найдено проблем окружения: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenMods(int cantidad) {
+		return "Найдено предложений или рисков по модам: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenConfigs(int cantidad) {
+		return "Найдено предложений по конфигурации: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenGPU() {
+		return "Обнаружена проблема с GPU. Поэтому кнопка открытия настроек GPU была включена.";
+	}
+
+	@Override
+	public String rendimientoSinHallazgos() {
+		return "В этом разделе предложений не найдено.";
+	}
+
+	@Override
+	public String rendimientoSugerencia() {
+		return "Предложение";
+	}
+
+	@Override
+	public String rendimientoColorFondo() {
+		return "Производительность - фон";
+	}
+
+	@Override
+	public String rendimientoColorPanel() {
+		return "Производительность - панель";
+	}
+
+	@Override
+	public String rendimientoColorTexto() {
+		return "Производительность - текст";
+	}
+
+	@Override
+	public String rendimientoColorTextoSecundario() {
+		return "Производительность - вторичный текст";
+	}
+
+	@Override
+	public String rendimientoColorBoton() {
+		return "Производительность - кнопка";
+	}
+
+	@Override
+	public String rendimientoColorBotonTexto() {
+		return "Производительность - текст кнопки";
+	}
+
+	@Override
+	public String rendimientoColorSeleccion() {
+		return "Производительность - выделение";
+	}
 
 }

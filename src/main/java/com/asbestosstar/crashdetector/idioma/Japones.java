@@ -9004,30 +9004,867 @@ public class Japones implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "mod が final メソッドをオーバーライドしようとしています";
 	}
+
 	// Japanese (日本語)
 	@Override
 	public String errorCrashProvocadoPorComando(String comandoDetectado) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Minecraft がクラッシュコマンドによって終了しました。</b>"
-	            + "<p>ログには、コマンド <code>" + comandoDetectado + "</code> が実行されたことが示されています。</p>"
-	            + "<p>これは通常、ゲームが通常の mod エラーで終了したのではなく、誰かが "
-	            + "手動でクラッシュを引き起こすように設計されたコマンドを使用したことを意味します。</p>"
-	            + "<p><b>確認すべき事項:</b></p>"
-	            + "<ul>"
-	            + "<li>コンソールまたはゲーム内で誰がコマンドを実行したかを確認してください。</li>"
-	            + "<li>テストだった場合は、このクラッシュを無視できます。</li>"
-	            + "<li>意図せずに発生した場合は、コマンドブロック、スクリプト、データパック、管理用 mod、またはオペレーター権限を確認してください。</li>"
-	            + "</ul>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft がクラッシュコマンドによって終了しました。</b>" + "<p>ログには、コマンド <code>" + comandoDetectado
+				+ "</code> が実行されたことが示されています。</p>" + "<p>これは通常、ゲームが通常の mod エラーで終了したのではなく、誰かが "
+				+ "手動でクラッシュを引き起こすように設計されたコマンドを使用したことを意味します。</p>" + "<p><b>確認すべき事項:</b></p>" + "<ul>"
+				+ "<li>コンソールまたはゲーム内で誰がコマンドを実行したかを確認してください。</li>" + "<li>テストだった場合は、このクラッシュを無視できます。</li>"
+				+ "<li>意図せずに発生した場合は、コマンドブロック、スクリプト、データパック、管理用 mod、またはオペレーター権限を確認してください。</li>" + "</ul>";
 	}
 
 	@Override
 	public String nombreCrashProvocadoPorComando() {
-	    return "コマンドによるクラッシュ";
+		return "コマンドによるクラッシュ";
 	}
-	
-	
-	
-	
-	
+
+	// Japanese (日本語)
+	public String impactoAlto() {
+		return "高";
+	}
+
+	public String impactoMedio() {
+		return "中";
+	}
+
+	public String impactoBajo() {
+		return "低";
+	}
+
+	public String impactoBajoMedio() {
+		return "低/中";
+	}
+
+	public String riesgoAlto() {
+		return "高";
+	}
+
+	public String riesgoMedio() {
+		return "中";
+	}
+
+	public String riesgoBajo() {
+		return "低";
+	}
+
+	public String riesgoMedioAlto() {
+		return "中/高";
+	}
+
+	public String tituloCrearConfigBBE() {
+		return "Better Block Entities 設定の作成";
+	}
+
+	public String descripcionCrearConfigBBE() {
+		return "BBEConfig.json ファイルが存在しません。";
+	}
+
+	public String sugerenciaCrearConfigBBE() {
+		return "チェスト、シュルカー、看板、ベッド、鐘、旗の最適化を含む BBEConfig.json を作成します。";
+	}
+
+	public String tituloActivarOptimizacionMaestraBBE() {
+		return "BBE マスター最適化の有効化";
+	}
+
+	public String descripcionActivarOptimizacionMaestraBBE() {
+		return "Better Block Entities にメインの最適化が有効になっていないようです。";
+	}
+
+	public String sugerenciaActivarOptimizacionMaestraBBE() {
+		return "追加: {\"option\":\"optimize.master\",\"value\":true}";
+	}
+
+	public String tituloActivarCullingTextoCartelesBBE() {
+		return "看板テキストのコーリング (Culling) を有効化";
+	}
+
+	public String descripcionActivarCullingTextoCartelesBBE() {
+		return "遠くの看板テキストのレンダリングを削減します。";
+	}
+
+	public String sugerenciaActivarCullingTextoCartelesBBE() {
+		return "追加: {\"option\":\"misc.sign_text_culling\",\"value\":true}";
+	}
+
+	public String tituloAumentarSleepDelayEntityCulling() {
+		return "EntityCulling の sleepDelay を増加";
+	}
+
+	public String descripcionAumentarSleepDelayEntityCulling() {
+		return "EntityCulling がエンティティをチェックする頻度を下げます。";
+	}
+
+	public String sugerenciaAumentarSleepDelayEntityCulling() {
+		return "\"sleepDelay\": 153";
+	}
+
+	public String tituloSubirLimiteHitboxEntityCulling() {
+		return "Hitbox 制限の引き上げ";
+	}
+
+	public String descripcionSubirLimiteHitboxEntityCulling() {
+		return "低速パスにフォールバックする前に、より積極的なコーリング動作を許可します。";
+	}
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling() {
+		return "\"hitboxLimit\": 90";
+	}
+
+	public String tituloDesactivarDatosF3EntityCulling() {
+		return "EntityCulling の F3 データを無効化";
+	}
+
+	public String descripcionDesactivarDatosF3EntityCulling() {
+		return "mod の追加デバッグ情報を削除します。";
+	}
+
+	public String sugerenciaDesactivarDatosF3EntityCulling() {
+		return "\"disableF3\": true";
+	}
+
+	public String tituloActivarBufferingSignsImmediatelyFast() {
+		return "看板の実験的バッファリングを有効化";
+	}
+
+	public String descripcionActivarBufferingSignsImmediatelyFast() {
+		return "看板が多い場合にパフォーマンスを向上させる可能性があります。";
+	}
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast() {
+		return "\"experimental_sign_text_buffering\": true";
+	}
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast() {
+		return "リソースパックの競合処理を削減";
+	}
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast() {
+		return "追加の処理を減らせますが、リソースパックで視覚的な問題を引き起こす可能性もあります。";
+	}
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast() {
+		return "\"experimental_disable_resource_pack_conflict_handling\": true";
+	}
+
+	public String tituloOcultarBotonNCR() {
+		return "No Chat Reports ボタンを非表示";
+	}
+
+	public String descripcionOcultarBotonNCR() {
+		return "UI の変更です。FPS は大きく向上しませんが、画面をすっきりさせます。";
+	}
+
+	public String sugerenciaOcultarBotonNCR() {
+		return "\"showNCRButton\": false";
+	}
+
+	public String tituloActivarMixinsExperimentalesLithium() {
+		return "Lithium の実験的 mixins を有効化";
+	}
+
+	public String descripcionActivarMixinsExperimentalesLithium() {
+		return "追加の実験的最適化を有効にします。";
+	}
+
+	public String sugerenciaActivarMixinsExperimentalesLithium() {
+		return "mixin.experimental=true";
+	}
+
+	public String tituloUsarDetectorThreadingPequenoFerriteCore() {
+		return "小型スレッド検出器を使用";
+	}
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore() {
+		return "メモリを削減しますが、リスクが高まる可能性があります。";
+	}
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore() {
+		return "useSmallThreadingDetector=true";
+	}
+
+	public String tituloModernFixRecursosDinamicos() {
+		return "ModernFix の動的リソースを有効化";
+	}
+
+	public String descripcionModernFixRecursosDinamicos() {
+		return "リソースをより効率的に読み込むことで、メモリ使用量とワークロードを削減する可能性があります。";
+	}
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades() {
+		return "エンティティ動的レンダラーを有効化";
+	}
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades() {
+		return "エンティティレンダラーをより効率的に処理することで、パフォーマンスを向上させる可能性があります。";
+	}
+
+	public String tituloModernFixRenderizadoItemsRapido() {
+		return "アイテム高速レンダリングを有効化";
+	}
+
+	public String descripcionModernFixRenderizadoItemsRapido() {
+		return "アイテムのレンダリング時にパフォーマンスを向上させる可能性があります。";
+	}
+
+	public String tituloModernFixWorldgenAllocation() {
+		return "ワールド生成時の割り当てを削減";
+	}
+
+	public String descripcionModernFixWorldgenAllocation() {
+		return "ワールド生成中のメモリゴミを削減する可能性があります。";
+	}
+
+	public String tituloModernFixDeduplicacionIngredientes() {
+		return "材料の重複排除を有効化";
+	}
+
+	public String descripcionModernFixDeduplicacionIngredientes() {
+		return "レシピと材料に関連する重複オブジェクトを削減します。";
+	}
+
+	public String tituloSodiumRenderCielo() {
+		return "Sodium で空の最適化/レンダリングを有効化";
+	}
+
+	public String descripcionSodiumRenderCielo() {
+		return "空のレンダリング動作を調整する可能性があります。";
+	}
+
+	public String tituloActivarLightmapCaching() {
+		return "ライトマップキャッシュを有効化";
+	}
+
+	public String descripcionActivarLightmapCaching() {
+		return "不要な場合に照明の再計算を回避します。";
+	}
+
+	public String sugerenciaActivarLightmapCaching() {
+		return "enable_lightmap_caching: true";
+	}
+
+	public String tituloOcultarTextoF3BadOptimizations() {
+		return "BadOptimizations の F3 テキストを非表示";
+	}
+
+	public String descripcionOcultarTextoF3BadOptimizations() {
+		return "F3 画面のデバッグノイズを削減します。";
+	}
+
+	public String sugerenciaOcultarTextoF3BadOptimizations() {
+		return "show_f3_text: false";
+	}
+
+	public String tituloDesactivarLogConfigBadOptimizations() {
+		return "構成ログを無効化";
+	}
+
+	public String descripcionDesactivarLogConfigBadOptimizations() {
+		return "起動時にすべての構成が出力されるのを防ぎます。";
+	}
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations() {
+		return "log_config: false";
+	}
+
+	public String tituloActivarSerializadorGCFreeC2ME() {
+		return "C2ME の GC フリーシリアライザを有効化";
+	}
+
+	public String descripcionActivarSerializadorGCFreeC2ME() {
+		return "チャンクの読み込みまたは保存時のメモリ割り当てを削減します。";
+	}
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME() {
+		return "[ioSystem] gcFreeChunkSerializer = true";
+	}
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME() {
+		return "syncPlayerTickets を無効化";
+	}
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME() {
+		return "チャンクのパフォーマンスを向上させる可能性がありますが、技術的な構造物に影響を与える場合があります。";
+	}
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME() {
+		return "[chunkSystem] syncPlayerTickets = false";
+	}
+
+	public String tituloUsarCullingHojasDepthMoreCulling() {
+		return "DEPTH 葉コーリングを使用";
+	}
+
+	public String descripcionUsarCullingHojasDepthMoreCulling() {
+		return "通常モードよりも積極的な葉のコーリングモードを使用します。";
+	}
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling() {
+		return "leavesCullingMode = \"DEPTH\"";
+	}
+
+	public String tituloActivarEndGatewayCullingMoreCulling() {
+		return "エンドゲートウェイコーリングを有効化";
+	}
+
+	public String descripcionActivarEndGatewayCullingMoreCulling() {
+		return "エンドゲートウェイの不要なレンダリングを防ぎます。";
+	}
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling() {
+		return "endGatewayCulling = true";
+	}
+
+	public String tituloActivarActivationRangeServerCore() {
+		return "activation range を有効化";
+	}
+
+	public String descripcionActivarActivationRangeServerCore() {
+		return "プレイヤーから遠いエンティティのティックを削減します。";
+	}
+
+	public String sugerenciaActivarActivationRangeServerCore() {
+		return "activation-range: enabled: true";
+	}
+
+	public String tituloActivarRangoVerticalServerCore() {
+		return "垂直範囲を有効化";
+	}
+
+	public String descripcionActivarRangoVerticalServerCore() {
+		return "プレイヤーの非常に上または下にあるエンティティのティックを削減します。";
+	}
+
+	public String sugerenciaActivarRangoVerticalServerCore() {
+		return "use-vertical-range: true";
+	}
+
+	// Japanese (日本語)
+	public String impactoNegativoAlto() {
+		return "高い負の影響";
+	}
+
+	public String advertenciaModsCulling() {
+		return "コーリング（culling）系 mod は他の mod との非互換性、クラッシュ、ゲームの tick が正常に行われなくなるエラーを引き起こす可能性があり、自動農場や工場が動作しなくなることもあります。";
+	}
+
+	public String tituloModBadOptimizations() {
+		return "BadOptimizations の追加";
+	}
+
+	public String descripcionModBadOptimizations() {
+		return "ライトマップキャッシュ、空のキャッシュ、不要な呼び出しの削減などのクライアント側マイクロ最適化を追加します。";
+	}
+
+	public String tituloModBBE() {
+		return "Better Block Entities の追加";
+	}
+
+	public String descripcionModBBE() {
+		return "チェスト、シュルカー、ベッド、鐘、旗、看板などのブロックエンティティのレンダリングを最適化します。";
+	}
+
+	public String tituloModC2ME() {
+		return "Concurrent Chunk Management Engine の追加";
+	}
+
+	public String descripcionModC2ME() {
+		return "並列処理を使用してチャンクの読み込み、生成、管理を改善します。非常に強力ですが、大規模な modpack では非互換性を引き起こす可能性があります。";
+	}
+
+	public String tituloModEntityCulling() {
+		return "EntityCulling の追加";
+	}
+
+	public String descripcionModEntityCulling() {
+		return "表示されていないエンティティのレンダリングを防ぎます。" + advertenciaModsCulling();
+	}
+
+	public String tituloModFerriteCore() {
+		return "FerriteCore の追加";
+	}
+
+	public String descripcionModFerriteCore() {
+		return "重複排除とより効率的な内部構造により、メモリ使用量を削減します。";
+	}
+
+	public String tituloModImmediatelyFast() {
+		return "ImmediatelyFast の追加";
+	}
+
+	public String descripcionModImmediatelyFast() {
+		return "即時レンダリング、テキスト、バッファ、マップ、UI のさまざまな部分を最適化します。";
+	}
+
+	public String tituloModLithium() {
+		return "Lithium の追加";
+	}
+
+	public String descripcionModLithium() {
+		return "バニラの動作を大幅に変更することなく、ゲームロジック、エンティティ、ブロック、物理演算、その他のシステムを最適化します。";
+	}
+
+	public String tituloModModernFix() {
+		return "ModernFix の追加";
+	}
+
+	public String descripcionModModernFix() {
+		return "メモリ、読み込み、リソース、全般的なパフォーマンスに関する多数の最適化を追加します。アトラス関連のツールは、アトラスを小さくする mod と競合する可能性があります。";
+	}
+
+	public String tituloModMoreCulling() {
+		return "More Culling の追加";
+	}
+
+	public String descripcionModMoreCulling() {
+		return "ブロック、葉、額縁、絵画、雨、ビーコンなどの要素にコーリングを追加します。" + advertenciaModsCulling();
+	}
+
+	public String tituloModScalableLux() {
+		return "ScalableLux の追加";
+	}
+
+	public String descripcionModScalableLux() {
+		return "照明関連の計算を最適化し、光の変化が多いワールドでパフォーマンスを向上させる可能性があります。";
+	}
+
+	public String tituloModServerCore() {
+		return "ServerCore の追加";
+	}
+
+	public String descripcionModServerCore() {
+		return "サーバー側最適化、アクティベーション範囲、モブキャップ制御、tick 削減、読み込み改善を追加します。";
+	}
+
+	public String tituloModSodium() {
+		return "Sodium の追加";
+	}
+
+	public String descripcionModSodium() {
+		return "主要なレンダリング最適化 mod。通常、FPS 向上において最も重要な mod の一つです。";
+	}
+
+	public String tituloModVMP() {
+		return "Very Many Players の追加";
+	}
+
+	public String descripcionModVMP() {
+		return "多くのプレイヤーを処理できるようにサーバーシステムを最適化します。想定される mod ID は vmp です。";
+	}
+
+	public String tituloModMCMT() {
+		return "MCMT の追加";
+	}
+
+	public String descripcionModMCMT() {
+		return "Minecraft サーバーの一部をマルチスレッド化しようとします。場合によってはパフォーマンスを向上させることができますが、非互換性、tick エラー、異常な動作のリスクが高くなります。";
+	}
+
+	public String tituloLiabilityUranium() {
+		return "Uranium の削除";
+	}
+
+	public String descripcionLiabilityUranium() {
+		return "Uranium は意図的にゲームをラグらせるように設計された mod です。パフォーマンスを重視する場合はインストールしないでください。";
+	}
+
+	// Japanese (日本語)
+	public String tituloAmbientalSinXmx() {
+		return "Java の最大メモリを設定";
+	}
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro) {
+		return "提供された引数に -Xmx が検出されませんでした。" + mods + " 個の mod の場合、推奨される最小値は " + minimo + " で、約 " + maximoSeguro
+				+ " を超えないようにしてください。";
+	}
+
+	public String sugerenciaAmbientalSinXmx(String minimo) {
+		return "-Xmx" + minimo.replace(" ", "") + " を追加";
+	}
+
+	public String tituloAmbientalDemasiadaMemoria() {
+		return "割り当てられたメモリを減らす";
+	}
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro) {
+		return "インスタンスには " + total + " 中 " + xmx + " が割り当てられています。利用可能な RAM の 80% 以上を割り当てることは推奨されません。";
+	}
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro) {
+		return "-Xmx を " + maximoSeguro + " 以下に減らしてください。";
+	}
+
+	public String tituloAmbientalMemoriaInsuficiente() {
+		return "割り当てられたメモリを増やす";
+	}
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo) {
+		return "インスタンスには " + xmx + " が割り当てられています。" + mods + " 個の mod の場合、推奨される最小値は " + minimo + " です。";
+	}
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo) {
+		return "-Xmx を少なくとも " + minimo + " に増やしてください。";
+	}
+
+	public String tituloAmbientalJava8GC() {
+		return "Java 8 で G1GC または Shenandoah を使用";
+	}
+
+	public String descripcionAmbientalJava8GC() {
+		return "Java 8 では、一時停止を減らし安定性を向上させるために G1GC または Shenandoah を使用することが推奨されます。";
+	}
+
+	public String sugerenciaAmbientalJava8GC() {
+		return "-XX:+UseG1GC または -XX:+UseShenandoahGC を追加";
+	}
+
+	public String tituloAmbientalZGC() {
+		return "ZGC を使用";
+	}
+
+	public String descripcionAmbientalZGC(String ramTotal) {
+		return "マシンには 12 GB 以上の RAM（" + ramTotal
+				+ "）があります。Java ディストリビューションがサポートしている場合、ZGC はガベージコレクションの一時停止を減らすことができます。";
+	}
+
+	public String sugerenciaAmbientalZGC() {
+		return "Java 17 以降では、-XX:+UseZGC を試してください。";
+	}
+
+	public String tituloAmbientalAikar() {
+		return "Aikar のフラグを追加";
+	}
+
+	public String descripcionAmbientalAikar() {
+		return "Java 17 以前では、Aikar のフラグは通常 Minecraft の G1GC の動作を改善します。";
+	}
+
+	public String sugerenciaAmbientalAikar() {
+		return "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 を含む Aikar のフラグを使用";
+	}
+
+	public String tituloAmbientalRedHatJDK() {
+		return "Red Hat JDK を使用";
+	}
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os) {
+		return os + " の Java " + javaMayor + " では、安定性と互換性のため Red Hat JDK が推奨されます。";
+	}
+
+	public String sugerenciaAmbientalRedHatJDK() {
+		return "Java 8 または Java 11 用 Red Hat JDK をインストール";
+	}
+
+	public String tituloAmbientalAzulPrime() {
+		return "Azul Prime を検討";
+	}
+
+	public String descripcionAmbientalAzulPrime() {
+		return "Linux で Java 16 以降および 16 GB 以上の RAM を使用する場合、Azul Prime は良いパフォーマンスの選択肢となり得ます。";
+	}
+
+	public String sugerenciaAmbientalAzulPrime() {
+		return "マシンに 16 GB 以上の RAM がある場合は Azul Prime を試してください。";
+	}
+
+	public String tituloAmbientalGraalVM() {
+		return "GraalVM を検討";
+	}
+
+	public String descripcionAmbientalGraalVM() {
+		return "Java 16 以降および 16 GB 以上の RAM を使用する場合、GraalVM は Linux 以外で有用な代替案となり得ます。";
+	}
+
+	public String sugerenciaAmbientalGraalVM() {
+		return "マシンに 16 GB 以上の RAM がある場合は GraalVM を試してください。";
+	}
+
+	public String tituloAmbientalDiscoBajo() {
+		return "ディスクの空き容量を確認";
+	}
+
+	public String descripcionAmbientalDiscoBajo(String libre) {
+		return "ディスクの空き容量が不足しています: " + libre + "。スペースが不足すると、Minecraft が失敗したり、保存が遅くなったり、データが破損したりする可能性があります。";
+	}
+
+	public String sugerenciaAmbientalDiscoBajo() {
+		return "少なくとも 20 GB の空き容量を確保してください。";
+	}
+
+	public String tituloAmbientalWindowsRHEL9() {
+		return "テスト用に RHEL 9 を検討";
+	}
+
+	public String descripcionAmbientalWindowsRHEL9() {
+		return "Windows では、Red Hat JDK を含み、安定しており、個人で無料でダウンロードでき、ほとんどのテストが行われる場所であるため、RHEL 9 を検討することが推奨されます。";
+	}
+
+	public String sugerenciaAmbientalWindowsRHEL9() {
+		return "最大のテスト安定性を求める場合は、RHEL 9 でインスタンスを試してください。";
+	}
+
+	public String tituloAmbientalRaptorLake() {
+		return "Intel Raptor Lake 警告";
+	}
+
+	public String descripcionAmbientalRaptorLake() {
+		return "既存のチェックでマークされた Raptor Lake の問題が検出されました。これは不安定さ、クラッシュ、および modpack が原因のように見えるエラーを引き起こす可能性があります。";
+	}
+
+	public String sugerenciaAmbientalRaptorLake() {
+		return "modpack を責める前に、BIOS/マイクロコードを更新し、Raptor Lake の警告を確認してください。";
+	}
+
+	// Japanese (日本語)
+	@Override
+	public String tituloAmbientalNeoForge1201Antiguo() {
+		return "古い NeoForge 1.20.1 が検出されました";
+	}
+
+	@Override
+	public String descripcionAmbientalNeoForge1201Antiguo() {
+		return "FancyModLoader 47 または NeoForge 1.20.1 と互換性のあるパスが検出されました。"
+				+ "NeoForge 1.20.1 は MinecraftForge 1.20.1 のフォークであり、通常はバイナリレベルで互換性がありますが、"
+				+ "そのラインは早期に放棄されており、Forge で利用可能な多くの最適化が欠けている可能性があります。";
+	}
+
+	@Override
+	public String sugerenciaAmbientalNeoForge1201Antiguo() {
+		return "1.20.1 の場合、modpack が許可するなら、NeoForge 1.20.1 の代わりに MinecraftForge 1.20.1 の使用を検討してください。";
+	}
+
+	@Override
+	public String tituloAmbientalGPU() {
+		return "GPU の問題が検出されました";
+	}
+
+	@Override
+	public String descripcionAmbientalGPU() {
+		return "別のチェックですでに潜在的な GPU、OpenGL、またはグラフィックスカードの選択問題が検出されています。";
+	}
+
+	@Override
+	public String sugerenciaAmbientalGPU() {
+		return "Minecraft が正しい GPU を使用しているか確認し、ドライバを更新し、不安定なハイブリッド構成を避けてください。";
+	}
+
+	// Japanese (日本語)
+	@Override
+	public String gpuFixTitulo() {
+		return "GPU 設定";
+	}
+
+	@Override
+	public String gpuFixBotonSidebar() {
+		return "GPU";
+	}
+
+	@Override
+	public String gpuFixBotonAplicar() {
+		return "設定を適用";
+	}
+
+	@Override
+	public String gpuFixBotonFuenteTLauncher() {
+		return "TLauncher ガイドを開く";
+	}
+
+	@Override
+	public String gpuFixBotonVirusTotal() {
+		return "VirusTotal 分析を開く";
+	}
+
+	@Override
+	public String gpuFixBotonOptimusLinux() {
+		return "NVIDIA Optimus ガイドを開く";
+	}
+
+	@Override
+	public String gpuFixTextoWindows() {
+		return "CrashDetector は、Minecraft が高性能 GPU を使用していない可能性があることを検出しました。\n\n" + "Windows では、"
+				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
+				+ "にレジストリキーを設定して、javaw.exe に専用 GPU を使用させることができます。\n\n" + "GpuPreference=0 = Windows の自動決定。\n"
+				+ "GpuPreference=1 = 省電力 / 統合 GPU。\n" + "GpuPreference=2 = 高性能 GPU。\n\n"
+				+ "この情報の一部は、TLauncher によって公開された研究および VirusTotal で利用可能な動作分析から得られました。";
+	}
+
+	@Override
+	public String gpuFixTextoLinux() {
+		return "CrashDetector は、NVIDIA Optimus または PRIME に関連する潜在的な問題を検出しました。\n\n"
+				+ "使用している Linux ディストリビューションによっては、NVIDIA Optimus、"
+				+ "nvidia-prime、switcheroo-control、または他のハイブリッドシステムを構成する必要がある場合があります。\n\n"
+				+ "Fedora/RHEL およびその派生版では、通常 RPMFusion のドキュメントに従うことが推奨されます。\n\n" + "下のボタンは、推奨される公式ドキュメントを開きます。";
+	}
+
+	@Override
+	public String gpuFixTextoMac() {
+		return "CrashDetector は、潜在的な GPU 選択問題を検出しました。\n\n"
+				+ "ハイブリッド GPU を搭載した一部の macOS システムでは、高度なシステム設定を通じて専用 GPU の使用を強制することができます。\n\n"
+				+ "適用ボタンは、高性能 GPU を優先するためのコマンドを実行しようとします。";
+	}
+
+	@Override
+	public String gpuFixTextoOtroSistema() {
+		return "CrashDetector は GPU に関連する潜在的な問題を検出しましたが、" + "このオペレーティングシステム用の特定の実装はありません。";
+	}
+
+	@Override
+	public String gpuFixLinuxManual() {
+		return "Linux では、通常、ディストリビューション、" + "NVIDIA ドライバー、および使用されている Optimus/PRIME システムに応じて手動で構成する必要があります。";
+	}
+
+	@Override
+	public String gpuFixSistemaNoSoportado() {
+		return "自動 GPU 構成をサポートしていないオペレーティングシステムです。";
+	}
+
+	@Override
+	public String gpuFixJavaNoDetectado() {
+		return "javaw.exe の現在のパスを検出できませんでした。";
+	}
+
+	@Override
+	public String gpuFixWindowsAplicado(String ruta) {
+		return "GPU 設定が次のパスに正常に適用されました:\n\n" + ruta + "\n\n" + "GpuPreference=2 は高性能 GPU を示します。";
+	}
+
+	@Override
+	public String gpuFixErrorAplicando() {
+		return "GPU 設定を適用しようとしている間にエラーが発生しました";
+	}
+
+	@Override
+	public String gpuFixMacAplicado() {
+		return "高性能 GPU 設定が適用されました。";
+	}
+
+	@Override
+	public String gpuFixMacError() {
+		return "macOS で GPU 設定を適用できませんでした";
+	}
+
+	// Japanese (日本語)
+	@Override
+	public String rendimientoTitulo() {
+		return "パフォーマンスマネージャー";
+	}
+
+	@Override
+	public String rendimientoBotonSidebar() {
+		return "パフォーマンス";
+	}
+
+	@Override
+	public String rendimientoBotonAnalizar() {
+		return "パフォーマンスを分析";
+	}
+
+	@Override
+	public String rendimientoBotonAbrirGPU() {
+		return "GPU設定を開く";
+	}
+
+	@Override
+	public String rendimientoDescripcion() {
+		return "このパネルは、環境問題、推奨または危険なmod、およびパフォーマンスを向上させることができる構成オプションをチェックします。すべてのオプションが同時に機能するわけではなく、すべてのMinecraftバージョンに適しているわけでも、すべてのmodローダーと互換性があるわけでもありません。それで構いません：完璧な最適化スコアは必要ありません。";
+	}
+
+	@Override
+	public String rendimientoNotaCompatibilidad() {
+		return "注意：これらの提案は可能性であり、すべてを適用する命令ではありません。一部のオプションは互いに競合したり、バージョン、ランチャー、modローダー、またはmodpackに適していない場合があります。";
+	}
+
+	@Override
+	public String rendimientoPestanaResumen() {
+		return "概要";
+	}
+
+	@Override
+	public String rendimientoPestanaAmbiental() {
+		return "環境問題";
+	}
+
+	@Override
+	public String rendimientoPestanaMods() {
+		return "推奨modおよびリスク項目";
+	}
+
+	@Override
+	public String rendimientoPestanaConfigs() {
+		return "構成オプション";
+	}
+
+	@Override
+	public String rendimientoResumenTitulo() {
+		return "分析の概要";
+	}
+
+	@Override
+	public String rendimientoResumenAmbiental(int cantidad) {
+		return "発見された環境問題: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenMods(int cantidad) {
+		return "発見されたmodの提案またはリスク項目: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenConfigs(int cantidad) {
+		return "発見された構成の提案: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenGPU() {
+		return "GPUの問題が検出されました。そのため、GPU設定を開くボタンが有効になりました。";
+	}
+
+	@Override
+	public String rendimientoSinHallazgos() {
+		return "このセクションで提案は見つかりませんでした。";
+	}
+
+	@Override
+	public String rendimientoSugerencia() {
+		return "提案";
+	}
+
+	@Override
+	public String rendimientoColorFondo() {
+		return "パフォーマンス - 背景";
+	}
+
+	@Override
+	public String rendimientoColorPanel() {
+		return "パフォーマンス - パネル";
+	}
+
+	@Override
+	public String rendimientoColorTexto() {
+		return "パフォーマンス - テキスト";
+	}
+
+	@Override
+	public String rendimientoColorTextoSecundario() {
+		return "パフォーマンス - 副テキスト";
+	}
+
+	@Override
+	public String rendimientoColorBoton() {
+		return "パフォーマンス - ボタン";
+	}
+
+	@Override
+	public String rendimientoColorBotonTexto() {
+		return "パフォーマンス - ボタンテキスト";
+	}
+
+	@Override
+	public String rendimientoColorSeleccion() {
+		return "パフォーマンス - 選択";
+	}
 
 }

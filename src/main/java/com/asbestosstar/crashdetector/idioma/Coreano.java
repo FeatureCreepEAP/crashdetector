@@ -8995,33 +8995,866 @@ public class Coreano implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "한 mod가 final 메서드를 재정의하려고 시도함";
 	}
+
 	// Korean (Munhwaŏ / Standard Korean) (한국어)
 	@Override
 	public String errorCrashProvocadoPorComando(String comandoDetectado) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Minecraft가 충돌 명령어로 인해 종료되었습니다.</b>"
-	            + "<p>로그에 명령어 <code>" + comandoDetectado + "</code>이(가) 실행되었음이 표시되어 있습니다.</p>"
-	            + "<p>이는 일반적으로 게임이 일반적인 mod 오류로 인해 종료된 것이 아니라, 누군가 "
-	            + "수동으로 충돌을 유발하도록 설계된 명령어를 사용했음을 의미합니다.</p>"
-	            + "<p><b>확인할 사항:</b></p>"
-	            + "<ul>"
-	            + "<li>콘솔 또는 게임 내에서 누가 명령어를 실행했는지 확인하세요.</li>"
-	            + "<li>테스트였다면 이 충돌을 무시해도 됩니다.</li>"
-	            + "<li>의도치 않게 발생했다면 명령 블록, 스크립트, 데이터팩, 관리용 mod 또는 운영자 권한을 확인하세요.</li>"
-	            + "</ul>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft가 충돌 명령어로 인해 종료되었습니다.</b>" + "<p>로그에 명령어 <code>" + comandoDetectado
+				+ "</code>이(가) 실행되었음이 표시되어 있습니다.</p>" + "<p>이는 일반적으로 게임이 일반적인 mod 오류로 인해 종료된 것이 아니라, 누군가 "
+				+ "수동으로 충돌을 유발하도록 설계된 명령어를 사용했음을 의미합니다.</p>" + "<p><b>확인할 사항:</b></p>" + "<ul>"
+				+ "<li>콘솔 또는 게임 내에서 누가 명령어를 실행했는지 확인하세요.</li>" + "<li>테스트였다면 이 충돌을 무시해도 됩니다.</li>"
+				+ "<li>의도치 않게 발생했다면 명령 블록, 스크립트, 데이터팩, 관리용 mod 또는 운영자 권한을 확인하세요.</li>" + "</ul>";
 	}
 
 	@Override
 	public String nombreCrashProvocadoPorComando() {
-	    return "명령어로 인한 충돌";
+		return "명령어로 인한 충돌";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	public String impactoAlto() {
+		return "높음";
+	}
+
+	public String impactoMedio() {
+		return "중간";
+	}
+
+	public String impactoBajo() {
+		return "낮음";
+	}
+
+	public String impactoBajoMedio() {
+		return "낮음/중간";
+	}
+
+	public String riesgoAlto() {
+		return "높음";
+	}
+
+	public String riesgoMedio() {
+		return "중간";
+	}
+
+	public String riesgoBajo() {
+		return "낮음";
+	}
+
+	public String riesgoMedioAlto() {
+		return "중간/높음";
+	}
+
+	public String tituloCrearConfigBBE() {
+		return "Better Block Entities 구성 생성";
+	}
+
+	public String descripcionCrearConfigBBE() {
+		return "BBEConfig.json 파일이 존재하지 않습니다.";
+	}
+
+	public String sugerenciaCrearConfigBBE() {
+		return "상자, 셜커, 표지판, 침대, 종, 현수막을 최적화하는 BBEConfig.json을 생성합니다.";
+	}
+
+	public String tituloActivarOptimizacionMaestraBBE() {
+		return "BBE 마스터 최적화 활성화";
+	}
+
+	public String descripcionActivarOptimizacionMaestraBBE() {
+		return "Better Block Entities에 주요 최적화가 활성화되어 있지 않은 것으로 보입니다.";
+	}
+
+	public String sugerenciaActivarOptimizacionMaestraBBE() {
+		return "추가: {\"option\":\"optimize.master\",\"value\":true}";
+	}
+
+	public String tituloActivarCullingTextoCartelesBBE() {
+		return "표지판 텍스트 컬링 활성화";
+	}
+
+	public String descripcionActivarCullingTextoCartelesBBE() {
+		return "멀리 있는 표지판 텍스트 렌더링을 줄입니다.";
+	}
+
+	public String sugerenciaActivarCullingTextoCartelesBBE() {
+		return "추가: {\"option\":\"misc.sign_text_culling\",\"value\":true}";
+	}
+
+	public String tituloAumentarSleepDelayEntityCulling() {
+		return "EntityCulling의 sleepDelay 증가";
+	}
+
+	public String descripcionAumentarSleepDelayEntityCulling() {
+		return "EntityCulling이 엔티티를 덜 자주 검사합니다.";
+	}
+
+	public String sugerenciaAumentarSleepDelayEntityCulling() {
+		return "\"sleepDelay\": 153";
+	}
+
+	public String tituloSubirLimiteHitboxEntityCulling() {
+		return "Hitbox 제한 상향";
+	}
+
+	public String descripcionSubirLimiteHitboxEntityCulling() {
+		return "느린 경로로 넘어가기 전 더 공격적인 컬링 동작을 허용합니다.";
+	}
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling() {
+		return "\"hitboxLimit\": 90";
+	}
+
+	public String tituloDesactivarDatosF3EntityCulling() {
+		return "EntityCulling의 F3 데이터 비활성화";
+	}
+
+	public String descripcionDesactivarDatosF3EntityCulling() {
+		return "mod의 추가 디버깅 정보를 제거합니다.";
+	}
+
+	public String sugerenciaDesactivarDatosF3EntityCulling() {
+		return "\"disableF3\": true";
+	}
+
+	public String tituloActivarBufferingSignsImmediatelyFast() {
+		return "표지판 실험적 버퍼링 활성화";
+	}
+
+	public String descripcionActivarBufferingSignsImmediatelyFast() {
+		return "표지판이 많을 때 성능을 향상시킬 수 있습니다.";
+	}
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast() {
+		return "\"experimental_sign_text_buffering\": true";
+	}
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast() {
+		return "리소스 팩 충돌 처리 감소";
+	}
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast() {
+		return "추가 작업을 줄일 수 있지만 리소스 팩에서 시각적 문제를 일으킬 수도 있습니다.";
+	}
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast() {
+		return "\"experimental_disable_resource_pack_conflict_handling\": true";
+	}
+
+	public String tituloOcultarBotonNCR() {
+		return "No Chat Reports 버튼 숨기기";
+	}
+
+	public String descripcionOcultarBotonNCR() {
+		return "UI 변경; FPS를 크게 높이지는 않지만 화면을 깔끔하게 정리합니다.";
+	}
+
+	public String sugerenciaOcultarBotonNCR() {
+		return "\"showNCRButton\": false";
+	}
+
+	public String tituloActivarMixinsExperimentalesLithium() {
+		return "Lithium 실험적 mixins 활성화";
+	}
+
+	public String descripcionActivarMixinsExperimentalesLithium() {
+		return "추가적인 실험적 최적화를 활성화합니다.";
+	}
+
+	public String sugerenciaActivarMixinsExperimentalesLithium() {
+		return "mixin.experimental=true";
+	}
+
+	public String tituloUsarDetectorThreadingPequenoFerriteCore() {
+		return "소형 스레딩 감지기 사용";
+	}
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore() {
+		return "메모리를 줄이지만 위험이 더 높을 수 있습니다.";
+	}
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore() {
+		return "useSmallThreadingDetector=true";
+	}
+
+	public String tituloModernFixRecursosDinamicos() {
+		return "ModernFix 동적 리소스 활성화";
+	}
+
+	public String descripcionModernFixRecursosDinamicos() {
+		return "리소스를 더 효율적으로 로드하여 메모리 사용량과 작업 부하를 줄일 수 있습니다.";
+	}
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades() {
+		return "엔티티 동적 렌더러 활성화";
+	}
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades() {
+		return "엔티티 렌더러를 더 효율적으로 처리하여 성능을 향상시킬 수 있습니다.";
+	}
+
+	public String tituloModernFixRenderizadoItemsRapido() {
+		return "아이템 빠른 렌더링 활성화";
+	}
+
+	public String descripcionModernFixRenderizadoItemsRapido() {
+		return "아이템 렌더링 시 성능을 향상시킬 수 있습니다.";
+	}
+
+	public String tituloModernFixWorldgenAllocation() {
+		return "월드 생성 할당 감소";
+	}
+
+	public String descripcionModernFixWorldgenAllocation() {
+		return "월드 생성 중 메모리 가비지를 줄일 수 있습니다.";
+	}
+
+	public String tituloModernFixDeduplicacionIngredientes() {
+		return "재료 중복 제거 활성화";
+	}
+
+	public String descripcionModernFixDeduplicacionIngredientes() {
+		return "레시피 및 재료 관련 중복 객체를 줄입니다.";
+	}
+
+	public String tituloSodiumRenderCielo() {
+		return "Sodium에서 하늘 최적화/렌더링 활성화";
+	}
+
+	public String descripcionSodiumRenderCielo() {
+		return "하늘 렌더링 동작을 조정할 수 있습니다.";
+	}
+
+	public String tituloActivarLightmapCaching() {
+		return "조명 맵 캐시 활성화";
+	}
+
+	public String descripcionActivarLightmapCaching() {
+		return "불필요할 때 조명을 다시 계산하지 않습니다.";
+	}
+
+	public String sugerenciaActivarLightmapCaching() {
+		return "enable_lightmap_caching: true";
+	}
+
+	public String tituloOcultarTextoF3BadOptimizations() {
+		return "BadOptimizations의 F3 텍스트 숨기기";
+	}
+
+	public String descripcionOcultarTextoF3BadOptimizations() {
+		return "F3 화면의 디버깅 노이즈를 줄입니다.";
+	}
+
+	public String sugerenciaOcultarTextoF3BadOptimizations() {
+		return "show_f3_text: false";
+	}
+
+	public String tituloDesactivarLogConfigBadOptimizations() {
+		return "구성 로그 비활성화";
+	}
+
+	public String descripcionDesactivarLogConfigBadOptimizations() {
+		return "시작 시 전체 구성이 출력되는 것을 방지합니다.";
+	}
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations() {
+		return "log_config: false";
+	}
+
+	public String tituloActivarSerializadorGCFreeC2ME() {
+		return "C2ME의 GC-free 직렬화기 활성화";
+	}
+
+	public String descripcionActivarSerializadorGCFreeC2ME() {
+		return "청크 로드 또는 저장 시 메모리 할당을 줄입니다.";
+	}
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME() {
+		return "[ioSystem] gcFreeChunkSerializer = true";
+	}
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME() {
+		return "syncPlayerTickets 비활성화";
+	}
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME() {
+		return "청크 성능을 향상시킬 수 있지만 기술적 장치(contraptions)에 영향을 줄 수 있습니다.";
+	}
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME() {
+		return "[chunkSystem] syncPlayerTickets = false";
+	}
+
+	public String tituloUsarCullingHojasDepthMoreCulling() {
+		return "DEPTH 잎사귀 컬링 사용";
+	}
+
+	public String descripcionUsarCullingHojasDepthMoreCulling() {
+		return "일반 모드보다 더 공격적인 잎사귀 컬링 모드를 사용합니다.";
+	}
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling() {
+		return "leavesCullingMode = \"DEPTH\"";
+	}
+
+	public String tituloActivarEndGatewayCullingMoreCulling() {
+		return "엔드 관문 컬링 활성화";
+	}
+
+	public String descripcionActivarEndGatewayCullingMoreCulling() {
+		return "불필요한 엔드 관문 렌더링을 방지합니다.";
+	}
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling() {
+		return "endGatewayCulling = true";
+	}
+
+	public String tituloActivarActivationRangeServerCore() {
+		return "activation range 활성화";
+	}
+
+	public String descripcionActivarActivationRangeServerCore() {
+		return "플레이어에서 멀리 떨어진 엔티티의 틱(tick)을 줄입니다.";
+	}
+
+	public String sugerenciaActivarActivationRangeServerCore() {
+		return "activation-range: enabled: true";
+	}
+
+	public String tituloActivarRangoVerticalServerCore() {
+		return "수직 범위 활성화";
+	}
+
+	public String descripcionActivarRangoVerticalServerCore() {
+		return "플레이어 바로 위나 아래에 있는 엔티티의 틱을 줄입니다.";
+	}
+
+	public String sugerenciaActivarRangoVerticalServerCore() {
+		return "use-vertical-range: true";
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	public String impactoNegativoAlto() {
+		return "높은 부정적 영향";
+	}
+
+	public String advertenciaModsCulling() {
+		return "컬링(culling) 모드는 일부 모드와 충돌을 일으키거나, 충돌(crash), 게임 틱(tick)이 정상적으로 작동하지 않는 오류를 발생시킬 수 있으며, 자동 농장이나 공장 작동을 멈추게 할 수도 있습니다.";
+	}
+
+	public String tituloModBadOptimizations() {
+		return "BadOptimizations 추가";
+	}
+
+	public String descripcionModBadOptimizations() {
+		return "라이트맵 캐시, 하늘 캐시 및 불필요한 호출 감소와 같은 클라이언트 마이크로 최적화를 추가합니다.";
+	}
+
+	public String tituloModBBE() {
+		return "Better Block Entities 추가";
+	}
+
+	public String descripcionModBBE() {
+		return "상자, 셜커, 침대, 종, 현수막, 표지판과 같은 블록 엔티티의 렌더링을 최적화합니다.";
+	}
+
+	public String tituloModC2ME() {
+		return "Concurrent Chunk Management Engine 추가";
+	}
+
+	public String descripcionModC2ME() {
+		return "동시 처리를 사용하여 청크 로딩, 생성 및 관리를 개선합니다. 매우 강력할 수 있지만 대형 모드팩에서는 호환성 문제를 일으킬 수도 있습니다.";
+	}
+
+	public String tituloModEntityCulling() {
+		return "EntityCulling 추가";
+	}
+
+	public String descripcionModEntityCulling() {
+		return "보이지 않는 엔티티의 렌더링을 방지합니다. " + advertenciaModsCulling();
+	}
+
+	public String tituloModFerriteCore() {
+		return "FerriteCore 추가";
+	}
+
+	public String descripcionModFerriteCore() {
+		return "중복 제거 및 더 효율적인 내부 구조를 통해 메모리 사용량을 줄입니다.";
+	}
+
+	public String tituloModImmediatelyFast() {
+		return "ImmediatelyFast 추가";
+	}
+
+	public String descripcionModImmediatelyFast() {
+		return "즉시 렌더링의 여러 부분, 텍스트, 버퍼, 지도 및 UI를 최적화합니다.";
+	}
+
+	public String tituloModLithium() {
+		return "Lithium 추가";
+	}
+
+	public String descripcionModLithium() {
+		return "바닐라 동작을 크게 변경하지 않고 게임 로직, 엔티티, 블록, 물리 및 기타 시스템을 최적화합니다.";
+	}
+
+	public String tituloModModernFix() {
+		return "ModernFix 추가";
+	}
+
+	public String descripcionModModernFix() {
+		return "메모리, 로딩, 리소스 및 일반 성능에 대한 다양한 최적화를 추가합니다. 아틀라스 관련 도구는 아틀라스 크기를 줄이는 모드와 충돌할 수 있습니다.";
+	}
+
+	public String tituloModMoreCulling() {
+		return "More Culling 추가";
+	}
+
+	public String descripcionModMoreCulling() {
+		return "블록, 나뭇잎, 아이템 액자, 그림, 비, 신호기 및 기타 요소에 대한 컬링을 추가합니다. " + advertenciaModsCulling();
+	}
+
+	public String tituloModScalableLux() {
+		return "ScalableLux 추가";
+	}
+
+	public String descripcionModScalableLux() {
+		return "조명 관련 계산을 최적화하며 조명이 자주 변경되는 세계에서 성능을 향상시킬 수 있습니다.";
+	}
+
+	public String tituloModServerCore() {
+		return "ServerCore 추가";
+	}
+
+	public String descripcionModServerCore() {
+		return "서버 측 최적화, 활성화 범위, 몹 캡 제한, 틱 감소 및 로딩 개선을 추가합니다.";
+	}
+
+	public String tituloModSodium() {
+		return "Sodium 추가";
+	}
+
+	public String descripcionModSodium() {
+		return "주요 렌더링 최적화 모드입니다. 일반적으로 FPS 향상에 가장 중요한 모드 중 하나입니다.";
+	}
+
+	public String tituloModVMP() {
+		return "Very Many Players 추가";
+	}
+
+	public String descripcionModVMP() {
+		return "많은 플레이어를 처리하도록 서버 시스템을 최적화합니다. 예상 모드 ID는 vmp입니다.";
+	}
+
+	public String tituloModMCMT() {
+		return "MCMT 추가";
+	}
+
+	public String descripcionModMCMT() {
+		return "Minecraft 서버의 일부를 멀티스레딩하려고 시도합니다. 일부 경우 성능을 향상시킬 수 있지만 호환성 문제, 틱 오류 및 이상한 동작의 위험이 높습니다.";
+	}
+
+	public String tituloLiabilityUranium() {
+		return "Uranium 제거";
+	}
+
+	public String descripcionLiabilityUranium() {
+		return "Uranium은 게임을 의도적으로 렉 걸리게 하도록 설계된 모드입니다. 성능을 원한다면 설치해서는 안 됩니다.";
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	public String tituloAmbientalSinXmx() {
+		return "Java 최대 메모리 설정";
+	}
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro) {
+		return "제공된 인수에서 -Xmx가 감지되지 않았습니다. " + mods + "개의 모드의 경우 권장 최소값은 " + minimo + "이며, 약 " + maximoSeguro
+				+ "를 초과하지 않아야 합니다.";
+	}
+
+	public String sugerenciaAmbientalSinXmx(String minimo) {
+		return "-Xmx" + minimo.replace(" ", "") + " 추가";
+	}
+
+	public String tituloAmbientalDemasiadaMemoria() {
+		return "할당된 메모리 줄이기";
+	}
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro) {
+		return "인스턴스에 " + total + " 중 " + xmx + "가 할당되었습니다. 사용 가능한 RAM의 80% 이상을 할당하는 것은 권장되지 않습니다.";
+	}
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro) {
+		return "-Xmx를 " + maximoSeguro + " 이하로 줄이십시오.";
+	}
+
+	public String tituloAmbientalMemoriaInsuficiente() {
+		return "할당된 메모리 늘리기";
+	}
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo) {
+		return "인스턴스에 " + xmx + "가 할당되었습니다. " + mods + "개의 모드의 경우 권장 최소값은 " + minimo + "입니다.";
+	}
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo) {
+		return "-Xmx를 최소한 " + minimo + "(으)로 늘리십시오.";
+	}
+
+	public String tituloAmbientalJava8GC() {
+		return "Java 8에서 G1GC 또는 Shenandoah 사용";
+	}
+
+	public String descripcionAmbientalJava8GC() {
+		return "Java 8에서는 일시 중단을 줄이고 안정성을 향상시키기 위해 G1GC 또는 Shenandoah를 사용하는 것이 좋습니다.";
+	}
+
+	public String sugerenciaAmbientalJava8GC() {
+		return "-XX:+UseG1GC 또는 -XX:+UseShenandoahGC 추가";
+	}
+
+	public String tituloAmbientalZGC() {
+		return "ZGC 사용";
+	}
+
+	public String descripcionAmbientalZGC(String ramTotal) {
+		return "시스템에 12GB 이상의 RAM(" + ramTotal + ")이 있습니다. Java 배포판이 지원한다면 ZGC는 가비지 컬렉터 일시 중단을 줄일 수 있습니다.";
+	}
+
+	public String sugerenciaAmbientalZGC() {
+		return "Java 17 이상에서 -XX:+UseZGC를 시도해 보십시오.";
+	}
+
+	public String tituloAmbientalAikar() {
+		return "Aikar 플래그 추가";
+	}
+
+	public String descripcionAmbientalAikar() {
+		return "Java 17 이하에서는 Aikar 플래그가 Minecraft의 G1GC 동작을 일반적으로 개선합니다.";
+	}
+
+	public String sugerenciaAmbientalAikar() {
+		return "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200를 포함한 Aikar 플래그 사용";
+	}
+
+	public String tituloAmbientalRedHatJDK() {
+		return "Red Hat JDK 사용";
+	}
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os) {
+		return os + "의 Java " + javaMayor + "의 경우 안정성과 호환성을 위해 Red Hat JDK를 권장합니다.";
+	}
+
+	public String sugerenciaAmbientalRedHatJDK() {
+		return "Java 8 또는 Java 11용 Red Hat JDK 설치";
+	}
+
+	public String tituloAmbientalAzulPrime() {
+		return "Azul Prime 고려";
+	}
+
+	public String descripcionAmbientalAzulPrime() {
+		return "Linux에서 Java 16 이상과 16GB 이상의 RAM을 사용할 때 Azul Prime은 좋은 성능 선택지가 될 수 있습니다.";
+	}
+
+	public String sugerenciaAmbientalAzulPrime() {
+		return "시스템에 16GB 이상의 RAM이 있다면 Azul Prime을 시도해 보십시오.";
+	}
+
+	public String tituloAmbientalGraalVM() {
+		return "GraalVM 고려";
+	}
+
+	public String descripcionAmbientalGraalVM() {
+		return "Java 16 이상과 16GB 이상의 RAM을 사용할 때 GraalVM은 Linux 외부에서 유용한 대안이 될 수 있습니다.";
+	}
+
+	public String sugerenciaAmbientalGraalVM() {
+		return "시스템에 16GB 이상의 RAM이 있다면 GraalVM을 시도해 보십시오.";
+	}
+
+	public String tituloAmbientalDiscoBajo() {
+		return "디스크 여유 공간 확인";
+	}
+
+	public String descripcionAmbientalDiscoBajo(String libre) {
+		return "디스크 여유 공간이 부족합니다: " + libre + ". 공간이 부족하면 Minecraft가 실패하거나 저장이 느려지거나 데이터가 손상될 수 있습니다.";
+	}
+
+	public String sugerenciaAmbientalDiscoBajo() {
+		return "최소 20GB의 공간을 확보하십시오.";
+	}
+
+	public String tituloAmbientalWindowsRHEL9() {
+		return "테스트를 위해 RHEL 9 고려";
+	}
+
+	public String descripcionAmbientalWindowsRHEL9() {
+		return "Windows에서는 Red Hat JDK를 포함하고 안정적이며 개인이 무료로 다운로드할 수 있고 대부분의 테스트가 진행되는 RHEL 9를 고려하는 것이 좋습니다.";
+	}
+
+	public String sugerenciaAmbientalWindowsRHEL9() {
+		return "최대의 테스트 안정성을 원한다면 RHEL 9에서 인스턴스를 시도해 보십시오.";
+	}
+
+	public String tituloAmbientalRaptorLake() {
+		return "Intel Raptor Lake 경고";
+	}
+
+	public String descripcionAmbientalRaptorLake() {
+		return "기존 검사에서 표시된 Raptor Lake 문제가 감지되었습니다. 이는 불안정성, 충돌 및 모드팩 탓으로 보기 쉬운 오류를 유발할 수 있습니다.";
+	}
+
+	public String sugerenciaAmbientalRaptorLake() {
+		return "모드팩을 탓하기 전에 BIOS/마이크로코드를 업데이트하고 Raptor Lake 경고를 확인하십시오.";
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String tituloAmbientalNeoForge1201Antiguo() {
+		return "구형 NeoForge 1.20.1 감지됨";
+	}
+
+	@Override
+	public String descripcionAmbientalNeoForge1201Antiguo() {
+		return "FancyModLoader 47 또는 NeoForge 1.20.1과 호환되는 경로가 감지되었습니다. "
+				+ "NeoForge 1.20.1은 MinecraftForge 1.20.1의 포크이며 일반적으로 바이너리 수준에서 호환되지만, "
+				+ "해당 라인은 일찍 버려졌으며 Forge에서 사용할 수 있는 여러 최적화가 부족할 수 있습니다.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalNeoForge1201Antiguo() {
+		return "1.20.1의 경우 모드팩이 허용한다면 NeoForge 1.20.1 대신 MinecraftForge 1.20.1 사용을 고려하십시오.";
+	}
+
+	@Override
+	public String tituloAmbientalGPU() {
+		return "GPU 문제 감지됨";
+	}
+
+	@Override
+	public String descripcionAmbientalGPU() {
+		return "다른 검사에서 이미 잠재적인 GPU, OpenGL 또는 그래픽 카드 선택 문제를 감지했습니다.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalGPU() {
+		return "Minecraft가 올바른 GPU를 사용하고 있는지 확인하고, 드라이버를 업데이트하며, 불안정한 하이브리드 구성을 피하십시오.";
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String gpuFixTitulo() {
+		return "GPU 설정";
+	}
+
+	@Override
+	public String gpuFixBotonSidebar() {
+		return "GPU";
+	}
+
+	@Override
+	public String gpuFixBotonAplicar() {
+		return "설정 적용";
+	}
+
+	@Override
+	public String gpuFixBotonFuenteTLauncher() {
+		return "TLauncher 가이드 열기";
+	}
+
+	@Override
+	public String gpuFixBotonVirusTotal() {
+		return "VirusTotal 분석 열기";
+	}
+
+	@Override
+	public String gpuFixBotonOptimusLinux() {
+		return "NVIDIA Optimus 가이드 열기";
+	}
+
+	@Override
+	public String gpuFixTextoWindows() {
+		return "CrashDetector가 Minecraft가 고성능 GPU를 사용하지 않을 수 있음을 감지했습니다.\n\n" + "Windows에서는 "
+				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
+				+ "에 레지스트리 키를 설정하여 javaw.exe가 전용 GPU를 사용하도록 강제할 수 있습니다.\n\n" + "GpuPreference=0 = Windows 자동 결정.\n"
+				+ "GpuPreference=1 = 전력 절약 / 내장 GPU.\n" + "GpuPreference=2 = 고성능 GPU.\n\n"
+				+ "이 정보의 일부는 TLauncher에서 발표한 연구와 VirusTotal에서 이용 가능한 행동 분석을 통해 얻었습니다.";
+	}
+
+	@Override
+	public String gpuFixTextoLinux() {
+		return "CrashDetector가 NVIDIA Optimus 또는 PRIME과 관련된 잠재적 문제를 감지했습니다.\n\n"
+				+ "사용 중인 Linux 배포판에 따라 NVIDIA Optimus, "
+				+ "nvidia-prime, switcheroo-control 또는 기타 하이브리드 시스템을 구성해야 할 수 있습니다.\n\n"
+				+ "Fedora/RHEL 및 파생 버전에서는 일반적으로 RPMFusion 문서를 따르는 것이 좋습니다.\n\n" + "하단 버튼은 권장되는 공식 문서를 엽니다.";
+	}
+
+	@Override
+	public String gpuFixTextoMac() {
+		return "CrashDetector가 잠재적인 GPU 선택 문제를 감지했습니다.\n\n"
+				+ "하이브리드 GPU가 있는 일부 macOS 시스템에서는 고급 시스템 설정을 통해 전용 GPU 사용을 강제할 수 있습니다.\n\n"
+				+ "적용 버튼은 고성능 GPU를 우선순위화하는 명령을 실행하려고 시도합니다.";
+	}
+
+	@Override
+	public String gpuFixTextoOtroSistema() {
+		return "CrashDetector가 잠재적인 GPU 관련 문제를 감지했지만, " + "이 운영 체제에 대한 특정 구현은 존재하지 않습니다.";
+	}
+
+	@Override
+	public String gpuFixLinuxManual() {
+		return "Linux에서는 일반적으로 배포판, " + "NVIDIA 드라이버 및 사용된 Optimus/PRIME 시스템에 따라 수동으로 구성해야 합니다.";
+	}
+
+	@Override
+	public String gpuFixSistemaNoSoportado() {
+		return "자동 GPU 구성을 지원하지 않는 운영 체제입니다.";
+	}
+
+	@Override
+	public String gpuFixJavaNoDetectado() {
+		return "javaw.exe의 현재 경로를 감지할 수 없습니다.";
+	}
+
+	@Override
+	public String gpuFixWindowsAplicado(String ruta) {
+		return "GPU 설정이 다음 경로에 성공적으로 적용되었습니다:\n\n" + ruta + "\n\n" + "GpuPreference=2는 고성능 GPU를 나타냅니다.";
+	}
+
+	@Override
+	public String gpuFixErrorAplicando() {
+		return "GPU 설정을 적용하는 동안 오류가 발생했습니다";
+	}
+
+	@Override
+	public String gpuFixMacAplicado() {
+		return "고성능 GPU 설정이 적용되었습니다.";
+	}
+
+	@Override
+	public String gpuFixMacError() {
+		return "macOS에서 GPU 설정을 적용할 수 없습니다";
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String rendimientoTitulo() {
+		return "성능 관리자";
+	}
+
+	@Override
+	public String rendimientoBotonSidebar() {
+		return "성능";
+	}
+
+	@Override
+	public String rendimientoBotonAnalizar() {
+		return "성능 분석";
+	}
+
+	@Override
+	public String rendimientoBotonAbrirGPU() {
+		return "GPU 설정 열기";
+	}
+
+	@Override
+	public String rendimientoDescripcion() {
+		return "이 패널은 환경 문제, 권장되거나 위험한 mod, 그리고 성능을 향상시킬 수 있는 구성 옵션을 검토합니다. 모든 옵션이 함께 작동하는 것은 아니며, 모든 Minecraft 버전에 적합한 것도 아니고, 모든 mod 로더와 호환되는 것도 아닙니다. 괜찮습니다: 완벽한 최적화 점수가 필요하지는 않습니다.";
+	}
+
+	@Override
+	public String rendimientoNotaCompatibilidad() {
+		return "참고: 이러한 제안은 가능성일 뿐이며 모든 것을 적용하라는 명령이 아닙니다. 일부 옵션은 서로 충돌하거나 버전, 런처, mod 로더 또는 modpack에 적합하지 않을 수 있습니다.";
+	}
+
+	@Override
+	public String rendimientoPestanaResumen() {
+		return "요약";
+	}
+
+	@Override
+	public String rendimientoPestanaAmbiental() {
+		return "환경 문제";
+	}
+
+	@Override
+	public String rendimientoPestanaMods() {
+		return "권장 mod 및 위험 요소";
+	}
+
+	@Override
+	public String rendimientoPestanaConfigs() {
+		return "구성 옵션";
+	}
+
+	@Override
+	public String rendimientoResumenTitulo() {
+		return "분석 요약";
+	}
+
+	@Override
+	public String rendimientoResumenAmbiental(int cantidad) {
+		return "발견된 환경 문제: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenMods(int cantidad) {
+		return "발견된 mod 제안 또는 위험 요소: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenConfigs(int cantidad) {
+		return "발견된 구성 제안: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenGPU() {
+		return "GPU 문제가 감지되었습니다. 따라서 GPU 설정을 여는 버튼이 활성화되었습니다.";
+	}
+
+	@Override
+	public String rendimientoSinHallazgos() {
+		return "이 섹션에서 제안 사항을 찾을 수 없습니다.";
+	}
+
+	@Override
+	public String rendimientoSugerencia() {
+		return "제안";
+	}
+
+	@Override
+	public String rendimientoColorFondo() {
+		return "성능 - 배경";
+	}
+
+	@Override
+	public String rendimientoColorPanel() {
+		return "성능 - 패널";
+	}
+
+	@Override
+	public String rendimientoColorTexto() {
+		return "성능 - 텍스트";
+	}
+
+	@Override
+	public String rendimientoColorTextoSecundario() {
+		return "성능 - 보조 텍스트";
+	}
+
+	@Override
+	public String rendimientoColorBoton() {
+		return "성능 - 버튼";
+	}
+
+	@Override
+	public String rendimientoColorBotonTexto() {
+		return "성능 - 버튼 텍스트";
+	}
+
+	@Override
+	public String rendimientoColorSeleccion() {
+		return "성능 - 선택";
+	}
 
 }

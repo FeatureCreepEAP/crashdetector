@@ -9543,31 +9543,882 @@ public class Khmer implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "mod មួយកំពុងព្យាយាមលុបចោល (override) វិធីសាស្ត្រ final";
 	}
+
 	// Khmer (ភាសាខ្មែរ)
 	@Override
 	public String errorCrashProvocadoPorComando(String comandoDetectado) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Minecraft ត្រូវបានបិទដោយសារតែពាក្យបញ្ជាបណ្តាលឱ្យដួល (crash)។</b>"
-	            + "<p>កំណត់ហេតុបង្ហាញថាពាក្យបញ្ជា <code>" + comandoDetectado + "</code> ត្រូវបានអនុវត្ត។</p>"
-	            + "<p>នេះជាធម្មតាមានន័យថាហ្គេមមិនបានបិទដោយសារតែកំហុស mod ធម្មតាទេ ប៉ុន្តែដោយសារតែនរណាម្នាក់ "
-	            + "បានប្រើពាក្យបញ្ជាដែលត្រូវបានរចនាឡើងដើម្បីបណ្តាលឱ្យដួលដោយដៃ។</p>"
-	            + "<p><b>អ្វីដែលត្រូវពិនិត្យ:</b></p>"
-	            + "<ul>"
-	            + "<li>ពិនិត្យមើលថាតើនរណាបានអនុវត្តពាក្យបញ្ជានៅក្នុងកុងសូល ឬនៅក្នុងហ្គេម។</li>"
-	            + "<li>ប្រសិនបើវាជាការសាកល្បង អ្នកអាចមិនអើពើនឹងការដួលនេះបាន។</li>"
-	            + "<li>ប្រសិនបើវាកើតឡើងដោយមិនបានตั้งใจ សូមពិនិត្យមើល command blocks, scripts, datapacks, mods គ្រប់គ្រង ឬសិទ្ធិរបស់អ្នកប្រតិបត្តិការ។</li>"
-	            + "</ul>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft ត្រូវបានបិទដោយសារតែពាក្យបញ្ជាបណ្តាលឱ្យដួល (crash)។</b>"
+				+ "<p>កំណត់ហេតុបង្ហាញថាពាក្យបញ្ជា <code>" + comandoDetectado + "</code> ត្រូវបានអនុវត្ត។</p>"
+				+ "<p>នេះជាធម្មតាមានន័យថាហ្គេមមិនបានបិទដោយសារតែកំហុស mod ធម្មតាទេ ប៉ុន្តែដោយសារតែនរណាម្នាក់ "
+				+ "បានប្រើពាក្យបញ្ជាដែលត្រូវបានរចនាឡើងដើម្បីបណ្តាលឱ្យដួលដោយដៃ។</p>"
+				+ "<p><b>អ្វីដែលត្រូវពិនិត្យ:</b></p>" + "<ul>"
+				+ "<li>ពិនិត្យមើលថាតើនរណាបានអនុវត្តពាក្យបញ្ជានៅក្នុងកុងសូល ឬនៅក្នុងហ្គេម។</li>"
+				+ "<li>ប្រសិនបើវាជាការសាកល្បង អ្នកអាចមិនអើពើនឹងការដួលនេះបាន។</li>"
+				+ "<li>ប្រសិនបើវាកើតឡើងដោយមិនបានตั้งใจ សូមពិនិត្យមើល command blocks, scripts, datapacks, mods គ្រប់គ្រង ឬសិទ្ធិរបស់អ្នកប្រតិបត្តិការ។</li>"
+				+ "</ul>";
 	}
 
 	@Override
 	public String nombreCrashProvocadoPorComando() {
-	    return "ការដួលបណ្តាលមកពីពាក្យបញ្ជា";
+		return "ការដួលបណ្តាលមកពីពាក្យបញ្ជា";
 	}
-	
-	
-	
-	
-	
-	
+
+	// Khmer (ភាសាខ្មែរ)
+	public String impactoAlto() {
+		return "ខ្ពស់";
+	}
+
+	public String impactoMedio() {
+		return "មធ្យម";
+	}
+
+	public String impactoBajo() {
+		return "ទាប";
+	}
+
+	public String impactoBajoMedio() {
+		return "ទាប/មធ្យម";
+	}
+
+	public String riesgoAlto() {
+		return "ខ្ពស់";
+	}
+
+	public String riesgoMedio() {
+		return "មធ្យម";
+	}
+
+	public String riesgoBajo() {
+		return "ទាប";
+	}
+
+	public String riesgoMedioAlto() {
+		return "មធ្យម/ខ្ពស់";
+	}
+
+	public String tituloCrearConfigBBE() {
+		return "បង្កើតការកំណត់របស់ Better Block Entities";
+	}
+
+	public String descripcionCrearConfigBBE() {
+		return "ឯកសារ BBEConfig.json មិនមានទេ។";
+	}
+
+	public String sugerenciaCrearConfigBBE() {
+		return "បង្កើត BBEConfig.json ជាមួយនឹងការបង្កើនប្រសិទ្ធភាពសម្រាប់ប្រអប់, shulkers, ផ្លាក, គ្រែ, កណ្តឹង និងទង់។";
+	}
+
+	public String tituloActivarOptimizacionMaestraBBE() {
+		return "បើកការបង្កើនប្រសិទ្ធភាពមេរបស់ BBE";
+	}
+
+	public String descripcionActivarOptimizacionMaestraBBE() {
+		return "Better Block Entities ហាក់ដូចជាមិនបានបើកការបង្កើនប្រសិទ្ធភាពសំខាន់។";
+	}
+
+	public String sugerenciaActivarOptimizacionMaestraBBE() {
+		return "បន្ថែម {\"option\":\"optimize.master\",\"value\":true}";
+	}
+
+	public String tituloActivarCullingTextoCartelesBBE() {
+		return "បើកការលាក់អក្សរផ្លាក (Culling)";
+	}
+
+	public String descripcionActivarCullingTextoCartelesBBE() {
+		return "កាត់បន្ថយការបង្ហាញអក្សរផ្លាកពីចម្ងាយ។";
+	}
+
+	public String sugerenciaActivarCullingTextoCartelesBBE() {
+		return "បន្ថែម {\"option\":\"misc.sign_text_culling\",\"value\":true}";
+	}
+
+	public String tituloAumentarSleepDelayEntityCulling() {
+		return "បង្កើន sleepDelay របស់ EntityCulling";
+	}
+
+	public String descripcionAumentarSleepDelayEntityCulling() {
+		return "EntityCulling នឹងពិនិត្យមើលអង្គភាពដោយមិនញឹកញាប់។";
+	}
+
+	public String sugerenciaAumentarSleepDelayEntityCulling() {
+		return "\"sleepDelay\": 153";
+	}
+
+	public String tituloSubirLimiteHitboxEntityCulling() {
+		return "លើកកម្រិត hitbox";
+	}
+
+	public String descripcionSubirLimiteHitboxEntityCulling() {
+		return "អនុញ្ញាតឱ្យមានឥរិយាបថលាក់ (culling) កាន់តែខ្លាំងមុនពេលធ្លាក់ទៅផ្លូវយឺត។";
+	}
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling() {
+		return "\"hitboxLimit\": 90";
+	}
+
+	public String tituloDesactivarDatosF3EntityCulling() {
+		return "បិទទិន្នន័យ F3 របស់ EntityCulling";
+	}
+
+	public String descripcionDesactivarDatosF3EntityCulling() {
+		return "យកព័ត៌មាន debug បន្ថែមចេញពី mod។";
+	}
+
+	public String sugerenciaDesactivarDatosF3EntityCulling() {
+		return "\"disableF3\": true";
+	}
+
+	public String tituloActivarBufferingSignsImmediatelyFast() {
+		return "បើកការផ្ទុកផ្លាកពិសោធន៍";
+	}
+
+	public String descripcionActivarBufferingSignsImmediatelyFast() {
+		return "អាចបង្កើនប្រសិទ្ធភាពនៅពេលមានផ្លាកច្រើន។";
+	}
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast() {
+		return "\"experimental_sign_text_buffering\": true";
+	}
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast() {
+		return "កាត់បន្ថយការដោះស្រាយជម្លោះ resource pack";
+	}
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast() {
+		return "អាចដកការងារបន្ថែម ប៉ុន្តែក៏អាចបណ្តាលឱ្យមានបញ្ហាទស្សនៈជាមួយ resource packs ផងដែរ។";
+	}
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast() {
+		return "\"experimental_disable_resource_pack_conflict_handling\": true";
+	}
+
+	public String tituloOcultarBotonNCR() {
+		return "លាក់ប៊ូតុង No Chat Reports";
+	}
+
+	public String descripcionOcultarBotonNCR() {
+		return "ការផ្លាស់ប្តូរចំណុចប្រទាក់; មិនជួយបង្កើន FPS ច្រើនទេ ប៉ុន្តែជួយសម្អាតអេក្រង់។";
+	}
+
+	public String sugerenciaOcultarBotonNCR() {
+		return "\"showNCRButton\": false";
+	}
+
+	public String tituloActivarMixinsExperimentalesLithium() {
+		return "បើក mixins ពិសោធន៍របស់ Lithium";
+	}
+
+	public String descripcionActivarMixinsExperimentalesLithium() {
+		return "បើកការបង្កើនប្រសិទ្ធភាពពិសោធន៍បន្ថែម។";
+	}
+
+	public String sugerenciaActivarMixinsExperimentalesLithium() {
+		return "mixin.experimental=true";
+	}
+
+	public String tituloUsarDetectorThreadingPequenoFerriteCore() {
+		return "ប្រើឧបករណ៍រកឃើញ threading តូច";
+	}
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore() {
+		return "កាត់បន្ថយអង្គចងចាំ ប៉ុន្តែអាចមានហានិភ័យខ្ពស់ជាង។";
+	}
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore() {
+		return "useSmallThreadingDetector=true";
+	}
+
+	public String tituloModernFixRecursosDinamicos() {
+		return "បើកធនធានឌីណាមិករបស់ ModernFix";
+	}
+
+	public String descripcionModernFixRecursosDinamicos() {
+		return "អាចកាត់បន្ថយការប្រើប្រាស់អង្គចងចាំ និងការងារដោយផ្ទុកធនធានបានមានប្រសិទ្ធភាពជាងមុន។";
+	}
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades() {
+		return "បើកឧបករណ៍បង្ហាញអង្គភាពឌីណាមិក";
+	}
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades() {
+		return "អាចបង្កើនប្រសិទ្ធភាពដោយគ្រប់គ្រងឧបករណ៍បង្ហាញអង្គភាពបានមានប្រសិទ្ធភាពជាងមុន។";
+	}
+
+	public String tituloModernFixRenderizadoItemsRapido() {
+		return "បើកការបង្ហាញវត្ថុលឿន";
+	}
+
+	public String descripcionModernFixRenderizadoItemsRapido() {
+		return "អាចបង្កើនប្រសិទ្ធភាពនៅពេលបង្ហាញវត្ថុ។";
+	}
+
+	public String tituloModernFixWorldgenAllocation() {
+		return "កាត់បន្ថយការកំណត់ទីតាំងក្នុង worldgen";
+	}
+
+	public String descripcionModernFixWorldgenAllocation() {
+		return "អាចកាត់បន្ថយសំរាមអង្គចងចាំក្នុងអំឡុងពេលបង្កើតពិភពលោក។";
+	}
+
+	public String tituloModernFixDeduplicacionIngredientes() {
+		return "បើកការលុបចោលសមាសធាតុដដែលៗ";
+	}
+
+	public String descripcionModernFixDeduplicacionIngredientes() {
+		return "កាត់បន្ថយវត្ថុដដែលៗដែលទាក់ទងនឹងរូបមន្ត និងសមាសធាតុ។";
+	}
+
+	public String tituloSodiumRenderCielo() {
+		return "បើកការបង្កើនប្រសិទ្ធភាព/បង្ហាញមេឃក្នុង Sodium";
+	}
+
+	public String descripcionSodiumRenderCielo() {
+		return "អាចកែតម្រូវឥរិយាបថបង្ហាញមេឃ។";
+	}
+
+	public String tituloActivarLightmapCaching() {
+		return "បើក cache lightmap";
+	}
+
+	public String descripcionActivarLightmapCaching() {
+		return "ជៀសវាងការគណនាពន្លឺឡើងវិញនៅពេលមិនចាំបាច់។";
+	}
+
+	public String sugerenciaActivarLightmapCaching() {
+		return "enable_lightmap_caching: true";
+	}
+
+	public String tituloOcultarTextoF3BadOptimizations() {
+		return "លាក់អក្សរ F3 របស់ BadOptimizations";
+	}
+
+	public String descripcionOcultarTextoF3BadOptimizations() {
+		return "កាត់បន្ថយសំឡេងរំខាន debug នៅលើអេក្រង់ F3។";
+	}
+
+	public String sugerenciaOcultarTextoF3BadOptimizations() {
+		return "show_f3_text: false";
+	}
+
+	public String tituloDesactivarLogConfigBadOptimizations() {
+		return "បិទ log ការកំណត់";
+	}
+
+	public String descripcionDesactivarLogConfigBadOptimizations() {
+		return "ជៀសវាងការបោះពុម្ពការកំណត់ទាំងមូលនៅពេលចាប់ផ្តើម។";
+	}
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations() {
+		return "log_config: false";
+	}
+
+	public String tituloActivarSerializadorGCFreeC2ME() {
+		return "បើកឧបករណ៍ GC-free របស់ C2ME";
+	}
+
+	public String descripcionActivarSerializadorGCFreeC2ME() {
+		return "កាត់បន្ថយការកំណត់អង្គចងចាំនៅពេលផ្ទុក ឬរក្សាទុក chunks។";
+	}
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME() {
+		return "[ioSystem] gcFreeChunkSerializer = true";
+	}
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME() {
+		return "បិទ syncPlayerTickets";
+	}
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME() {
+		return "អាចបង្កើនប្រសិទ្ធភាព chunks ប៉ុន្តែអាចប៉ះពាល់ដល់ contraptions បច្ចេកទេស។";
+	}
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME() {
+		return "[chunkSystem] syncPlayerTickets = false";
+	}
+
+	public String tituloUsarCullingHojasDepthMoreCulling() {
+		return "ប្រើ culling ស្លឹក DEPTH";
+	}
+
+	public String descripcionUsarCullingHojasDepthMoreCulling() {
+		return "ប្រើម៉ូដ culling ស្លឹកកាន់តែខ្លាំងជាងម៉ូដធម្មតា។";
+	}
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling() {
+		return "leavesCullingMode = \"DEPTH\"";
+	}
+
+	public String tituloActivarEndGatewayCullingMoreCulling() {
+		return "បើក culling End Gateway";
+	}
+
+	public String descripcionActivarEndGatewayCullingMoreCulling() {
+		return "ការពារការបង្ហាញ End Gateways ដែលមិនចាំបាច់។";
+	}
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling() {
+		return "endGatewayCulling = true";
+	}
+
+	public String tituloActivarActivationRangeServerCore() {
+		return "បើក activation range";
+	}
+
+	public String descripcionActivarActivationRangeServerCore() {
+		return "កាត់បន្ថយ ticks របស់អង្គភាពដែលនៅឆ្ងាយពីអ្នកលេង។";
+	}
+
+	public String sugerenciaActivarActivationRangeServerCore() {
+		return "activation-range: enabled: true";
+	}
+
+	public String tituloActivarRangoVerticalServerCore() {
+		return "បើកជួរឈរ";
+	}
+
+	public String descripcionActivarRangoVerticalServerCore() {
+		return "កាត់បន្ថយ ticks របស់អង្គភាពដែលនៅខ្ពស់ ឬទាបខ្លាំងពីអ្នកលេង។";
+	}
+
+	public String sugerenciaActivarRangoVerticalServerCore() {
+		return "use-vertical-range: true";
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	public String impactoNegativoAlto() {
+		return "ផលប៉ះពាល់អវិជ្ជមានខ្ពស់";
+	}
+
+	public String advertenciaModsCulling() {
+		return "Mods ប្រភេទ culling អាចបណ្តាលឱ្យមានភាពមិនស៊ីសង្វាក់គ្នាជាមួយ mods ផ្សេងទៀត ការដួល (crash) កំហុសដែលហ្គេមឈប់ធ្វើ tick ត្រឹមត្រូវ និងអាចធ្វើឱ្យកសិដ្ឋាន ឬរោងចក្រស្វ័យប្រវត្តិឈប់ដំណើរការ។";
+	}
+
+	public String tituloModBadOptimizations() {
+		return "បន្ថែម BadOptimizations";
+	}
+
+	public String descripcionModBadOptimizations() {
+		return "បន្ថែមការបង្កើនប្រសិទ្ធភាពតូចៗសម្រាប់អតិថិជន ដូចជា cache lightmap, cache មេឃ និងកាត់បន្ថយការហៅមិនចាំបាច់។";
+	}
+
+	public String tituloModBBE() {
+		return "បន្ថែម Better Block Entities";
+	}
+
+	public String descripcionModBBE() {
+		return "បង្កើនប្រសិទ្ធភាពការបង្ហាញ block entities ដូចជាប្រអប់, shulkers, គ្រែ, កណ្តឹង, ទង់ និងផ្លាក។";
+	}
+
+	public String tituloModC2ME() {
+		return "បន្ថែម Concurrent Chunk Management Engine";
+	}
+
+	public String descripcionModC2ME() {
+		return "ធ្វើឱ្យប្រសើរឡើងនូវការផ្ទុក ការបង្កើត និងការគ្រប់គ្រង chunks ដោយប្រើការដំណើរការប្រកួតប្រជែង (concurrent processing)។ អាចមានឥទ្ធិពលខ្លាំង ប៉ុន្តែក៏អាចបណ្តាលឱ្យមានភាពមិនស៊ីសង្វាក់គ្នានៅក្នុង modpacks ធំៗផងដែរ។";
+	}
+
+	public String tituloModEntityCulling() {
+		return "បន្ថែម EntityCulling";
+	}
+
+	public String descripcionModEntityCulling() {
+		return "ការពារការបង្ហាញអង្គភាពដែលមិនអាចមើលឃើញ។ " + advertenciaModsCulling();
+	}
+
+	public String tituloModFerriteCore() {
+		return "បន្ថែម FerriteCore";
+	}
+
+	public String descripcionModFerriteCore() {
+		return "កាត់បន្ថយការប្រើប្រាស់អង្គចងចាំតាមរយៈការលុបចោលភាពដដែលៗ និងរចនាសម្ព័ន្ធខាងក្នុងដែលមានប្រសិទ្ធភាពជាងមុន។";
+	}
+
+	public String tituloModImmediatelyFast() {
+		return "បន្ថែម ImmediatelyFast";
+	}
+
+	public String descripcionModImmediatelyFast() {
+		return "បង្កើនប្រសិទ្ធភាពផ្នែកផ្សេងៗនៃការបង្ហាញភ្លាមៗ អក្សរ buffer ផែនទី និងចំណុចប្រទាក់។";
+	}
+
+	public String tituloModLithium() {
+		return "បន្ថែម Lithium";
+	}
+
+	public String descripcionModLithium() {
+		return "បង្កើនប្រសិទ្ធភាពលោជីកហ្គេម អង្គភាព ប្លុក រូបវិទ្យា និងប្រព័ន្ធផ្សេងទៀតដោយមិនផ្លាស់ប្តូរឥរិយាបថ vanilla ច្រើនពេក។";
+	}
+
+	public String tituloModModernFix() {
+		return "បន្ថែម ModernFix";
+	}
+
+	public String descripcionModModernFix() {
+		return "បន្ថែមការបង្កើនប្រសិទ្ធភាពជាច្រើនសម្រាប់អង្គចងចាំ ការផ្ទុក ធនធាន និងការអនុវត្តទូទៅ។ ឧបករណ៍ទាក់ទងនឹង atlas របស់វាអាចផ្ទុយគ្នាជាមួយ mods ដែលធ្វើឱ្យ atlas តូចជាងមុន។";
+	}
+
+	public String tituloModMoreCulling() {
+		return "បន្ថែម More Culling";
+	}
+
+	public String descripcionModMoreCulling() {
+		return "បន្ថែម culling សម្រាប់ប្លុក ស្លឹកឈើ ក្របខ័ណ្ឌវត្ថុ គំនូរ ភ្លៀង beacon និងធាតុផ្សេងទៀត។ "
+				+ advertenciaModsCulling();
+	}
+
+	public String tituloModScalableLux() {
+		return "បន្ថែម ScalableLux";
+	}
+
+	public String descripcionModScalableLux() {
+		return "បង្កើនប្រសិទ្ធភាពការគណនាទាក់ទងនឹងពន្លឺ និងអាចបង្កើនប្រសិទ្ធភាពនៅក្នុងពិភពលោកដែលមានការផ្លាស់ប្តូរពន្លឺច្រើន។";
+	}
+
+	public String tituloModServerCore() {
+		return "បន្ថែម ServerCore";
+	}
+
+	public String descripcionModServerCore() {
+		return "បន្ថែមការបង្កើនប្រសិទ្ធភាពផ្នែកម៉ាស៊ីនបម្រើ activation range ការគ្រប់គ្រង mobcap ការកាត់បន្ថយ tick និងការកែលម្អការផ្ទុក។";
+	}
+
+	public String tituloModSodium() {
+		return "បន្ថែម Sodium";
+	}
+
+	public String descripcionModSodium() {
+		return "Mod បង្កើនប្រសិទ្ធភាពការបង្ហាញចម្បង។ ជាធម្មតាគឺជាការកែលម្អដ៏សំខាន់មួយសម្រាប់ FPS។";
+	}
+
+	public String tituloModVMP() {
+		return "បន្ថែម Very Many Players";
+	}
+
+	public String descripcionModVMP() {
+		return "បង្កើនប្រសិទ្ធភាពប្រព័ន្ធម៉ាស៊ីនបម្រើដើម្បីដោះស្រាយអ្នកលេងច្រើន។ ID mod ដែលរំពឹងទុកគឺ vmp។";
+	}
+
+	public String tituloModMCMT() {
+		return "បន្ថែម MCMT";
+	}
+
+	public String descripcionModMCMT() {
+		return "ព្យាយាមធ្វើ multithread ផ្នែកខ្លះនៃម៉ាស៊ីនបម្រើ Minecraft។ អាចបង្កើនប្រសិទ្ធភាពក្នុងករណីខ្លះ ប៉ុន្តែមានហានិភ័យខ្ពស់នៃភាពមិនស៊ីសង្វាក់គ្នា កំហុស tick និងឥរិយាបថចម្លែក។";
+	}
+
+	public String tituloLiabilityUranium() {
+		return "ដក Uranium ចេញ";
+	}
+
+	public String descripcionLiabilityUranium() {
+		return "Uranium គឺជា mod ដែលត្រូវបានរចនាឡើងដើម្បីធ្វើឱ្យហ្គេមដើរយឺតដោយចេតនា។ មិនគួរដំឡើងវាទេប្រសិនបើអ្នកចង់បានការអនុវត្តល្អ។";
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	public String tituloAmbientalSinXmx() {
+		return "កំណត់អង្គចងចាំអតិបរមារបស់ Java";
+	}
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro) {
+		return "-Xmx មិនត្រូវបានរកឃើញនៅក្នុងអាគុយម៉ង់ដែលបានផ្តល់។ សម្រាប់ " + mods + " mods តម្លៃអប្បបរមាដែលបានណែនាំគឺ "
+				+ minimo + " ដោយមិនលើសពីប្រហែល " + maximoSeguro + "។";
+	}
+
+	public String sugerenciaAmbientalSinXmx(String minimo) {
+		return "បន្ថែម -Xmx" + minimo.replace(" ", "");
+	}
+
+	public String tituloAmbientalDemasiadaMemoria() {
+		return "កាត់បន្ថយអង្គចងចាំដែលបានកំណត់";
+	}
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro) {
+		return "Instance បានកំណត់ " + xmx + " នៃ " + total + "។ មិនណែនាំឱ្យកំណត់លើសពី 80% នៃ RAM ដែលមាន។";
+	}
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro) {
+		return "កាត់បន្ថយ -Xmx ទៅ " + maximoSeguro + " ឬតិចជាងនេះ។";
+	}
+
+	public String tituloAmbientalMemoriaInsuficiente() {
+		return "បង្កើនអង្គចងចាំដែលបានកំណត់";
+	}
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo) {
+		return "Instance មាន " + xmx + " ដែលបានកំណត់។ សម្រាប់ " + mods + " mods តម្លៃអប្បបរមាដែលបានណែនាំគឺ " + minimo
+				+ "។";
+	}
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo) {
+		return "បង្កើន -Xmx យ៉ាងហោចណាស់ទៅ " + minimo + "។";
+	}
+
+	public String tituloAmbientalJava8GC() {
+		return "ប្រើ G1GC ឬ Shenandoah នៅលើ Java 8";
+	}
+
+	public String descripcionAmbientalJava8GC() {
+		return "នៅលើ Java 8 វាត្រូវបានណែនាំឱ្យប្រើ G1GC ឬ Shenandoah ដើម្បីកាត់បន្ថយការផ្អាក និងបង្កើនស្ថេរភាព។";
+	}
+
+	public String sugerenciaAmbientalJava8GC() {
+		return "បន្ថែម -XX:+UseG1GC ឬ -XX:+UseShenandoahGC។";
+	}
+
+	public String tituloAmbientalZGC() {
+		return "ប្រើ ZGC";
+	}
+
+	public String descripcionAmbientalZGC(String ramTotal) {
+		return "ម៉ាស៊ីនមាន RAM លើសពី 12 GB (" + ramTotal
+				+ ")។ ប្រសិនបើការចែកចាយ Java គាំទ្រវា ZGC អាចកាត់បន្ថយការផ្អាករបស់ឧបករណ៍ប្រមូលសំរាម។";
+	}
+
+	public String sugerenciaAmbientalZGC() {
+		return "នៅលើ Java 17 ឬខ្ពស់ជាងនេះ សូមសាកល្បង -XX:+UseZGC។";
+	}
+
+	public String tituloAmbientalAikar() {
+		return "បន្ថែម flags របស់ Aikar";
+	}
+
+	public String descripcionAmbientalAikar() {
+		return "នៅលើ Java 17 ឬមុន flags របស់ Aikar ជាធម្មតាធ្វើឱ្យប្រសើរឡើងនូវឥរិយាបថ G1GC សម្រាប់ Minecraft។";
+	}
+
+	public String sugerenciaAmbientalAikar() {
+		return "ប្រើ flags របស់ Aikar រួមមាន -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200។";
+	}
+
+	public String tituloAmbientalRedHatJDK() {
+		return "ប្រើ Red Hat JDK";
+	}
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os) {
+		return "សម្រាប់ Java " + javaMayor + " នៅលើ " + os
+				+ " Red Hat JDK ត្រូវបានណែនាំសម្រាប់ស្ថេរភាព និងភាពស៊ីសង្វាក់គ្នា។";
+	}
+
+	public String sugerenciaAmbientalRedHatJDK() {
+		return "ដំឡើង Red Hat JDK សម្រាប់ Java 8 ឬ Java 11។";
+	}
+
+	public String tituloAmbientalAzulPrime() {
+		return "ពិចារណា Azul Prime";
+	}
+
+	public String descripcionAmbientalAzulPrime() {
+		return "នៅលើ Linux ជាមួយ Java 16 ឬខ្ពស់ជាងនេះ និង RAM លើសពី 16 GB Azul Prime អាចជាជម្រើសដ៏ល្អសម្រាប់ការអនុវត្ត។";
+	}
+
+	public String sugerenciaAmbientalAzulPrime() {
+		return "សាកល្បង Azul Prime ប្រសិនបើម៉ាស៊ីនមាន RAM លើសពី 16 GB។";
+	}
+
+	public String tituloAmbientalGraalVM() {
+		return "ពិចារណា GraalVM";
+	}
+
+	public String descripcionAmbientalGraalVM() {
+		return "ជាមួយ Java 16 ឬខ្ពស់ជាងនេះ និង RAM លើសពី 16 GB GraalVM អាចជាជម្រើសជំនួសដ៏មានប្រយោជន៍ក្រៅពី Linux។";
+	}
+
+	public String sugerenciaAmbientalGraalVM() {
+		return "សាកល្បង GraalVM ប្រសិនបើម៉ាស៊ីនមាន RAM លើសពី 16 GB។";
+	}
+
+	public String tituloAmbientalDiscoBajo() {
+		return "ពិនិត្យមើលចន្លោះទំនេរនៅលើថាស";
+	}
+
+	public String descripcionAmbientalDiscoBajo(String libre) {
+		return "ថាសមានចន្លោះទំនេរតិចតួច: " + libre + "។ Minecraft អាចបរាជ័យ រក្សាទុកយឺត ឬខូចទិន្នន័យប្រសិនបើអស់ចន្លោះ។";
+	}
+
+	public String sugerenciaAmbientalDiscoBajo() {
+		return "ដោះលែងចន្លោះរហូតដល់មានយ៉ាងហោចណាស់ 20 GB ដែលអាចប្រើបាន។";
+	}
+
+	public String tituloAmbientalWindowsRHEL9() {
+		return "ពិចារណា RHEL 9 សម្រាប់ការធ្វើតេស្ត";
+	}
+
+	public String descripcionAmbientalWindowsRHEL9() {
+		return "នៅលើ Windows វាត្រូវបានណែនាំឱ្យពិចារណា RHEL 9 ព្រោះវារួមបញ្ចូល Red Hat JDK មានស្ថេរភាព អាចទាញយកដោយឥតគិតថ្លៃសម្រាប់បុគ្គល និងជាកន្លែងដែលការធ្វើតេស្តភាគច្រើនត្រូវបានធ្វើ។";
+	}
+
+	public String sugerenciaAmbientalWindowsRHEL9() {
+		return "សាកល្បង instance នៅលើ RHEL 9 ប្រសិនបើអ្នកកំពុងស្វែងរកស្ថេរភាពការធ្វើតេស្តអតិបរមា។";
+	}
+
+	public String tituloAmbientalRaptorLake() {
+		return "ការព្រមាន Intel Raptor Lake";
+	}
+
+	public String descripcionAmbientalRaptorLake() {
+		return "បញ្ហា Raptor Lake ដែលបានសម្គាល់ដោយការត្រួតពិនិត្យដែលមានស្រាប់ត្រូវបានរកឃើញ។ នេះអាចបណ្តាលឱ្យមានភាពមិនស្ថិតស្ថេរ ការដួល និងកំហុសដែលហាក់ដូចជាមកពី modpack។";
+	}
+
+	public String sugerenciaAmbientalRaptorLake() {
+		return "ធ្វើបច្ចុប្បន្នភាព BIOS/microcode និងពិនិត្យមើលការព្រមាន Raptor Lake មុនពេលចោទប្រកាន់ modpack។";
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String tituloAmbientalNeoForge1201Antiguo() {
+		return "បានរកឃើញ NeoForge 1.20.1 ចាស់";
+	}
+
+	@Override
+	public String descripcionAmbientalNeoForge1201Antiguo() {
+		return "បានរកឃើញ FancyModLoader 47 ឬផ្លូវដែលស៊ីសង្វាក់គ្នាជាមួយ NeoForge 1.20.1។ "
+				+ "NeoForge 1.20.1 គឺជា fork នៃ MinecraftForge 1.20.1 និងជាធម្មតាស៊ីសង្វាក់គ្នានៅកម្រិត binary, "
+				+ "ប៉ុន្តែខ្សែនោះត្រូវបានបោះបង់ចោលមុន ហើយអាចខ្វះការបង្កើនប្រសិទ្ធភាពជាច្រើនដែលមាននៅក្នុង Forge។";
+	}
+
+	@Override
+	public String sugerenciaAmbientalNeoForge1201Antiguo() {
+		return "សម្រាប់ 1.20.1 ប្រសិនបើ modpack អនុញ្ញាត សូមពិចារណាប្រើ MinecraftForge 1.20.1 ជំនួសឱ្យ NeoForge 1.20.1។";
+	}
+
+	@Override
+	public String tituloAmbientalGPU() {
+		return "បានរកឃើញបញ្ហា GPU";
+	}
+
+	@Override
+	public String descripcionAmbientalGPU() {
+		return "ការត្រួតពិនិត្យផ្សេងទៀតបានរកឃើញបញ្ហា GPU, OpenGL ឬការជ្រើសរើសកាតក្រាហ្វិកដែលអាចកើតមាន។";
+	}
+
+	@Override
+	public String sugerenciaAmbientalGPU() {
+		return "ពិនិត្យមើលថាតើ Minecraft កំពុងប្រើ GPU ត្រឹមត្រូវឬអត់ ធ្វើបច្ចុប្បន្នភាព drivers និងជៀសវាងការកំណត់រចនាសម្ព័ន្ធបញ្ចូលគ្នាដែលមិនស្ថិតស្ថេរ។";
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String gpuFixTitulo() {
+		return "ការកំណត់ GPU";
+	}
+
+	@Override
+	public String gpuFixBotonSidebar() {
+		return "GPU";
+	}
+
+	@Override
+	public String gpuFixBotonAplicar() {
+		return "អនុវត្តការកំណត់";
+	}
+
+	@Override
+	public String gpuFixBotonFuenteTLauncher() {
+		return "បើកការណែនាំ TLauncher";
+	}
+
+	@Override
+	public String gpuFixBotonVirusTotal() {
+		return "បើកការវិភាគ VirusTotal";
+	}
+
+	@Override
+	public String gpuFixBotonOptimusLinux() {
+		return "បើកការណែនាំ NVIDIA Optimus";
+	}
+
+	@Override
+	public String gpuFixTextoWindows() {
+		return "CrashDetector បានរកឃើញថា Minecraft អាចមិនកំពុងប្រើ GPU ដែលមានល្បឿនលឿន។\n\n"
+				+ "នៅលើ Windows គេអាចកំណត់កូនសោ Registry នៅក្នុង "
+				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
+				+ "ដើម្បីបង្ខំឱ្យ javaw.exe ប្រើ GPU ដាច់ដោយឡែក។\n\n"
+				+ "GpuPreference=0 = ការសម្រេចចិត្តស្វ័យប្រវត្តិរបស់ Windows។\n"
+				+ "GpuPreference=1 = សន្សំសំចៃថាមពល / GPU បញ្ចូលគ្នា។\n" + "GpuPreference=2 = GPU ដែលមានល្បឿនលឿន។\n\n"
+				+ "ផ្នែកខ្លះនៃព័ត៌មាននេះត្រូវបានទទួលដោយសារតែការស្រាវជ្រាវដែលបានផ្សាយដោយ TLauncher និងការវិភាគ "
+				+ "ឥរិយាបថដែលមាននៅលើ VirusTotal។";
+	}
+
+	@Override
+	public String gpuFixTextoLinux() {
+		return "CrashDetector បានរកឃើញបញ្ហាដែលអាចកើតមានទាក់ទងនឹង NVIDIA Optimus ឬ PRIME។\n\n"
+				+ "អាស្រ័យលើការចែកចាយ Linux ដែលបានប្រើ វាអាចចាំបាច់ត្រូវកំណត់រចនាសម្ព័ន្ធ NVIDIA Optimus, "
+				+ "nvidia-prime, switcheroo-control ឬប្រព័ន្ធបញ្ចូលគ្នាផ្សេងទៀត។\n\n"
+				+ "នៅលើ Fedora/RHEL និងផលិតផលដែលបានមកពីវា ជាធម្មតាត្រូវបានណែនាំឱ្យអនុវត្តតាមឯកសាររបស់ RPMFusion។\n\n"
+				+ "ប៊ូតុងខាងក្រោមនឹងបើកឯកសារផ្លូវការដែលបានណែនាំ។";
+	}
+
+	@Override
+	public String gpuFixTextoMac() {
+		return "CrashDetector បានរកឃើញបញ្ហាដែលអាចកើតមានក្នុងការជ្រើសរើស GPU។\n\n"
+				+ "នៅលើប្រព័ន្ធ macOS មួយចំនួនដែលមាន GPU បញ្ចូលគ្នា គេអាចបង្ខំឱ្យប្រើ GPU ដាច់ដោយឡែក "
+				+ "តាមរយៈការកំណត់រចនាសម្ព័ន្ធប្រព័ន្ធកម្រិតខ្ពស់។\n\n"
+				+ "ប៊ូតុងអនុវត្តនឹងព្យាយាមដំណើរការពាក្យបញ្ជាដើម្បីអាទិភាព GPU ដែលមានល្បឿនលឿន។";
+	}
+
+	@Override
+	public String gpuFixTextoOtroSistema() {
+		return "CrashDetector បានរកឃើញបញ្ហាដែលអាចកើតមានទាក់ទងនឹង GPU, "
+				+ "ប៉ុន្តែមិនមានការអនុវត្តជាក់លាក់សម្រាប់ប្រព័ន្ធប្រតិបត្តិការនេះទេ។";
+	}
+
+	@Override
+	public String gpuFixLinuxManual() {
+		return "នៅលើ Linux ជាធម្មតាការកំណត់រចនាសម្ព័ន្ធត្រូវតែធ្វើដោយដៃអាស្រ័យលើការចែកចាយ, "
+				+ "កម្មវិធីបញ្ជា NVIDIA និងប្រព័ន្ធ Optimus/PRIME ដែលបានប្រើ។";
+	}
+
+	@Override
+	public String gpuFixSistemaNoSoportado() {
+		return "ប្រព័ន្ធប្រតិបត្តិការមិនត្រូវបានគាំទ្រសម្រាប់ការកំណត់រចនាសម្ព័ន្ធ GPU ស្វ័យប្រវត្តិ។";
+	}
+
+	@Override
+	public String gpuFixJavaNoDetectado() {
+		return "មិនអាចរកឃើញផ្លូវបច្ចុប្បន្នរបស់ javaw.exe។";
+	}
+
+	@Override
+	public String gpuFixWindowsAplicado(String ruta) {
+		return "ការកំណត់រចនាសម្ព័ន្ធ GPU ត្រូវបានអនុវត្តដោយជោគជ័យសម្រាប់:\n\n" + ruta + "\n\n"
+				+ "GpuPreference=2 បង្ហាញពី GPU ដែលមានល្បឿនលឿន។";
+	}
+
+	@Override
+	public String gpuFixErrorAplicando() {
+		return "មានកំហុសកើតឡើងនៅពេលព្យាយាមអនុវត្តការកំណត់រចនាសម្ព័ន្ធ GPU";
+	}
+
+	@Override
+	public String gpuFixMacAplicado() {
+		return "ការកំណត់រចនាសម្ព័ន្ធ GPU ដែលមានល្បឿនលឿនត្រូវបានអនុវត្ត។";
+	}
+
+	@Override
+	public String gpuFixMacError() {
+		return "មិនអាចអនុវត្តការកំណត់រចនាសម្ព័ន្ធ GPU នៅលើ macOS";
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String rendimientoTitulo() {
+		return "កម្មវិធីគ្រប់គ្រងការអនុវត្ត";
+	}
+
+	@Override
+	public String rendimientoBotonSidebar() {
+		return "ការអនុវត្ត";
+	}
+
+	@Override
+	public String rendimientoBotonAnalizar() {
+		return "វិភាគការអនុវត្ត";
+	}
+
+	@Override
+	public String rendimientoBotonAbrirGPU() {
+		return "បើកការកំណត់ GPU";
+	}
+
+	@Override
+	public String rendimientoDescripcion() {
+		return "ផ្ទាំងនេះពិនិត្យមើលបញ្ហាបរិស្ថាន, mods ដែលបានណែនាំ ឬមានហានិភ័យ, និងជម្រើសកំណត់រចនាសម្ព័ន្ធដែលអាចធ្វើឱ្យការអនុវត្តប្រសើរឡើង។ មិនមែនជម្រើសទាំងអស់ដំណើរការជាមួយគ្នាទេ, មិនមែនទាំងអស់សមស្របសម្រាប់កំណែ Minecraft នីមួយៗទេ, និងមិនមែនទាំងអស់ស៊ីសង្វាក់គ្នាជាមួយ mod loader នីមួយៗទេ។ វាល្អហើយ: អ្នកមិនត្រូវការពិន្ទុការបង្កើនប្រសិទ្ធភាពល្អឥតខ្ចោះទេ។";
+	}
+
+	@Override
+	public String rendimientoNotaCompatibilidad() {
+		return "ចំណាំ: សំណើទាំងនេះគឺជាលទ្ធភាព មិនមែនជាបញ្ជាឱ្យអនុវត្តអ្វីៗទាំងអស់ទេ។ ជម្រើសខ្លះអាចផ្ទុយគ្នា ឬមិនសមស្របសម្រាប់កំណែ, launcher, mod loader ឬ modpack របស់អ្នក។";
+	}
+
+	@Override
+	public String rendimientoPestanaResumen() {
+		return "សេចក្តីសង្ខេប";
+	}
+
+	@Override
+	public String rendimientoPestanaAmbiental() {
+		return "បញ្ហាបរិស្ថាន";
+	}
+
+	@Override
+	public String rendimientoPestanaMods() {
+		return "Mods ដែលបានណែនាំ និងហានិភ័យ";
+	}
+
+	@Override
+	public String rendimientoPestanaConfigs() {
+		return "ជម្រើសកំណត់រចនាសម្ព័ន្ធ";
+	}
+
+	@Override
+	public String rendimientoResumenTitulo() {
+		return "សេចក្តីសង្ខេបនៃការវិភាគ";
+	}
+
+	@Override
+	public String rendimientoResumenAmbiental(int cantidad) {
+		return "បញ្ហាបរិស្ថានដែលបានរកឃើញ: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenMods(int cantidad) {
+		return "សំណើ ឬហានិភ័យ mod ដែលបានរកឃើញ: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenConfigs(int cantidad) {
+		return "សំណើកំណត់រចនាសម្ព័ន្ធដែលបានរកឃើញ: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenGPU() {
+		return "បញ្ហា GPU ត្រូវបានរកឃើញ។ ដូច្នេះប៊ូតុងសម្រាប់បើកការកំណត់ GPU ត្រូវបានបើកដំណើរការ។";
+	}
+
+	@Override
+	public String rendimientoSinHallazgos() {
+		return "មិនមានសំណើណាមួយត្រូវបានរកឃើញនៅក្នុងផ្នែកនេះទេ។";
+	}
+
+	@Override
+	public String rendimientoSugerencia() {
+		return "សំណើ";
+	}
+
+	@Override
+	public String rendimientoColorFondo() {
+		return "ការអនុវត្ត - ផ្ទៃខាងក្រោយ";
+	}
+
+	@Override
+	public String rendimientoColorPanel() {
+		return "ការអនុវត្ត - ផ្ទាំង";
+	}
+
+	@Override
+	public String rendimientoColorTexto() {
+		return "ការអនុវត្ត - អក្សរ";
+	}
+
+	@Override
+	public String rendimientoColorTextoSecundario() {
+		return "ការអនុវត្ត - អក្សរបន្ទាប់បន្សំ";
+	}
+
+	@Override
+	public String rendimientoColorBoton() {
+		return "ការអនុវត្ត - ប៊ូតុង";
+	}
+
+	@Override
+	public String rendimientoColorBotonTexto() {
+		return "ការអនុវត្ត - អក្សរប៊ូតុង";
+	}
+
+	@Override
+	public String rendimientoColorSeleccion() {
+		return "ការអនុវត្ត - ការជ្រើសរើស";
+	}
 
 }

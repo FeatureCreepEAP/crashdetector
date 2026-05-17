@@ -3,10 +3,13 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.bajo.hw.gpu.HacerVerificacionGPU;
+import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.gui.tipos.gpu.GPUFixGUI;
+import com.asbestosstar.crashdetector.gui.tipos.gpu.GPUFixOptimusPrime;
 import com.asbestosstar.crashdetector.parches.ConfigDeParches;
 
 public class VerificacionGPU implements Verificaciones {
@@ -14,6 +17,7 @@ public class VerificacionGPU implements Verificaciones {
 	private boolean activado = false;
 	private String mensaje = "";
 	private float prioridad = 0;
+	public static boolean hayProblema = false;
 
 	@Override
 	public void verificar(Consola consola) {
@@ -34,6 +38,7 @@ public class VerificacionGPU implements Verificaciones {
 
 			this.activado = true;
 			this.prioridad = 1500.0f;
+			hayProblema = true;
 
 			this.mensaje = MonitorDePID.idioma.gpu_crash_posible() + Verificaciones.nl_html
 					+ MonitorDePID.idioma.gpu_crash_causas() + Verificaciones.nl_html
@@ -51,7 +56,7 @@ public class VerificacionGPU implements Verificaciones {
 
 			this.activado = true;
 			this.prioridad = -1000.0f;// No esta importante
-
+			hayProblema = true;
 			this.mensaje = MonitorDePID.idioma.gpu_no_optima() + Verificaciones.nl_html
 					+ MonitorDePID.idioma.gpu_no_optima_detalles() + Verificaciones.nl_html
 					+ MonitorDePID.idioma.gpu_nota_precision() + Verificaciones.nl_html
@@ -89,7 +94,11 @@ public class VerificacionGPU implements Verificaciones {
 	@Override
 	public QuickFix solucion() {
 		return new QuickFix.Builder(MonitorDePID.idioma.nombre_verificacion_gpu())
-				.agregarBoton(MonitorDePID.idioma.desactivar_parche_gpu(), retener -> {
+				.agregarBoton(MonitorDePID.idioma.gpuFixTitulo(), retener -> {
+					GPUFixGUI gui = TipoGUI.GPU_FIX.obtenerGUIPredeterminado(GPUFixOptimusPrime.ID,
+							GPUFixOptimusPrime::new);
+					gui.init();
+				}, true).agregarBoton(MonitorDePID.idioma.desactivar_parche_gpu(), retener -> {
 					ConfigDeParches.obtenerInstancia().establecerActivo("transformacion_de_minecraft_codigo_gpu",
 							false);
 				}, true).construir();

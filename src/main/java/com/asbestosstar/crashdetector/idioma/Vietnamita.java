@@ -9586,30 +9586,880 @@ public class Vietnamita implements Idioma {
 		return "Một mod cố ghi đè một phương thức final";
 	}
 
-    @Override
-    public String errorCrashProvocadoPorComando(String comandoDetectado) {
-        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-                + "Minecraft đã bị đóng bởi một lệnh crash.</b>"
-                + "<p>Log cho biết lệnh <code>" + comandoDetectado + "</code> đã được thực thi.</p>"
-                + "<p>Điều này thường có nghĩa là trò chơi không đóng do lỗi mod thông thường, mà vì ai đó "
-                + "đã sử dụng một lệnh được thiết kế để gây ra crash một cách cố ý.</p>"
-                + "<p><b>Những điều cần kiểm tra:</b></p>"
-                + "<ul>"
-                + "<li>Kiểm tra xem ai đã thực thi lệnh trong bảng điều khiển hoặc trong trò chơi.</li>"
-                + "<li>Nếu đây là một bài kiểm tra, bạn có thể bỏ qua crash này.</li>"
-                + "<li>Nếu nó xảy ra ngoài ý muốn, hãy kiểm tra command blocks, script, datapack, mod quản trị hoặc quyền của operator.</li>"
-                + "</ul>";
-    }
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft đã bị đóng bởi một lệnh crash.</b>" + "<p>Log cho biết lệnh <code>" + comandoDetectado
+				+ "</code> đã được thực thi.</p>"
+				+ "<p>Điều này thường có nghĩa là trò chơi không đóng do lỗi mod thông thường, mà vì ai đó "
+				+ "đã sử dụng một lệnh được thiết kế để gây ra crash một cách cố ý.</p>"
+				+ "<p><b>Những điều cần kiểm tra:</b></p>" + "<ul>"
+				+ "<li>Kiểm tra xem ai đã thực thi lệnh trong bảng điều khiển hoặc trong trò chơi.</li>"
+				+ "<li>Nếu đây là một bài kiểm tra, bạn có thể bỏ qua crash này.</li>"
+				+ "<li>Nếu nó xảy ra ngoài ý muốn, hãy kiểm tra command blocks, script, datapack, mod quản trị hoặc quyền của operator.</li>"
+				+ "</ul>";
+	}
 
-    @Override
-    public String nombreCrashProvocadoPorComando() {
-        return "Crash do lệnh gây ra";
-    }
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+		return "Crash do lệnh gây ra";
+	}
+
+	public String impactoAlto() {
+		return "Cao";
+	}
+
+	public String impactoMedio() {
+		return "Trung bình";
+	}
+
+	public String impactoBajo() {
+		return "Thấp";
+	}
+
+	public String impactoBajoMedio() {
+		return "Thấp/Trung bình";
+	}
+
+	public String riesgoAlto() {
+		return "Cao";
+	}
+
+	public String riesgoMedio() {
+		return "Trung bình";
+	}
+
+	public String riesgoBajo() {
+		return "Thấp";
+	}
+
+	public String riesgoMedioAlto() {
+		return "Trung bình/Cao";
+	}
+
+	public String tituloCrearConfigBBE() {
+		return "Tạo cấu hình Better Block Entities";
+	}
+
+	public String descripcionCrearConfigBBE() {
+		return "Tệp BBEConfig.json không tồn tại.";
+	}
+
+	public String sugerenciaCrearConfigBBE() {
+		return "Tạo BBEConfig.json với tối ưu hóa cho rương, shulkers, biển báo, giường, chuông và cờ.";
+	}
+
+	public String tituloActivarOptimizacionMaestraBBE() {
+		return "Kích hoạt tối ưu hóa chính của BBE";
+	}
+
+	public String descripcionActivarOptimizacionMaestraBBE() {
+		return "Có vẻ như Better Block Entities chưa kích hoạt tối ưu hóa chính.";
+	}
+
+	public String sugerenciaActivarOptimizacionMaestraBBE() {
+		return "Thêm {\"option\":\"optimize.master\",\"value\":true}";
+	}
+
+	public String tituloActivarCullingTextoCartelesBBE() {
+		return "Kích hoạt culling văn bản biển báo";
+	}
+
+	public String descripcionActivarCullingTextoCartelesBBE() {
+		return "Giảm kết xuất văn bản biển báo ở khoảng cách xa.";
+	}
+
+	public String sugerenciaActivarCullingTextoCartelesBBE() {
+		return "Thêm {\"option\":\"misc.sign_text_culling\",\"value\":true}";
+	}
+
+	public String tituloAumentarSleepDelayEntityCulling() {
+		return "Tăng sleepDelay của EntityCulling";
+	}
+
+	public String descripcionAumentarSleepDelayEntityCulling() {
+		return "EntityCulling sẽ kiểm tra entities ít thường xuyên hơn.";
+	}
+
+	public String sugerenciaAumentarSleepDelayEntityCulling() {
+		return "\"sleepDelay\": 153";
+	}
+
+	public String tituloSubirLimiteHitboxEntityCulling() {
+		return "Tăng giới hạn hitbox";
+	}
+
+	public String descripcionSubirLimiteHitboxEntityCulling() {
+		return "Cho phép hành vi culling tích cực hơn trước khi chuyển sang các tuyến đường chậm hơn.";
+	}
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling() {
+		return "\"hitboxLimit\": 90";
+	}
+
+	public String tituloDesactivarDatosF3EntityCulling() {
+		return "Tắt dữ liệu F3 của EntityCulling";
+	}
+
+	public String descripcionDesactivarDatosF3EntityCulling() {
+		return "Loại bỏ thông tin gỡ lỗi bổ sung của mod.";
+	}
+
+	public String sugerenciaDesactivarDatosF3EntityCulling() {
+		return "\"disableF3\": true";
+	}
+
+	public String tituloActivarBufferingSignsImmediatelyFast() {
+		return "Kích hoạt bộ đệm thử nghiệm cho biển báo";
+	}
+
+	public String descripcionActivarBufferingSignsImmediatelyFast() {
+		return "Có thể cải thiện hiệu suất khi có nhiều biển báo.";
+	}
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast() {
+		return "\"experimental_sign_text_buffering\": true";
+	}
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast() {
+		return "Giảm xử lý xung đột resource pack";
+	}
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast() {
+		return "Có thể loại bỏ công việc thừa, nhưng cũng có thể gây ra vấn đề hình ảnh với resource pack.";
+	}
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast() {
+		return "\"experimental_disable_resource_pack_conflict_handling\": true";
+	}
+
+	public String tituloOcultarBotonNCR() {
+		return "Ẩn nút No Chat Reports";
+	}
+
+	public String descripcionOcultarBotonNCR() {
+		return "Thay đổi giao diện; không cải thiện nhiều FPS, nhưng làm sạch màn hình.";
+	}
+
+	public String sugerenciaOcultarBotonNCR() {
+		return "\"showNCRButton\": false";
+	}
+
+	public String tituloActivarMixinsExperimentalesLithium() {
+		return "Kích hoạt mixins thử nghiệm của Lithium";
+	}
+
+	public String descripcionActivarMixinsExperimentalesLithium() {
+		return "Bật các tối ưu hóa thử nghiệm bổ sung.";
+	}
+
+	public String sugerenciaActivarMixinsExperimentalesLithium() {
+		return "mixin.experimental=true";
+	}
+
+	public String tituloUsarDetectorThreadingPequenoFerriteCore() {
+		return "Sử dụng bộ phát hiện threading nhỏ";
+	}
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore() {
+		return "Giảm bộ nhớ, nhưng có thể rủi ro hơn.";
+	}
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore() {
+		return "useSmallThreadingDetector=true";
+	}
+
+	public String tituloModernFixRecursosDinamicos() {
+		return "Kích hoạt tài nguyên động của ModernFix";
+	}
+
+	public String descripcionModernFixRecursosDinamicos() {
+		return "Có thể giảm sử dụng bộ nhớ và tải bằng cách tải tài nguyên hiệu quả hơn.";
+	}
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades() {
+		return "Kích hoạt trình kết xuất entities động";
+	}
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades() {
+		return "Có thể cải thiện hiệu suất bằng cách quản lý trình kết xuất entities hiệu quả hơn.";
+	}
+
+	public String tituloModernFixRenderizadoItemsRapido() {
+		return "Kích hoạt kết xuất nhanh vật phẩm";
+	}
+
+	public String descripcionModernFixRenderizadoItemsRapido() {
+		return "Có thể cải thiện hiệu suất khi kết xuất vật phẩm.";
+	}
+
+	public String tituloModernFixWorldgenAllocation() {
+		return "Giảm phân bổ trong worldgen";
+	}
+
+	public String descripcionModernFixWorldgenAllocation() {
+		return "Có thể giảm rác bộ nhớ trong quá trình tạo thế giới.";
+	}
+
+	public String tituloModernFixDeduplicacionIngredientes() {
+		return "Kích hoạt loại bỏ trùng lặp thành phần";
+	}
+
+	public String descripcionModernFixDeduplicacionIngredientes() {
+		return "Giảm các đối tượng trùng lặp liên quan đến công thức và thành phần.";
+	}
+
+	public String tituloSodiumRenderCielo() {
+		return "Kích hoạt tối ưu hóa/kết xuất bầu trời trong Sodium";
+	}
+
+	public String descripcionSodiumRenderCielo() {
+		return "Có thể điều chỉnh hành vi kết xuất bầu trời.";
+	}
+
+	public String tituloActivarLightmapCaching() {
+		return "Kích hoạt bộ đệm lightmap";
+	}
+
+	public String descripcionActivarLightmapCaching() {
+		return "Ngăn tính toán lại ánh sáng khi không cần thiết.";
+	}
+
+	public String sugerenciaActivarLightmapCaching() {
+		return "enable_lightmap_caching: true";
+	}
+
+	public String tituloOcultarTextoF3BadOptimizations() {
+		return "Ẩn văn bản F3 của BadOptimizations";
+	}
+
+	public String descripcionOcultarTextoF3BadOptimizations() {
+		return "Giảm nhiễu gỡ lỗi trên màn hình F3.";
+	}
+
+	public String sugerenciaOcultarTextoF3BadOptimizations() {
+		return "show_f3_text: false";
+	}
+
+	public String tituloDesactivarLogConfigBadOptimizations() {
+		return "Tắt log cấu hình";
+	}
+
+	public String descripcionDesactivarLogConfigBadOptimizations() {
+		return "Ngăn in toàn bộ cấu hình khi khởi động.";
+	}
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations() {
+		return "log_config: false";
+	}
+
+	public String tituloActivarSerializadorGCFreeC2ME() {
+		return "Kích hoạt bộ nối tiếp GC-free của C2ME";
+	}
+
+	public String descripcionActivarSerializadorGCFreeC2ME() {
+		return "Giảm phân bổ bộ nhớ khi tải hoặc lưu chunks.";
+	}
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME() {
+		return "[ioSystem] gcFreeChunkSerializer = true";
+	}
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME() {
+		return "Tắt syncPlayerTickets";
+	}
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME() {
+		return "Có thể cải thiện hiệu suất chunks, nhưng có thể ảnh hưởng đến contraptions kỹ thuật.";
+	}
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME() {
+		return "[chunkSystem] syncPlayerTickets = false";
+	}
+
+	public String tituloUsarCullingHojasDepthMoreCulling() {
+		return "Sử dụng culling lá DEPTH";
+	}
+
+	public String descripcionUsarCullingHojasDepthMoreCulling() {
+		return "Sử dụng chế độ culling lá tích cực hơn chế độ thông thường.";
+	}
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling() {
+		return "leavesCullingMode = \"DEPTH\"";
+	}
+
+	public String tituloActivarEndGatewayCullingMoreCulling() {
+		return "Kích hoạt culling End Gateway";
+	}
+
+	public String descripcionActivarEndGatewayCullingMoreCulling() {
+		return "Ngăn kết xuất không cần thiết của End Gateways.";
+	}
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling() {
+		return "endGatewayCulling = true";
+	}
+
+	public String tituloActivarActivationRangeServerCore() {
+		return "Kích hoạt activation range";
+	}
+
+	public String descripcionActivarActivationRangeServerCore() {
+		return "Giảm ticks của entities ở xa người chơi.";
+	}
+
+	public String sugerenciaActivarActivationRangeServerCore() {
+		return "activation-range: enabled: true";
+	}
+
+	public String tituloActivarRangoVerticalServerCore() {
+		return "Kích hoạt phạm vi dọc";
+	}
+
+	public String descripcionActivarRangoVerticalServerCore() {
+		return "Giảm ticks của entities nằm quá cao hoặc quá thấp so với người chơi.";
+	}
+
+	public String sugerenciaActivarRangoVerticalServerCore() {
+		return "use-vertical-range: true";
+	}
+
+	public String impactoNegativoAlto() {
+		return "Tác động tiêu cực cao";
+	}
+
+	public String advertenciaModsCulling() {
+		return "Các mod culling có thể gây ra xung đột với một số mod, crash, lỗi khiến game ngừng tick chính xác và cũng có thể làm cho trang trại tự động hoặc nhà máy ngừng hoạt động.";
+	}
+
+	public String tituloModBadOptimizations() {
+		return "Thêm BadOptimizations";
+	}
+
+	public String descripcionModBadOptimizations() {
+		return "Thêm các tối ưu vi mô phía client như bộ đệm lightmap, bộ đệm bầu trời và giảm các lệnh gọi không cần thiết.";
+	}
+
+	public String tituloModBBE() {
+		return "Thêm Better Block Entities";
+	}
+
+	public String descripcionModBBE() {
+		return "Tối ưu hóa việc render các block entity như rương, shulker, giường, chuông, cờ và biển báo.";
+	}
+
+	public String tituloModC2ME() {
+		return "Thêm Concurrent Chunk Management Engine";
+	}
+
+	public String descripcionModC2ME() {
+		return "Cải thiện việc tải, tạo và quản lý chunk bằng xử lý đồng thời. Có thể rất mạnh, nhưng cũng có thể gây xung đột trong các modpack lớn.";
+	}
+
+	public String tituloModEntityCulling() {
+		return "Thêm EntityCulling";
+	}
+
+	public String descripcionModEntityCulling() {
+		return "Tránh render các entity không thể nhìn thấy. " + advertenciaModsCulling();
+	}
+
+	public String tituloModFerriteCore() {
+		return "Thêm FerriteCore";
+	}
+
+	public String descripcionModFerriteCore() {
+		return "Giảm sử dụng bộ nhớ thông qua việc loại bỏ trùng lặp và cấu trúc nội bộ hiệu quả hơn.";
+	}
+
+	public String tituloModImmediatelyFast() {
+		return "Thêm ImmediatelyFast";
+	}
+
+	public String descripcionModImmediatelyFast() {
+		return "Tối ưu hóa nhiều phần của render immediate mode, văn bản, buffer, bản đồ và giao diện.";
+	}
+
+	public String tituloModLithium() {
+		return "Thêm Lithium";
+	}
+
+	public String descripcionModLithium() {
+		return "Tối ưu hóa logic game, entity, khối, vật lý và các hệ thống khác mà không thay đổi quá nhiều hành vi vanilla.";
+	}
+
+	public String tituloModModernFix() {
+		return "Thêm ModernFix";
+	}
+
+	public String descripcionModModernFix() {
+		return "Thêm nhiều tối ưu hóa về bộ nhớ, tải, tài nguyên và hiệu suất tổng thể. Các công cụ liên quan đến atlas của nó có thể xung đột với các mod làm atlas nhỏ hơn.";
+	}
+
+	public String tituloModMoreCulling() {
+		return "Thêm More Culling";
+	}
+
+	public String descripcionModMoreCulling() {
+		return "Thêm culling cho khối, lá, khung vật phẩm, tranh, mưa, beacon và các yếu tố khác. "
+				+ advertenciaModsCulling();
+	}
+
+	public String tituloModScalableLux() {
+		return "Thêm ScalableLux";
+	}
+
+	public String descripcionModScalableLux() {
+		return "Tối ưu hóa các tính toán liên quan đến ánh sáng và có thể cải thiện hiệu suất trong các thế giới có nhiều thay đổi ánh sáng.";
+	}
+
+	public String tituloModServerCore() {
+		return "Thêm ServerCore";
+	}
+
+	public String descripcionModServerCore() {
+		return "Thêm các tối ưu hóa phía server, activation range, kiểm soát mobcaps, giảm tick và cải thiện việc tải.";
+	}
+
+	public String tituloModSodium() {
+		return "Thêm Sodium";
+	}
+
+	public String descripcionModSodium() {
+		return "Mod tối ưu render chính. Thường là một trong những cải thiện quan trọng nhất cho FPS.";
+	}
+
+	public String tituloModVMP() {
+		return "Thêm Very Many Players";
+	}
+
+	public String descripcionModVMP() {
+		return "Tối ưu hóa hệ thống server để xử lý nhiều người chơi. Mod id dự kiến là vmp.";
+	}
+
+	public String tituloModMCMT() {
+		return "Thêm MCMT";
+	}
+
+	public String descripcionModMCMT() {
+		return "Cố gắng đa luồng một số phần của server Minecraft. Có thể cải thiện hiệu suất trong một số trường hợp, nhưng có nguy cơ cao gây xung đột, lỗi tick và hành vi lạ.";
+	}
+
+	public String tituloLiabilityUranium() {
+		return "Xóa Uranium";
+	}
+
+	public String descripcionLiabilityUranium() {
+		return "Uranium là một mod được thiết kế cố ý để làm lag game. Không nên cài đặt nếu muốn hiệu suất tốt.";
+	}
+
+	public String tituloAmbientalSinXmx() {
+		return "Cấu hình bộ nhớ tối đa của Java";
+	}
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro) {
+		return "Không phát hiện thấy -Xmx trong các đối số đã cung cấp. Đối với " + mods
+				+ " mod, mức tối thiểu được đề xuất là " + minimo + ", không vượt quá khoảng " + maximoSeguro + ".";
+	}
+
+	public String sugerenciaAmbientalSinXmx(String minimo) {
+		return "Thêm -Xmx" + minimo.replace(" ", "");
+	}
+
+	public String tituloAmbientalDemasiadaMemoria() {
+		return "Giảm bộ nhớ được cấp phát";
+	}
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro) {
+		return "Instance đã được cấp phát " + xmx + " trên tổng số " + total
+				+ ". Không nên cấp phát nhiều hơn 80% RAM khả dụng.";
+	}
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro) {
+		return "Giảm -Xmx xuống " + maximoSeguro + " hoặc thấp hơn.";
+	}
+
+	public String tituloAmbientalMemoriaInsuficiente() {
+		return "Tăng bộ nhớ được cấp phát";
+	}
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo) {
+		return "Instance đã được cấp phát " + xmx + ". Đối với " + mods + " mod, mức tối thiểu được đề xuất là "
+				+ minimo + ".";
+	}
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo) {
+		return "Tăng -Xmx lên ít nhất " + minimo + ".";
+	}
+
+	public String tituloAmbientalJava8GC() {
+		return "Sử dụng G1GC hoặc Shenandoah trong Java 8";
+	}
+
+	public String descripcionAmbientalJava8GC() {
+		return "Trong Java 8, khuyến nghị sử dụng G1GC hoặc Shenandoah để giảm thời gian dừng và cải thiện độ ổn định.";
+	}
+
+	public String sugerenciaAmbientalJava8GC() {
+		return "Thêm -XX:+UseG1GC hoặc -XX:+UseShenandoahGC.";
+	}
+
+	public String tituloAmbientalZGC() {
+		return "Sử dụng ZGC";
+	}
+
+	public String descripcionAmbientalZGC(String ramTotal) {
+		return "Máy có hơn 12 GB RAM (" + ramTotal
+				+ "). Nếu bản phân phối Java hỗ trợ, ZGC có thể giảm thời gian dừng của bộ thu gom rác.";
+	}
+
+	public String sugerenciaAmbientalZGC() {
+		return "Trong Java 17 trở lên, hãy thử -XX:+UseZGC.";
+	}
+
+	public String tituloAmbientalAikar() {
+		return "Thêm cờ Aikar";
+	}
+
+	public String descripcionAmbientalAikar() {
+		return "Trong Java 17 hoặc cũ hơn, các cờ Aikar thường cải thiện hành vi của G1GC cho Minecraft.";
+	}
+
+	public String sugerenciaAmbientalAikar() {
+		return "Sử dụng các cờ Aikar, bao gồm -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200.";
+	}
+
+	public String tituloAmbientalRedHatJDK() {
+		return "Sử dụng Red Hat JDK";
+	}
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os) {
+		return "Đối với Java " + javaMayor + " trên " + os
+				+ ", khuyến nghị sử dụng Red Hat JDK vì độ ổn định và khả năng tương thích.";
+	}
+
+	public String sugerenciaAmbientalRedHatJDK() {
+		return "Cài đặt Red Hat JDK cho Java 8 hoặc Java 11.";
+	}
+
+	public String tituloAmbientalAzulPrime() {
+		return "Xem xét Azul Prime";
+	}
+
+	public String descripcionAmbientalAzulPrime() {
+		return "Trên Linux với Java 16 trở lên và hơn 16 GB RAM, Azul Prime có thể là một lựa chọn hiệu suất tốt.";
+	}
+
+	public String sugerenciaAmbientalAzulPrime() {
+		return "Thử Azul Prime nếu máy có hơn 16 GB RAM.";
+	}
+
+	public String tituloAmbientalGraalVM() {
+		return "Xem xét GraalVM";
+	}
+
+	public String descripcionAmbientalGraalVM() {
+		return "Với Java 16 trở lên và hơn 16 GB RAM, GraalVM có thể là một lựa chọn hữu ích ngoài Linux.";
+	}
+
+	public String sugerenciaAmbientalGraalVM() {
+		return "Thử GraalVM nếu máy có hơn 16 GB RAM.";
+	}
+
+	public String tituloAmbientalDiscoBajo() {
+		return "Kiểm tra dung lượng trống trên đĩa";
+	}
+
+	public String descripcionAmbientalDiscoBajo(String libre) {
+		return "Đĩa còn ít dung lượng trống: " + libre
+				+ ". Minecraft có thể bị lỗi, lưu chậm hoặc hỏng dữ liệu nếu hết dung lượng.";
+	}
+
+	public String sugerenciaAmbientalDiscoBajo() {
+		return "Giải phóng dung lượng để có ít nhất 20 GB khả dụng.";
+	}
+
+	public String tituloAmbientalWindowsRHEL9() {
+		return "Xem xét RHEL 9 để kiểm thử";
+	}
+
+	public String descripcionAmbientalWindowsRHEL9() {
+		return "Trên Windows, khuyến nghị xem xét RHEL 9 vì nó bao gồm Red Hat JDK, ổn định, có thể tải xuống miễn phí cho cá nhân và là nơi thực hiện hầu hết các bài kiểm thử.";
+	}
+
+	public String sugerenciaAmbientalWindowsRHEL9() {
+		return "Thử nghiệm instance trên RHEL 9 nếu muốn độ ổn định kiểm thử cao nhất.";
+	}
+
+	public String tituloAmbientalRaptorLake() {
+		return "Cảnh báo Intel Raptor Lake";
+	}
+
+	public String descripcionAmbientalRaptorLake() {
+		return "Đã phát hiện sự cố Raptor Lake được đánh dấu bởi kiểm tra hiện có. Điều này có thể gây ra mất ổn định, crash và các lỗi trông giống như do modpack.";
+	}
+
+	public String sugerenciaAmbientalRaptorLake() {
+		return "Cập nhật BIOS/microcode và xem lại cảnh báo Raptor Lake trước khi đổ lỗi cho modpack.";
+	}
+
+	@Override
+	public String tituloAmbientalNeoForge1201Antiguo() {
+		return "Phát hiện NeoForge 1.20.1 cũ";
+	}
+
+	@Override
+	public String descripcionAmbientalNeoForge1201Antiguo() {
+		return "Đã phát hiện FancyModLoader 47 hoặc đường dẫn tương thích với NeoForge 1.20.1. "
+				+ "NeoForge 1.20.1 là một nhánh của MinecraftForge 1.20.1 và thường tương thích ở mức nhị phân, "
+				+ "nhưng dòng này đã bị bỏ hoang sớm hơn và có thể thiếu nhiều tối ưu hóa có sẵn trong Forge.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalNeoForge1201Antiguo() {
+		return "Đối với 1.20.1, nếu modpack cho phép, hãy cân nhắc sử dụng MinecraftForge 1.20.1 thay vì NeoForge 1.20.1.";
+	}
+
+	@Override
+	public String tituloAmbientalGPU() {
+		return "Phát hiện vấn đề về GPU";
+	}
+
+	@Override
+	public String descripcionAmbientalGPU() {
+		return "Một kiểm tra khác đã phát hiện ra một vấn đề tiềm ẩn với GPU, OpenGL hoặc lựa chọn card đồ họa.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalGPU() {
+		return "Kiểm tra xem Minecraft có đang sử dụng đúng GPU không, cập nhật driver và tránh các cấu hình lai không ổn định.";
+	}
+
+	@Override
+	public String gpuFixTitulo() {
+		return "Cấu hình GPU";
+	}
+
+	@Override
+	public String gpuFixBotonSidebar() {
+		return "GPU";
+	}
+
+	@Override
+	public String gpuFixBotonAplicar() {
+		return "Áp dụng cấu hình";
+	}
+
+	@Override
+	public String gpuFixBotonFuenteTLauncher() {
+		return "Mở hướng dẫn TLauncher";
+	}
+
+	@Override
+	public String gpuFixBotonVirusTotal() {
+		return "Mở phân tích VirusTotal";
+	}
+
+	@Override
+	public String gpuFixBotonOptimusLinux() {
+		return "Mở hướng dẫn NVIDIA Optimus";
+	}
+
+	@Override
+	public String gpuFixTextoWindows() {
+		return "CrashDetector phát hiện rằng Minecraft có thể không sử dụng GPU hiệu năng cao.\n\n"
+				+ "Trong Windows, bạn có thể đặt các khóa registry trong "
+				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
+				+ "để buộc javaw.exe sử dụng GPU rời.\n\n" + "GpuPreference=0 = quyết định tự động của Windows.\n"
+				+ "GpuPreference=1 = tiết kiệm năng lượng / GPU tích hợp.\n"
+				+ "GpuPreference=2 = GPU hiệu năng cao.\n\n"
+				+ "Một phần thông tin này có được nhờ nghiên cứu được công bố bởi TLauncher và phân tích "
+				+ "hành vi có sẵn trên VirusTotal.";
+	}
+
+	@Override
+	public String gpuFixTextoLinux() {
+		return "CrashDetector phát hiện một vấn đề tiềm ẩn liên quan đến NVIDIA Optimus hoặc PRIME.\n\n"
+				+ "Tùy thuộc vào bản phân phối Linux được sử dụng, có thể cần cấu hình NVIDIA Optimus, "
+				+ "nvidia-prime, switcheroo-control hoặc các hệ thống lai khác.\n\n"
+				+ "Trong Fedora/RHEL và các biến thể, thường khuyến nghị làm theo tài liệu của RPMFusion.\n\n"
+				+ "Nút bên dưới sẽ mở tài liệu chính thức được khuyến nghị.";
+	}
+
+	@Override
+	public String gpuFixTextoMac() {
+		return "CrashDetector phát hiện một vấn đề tiềm ẩn về lựa chọn GPU.\n\n"
+				+ "Trong một số hệ thống macOS có GPU lai, có thể buộc sử dụng GPU rời "
+				+ "thông qua các cài đặt hệ thống nâng cao.\n\n"
+				+ "Nút áp dụng sẽ cố gắng thực thi một lệnh để ưu tiên GPU hiệu năng cao.";
+	}
+
+	@Override
+	public String gpuFixTextoOtroSistema() {
+		return "CrashDetector phát hiện một vấn đề tiềm ẩn liên quan đến GPU, "
+				+ "nhưng không có triển khai cụ thể cho hệ điều hành này.";
+	}
+
+	@Override
+	public String gpuFixLinuxManual() {
+		return "Trong Linux, thông thường cấu hình phải được thực hiện thủ công tùy thuộc vào bản phân phối, "
+				+ "driver NVIDIA và hệ thống Optimus/PRIME được sử dụng.";
+	}
+
+	@Override
+	public String gpuFixSistemaNoSoportado() {
+		return "Hệ điều hành không được hỗ trợ cho cấu hình GPU tự động.";
+	}
+
+	@Override
+	public String gpuFixJavaNoDetectado() {
+		return "Không thể phát hiện đường dẫn hiện tại của javaw.exe.";
+	}
+
+	@Override
+	public String gpuFixWindowsAplicado(String ruta) {
+		return "Cấu hình GPU đã được áp dụng thành công cho:\n\n" + ruta + "\n\n"
+				+ "GpuPreference=2 chỉ ra GPU hiệu năng cao.";
+	}
+
+	@Override
+	public String gpuFixErrorAplicando() {
+		return "Đã xảy ra lỗi khi cố gắng áp dụng cấu hình GPU";
+	}
+
+	@Override
+	public String gpuFixMacAplicado() {
+		return "Cấu hình GPU hiệu năng cao đã được áp dụng.";
+	}
+
+	@Override
+	public String gpuFixMacError() {
+		return "Không thể áp dụng cấu hình GPU trong macOS";
+	}
+
+	@Override
+	public String rendimientoTitulo() {
+		return "Trình quản lý hiệu suất";
+	}
+
+	@Override
+	public String rendimientoBotonSidebar() {
+		return "Hiệu suất";
+	}
+
+	@Override
+	public String rendimientoBotonAnalizar() {
+		return "Phân tích hiệu suất";
+	}
+
+	@Override
+	public String rendimientoBotonAbrirGPU() {
+		return "Mở cấu hình GPU";
+	}
+
+	@Override
+	public String rendimientoDescripcion() {
+		return "Bảng này kiểm tra các vấn đề môi trường, các mod được khuyến nghị hoặc có rủi ro, và các tùy chọn cấu hình "
+				+ "có thể cải thiện hiệu suất. Không phải tất cả các tùy chọn đều hoạt động cùng nhau, không phải tất cả đều phù hợp với mỗi "
+				+ "phiên bản Minecraft và không phải tất cả đều tương thích với mỗi trình tải mod. Điều đó không sao: bạn không cần "
+				+ "điểm tối ưu hóa hoàn hảo.";
+	}
+
+	@Override
+	public String rendimientoNotaCompatibilidad() {
+		return "Lưu ý: những gợi ý này là khả năng, không phải lệnh áp dụng mọi thứ. Một số tùy chọn có thể xung đột "
+				+ "với nhau hoặc không phù hợp với phiên bản, trình khởi chạy, trình tải mod hoặc modpack của bạn.";
+	}
+
+	@Override
+	public String rendimientoPestanaResumen() {
+		return "Tóm tắt";
+	}
+
+	@Override
+	public String rendimientoPestanaAmbiental() {
+		return "Vấn đề môi trường";
+	}
+
+	@Override
+	public String rendimientoPestanaMods() {
+		return "Mod được khuyến nghị và rủi ro";
+	}
+
+	@Override
+	public String rendimientoPestanaConfigs() {
+		return "Tùy chọn cấu hình";
+	}
+
+	@Override
+	public String rendimientoResumenTitulo() {
+		return "Tóm tắt phân tích";
+	}
+
+	@Override
+	public String rendimientoResumenAmbiental(int cantidad) {
+		return "Số vấn đề môi trường tìm thấy: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenMods(int cantidad) {
+		return "Số gợi ý hoặc rủi ro về mod tìm thấy: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenConfigs(int cantidad) {
+		return "Số gợi ý cấu hình tìm thấy: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenGPU() {
+		return "Đã phát hiện sự cố GPU. Do đó, nút để mở cấu hình GPU đã được kích hoạt.";
+	}
+
+	@Override
+	public String rendimientoSinHallazgos() {
+		return "Không tìm thấy gợi ý nào trong phần này.";
+	}
+
+	@Override
+	public String rendimientoSugerencia() {
+		return "Gợi ý";
+	}
+
+	@Override
+	public String rendimientoColorFondo() {
+		return "Hiệu suất - nền";
+	}
+
+	@Override
+	public String rendimientoColorPanel() {
+		return "Hiệu suất - bảng điều khiển";
+	}
+
+	@Override
+	public String rendimientoColorTexto() {
+		return "Hiệu suất - văn bản";
+	}
+
+	@Override
+	public String rendimientoColorTextoSecundario() {
+		return "Hiệu suất - văn bản phụ";
+	}
+
+	@Override
+	public String rendimientoColorBoton() {
+		return "Hiệu suất - nút";
+	}
+
+	@Override
+	public String rendimientoColorBotonTexto() {
+		return "Hiệu suất - văn bản nút";
+	}
+
+	@Override
+	public String rendimientoColorSeleccion() {
+		return "Hiệu suất - lựa chọn";
+	}
+
 }

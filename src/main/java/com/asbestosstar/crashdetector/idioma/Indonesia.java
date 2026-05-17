@@ -9927,31 +9927,884 @@ public class Indonesia implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "Sebuah mod mencoba menimpa metode final";
 	}
-	
+
 	// Indonesian (Bahasa Indonesia)
 	@Override
 	public String errorCrashProvocadoPorComando(String comandoDetectado) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Minecraft ditutup karena perintah crash.</b>"
-	            + "<p>Log menunjukkan bahwa perintah <code>" + comandoDetectado + "</code> telah dijalankan.</p>"
-	            + "<p>Ini biasanya berarti game tidak tertutup karena kesalahan mod normal, melainkan karena seseorang "
-	            + "menggunakan perintah yang dirancang untuk memicu crash secara manual.</p>"
-	            + "<p><b>Yang perlu diperiksa:</b></p>"
-	            + "<ul>"
-	            + "<li>Periksa siapa yang menjalankan perintah tersebut di konsol atau di dalam game.</li>"
-	            + "<li>Jika itu adalah uji coba, Anda dapat mengabaikan crash ini.</li>"
-	            + "<li>Jika terjadi tanpa sengaja, periksa command block, skrip, datapack, mod administrasi, atau izin operator.</li>"
-	            + "</ul>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft ditutup karena perintah crash.</b>" + "<p>Log menunjukkan bahwa perintah <code>"
+				+ comandoDetectado + "</code> telah dijalankan.</p>"
+				+ "<p>Ini biasanya berarti game tidak tertutup karena kesalahan mod normal, melainkan karena seseorang "
+				+ "menggunakan perintah yang dirancang untuk memicu crash secara manual.</p>"
+				+ "<p><b>Yang perlu diperiksa:</b></p>" + "<ul>"
+				+ "<li>Periksa siapa yang menjalankan perintah tersebut di konsol atau di dalam game.</li>"
+				+ "<li>Jika itu adalah uji coba, Anda dapat mengabaikan crash ini.</li>"
+				+ "<li>Jika terjadi tanpa sengaja, periksa command block, skrip, datapack, mod administrasi, atau izin operator.</li>"
+				+ "</ul>";
 	}
 
 	@Override
 	public String nombreCrashProvocadoPorComando() {
-	    return "Crash disebabkan oleh perintah";
+		return "Crash disebabkan oleh perintah";
 	}
-	
-	
-	
-	
-	
+
+	// Indonesian (Bahasa Indonesia)
+	public String impactoAlto() {
+		return "Tinggi";
+	}
+
+	public String impactoMedio() {
+		return "Sedang";
+	}
+
+	public String impactoBajo() {
+		return "Rendah";
+	}
+
+	public String impactoBajoMedio() {
+		return "Rendah/Sedang";
+	}
+
+	public String riesgoAlto() {
+		return "Tinggi";
+	}
+
+	public String riesgoMedio() {
+		return "Sedang";
+	}
+
+	public String riesgoBajo() {
+		return "Rendah";
+	}
+
+	public String riesgoMedioAlto() {
+		return "Sedang/Tinggi";
+	}
+
+	public String tituloCrearConfigBBE() {
+		return "Buat konfigurasi Better Block Entities";
+	}
+
+	public String descripcionCrearConfigBBE() {
+		return "File BBEConfig.json tidak ada.";
+	}
+
+	public String sugerenciaCrearConfigBBE() {
+		return "Buat BBEConfig.json dengan optimasi untuk peti, shulker, papan tanda, tempat tidur, lonceng, dan spanduk.";
+	}
+
+	public String tituloActivarOptimizacionMaestraBBE() {
+		return "Aktifkan optimasi utama BBE";
+	}
+
+	public String descripcionActivarOptimizacionMaestraBBE() {
+		return "Better Block Entities tampaknya tidak memiliki optimasi utama yang diaktifkan.";
+	}
+
+	public String sugerenciaActivarOptimizacionMaestraBBE() {
+		return "Tambahkan {\"option\":\"optimize.master\",\"value\":true}";
+	}
+
+	public String tituloActivarCullingTextoCartelesBBE() {
+		return "Aktifkan culling teks papan tanda";
+	}
+
+	public String descripcionActivarCullingTextoCartelesBBE() {
+		return "Mengurangi rendering teks papan tanda dari kejauhan.";
+	}
+
+	public String sugerenciaActivarCullingTextoCartelesBBE() {
+		return "Tambahkan {\"option\":\"misc.sign_text_culling\",\"value\":true}";
+	}
+
+	public String tituloAumentarSleepDelayEntityCulling() {
+		return "Tingkatkan sleepDelay EntityCulling";
+	}
+
+	public String descripcionAumentarSleepDelayEntityCulling() {
+		return "EntityCulling akan memeriksa entitas lebih jarang.";
+	}
+
+	public String sugerenciaAumentarSleepDelayEntityCulling() {
+		return "\"sleepDelay\": 153";
+	}
+
+	public String tituloSubirLimiteHitboxEntityCulling() {
+		return "Naikkan batas hitbox";
+	}
+
+	public String descripcionSubirLimiteHitboxEntityCulling() {
+		return "Memungkinkan perilaku culling yang lebih agresif sebelum jatuh ke rute yang lebih lambat.";
+	}
+
+	public String sugerenciaSubirLimiteHitboxEntityCulling() {
+		return "\"hitboxLimit\": 90";
+	}
+
+	public String tituloDesactivarDatosF3EntityCulling() {
+		return "Nonaktifkan data F3 EntityCulling";
+	}
+
+	public String descripcionDesactivarDatosF3EntityCulling() {
+		return "Menghapus informasi debug tambahan dari mod.";
+	}
+
+	public String sugerenciaDesactivarDatosF3EntityCulling() {
+		return "\"disableF3\": true";
+	}
+
+	public String tituloActivarBufferingSignsImmediatelyFast() {
+		return "Aktifkan buffering eksperimental papan tanda";
+	}
+
+	public String descripcionActivarBufferingSignsImmediatelyFast() {
+		return "Dapat meningkatkan kinerja saat ada banyak papan tanda.";
+	}
+
+	public String sugerenciaActivarBufferingSignsImmediatelyFast() {
+		return "\"experimental_sign_text_buffering\": true";
+	}
+
+	public String tituloReducirConflictosResourcePacksImmediatelyFast() {
+		return "Kurangi penanganan konflik resource pack";
+	}
+
+	public String descripcionReducirConflictosResourcePacksImmediatelyFast() {
+		return "Dapat mengurangi pekerjaan tambahan, tetapi juga dapat menyebabkan masalah visual dengan resource pack.";
+	}
+
+	public String sugerenciaReducirConflictosResourcePacksImmediatelyFast() {
+		return "\"experimental_disable_resource_pack_conflict_handling\": true";
+	}
+
+	public String tituloOcultarBotonNCR() {
+		return "Sembunyikan tombol No Chat Reports";
+	}
+
+	public String descripcionOcultarBotonNCR() {
+		return "Perubahan antarmuka; tidak banyak meningkatkan FPS, tetapi membersihkan layar.";
+	}
+
+	public String sugerenciaOcultarBotonNCR() {
+		return "\"showNCRButton\": false";
+	}
+
+	public String tituloActivarMixinsExperimentalesLithium() {
+		return "Aktifkan mixin eksperimental Lithium";
+	}
+
+	public String descripcionActivarMixinsExperimentalesLithium() {
+		return "Mengaktifkan optimasi eksperimental tambahan.";
+	}
+
+	public String sugerenciaActivarMixinsExperimentalesLithium() {
+		return "mixin.experimental=true";
+	}
+
+	public String tituloUsarDetectorThreadingPequenoFerriteCore() {
+		return "Gunakan detektor threading kecil";
+	}
+
+	public String descripcionUsarDetectorThreadingPequenoFerriteCore() {
+		return "Mengurangi memori, tetapi bisa lebih berisiko.";
+	}
+
+	public String sugerenciaUsarDetectorThreadingPequenoFerriteCore() {
+		return "useSmallThreadingDetector=true";
+	}
+
+	public String tituloModernFixRecursosDinamicos() {
+		return "Aktifkan sumber daya dinamis ModernFix";
+	}
+
+	public String descripcionModernFixRecursosDinamicos() {
+		return "Dapat mengurangi penggunaan memori dan beban dengan memuat sumber daya secara lebih efisien.";
+	}
+
+	public String tituloModernFixRenderizadoresDinamicosEntidades() {
+		return "Aktifkan renderer entitas dinamis";
+	}
+
+	public String descripcionModernFixRenderizadoresDinamicosEntidades() {
+		return "Dapat meningkatkan kinerja dengan menangani renderer entitas secara lebih efisien.";
+	}
+
+	public String tituloModernFixRenderizadoItemsRapido() {
+		return "Aktifkan rendering item cepat";
+	}
+
+	public String descripcionModernFixRenderizadoItemsRapido() {
+		return "Dapat meningkatkan kinerja saat merender item.";
+	}
+
+	public String tituloModernFixWorldgenAllocation() {
+		return "Kurangi alokasi pada worldgen";
+	}
+
+	public String descripcionModernFixWorldgenAllocation() {
+		return "Dapat mengurangi sampah memori selama pembuatan dunia.";
+	}
+
+	public String tituloModernFixDeduplicacionIngredientes() {
+		return "Aktifkan deduplikasi bahan";
+	}
+
+	public String descripcionModernFixDeduplicacionIngredientes() {
+		return "Mengurangi objek duplikat terkait resep dan bahan.";
+	}
+
+	public String tituloSodiumRenderCielo() {
+		return "Aktifkan optimasi/render langit di Sodium";
+	}
+
+	public String descripcionSodiumRenderCielo() {
+		return "Dapat menyesuaikan perilaku rendering langit.";
+	}
+
+	public String tituloActivarLightmapCaching() {
+		return "Aktifkan cache lightmap";
+	}
+
+	public String descripcionActivarLightmapCaching() {
+		return "Menghindari perhitungan ulang pencahayaan saat tidak diperlukan.";
+	}
+
+	public String sugerenciaActivarLightmapCaching() {
+		return "enable_lightmap_caching: true";
+	}
+
+	public String tituloOcultarTextoF3BadOptimizations() {
+		return "Sembunyikan teks F3 BadOptimizations";
+	}
+
+	public String descripcionOcultarTextoF3BadOptimizations() {
+		return "Mengurangi noise debug di layar F3.";
+	}
+
+	public String sugerenciaOcultarTextoF3BadOptimizations() {
+		return "show_f3_text: false";
+	}
+
+	public String tituloDesactivarLogConfigBadOptimizations() {
+		return "Nonaktifkan log konfigurasi";
+	}
+
+	public String descripcionDesactivarLogConfigBadOptimizations() {
+		return "Mencegah pencetakan seluruh konfigurasi saat memulai.";
+	}
+
+	public String sugerenciaDesactivarLogConfigBadOptimizations() {
+		return "log_config: false";
+	}
+
+	public String tituloActivarSerializadorGCFreeC2ME() {
+		return "Aktifkan serialisasi GC-free C2ME";
+	}
+
+	public String descripcionActivarSerializadorGCFreeC2ME() {
+		return "Mengurangi alokasi memori saat memuat atau menyimpan chunk.";
+	}
+
+	public String sugerenciaActivarSerializadorGCFreeC2ME() {
+		return "[ioSystem] gcFreeChunkSerializer = true";
+	}
+
+	public String tituloDesactivarSyncPlayerTicketsC2ME() {
+		return "Nonaktifkan syncPlayerTickets";
+	}
+
+	public String descripcionDesactivarSyncPlayerTicketsC2ME() {
+		return "Dapat meningkatkan kinerja chunk, tetapi dapat memengaruhi contraptions teknis.";
+	}
+
+	public String sugerenciaDesactivarSyncPlayerTicketsC2ME() {
+		return "[chunkSystem] syncPlayerTickets = false";
+	}
+
+	public String tituloUsarCullingHojasDepthMoreCulling() {
+		return "Gunakan culling daun DEPTH";
+	}
+
+	public String descripcionUsarCullingHojasDepthMoreCulling() {
+		return "Menggunakan mode culling daun yang lebih agresif daripada mode normal.";
+	}
+
+	public String sugerenciaUsarCullingHojasDepthMoreCulling() {
+		return "leavesCullingMode = \"DEPTH\"";
+	}
+
+	public String tituloActivarEndGatewayCullingMoreCulling() {
+		return "Aktifkan culling End Gateway";
+	}
+
+	public String descripcionActivarEndGatewayCullingMoreCulling() {
+		return "Mencegah rendering End Gateway yang tidak perlu.";
+	}
+
+	public String sugerenciaActivarEndGatewayCullingMoreCulling() {
+		return "endGatewayCulling = true";
+	}
+
+	public String tituloActivarActivationRangeServerCore() {
+		return "Aktifkan activation range";
+	}
+
+	public String descripcionActivarActivationRangeServerCore() {
+		return "Mengurangi tick entitas yang jauh dari pemain.";
+	}
+
+	public String sugerenciaActivarActivationRangeServerCore() {
+		return "activation-range: enabled: true";
+	}
+
+	public String tituloActivarRangoVerticalServerCore() {
+		return "Aktifkan jangkauan vertikal";
+	}
+
+	public String descripcionActivarRangoVerticalServerCore() {
+		return "Mengurangi tick entitas yang berada sangat di atas atau di bawah pemain.";
+	}
+
+	public String sugerenciaActivarRangoVerticalServerCore() {
+		return "use-vertical-range: true";
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	public String impactoNegativoAlto() {
+		return "Dampak negatif tinggi";
+	}
+
+	public String advertenciaModsCulling() {
+		return "Mod culling dapat menyebabkan ketidakcocokan dengan beberapa mod, crash, kesalahan di mana game berhenti melakukan tick dengan benar, dan juga dapat membuat pertanian otomatis atau pabrik berhenti bekerja.";
+	}
+
+	public String tituloModBadOptimizations() {
+		return "Tambahkan BadOptimizations";
+	}
+
+	public String descripcionModBadOptimizations() {
+		return "Menambahkan mikro-optimasi klien seperti cache lightmap, cache langit, dan pengurangan pemanggilan yang tidak perlu.";
+	}
+
+	public String tituloModBBE() {
+		return "Tambahkan Better Block Entities";
+	}
+
+	public String descripcionModBBE() {
+		return "Mengoptimalkan rendering entitas blok seperti peti, shulker, tempat tidur, lonceng, spanduk, dan papan tanda.";
+	}
+
+	public String tituloModC2ME() {
+		return "Tambahkan Concurrent Chunk Management Engine";
+	}
+
+	public String descripcionModC2ME() {
+		return "Meningkatkan pemuatan, generasi, dan pengelolaan chunk menggunakan pemrosesan konkuren. Bisa sangat kuat, tetapi juga dapat menyebabkan ketidakcocokan di modpack besar.";
+	}
+
+	public String tituloModEntityCulling() {
+		return "Tambahkan EntityCulling";
+	}
+
+	public String descripcionModEntityCulling() {
+		return "Mencegah rendering entitas yang tidak terlihat. " + advertenciaModsCulling();
+	}
+
+	public String tituloModFerriteCore() {
+		return "Tambahkan FerriteCore";
+	}
+
+	public String descripcionModFerriteCore() {
+		return "Mengurangi penggunaan memori melalui deduplikasi dan struktur internal yang lebih efisien.";
+	}
+
+	public String tituloModImmediatelyFast() {
+		return "Tambahkan ImmediatelyFast";
+	}
+
+	public String descripcionModImmediatelyFast() {
+		return "Mengoptimalkan berbagai bagian dari immediate rendering, teks, buffer, peta, dan antarmuka.";
+	}
+
+	public String tituloModLithium() {
+		return "Tambahkan Lithium";
+	}
+
+	public String descripcionModLithium() {
+		return "Mengoptimalkan logika game, entitas, blok, fisika, dan sistem lainnya tanpa terlalu banyak mengubah perilaku vanilla.";
+	}
+
+	public String tituloModModernFix() {
+		return "Tambahkan ModernFix";
+	}
+
+	public String descripcionModModernFix() {
+		return "Menambahkan banyak optimasi memori, pemuatan, sumber daya, dan kinerja umum. Alat terkait atlasnya dapat bentrok dengan mod yang membuat atlas lebih kecil.";
+	}
+
+	public String tituloModMoreCulling() {
+		return "Tambahkan More Culling";
+	}
+
+	public String descripcionModMoreCulling() {
+		return "Menambahkan culling untuk blok, daun, bingkai item, lukisan, hujan, beacon, dan elemen lainnya. "
+				+ advertenciaModsCulling();
+	}
+
+	public String tituloModScalableLux() {
+		return "Tambahkan ScalableLux";
+	}
+
+	public String descripcionModScalableLux() {
+		return "Mengoptimalkan perhitungan terkait pencahayaan dan dapat meningkatkan kinerja di dunia dengan banyak perubahan cahaya.";
+	}
+
+	public String tituloModServerCore() {
+		return "Tambahkan ServerCore";
+	}
+
+	public String descripcionModServerCore() {
+		return "Menambahkan optimasi sisi server, activation range, kontrol mobcap, pengurangan tick, dan peningkatan pemuatan.";
+	}
+
+	public String tituloModSodium() {
+		return "Tambahkan Sodium";
+	}
+
+	public String descripcionModSodium() {
+		return "Mod utama optimasi rendering. Biasanya merupakan salah satu peningkatan paling penting untuk FPS.";
+	}
+
+	public String tituloModVMP() {
+		return "Tambahkan Very Many Players";
+	}
+
+	public String descripcionModVMP() {
+		return "Mengoptimalkan sistem server untuk menangani banyak pemain. ID mod yang diharapkan adalah vmp.";
+	}
+
+	public String tituloModMCMT() {
+		return "Tambahkan MCMT";
+	}
+
+	public String descripcionModMCMT() {
+		return "Mencoba melakukan multithreading pada bagian server Minecraft. Dapat meningkatkan kinerja dalam beberapa kasus, tetapi memiliki risiko tinggi ketidakcocokan, kesalahan ticking, dan perilaku aneh.";
+	}
+
+	public String tituloLiabilityUranium() {
+		return "Hapus Uranium";
+	}
+
+	public String descripcionLiabilityUranium() {
+		return "Uranium adalah mod yang dirancang untuk sengaja membuat game lag. Sebaiknya tidak diinstal jika Anda menginginkan kinerja yang baik.";
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	public String tituloAmbientalSinXmx() {
+		return "Atur memori maksimal Java";
+	}
+
+	public String descripcionAmbientalSinXmx(int mods, String minimo, String maximoSeguro) {
+		return "-Xmx tidak terdeteksi dalam argumen yang diberikan. Untuk " + mods
+				+ " mod, minimum yang disarankan adalah " + minimo + ", jangan melebihi sekitar " + maximoSeguro + ".";
+	}
+
+	public String sugerenciaAmbientalSinXmx(String minimo) {
+		return "Tambahkan -Xmx" + minimo.replace(" ", "");
+	}
+
+	public String tituloAmbientalDemasiadaMemoria() {
+		return "Kurangi memori yang dialokasikan";
+	}
+
+	public String descripcionAmbientalDemasiadaMemoria(String xmx, String total, String maximoSeguro) {
+		return "Instansi telah mengalokasikan " + xmx + " dari " + total
+				+ ". Tidak disarankan mengalokasikan lebih dari 80% dari RAM yang tersedia.";
+	}
+
+	public String sugerenciaAmbientalDemasiadaMemoria(String maximoSeguro) {
+		return "Kurangi -Xmx menjadi " + maximoSeguro + " atau kurang.";
+	}
+
+	public String tituloAmbientalMemoriaInsuficiente() {
+		return "Tambahkan memori yang dialokasikan";
+	}
+
+	public String descripcionAmbientalMemoriaInsuficiente(int mods, String xmx, String minimo) {
+		return "Instansi memiliki " + xmx + " yang dialokasikan. Untuk " + mods
+				+ " mod, minimum yang disarankan adalah " + minimo + ".";
+	}
+
+	public String sugerenciaAmbientalMemoriaInsuficiente(String minimo) {
+		return "Tingkatkan -Xmx menjadi setidaknya " + minimo + ".";
+	}
+
+	public String tituloAmbientalJava8GC() {
+		return "Gunakan G1GC atau Shenandoah di Java 8";
+	}
+
+	public String descripcionAmbientalJava8GC() {
+		return "Di Java 8, disarankan menggunakan G1GC atau Shenandoah untuk mengurangi jeda dan meningkatkan stabilitas.";
+	}
+
+	public String sugerenciaAmbientalJava8GC() {
+		return "Tambahkan -XX:+UseG1GC atau -XX:+UseShenandoahGC.";
+	}
+
+	public String tituloAmbientalZGC() {
+		return "Gunakan ZGC";
+	}
+
+	public String descripcionAmbientalZGC(String ramTotal) {
+		return "Perangkat memiliki lebih dari 12 GB RAM (" + ramTotal
+				+ "). Jika distribusi Java mendukungnya, ZGC dapat mengurangi jeda pengumpul sampah.";
+	}
+
+	public String sugerenciaAmbientalZGC() {
+		return "Di Java 17 atau lebih tinggi, coba -XX:+UseZGC.";
+	}
+
+	public String tituloAmbientalAikar() {
+		return "Tambahkan flag Aikar";
+	}
+
+	public String descripcionAmbientalAikar() {
+		return "Di Java 17 atau sebelumnya, flag Aikar biasanya meningkatkan perilaku G1GC untuk Minecraft.";
+	}
+
+	public String sugerenciaAmbientalAikar() {
+		return "Gunakan flag Aikar, termasuk -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200.";
+	}
+
+	public String tituloAmbientalRedHatJDK() {
+		return "Gunakan Red Hat JDK";
+	}
+
+	public String descripcionAmbientalRedHatJDK(int javaMayor, String os) {
+		return "Untuk Java " + javaMayor + " di " + os
+				+ ", Red Hat JDK direkomendasikan karena stabilitas dan kompatibilitasnya.";
+	}
+
+	public String sugerenciaAmbientalRedHatJDK() {
+		return "Instal Red Hat JDK untuk Java 8 atau Java 11.";
+	}
+
+	public String tituloAmbientalAzulPrime() {
+		return "Pertimbangkan Azul Prime";
+	}
+
+	public String descripcionAmbientalAzulPrime() {
+		return "Di Linux dengan Java 16 atau lebih tinggi dan lebih dari 16 GB RAM, Azul Prime bisa menjadi pilihan kinerja yang baik.";
+	}
+
+	public String sugerenciaAmbientalAzulPrime() {
+		return "Coba Azul Prime jika perangkat memiliki lebih dari 16 GB RAM.";
+	}
+
+	public String tituloAmbientalGraalVM() {
+		return "Pertimbangkan GraalVM";
+	}
+
+	public String descripcionAmbientalGraalVM() {
+		return "Dengan Java 16 atau lebih tinggi dan lebih dari 16 GB RAM, GraalVM bisa menjadi alternatif yang berguna di luar Linux.";
+	}
+
+	public String sugerenciaAmbientalGraalVM() {
+		return "Coba GraalVM jika perangkat memiliki lebih dari 16 GB RAM.";
+	}
+
+	public String tituloAmbientalDiscoBajo() {
+		return "Periksa ruang kosong pada disk";
+	}
+
+	public String descripcionAmbientalDiscoBajo(String libre) {
+		return "Disk memiliki sedikit ruang kosong: " + libre
+				+ ". Minecraft dapat gagal, menyimpan dengan lambat, atau merusak data jika kehabisan ruang.";
+	}
+
+	public String sugerenciaAmbientalDiscoBajo() {
+		return "Bebaskan ruang hingga setidaknya 20 GB tersedia.";
+	}
+
+	public String tituloAmbientalWindowsRHEL9() {
+		return "Pertimbangkan RHEL 9 untuk pengujian";
+	}
+
+	public String descripcionAmbientalWindowsRHEL9() {
+		return "Di Windows, disarankan mempertimbangkan RHEL 9 karena mencakup Red Hat JDK, stabil, dapat diunduh gratis untuk individu, dan merupakan tempat sebagian besar pengujian dilakukan.";
+	}
+
+	public String sugerenciaAmbientalWindowsRHEL9() {
+		return "Coba instansi di RHEL 9 jika Anda mencari stabilitas pengujian maksimal.";
+	}
+
+	public String tituloAmbientalRaptorLake() {
+		return "Peringatan Intel Raptor Lake";
+	}
+
+	public String descripcionAmbientalRaptorLake() {
+		return "Masalah Raptor Lake yang ditandai oleh pemeriksaan yang ada telah terdeteksi. Ini dapat menyebabkan ketidakstabilan, crash, dan kesalahan yang tampak seperti berasal dari modpack.";
+	}
+
+	public String sugerenciaAmbientalRaptorLake() {
+		return "Perbarui BIOS/mikrokode dan periksa peringatan Raptor Lake sebelum menyalahkan modpack.";
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String tituloAmbientalNeoForge1201Antiguo() {
+		return "NeoForge 1.20.1 lama terdeteksi";
+	}
+
+	@Override
+	public String descripcionAmbientalNeoForge1201Antiguo() {
+		return "FancyModLoader 47 atau jalur yang kompatibel dengan NeoForge 1.20.1 terdeteksi. "
+				+ "NeoForge 1.20.1 adalah fork dari MinecraftForge 1.20.1 dan biasanya kompatibel secara biner, "
+				+ "tetapi jalur tersebut ditinggalkan lebih awal dan mungkin kekurangan beberapa optimasi yang tersedia di Forge.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalNeoForge1201Antiguo() {
+		return "Untuk 1.20.1, jika modpack mengizinkannya, pertimbangkan untuk menggunakan MinecraftForge 1.20.1 alih-alih NeoForge 1.20.1.";
+	}
+
+	@Override
+	public String tituloAmbientalGPU() {
+		return "Masalah GPU terdeteksi";
+	}
+
+	@Override
+	public String descripcionAmbientalGPU() {
+		return "Pemeriksaan lain sudah mendeteksi kemungkinan masalah GPU, OpenGL, atau pemilihan kartu grafis.";
+	}
+
+	@Override
+	public String sugerenciaAmbientalGPU() {
+		return "Periksa apakah Minecraft menggunakan GPU yang benar, perbarui driver, dan hindari konfigurasi hybrid yang tidak stabil.";
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String gpuFixTitulo() {
+		return "Konfigurasi GPU";
+	}
+
+	@Override
+	public String gpuFixBotonSidebar() {
+		return "GPU";
+	}
+
+	@Override
+	public String gpuFixBotonAplicar() {
+		return "Terapkan konfigurasi";
+	}
+
+	@Override
+	public String gpuFixBotonFuenteTLauncher() {
+		return "Buka panduan TLauncher";
+	}
+
+	@Override
+	public String gpuFixBotonVirusTotal() {
+		return "Buka analisis VirusTotal";
+	}
+
+	@Override
+	public String gpuFixBotonOptimusLinux() {
+		return "Buka panduan NVIDIA Optimus";
+	}
+
+	@Override
+	public String gpuFixTextoWindows() {
+		return "CrashDetector mendeteksi bahwa Minecraft mungkin tidak menggunakan GPU berkinerja tinggi.\n\n"
+				+ "Di Windows, kunci registri dapat diatur di "
+				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
+				+ "untuk memaksa javaw.exe menggunakan GPU dedicated.\n\n"
+				+ "GpuPreference=0 = keputusan otomatis Windows.\n"
+				+ "GpuPreference=1 = hemat daya / GPU terintegrasi.\n" + "GpuPreference=2 = GPU berkinerja tinggi.\n\n"
+				+ "Sebagian informasi ini diperoleh berkat penelitian yang diterbitkan oleh TLauncher dan analisis "
+				+ "perilaku yang tersedia di VirusTotal.";
+	}
+
+	@Override
+	public String gpuFixTextoLinux() {
+		return "CrashDetector mendeteksi masalah potensial terkait NVIDIA Optimus atau PRIME.\n\n"
+				+ "Tergantung pada distribusi Linux yang digunakan, mungkin perlu mengkonfigurasi NVIDIA Optimus, "
+				+ "nvidia-prime, switcheroo-control, atau sistem hybrid lainnya.\n\n"
+				+ "Di Fedora/RHEL dan turunannya, biasanya disarankan untuk mengikuti dokumentasi RPMFusion.\n\n"
+				+ "Tombol di bawah akan membuka dokumentasi resmi yang direkomendasikan.";
+	}
+
+	@Override
+	public String gpuFixTextoMac() {
+		return "CrashDetector mendeteksi masalah potensial dalam pemilihan GPU.\n\n"
+				+ "Pada beberapa sistem macOS dengan GPU hybrid, dimungkinkan untuk memaksa penggunaan GPU dedicated "
+				+ "melalui konfigurasi sistem lanjutan.\n\n"
+				+ "Tombol terapkan akan mencoba menjalankan perintah untuk memprioritaskan GPU berkinerja tinggi.";
+	}
+
+	@Override
+	public String gpuFixTextoOtroSistema() {
+		return "CrashDetector mendeteksi masalah potensial terkait GPU, "
+				+ "tetapi tidak ada implementasi spesifik untuk sistem operasi ini.";
+	}
+
+	@Override
+	public String gpuFixLinuxManual() {
+		return "Di Linux, konfigurasi biasanya harus dilakukan secara manual tergantung pada distribusi, "
+				+ "driver NVIDIA, dan sistem Optimus/PRIME yang digunakan.";
+	}
+
+	@Override
+	public String gpuFixSistemaNoSoportado() {
+		return "Sistem operasi tidak didukung untuk konfigurasi GPU otomatis.";
+	}
+
+	@Override
+	public String gpuFixJavaNoDetectado() {
+		return "Tidak dapat mendeteksi jalur saat ini dari javaw.exe.";
+	}
+
+	@Override
+	public String gpuFixWindowsAplicado(String ruta) {
+		return "Konfigurasi GPU berhasil diterapkan untuk:\n\n" + ruta + "\n\n"
+				+ "GpuPreference=2 menunjukkan GPU berkinerja tinggi.";
+	}
+
+	@Override
+	public String gpuFixErrorAplicando() {
+		return "Terjadi kesalahan saat mencoba menerapkan konfigurasi GPU";
+	}
+
+	@Override
+	public String gpuFixMacAplicado() {
+		return "Konfigurasi GPU berkinerja tinggi telah diterapkan.";
+	}
+
+	@Override
+	public String gpuFixMacError() {
+		return "Tidak dapat menerapkan konfigurasi GPU di macOS";
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String rendimientoTitulo() {
+		return "Manajer Kinerja";
+	}
+
+	@Override
+	public String rendimientoBotonSidebar() {
+		return "Kinerja";
+	}
+
+	@Override
+	public String rendimientoBotonAnalizar() {
+		return "Analisis Kinerja";
+	}
+
+	@Override
+	public String rendimientoBotonAbrirGPU() {
+		return "Buka Konfigurasi GPU";
+	}
+
+	@Override
+	public String rendimientoDescripcion() {
+		return "Panel ini memeriksa masalah lingkungan, mod yang direkomendasikan atau berisiko, dan opsi konfigurasi yang dapat meningkatkan kinerja. Tidak semua opsi bekerja bersama, tidak semua cocok untuk setiap versi Minecraft, dan tidak semua kompatibel dengan setiap pemuat mod. Itu tidak masalah: Anda tidak memerlukan skor optimasi yang sempurna.";
+	}
+
+	@Override
+	public String rendimientoNotaCompatibilidad() {
+		return "Catatan: saran-saran ini adalah kemungkinan, bukan perintah untuk menerapkan semuanya. Beberapa opsi mungkin bentrok satu sama lain atau tidak cocok untuk versi, peluncur, pemuat mod, atau modpack Anda.";
+	}
+
+	@Override
+	public String rendimientoPestanaResumen() {
+		return "Ringkasan";
+	}
+
+	@Override
+	public String rendimientoPestanaAmbiental() {
+		return "Masalah Lingkungan";
+	}
+
+	@Override
+	public String rendimientoPestanaMods() {
+		return "Mod yang Direkomendasikan dan Risiko";
+	}
+
+	@Override
+	public String rendimientoPestanaConfigs() {
+		return "Opsi Konfigurasi";
+	}
+
+	@Override
+	public String rendimientoResumenTitulo() {
+		return "Ringkasan Analisis";
+	}
+
+	@Override
+	public String rendimientoResumenAmbiental(int cantidad) {
+		return "Masalah lingkungan ditemukan: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenMods(int cantidad) {
+		return "Saran atau risiko mod ditemukan: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenConfigs(int cantidad) {
+		return "Saran konfigurasi ditemukan: " + cantidad;
+	}
+
+	@Override
+	public String rendimientoResumenGPU() {
+		return "Masalah GPU terdeteksi. Oleh karena itu, tombol untuk membuka konfigurasi GPU diaktifkan.";
+	}
+
+	@Override
+	public String rendimientoSinHallazgos() {
+		return "Tidak ada saran yang ditemukan di bagian ini.";
+	}
+
+	@Override
+	public String rendimientoSugerencia() {
+		return "Saran";
+	}
+
+	@Override
+	public String rendimientoColorFondo() {
+		return "Kinerja - latar belakang";
+	}
+
+	@Override
+	public String rendimientoColorPanel() {
+		return "Kinerja - panel";
+	}
+
+	@Override
+	public String rendimientoColorTexto() {
+		return "Kinerja - teks";
+	}
+
+	@Override
+	public String rendimientoColorTextoSecundario() {
+		return "Kinerja - teks sekunder";
+	}
+
+	@Override
+	public String rendimientoColorBoton() {
+		return "Kinerja - tombol";
+	}
+
+	@Override
+	public String rendimientoColorBotonTexto() {
+		return "Kinerja - teks tombol";
+	}
+
+	@Override
+	public String rendimientoColorSeleccion() {
+		return "Kinerja - seleksi";
+	}
 
 }
