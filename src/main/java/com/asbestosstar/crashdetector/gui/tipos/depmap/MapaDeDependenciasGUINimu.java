@@ -137,9 +137,8 @@ public class MapaDeDependenciasGUINimu extends MapaDeDependenciasGUI {
 			areaAyuda.setSelectedTextColor(textoSeleccionado);
 		}
 
-		if (gifCarga != null) {
-			gifCarga.setText(MonitorDePID.idioma.cargando());
-			gifCarga.setForeground(colorCarga.obtener());
+		if (overlayCarga != null) {
+			overlayCarga.recargarContenido();
 		}
 
 		if (panelGrafo != null) {

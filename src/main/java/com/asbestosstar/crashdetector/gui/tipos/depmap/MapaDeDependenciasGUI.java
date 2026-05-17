@@ -52,6 +52,7 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
+import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
@@ -95,8 +96,7 @@ public abstract class MapaDeDependenciasGUI extends JFrame implements BotonDeBar
 	public JTextArea areaAyuda;
 	public JLabel imagenNimu;
 
-	public JPanel overlayCarga;
-	public JLabel gifCarga;
+	public ElementoOverlayCarga overlayCarga;
 	public volatile boolean cargando = false;
 
 	public ImageIcon iconoMod;
@@ -1234,21 +1234,18 @@ public abstract class MapaDeDependenciasGUI extends JFrame implements BotonDeBar
 	}
 
 	public void initOverlayCarga() {
-		overlayCarga = new JPanel(new BorderLayout());
-		overlayCarga.setOpaque(false);
-
-		gifCarga = new JLabel(MonitorDePID.idioma.cargando(), JLabel.CENTER);
-		gifCarga.setHorizontalTextPosition(JLabel.CENTER);
-		gifCarga.setVerticalTextPosition(JLabel.BOTTOM);
-
-		overlayCarga.add(gifCarga, BorderLayout.CENTER);
+		overlayCarga = new ElementoOverlayCarga();
+		overlayCarga.setVisible(false);
 		setGlassPane(overlayCarga);
 	}
 
 	public void setCargando(boolean valor) {
 		cargando = valor;
+
 		if (overlayCarga != null) {
 			overlayCarga.setVisible(valor);
+			overlayCarga.revalidate();
+			overlayCarga.repaint();
 		}
 	}
 

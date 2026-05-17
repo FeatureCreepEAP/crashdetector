@@ -90,9 +90,8 @@ public class GuardiaSketchyVT extends GuardiaGUI {
 			estilizarTabla(tablaMalware, tabla, texto, seleccion, textoSeleccion);
 		}
 
-		if (gifCarga != null) {
-			gifCarga.setText(MonitorDePID.idioma.cargando());
-			gifCarga.setForeground(colorCarga.obtener());
+		if (overlayCarga != null) {
+			overlayCarga.recargarContenido();
 		}
 
 		if (imagenGuard != null) {

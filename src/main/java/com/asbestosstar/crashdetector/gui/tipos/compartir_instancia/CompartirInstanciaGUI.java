@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -54,6 +52,7 @@ import com.asbestosstar.crashdetector.api_sitio_archivo.WormholeApp;
 import com.asbestosstar.crashdetector.dto.modpack.CopiaDeSeguridadDeArchivos;
 import com.asbestosstar.crashdetector.dto.modpack.ProveedorMods;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
 
@@ -93,9 +92,8 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 	public Path carpetaBase;
 	public Set<Path> seleccionadas = new LinkedHashSet<>();
 
-	public JPanel overlayCarga;
-	public JLabel gifCarga;
-	public JLabel textoCarga;
+	public ElementoOverlayCarga overlayCarga;
+	public String textoCargaActual = "";
 	public volatile boolean cargando = false;
 
 	@Override
@@ -715,32 +713,8 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 	}
 
 	protected void initOverlayCarga() {
-		overlayCarga = new JPanel(new GridBagLayout());
-		overlayCarga.setOpaque(true);
-		overlayCarga.setBackground(new java.awt.Color(0, 0, 0, 120));
+		overlayCarga = new ElementoOverlayCarga();
 		overlayCarga.setVisible(false);
-
-		gifCarga = new JLabel();
-		ImageIcon icon = new ImageIcon(Statics.carpeta.resolve("imagenes/padoru.gif").toString());
-		if (icon.getIconWidth() > 0) {
-			gifCarga.setIcon(icon);
-		} else {
-			gifCarga.setText("...");
-		}
-
-		textoCarga = new JLabel(MonitorDePID.idioma.compartirInstanciaEstadoSubiendo());
-		textoCarga.setForeground(java.awt.Color.WHITE);
-
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.insets = new Insets(0, 0, 8, 0);
-		overlayCarga.add(gifCarga, gbc);
-
-		gbc.gridy = 1;
-		gbc.insets = new Insets(0, 0, 0, 0);
-		overlayCarga.add(textoCarga, gbc);
-
 		setGlassPane(overlayCarga);
 	}
 
@@ -755,9 +729,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 	}
 
 	protected void setTextoCarga(String texto) {
-		if (textoCarga != null && texto != null) {
-			textoCarga.setText(texto);
-		}
+		textoCargaActual = texto != null ? texto : "";
 	}
 
 }

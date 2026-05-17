@@ -35,6 +35,7 @@ import com.asbestosstar.crashdetector.guard.ArticuloMalware;
 import com.asbestosstar.crashdetector.guard.ModsMalware;
 import com.asbestosstar.crashdetector.guard.ServidoresProblematicos;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
+import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
@@ -69,8 +70,7 @@ public abstract class GuardiaGUI extends JFrame implements BotonDeBarraLateralDe
 	public ModeloTablaServidores modeloServidores;
 	public ModeloTablaMalware modeloMalware;
 
-	public JPanel overlayCarga;
-	public JLabel gifCarga;
+	public ElementoOverlayCarga overlayCarga;
 	public volatile boolean cargando = false;
 
 	public volatile boolean inicializada = false;
@@ -453,28 +453,28 @@ public abstract class GuardiaGUI extends JFrame implements BotonDeBarraLateralDe
 	}
 
 	public void initOverlayCarga() {
-		overlayCarga = new JPanel(new BorderLayout());
-		overlayCarga.setOpaque(false);
-
-		gifCarga = new JLabel(MonitorDePID.idioma.cargando(), JLabel.CENTER);
-		gifCarga.setHorizontalTextPosition(JLabel.CENTER);
-		gifCarga.setVerticalTextPosition(JLabel.BOTTOM);
-
-		overlayCarga.add(gifCarga, BorderLayout.CENTER);
+		overlayCarga = new ElementoOverlayCarga();
+		overlayCarga.setVisible(false);
 		setGlassPane(overlayCarga);
 	}
 
 	public void setCargando(boolean valor) {
 		cargando = valor;
+
 		if (overlayCarga != null) {
 			overlayCarga.setVisible(valor);
+			overlayCarga.revalidate();
+			overlayCarga.repaint();
 		}
+
 		if (botonEscanearTodo != null) {
 			botonEscanearTodo.setEnabled(!valor);
 		}
+
 		if (botonEscanearServidores != null) {
 			botonEscanearServidores.setEnabled(!valor);
 		}
+
 		if (botonEscanearMalware != null) {
 			botonEscanearMalware.setEnabled(!valor);
 		}

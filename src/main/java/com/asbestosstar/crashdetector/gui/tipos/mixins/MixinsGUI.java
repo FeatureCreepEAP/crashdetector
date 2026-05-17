@@ -44,6 +44,7 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
+import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.elementos.LectadorDeCodigo;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
@@ -76,8 +77,7 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 	public ImageIcon iconoCampo;
 	public ImageIcon iconoConflicto;
 
-	public JPanel overlayCarga;
-	public JLabel gifCarga;
+	public ElementoOverlayCarga overlayCarga;
 	public volatile boolean cargando = false;
 
 	public SwingWorker<DefaultMutableTreeNode, Void> workerCarga;
@@ -886,21 +886,18 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 	}
 
 	public void initOverlayCarga() {
-		overlayCarga = new JPanel(new BorderLayout());
-		overlayCarga.setOpaque(false);
-
-		gifCarga = new JLabel(MonitorDePID.idioma.cargando(), JLabel.CENTER);
-		gifCarga.setHorizontalTextPosition(JLabel.CENTER);
-		gifCarga.setVerticalTextPosition(JLabel.BOTTOM);
-
-		overlayCarga.add(gifCarga, BorderLayout.CENTER);
+		overlayCarga = new ElementoOverlayCarga();
+		overlayCarga.setVisible(false);
 		setGlassPane(overlayCarga);
 	}
 
 	public void setCargando(boolean valor) {
 		cargando = valor;
+
 		if (overlayCarga != null) {
 			overlayCarga.setVisible(valor);
+			overlayCarga.revalidate();
+			overlayCarga.repaint();
 		}
 	}
 

@@ -124,9 +124,8 @@ public class MixinsGUIChiarru extends MixinsGUI {
 			areaContenido.setSelectedTextColor(colorSeleccionTextoReal);
 		}
 
-		if (gifCarga != null) {
-			gifCarga.setText(MonitorDePID.idioma.cargando());
-			gifCarga.setForeground(colorCarga.obtener());
+		if (overlayCarga != null) {
+			overlayCarga.recargarContenido();
 		}
 
 		if (imagenChiarru != null) {
