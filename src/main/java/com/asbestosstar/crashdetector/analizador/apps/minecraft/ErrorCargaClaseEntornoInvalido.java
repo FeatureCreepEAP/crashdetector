@@ -7,9 +7,6 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
 /**
  * Analiza errores cuando un mod se está utilizando en una plataforma incorrecta
  * (cliente/servidor). Detecta específicamente el error "Attempted to load class
@@ -19,54 +16,145 @@ import java.util.regex.Matcher;
 public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 
 	private boolean activado = false;
+	private boolean analizarLineas = false;
+
 	private String mensaje = "";
 	private String nombreClase = "";
 	private String entornoInvalido = "";
 	private String enlaceHtml = "";
 
+	private static final String TEXTO_CLASE = "Attempted to load class";
+	private static final String TEXTO_DIST = "for invalid dist";
+
 	/**
-	 * Verificación global no utilizada en este verificador.
+	 * Verificación global barata.
 	 * <p>
-	 * La detección se hace por línea en {@link #verificar(Consola, String, int)},
-	 * llamado por el sistema de análisis línea a línea.
+	 * Si el log completo no contiene las dos señales principales, se desactiva el
+	 * análisis por línea para evitar trabajo innecesario.
 	 * </p>
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
+
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains(TEXTO_CLASE) && contenido.contains(TEXTO_DIST)) {
+			this.analizarLineas = true;
+		}
 	}
 
 	/**
 	 * Verificación por línea del registro.
 	 * <p>
-	 * Busca el patrón: "Attempted to load class [CLASE] for invalid dist
+	 * Busca el patrón textual: "Attempted to load class [CLASE] for invalid dist
 	 * [CLIENT|SERVER]" en la línea actual, extrae la clase y el entorno y registra
 	 * el enlace.
 	 * </p>
 	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si el chequeo global no encontró las señales principales, no analizamos
+		// línea por línea.
+		if (!analizarLineas) {
+			return;
+		}
+
 		// Si ya se activó, no seguimos procesando más líneas.
 		if (activado) {
 			return;
 		}
 
-		// Detecta el error específico de carga en entorno incorrecto
-		if (linea.contains("Attempted to load class") && linea.contains("for invalid dist")) {
+		if (linea == null) {
+			return;
+		}
 
-			// Extrae el nombre de la clase y el entorno usando expresión regular.
+		// Detecta el error específico de carga en entorno incorrecto.
+		if (linea.contains(TEXTO_CLASE) && linea.contains(TEXTO_DIST)) {
+
+			// Extrae el nombre de la clase y el entorno sin regex.
 			// Acepta CLIENT, SERVER, DEDICATED_SERVER, etc. (cualquier token MAYÚSCULAS+_).
-			Pattern pattern = Pattern.compile("Attempted to load class\\s+([^ ]+)\\s+for invalid dist\\s+([A-Z_]+)");
-			Matcher matcher = pattern.matcher(linea);
-			if (matcher.find()) {
-				nombreClase = matcher.group(1);
-				entornoInvalido = matcher.group(2);
+			ResultadoExtraccion resultado = extraerClaseYEntorno(linea);
+
+			if (resultado != null) {
+				nombreClase = resultado.nombreClase;
+				entornoInvalido = resultado.entornoInvalido;
 
 				mensaje = MonitorDePID.idioma.errorModEnPlataformaIncorrecta(nombreClase, entornoInvalido)
 						+ Verificaciones.nl_html;
+
 				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 				activado = true;
 			}
+		}
+	}
+
+	private ResultadoExtraccion extraerClaseYEntorno(String linea) {
+		int posClase = linea.indexOf(TEXTO_CLASE);
+		if (posClase < 0) {
+			return null;
+		}
+
+		int inicioClase = posClase + TEXTO_CLASE.length();
+		inicioClase = saltarEspacios(linea, inicioClase);
+
+		int posDist = linea.indexOf(TEXTO_DIST, inicioClase);
+		if (posDist < 0 || posDist <= inicioClase) {
+			return null;
+		}
+
+		String clase = linea.substring(inicioClase, posDist).trim();
+		if (clase.isEmpty() || contieneEspacio(clase)) {
+			return null;
+		}
+
+		int inicioEntorno = posDist + TEXTO_DIST.length();
+		inicioEntorno = saltarEspacios(linea, inicioEntorno);
+
+		int finEntorno = inicioEntorno;
+		while (finEntorno < linea.length() && esCaracterEntorno(linea.charAt(finEntorno))) {
+			finEntorno++;
+		}
+
+		if (finEntorno <= inicioEntorno) {
+			return null;
+		}
+
+		String entorno = linea.substring(inicioEntorno, finEntorno);
+		return new ResultadoExtraccion(clase, entorno);
+	}
+
+	private int saltarEspacios(String texto, int inicio) {
+		int i = inicio;
+		while (i < texto.length() && Character.isWhitespace(texto.charAt(i))) {
+			i++;
+		}
+		return i;
+	}
+
+	private boolean contieneEspacio(String texto) {
+		for (int i = 0; i < texto.length(); i++) {
+			if (Character.isWhitespace(texto.charAt(i))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean esCaracterEntorno(char c) {
+		return (c >= 'A' && c <= 'Z') || c == '_';
+	}
+
+	private static class ResultadoExtraccion {
+		final String nombreClase;
+		final String entornoInvalido;
+
+		ResultadoExtraccion(String nombreClase, String entornoInvalido) {
+			this.nombreClase = nombreClase;
+			this.entornoInvalido = entornoInvalido;
 		}
 	}
 
@@ -138,7 +226,7 @@ public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 
 		// Fallback muy conservador si por alguna razón no se capturó la clase o el
 		// entorno.
-		return t.contains("Attempted to load class") && t.contains("for invalid dist");
+		return t.contains(TEXTO_CLASE) && t.contains(TEXTO_DIST);
 	}
 
 	@Override

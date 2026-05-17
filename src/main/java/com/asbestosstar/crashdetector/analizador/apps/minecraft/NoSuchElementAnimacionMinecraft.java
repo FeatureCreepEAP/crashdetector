@@ -1,8 +1,6 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
@@ -20,33 +18,88 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 
 	private boolean activado = false;
+	private boolean analizarLineas = false;
+
 	private String namespaceEncontrado = null;
 	private String enlaceHtml = "";
 
-	// Patrón para detectar el error con cualquier namespace (cacheado a nivel de
-	// clase)
-	private static final Pattern PATTERN = Pattern
-			.compile("java\\.util\\.NoSuchElementException: No animation with registry name ([a-zA-Z0-9_]+):");
+	private static final String PREFIJO_ERROR = "java.util.NoSuchElementException: No animation with registry name ";
 
 	@Override
 	public void verificar(Consola consola) {
-		// La detección se realiza en el método por línea para evitar recorrer dos veces
-		// el contenido completo de la consola y aprovechar el escaneo línea a línea.
+
+		// Chequeo global barato:
+		// si el log completo no contiene la señal principal,
+		// no hace falta procesar línea por línea.
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		if (consola.contenido_verificar.contains(PREFIJO_ERROR)) {
+			this.analizarLineas = true;
+		}
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si el chequeo global no encontró la señal principal, no analizamos líneas.
+		if (!analizarLineas) {
+			return;
+		}
+
 		// Si ya se activó, no seguimos buscando más coincidencias.
 		if (activado) {
 			return;
 		}
 
-		Matcher matcher = PATTERN.matcher(linea);
-		if (matcher.find()) {
-			namespaceEncontrado = matcher.group(1);
+		String namespace = extraerNamespace(linea);
+		if (namespace != null) {
+			namespaceEncontrado = namespace;
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}
+	}
+
+	private String extraerNamespace(String linea) {
+		if (linea == null || linea.isEmpty()) {
+			return null;
+		}
+
+		int inicioPrefijo = linea.indexOf(PREFIJO_ERROR);
+		if (inicioPrefijo < 0) {
+			return null;
+		}
+
+		int inicioNamespace = inicioPrefijo + PREFIJO_ERROR.length();
+		int finNamespace = linea.indexOf(':', inicioNamespace);
+
+		if (finNamespace <= inicioNamespace) {
+			return null;
+		}
+
+		String namespace = linea.substring(inicioNamespace, finNamespace);
+
+		if (!esNamespaceValido(namespace)) {
+			return null;
+		}
+
+		return namespace;
+	}
+
+	private boolean esNamespaceValido(String namespace) {
+		if (namespace == null || namespace.isEmpty()) {
+			return false;
+		}
+
+		for (int i = 0; i < namespace.length(); i++) {
+			char c = namespace.charAt(i);
+
+			if (!(Character.isLetterOrDigit(c) || c == '_')) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	@Override

@@ -7,9 +7,6 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * Detecta errores al cargar datos NBT de un mundo, típicamente causados por
  * corrupción del archivo level.dat, playerdata/*.dat o chunks. Extrae el byte
@@ -18,41 +15,78 @@ import java.util.regex.Pattern;
 public class ErrorCargaNBTMundoCorrupto implements Verificaciones {
 
 	private boolean activado = false;
+	private boolean analizarLineas = false;
+
 	private String mensaje = "";
-	private static final Pattern PATRON_BYTE_CORRUPTO = Pattern
-			.compile("java\\.io\\.UTFDataFormatException: malformed input around byte (\\d+)");
+	private String byteCorrupto = "desconocido";
+
+	private static final String TEXTO_LOADING_NBT = "net.minecraft.ReportedException: Loading NBT data";
+	private static final String TEXTO_MALFORMED_INPUT = "java.io.UTFDataFormatException: malformed input";
+	private static final String TEXTO_BYTE = "malformed input around byte ";
 
 	@Override
 	public void verificar(Consola consola) {
-		// Este método no se usa; el análisis se hace por línea
+
+		// Chequeo global barato:
+		// si el log completo no contiene las dos señales principales,
+		// no hace falta procesar línea por línea.
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains(TEXTO_LOADING_NBT) && contenido.contains(TEXTO_MALFORMED_INPUT)) {
+			this.analizarLineas = true;
+			this.byteCorrupto = extraerByteCorrupto(contenido);
+		}
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		if (this.activado) {
+		if (!analizarLineas || this.activado) {
 			return;
 		}
 
-		if (linea.contains("net.minecraft.ReportedException: Loading NBT data")) {
-			String contenido = consola.contenido_verificar;
-			if (contenido.contains("java.io.UTFDataFormatException: malformed input")) {
-				Matcher m = PATRON_BYTE_CORRUPTO.matcher(contenido);
-				String byteCorrupto = "desconocido";
-				if (m.find()) {
-					byteCorrupto = m.group(1);
-				}
-
-				String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-				this.mensaje = MonitorDePID.idioma.errorCargaNBTMundoCorruptoConByte(byteCorrupto) + enlaceHtml;
-				this.activado = true;
-			}
+		if (linea == null) {
+			return;
 		}
+
+		if (linea.contains(TEXTO_LOADING_NBT)) {
+			String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			this.mensaje = MonitorDePID.idioma.errorCargaNBTMundoCorruptoConByte(byteCorrupto) + enlaceHtml;
+			this.activado = true;
+		}
+	}
+
+	private String extraerByteCorrupto(String contenido) {
+		if (contenido == null || contenido.isEmpty()) {
+			return "desconocido";
+		}
+
+		int inicioTexto = contenido.indexOf(TEXTO_BYTE);
+		if (inicioTexto < 0) {
+			return "desconocido";
+		}
+
+		int inicioNumero = inicioTexto + TEXTO_BYTE.length();
+		int finNumero = inicioNumero;
+
+		while (finNumero < contenido.length() && Character.isDigit(contenido.charAt(finNumero))) {
+			finNumero++;
+		}
+
+		if (finNumero <= inicioNumero) {
+			return "desconocido";
+		}
+
+		return contenido.substring(inicioNumero, finNumero);
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		return trazo.trace.contains("net.minecraft.ReportedException: Loading NBT data")
-				&& trazo.trace.contains("java.io.UTFDataFormatException: malformed input");
+		return trazo != null && trazo.trace != null && trazo.trace.contains(TEXTO_LOADING_NBT)
+				&& trazo.trace.contains(TEXTO_MALFORMED_INPUT);
 	}
 
 	@Override

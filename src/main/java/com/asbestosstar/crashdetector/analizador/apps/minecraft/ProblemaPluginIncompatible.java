@@ -2,8 +2,6 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -22,28 +20,34 @@ public class ProblemaPluginIncompatible implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
-	private final List<String> nombresPlugins = new ArrayList<>();
+	private final List<String> nombresPlugins = new ArrayList<String>();
+
+	private static final String PREFIJO = "Could not load plugin '";
+	private static final String SUFIJO_API = "': Incompatible API version";
+	private static final String SUFIJO_PROTOCOLO = "': Incompatible network protocol version";
 
 	/**
 	 * Verifica si el log contiene plugins incompatibles con PocketMine-MP.
 	 */
 	@Override
 	public void verificar(Consola consola) {
+
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		String contenido = consola.contenido_verificar;
 
-		// Patrones para detectar plugins con API o protocolo incompatible
-		Pattern[] patrones = { Pattern.compile("Could not load plugin '([^']+)'\\: Incompatible API version"),
-				Pattern.compile("Could not load plugin '([^']+)'\\: Incompatible network protocol version") };
-
-		for (Pattern patron : patrones) {
-			Matcher coincidencia = patron.matcher(contenido);
-			while (coincidencia.find()) {
-				String nombrePlugin = coincidencia.group(1).trim();
-				if (!nombrePlugin.isEmpty() && !nombresPlugins.contains(nombrePlugin)) {
-					nombresPlugins.add(nombrePlugin);
-				}
-			}
+		// Chequeo global barato:
+		// si el log no contiene la frase base ni ningún motivo incompatible,
+		// no hace falta escanear buscando nombres de plugins.
+		if (!contenido.contains(PREFIJO)
+				|| (!contenido.contains(SUFIJO_API) && !contenido.contains(SUFIJO_PROTOCOLO))) {
+			return;
 		}
+
+		extraerPluginsIncompatibles(contenido, SUFIJO_API);
+		extraerPluginsIncompatibles(contenido, SUFIJO_PROTOCOLO);
 
 		if (!nombresPlugins.isEmpty()) {
 			if (nombresPlugins.size() > 1) {
@@ -52,6 +56,32 @@ public class ProblemaPluginIncompatible implements Verificaciones {
 				this.mensaje = MonitorDePID.idioma.mensajePluginIncompatibleSingular(nombresPlugins.get(0));
 			}
 			activado = true;
+		}
+	}
+
+	private void extraerPluginsIncompatibles(String contenido, String sufijo) {
+		int desde = 0;
+
+		while (true) {
+			int inicioPrefijo = contenido.indexOf(PREFIJO, desde);
+			if (inicioPrefijo < 0) {
+				return;
+			}
+
+			int inicioNombre = inicioPrefijo + PREFIJO.length();
+			int finNombre = contenido.indexOf(sufijo, inicioNombre);
+
+			if (finNombre > inicioNombre) {
+				String nombrePlugin = contenido.substring(inicioNombre, finNombre).trim();
+
+				if (!nombrePlugin.isEmpty() && !nombresPlugins.contains(nombrePlugin)) {
+					nombresPlugins.add(nombrePlugin);
+				}
+
+				desde = finNombre + sufijo.length();
+			} else {
+				desde = inicioNombre;
+			}
 		}
 	}
 

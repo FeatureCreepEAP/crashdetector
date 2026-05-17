@@ -104,10 +104,6 @@ public class NullPointer implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 
-		errores.clear();
-		enlacesPorLinea.clear();
-		activado = false;
-
 		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 		if (vdst == null || vdst.trazos_completos == null) {
 			return;

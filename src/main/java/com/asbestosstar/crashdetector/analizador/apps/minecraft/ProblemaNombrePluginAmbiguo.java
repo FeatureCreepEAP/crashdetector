@@ -2,8 +2,6 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -21,46 +19,185 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 
 	private boolean activado = false;
-	private String mensaje = "";
-	private List<String> nombresPlugins = new ArrayList<>();
-	private List<String> primerosArchivos = new ArrayList<>();
-	private List<String> segundosArchivos = new ArrayList<>();
-	private final List<String> enlaces = new ArrayList<>();
+	private boolean analizarLineas = false;
 
-	// Patrón mejorado para manejar cualquier combinación de comillas (cacheado)
-	private static final Pattern PATRON = Pattern.compile(
-			"Ambiguous plugin name [`']([^`']*)[`'].*?files [`']plugins/([^`']*)[`'].*?and [`']plugins/([^`']*)[`']");
+	private String mensaje = "";
+
+	private List<String> nombresPlugins = new ArrayList<String>();
+	private List<String> primerosArchivos = new ArrayList<String>();
+	private List<String> segundosArchivos = new ArrayList<String>();
+
+	private final List<String> enlaces = new ArrayList<String>();
+
+	private static final String TEXTO_BASE = "Ambiguous plugin name ";
+	private static final String TEXTO_FILES = "files ";
+	private static final String TEXTO_AND = " and ";
 
 	/**
 	 * Verifica si el log contiene errores de nombre ambiguo de plugins.
 	 * 
-	 * En esta versión, el análisis real se hace línea a línea en
-	 * {@link #verificar(Consola, String, int)}, aprovechando que el motor de
-	 * análisis llama a ese método para cada línea de la consola.
+	 * Se hace un chequeo global barato para decidir si vale la pena analizar línea
+	 * por línea.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se recorre el contenido completo aquí; cada línea se procesa en
-		// verificar(Consola, String, int).
+
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar;
+
+		// Chequeo global barato:
+		// si el log no contiene la señal principal, no analizamos línea por línea.
+		if (contenido.contains(TEXTO_BASE) && contenido.contains(TEXTO_FILES) && contenido.contains(TEXTO_AND)) {
+
+			this.analizarLineas = true;
+		}
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
+
+		if (!analizarLineas) {
+			return;
+		}
+
 		if (linea == null) {
 			return;
 		}
 
-		Matcher coincidencia = PATRON.matcher(linea.trim());
+		ResultadoAmbiguo resultado = extraerDatos(linea.trim());
 
-		if (coincidencia.find()) {
-			nombresPlugins.add(coincidencia.group(1));
-			primerosArchivos.add(extraerNombrePlugin(coincidencia.group(2)));
-			segundosArchivos.add(extraerNombrePlugin(coincidencia.group(3)));
+		if (resultado != null) {
+
+			nombresPlugins.add(resultado.nombrePlugin);
+
+			primerosArchivos.add(extraerNombrePlugin(resultado.primerArchivo));
+
+			segundosArchivos.add(extraerNombrePlugin(resultado.segundoArchivo));
+
 			String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+
 			enlaces.add(enlace);
 
 			reconstruirMensaje();
+
 			activado = true;
+		}
+	}
+
+	/**
+	 * Extrae:
+	 * 
+	 * - nombre plugin - primer archivo - segundo archivo
+	 * 
+	 * sin usar regex.
+	 */
+	private ResultadoAmbiguo extraerDatos(String linea) {
+
+		if (linea == null || linea.isEmpty()) {
+			return null;
+		}
+
+		int posBase = linea.indexOf(TEXTO_BASE);
+
+		if (posBase < 0) {
+			return null;
+		}
+
+		// Buscar nombre del plugin entre ` ` o ' '
+		ParComillas plugin = extraerTextoEntreComillas(linea, posBase + TEXTO_BASE.length());
+
+		if (plugin == null || plugin.texto.isEmpty()) {
+			return null;
+		}
+
+		int posFiles = linea.indexOf(TEXTO_FILES, plugin.fin);
+
+		if (posFiles < 0) {
+			return null;
+		}
+
+		ParComillas archivo1 = extraerTextoEntreComillas(linea, posFiles + TEXTO_FILES.length());
+
+		if (archivo1 == null || archivo1.texto.isEmpty()) {
+			return null;
+		}
+
+		int posAnd = linea.indexOf(TEXTO_AND, archivo1.fin);
+
+		if (posAnd < 0) {
+			return null;
+		}
+
+		int posPlugins = linea.indexOf("plugins/", posAnd);
+
+		if (posPlugins < 0) {
+			return null;
+		}
+
+		ParComillas archivo2 = extraerTextoEntreComillas(linea, posPlugins);
+
+		if (archivo2 == null || archivo2.texto.isEmpty()) {
+			return null;
+		}
+
+		return new ResultadoAmbiguo(plugin.texto, archivo1.texto, archivo2.texto);
+	}
+
+	/**
+	 * Extrae texto entre:
+	 * 
+	 * `texto` o 'texto'
+	 */
+	private ParComillas extraerTextoEntreComillas(String texto, int desde) {
+
+		for (int i = desde; i < texto.length(); i++) {
+
+			char inicio = texto.charAt(i);
+
+			if (inicio == '\'' || inicio == '`') {
+
+				for (int j = i + 1; j < texto.length(); j++) {
+
+					if (texto.charAt(j) == inicio) {
+
+						String contenido = texto.substring(i + 1, j);
+
+						return new ParComillas(contenido, j + 1);
+					}
+				}
+
+				return null;
+			}
+		}
+
+		return null;
+	}
+
+	private static class ParComillas {
+
+		final String texto;
+		final int fin;
+
+		ParComillas(String texto, int fin) {
+			this.texto = texto;
+			this.fin = fin;
+		}
+	}
+
+	private static class ResultadoAmbiguo {
+
+		final String nombrePlugin;
+		final String primerArchivo;
+		final String segundoArchivo;
+
+		ResultadoAmbiguo(String nombrePlugin, String primerArchivo, String segundoArchivo) {
+
+			this.nombrePlugin = nombrePlugin;
+			this.primerArchivo = primerArchivo;
+			this.segundoArchivo = segundoArchivo;
 		}
 	}
 
@@ -69,6 +206,7 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 	 * vez que se encuentra un nuevo caso de nombre ambiguo.
 	 */
 	private void reconstruirMensaje() {
+
 		if (nombresPlugins.isEmpty()) {
 			mensaje = "";
 			return;
@@ -77,7 +215,9 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 		StringBuilder mensajeBuilder = new StringBuilder();
 
 		for (int i = 0; i < nombresPlugins.size(); i++) {
+
 			String enlace = i < enlaces.size() ? enlaces.get(i) : "";
+
 			mensajeBuilder
 					.append(MonitorDePID.idioma.mensajeNombrePluginAmbiguo(nombresPlugins.get(i),
 							primerosArchivos.get(i), segundosArchivos.get(i)))
@@ -91,7 +231,9 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 	 * Extrae solo el nombre del archivo del path completo.
 	 */
 	private String extraerNombrePlugin(String path) {
+
 		int indiceUltimaBarra = path.lastIndexOf("/");
+
 		return (indiceUltimaBarra != -1) ? path.substring(indiceUltimaBarra + 1) : path;
 	}
 
@@ -140,10 +282,13 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 	 */
 	@Override
 	public QuickFix solucion() {
+
 		Builder builder = new Builder(nombre());
 
 		for (int i = 0; i < primerosArchivos.size(); i++) {
+
 			builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(primerosArchivos.get(i)));
+
 			builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(segundosArchivos.get(i)));
 		}
 

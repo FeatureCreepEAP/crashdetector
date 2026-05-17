@@ -7,9 +7,6 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * Detecta errores NullPointerException relacionados con BlockItem nulo en
  * addons de Create, típicamente causados por conflictos con Amendments,
@@ -19,24 +16,37 @@ public class ErrorBlockItemNuloCreate implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
-	private static final Pattern PATRON_BLOCKITEM_NULO = Pattern
-			.compile("java\\.lang\\.NullPointerException: BlockItem ([^ ]+) has a NULL block!");
+
+	private static final String PREFIJO_ERROR = "java.lang.NullPointerException: BlockItem ";
+	private static final String SUFIJO_ERROR = " has a NULL block!";
+
+	private boolean analizarLineas = false;
 
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa; análisis por línea
+
+		// Chequeo global barato:
+		// si el log completo no contiene las dos señales principales,
+		// no hace falta procesar línea por línea.
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains("NullPointerException: BlockItem") && contenido.contains("has a NULL block!")) {
+			this.analizarLineas = true;
+		}
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		if (this.activado) {
+		if (!analizarLineas || this.activado) {
 			return;
 		}
 
-		Matcher m = PATRON_BLOCKITEM_NULO.matcher(linea);
-		if (m.find()) {
-			String nombreBlockItem = m.group(1);
-
+		String nombreBlockItem = extraerNombreBlockItem(linea);
+		if (nombreBlockItem != null) {
 			String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			this.mensaje = MonitorDePID.idioma.errorBlockItemNuloCreate(nombreBlockItem) + enlaceHtml;
 			this.activado = true;
@@ -45,7 +55,31 @@ public class ErrorBlockItemNuloCreate implements Verificaciones {
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		return PATRON_BLOCKITEM_NULO.matcher(trazo.trace).find();
+		return trazo != null && extraerNombreBlockItem(trazo.trace) != null;
+	}
+
+	private String extraerNombreBlockItem(String texto) {
+		if (texto == null || texto.isEmpty()) {
+			return null;
+		}
+
+		int inicioPrefijo = texto.indexOf(PREFIJO_ERROR);
+		if (inicioPrefijo < 0) {
+			return null;
+		}
+
+		int inicioNombre = inicioPrefijo + PREFIJO_ERROR.length();
+		int finNombre = texto.indexOf(SUFIJO_ERROR, inicioNombre);
+		if (finNombre <= inicioNombre) {
+			return null;
+		}
+
+		String nombre = texto.substring(inicioNombre, finNombre).trim();
+		if (nombre.isEmpty() || nombre.indexOf(' ') >= 0) {
+			return null;
+		}
+
+		return nombre;
 	}
 
 	@Override

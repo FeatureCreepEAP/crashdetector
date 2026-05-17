@@ -1,6 +1,6 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
-import java.util.regex.Pattern;
+import java.util.Locale;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -11,66 +11,128 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
- * Detecta errores de carga de chunks procesando línea por línea. Evita regex
- * costosos con DOTALL. Basado en Codex de Aternos.
+ * Detecta errores de carga de chunks procesando línea por línea.
+ * 
+ * Versión sin regex para evitar costo de Pattern/Matcher. Basado en Codex de
+ * Aternos.
  */
 public class ProblemaCargaChunk implements Verificaciones {
 
 	private boolean activado = false;
 	private String enlace = "";
 
-	// Patrones por línea (sin DOTALL, más rápidos)
-	private static final Pattern PATRON_LOAD_CHUNK = Pattern.compile("at.*ChunkRegionLoader\\.loadChunk",
-			Pattern.CASE_INSENSITIVE);
-	private static final Pattern PATRON_LOAD_ENTITIES = Pattern.compile("at.*ChunkRegionLoader\\.loadEntities",
-			Pattern.CASE_INSENSITIVE);
-	private static final Pattern PATRON_GEN_CHUNK = Pattern.compile("Exception generating new chunk",
-			Pattern.CASE_INSENSITIVE);
-	private static final Pattern PATRON_CANT_LOAD_CHUNK = Pattern.compile("Couldn't load chunk",
-			Pattern.CASE_INSENSITIVE);
-	private static final Pattern PATRON_UNEXPECTED_EXCEPTION = Pattern.compile("Encountered an unexpected exception",
-			Pattern.CASE_INSENSITIVE);
+	/**
+	 * Indica si vale la pena procesar línea por línea.
+	 * 
+	 * Se activa desde verificar(Consola consola) con un chequeo global barato.
+	 */
+	private boolean analizarLineas = false;
 
+	/**
+	 * Estado temporal:
+	 * 
+	 * Si se detectó "Encountered an unexpected exception", las siguientes líneas
+	 * pueden contener la traza relevante.
+	 */
 	private boolean viUnexpectedException = false;
 
 	@Override
 	public void verificar(Consola consola) {
-		this.activado = false;
-		this.enlace = "";
-		this.viUnexpectedException = false;
+
+		// Chequeo global barato:
+		// si el log completo no contiene señales básicas de este error,
+		// no hace falta procesar línea por línea.
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar.toLowerCase(Locale.ROOT);
+
+		if (contieneAlguna(contenido, "chunkregionloader", "exception generating new chunk", "couldn't load chunk",
+				"encountered an unexpected exception")) {
+
+			this.analizarLineas = true;
+		}
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!analizarLineas) {
+			return;
+		}
+
 		if (linea == null)
 			return;
 
 		String l = linea.trim();
+		String lower = l.toLowerCase(Locale.ROOT);
 
 		// Reiniciar estado si la línea no está relacionada
-		if (!l.contains("exception") && !l.contains("chunk") && !l.contains("load") && !l.contains("generate")) {
+		if (!contieneAlguna(lower, "exception", "chunk", "load", "generate")) {
 			viUnexpectedException = false;
 			return;
 		}
 
 		// 1. Detectar "Encountered an unexpected exception"
-		if (PATRON_UNEXPECTED_EXCEPTION.matcher(l).find()) {
+		if (lower.contains("encountered an unexpected exception")) {
 			viUnexpectedException = true;
 			return;
 		}
 
 		// 2. Si ya vimos "unexpected exception", buscar trazas de ChunkRegionLoader
 		if (viUnexpectedException) {
-			if (PATRON_LOAD_CHUNK.matcher(l).find() || PATRON_LOAD_ENTITIES.matcher(l).find()) {
+
+			if (esTrazaChunkRegionLoader(lower, "loadchunk") || esTrazaChunkRegionLoader(lower, "loadentities")) {
+
 				activar(consola, numero_de_linea);
 				return;
 			}
 		}
 
 		// 3. Otros errores directos (no necesitan contexto previo)
-		if (PATRON_GEN_CHUNK.matcher(l).find() || PATRON_CANT_LOAD_CHUNK.matcher(l).find()) {
+		if (lower.contains("exception generating new chunk") || lower.contains("couldn't load chunk")) {
+
 			activar(consola, numero_de_linea);
 		}
+	}
+
+	/**
+	 * Detecta líneas tipo:
+	 * 
+	 * at ...ChunkRegionLoader.loadChunk at ...ChunkRegionLoader.loadEntities
+	 */
+	private boolean esTrazaChunkRegionLoader(String lower, String metodo) {
+
+		int at = lower.indexOf("at");
+		if (at < 0) {
+			return false;
+		}
+
+		int chunkRegionLoader = lower.indexOf("chunkregionloader.", at);
+		if (chunkRegionLoader < 0) {
+			return false;
+		}
+
+		int metodoPos = lower.indexOf(metodo, chunkRegionLoader);
+		return metodoPos >= 0;
+	}
+
+	/**
+	 * Devuelve true si el texto contiene cualquiera de las cadenas dadas.
+	 */
+	private boolean contieneAlguna(String texto, String... partes) {
+
+		if (texto == null) {
+			return false;
+		}
+
+		for (String parte : partes) {
+			if (texto.contains(parte)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private void activar(Consola consola, int linea) {
@@ -99,6 +161,7 @@ public class ProblemaCargaChunk implements Verificaciones {
 	public String mensaje() {
 		if (!activado)
 			return "";
+
 		return MonitorDePID.idioma.mensajeCargaChunk() + (enlace.isEmpty() ? "" : " " + enlace);
 	}
 
@@ -109,10 +172,15 @@ public class ProblemaCargaChunk implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
+
 		Builder builder = new Builder(nombre());
+
 		builder.agregarEtiqueta(MonitorDePID.idioma.solucionRepararMundo("world"));
+
 		builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarCarpetaMundo("world"));
+
 		builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarChunk());
+
 		return builder.construir();
 	}
 
@@ -128,13 +196,11 @@ public class ProblemaCargaChunk implements Verificaciones {
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
