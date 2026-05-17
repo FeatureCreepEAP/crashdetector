@@ -9374,5 +9374,32 @@ public class Portuges implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "Um mod tenta sobrescrever um método final";
 	}
+	
+    @Override
+    public String errorCrashProvocadoPorComando(String comandoDetectado) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "O Minecraft foi fechado por um comando de crash.</b>"
+                + "<p>O log indica que o comando <code>" + comandoDetectado + "</code> foi executado.</p>"
+                + "<p>Isso normalmente significa que o jogo não fechou devido a um erro normal de mods, mas porque alguém "
+                + "usou um comando projetado para provocar um crash manualmente.</p>"
+                + "<p><b>O que verificar:</b></p>"
+                + "<ul>"
+                + "<li>Verifique quem executou o comando no console ou dentro do jogo.</li>"
+                + "<li>Se foi um teste, você pode ignorar este crash.</li>"
+                + "<li>Se ocorreu sem intenção, verifique command blocks, scripts, datapacks, mods de administração ou permissões de operadores.</li>"
+                + "</ul>";
+    }
+
+    @Override
+    public String nombreCrashProvocadoPorComando() {
+        return "Crash provocado por comando";
+    }
+	
+	
+	
+	
+	
+	
+	
 
 }

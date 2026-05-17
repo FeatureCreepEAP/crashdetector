@@ -3584,4 +3584,8 @@ public interface Idioma {
 
 	public String nombreErrorMetodoFinalSobrescrito();
 
+	public String errorCrashProvocadoPorComando(String comandoDetectado);
+
+	public String nombreCrashProvocadoPorComando();
+
 }

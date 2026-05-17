@@ -8791,5 +8791,30 @@ public class Chino implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "某个 mod 试图覆盖 final 方法";
 	}
+	// Chinese (Simplified) (中文)
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Minecraft 因崩溃命令而关闭。</b>"
+	            + "<p>日志表明执行了命令 <code>" + comandoDetectado + "</code>。</p>"
+	            + "<p>这通常意味着游戏并非因普通的 mod 错误而关闭，而是有人 "
+	            + "使用了旨在手动引发崩溃的命令。</p>"
+	            + "<p><b>需要检查的内容：</b></p>"
+	            + "<ul>"
+	            + "<li>检查是谁在控制台或游戏内执行了该命令。</li>"
+	            + "<li>如果是测试，您可以忽略此次崩溃。</li>"
+	            + "<li>如果是无意发生的，请检查命令方块、脚本、数据包、管理类 mod 或操作员权限。</li>"
+	            + "</ul>";
+	}
+
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+	    return "由命令引发的崩溃";
+	}
+	
+	
+	
+	
+	
 
 }

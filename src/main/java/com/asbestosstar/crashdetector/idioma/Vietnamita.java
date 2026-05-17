@@ -9586,4 +9586,30 @@ public class Vietnamita implements Idioma {
 		return "Một mod cố ghi đè một phương thức final";
 	}
 
+    @Override
+    public String errorCrashProvocadoPorComando(String comandoDetectado) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "Minecraft đã bị đóng bởi một lệnh crash.</b>"
+                + "<p>Log cho biết lệnh <code>" + comandoDetectado + "</code> đã được thực thi.</p>"
+                + "<p>Điều này thường có nghĩa là trò chơi không đóng do lỗi mod thông thường, mà vì ai đó "
+                + "đã sử dụng một lệnh được thiết kế để gây ra crash một cách cố ý.</p>"
+                + "<p><b>Những điều cần kiểm tra:</b></p>"
+                + "<ul>"
+                + "<li>Kiểm tra xem ai đã thực thi lệnh trong bảng điều khiển hoặc trong trò chơi.</li>"
+                + "<li>Nếu đây là một bài kiểm tra, bạn có thể bỏ qua crash này.</li>"
+                + "<li>Nếu nó xảy ra ngoài ý muốn, hãy kiểm tra command blocks, script, datapack, mod quản trị hoặc quyền của operator.</li>"
+                + "</ul>";
+    }
+
+    @Override
+    public String nombreCrashProvocadoPorComando() {
+        return "Crash do lệnh gây ra";
+    }
+	
+	
+	
+	
+	
+	
+	
 }

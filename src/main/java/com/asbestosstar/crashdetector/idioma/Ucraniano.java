@@ -8690,5 +8690,31 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "Мод намагається перевизначити фінальний метод";
 	}
+	
+	
+    @Override
+    public String errorCrashProvocadoPorComando(String comandoDetectado) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "Minecraft було закрито через команду крашу.</b>"
+                + "<p>Лог вказує, що було виконано команду <code>" + comandoDetectado + "</code>.</p>"
+                + "<p>Це зазвичай означає, що гра закрилася не через звичайну помилку модів, а тому що хтось "
+                + "використав команду, призначену для навмисного виклику крашу.</p>"
+                + "<p><b>Що перевірити:</b></p>"
+                + "<ul>"
+                + "<li>Перевірте, хто виконав команду в консолі або всередині гри.</li>"
+                + "<li>Якщо це було тестування, ви можете ігнорувати цей краш.</li>"
+                + "<li>Якщо це сталося ненавмисно, перевірте командні блоки, скрипти, датапаки, адміністративні моди або права операторів.</li>"
+                + "</ul>";
+    }
+
+    @Override
+    public String nombreCrashProvocadoPorComando() {
+        return "Краш, спричинений командою";
+    }
+	
+	
+	
+	
+	
 
 }

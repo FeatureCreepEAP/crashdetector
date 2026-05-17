@@ -9395,5 +9395,32 @@ public class Ingles implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "A mod attempts to override a final method";
 	}
+	
+	// English (UK)
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Minecraft was closed by a crash command.</b>"
+	            + "<p>The log indicates that the command <code>" + comandoDetectado + "</code> was executed.</p>"
+	            + "<p>This usually means that the game did not close due to a normal mod error, but because someone "
+	            + "used a command designed to trigger a crash manually.</p>"
+	            + "<p><b>What to check:</b></p>"
+	            + "<ul>"
+	            + "<li>Check who executed the command in the console or within the game.</li>"
+	            + "<li>If it was a test, you can ignore this crash.</li>"
+	            + "<li>If it occurred unintentionally, check command blocks, scripts, datapacks, administration mods, or operator permissions.</li>"
+	            + "</ul>";
+	}
+
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+	    return "Crash caused by command";
+	}
+	
+	
+	
+	
+	
+	
 
 }

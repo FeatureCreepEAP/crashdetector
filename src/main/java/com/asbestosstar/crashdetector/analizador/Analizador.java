@@ -340,7 +340,11 @@ public class Analizador {
 		verificaciones.add(new ErrorOpenGLMemoriaInsuficiente());
 		verificaciones.add(new ErrorVerificacionBytecode());
 		verificaciones.add(new ErrorMetodoFinalSobrescrito());
+		verificaciones.add(new CrashProvocadoPorComando());
 
+		
+		
+		
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());
 		verificaciones.add(new LanzerDesAnimado());

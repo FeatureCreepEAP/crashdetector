@@ -9817,5 +9817,33 @@ public class Suajili implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "Mod inajarikuandika upya njia ya final";
 	}
+	
+    @Override
+    public String errorCrashProvocadoPorComando(String comandoDetectado) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "Minecraft ilifungwa na amri ya crash.</b>"
+                + "<p>Logi inaonyesha kwamba amri <code>" + comandoDetectado + "</code> ilitumika.</p>"
+                + "<p>Hii kwa kawaida inamaanisha kwamba mchezo haukufungwa kwa sababu ya hitilafu ya kawaida ya mod, bali kwa sababu mtu "
+                + "alitumia amri iliyoundwa kusababisha crash kwa makusudi.</p>"
+                + "<p><b>Nini cha kukagua:</b></p>"
+                + "<ul>"
+                + "<li>Kagua ni nani aliyetekeleza amri hiyo kwenye konsole au ndani ya mchezo.</li>"
+                + "<li>Ikiwa ilikuwa jaribio, unaweza kupuuza crash hii.</li>"
+                + "<li>Ikiwa ilitokea bila kukusudia, kagua command blocks, hati (scripts), datapacks, mod za utawala au ruhusa za wasimamizi.</li>"
+                + "</ul>";
+    }
+
+    @Override
+    public String nombreCrashProvocadoPorComando() {
+        return "Crash iliyosababishwa na amri";
+    }
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

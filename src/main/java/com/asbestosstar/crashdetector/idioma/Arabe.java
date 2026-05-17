@@ -9256,5 +9256,31 @@ public class Arabe implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "يحاول أحد الـ mods تجاوز أسلوب نهائي";
 	}
+	// Arabic (العربية)
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "تم إغلاق Minecraft بسبب أمر تسبب في انهيار اللعبة.</b>"
+	            + "<p>يشير السجل إلى أنه تم تنفيذ الأمر <code>" + comandoDetectado + "</code>.</p>"
+	            + "<p>هذا يعني عادةً أن اللعبة لم تغلق بسبب خطأ عادي في الـ mods، بل لأن شخصاً ما "
+	            + "استخدم أمراً مصمماً لإحداث انهيار يدوياً.</p>"
+	            + "<p><b>ما يجب مراجعته:</b></p>"
+	            + "<ul>"
+	            + "<li>راجع من نفذ الأمر في وحدة التحكم أو داخل اللعبة.</li>"
+	            + "<li>إذا كان ذلك اختباراً، يمكنك تجاهل هذا الانهيار.</li>"
+	            + "<li>إذا حدث دون قصد، راجع كتل الأوامر (command blocks)، النصوص البرمجية، حزم البيانات (datapacks)، mods الإدارة، أو صلاحيات المشغلين.</li>"
+	            + "</ul>";
+	}
+
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+	    return "انهيار ناتج عن أمر";
+	}
+	
+	
+	
+	
+	
+	
 
 }

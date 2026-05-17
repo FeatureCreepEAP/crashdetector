@@ -9324,5 +9324,30 @@ public class Persa implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "یک ماد سعی در بازنویسی یک متد final دارد";
 	}
+	
+    @Override
+    public String errorCrashProvocadoPorComando(String comandoDetectado) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "ماینکرفت توسط یک دستور crash بسته شد.</b>"
+                + "<p>گزارش نشان می‌دهد که دستور <code>" + comandoDetectado + "</code> اجرا شده است.</p>"
+                + "<p>این معمولاً به این معنی است که بازی به دلیل یک خطای عادی مادها بسته نشده، بلکه کسی "
+                + "از دستوری استفاده کرده که عمداً برای ایجاد crash طراحی شده است.</p>"
+                + "<p><b>چه چیزی را بررسی کنید:</b></p>"
+                + "<ul>"
+                + "<li>بررسی کنید چه کسی دستور را در کنسول یا داخل بازی اجرا کرده است.</li>"
+                + "<li>اگر این یک آزمایش بود، می‌توانید این crash را نادیده بگیرید.</li>"
+                + "<li>اگر بدون قصد رخ داده است، command blocks، اسکریپت‌ها، datapackها، مادهای مدیریتی یا دسترسی‌های اپراتور را بررسی کنید.</li>"
+                + "</ul>";
+    }
+
+    @Override
+    public String nombreCrashProvocadoPorComando() {
+        return "Crash ایجاد شده توسط دستور";
+    }
+	
+	
+	
+	
+	
 
 }

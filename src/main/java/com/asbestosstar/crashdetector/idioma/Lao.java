@@ -9796,5 +9796,28 @@ public class Lao implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "ມອດພະຍາຍາມຂຽນທັບເມທອດ final";
 	}
+	
+    @Override
+    public String errorCrashProvocadoPorComando(String comandoDetectado) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "Minecraft ຖືກປິດໂດຍຄຳສັ່ງ crash.</b>"
+                + "<p>ບັນທຶກລະບຸວ່າຄຳສັ່ງ <code>" + comandoDetectado + "</code> ຖືກປະຕິບັດ.</p>"
+                + "<p>ສິ່ງນີ້ໝາຍຄວາມວ່າ ເກມບໍ່ໄດ້ປິດຍ້ອນຂໍ້ຜິດພາດຂອງ mod ທຳມະດາ, ແຕ່ເປັນເພາະມີຜູ້ໃຊ້ "
+                + "ຄຳສັ່ງທີ່ອອກແບບມາເພື່ອເຮັດໃຫ້ເກມ crash ໂດຍຈົງໃຈ.</p>"
+                + "<p><b>ສິ່ງທີ່ຄວນກວດສອບ:</b></p>"
+                + "<ul>"
+                + "<li>ກວດສອບວ່າໃຜເປັນຜູ້ປະຕິບັດຄຳສັ່ງໃນ console ຫຼື ໃນເກມ.</li>"
+                + "<li>ຖ້າເປັນການທົດສອບ, ທ່ານສາມາດລະເລີຍ crash ນີ້ໄດ້.</li>"
+                + "<li>ຖ້າເກີດຂຶ້ນໂດຍບໍ່ຕັ້ງໃຈ, ກວດສອບ command blocks, scripts, datapacks, mods ບໍລິຫານ ຫຼື ສິດທິຂອງ operator.</li>"
+                + "</ul>";
+    }
+
+    @Override
+    public String nombreCrashProvocadoPorComando() {
+        return "Crash ທີ່ເກີດຈາກຄຳສັ່ງ";
+    }
+	
+	
+	
 
 }

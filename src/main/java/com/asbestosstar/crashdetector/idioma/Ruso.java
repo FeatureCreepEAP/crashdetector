@@ -9370,5 +9370,30 @@ public class Ruso implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "Мод пытается переопределить final-метод";
 	}
+	
+	
+    @Override
+    public String errorCrashProvocadoPorComando(String comandoDetectado) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "Minecraft был закрыт командой краша.</b>"
+                + "<p>Лог указывает, что была выполнена команда <code>" + comandoDetectado + "</code>.</p>"
+                + "<p>Это обычно означает, что игра закрылась не из-за обычной ошибки модов, а потому что кто-то "
+                + "использовал команду, предназначенную для намеренного вызова краша.</p>"
+                + "<p><b>Что проверить:</b></p>"
+                + "<ul>"
+                + "<li>Проверьте, кто выполнил команду в консоли или внутри игры.</li>"
+                + "<li>Если это было тестирование, вы можете игнорировать этот краш.</li>"
+                + "<li>Если это произошло непреднамеренно, проверьте командные блоки, скрипты, датапаки, административные моды или права операторов.</li>"
+                + "</ul>";
+    }
+
+    @Override
+    public String nombreCrashProvocadoPorComando() {
+        return "Краш, вызванный командой";
+    }
+	
+	
+	
+	
 
 }

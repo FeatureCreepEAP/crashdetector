@@ -9004,5 +9004,30 @@ public class Japones implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "mod が final メソッドをオーバーライドしようとしています";
 	}
+	// Japanese (日本語)
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Minecraft がクラッシュコマンドによって終了しました。</b>"
+	            + "<p>ログには、コマンド <code>" + comandoDetectado + "</code> が実行されたことが示されています。</p>"
+	            + "<p>これは通常、ゲームが通常の mod エラーで終了したのではなく、誰かが "
+	            + "手動でクラッシュを引き起こすように設計されたコマンドを使用したことを意味します。</p>"
+	            + "<p><b>確認すべき事項:</b></p>"
+	            + "<ul>"
+	            + "<li>コンソールまたはゲーム内で誰がコマンドを実行したかを確認してください。</li>"
+	            + "<li>テストだった場合は、このクラッシュを無視できます。</li>"
+	            + "<li>意図せずに発生した場合は、コマンドブロック、スクリプト、データパック、管理用 mod、またはオペレーター権限を確認してください。</li>"
+	            + "</ul>";
+	}
+
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+	    return "コマンドによるクラッシュ";
+	}
+	
+	
+	
+	
+	
 
 }

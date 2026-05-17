@@ -9912,5 +9912,31 @@ public class Frances implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "Un mod tente de surcharger une méthode final";
 	}
+	
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Minecraft a été fermé par une commande de crash.</b>"
+	            + "<p>Le journal indique que la commande <code>" + comandoDetectado + "</code> a été exécutée.</p>"
+	            + "<p>Cela signifie généralement que le jeu ne s'est pas fermé à cause d'une erreur normale de mods, mais parce que quelqu'un "
+	            + "a utilisé une commande conçue pour provoquer un crash manuellement.</p>"
+	            + "<p><b>À vérifier :</b></p>"
+	            + "<ul>"
+	            + "<li>Vérifiez qui a exécuté la commande dans la console ou dans le jeu.</li>"
+	            + "<li>Si c'était un test, vous pouvez ignorer ce crash.</li>"
+	            + "<li>Si cela s'est produit involontairement, vérifiez les blocs de commande, les scripts, les datapacks, les mods d'administration ou les permissions des opérateurs.</li>"
+	            + "</ul>";
+	}
+
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+	    return "Crash provoqué par une commande";
+	}
+	
+	
+	
+	
+	
 
 }

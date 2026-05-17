@@ -9343,5 +9343,33 @@ public class Esperanto implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "Modo provas superskribi finan metodon";
 	}
+	
+	// Esperanto (Esperanto)
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Minecraft estis fermita pro komando de kraŝo.</b>"
+	            + "<p>La protokolo indikas, ke la komando <code>" + comandoDetectado + "</code> estis plenumita.</p>"
+	            + "<p>Ĉi tio kutime signifas, ke la ludo ne fermiĝis pro normala eraro de modoj, sed ĉar iu "
+	            + "uzis komandon dizajnitan por provoki kraŝon mane.</p>"
+	            + "<p><b>Kion kontroli:</b></p>"
+	            + "<ul>"
+	            + "<li>Kontrolu, kiu plenumis la komandon en la konzolo aŭ ene de la ludo.</li>"
+	            + "<li>Se ĝi estis testo, vi povas ignori ĉi tiun kraŝon.</li>"
+	            + "<li>Se ĝi okazis senintence, kontrolu komandoblokojn, skriptojn, datumplakojn, administrajn modojn aŭ permesojn de operaciistoj.</li>"
+	            + "</ul>";
+	}
+
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+	    return "Kraŝo provokita de komando";
+	}
+	
+	
+	
+	
+	
+	
+	
 
 }

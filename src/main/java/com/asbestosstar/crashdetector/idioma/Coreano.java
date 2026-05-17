@@ -8995,5 +8995,33 @@ public class Coreano implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "한 mod가 final 메서드를 재정의하려고 시도함";
 	}
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Minecraft가 충돌 명령어로 인해 종료되었습니다.</b>"
+	            + "<p>로그에 명령어 <code>" + comandoDetectado + "</code>이(가) 실행되었음이 표시되어 있습니다.</p>"
+	            + "<p>이는 일반적으로 게임이 일반적인 mod 오류로 인해 종료된 것이 아니라, 누군가 "
+	            + "수동으로 충돌을 유발하도록 설계된 명령어를 사용했음을 의미합니다.</p>"
+	            + "<p><b>확인할 사항:</b></p>"
+	            + "<ul>"
+	            + "<li>콘솔 또는 게임 내에서 누가 명령어를 실행했는지 확인하세요.</li>"
+	            + "<li>테스트였다면 이 충돌을 무시해도 됩니다.</li>"
+	            + "<li>의도치 않게 발생했다면 명령 블록, 스크립트, 데이터팩, 관리용 mod 또는 운영자 권한을 확인하세요.</li>"
+	            + "</ul>";
+	}
+
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+	    return "명령어로 인한 충돌";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

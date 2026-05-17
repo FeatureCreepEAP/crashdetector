@@ -9927,5 +9927,31 @@ public class Indonesia implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "Sebuah mod mencoba menimpa metode final";
 	}
+	
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String errorCrashProvocadoPorComando(String comandoDetectado) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Minecraft ditutup karena perintah crash.</b>"
+	            + "<p>Log menunjukkan bahwa perintah <code>" + comandoDetectado + "</code> telah dijalankan.</p>"
+	            + "<p>Ini biasanya berarti game tidak tertutup karena kesalahan mod normal, melainkan karena seseorang "
+	            + "menggunakan perintah yang dirancang untuk memicu crash secara manual.</p>"
+	            + "<p><b>Yang perlu diperiksa:</b></p>"
+	            + "<ul>"
+	            + "<li>Periksa siapa yang menjalankan perintah tersebut di konsol atau di dalam game.</li>"
+	            + "<li>Jika itu adalah uji coba, Anda dapat mengabaikan crash ini.</li>"
+	            + "<li>Jika terjadi tanpa sengaja, periksa command block, skrip, datapack, mod administrasi, atau izin operator.</li>"
+	            + "</ul>";
+	}
+
+	@Override
+	public String nombreCrashProvocadoPorComando() {
+	    return "Crash disebabkan oleh perintah";
+	}
+	
+	
+	
+	
+	
 
 }

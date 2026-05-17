@@ -9558,5 +9558,31 @@ public class Tailandes implements Idioma {
 	public String nombreErrorMetodoFinalSobrescrito() {
 		return "มอดพยายามเขียนทับเมธอด final";
 	}
+    @Override
+    public String errorCrashProvocadoPorComando(String comandoDetectado) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "Minecraft ถูกปิดโดยคำสั่ง crash</b>"
+                + "<p>บันทึกระบุว่ามีการดำเนินการคำสั่ง <code>" + comandoDetectado + "</code></p>"
+                + "<p>สิ่งนี้มักหมายความว่าเกมไม่ได้ปิดเนื่องจากข้อผิดพลาดของมอดทั่วไป แต่เพราะมีใครบางคน "
+                + "ใช้คำสั่งที่ออกแบบมาเพื่อทำให้เกิด crash โดยเจตนา</p>"
+                + "<p><b>สิ่งที่ควรตรวจสอบ:</b></p>"
+                + "<ul>"
+                + "<li>ตรวจสอบว่าใครเป็นผู้ดำเนินการคำสั่งในคอนโซลหรือในเกม</li>"
+                + "<li>หากเป็นการทดสอบ คุณสามารถละเว้น crash นี้ได้</li>"
+                + "<li>หากเกิดขึ้นโดยไม่ตั้งใจ ให้ตรวจสอบ command blocks, สคริปต์, datapacks, มอดดูแลระบบ หรือสิทธิ์ของผู้ปฏิบัติการ</li>"
+                + "</ul>";
+    }
+
+    @Override
+    public String nombreCrashProvocadoPorComando() {
+        return "Crash ที่เกิดจากคำสั่ง";
+    }
+	
+	
+	
+	
+	
+	
+	
 
 }
