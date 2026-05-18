@@ -22,6 +22,7 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 	private static final String TEXTO_ABSTRACT = "java.lang.AbstractMethodError";
 	private static final String TEXTO_NO_IMPLEMENTA = "does not define or inherit an implementation";
 	private static final String TEXTO_INTERFACE = "of interface";
+	private static final String TEXTO_CLASE_ABSTRACTA = "of abstract class";
 
 	@Override
 	public void verificar(Consola consola) {
@@ -32,7 +33,7 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 		// Marcar posible error si los textos clave están presentes
 		posibleError = consola.contenido_verificar.contains(TEXTO_ABSTRACT)
 				&& consola.contenido_verificar.contains(TEXTO_NO_IMPLEMENTA)
-				&& consola.contenido_verificar.contains(TEXTO_INTERFACE);
+				&& contieneTipoObjetivo(consola.contenido_verificar);
 	}
 
 	@Override
@@ -42,7 +43,12 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 
 		String recorte = linea.trim();
 		if (!recorte.contains(TEXTO_ABSTRACT) || !recorte.contains(TEXTO_NO_IMPLEMENTA)
-				|| !recorte.contains(TEXTO_INTERFACE)) {
+				|| !contieneTipoObjetivo(recorte)) {
+			return;
+		}
+
+		String textoTipoObjetivo = obtenerTextoTipoObjetivo(recorte);
+		if (textoTipoObjetivo == null) {
 			return;
 		}
 
@@ -50,14 +56,14 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 		int idxClaseStart = recorte.indexOf(":") + 1;
 		int idxMetodoStart = recorte.indexOf("'", idxClaseStart);
 		int idxMetodoEnd = recorte.indexOf("'", idxMetodoStart + 1);
-		int idxInterfaz = recorte.lastIndexOf("of interface");
+		int idxInterfaz = recorte.lastIndexOf(textoTipoObjetivo);
 
-		if (idxClaseStart < 0 || idxMetodoStart < 0 || idxMetodoEnd < 0 || idxInterfaz < 0)
+		if (idxClaseStart <= 0 || idxMetodoStart < 0 || idxMetodoEnd < 0 || idxInterfaz < 0)
 			return;
 
 		String claseConcreta = recorte.substring(idxClaseStart, idxMetodoStart).trim();
 		String firmaMetodo = recorte.substring(idxMetodoStart + 1, idxMetodoEnd).trim();
-		String interfaz = recorte.substring(idxInterfaz + "of interface".length()).trim();
+		String interfaz = recorte.substring(idxInterfaz + textoTipoObjetivo.length()).trim();
 
 		// Buscar origen dinámicamente en las siguientes 10 líneas
 		String origen = "";
@@ -99,12 +105,29 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 		activado = true;
 	}
 
+	private boolean contieneTipoObjetivo(String texto) {
+		return texto != null && (texto.contains(TEXTO_INTERFACE) || texto.contains(TEXTO_CLASE_ABSTRACTA));
+	}
+
+	private String obtenerTextoTipoObjetivo(String texto) {
+		if (texto == null) {
+			return null;
+		}
+		if (texto.contains(TEXTO_INTERFACE)) {
+			return TEXTO_INTERFACE;
+		}
+		if (texto.contains(TEXTO_CLASE_ABSTRACTA)) {
+			return TEXTO_CLASE_ABSTRACTA;
+		}
+		return null;
+	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		if (!activado || trazo == null || trazo.trace == null)
 			return false;
 		return trazo.trace.contains(TEXTO_ABSTRACT) && trazo.trace.contains(TEXTO_NO_IMPLEMENTA)
-				&& trazo.trace.contains(TEXTO_INTERFACE);
+				&& contieneTipoObjetivo(trazo.trace);
 	}
 
 	@Override

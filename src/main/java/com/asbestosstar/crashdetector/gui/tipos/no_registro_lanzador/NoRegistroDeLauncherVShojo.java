@@ -61,40 +61,39 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 	@Override
 	public void preparar(JFrame blanco, Instant instant) {
 		this.instant = instant;
-		// Inicializar colores PRIMERO
 
-		// Configuración básica de diálogo
 		setModal(true);
 		setAlwaysOnTop(true);
 		setTitle(Config.obtenerInstancia().obtenerNombreCD() + " – " + MonitorDePID.idioma.noRegistroLauncherTitulo());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(true);
 		setMinimumSize(new Dimension(700, 520));
-		setLocationRelativeTo(blanco);
 		getContentPane().setLayout(new BorderLayout(8, 0));
 
-		// Construir contenido técnico y aplicar apariencia
 		JPanel raiz = construirContenido();
 		getContentPane().add(raiz, BorderLayout.CENTER);
 
 		pack();
 		setSize(880, 640);
 
-		// Apariencia inicial (colores, bordes y textos NO localizados)
+		// Java 8: ubicar después de pack/setSize evita que el popup del combo calcule mal su área.
+		setLocationRelativeTo(blanco);
+
 		aplicarApariencia();
 
-		// *** Hacer que cerrar la ventana ("X") sea EXACTAMENTE como Omitir ***
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent e) {
 				if (botonOmitir != null && botonOmitir.isEnabled()) {
-					botonOmitir.doClick(); // mismo handler que el botón
+					botonOmitir.doClick();
 				} else {
 					dispose();
 				}
 			}
 		});
 	}
+
+
 
 	// ====== Construcción técnica de la UI (ahora en la implementación concreta)
 	// ======
@@ -452,12 +451,19 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 
 	public void estilizarCombo(JComboBox<?> combo) {
 		if (!CrashDetectorGUI.esMac()) {
-			// Los colores se aplicarán en la implementación concreta
 			combo.setBackground(colorBoton.obtener());
 			combo.setForeground(colorTexto.obtener());
 		}
+
 		combo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		combo.setPreferredSize(new Dimension(220, 32));
+
+		// Java 8: evita que el popup ligero sea cortado por componentes AWT pesados,
+		// especialmente porque esta ventana usa java.awt.TextArea.
+		combo.setLightWeightPopupEnabled(false);
+
+		// Java 8: evita popups demasiado altos que se dibujan mal antes de mover la ventana.
+		combo.setMaximumRowCount(12);
 	}
 
 	/** Envuelve HTML sin escapar, aplicando colores/estilo del proyecto. */

@@ -100,6 +100,8 @@ public class FaltasClases implements Verificaciones {
 		// HauntedHarvest: integración opcional con JEI busca Supplementaries.
 		// En este caso específico no debe contarse como clase fatal faltante.
 		ignorar.add("net/mehvahdjukaar/supplementaries/Supplementaries");
+		ignorar.add("FT_Face");
+
 
 	}
 
