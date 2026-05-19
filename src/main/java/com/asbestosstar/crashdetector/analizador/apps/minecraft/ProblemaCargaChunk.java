@@ -46,10 +46,12 @@ public class ProblemaCargaChunk implements Verificaciones {
 			return;
 		}
 
-		String contenido = consola.contenido_verificar.toLowerCase(Locale.ROOT);
+		String contenido = consola.contenido_verificar;
 
-		if (contieneAlguna(contenido, "chunkregionloader", "exception generating new chunk", "couldn't load chunk",
-				"encountered an unexpected exception")) {
+		if (contieneAlguna(contenido,
+				"ChunkRegionLoader",
+				"Exception generating new chunk",
+				"Couldn't load chunk")) {
 
 			this.analizarLineas = true;
 		}
