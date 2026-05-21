@@ -25,6 +25,7 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.LineaTrazo;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -215,7 +216,7 @@ public class ContenidoDeTrazos implements Verificaciones {
 	}
 
 	private static String construirEnlaceCfr(String clase) {
-		if (clase == null || clase.trim().isEmpty())
+		if (clase == null || clase.trim().isEmpty() || !Buscardor.hablicar.obtener())
 			return "";
 		return "<a href=\"cfr://" + clase + "\">[CFR]</a>";
 	}

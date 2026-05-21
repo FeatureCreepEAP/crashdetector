@@ -45,7 +45,7 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 	}
 
 	@Override
-	protected void aplicarApariencia() {
+	public void aplicarApariencia() {
 		// Solo apariencia, no datos
 		// Applicar fondo otra vez
 		if (getContentPane() instanceof JLayeredPane) {
@@ -60,7 +60,7 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 	}
 
 	@Override
-	protected void instalarFondoApariencia(JLayeredPane capa) {
+	public void instalarFondoApariencia(JLayeredPane capa) {
 		FondoPanel fondo = new FondoPanel(Statics.carpeta.resolve("imagenes/kiara_ame.png").toString());
 		fondo.setBounds(0, 0, getWidth(), getHeight());
 		capa.add(fondo, JLayeredPane.DEFAULT_LAYER);

@@ -39,7 +39,7 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetectorGUI, BotonDeBarraLateralDerecha {
 
-	private static final long serialVersionUID = 1L;
+	public static final long serialVersionUID = 1L;
 
 	// ====== Registro de GUIs por tipo ======
 
@@ -151,7 +151,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 
 	// ====== Construcción ======
 
-	protected void configurarVentanaBase() {
+	public void configurarVentanaBase() {
 		setTitle(MonitorDePID.idioma.tituloLectador());
 		setSize(1280, 720);
 		setLocationRelativeTo(null);
@@ -183,11 +183,11 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		});
 	}
 
-	protected void instalarFondoApariencia(JLayeredPane capa) {
+	public void instalarFondoApariencia(JLayeredPane capa) {
 		// Apariencia opcional en la implementación concreta.
 	}
 
-	protected void inicializarComponentesBase() {
+	public void inicializarComponentesBase() {
 		final JLayeredPane capa = (JLayeredPane) getContentPane();
 
 		configurarAreaRegistros();
@@ -213,7 +213,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		recolocarComponentes();
 	}
 
-	protected void instalarEscuchaDeScrollParaCargaDiferida() {
+	public void instalarEscuchaDeScrollParaCargaDiferida() {
 		if (scrollLogs == null) {
 			return;
 		}
@@ -226,7 +226,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		});
 	}
 
-	protected void priorizarZonaVisibleActual() {
+	public void priorizarZonaVisibleActual() {
 		if (visorRegistros == null || consolaActual == null) {
 			return;
 		}
@@ -247,7 +247,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		cargador.cargarRangoVisible(indiceInicio, indiceFin);
 	}
 
-	protected CargadorDeLogDiferido obtenerCargadorDeConsolaActual() {
+	public CargadorDeLogDiferido obtenerCargadorDeConsolaActual() {
 		if (consolaActual == null || consolaActual.archivo == null) {
 			return null;
 		}
@@ -258,7 +258,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 
 	// ====== Colocación ======
 
-	protected void recolocarComponentes() {
+	public void recolocarComponentes() {
 		int anchoBase = 1280;
 		int altoBase = 720;
 
@@ -296,7 +296,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		repaint();
 	}
 
-	protected void recolocarBuscador() {
+	public void recolocarBuscador() {
 		int x;
 		int y;
 		int w;
@@ -322,7 +322,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 
 	// ====== Subpaneles ======
 
-	protected JPanel crearPanelLeyenda() {
+	public JPanel crearPanelLeyenda() {
 		JPanel pnl = new JPanel();
 		pnl.setLayout(new javax.swing.BoxLayout(pnl, javax.swing.BoxLayout.Y_AXIS));
 		pnl.setBackground(colorFondoPanel.obtener());
@@ -366,7 +366,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		return pnl;
 	}
 
-	protected void configurarAreaRegistros() {
+	public void configurarAreaRegistros() {
 		visorRegistros.setFont(getFont());
 
 		visorRegistros.colorFondo = colorFondo.obtener();
@@ -387,7 +387,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		};
 	}
 
-	protected void reconstruirIndiceDeErrores(Consola consola) {
+	public void reconstruirIndiceDeErrores(Consola consola) {
 		erroresPorLinea.clear();
 
 		if (consola == null || consola.errores_de_lectadores == null) {
@@ -403,7 +403,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		visorRegistros.establecerErrores(erroresPorLinea);
 	}
 
-	protected JPanel crearPanelInformacionErrores() {
+	public JPanel crearPanelInformacionErrores() {
 		JPanel pnl = new JPanel(new GridLayout(1, 2, 42, 10));
 
 		txtNombreError.setEditable(false);
@@ -433,7 +433,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		return pnl;
 	}
 
-	protected JComponent crearPanelSelector() {
+	public JComponent crearPanelSelector() {
 		JPanel pnl = new JPanel(new GridLayout(2, 1, 0, 5));
 		pnl.setBackground(colorFondoPanel.obtener());
 
@@ -457,7 +457,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		return pnl;
 	}
 
-	protected void inicializarBuscador(JLayeredPane capa) {
+	public void inicializarBuscador(JLayeredPane capa) {
 		pnlBuscador = new JPanel(new java.awt.BorderLayout(4, 0));
 		pnlBuscador.setVisible(false);
 		pnlBuscador.setOpaque(true);
@@ -524,7 +524,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 
 	// ====== Consolas ======
 
-	protected void cargarConsolas() {
+	public void cargarConsolas() {
 		cmbConsolas.removeAllItems();
 
 		for (Consola consola : consolas) {
@@ -537,7 +537,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		}
 	}
 
-	protected void actualizarConsola() {
+	public void actualizarConsola() {
 		final Consola consola = obtenerConsolaSeleccionada();
 
 		if (consola == null) {
@@ -602,7 +602,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		});
 	}
 
-	protected void setLoadingModel(final String mensaje) {
+	public void setLoadingModel(final String mensaje) {
 		visorRegistros.establecerFuente(new VisorLogVirtual.FuenteDeLineas() {
 			@Override
 			public int totalLineas() {
@@ -624,7 +624,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		visorRegistros.repaint();
 	}
 
-	protected Consola obtenerConsolaSeleccionada() {
+	public Consola obtenerConsolaSeleccionada() {
 		String nombreArchivo = (String) cmbConsolas.getSelectedItem();
 
 		if (nombreArchivo == null) {
@@ -640,7 +640,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		return null;
 	}
 
-	protected void refrescarModeloCon(final CargadorDeLogDiferido cargador) {
+	public void refrescarModeloCon(final CargadorDeLogDiferido cargador) {
 		visorRegistros.establecerFuente(new VisorLogVirtual.FuenteDeLineas() {
 			@Override
 			public int totalLineas() {
@@ -668,7 +668,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 
 	// ====== Búsqueda ======
 
-	protected void saltarCoincidenciaAnterior() {
+	public void saltarCoincidenciaAnterior() {
 		String texto = txtBuscar.getText();
 
 		if (texto == null || texto.isEmpty()) {
@@ -689,7 +689,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		resaltarCoincidenciaActual();
 	}
 
-	protected void saltarSiguienteCoincidencia() {
+	public void saltarSiguienteCoincidencia() {
 		String texto = txtBuscar.getText();
 
 		if (texto == null || texto.isEmpty()) {
@@ -710,7 +710,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		resaltarCoincidenciaActual();
 	}
 
-	protected void buscarTexto(final String texto) {
+	public void buscarTexto(final String texto) {
 		posicionesCoincidencias.clear();
 		indiceBusquedaActual = -1;
 
@@ -773,7 +773,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		});
 	}
 
-	protected void resaltarCoincidenciaActual() {
+	public void resaltarCoincidenciaActual() {
 		if (indiceBusquedaActual < 0 || indiceBusquedaActual >= posicionesCoincidencias.size()) {
 			if (pnlBuscador != null) {
 				pnlBuscador.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.buscar()));
@@ -805,7 +805,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 
 	// ====== HTML / descripción de error ======
 
-	protected static String htmlAPlano(String s) {
+	public static String htmlAPlano(String s) {
 		if (s == null) {
 			return "";
 		}
@@ -831,7 +831,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		return r.trim();
 	}
 
-	protected static String escHtml(String s) {
+	public static String escHtml(String s) {
 		if (s == null) {
 			return "";
 		}
@@ -847,7 +847,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		return r;
 	}
 
-	protected void descripcionHtml(String textoPlano) {
+	public void descripcionHtml(String textoPlano) {
 		String safe = textoPlano == null ? "" : escHtml(textoPlano);
 		String html = "<html><body bgcolor='#111111' text='#FFFFFF'><pre>" + safe + "</pre></body></html>";
 
@@ -855,7 +855,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		txtDescripcionError.setCaretPosition(0);
 	}
 
-	protected void procesarSeleccionError(int numeroLinea, Consola consola) {
+	public void procesarSeleccionError(int numeroLinea, Consola consola) {
 		txtNombreError.setText("");
 
 		StringBuilder detallePlano = new StringBuilder();
@@ -918,7 +918,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 
 	// ====== Saltos directos ======
 
-	protected void saltarDirectamenteALinea(final int numeroLinea) {
+	public void saltarDirectamenteALinea(final int numeroLinea) {
 		final CargadorDeLogDiferido cargador = obtenerCargadorDeConsolaActual();
 
 		if (cargador == null) {
@@ -958,7 +958,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		aplicarApariencia();
 	}
 
-	protected abstract void aplicarApariencia();
+	public abstract void aplicarApariencia();
 
 	@Override
 	public void init() {

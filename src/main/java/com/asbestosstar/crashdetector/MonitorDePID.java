@@ -43,6 +43,7 @@ import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUISaliorMo
 import com.asbestosstar.crashdetector.gui.tipos.cfr.BuscarParaCFR;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
+import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirPrimitiva;
 import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUI;
@@ -69,6 +70,7 @@ import com.asbestosstar.crashdetector.gui.tipos.jgit.JGitHubIzzy;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUIMaidMint;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUISylentBell;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
+import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasMinimalista;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
 import com.asbestosstar.crashdetector.gui.tipos.miranda.DerechosPiratasGUIOnePiece;
@@ -564,6 +566,9 @@ public class MonitorDePID {
 		TipoGUI.ADMINISTRADOR_DE_RENDIMIENTO.registrarGUI(AdministradorDeRendimientoNightcore.ID,
 				AdministradorDeRendimientoNightcore::new);
 		TipoGUI.PRINCIPAL.registrarGUI(PrincipalGUIPrimitiva.ID, () -> new PrincipalGUIPrimitiva());
+		TipoGUI.DIALOGO_COMPARTIR.registrarGUI(DialogoCompartirPrimitiva.ID, () -> new DialogoCompartirPrimitiva());
+		TipoGUI.LECTADOR_DE_CONSOLAS.registrarGUI(LectadorDeConsolasMinimalista.ID,
+				() -> new LectadorDeConsolasMinimalista());
 
 	}
 

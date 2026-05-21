@@ -135,6 +135,12 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public Map<String, Supplier<ArbolDeModsGUI>> obtenerGUIs() {
 			return ArbolDeModsGUI.GUIS;
 		}
+
+		@Override
+		public boolean requireBuscador() {
+			// TODO Auto-generated method stub
+			return true;
+		}
 	};
 
 	/**
@@ -260,6 +266,12 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public Map<String, Supplier<EscanerMCreatorGUI>> obtenerGUIs() {
 			return EscanerMCreatorGUI.GUIS;
 		}
+
+		@Override
+		public boolean requireBuscador() {
+			// TODO Auto-generated method stub
+			return true;
+		}
 	};
 
 	/**
@@ -365,6 +377,13 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 	 * @return
 	 */
 	public abstract Map<String, Supplier<T>> obtenerGUIs();
+
+	/**
+	 * si require buscador
+	 */
+	public boolean requireBuscador() {
+		return false;
+	}
 
 	public T obtenerGUIPredeterminado(String id_de_por_defecto, Supplier<T> por_defecto) {
 		ConfigString str = ConfigString.de("guitipo_" + this.id(), id_de_por_defecto);
@@ -495,6 +514,12 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public Map<String, Supplier<CfrBase>> obtenerGUIs() {
 			return CfrBase.GUIS;
 		}
+
+		@Override
+		public boolean requireBuscador() {
+			// TODO Auto-generated method stub
+			return true;
+		}
 	};
 
 	/**
@@ -545,6 +570,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public Map<String, Supplier<DeshablicarVerificaciones>> obtenerGUIs() {
 			return DeshablicarVerificaciones.GUIS;
 		}
+
 	};
 
 	public static TipoGUI<LanzerMaloGUI> LANZER_MALO = new TipoGUI<LanzerMaloGUI>() {
@@ -857,6 +883,12 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public Map<String, Supplier<MixinsGUI>> obtenerGUIs() {
 			return MixinsGUI.GUIS;
 		}
+
+		@Override
+		public boolean requireBuscador() {
+			// TODO Auto-generated method stub
+			return true;
+		}
 	};
 
 	public static TipoGUI<MapaDeDependenciasGUI> DEPMAP = new TipoGUI<MapaDeDependenciasGUI>() {
@@ -878,6 +910,12 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		@Override
 		public Map<String, Supplier<MapaDeDependenciasGUI>> obtenerGUIs() {
 			return MapaDeDependenciasGUI.GUIS;
+		}
+
+		@Override
+		public boolean requireBuscador() {
+			// TODO Auto-generated method stub
+			return true;
 		}
 	};
 
@@ -901,6 +939,13 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public java.util.Map<String, java.util.function.Supplier<GuardiaGUI>> obtenerGUIs() {
 			return GuardiaGUI.GUIS;
 		}
+
+		@Override
+		public boolean requireBuscador() {
+			// TODO Auto-generated method stub
+			return true;
+		}
+
 	};
 
 	public static TipoGUI<CompartirInstanciaGUI> COMPARTIR_INSTANCIA = new TipoGUI<CompartirInstanciaGUI>() {

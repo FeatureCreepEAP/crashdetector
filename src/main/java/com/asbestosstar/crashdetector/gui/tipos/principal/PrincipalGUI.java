@@ -30,6 +30,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.discord.ManagerDiscord;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
@@ -162,7 +163,16 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	 */
 	public static void registrarBotonDeBarraLateralDerecha(TipoGUI<? extends BotonDeBarraLateralDerecha> boton,
 			String predeterminado, Supplier<BotonDeBarraLateralDerecha> gui_predeterminado) {
+
+		if (!Buscardor.hablicar.obtener() && boton.requireBuscador()) {
+			CrashDetectorLogger.log("No se puede registrar el botón " + boton.id()
+					+ " porque requiere el buscador, que está deshabilitado.");
+			return;
+
+		}
+
 		botons_de_barra_lateral_derecha.put(boton, predeterminado, gui_predeterminado);
+
 	}
 
 	/**

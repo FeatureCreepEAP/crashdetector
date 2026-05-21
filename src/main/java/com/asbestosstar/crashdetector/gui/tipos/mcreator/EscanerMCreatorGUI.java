@@ -209,4 +209,5 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 	public TipoGUI<EscanerMCreatorGUI> tipo() {
 		return TipoGUI.ESCANER_MCREATOR;
 	}
+
 }

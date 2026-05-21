@@ -657,4 +657,5 @@ public abstract class GuardiaGUI extends JFrame implements BotonDeBarraLateralDe
 			return boton.getText();
 		}
 	}
+
 }
