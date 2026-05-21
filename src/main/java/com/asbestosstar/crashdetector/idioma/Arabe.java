@@ -10134,4 +10134,35 @@ public class Arabe implements Idioma {
 		return "الأداء - التحديد";
 	}
 
+	// Arabic (العربية)
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "لقد تعرضت للانهيار. إذا لم تظهر نافذة منبثقة تحتوي على حل، يرجى إرسال السجلات إلى مركز الدعم.";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "الانتقال إلى الوضع العادي";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "لا توجد روابط للنسخ.";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "خطأ غير متوقع";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "مركز الدعم";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "لم يتم تكوين مركز دعم.";
+	}
+
 }

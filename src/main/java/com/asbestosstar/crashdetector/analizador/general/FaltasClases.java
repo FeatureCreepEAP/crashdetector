@@ -102,7 +102,6 @@ public class FaltasClases implements Verificaciones {
 		ignorar.add("net/mehvahdjukaar/supplementaries/Supplementaries");
 		ignorar.add("FT_Face");
 
-
 	}
 
 	@Override

@@ -9867,4 +9867,35 @@ public class Japones implements Idioma {
 		return "パフォーマンス - 選択";
 	}
 
+	// Japanese (日本語)
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "クラッシュが発生しました。解決策を含むポップアップウィンドウが表示されない場合は、ログをサポートセンターに送信してください。";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "通常モードへ移動";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "コピーするリンクはありません。";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "予期せぬエラー";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "サポートセンター";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "サポートセンターが構成されていません。";
+	}
+
 }

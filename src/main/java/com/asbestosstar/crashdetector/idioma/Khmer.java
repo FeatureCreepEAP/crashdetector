@@ -10421,4 +10421,35 @@ public class Khmer implements Idioma {
 		return "ការអនុវត្ត - ការជ្រើសរើស";
 	}
 
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "អ្នកបានជួបប្រទះការដួល (crash)។ ប្រសិនបើមិនមានបង្អួចលោតឡើងដែលមានដំណោះស្រាយទេ សូមផ្ញើកំណត់ហេតុ (logs) ទៅកាន់មជ្ឈមណ្ឌលគាំទ្រ។";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "ទៅកាន់របៀបធម្មតា";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "មិនមានតំណភ្ជាប់សម្រាប់ចម្លងទេ។";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "កំហុសមិនបានរំពឹងទុក";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "មជ្ឈមណ្ឌលគាំទ្រ";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "មិនមានមជ្ឈមណ្ឌលគាំទ្រដែលបានកំណត់រចនាសម្ព័ន្ធទេ។";
+	}
+
 }

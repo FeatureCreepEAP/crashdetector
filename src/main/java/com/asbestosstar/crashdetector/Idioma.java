@@ -3992,4 +3992,16 @@ public interface Idioma {
 
 	public String rendimientoColorSeleccion();
 
+	public String mensajeDialogoCompartirPrimitiva();
+
+	public String error_inesperado();
+
+	public String irAModoNormalEstiloTL();
+
+	public String noHayEnlacesParaCopiar();
+
+	public String noHayCentroSoporteConfigurado();
+
+	public String centroDeSoporte();
+
 }

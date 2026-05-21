@@ -9647,4 +9647,35 @@ public class Chino implements Idioma {
 		return "性能 - 选中";
 	}
 
+	// Chinese (Simplified) (中文)
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "游戏已崩溃。如果没有弹出包含解决方案的窗口，请将日志发送至支持中心。";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "前往正常模式";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "没有可复制的链接。";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "意外错误";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "支持中心";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "未配置支持中心。";
+	}
+
 }

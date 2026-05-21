@@ -10199,4 +10199,34 @@ public class Persa implements Idioma {
 		return "عملکرد - انتخاب";
 	}
 
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "بازی شما کرش کرده است. اگر پنجره‌ای با راه حل ظاهر نشد، لطفاً لاگ‌ها را به مرکز پشتیبانی ارسال کنید.";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "رفتن به حالت عادی";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "لینکی برای کپی کردن وجود ندارد.";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "خطای غیرمنتظره";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "مرکز پشتیبانی";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "هیچ مرکز پشتیبانی‌ای پیکربندی نشده است.";
+	}
+
 }

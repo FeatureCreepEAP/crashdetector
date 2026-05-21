@@ -10246,4 +10246,34 @@ public class Ruso implements Idioma {
 		return "Производительность - выделение";
 	}
 
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "Произошел краш игры. Если не появится всплывающее окно с решением, пожалуйста, отправьте логи в центр поддержки.";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "Перейти в обычный режим";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "Нет ссылок для копирования.";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "Неожиданная ошибка";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "Центр поддержки";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "Центр поддержки не настроен.";
+	}
+
 }

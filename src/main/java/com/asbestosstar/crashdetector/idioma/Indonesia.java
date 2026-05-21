@@ -10807,4 +10807,35 @@ public class Indonesia implements Idioma {
 		return "Kinerja - seleksi";
 	}
 
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "Anda mengalami crash. Jika tidak muncul jendela pop-up dengan solusi, silakan kirimkan log ke pusat dukungan.";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "Pergi ke mode normal";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "Tidak ada tautan untuk disalin.";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "Kesalahan tak terduga";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "Pusat dukungan";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "Tidak ada pusat dukungan yang dikonfigurasi.";
+	}
+
 }

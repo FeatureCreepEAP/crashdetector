@@ -10462,4 +10462,34 @@ public class Vietnamita implements Idioma {
 		return "Hiệu suất - lựa chọn";
 	}
 
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "Trò chơi đã bị crash. Nếu không có cửa sổ bật lên với giải pháp, vui lòng gửi nhật ký (logs) đến trung tâm hỗ trợ.";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "Chuyển sang chế độ bình thường";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "Không có liên kết để sao chép.";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "Lỗi không mong đợi";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "Trung tâm hỗ trợ";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "Chưa cấu hình trung tâm hỗ trợ.";
+	}
+
 }

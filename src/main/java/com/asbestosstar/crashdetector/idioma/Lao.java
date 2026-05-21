@@ -10666,4 +10666,34 @@ public class Lao implements Idioma {
 		return "ປະສິດທິພາບ - ການເລືອກ";
 	}
 
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "ເກມຂອງທ່ານໄດ້ crash. ຖ້າບໍ່ມີປ່ອງຢ້ຽມແຈ້ງເຕືອນທີ່ມີວິທີແກ້ໄຂປາກົດຂຶ້ນ, ກະລຸນາສົ່ງ log ໄປຍັງສູນຊ່ວຍເຫຼືອ.";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "ໄປທີ່ໂໝດປົກກະຕິ";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "ບໍ່ມີລິ້ງໃຫ້ຄັດລອກ.";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "ຂໍ້ຜິດພາດທີ່ບໍ່ຄາດຄິດ";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "ສູນຊ່ວຍເຫຼືອ";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "ບໍ່ມີສູນຊ່ວຍເຫຼືອທີ່ຕັ້ງຄ່າໄວ້.";
+	}
+
 }

@@ -67,12 +67,12 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 	public JButton botonCompartirInstanciaOModpack;
 
 	// Variables internas para la lógica
-	protected JEditorPane textoExplicacion;
-	protected JPanel panelPrincipal;
-	protected JPanel panelSuperior;
-	protected JPanel panelControles;
-	protected JTable tabla;
-	protected JPanel panelConfig;
+	public JEditorPane textoExplicacion;
+	public JPanel panelPrincipal;
+	public JPanel panelSuperior;
+	public JPanel panelControles;
+	public JTable tabla;
+	public JPanel panelConfig;
 
 	/**
 	 * Prepara y muestra el diálogo con la información del instante proporcionado.
@@ -84,12 +84,12 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 	/**
 	 * Devuelve true si el sistema operativo actual es macOS.
 	 */
-	protected boolean esMacOS() {
+	public boolean esMacOS() {
 		String nombreSO = System.getProperty("os.name");
 		return nombreSO != null && nombreSO.toLowerCase().contains("mac");
 	}
 
-	protected void setEnviando(boolean enviando) {
+	public void setEnviando(boolean enviando) {
 		try {
 			if (botonCompartirTodos != null) {
 				botonCompartirTodos.setEnabled(!enviando);
@@ -106,7 +106,7 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 		}
 	}
 
-	protected void mostrarError(String mensaje, Throwable t) {
+	public void mostrarError(String mensaje, Throwable t) {
 		CrashDetectorLogger.logException(t);
 		SwingUtilities.invokeLater(() -> {
 			JOptionPane.showMessageDialog(this, mensaje
@@ -115,13 +115,13 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 		});
 	}
 
-	protected void mostrarInfo(String mensaje) {
+	public void mostrarInfo(String mensaje) {
 		SwingUtilities.invokeLater(() -> {
 			JOptionPane.showMessageDialog(this, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
 		});
 	}
 
-	protected static void copiarAlPortapapeles(String texto) {
+	public static void copiarAlPortapapeles(String texto) {
 		if (texto == null)
 			return;
 		try {
@@ -133,7 +133,7 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 		}
 	}
 
-	protected void cargarConsolas() {
+	public void cargarConsolas() {
 		if (modeloTabla != null) {
 			for (Consola consola : MonitorDePID.consolas) {
 				modeloTabla.addRow(new Object[] { true, consola.archivo.getFileName().toString(),
@@ -212,7 +212,7 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 				.init();
 	}
 
-	protected void actualizarComboSitios(String apiNombre, Set<String> sitios, String sitioSeleccionado) {
+	public void actualizarComboSitios(String apiNombre, Set<String> sitios, String sitioSeleccionado) {
 		if (comboSitioRegistro != null) {
 			comboSitioRegistro.removeAllItems();
 			if (sitios != null) {

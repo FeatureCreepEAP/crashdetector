@@ -10694,4 +10694,34 @@ public class Suajili implements Idioma {
 		return "Utendaji - uteuzi";
 	}
 
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "Mchezo umefungwa ghafla (crash). Ikiwa hakuna dirisha la kujitokeza lenye suluhisho, tafadhali tuma logi kwa kituo cha usaidizi.";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "Nenda kwenye hali ya kawaida";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "Hakuna viungo vya kunakili.";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "Hitilafu isiyotarajiwa";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "Kituo cha usaidizi";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "Hakuna kituo cha usaidizi kilichosanidiwa.";
+	}
+
 }

@@ -10958,4 +10958,34 @@ public class Espanol implements Idioma {
 		return "Rendimiento - selección";
 	}
 
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "Has tenido un crash. Si no aparece una ventana emergente con una solución, por favor envía los logs al centro de soporte.";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "Ir al modo normal";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "No hay enlaces para copiar.";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "Error inesperado";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "Centro de soporte";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "No hay un centro de soporte configurado.";
+	}
+
 }

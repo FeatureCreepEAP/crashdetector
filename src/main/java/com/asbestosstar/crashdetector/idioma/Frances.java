@@ -10792,4 +10792,35 @@ public class Frances implements Idioma {
 		return "Performance - sélection";
 	}
 
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "Vous avez subi un crash. Si aucune fenêtre contextuelle avec une solution n'apparaît, veuillez envoyer les journaux au centre de support.";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "Aller en mode normal";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "Il n'y a pas de liens à copier.";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "Erreur inattendue";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "Centre de support";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "Aucun centre de support n'est configuré.";
+	}
+
 }

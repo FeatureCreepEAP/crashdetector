@@ -10273,4 +10273,35 @@ public class Ingles implements Idioma {
 		return "Performance - selection";
 	}
 
+	// English (UK)
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "You have experienced a crash. If a pop-up window with a solution does not appear, please send the logs to the support centre.";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "Go to normal mode";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "There are no links to copy.";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "Unexpected error";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "Support Centre";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "No support centre is configured.";
+	}
+
 }

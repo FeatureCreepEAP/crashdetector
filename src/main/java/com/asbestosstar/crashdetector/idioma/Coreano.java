@@ -9857,4 +9857,35 @@ public class Coreano implements Idioma {
 		return "성능 - 선택";
 	}
 
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "충돌이 발생했습니다. 해결책이 포함된 팝업 창이 나타나지 않으면 로그를 지원 센터로 보내주십시오.";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "일반 모드로 이동";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "복사할 링크가 없습니다.";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "예기치 않은 오류";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "지원 센터";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "구성된 지원 센터가 없습니다.";
+	}
+
 }

@@ -80,6 +80,7 @@ import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroD
 import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroLanzadorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUIEstiloLanzer;
+import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUIPrimitiva;
 import com.asbestosstar.crashdetector.gui.tipos.profiler.ProfilerGUIMinaly;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.ElementoQuickFixDemonSlayers;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlayers;
@@ -562,6 +563,7 @@ public class MonitorDePID {
 		TipoGUI.GPU_FIX.registrarGUI(GPUFixOptimusPrime.ID, GPUFixOptimusPrime::new);
 		TipoGUI.ADMINISTRADOR_DE_RENDIMIENTO.registrarGUI(AdministradorDeRendimientoNightcore.ID,
 				AdministradorDeRendimientoNightcore::new);
+		TipoGUI.PRINCIPAL.registrarGUI(PrincipalGUIPrimitiva.ID, () -> new PrincipalGUIPrimitiva());
 
 	}
 

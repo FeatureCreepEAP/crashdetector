@@ -10250,4 +10250,34 @@ public class Portuges implements Idioma {
 		return "Desempenho - seleção";
 	}
 
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "O jogo sofreu um crash. Se não aparecer uma janela pop-up com uma solução, por favor, envie os logs para a central de suporte.";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "Ir para o modo normal";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "Não há links para copiar.";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "Erro inesperado";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "Central de suporte";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "Não há uma central de suporte configurada.";
+	}
+
 }

@@ -9565,4 +9565,34 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Продуктивність - виділення";
 	}
 
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "Стався краш гри. Якщо не з'явиться спливаюче вікно з рішенням, будь ласка, надішліть логи до центру підтримки.";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "Перейти до звичайного режиму";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "Немає посилань для копіювання.";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "Неочікувана помилка";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "Центр підтримки";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "Центр підтримки не налаштовано.";
+	}
+
 }

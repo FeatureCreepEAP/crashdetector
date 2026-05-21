@@ -76,7 +76,8 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 		pack();
 		setSize(880, 640);
 
-		// Java 8: ubicar después de pack/setSize evita que el popup del combo calcule mal su área.
+		// Java 8: ubicar después de pack/setSize evita que el popup del combo calcule
+		// mal su área.
 		setLocationRelativeTo(blanco);
 
 		aplicarApariencia();
@@ -92,8 +93,6 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 			}
 		});
 	}
-
-
 
 	// ====== Construcción técnica de la UI (ahora en la implementación concreta)
 	// ======
@@ -462,7 +461,8 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 		// especialmente porque esta ventana usa java.awt.TextArea.
 		combo.setLightWeightPopupEnabled(false);
 
-		// Java 8: evita popups demasiado altos que se dibujan mal antes de mover la ventana.
+		// Java 8: evita popups demasiado altos que se dibujan mal antes de mover la
+		// ventana.
 		combo.setMaximumRowCount(12);
 	}
 

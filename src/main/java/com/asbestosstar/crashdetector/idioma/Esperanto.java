@@ -10221,4 +10221,35 @@ public class Esperanto implements Idioma {
 		return "Rendimento - selekto";
 	}
 
+	// Esperanto (Esperanto)
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "Vi spertis kraŝon. Se ne aperas ŝprucfenestro kun solvo, bonvolu sendi la protokolojn al la subtena centro.";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "Iri al normala modo";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "Ne estas ligiloj por kopii.";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "Neatendita eraro";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "Subtena centro";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "Neniu subtena centro estas agordita.";
+	}
+
 }

@@ -10430,4 +10430,34 @@ public class Tailandes implements Idioma {
 		return "ประสิทธิภาพ - การเลือก";
 	}
 
+	@Override
+	public String mensajeDialogoCompartirPrimitiva() {
+		return "เกมเกิดข้อผิดพลาด (crash) หากไม่มีหน้าต่างป๊อปอัปแสดงวิธีแก้ไข กรุณาส่งบันทึกไปยังศูนย์ช่วยเหลือ";
+	}
+
+	@Override
+	public String irAModoNormalEstiloTL() {
+		return "ไปยังโหมดปกติ";
+	}
+
+	@Override
+	public String noHayEnlacesParaCopiar() {
+		return "ไม่มีลิงก์ให้คัดลอก";
+	}
+
+	@Override
+	public String error_inesperado() {
+		return "ข้อผิดพลาดที่ไม่คาดคิด";
+	}
+
+	@Override
+	public String centroDeSoporte() {
+		return "ศูนย์ช่วยเหลือ";
+	}
+
+	@Override
+	public String noHayCentroSoporteConfigurado() {
+		return "ไม่ได้กำหนดค่าศูนย์ช่วยเหลือ";
+	}
+
 }
