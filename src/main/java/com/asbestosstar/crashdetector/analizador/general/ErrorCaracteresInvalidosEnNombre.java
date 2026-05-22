@@ -7,9 +7,6 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
 /**
  * Analiza errores cuando los mods contienen caracteres inválidos en sus nombres
  * de módulo. Detecta específicamente el error "Invalid module name: 'X' is not
@@ -18,9 +15,9 @@ import java.util.regex.Matcher;
  */
 public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 
-	// Patrón reutilizable para no recompilarlo por cada línea.
-	private static final Pattern PATRON_ERROR = Pattern
-			.compile("IllegalArgumentException: ([^:]+): Invalid module name: '([^']+)'");
+	private static final String PREFIJO_EXCEPCION = "IllegalArgumentException: ";
+	private static final String TEXTO_ERROR = ": Invalid module name: '";
+	private static final String TEXTO_FINAL = "' is not a Java identifier";
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -28,16 +25,10 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 	private String parteInvalida = "";
 	private String enlaceHtml = "";
 
-	/**
-	 * Bandera ligera para saber si el log contiene indicios del error. Se usa como
-	 * filtro rápido antes del análisis línea a línea.
-	 */
 	private boolean posibleErrorNombreInvalido = false;
 
 	@Override
 	public void verificar(Consola consola) {
-		// Trabajo global mínimo: solo comprobamos si el texto base del error aparece
-		// en algún punto del log. Si no, la verificación por línea se saltará.
 		String contenidoConsola = consola.contenido_verificar;
 		if (contenidoConsola == null) {
 			posibleErrorNombreInvalido = false;
@@ -48,41 +39,69 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 				&& contenidoConsola.contains("' is not a Java identifier");
 	}
 
-	/**
-	 * Análisis por línea del registro.
-	 * <p>
-	 * Busca el patrón:
-	 * {@code IllegalArgumentException: <modulo>: Invalid module name: '<x>' is not a Java identifier}
-	 * y extrae tanto el nombre del módulo como la parte inválida.
-	 * </p>
-	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó o sabemos que el log no contiene este tipo de error,
-		// no hacemos trabajo adicional.
 		if (activado || !posibleErrorNombreInvalido || linea == null) {
 			return;
 		}
 
-		// Detecta cualquier caso de "Invalid module name: 'X' is not a Java identifier"
-		if (linea.contains("Invalid module name: '") && linea.contains("' is not a Java identifier")) {
-
-			// Extrae el nombre completo del módulo y la parte inválida usando expresiones
-			// regulares
-			Matcher matcher = PATRON_ERROR.matcher(linea);
-
-			if (matcher.find()) {
-				nombreModulo = matcher.group(1);
-				parteInvalida = matcher.group(2);
-
-				// Registrar el error en el sistema de lectura con el número de línea
-				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-
-				mensaje = MonitorDePID.idioma.errorCaracteresInvalidosEnNombre(nombreModulo, parteInvalida)
-						+ Verificaciones.nl_html;
-				activado = true; // Es crítico y suele ocurrir una sola vez
-			}
+		if (!linea.contains("Invalid module name: '") || !linea.contains("' is not a Java identifier")) {
+			return;
 		}
+
+		String[] datos = extraerDatos(linea);
+		if (datos == null) {
+			return;
+		}
+
+		nombreModulo = datos[0];
+		parteInvalida = datos[1];
+
+		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+
+		mensaje = MonitorDePID.idioma.errorCaracteresInvalidosEnNombre(nombreModulo, parteInvalida)
+				+ Verificaciones.nl_html;
+
+		activado = true;
+	}
+
+	/**
+	 * Extrae: IllegalArgumentException: <modulo>: Invalid module name: '<parte>' is
+	 * not a Java identifier
+	 *
+	 * Sin regex.
+	 */
+	private static String[] extraerDatos(String linea) {
+		int inicioExcepcion = linea.indexOf(PREFIJO_EXCEPCION);
+		if (inicioExcepcion < 0) {
+			return null;
+		}
+
+		int inicioModulo = inicioExcepcion + PREFIJO_EXCEPCION.length();
+
+		int inicioTextoError = linea.indexOf(TEXTO_ERROR, inicioModulo);
+		if (inicioTextoError < 0 || inicioTextoError <= inicioModulo) {
+			return null;
+		}
+
+		String modulo = linea.substring(inicioModulo, inicioTextoError).trim();
+		if (modulo.length() == 0) {
+			return null;
+		}
+
+		int inicioParteInvalida = inicioTextoError + TEXTO_ERROR.length();
+
+		int finParteInvalida = linea.indexOf(TEXTO_FINAL, inicioParteInvalida);
+		if (finParteInvalida < 0 || finParteInvalida <= inicioParteInvalida) {
+			return null;
+		}
+
+		String parte = linea.substring(inicioParteInvalida, finParteInvalida).trim();
+		if (parte.length() == 0) {
+			return null;
+		}
+
+		return new String[] { modulo, parte };
 	}
 
 	@Override
@@ -97,14 +116,14 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 950.0f; // Máxima prioridad - error crítico que impide iniciar el juego
+		return 950.0f;
 	}
 
 	@Override
 	public String mensaje() {
-		if (!activado)
+		if (!activado) {
 			return "";
-		// Incluir solo el mensaje original y el enlace HTML (que ya tiene su formato)
+		}
 		return mensaje + enlaceHtml;
 	}
 
@@ -123,41 +142,27 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "caracters_invalidos_en_nombre";
 	}
 
-	/**
-	 * Marca trazos del stack trace que corresponden claramente a este problema.
-	 * <p>
-	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
-	 * <ul>
-	 * <li>El verificador ya se ha activado, y</li>
-	 * <li>El trazo contiene tanto la frase base "Invalid module name:" como "is not
-	 * a Java identifier".</li>
-	 * </ul>
-	 * </p>
-	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		if (!activado || trazo == null || trazo.trace == null) {
 			return false;
 		}
+
 		String t = trazo.trace;
 		return t.contains("Invalid module name:") && t.contains("is not a Java identifier");
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

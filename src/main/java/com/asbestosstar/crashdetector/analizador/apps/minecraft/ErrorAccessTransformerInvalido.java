@@ -22,6 +22,8 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 	private String nombreJar = "";
 	private String enlaceHtml = "";
 
+	public boolean posible = false;
+
 	/**
 	 * Verificación global no utilizada en este verificador.
 	 * <p>
@@ -32,7 +34,10 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
+		if (consola.contenido_verificar.contains("Invalid access transformer line in")) {
+			posible = true;
+		}
+
 	}
 
 	/**
@@ -44,23 +49,40 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó, no hace falta seguir procesando más líneas.
-		if (activado) {
+		// Si ya se activó o el chequeo global dijo que no es posible,
+		// no seguimos revisando líneas.
+		if (activado || !posible) {
 			return;
 		}
 
-		// Detecta el error específico de access transformer inválido
-		if (linea.contains("Invalid access transformer line in")) {
-			// Extrae el nombre del JAR problemático usando expresión regular
-			Pattern pattern = Pattern.compile("Invalid access transformer line in ([^:]+):");
-			Matcher matcher = pattern.matcher(linea);
-			if (matcher.find()) {
-				nombreJar = matcher.group(1);
-				mensaje = MonitorDePID.idioma.errorAccessTransformerInvalido(nombreJar) + Verificaciones.nl_html;
-				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-				activado = true;
-			}
+		String marcadorInicio = "Invalid access transformer line in ";
+		String marcadorFin = ":";
+
+		// Detecta el error específico de access transformer inválido.
+		int inicio = linea.indexOf(marcadorInicio);
+		if (inicio < 0) {
+			return;
 		}
+
+		// Mueve el índice hasta el inicio real del nombre del JAR.
+		inicio += marcadorInicio.length();
+
+		// Busca los dos puntos después del nombre del JAR.
+		int fin = linea.indexOf(marcadorFin, inicio);
+		if (fin < 0 || fin <= inicio) {
+			return;
+		}
+
+		// Extrae el nombre del JAR problemático.
+		nombreJar = linea.substring(inicio, fin).trim();
+
+		if (nombreJar.length() == 0) {
+			return;
+		}
+
+		mensaje = MonitorDePID.idioma.errorAccessTransformerInvalido(nombreJar) + Verificaciones.nl_html;
+		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		activado = true;
 	}
 
 	@Override

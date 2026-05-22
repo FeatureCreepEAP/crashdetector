@@ -1,8 +1,5 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
@@ -19,23 +16,32 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 public class ErrorJEIPluginFallido implements Verificaciones {
 
 	private boolean activado = false;
+	private boolean posible = false;
+
 	private String mensaje = "";
 	private String nombreClase = "";
 	private String modId = "";
 	private String pluginId = "";
 	private String enlaceHtml = "";
 
+	private static final String TEXTO_ERROR = "Caught an error from mod plugin: class";
+
 	/**
-	 * Verificación global no utilizada en este verificador.
+	 * Verificación global barata.
 	 * <p>
-	 * La detección real se hace por línea en
-	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
-	 * línea.
+	 * Solo revisa si el texto base aparece en el log completo. Así evitamos hacer
+	 * trabajo línea por línea cuando este error claramente no aparece.
 	 * </p>
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		if (consola.contenido_verificar.contains(TEXTO_ERROR)) {
+			posible = true;
+		}
 	}
 
 	/**
@@ -48,28 +54,89 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó, no seguimos procesando más líneas.
-		if (activado) {
+		// Si ya se activó o el chequeo global dijo que no es posible,
+		// no seguimos revisando líneas.
+		if (activado || !posible) {
 			return;
 		}
 
-		// Detecta el error específico de plugin JEI fallido
-		if (linea.contains("Caught an error from mod plugin: class")) {
-
-			// Extrae la información usando expresión regular
-			Pattern pattern = Pattern.compile("Caught an error from mod plugin: class ([^ ]+) ([^:]+):([^ ]+)");
-			Matcher matcher = pattern.matcher(linea);
-			if (matcher.find()) {
-				nombreClase = matcher.group(1);
-				modId = matcher.group(2);
-				pluginId = matcher.group(3);
-
-				mensaje = MonitorDePID.idioma.errorJEIPluginFallido(nombreClase, modId, pluginId)
-						+ Verificaciones.nl_html;
-				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-				activado = true;
-			}
+		if (linea == null) {
+			return;
 		}
+
+		int inicio = linea.indexOf(TEXTO_ERROR);
+		if (inicio < 0) {
+			return;
+		}
+
+		// Mover el índice al comienzo de la clase.
+		inicio += TEXTO_ERROR.length();
+
+		// Saltar espacios después del texto base.
+		while (inicio < linea.length() && linea.charAt(inicio) == ' ') {
+			inicio++;
+		}
+
+		if (inicio >= linea.length()) {
+			return;
+		}
+
+		// La clase termina en el siguiente espacio.
+		int finClase = linea.indexOf(' ', inicio);
+		if (finClase < 0 || finClase <= inicio) {
+			return;
+		}
+
+		nombreClase = linea.substring(inicio, finClase).trim();
+
+		if (nombreClase.isEmpty()) {
+			return;
+		}
+
+		// Después de la clase viene "modid:pluginId".
+		int inicioMod = finClase + 1;
+
+		// Saltar espacios antes de modid:pluginId.
+		while (inicioMod < linea.length() && linea.charAt(inicioMod) == ' ') {
+			inicioMod++;
+		}
+
+		if (inicioMod >= linea.length()) {
+			return;
+		}
+
+		int separador = linea.indexOf(':', inicioMod);
+		if (separador < 0 || separador <= inicioMod) {
+			return;
+		}
+
+		// El modId termina antes de los dos puntos.
+		modId = linea.substring(inicioMod, separador).trim();
+
+		if (modId.isEmpty()) {
+			return;
+		}
+
+		int inicioPlugin = separador + 1;
+		if (inicioPlugin >= linea.length()) {
+			return;
+		}
+
+		// El pluginId termina en el siguiente espacio o al final de la línea.
+		int finPlugin = linea.indexOf(' ', inicioPlugin);
+		if (finPlugin < 0) {
+			finPlugin = linea.length();
+		}
+
+		pluginId = linea.substring(inicioPlugin, finPlugin).trim();
+
+		if (pluginId.isEmpty()) {
+			return;
+		}
+
+		mensaje = MonitorDePID.idioma.errorJEIPluginFallido(nombreClase, modId, pluginId) + Verificaciones.nl_html;
+		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		activado = true;
 	}
 
 	@Override
@@ -89,8 +156,10 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		if (!activado)
+		if (!activado) {
 			return "";
+		}
+
 		return mensaje + enlaceHtml;
 	}
 
@@ -117,8 +186,9 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
 	 * <ul>
 	 * <li>El verificador ya se activó, y</li>
-	 * <li>El trazo contiene la línea completa característica del error (incluyendo
-	 * clase, modId y pluginId) o, como fallback muy estricto, el patrón base.</li>
+	 * <li>El trazo contiene la línea completa característica del error, incluyendo
+	 * clase, modId y pluginId, o como fallback muy estricto contiene el patrón base
+	 * y menciona JEI.</li>
 	 * </ul>
 	 * Es intencionadamente conservador: se prefiere un falso negativo antes que
 	 * marcar un trazo que no corresponda a este error.
@@ -133,26 +203,22 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 		String t = trazo.trace;
 
 		if (!nombreClase.isEmpty() && !modId.isEmpty() && !pluginId.isEmpty()) {
-			String esperado = "Caught an error from mod plugin: class " + nombreClase + " " + modId + ":" + pluginId;
+			String esperado = TEXTO_ERROR + " " + nombreClase + " " + modId + ":" + pluginId;
 			return t.contains(esperado);
 		}
 
 		// Fallback muy estricto si por alguna razón no se capturaron todos los datos.
-		return t.contains("Caught an error from mod plugin: class") && t.contains("JEI"); // opcional si el trazo suele
-																							// mencionar JEI
+		return t.contains(TEXTO_ERROR) && t.contains("JEI");
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

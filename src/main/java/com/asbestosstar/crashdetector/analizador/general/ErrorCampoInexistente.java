@@ -19,21 +19,6 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
  */
 public class ErrorCampoInexistente implements Verificaciones {
 
-	// Patrón simple tradicional: toma el token inmediatamente después de
-	// "NoSuchFieldError:"
-	private static final Pattern PATRON_ERROR_SIMPLE = Pattern.compile("java\\.lang\\.NoSuchFieldError:\\s+(\\w+)");
-
-	// Patrón extendido (Forge/Fabric más verboso): extrae el nombre de campo dentro
-	// de comillas simples.
-	// Ejemplo:
-	// java.lang.NoSuchFieldError: Class
-	// traben.entity_model_features.config.EMFConfig
-	// does not have member field
-	// 'traben.entity_model_features.config.EMFConfig$PhysicsModCompatChoice
-	// attemptPhysicsModPatch_2'
-	private static final Pattern PATRON_ERROR_MIEMBRO = Pattern.compile(
-			"java\\.lang\\.NoSuchFieldError:\\s*Class\\s+[^\\s]+\\s+does\\s+not\\s+have\\s+member\\s+field\\s+'([^']+)'");
-
 	/**
 	 * Bandera para indicar si ya se detectó este problema en el log.
 	 */
@@ -85,100 +70,124 @@ public class ErrorCampoInexistente implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// Si ya estamos activados y ya obtuvimos el stacktrace, no hacer nada más
-		if (activado && !esperandoLineaStack) {
+		if (linea == null || !posibleNoSuchField) {
 			return;
 		}
-		// Si ni siquiera hay rastro del error en todo el log, salir inmediatamente
-		if (!posibleNoSuchField || linea == null) {
+
+		if (activado && !esperandoLineaStack) {
 			return;
 		}
 
 		String l = linea;
 
-		// Si todavía no se ha detectado el error principal, buscarlo
-		if (!activado && l.contains("java.lang.NoSuchFieldError:")) {
-			// Intentar patrón extendido primero (con comillas)
-			String nombreCampo = null;
-			Matcher mExt = PATRON_ERROR_MIEMBRO.matcher(l);
-			if (mExt.find()) {
-				String crudo = mExt.group(1).trim();
-				int idxEspacio = crudo.lastIndexOf(' ');
-				nombreCampo = (idxEspacio >= 0 && idxEspacio < crudo.length() - 1) ? crudo.substring(idxEspacio + 1)
-						: crudo;
-			} else {
-				// Fallback: patrón simple
-				Matcher mSimple = PATRON_ERROR_SIMPLE.matcher(l);
-				if (mSimple.find()) {
-					nombreCampo = mSimple.group(1);
-				}
-			}
-
-			if (nombreCampo != null && !nombreCampo.isEmpty()) {
-				this.nombreCampoDetectado = nombreCampo;
-				this.lineaError = l.trim();
-				this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-
-				// 🔥 CORRECCIÓN: solo analizar la PRIMERA línea del stacktrace, no ±10 líneas
-				String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
-				String primeraLineaStack = "";
-				for (int i = numero_de_linea + 1; i < lineas.length; i++) {
-					String s = lineas[i].trim();
-					if (s.startsWith("at ")) {
-						primeraLineaStack = s;
-						break;
-					}
-				}
-
-				// Resetear todas las banderas
-				this.create = false;
-				this.epicfight = false;
-				this.azurelib = false;
-				this.minecraft = false;
-				this.dangerzone = false;
-				this.featurecreep = false;
-				this.modlauncher = false;
-				this.minecraftforge = false;
-				this.neoforged = false;
-				this.fabricloader = false;
-				this.pillowmc = false;
-
-				// Analizar SOLO la primera línea del stacktrace
-				String target = primeraLineaStack;
-
-				if (target.contains("com/simibubi/create") || target.contains("com.simibubi.create")) {
-					create = true;
-				} else if (target.contains("yesman/epicfight") || target.contains("yesman.epicfight")) {
-					epicfight = true;
-				} else if (target.contains("mod/azure/azurelib") || target.contains("mod.azure.azurelib")) {
-					azurelib = true;
-				} else if (target.contains("asbestosstar/") || target.contains("asbestosstar.")) {
-					featurecreep = true;
-				} else if (target.contains("dangerzone/") || target.contains("dangerzone.")) {
-					dangerzone = true;
-				} else if (target.contains("net/fabricmc/") || target.contains("net.fabricmc.")) {
-					fabricloader = true;
-				} else if (target.contains("net/neoforged/") || target.contains("net.neoforged.")) {
-					neoforged = true;
-				} else if (target.contains("net/pillowmc/") || target.contains("net.pillowmc.")) {
-					pillowmc = true;
-				} else if (target.contains("cpw/mods/modlauncher") || target.contains("cpw.mods.modlauncher")) {
-					modlauncher = true;
-				} else if (target.contains("net/minecraftforge") || target.contains("net.minecraftforge")) {
-					minecraftforge = true;
-				} else if ((target.contains("net/minecraft/") || target.contains("net.minecraft."))
-						&& !target.contains("net/minecraftforge/") && !target.contains("net.minecraftforge.")) {
-					minecraft = true;
-				}
-				// ⚠️ Si no coincide con ninguno, NO se marca ningún mod (incluido Forge)
-
-				this.activado = true;
-				this.esperandoLineaStack = true;
-				this.lineaStack = primeraLineaStack; // ya la tenemos
-				this.esperandoLineaStack = false;
+		if (!activado) {
+			if (l.indexOf("java.lang.NoSuchFieldError:") < 0) {
 				return;
 			}
+
+			String nombreCampo = extraerCampoNoSuchField(l);
+
+			if (nombreCampo == null || nombreCampo.isEmpty()) {
+				return;
+			}
+
+			this.nombreCampoDetectado = nombreCampo;
+			this.lineaError = l.trim();
+			this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+
+			resetearBanderasMods();
+
+			this.activado = true;
+			this.esperandoLineaStack = true;
+			return;
 		}
+
+		if (esperandoLineaStack) {
+			String s = l.trim();
+
+			if (s.startsWith("at ")) {
+				this.lineaStack = s;
+				detectarModDesdeStack(s);
+				this.esperandoLineaStack = false;
+			}
+		}
+	}
+
+	private void resetearBanderasMods() {
+		this.create = false;
+		this.epicfight = false;
+		this.azurelib = false;
+		this.minecraft = false;
+		this.dangerzone = false;
+		this.featurecreep = false;
+		this.modlauncher = false;
+		this.minecraftforge = false;
+		this.neoforged = false;
+		this.fabricloader = false;
+		this.pillowmc = false;
+	}
+
+	private void detectarModDesdeStack(String target) {
+		if (target == null || target.isEmpty()) {
+			return;
+		}
+
+		if (target.indexOf("com/simibubi/create") >= 0 || target.indexOf("com.simibubi.create") >= 0) {
+			create = true;
+		} else if (target.indexOf("yesman/epicfight") >= 0 || target.indexOf("yesman.epicfight") >= 0) {
+			epicfight = true;
+		} else if (target.indexOf("mod/azure/azurelib") >= 0 || target.indexOf("mod.azure.azurelib") >= 0) {
+			azurelib = true;
+		} else if (target.indexOf("asbestosstar/") >= 0 || target.indexOf("asbestosstar.") >= 0) {
+			featurecreep = true;
+		} else if (target.indexOf("dangerzone/") >= 0 || target.indexOf("dangerzone.") >= 0) {
+			dangerzone = true;
+		} else if (target.indexOf("net/fabricmc/") >= 0 || target.indexOf("net.fabricmc.") >= 0) {
+			fabricloader = true;
+		} else if (target.indexOf("net/neoforged/") >= 0 || target.indexOf("net.neoforged.") >= 0) {
+			neoforged = true;
+		} else if (target.indexOf("net/pillowmc/") >= 0 || target.indexOf("net.pillowmc.") >= 0) {
+			pillowmc = true;
+		} else if (target.indexOf("cpw/mods/modlauncher") >= 0 || target.indexOf("cpw.mods.modlauncher") >= 0) {
+			modlauncher = true;
+		} else if (target.indexOf("net/minecraftforge") >= 0 || target.indexOf("net.minecraftforge") >= 0) {
+			minecraftforge = true;
+		} else if ((target.indexOf("net/minecraft/") >= 0 || target.indexOf("net.minecraft.") >= 0)
+				&& target.indexOf("net/minecraftforge/") < 0 && target.indexOf("net.minecraftforge.") < 0) {
+			minecraft = true;
+		}
+	}
+
+	private String extraerCampoNoSuchField(String linea) {
+		String base = "java.lang.NoSuchFieldError:";
+		int idx = linea.indexOf(base);
+
+		if (idx < 0) {
+			return "";
+		}
+
+		String resto = linea.substring(idx + base.length()).trim();
+
+		int primeraComilla = resto.indexOf('\'');
+		if (primeraComilla >= 0) {
+			int segundaComilla = resto.indexOf('\'', primeraComilla + 1);
+			if (segundaComilla > primeraComilla) {
+				String crudo = resto.substring(primeraComilla + 1, segundaComilla).trim();
+				int espacio = crudo.lastIndexOf(' ');
+				return espacio >= 0 ? crudo.substring(espacio + 1).trim() : crudo;
+			}
+		}
+
+		int fin = 0;
+		while (fin < resto.length()) {
+			char c = resto.charAt(fin);
+			if (!Character.isLetterOrDigit(c) && c != '_' && c != '$') {
+				break;
+			}
+			fin++;
+		}
+
+		return fin > 0 ? resto.substring(0, fin) : "";
 	}
 
 	// Utilidad para escapar HTML básico

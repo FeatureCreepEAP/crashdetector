@@ -2,8 +2,6 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -16,76 +14,138 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Analiza errores cuando falla el registro de suscriptores automáticos. Detecta
- * específicamente el error "Failed to register automatic subscribers. ModID:
- * [modid], class [classname]". Incluye tanto el modid como la clase en el
- * mensaje y usa Buscardor para encontrar los JARs relacionados.
+ * específicamente el error:
+ *
+ * "Failed to register automatic subscribers. ModID: [modid], class [classname]"
+ *
+ * Incluye tanto el modid como la clase en el mensaje y usa Buscardor para
+ * encontrar los JARs relacionados.
  */
 public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 
 	private boolean activado = false;
+	private boolean posible = false;
+
 	private String mensaje = "";
 	private String modId = "";
 	private String nombreClase = "";
+
 	private List<String> modsUbicacion = new ArrayList<>();
+
 	private String enlaceHtml = "";
 
+	private static final String TEXTO_ERROR = "Failed to register automatic subscribers. ModID: ";
+
+	private static final String TEXTO_CLASE = ", class ";
+
 	/**
-	 * Verificación global no utilizada en este verificador.
+	 * Verificación global barata.
 	 * <p>
-	 * La detección real se hace por línea en
-	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
-	 * línea.
+	 * Solo revisa si el log completo contiene el texto base del error. Así evitamos
+	 * revisar línea por línea cuando el error claramente no existe.
 	 * </p>
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		if (consola.contenido_verificar.contains(TEXTO_ERROR)) {
+			posible = true;
+		}
 	}
 
 	/**
 	 * Verificación por línea del registro.
 	 * <p>
-	 * Busca el patrón: "Failed to register automatic subscribers. ModID: <modid>,
-	 * class <clase>" en la línea actual, extrae modId y nombre de clase, localiza
-	 * los mods implicados y registra la línea en el lector.
+	 * Busca el patrón:
+	 *
+	 * "Failed to register automatic subscribers. ModID: <modid>, class <clase>"
+	 *
+	 * en la línea actual, extrae modId y nombre de clase, localiza los mods
+	 * implicados y registra la línea en el lector.
 	 * </p>
 	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó, no seguimos procesando más líneas.
-		if (activado) {
+
+		// Si ya se activó o el chequeo global dijo que no es posible,
+		// no seguimos revisando líneas.
+		if (activado || !posible) {
 			return;
 		}
 
-		// Detecta el error específico de registro de suscriptores automáticos
-		if (linea.contains("Failed to register automatic subscribers. ModID:")) {
-
-			// Extrae el modid y el nombre de la clase usando expresión regular
-			Pattern pattern = Pattern
-					.compile("Failed to register automatic subscribers\\. ModID: ([^,]+), class ([^\\s]+)");
-			Matcher matcher = pattern.matcher(linea);
-
-			if (matcher.find()) {
-				modId = matcher.group(1).trim();
-				nombreClase = matcher.group(2).trim();
-
-				// Convierte el nombre de clase a formato de ruta para buscar en JARs
-				String classPath = nombreClase.replace('.', '/') + ".class";
-
-				// Busca mods que contienen esta clase
-				List<ArchivoDeMod> modsPotenciales = Buscardor.buscarModsConTermino(classPath);
-
-				// Extrae las ubicaciones para publicar de cada mod encontrado
-				for (ArchivoDeMod mod : modsPotenciales) {
-					modsUbicacion.add(mod.ubicacion_para_publicar());
-				}
-
-				mensaje = MonitorDePID.idioma.errorRegistroSuscriptoresAutomaticos(modId, nombreClase, modsUbicacion)
-						+ Verificaciones.nl_html;
-				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-				activado = true;
-			}
+		if (linea == null) {
+			return;
 		}
+
+		int inicio = linea.indexOf(TEXTO_ERROR);
+
+		if (inicio < 0) {
+			return;
+		}
+
+		// Mover al inicio real del modId.
+		inicio += TEXTO_ERROR.length();
+
+		if (inicio >= linea.length()) {
+			return;
+		}
+
+		// Buscar el separador entre modId y clase.
+		int separadorClase = linea.indexOf(TEXTO_CLASE, inicio);
+
+		if (separadorClase < 0 || separadorClase <= inicio) {
+			return;
+		}
+
+		// Extraer modId.
+		modId = linea.substring(inicio, separadorClase).trim();
+
+		if (modId.isEmpty()) {
+			return;
+		}
+
+		// Inicio real de la clase.
+		int inicioClase = separadorClase + TEXTO_CLASE.length();
+
+		if (inicioClase >= linea.length()) {
+			return;
+		}
+
+		// Buscar final de la clase.
+		// Normalmente termina en espacio o final de línea.
+		int finClase = linea.indexOf(' ', inicioClase);
+
+		if (finClase < 0) {
+			finClase = linea.length();
+		}
+
+		// Extraer clase.
+		nombreClase = linea.substring(inicioClase, finClase).trim();
+
+		if (nombreClase.isEmpty()) {
+			return;
+		}
+
+		// Convierte el nombre de clase a formato de ruta para buscar en JARs.
+		String classPath = nombreClase.replace('.', '/') + ".class";
+
+		// Busca mods que contienen esta clase.
+		List<ArchivoDeMod> modsPotenciales = Buscardor.buscarModsConTermino(classPath);
+
+		// Extrae las ubicaciones para publicar de cada mod encontrado.
+		for (ArchivoDeMod mod : modsPotenciales) {
+			modsUbicacion.add(mod.ubicacion_para_publicar());
+		}
+
+		mensaje = MonitorDePID.idioma.errorRegistroSuscriptoresAutomaticos(modId, nombreClase, modsUbicacion)
+				+ Verificaciones.nl_html;
+
+		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+
+		activado = true;
 	}
 
 	@Override
@@ -100,13 +160,15 @@ public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 900.0f; // Prioridad media-alta - error que impide funcionalidad específica del mod
+		return 900.0f; // Prioridad media-alta
 	}
 
 	@Override
 	public String mensaje() {
-		if (!activado)
+		if (!activado) {
 			return "";
+		}
+
 		return mensaje + enlaceHtml;
 	}
 
@@ -127,25 +189,24 @@ public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 
 	@Override
 	public String id() {
-		// Sin acentos, en minúsculas, con guiones bajos
+		// Sin acentos, en minúsculas, con guiones bajos.
 		return "registro_subscriptores_automaticos";
 	}
 
 	/**
 	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
 	 * <p>
-	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
+	 * Para evitar falsos positivos, solo devuelve true cuando:
 	 * <ul>
-	 * <li>El verificador ya se activó, y</li>
+	 * <li>El verificador ya se activó.</li>
 	 * <li>El trazo contiene el texto completo del error con los datos conocidos
-	 * (modId y clase), o bien el patrón base de forma muy estricta.</li>
+	 * (modId y clase), o bien el patrón base.</li>
 	 * </ul>
-	 * Es intencionadamente conservador: se prefiere un falso negativo a marcar un
-	 * trazo que no corresponda a este error.
 	 * </p>
 	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
+
 		if (!activado || trazo == null || trazo.trace == null) {
 			return false;
 		}
@@ -153,25 +214,24 @@ public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 		String t = trazo.trace;
 
 		if (!modId.isEmpty() && !nombreClase.isEmpty()) {
-			String esperado = "Failed to register automatic subscribers. ModID: " + modId + ", class " + nombreClase;
+
+			String esperado = TEXTO_ERROR + modId + TEXTO_CLASE + nombreClase;
+
 			return t.contains(esperado);
 		}
 
-		// Fallback muy estricto si por alguna razón no se capturaron los datos.
-		return t.contains("Failed to register automatic subscribers. ModID:");
+		// Fallback muy estricto.
+		return t.contains(TEXTO_ERROR);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

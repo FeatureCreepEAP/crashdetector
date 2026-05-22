@@ -22,13 +22,13 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  */
 public class ErrorConfiguracionServicioIDependencyLocator implements Verificaciones {
 
-	private static final String PATRON_ERROR = "Caused by: java\\.util\\.ServiceConfigurationError: .*IDependencyLocator: Unable to load ([^\\s]+)";
-
 	private boolean activado = false;
 	private String mensaje = "";
 	private String claseProblematica = "";
 	private List<String> modsUbicacion = new ArrayList<>();
 	private String enlaceHtml = "";
+
+	public boolean posible = false;
 
 	/**
 	 * Verificación global no utilizada en este verificador.
@@ -41,6 +41,10 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 	@Override
 	public void verificar(Consola consola) {
 		// No se usa: este verificador funciona en modo por línea.
+		String cont = consola.contenido_verificar;
+		if (cont.contains("ServiceConfigurationError") && cont.contains("IDependencyLocator")) {
+			posible = true;
+		}
 	}
 
 	/**
@@ -53,33 +57,62 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó, no es necesario seguir comprobando más líneas.
-		if (activado) {
+		// Si ya se activó o el chequeo global dijo que no es posible,
+		// no seguimos revisando más líneas.
+		if (activado || !posible) {
 			return;
 		}
 
-		if (linea.contains("ServiceConfigurationError") && linea.contains("IDependencyLocator")) {
-			Pattern patron = Pattern.compile(PATRON_ERROR);
-			Matcher matcher = patron.matcher(linea);
-			if (matcher.find()) {
-				claseProblematica = matcher.group(1);
-
-				// Buscar el mod que contiene esta clase
-				String classPath = claseProblematica.replace('.', '/') + ".class";
-				List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(classPath);
-
-				for (ArchivoDeMod mod : mods) {
-					modsUbicacion.add(mod.ubicacion_para_publicar());
-				}
-
-				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-				activado = true;
-
-				// Construir el mensaje final ahora que tenemos toda la info relevante
-				mensaje = MonitorDePID.idioma.errorConfiguracionServicio(claseProblematica,
-						modsUbicacion.isEmpty() ? null : modsUbicacion) + Verificaciones.nl_html + enlaceHtml;
-			}
+		// Verificación rápida inicial.
+		if (!linea.contains("ServiceConfigurationError") || !linea.contains("IDependencyLocator")) {
+			return;
 		}
+
+		// Texto que aparece justo antes del nombre de la clase.
+		String marcador = "IDependencyLocator: Unable to load ";
+
+		int inicio = linea.indexOf(marcador);
+
+		// Si no existe el marcador, salir.
+		if (inicio < 0) {
+			return;
+		}
+
+		// Mover al inicio real del nombre de clase.
+		inicio += marcador.length();
+
+		// Buscar el final de la clase.
+		// Normalmente termina en espacio o final de línea.
+		int fin = linea.indexOf(' ', inicio);
+
+		if (fin < 0) {
+			fin = linea.length();
+		}
+
+		// Extraer clase problemática.
+		claseProblematica = linea.substring(inicio, fin).trim();
+
+		// Validación básica.
+		if (claseProblematica.isEmpty()) {
+			return;
+		}
+
+		// Buscar el mod que contiene esta clase.
+		String classPath = claseProblematica.replace('.', '/') + ".class";
+
+		List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(classPath);
+
+		for (ArchivoDeMod mod : mods) {
+			modsUbicacion.add(mod.ubicacion_para_publicar());
+		}
+
+		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+
+		activado = true;
+
+		// Construir mensaje final.
+		mensaje = MonitorDePID.idioma.errorConfiguracionServicio(claseProblematica,
+				modsUbicacion.isEmpty() ? null : modsUbicacion) + Verificaciones.nl_html + enlaceHtml;
 	}
 
 	@Override

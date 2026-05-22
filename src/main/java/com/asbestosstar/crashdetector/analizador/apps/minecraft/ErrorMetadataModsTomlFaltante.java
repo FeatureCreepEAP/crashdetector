@@ -1,8 +1,6 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -21,22 +19,31 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 
 	private boolean activado = false;
+	private boolean posible = false;
+
 	private String mensaje = "";
 	private String modIdFaltante = "";
 	private List<String> modsPotenciales = null;
 	private String enlaceHtml = "";
 
+	private static final String TEXTO_ERROR = "mods.toml missing metadata for modid ";
+
 	/**
-	 * Verificación global no utilizada en este verificador.
+	 * Verificación global barata.
 	 * <p>
-	 * La detección real se hace por línea en
-	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
-	 * línea.
+	 * Solo revisa si el texto base aparece en el log completo. Así evitamos hacer
+	 * trabajo línea por línea cuando este error claramente no aparece.
 	 * </p>
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		if (consola.contenido_verificar.contains(TEXTO_ERROR)) {
+			posible = true;
+		}
 	}
 
 	/**
@@ -49,29 +56,74 @@ public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó, no seguimos procesando más líneas.
-		if (activado) {
+		// Si ya se activó o el chequeo global dijo que no es posible,
+		// no seguimos revisando líneas.
+		if (activado || !posible) {
 			return;
 		}
 
-		// Detecta el error específico de metadata faltante
-		if (linea.contains("mods.toml missing metadata for modid")) {
+		if (linea == null) {
+			return;
+		}
 
-			// Extrae el modid faltante usando expresión regular
-			Pattern pattern = Pattern.compile("mods\\.toml missing metadata for modid (\\w+)");
-			Matcher matcher = pattern.matcher(linea);
-			if (matcher.find()) {
-				modIdFaltante = matcher.group(1);
+		int inicio = linea.indexOf(TEXTO_ERROR);
+		if (inicio < 0) {
+			return;
+		}
 
-				// Busca mods que podrían estar causando el problema
-				modsPotenciales = Buscardor.obtenerModsConNombre(modIdFaltante);
+		inicio += TEXTO_ERROR.length();
 
-				mensaje = MonitorDePID.idioma.errorMetadataModsTomlFaltante(modIdFaltante, modsPotenciales)
-						+ Verificaciones.nl_html;
-				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-				activado = true;
+		if (inicio >= linea.length()) {
+			return;
+		}
+
+		int fin = buscarFinToken(linea, inicio);
+
+		modIdFaltante = linea.substring(inicio, fin).trim();
+
+		if (modIdFaltante.isEmpty()) {
+			return;
+		}
+
+		// Busca mods que podrían estar causando el problema.
+		modsPotenciales = Buscardor.obtenerModsConNombre(modIdFaltante);
+
+		mensaje = MonitorDePID.idioma.errorMetadataModsTomlFaltante(modIdFaltante, modsPotenciales)
+				+ Verificaciones.nl_html;
+		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		activado = true;
+	}
+
+	/**
+	 * Busca el final del token del modid.
+	 * <p>
+	 * Reemplaza el comportamiento de \w+ sin usar regex. Acepta letras, números,
+	 * guion bajo, punto y guion medio para ser un poco más tolerante con modid
+	 * reales.
+	 * </p>
+	 */
+	private int buscarFinToken(String texto, int inicio) {
+		int i = inicio;
+
+		while (i < texto.length()) {
+			char c = texto.charAt(i);
+
+			if (esCaracterDeModId(c)) {
+				i++;
+			} else {
+				break;
 			}
 		}
+
+		return i;
+	}
+
+	/**
+	 * Indica si un carácter puede pertenecer al modid.
+	 */
+	private boolean esCaracterDeModId(char c) {
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '-'
+				|| c == '.';
 	}
 
 	@Override
@@ -91,8 +143,10 @@ public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		if (!activado)
+		if (!activado) {
 			return "";
+		}
+
 		return mensaje + enlaceHtml;
 	}
 
@@ -136,25 +190,22 @@ public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 		String t = trazo.trace;
 
 		if (modIdFaltante != null && !modIdFaltante.isEmpty()) {
-			String esperado = "mods.toml missing metadata for modid " + modIdFaltante;
+			String esperado = TEXTO_ERROR + modIdFaltante;
 			return t.contains(esperado);
 		}
 
 		// Fallback muy estricto si por alguna razón no se capturó el modid.
-		return t.contains("mods.toml missing metadata for modid ");
+		return t.contains(TEXTO_ERROR);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

@@ -34,26 +34,6 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 public class NullPointer implements Verificaciones {
 
 	/**
-	 * Detecta el encabezado de una NPE: java.lang.NullPointerException: <mensaje
-	 * opcional>
-	 */
-	private static final Pattern CABECERA_NPE = Pattern.compile("java\\.lang\\.NullPointerException(?::\\s*)?(.*)",
-			Pattern.CASE_INSENSITIVE);
-
-	/**
-	 * Detecta mensajes modernos de Java como: "Cannot invoke 'X' because the return
-	 * value of 'Y' is null"
-	 */
-	private static final Pattern FORMATO_CANNOT = Pattern
-			.compile("Cannot\\s+(invoke|read|assign)[^\"]*\"([^\"]+)\"[^\"]*\"([^\"]+)\"");
-
-	/**
-	 * Patrón común en errores de Gson: intentar usar un JsonObject que es null Ej:
-	 * "Cannot invoke \"JsonObject.entrySet()\" because \"jsonobject\" is null"
-	 */
-	private static final Pattern ERROR_JSON = Pattern.compile("JsonObject\\.[a-zA-Z]+\\(\\).*\"([^\"]+)\" is null");
-
-	/**
 	 * Separador de líneas, definido en la interfaz base
 	 */
 	private static final String NL = Verificaciones.nl;
@@ -75,6 +55,8 @@ public class NullPointer implements Verificaciones {
 	private final Map<String, String> enlacesPorLinea = new HashMap<>();
 
 	public static List<String> lineas_ignorar = new ArrayList<>();
+
+	public boolean posiblePorLinea = false;
 
 	static {
 		// Ejemplo de línea a ignorar (puedes añadir más patrones específicos aquí)
@@ -109,6 +91,11 @@ public class NullPointer implements Verificaciones {
 			return;
 		}
 
+		if (!consola.contenido_verificar.contains("")) {
+			return;
+		}
+		posiblePorLinea = true;
+
 		for (TraceInfo trace : vdst.trazos_completos) {
 
 			if (trace == null || trace.trace == null) {
@@ -123,24 +110,14 @@ public class NullPointer implements Verificaciones {
 			String metodo = "método desconocido";
 			String objeto = "objeto";
 
-			Matcher mCannot = FORMATO_CANNOT.matcher(trace.trace);
-			Matcher mJson = ERROR_JSON.matcher(trace.trace);
-			Matcher mCabecera = CABECERA_NPE.matcher(trace.trace);
+			DatosNPE datos = extraerDatosNPE(trace.trace, true);
 
-			if (mCannot.find()) {
-				metodo = mCannot.group(2);
-				objeto = mCannot.group(3);
-			} else if (mJson.find()) {
-				metodo = "JsonObject.*()";
-				objeto = mJson.group(1);
-			} else if (mCabecera.find()) {
-				String detalle = mCabecera.group(1).trim();
-				if (!detalle.isEmpty()) {
-					metodo = detalle;
-				}
-			} else {
+			if (datos == null) {
 				continue;
 			}
+
+			metodo = datos.metodo;
+			objeto = datos.objeto;
 
 			// === Inferir origen SOLO desde este TraceInfo ===
 			String origen = inferirOrigenDesdeTrace(trace);
@@ -160,7 +137,12 @@ public class NullPointer implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola, String linea, int i) {
-		if (linea.contains("NullPointerException") && !linea.contains("at ")
+
+		if (!posiblePorLinea) {
+			return;
+		}
+
+		if (contieneIgnoreCase(linea, "NullPointerException") && !linea.contains("at ")
 				&& VerificacionDeStackTrace.tracePermite(linea)) {
 			procesarLineaSinTraza(linea, consola.verificacion_de_stacktrace, i, consola);
 		}
@@ -178,18 +160,14 @@ public class NullPointer implements Verificaciones {
 		String metodo = "desconocido";
 		String objeto = "desconocido";
 
-		Matcher mCannot = FORMATO_CANNOT.matcher(linea);
-		Matcher mJson = ERROR_JSON.matcher(linea);
+		DatosNPE datos = extraerDatosNPE(linea, false);
 
-		if (mCannot.find()) {
-			metodo = mCannot.group(2);
-			objeto = mCannot.group(3);
-		} else if (mJson.find()) {
-			metodo = "JsonObject.*()";
-			objeto = mJson.group(1);
-		} else {
-			return; // No es relevante
+		if (datos == null) {
+			return;
 		}
+
+		metodo = datos.metodo;
+		objeto = datos.objeto;
 
 		// Buscar origen SOLO en esta línea
 		String origen = detectarOrigenEnLinea(linea, vdst, numeroLinea);
@@ -205,6 +183,239 @@ public class NullPointer implements Verificaciones {
 		}
 
 		activado = true;
+	}
+
+	private static class DatosNPE {
+		String metodo;
+		String objeto;
+
+		DatosNPE(String metodo, String objeto) {
+			this.metodo = metodo;
+			this.objeto = objeto;
+		}
+	}
+
+	/**
+	 * Extrae datos de una NPE sin regex. Cubre: 1) Cannot invoke/read/assign
+	 * "...metodo..." because "...objeto..." 2) JsonObject.algo() ... "...objeto..."
+	 * is null 3) java.lang.NullPointerException: detalle
+	 */
+	private static DatosNPE extraerDatosNPE(String texto, boolean permitirCabecera) {
+		if (texto == null) {
+			return null;
+		}
+
+		DatosNPE cannot = extraerFormatoCannot(texto);
+		if (cannot != null) {
+			return cannot;
+		}
+
+		DatosNPE json = extraerFormatoJson(texto);
+		if (json != null) {
+			return json;
+		}
+
+		if (permitirCabecera) {
+			String detalle = extraerDetalleCabeceraNPE(texto);
+			if (detalle != null && !detalle.isEmpty()) {
+				return new DatosNPE(detalle, "objeto");
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Equivalente aproximado de:
+	 * Cannot\s+(invoke|read|assign)[^\"]*\"([^\"]+)\"[^\"]*\"([^\"]+)\"
+	 */
+	private static DatosNPE extraerFormatoCannot(String texto) {
+		int pos = indexOfIgnoreCase(texto, "Cannot");
+		if (pos < 0) {
+			return null;
+		}
+
+		int accionInicio = saltarEspacios(texto, pos + "Cannot".length());
+
+		if (!empiezaConPalabra(texto, accionInicio, "invoke") && !empiezaConPalabra(texto, accionInicio, "read")
+				&& !empiezaConPalabra(texto, accionInicio, "assign")) {
+			return null;
+		}
+
+		int busqueda = accionInicio;
+
+		while (true) {
+			int q1 = texto.indexOf('"', busqueda);
+			if (q1 < 0) {
+				return null;
+			}
+
+			int q2 = texto.indexOf('"', q1 + 1);
+			if (q2 < 0) {
+				return null;
+			}
+
+			int q3 = texto.indexOf('"', q2 + 1);
+			if (q3 < 0) {
+				return null;
+			}
+
+			int q4 = texto.indexOf('"', q3 + 1);
+			if (q4 < 0) {
+				return null;
+			}
+
+			String entreComillas = texto.substring(q2 + 1, q3);
+			if (!contieneIgnoreCase(entreComillas, "because")) {
+				// Avanzamos al cierre del primer par para evitar desalineaciones simétricas
+				busqueda = q2 + 1;
+				continue;
+			}
+
+			String metodo = texto.substring(q1 + 1, q2).trim();
+			String objeto = texto.substring(q3 + 1, q4).trim();
+
+			// Si la estructura es un match real ("because"), obligamos a romper o avanzar
+			if (!metodo.isEmpty() && !objeto.isEmpty()) {
+				return new DatosNPE(metodo, objeto);
+			}
+
+			// Si cayó aquí (p.ej. método vacío), avanzamos pasando TODO el bloque evaluado
+			// para evitar procesar q3 y q4 como si fueran un nuevo q1 y q2.
+			busqueda = q4 + 1;
+		}
+	}
+
+	/**
+	 * Equivalente aproximado de: JsonObject\.[a-zA-Z]+\(\).*\"([^\"]+)\" is null
+	 */
+	private static DatosNPE extraerFormatoJson(String texto) {
+		int pos = texto.indexOf("JsonObject.");
+		if (pos < 0) {
+			return null;
+		}
+
+		int metodoInicio = pos + "JsonObject.".length();
+		if (metodoInicio >= texto.length() || !esLetraAscii(texto.charAt(metodoInicio))) {
+			return null;
+		}
+
+		int parentesis = texto.indexOf("()", metodoInicio);
+		if (parentesis < 0) {
+			return null;
+		}
+
+		for (int i = metodoInicio; i < parentesis; i++) {
+			if (!esLetraAscii(texto.charAt(i))) {
+				return null;
+			}
+		}
+
+		int busqueda = parentesis + 2;
+
+		while (true) {
+			int q1 = texto.indexOf('"', busqueda);
+			if (q1 < 0) {
+				return null;
+			}
+
+			int q2 = texto.indexOf('"', q1 + 1);
+			if (q2 < 0) {
+				return null;
+			}
+
+			int despues = saltarEspacios(texto, q2 + 1);
+			if (empiezaConFrase(texto, despues, "is null")) {
+				String objeto = texto.substring(q1 + 1, q2).trim();
+				if (!objeto.isEmpty()) {
+					return new DatosNPE("JsonObject.*()", objeto);
+				}
+			}
+
+			busqueda = q1 + 1;
+		}
+	}
+
+	private static int indexOfDesde(String texto, String buscar, int desde) {
+		if (texto == null || buscar == null || desde < 0) {
+			return -1;
+		}
+
+		int max = texto.length() - buscar.length();
+		for (int i = desde; i <= max; i++) {
+			if (texto.regionMatches(false, i, buscar, 0, buscar.length())) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	private static boolean empiezaConFrase(String texto, int pos, String frase) {
+		return pos >= 0 && pos + frase.length() <= texto.length()
+				&& texto.regionMatches(false, pos, frase, 0, frase.length());
+	}
+
+	private static int saltarEspacios(String texto, int pos) {
+		while (pos < texto.length() && Character.isWhitespace(texto.charAt(pos))) {
+			pos++;
+		}
+		return pos;
+	}
+
+	private static boolean contieneIgnoreCase(String texto, String buscar) {
+		return indexOfIgnoreCase(texto, buscar) >= 0;
+	}
+
+	private static boolean esLetraAscii(char c) {
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+	}
+
+	/**
+	 * Equivalente aproximado de: java\.lang\.NullPointerException(?::\s*)?(.*)
+	 */
+	private static String extraerDetalleCabeceraNPE(String texto) {
+		int pos = indexOfIgnoreCase(texto, "java.lang.NullPointerException");
+		if (pos < 0) {
+			return null;
+		}
+
+		int fin = pos + "java.lang.NullPointerException".length();
+
+		fin = saltarEspacios(texto, fin);
+
+		if (fin >= texto.length()) {
+			return "";
+		}
+
+		if (texto.charAt(fin) == ':') {
+			return texto.substring(fin + 1).trim();
+		}
+
+		return texto.substring(fin).trim();
+	}
+
+	private static int indexOfIgnoreCase(String texto, String buscar) {
+		int max = texto.length() - buscar.length();
+		for (int i = 0; i <= max; i++) {
+			if (texto.regionMatches(true, i, buscar, 0, buscar.length())) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	private static boolean empiezaConPalabra(String texto, int pos, String palabra) {
+		if (pos < 0 || pos + palabra.length() > texto.length()) {
+			return false;
+		}
+
+		if (!texto.regionMatches(true, pos, palabra, 0, palabra.length())) {
+			return false;
+		}
+
+		int fin = pos + palabra.length();
+		return fin >= texto.length() || !Character.isLetterOrDigit(texto.charAt(fin));
 	}
 
 	/**

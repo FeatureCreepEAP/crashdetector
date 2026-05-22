@@ -7,9 +7,6 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
 /**
  * Analiza errores cuando hay discrepancia entre el ID del mod en la
  * anotación @Mod y el archivo mods.toml. Detecta específicamente el error "The
@@ -19,22 +16,34 @@ import java.util.regex.Matcher;
 public class ErrorDiscrepanciaModID implements Verificaciones {
 
 	private boolean activado = false;
+	private boolean posible = false;
+
 	private String mensaje = "";
 	private String rutaMod = "";
 	private String nombreMod = "";
 	private String enlaceHtml = "";
 
+	private static final String TEXTO_INICIO = "The Mod File ";
+	private static final String TEXTO_FIN = " has mods that were not found";
+
 	/**
-	 * Verificación global no utilizada en este verificador.
+	 * Verificación global barata.
 	 * <p>
-	 * La detección real se hace por línea en
-	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
-	 * línea.
+	 * Solo revisa si el log completo contiene las dos partes fijas del error. Así
+	 * evitamos revisar línea por línea cuando este error claramente no aparece.
 	 * </p>
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains(TEXTO_INICIO) && contenido.contains(TEXTO_FIN)) {
+			posible = true;
+		}
 	}
 
 	/**
@@ -47,33 +56,60 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó, no seguimos procesando más líneas.
-		if (activado) {
+		// Si ya se activó o el chequeo global dijo que no es posible,
+		// no seguimos revisando líneas.
+		if (activado || !posible) {
 			return;
 		}
 
-		// Detecta el error específico de mods no encontrados
-		if (linea.contains("has mods that were not found")) {
-			// Extrae la ruta del mod problemático usando expresión regular
-			Pattern pattern = Pattern.compile("The Mod File (.+) has mods that were not found");
-			Matcher matcher = pattern.matcher(linea);
-			if (matcher.find()) {
-				rutaMod = matcher.group(1);
-
-				// Extrae solo el nombre del archivo/directorio de la ruta completa
-				if (rutaMod.contains("\\")) {
-					nombreMod = rutaMod.substring(rutaMod.lastIndexOf("\\") + 1);
-				} else if (rutaMod.contains("/")) {
-					nombreMod = rutaMod.substring(rutaMod.lastIndexOf("/") + 1);
-				} else {
-					nombreMod = rutaMod;
-				}
-
-				mensaje = MonitorDePID.idioma.errorDiscrepanciaModID(nombreMod) + Verificaciones.nl_html;
-				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-				activado = true;
-			}
+		if (linea == null) {
+			return;
 		}
+
+		int inicio = linea.indexOf(TEXTO_INICIO);
+		if (inicio < 0) {
+			return;
+		}
+
+		inicio += TEXTO_INICIO.length();
+
+		int fin = linea.indexOf(TEXTO_FIN, inicio);
+		if (fin < 0 || fin <= inicio) {
+			return;
+		}
+
+		// Extrae la ruta completa del mod problemático.
+		rutaMod = linea.substring(inicio, fin).trim();
+
+		if (rutaMod.isEmpty()) {
+			return;
+		}
+
+		// Extrae solo el nombre del archivo/directorio de la ruta completa.
+		nombreMod = extraerNombreArchivo(rutaMod);
+
+		mensaje = MonitorDePID.idioma.errorDiscrepanciaModID(nombreMod) + Verificaciones.nl_html;
+		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		activado = true;
+	}
+
+	/**
+	 * Extrae el nombre final de una ruta Windows, Linux o macOS.
+	 */
+	private String extraerNombreArchivo(String ruta) {
+		if (ruta == null || ruta.isEmpty()) {
+			return "";
+		}
+
+		int ultimoSlash = ruta.lastIndexOf('/');
+		int ultimoBackslash = ruta.lastIndexOf('\\');
+		int ultimoSeparador = Math.max(ultimoSlash, ultimoBackslash);
+
+		if (ultimoSeparador >= 0 && ultimoSeparador + 1 < ruta.length()) {
+			return ruta.substring(ultimoSeparador + 1);
+		}
+
+		return ruta;
 	}
 
 	@Override
@@ -93,8 +129,10 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		if (!activado)
+		if (!activado) {
 			return "";
+		}
+
 		return mensaje + enlaceHtml;
 	}
 
@@ -137,25 +175,22 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 		String t = trazo.trace;
 
 		if (rutaMod != null && !rutaMod.isEmpty()) {
-			String esperado = "The Mod File " + rutaMod + " has mods that were not found";
+			String esperado = TEXTO_INICIO + rutaMod + TEXTO_FIN;
 			return t.contains(esperado);
 		}
 
 		// Fallback muy estricto si por alguna razón no se guardó la ruta.
-		return t.contains("The Mod File ") && t.contains(" has mods that were not found");
+		return t.contains(TEXTO_INICIO) && t.contains(TEXTO_FIN);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

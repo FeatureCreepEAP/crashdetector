@@ -7,9 +7,6 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * Detecta específicamente errores ZipException que incluyen el nombre del
  * archivo JAR corrupto. Extrae y muestra el nombre del archivo afectado para
@@ -17,38 +14,86 @@ import java.util.regex.Pattern;
  */
 public class ErrorJarCorruptoConNombre implements Verificaciones {
 
+	private static final String PREFIJO = "Error analyzing [";
+	private static final String SUFIJO = "]: java.util.zip.ZipException: zip END header not found";
+	private static final String EXTENSION_JAR = ".jar";
+
 	private boolean activado = false;
 	private String mensaje = "";
-	private static final Pattern PATRON_JAR_EN_ERROR = Pattern.compile(
-			"Error analyzing \\[([^\\]]+\\.jar)\\]: java\\.util\\.zip\\.ZipException: zip END header not found");
+
+	private boolean posibleJarCorruptoConNombre = false;
 
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa; el análisis es por línea
+		// Chequeo global barato: solo busca frases fijas.
+		String contenidoConsola = consola.contenido_verificar;
+		if (contenidoConsola == null) {
+			posibleJarCorruptoConNombre = false;
+			return;
+		}
+
+		posibleJarCorruptoConNombre = contenidoConsola.contains(PREFIJO) && contenidoConsola.contains(EXTENSION_JAR)
+				&& contenidoConsola.contains(SUFIJO);
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		if (this.activado) {
+		if (this.activado || !posibleJarCorruptoConNombre || linea == null) {
 			return;
 		}
 
-		Matcher m = PATRON_JAR_EN_ERROR.matcher(linea);
-		if (m.find()) {
-			String rutaCompleta = m.group(1);
-			// Extraer solo el nombre del archivo (último segmento después de '/')
-			String nombreJar = rutaCompleta.substring(rutaCompleta.lastIndexOf('/') + 1);
-			nombreJar = nombreJar.substring(nombreJar.lastIndexOf('\\') + 1); // Soporte para Windows
-
-			String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-			this.mensaje = MonitorDePID.idioma.errorJarCorruptoConNombre(nombreJar) + enlaceHtml;
-			this.activado = true;
+		String rutaCompleta = extraerRutaJar(linea);
+		if (rutaCompleta == null) {
+			return;
 		}
+
+		String nombreJar = extraerNombreArchivo(rutaCompleta);
+
+		String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		this.mensaje = MonitorDePID.idioma.errorJarCorruptoConNombre(nombreJar) + enlaceHtml;
+		this.activado = true;
+	}
+
+	private static String extraerRutaJar(String linea) {
+		int inicio = linea.indexOf(PREFIJO);
+		if (inicio < 0) {
+			return null;
+		}
+
+		int inicioRuta = inicio + PREFIJO.length();
+
+		int fin = linea.indexOf(SUFIJO, inicioRuta);
+		if (fin < 0 || fin <= inicioRuta) {
+			return null;
+		}
+
+		String ruta = linea.substring(inicioRuta, fin).trim();
+		if (ruta.length() == 0 || !ruta.endsWith(EXTENSION_JAR)) {
+			return null;
+		}
+
+		return ruta;
+	}
+
+	private static String extraerNombreArchivo(String rutaCompleta) {
+		int barraNormal = rutaCompleta.lastIndexOf('/');
+		int barraWindows = rutaCompleta.lastIndexOf('\\');
+		int ultimaBarra = Math.max(barraNormal, barraWindows);
+
+		if (ultimaBarra >= 0 && ultimaBarra + 1 < rutaCompleta.length()) {
+			return rutaCompleta.substring(ultimaBarra + 1);
+		}
+
+		return rutaCompleta;
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		return PATRON_JAR_EN_ERROR.matcher(trazo.trace).find();
+		if (trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		return extraerRutaJar(trazo.trace) != null;
 	}
 
 	@Override
@@ -68,7 +113,7 @@ public class ErrorJarCorruptoConNombre implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 865.0f; // Ligeramente más alta que la genérica, para priorizar esta
+		return 865.0f;
 	}
 
 	@Override
@@ -88,13 +133,11 @@ public class ErrorJarCorruptoConNombre implements Verificaciones {
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
@@ -103,5 +146,4 @@ public class ErrorJarCorruptoConNombre implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

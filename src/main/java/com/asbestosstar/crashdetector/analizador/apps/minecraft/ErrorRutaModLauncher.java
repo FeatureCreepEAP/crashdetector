@@ -23,11 +23,6 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 public class ErrorRutaModLauncher implements Verificaciones {
 
 	/**
-	 * Separador de líneas, definido en la interfaz base
-	 */
-	private static final String NL = Verificaciones.nl;
-
-	/**
 	 * Almacena los mensajes de error únicos detectados
 	 */
 	private final Map<String, String> errores = new HashMap<>();

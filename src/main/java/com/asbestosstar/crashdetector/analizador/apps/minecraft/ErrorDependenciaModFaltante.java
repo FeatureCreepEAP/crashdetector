@@ -7,9 +7,6 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
 /**
  * Analiza errores cuando un mod tiene dependencias con campos obligatorios
  * faltantes. Detecta específicamente el error "Missing required field mandatory
@@ -18,21 +15,31 @@ import java.util.regex.Matcher;
 public class ErrorDependenciaModFaltante implements Verificaciones {
 
 	private boolean activado = false;
+	private boolean posible = false;
+
 	private String mensaje = "";
 	private String nombreJar = "";
 	private String enlaceHtml = "";
 
+	private static final String TEXTO_ERROR = "Missing required field mandatory in dependency";
+
 	/**
-	 * Verificación global no utilizada en este verificador.
+	 * Verificación global barata.
 	 * <p>
-	 * La detección real se hace por línea en
-	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
-	 * línea.
+	 * Solo revisa si el texto base aparece en el log completo. Esto evita que el
+	 * verificador haga trabajo línea por línea cuando el error claramente no
+	 * existe.
 	 * </p>
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		if (consola.contenido_verificar.contains(TEXTO_ERROR)) {
+			posible = true;
+		}
 	}
 
 	/**
@@ -44,23 +51,43 @@ public class ErrorDependenciaModFaltante implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó, no seguimos procesando más líneas.
-		if (activado) {
+		// Si ya se activó o el chequeo global dijo que no es posible,
+		// no seguimos revisando líneas.
+		if (activado || !posible) {
 			return;
 		}
 
-		// Detecta el error específico de campo obligatorio faltante en dependencias
-		if (linea.contains("Missing required field mandatory in dependency")) {
-			// Extrae el nombre del JAR problemático usando expresión regular
-			Pattern pattern = Pattern.compile("Missing required field mandatory in dependency \\(([^)]+)\\)");
-			Matcher matcher = pattern.matcher(linea);
-			if (matcher.find()) {
-				nombreJar = matcher.group(1);
-				mensaje = MonitorDePID.idioma.errorDependenciaModFaltante(nombreJar) + Verificaciones.nl_html;
-				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-				activado = true;
-			}
+		if (linea == null) {
+			return;
 		}
+
+		// Primer filtro barato por texto fijo.
+		int inicioError = linea.indexOf(TEXTO_ERROR);
+		if (inicioError < 0) {
+			return;
+		}
+
+		// El nombre del JAR viene dentro de paréntesis después del texto del error.
+		int inicioParentesis = linea.indexOf('(', inicioError + TEXTO_ERROR.length());
+		if (inicioParentesis < 0) {
+			return;
+		}
+
+		int finParentesis = linea.indexOf(')', inicioParentesis + 1);
+		if (finParentesis < 0 || finParentesis <= inicioParentesis + 1) {
+			return;
+		}
+
+		// Extrae el nombre del JAR problemático.
+		nombreJar = linea.substring(inicioParentesis + 1, finParentesis).trim();
+
+		if (nombreJar.isEmpty()) {
+			return;
+		}
+
+		mensaje = MonitorDePID.idioma.errorDependenciaModFaltante(nombreJar) + Verificaciones.nl_html;
+		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		activado = true;
 	}
 
 	@Override
@@ -80,8 +107,10 @@ public class ErrorDependenciaModFaltante implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		if (!activado)
+		if (!activado) {
 			return "";
+		}
+
 		return mensaje + enlaceHtml;
 	}
 
@@ -125,25 +154,22 @@ public class ErrorDependenciaModFaltante implements Verificaciones {
 		String t = trazo.trace;
 
 		if (!nombreJar.isEmpty()) {
-			String esperado = "Missing required field mandatory in dependency (" + nombreJar + ")";
+			String esperado = TEXTO_ERROR + " (" + nombreJar + ")";
 			return t.contains(esperado);
 		}
 
 		// Fallback muy estricto si por alguna razón no se capturó el nombre del JAR.
-		return t.contains("Missing required field mandatory in dependency");
+		return t.contains(TEXTO_ERROR);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }
