@@ -58,18 +58,18 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 	 * Código de idioma solo para esta instancia del diálogo. No cambia el idioma
 	 * global del programa.
 	 */
-	protected String codigoIdiomaActual = MonitorDePID.idioma.codigo();
+	public String codigoIdiomaActual = MonitorDePID.idioma.codigo();
 
 	/**
 	 * Conversor de markdown a HTML.
 	 */
-	protected final MarkdownHTML markdownHTML = new MarkdownHTML();
+	public final MarkdownHTML markdownHTML = new MarkdownHTML();
 
 	/**
 	 * Árbol y modelo.
 	 */
-	protected final JTree arbolDocs = new JTree();
-	protected DefaultTreeModel modeloArbol;
+	public final JTree arbolDocs = new JTree();
+	public DefaultTreeModel modeloArbol;
 
 	/**
 	 * Visor HTML del documento.
@@ -105,12 +105,12 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 	/**
 	 * Mapa visible -> código.
 	 */
-	protected LinkedHashMap<String, String> mapaIdiomas;
+	public LinkedHashMap<String, String> mapaIdiomas;
 
 	/**
 	 * Representa un documento o carpeta dentro del árbol.
 	 */
-	protected static class NodoDocumento {
+	public static class NodoDocumento {
 		public final String nombreVisible;
 		public final Path rutaAbsoluta;
 		public final boolean carpeta;
@@ -143,7 +143,7 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 	/**
 	 * Construye la ventana base.
 	 */
-	protected void configurarVentanaBase() {
+	public void configurarVentanaBase() {
 		setTitle(MonitorDePID.idioma.docsTituloVentana());
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(1200, 760);
@@ -249,12 +249,12 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 	/**
 	 * La implementación concreta crea aquí el panel con la ilustración.
 	 */
-	protected abstract JPanel crearPanelIlustracion();
+	public abstract JPanel crearPanelIlustracion();
 
 	/**
 	 * La implementación concreta aplica colores, bordes y tipografías.
 	 */
-	protected abstract void aplicarApariencia();
+	public abstract void aplicarApariencia();
 
 	@Override
 	public void recargarApariencia() {
@@ -262,7 +262,7 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 		repaint();
 	}
 
-	protected JComboBox<String> crearComboIdiomas() {
+	public JComboBox<String> crearComboIdiomas() {
 		JComboBox<String> combo = new JComboBox<String>(mapaIdiomas.keySet().toArray(new String[0]));
 
 		String nombreVisibleActual = Idioma.nombreDeIdiomaDesdeCodigo(codigoIdiomaActual);
@@ -289,7 +289,7 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 	/**
 	 * Recarga el árbol para el idioma actual de esta ventana.
 	 */
-	protected void recargarArbolDeIdioma() {
+	public void recargarArbolDeIdioma() {
 		Path carpetaIdioma = carpetaDocsDeIdiomaActual();
 
 		DefaultMutableTreeNode raiz;
@@ -326,7 +326,7 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 		}
 	}
 
-	protected void construirNodosRecursivos(DefaultMutableTreeNode nodoPadre, Path carpeta) {
+	public void construirNodosRecursivos(DefaultMutableTreeNode nodoPadre, Path carpeta) {
 		try {
 			List<Path> hijos = new ArrayList<Path>();
 			Files.list(carpeta).forEach(hijos::add);
@@ -364,7 +364,7 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 		}
 	}
 
-	protected boolean esMarkdown(Path ruta) {
+	public boolean esMarkdown(Path ruta) {
 		if (ruta == null || ruta.getFileName() == null) {
 			return false;
 		}
@@ -372,7 +372,7 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 		return n.endsWith(".md") || n.endsWith(".markdown");
 	}
 
-	protected String nombreVisibleDesdeRuta(Path ruta) {
+	public String nombreVisibleDesdeRuta(Path ruta) {
 		String nombre = ruta.getFileName().toString();
 		if (Files.isDirectory(ruta)) {
 			return nombre;
@@ -384,7 +384,7 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 		return nombre;
 	}
 
-	protected void alSeleccionarNodo(TreeSelectionEvent e) {
+	public void alSeleccionarNodo(TreeSelectionEvent e) {
 		TreePath path = e.getPath();
 		if (path == null) {
 			return;
@@ -405,7 +405,7 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 		abrirDocumento(nodo.rutaAbsoluta);
 	}
 
-	protected void abrirDocumento(Path ruta) {
+	public void abrirDocumento(Path ruta) {
 		if (ruta == null || !Files.exists(ruta)) {
 			visorDocumento.setText(envolverHtmlSimple(MonitorDePID.idioma.docsDocumentoNoEncontrado()));
 			documentoActual = null;
@@ -428,7 +428,7 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 		}
 	}
 
-	protected void alHipervinculoDocumento(HyperlinkEvent e) {
+	public void alHipervinculoDocumento(HyperlinkEvent e) {
 		if (e.getEventType() != HyperlinkEvent.EventType.ACTIVATED) {
 			return;
 		}
@@ -514,11 +514,11 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 		}
 	}
 
-	protected boolean existeCodigoIdioma(String codigo) {
+	public boolean existeCodigoIdioma(String codigo) {
 		return codigo != null && Idioma.nombreDeIdiomaDesdeCodigo(codigo) != null;
 	}
 
-	protected void seleccionarDocumentoEnArbol(Path ruta) {
+	public void seleccionarDocumentoEnArbol(Path ruta) {
 		DefaultMutableTreeNode root = (DefaultMutableTreeNode) modeloArbol.getRoot();
 		TreePath treePath = encontrarTreePath(root, ruta);
 
@@ -528,7 +528,7 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 		}
 	}
 
-	protected TreePath encontrarTreePath(DefaultMutableTreeNode actual, Path ruta) {
+	public TreePath encontrarTreePath(DefaultMutableTreeNode actual, Path ruta) {
 		Object obj = actual.getUserObject();
 		if (obj instanceof NodoDocumento) {
 			NodoDocumento nd = (NodoDocumento) obj;
@@ -547,7 +547,7 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 		return null;
 	}
 
-	protected Path encontrarPrimerMarkdown(Path carpeta) {
+	public Path encontrarPrimerMarkdown(Path carpeta) {
 		try {
 			List<Path> encontrados = new ArrayList<Path>();
 			Files.walk(carpeta).forEach(p -> {
@@ -570,13 +570,13 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 		}
 	}
 
-	protected void expandirTodo() {
+	public void expandirTodo() {
 		for (int i = 0; i < arbolDocs.getRowCount(); i++) {
 			arbolDocs.expandRow(i);
 		}
 	}
 
-	protected Path carpetaDocsDeIdiomaActual() {
+	public Path carpetaDocsDeIdiomaActual() {
 		String nombreIdiomaCarpeta = nombreAsciiDeIdiomaActual();
 		if (nombreIdiomaCarpeta == null || nombreIdiomaCarpeta.isEmpty()) {
 			return null;
@@ -584,7 +584,7 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 		return Statics.carpeta.resolve("docs").resolve(nombreIdiomaCarpeta);
 	}
 
-	protected String nombreAsciiDeIdiomaActual() {
+	public String nombreAsciiDeIdiomaActual() {
 		try {
 			Idioma idiomaTemp = Idioma.desdeCodigo(codigoIdiomaActual);
 			if (idiomaTemp != null) {
@@ -600,16 +600,16 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 		return MonitorDePID.idioma.nombre_del_idioma_espanol_minusculas_ascii();
 	}
 
-	protected String nombreVisibleDeIdiomaActual() {
+	public String nombreVisibleDeIdiomaActual() {
 		String visible = Idioma.nombreDeIdiomaDesdeCodigo(codigoIdiomaActual);
 		return visible != null ? visible : codigoIdiomaActual;
 	}
 
-	protected String envolverHtmlSimple(String cuerpo) {
+	public String envolverHtmlSimple(String cuerpo) {
 		return "<html><body style='font-family:sans-serif;'>" + cuerpo + "</body></html>";
 	}
 
-	protected String escaparHtml(String s) {
+	public String escaparHtml(String s) {
 		if (s == null) {
 			return "";
 		}

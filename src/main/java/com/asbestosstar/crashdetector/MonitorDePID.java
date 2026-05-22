@@ -51,6 +51,7 @@ import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUIT
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
 import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUINimu;
 import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshabilitarVerificacionesAmaneKanata;
+import com.asbestosstar.crashdetector.gui.tipos.docs.LectadorDeDocumentosMinimalista;
 import com.asbestosstar.crashdetector.gui.tipos.docs.LectadorDeDocumentosStudyJuche;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaModioNoche;
@@ -569,6 +570,7 @@ public class MonitorDePID {
 		TipoGUI.DIALOGO_COMPARTIR.registrarGUI(DialogoCompartirPrimitiva.ID, () -> new DialogoCompartirPrimitiva());
 		TipoGUI.LECTADOR_DE_CONSOLAS.registrarGUI(LectadorDeConsolasMinimalista.ID,
 				() -> new LectadorDeConsolasMinimalista());
+		TipoGUI.DOCS.registrarGUI(LectadorDeDocumentosMinimalista.ID, LectadorDeDocumentosMinimalista::new);
 
 	}
 

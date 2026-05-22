@@ -19,13 +19,11 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
-import com.asbestosstar.crashdetector.mapas.QuadMap.QuadrupleKey;
 import com.asbestosstar.crashdetector.mapas.TriMap;
 import com.asbestosstar.crashdetector.waifu.RespuestaWaifu;
-import com.asbestosstar.crashdetector.waifu.VersionWaifu;
 import com.asbestosstar.crashdetector.waifu.WaifuAPI;
 
 public class FaltasClases implements Verificaciones {
@@ -88,6 +86,8 @@ public class FaltasClases implements Verificaciones {
 	 */
 	private boolean postProcesado = false;
 
+	public boolean posible = false;
+
 	static {
 		ignorar.add("avaritia");// Positiva falsa comun con KubJS y avaritia TODO agregar a advertencia
 		ignorar.add("DeadKingMusicManager");// Positiva falsa comun con IronSpellbooker y alltheleaks pero necesitemos
@@ -108,6 +108,14 @@ public class FaltasClases implements Verificaciones {
 	public void verificar(Consola consola) {
 		this.vdst = consola.verificacion_de_stacktrace;
 		String cont = consola.contenido_verificar;
+
+		if (cont.contains("ClassMetadataNotFoundException") && !cont.contains("ClassNotFoundException")
+				&& !cont.contains("NoClassDefFoundError") && vdst.clases_fatales_no_existentes.isEmpty()
+
+		) {
+			return;
+		}
+		posible = true;
 
 		// Agregar clases faltantes desde stacktraces fatales
 		for (TriMap.TripleKey<String, Integer, Integer> llave : vdst.clases_fatales_no_existentes.keySet()) {
@@ -160,6 +168,9 @@ public class FaltasClases implements Verificaciones {
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
 		if (linea == null) {
+			return;
+		}
+		if (!posible) {
 			return;
 		}
 

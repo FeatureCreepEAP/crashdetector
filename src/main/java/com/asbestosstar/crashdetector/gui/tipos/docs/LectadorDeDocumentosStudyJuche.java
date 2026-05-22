@@ -85,7 +85,7 @@ public class LectadorDeDocumentosStudyJuche extends LectadorDeDocumentosGUI {
 	}
 
 	@Override
-	protected JPanel crearPanelIlustracion() {
+	public JPanel crearPanelIlustracion() {
 		JPanel panel = new JPanel(new BorderLayout(6, 6));
 		panel.setPreferredSize(new Dimension(170, 170));
 
@@ -107,7 +107,7 @@ public class LectadorDeDocumentosStudyJuche extends LectadorDeDocumentosGUI {
 	}
 
 	@Override
-	protected void aplicarApariencia() {
+	public void aplicarApariencia() {
 		getContentPane().setBackground(colorFondoVentana.obtener());
 
 		if (panelRaiz != null) {
