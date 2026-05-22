@@ -81,7 +81,8 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 	 * 
 	 */
 
-	private String[] lineasConsola = null;
+	private boolean posiblePorConsola = false;
+	private final Map<Consola, String[]> lineasPorConsola = new HashMap<>();
 
 	/**
 	 * 
@@ -100,12 +101,22 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 	 */
 
 	@Override
-
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
 
-		// Este método se deja vacío, toda la lógica está en verificar(Consola, String,
-		// int)
+		String contenido = consola.contenido_verificar;
 
+		boolean posible = contenido.indexOf("requires") >= 0 || contenido.indexOf("Requires") >= 0
+				|| contenido.indexOf("only supports") >= 0 || contenido.indexOf("Only supports") >= 0
+				|| contenido.indexOf("Missing or unsupported mandatory dependencies:") >= 0
+				|| contenido.indexOf("Failure message: Mod ") >= 0 || contenido.indexOf("which is missing") >= 0
+				|| contenido.indexOf("Currently,") >= 0;
+
+		if (posible) {
+			posiblePorConsola = true;
+		}
 	}
 
 	/**
@@ -130,10 +141,12 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 		// Si el array de líneas no ha sido inicializado, se divide el contenido total.
 
-		if (lineasConsola == null) {
+		if (consola == null || linea == null) {
+			return;
+		}
 
-			lineasConsola = consola.contenido_verificar.split(Verificaciones.nl);
-
+		if (!posiblePorConsola) {
+			return;
 		}
 
 		String lineaActual = linea.trim();
@@ -242,6 +255,9 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 			// Itera sobre las siguientes líneas para encontrar los mods con dependencias
 			// faltantes.
 
+			String[] lineasConsola=obetnerLineasDeConsola(consola);
+
+
 			for (int j = i + 1; j < lineasConsola.length; j++) {
 
 				String lineaDep = lineasConsola[j].trim();
@@ -298,6 +314,9 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 	 */
 
 	private void procesarNuevoFormatoDependencia(Consola consola, String lineaActual, int numero_de_linea) {
+
+		String[] lineasConsola=obetnerLineasDeConsola(consola);
+
 
 		try {
 
@@ -489,6 +508,8 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 			// Buscar la versión actual de 'geckoanimfix' en las líneas siguientes.
 
 			String versionActual = "desconocida";
+			String[] lineasConsola=obetnerLineasDeConsola(consola);
+
 
 			for (int i = 1; i <= 3; i++) {
 
@@ -861,8 +882,11 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 			String versionActual = "no encontrada";
 
+
+			String[] lineasConsola=obetnerLineasDeConsola(consola);
 			for (int i = 1; i <= 3; i++) {
 
+				
 				if (numero_de_linea + i < lineasConsola.length) {
 
 					String lineaSiguiente = limpiarFormato(lineasConsola[numero_de_linea + i].trim());
@@ -901,6 +925,26 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 		}
 
+	}
+	
+	
+	public String[] obetnerLineasDeConsola(Consola consola) {
+		if (consola == null) {
+			return new String[0];
+		}
+
+		String[] lineas = lineasPorConsola.get(consola);
+
+		if (lineas == null) {
+			if (consola.contenido_verificar == null) {
+				return new String[0];
+			}
+
+			lineas = consola.contenido_verificar.split(Verificaciones.nl);
+			lineasPorConsola.put(consola, lineas);
+		}
+
+		return lineas;
 	}
 
 	/**

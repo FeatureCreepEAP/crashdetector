@@ -21,7 +21,8 @@ public class LenguajeProveedorCheck implements Verificaciones {
 
 	// Cache del contenido de la consola dividido por líneas para evitar hacer split
 	// repetidos.
-	private String[] lineasConsola = null;
+	private boolean posiblePorConsola = false;
+	private final Map<Consola, String[]> lineasPorConsola = new HashMap<Consola, String[]>();
 
 	/**
 	 * Verifica el contenido de la consola para detectar errores relacionados con
@@ -35,10 +36,29 @@ public class LenguajeProveedorCheck implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// La lógica principal se realiza ahora en el método por línea para mejorar
-		// el rendimiento y reutilizar el mismo análisis en el escaneo línea a línea.
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar;
+
+		boolean posible = contenido.indexOf("language provider") >= 0
+				|| contenido.indexOf("Language Provider") >= 0
+				|| contenido.indexOf("languageprovider") >= 0
+				|| contenido.indexOf("LanguageProvider") >= 0
+				|| contenido.indexOf("Failed to load language provider") >= 0
+				|| contenido.indexOf("Loading language provider") >= 0
+	;
+
+		if (posible) {
+			posiblePorConsola = true;
+		}
 	}
 
+	
+	
+	
+	
 	/**
 	 * Verificación por línea del registro.
 	 * <p>
@@ -54,14 +74,21 @@ public class LenguajeProveedorCheck implements Verificaciones {
 		if (activado) {
 			return;
 		}
+		
+		
 
-		// Inicializamos el array de líneas una sola vez usando el contenido completo.
-		if (lineasConsola == null) {
-			lineasConsola = consola.contenido_verificar.split(Verificaciones.nl);
+		if (consola == null || linea == null) {
+			return;
 		}
 
-		String lineaActual = linea;
+		if (!posiblePorConsola) {
+			return;
+		}
 
+		String lineaActual = linea.trim();
+		String[] lineasConsola = obetnerLineasDeConsola(consola);
+
+		
 		if (lineaActual.contains("Mod File") && lineaActual.contains("needs language provider")) {
 			try {
 				// Extraer detalles del error
@@ -101,6 +128,29 @@ public class LenguajeProveedorCheck implements Verificaciones {
 			}
 		}
 	}
+	
+	
+	
+	public String[] obetnerLineasDeConsola(Consola consola) {
+		if (consola == null) {
+			return new String[0];
+		}
+
+		String[] lineas = lineasPorConsola.get(consola);
+
+		if (lineas == null) {
+			if (consola.contenido_verificar == null) {
+				return new String[0];
+			}
+
+			lineas = consola.contenido_verificar.split(Verificaciones.nl);
+			lineasPorConsola.put(consola, lineas);
+		}
+
+		return lineas;
+	}
+	
+	
 
 	@Override
 	public Verificaciones nueva() {

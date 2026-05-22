@@ -429,7 +429,7 @@ public class Drivers implements Verificaciones {
 
 	private void procesarProblemaOpenAL(Consola consola, int numero_de_linea) {
 		if (!mensajeOpenALAgregado) {
-			mensajes.append(nl);
+			mensajes.append(nl_html);
 			mensajes.append(MonitorDePID.idioma.problema_con_openAL());
 			mensajeOpenALAgregado = true;
 			activado = true;
