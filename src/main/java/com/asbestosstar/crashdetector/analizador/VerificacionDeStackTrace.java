@@ -25,6 +25,9 @@ public class VerificacionDeStackTrace {
 	 */
 	public static List<ListaDenegadosTrace> denegados = new ArrayList<ListaDenegadosTrace>();
 
+	// Reglas rápidas: solo "contains" simple.
+	public static List<String> denegadosContiene = new ArrayList<String>();
+
 	Consola consola;
 
 	// Patrón para coincidir con rastros de pila de excepciones de Java
@@ -189,20 +192,25 @@ public class VerificacionDeStackTrace {
 
 	private static boolean tracePermitePorRango(String[] lineas, int inicio, int fin) {
 
-		if (denegados == null || denegados.isEmpty()) {
+		if ((denegadosContiene == null || denegadosContiene.isEmpty()) && (denegados == null || denegados.isEmpty())) {
 			return true;
 		}
 
-		// Primero probar cada línea individualmente.
-		// Esto evita construir un String grande para la mayoría de reglas,
-		// porque casi todas tus reglas usan contains(), startsWith(), equals(), etc.
 		for (int i = inicio; i <= fin && i < lineas.length; i++) {
-			String linea = lineas[i];
 
-			if (linea == null) {
+			String linea = lineas[i];
+			if (linea == null || linea.isEmpty()) {
 				continue;
 			}
 
+			// === Reglas rápidas: contains simple ===
+			for (String texto : denegadosContiene) {
+				if (linea.contains(texto)) {
+					return false;
+				}
+			}
+
+			// === Reglas avanzadas: lambdas/predicados ===
 			for (ListaDenegadosTrace pred : denegados) {
 				if (pred.predicado(linea)) {
 					return false;
@@ -210,34 +218,21 @@ public class VerificacionDeStackTrace {
 			}
 		}
 
-		// Solo si ninguna línea individual coincidió, probar el trace completo.
-		// Esto mantiene compatibilidad con reglas que necesitan varias líneas a la vez,
-		// por ejemplo reglas con A && B donde A y B podrían estar en líneas diferentes.
-		StringBuilder sb = null;
-
-		for (int i = inicio; i <= fin && i < lineas.length; i++) {
-			if (sb == null) {
-				sb = new StringBuilder();
-			} else {
-				sb.append(Verificaciones.nl);
-			}
-
-			sb.append(lineas[i]);
-		}
-
-		if (sb == null) {
-			return true;
-		}
-
-		String traceCompleto = sb.toString();
-
-		for (ListaDenegadosTrace pred : denegados) {
-			if (pred.predicado(traceCompleto)) {
-				return false;
-			}
-		}
-
 		return true;
+	}
+
+	public static void agregarDenegadoContiene(String texto) {
+		if (texto == null || texto.isEmpty()) {
+			return;
+		}
+		denegadosContiene.add(texto);
+	}
+
+	public static void agregarDenegadoPredicado(ListaDenegadosTrace predicado) {
+		if (predicado == null) {
+			return;
+		}
+		denegados.add(predicado);
 	}
 
 	private TraceInfo construirYProcesarTraceInfo(String[] lineas, int inicio, int fin, int nivel, boolean fatal) {

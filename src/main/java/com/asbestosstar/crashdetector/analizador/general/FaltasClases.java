@@ -174,26 +174,26 @@ public class FaltasClases implements Verificaciones {
 			return;
 		}
 
-		// Saltar líneas con WARN (sin excepciones)
-		if (linea.contains("/WARN]") || linea.contains("Warn")
-				|| VerificacionDeStackTrace.esLineaDeAdvertenciaEstandar(linea)) {
-			return;
-		}
-
-		if (ignorarClaseOLinea(linea)) {
-			return;
-		}
-
-		// Eliminar prefijo de log tipo "[hh:mm:ss] [Server thread/INFO]: ..."
-		int indiceDosPuntos = linea.indexOf(':');
-		if (indiceDosPuntos != -1 && linea.charAt(0) == '[') {
-			linea = linea.substring(indiceDosPuntos + 1).trim();
-		}
-
 		String claseCruda = null;
 
 		// Procesar errores de clase faltante
 		if (linea.contains("java.lang.ClassNotFoundException:") || linea.contains("java.lang.NoClassDefFoundError:")) {
+
+			// Saltar líneas con WARN (sin excepciones)
+			if (linea.contains("/WARN]") || linea.contains("Warn")
+					|| VerificacionDeStackTrace.esLineaDeAdvertenciaEstandar(linea)) {
+				return;
+			}
+
+			if (ignorarClaseOLinea(linea)) {
+				return;
+			}
+
+			// Eliminar prefijo de log tipo "[hh:mm:ss] [Server thread/INFO]: ..."
+			int indiceDosPuntos = linea.indexOf(':');
+			if (indiceDosPuntos != -1 && linea.charAt(0) == '[') {
+				linea = linea.substring(indiceDosPuntos + 1).trim();
+			}
 
 			String[] llevas = { "java.lang.ClassNotFoundException:", "java.lang.NoClassDefFoundError:" };
 
@@ -312,8 +312,27 @@ public class FaltasClases implements Verificaciones {
 	private boolean esModidSospechoso(String modid) {
 		if (modid == null)
 			return true;
+
 		// Token corto que termina en 3+ dígitos -> casi siempre falso positivo.
-		return modid.length() <= 6 && modid.matches(".*\\d{3,}$");
+		if (modid.length() > 6)
+			return false;
+
+		int consecutivos = 0;
+
+		for (int i = modid.length() - 1; i >= 0; i--) {
+			char c = modid.charAt(i);
+
+			if (c >= '0' && c <= '9') {
+				consecutivos++;
+
+				if (consecutivos >= 3)
+					return true;
+			} else {
+				return false;
+			}
+		}
+
+		return false;
 	}
 
 	/**

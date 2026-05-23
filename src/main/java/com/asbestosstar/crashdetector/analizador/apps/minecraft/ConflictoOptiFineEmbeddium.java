@@ -27,7 +27,7 @@ public class ConflictoOptiFineEmbeddium implements Verificaciones {
 	public void verificar(Consola consola) {
 		// Verificamos si OptiFine está presente en el contenido del registro
 		if (consola.contenido_verificar != null) {
-			encontradoOptiFine = consola.contenido_verificar.toLowerCase().contains("optifine");
+			encontradoOptiFine = consola.contenido_verificar.contains("optifine");
 		}
 	}
 
