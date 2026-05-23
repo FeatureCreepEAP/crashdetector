@@ -1,18 +1,13 @@
 package com.asbestosstar.crashdetector.divisor;
 
-import java.io.File;
 import java.nio.file.Path;
-
-import com.asbestosstar.crashdetector.CrashDetectorLogger;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class TLauncherConsolaDivisor implements DivisorDeArchivos {
 
 	@Override
-	public int obtenerLineaOriginal(String contentido_existente) {
+	public int obtenerLineaOriginal(String[] lineas) {
 		// TODO Auto-generated method stub
 
-		String[] lineas = contentido_existente.split(Verificaciones.nl);
 		int ultima = 0;
 		for (int i = 0; i < lineas.length - 1; i++) {
 			String lin = lineas[i];

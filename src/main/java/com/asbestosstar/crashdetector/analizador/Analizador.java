@@ -435,7 +435,7 @@ public class Analizador {
 				CrashDetectorLogger.log("reinciar vdst");
 
 				CrashDetectorLogger.log("Analizando registro: " + consola.archivo.getFileName());
-				final String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
+				final String[] lineas = consola.lineas_verificar;
 
 				// 1) Pre-pass en paralelo: verificar(consola) para TODAS las verificaciones
 				// normales

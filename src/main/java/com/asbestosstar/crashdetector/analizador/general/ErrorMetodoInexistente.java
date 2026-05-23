@@ -67,7 +67,7 @@ public class ErrorMetodoInexistente implements Verificaciones {
 		}
 
 		// Obtener la siguiente línea significativa
-		String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
+		String[] lineas = consola.lineas_verificar;
 
 		this.lineaSiguiente = "";
 

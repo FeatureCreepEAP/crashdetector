@@ -126,7 +126,7 @@ public class FaltasClases implements Verificaciones {
 					numero_linea_consola);
 
 			if (numero_linea_consola > 0) {
-				String linea_menos1 = cont.split(nl)[numero_linea_consola - 1];
+				String linea_menos1 = consola.lineas_verificar[numero_linea_consola - 1];
 				if (linea_menos1.toLowerCase().contains("catching")
 						|| linea_menos1.toLowerCase().contains("rhino.CachedClassInfo")) {
 					continue; // Skip catching errors
@@ -224,7 +224,7 @@ public class FaltasClases implements Verificaciones {
 		}
 
 		if (numero_de_linea > 0) {
-			String linea_menos1 = consola.contenido_verificar.split(nl)[numero_de_linea - 1];
+			String linea_menos1 = consola.lineas_verificar[numero_de_linea - 1];
 			// CrashDetectorLogger.log(linea_menos1+ " linea menos 1");
 			if (linea_menos1.toLowerCase().contains("catching")
 					|| linea_menos1.toLowerCase().contains("rhino.CachedClassInfo")) {// A veces lineas tiene esta
@@ -428,7 +428,7 @@ public class FaltasClases implements Verificaciones {
 			return resultado;
 		}
 
-		String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
+		String[] lineas = consola.lineas_verificar;
 
 		// Buscar hacia abajo SOLO dentro del mismo bloque de stacktrace
 		for (int i = numeroLinea + 1; i < lineas.length && i <= numeroLinea + 50; i++) {
@@ -836,7 +836,7 @@ public class FaltasClases implements Verificaciones {
 	private String buscarOrigenEnLineaAnterior(int numeroLinea, Consola consola) {
 		if (consola == null)
 			return "";
-		String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
+		String[] lineas = consola.lineas_verificar;
 		if (numeroLinea <= 0 || numeroLinea >= lineas.length)
 			return "";
 

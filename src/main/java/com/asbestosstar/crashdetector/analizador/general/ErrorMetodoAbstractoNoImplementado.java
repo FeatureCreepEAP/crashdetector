@@ -68,7 +68,7 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 		// Buscar origen dinámicamente en las siguientes 10 líneas
 		String origen = "";
 		if (consola != null && consola.contenido_verificar != null) {
-			String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
+			String[] lineas = consola.lineas_verificar;
 			for (int j = numero_de_linea + 1; j < Math.min(numero_de_linea + 11, lineas.length); j++) {
 				String l = lineas[j].trim();
 				if (l.startsWith("at ")) {

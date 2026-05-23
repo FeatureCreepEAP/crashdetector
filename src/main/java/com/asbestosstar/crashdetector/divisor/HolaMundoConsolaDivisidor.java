@@ -4,8 +4,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
-
 /**
  * Un marcador para consolas que admiten SysOut pero que no tienen otro marcador
  * memorable para dividir. Asegúrese de imprimir la cadena HOLA_MUNDO al
@@ -29,10 +27,9 @@ public class HolaMundoConsolaDivisidor implements DivisorDeArchivos {
 	}
 
 	@Override
-	public int obtenerLineaOriginal(String contentido_existente) {
+	public int obtenerLineaOriginal(String[] lineas) {
 		// TODO Auto-generated method stub
 
-		String[] lineas = contentido_existente.split(Verificaciones.nl);
 		int ultima = 0;
 		for (int i = 0; i < lineas.length - 1; i++) {
 			String lin = lineas[i];

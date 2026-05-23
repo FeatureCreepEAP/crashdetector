@@ -82,7 +82,6 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 	 */
 
 	private boolean posiblePorConsola = false;
-	private final Map<Consola, String[]> lineasPorConsola = new HashMap<>();
 
 	/**
 	 * 
@@ -255,8 +254,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 			// Itera sobre las siguientes líneas para encontrar los mods con dependencias
 			// faltantes.
 
-			String[] lineasConsola=obetnerLineasDeConsola(consola);
-
+			String[] lineasConsola = consola.lineas_verificar;
 
 			for (int j = i + 1; j < lineasConsola.length; j++) {
 
@@ -315,8 +313,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 	private void procesarNuevoFormatoDependencia(Consola consola, String lineaActual, int numero_de_linea) {
 
-		String[] lineasConsola=obetnerLineasDeConsola(consola);
-
+		String[] lineasConsola = consola.lineas_verificar;
 
 		try {
 
@@ -508,8 +505,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 			// Buscar la versión actual de 'geckoanimfix' en las líneas siguientes.
 
 			String versionActual = "desconocida";
-			String[] lineasConsola=obetnerLineasDeConsola(consola);
-
+			String[] lineasConsola = consola.lineas_verificar;
 
 			for (int i = 1; i <= 3; i++) {
 
@@ -882,11 +878,9 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 			String versionActual = "no encontrada";
 
-
-			String[] lineasConsola=obetnerLineasDeConsola(consola);
+			String[] lineasConsola = consola.lineas_verificar;
 			for (int i = 1; i <= 3; i++) {
 
-				
 				if (numero_de_linea + i < lineasConsola.length) {
 
 					String lineaSiguiente = limpiarFormato(lineasConsola[numero_de_linea + i].trim());
@@ -925,26 +919,6 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 		}
 
-	}
-	
-	
-	public String[] obetnerLineasDeConsola(Consola consola) {
-		if (consola == null) {
-			return new String[0];
-		}
-
-		String[] lineas = lineasPorConsola.get(consola);
-
-		if (lineas == null) {
-			if (consola.contenido_verificar == null) {
-				return new String[0];
-			}
-
-			lineas = consola.contenido_verificar.split(Verificaciones.nl);
-			lineasPorConsola.put(consola, lineas);
-		}
-
-		return lineas;
 	}
 
 	/**

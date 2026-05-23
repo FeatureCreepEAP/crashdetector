@@ -52,6 +52,7 @@ public class Consola {
 	public int linea_original;
 	public boolean nueva = false;
 	public String contenido_verificar;
+	public String[] lineas_verificar;
 
 	public VerificacionDeStackTrace verificacion_de_stacktrace;
 
@@ -136,7 +137,7 @@ public class Consola {
 		for (DivisorDeArchivos div : divisores) {
 			String contento_existe = MonitorDePID.leer_archivo(archivo);
 			if (div.predicado(archivo, contento_existe)) {
-				int ln = div.obtenerLineaOriginal(contento_existe);
+				int ln = div.obtenerLineaOriginal(contento_existe.split(Verificaciones.nl));
 				if (ln > 0) {
 					linea_original = ln;
 					break;
@@ -201,7 +202,7 @@ public class Consola {
 						String contenido = MonitorDePID.leer_archivo(f.toPath());
 						if (div.predicado(f.toPath(), contenido)) {
 							huboDivisor = true;
-							int ln = div.obtenerLineaOriginal(contenido);
+							int ln = div.obtenerLineaOriginal(contenido.split(Verificaciones.nl));
 							if (ln > 0) {
 								linea = ln;
 								break;
@@ -331,6 +332,7 @@ public class Consola {
 				for (LimpiadorDeRegistro limp : limpiadores) {
 					if (limp.predicado(archivo)) {
 						contenido_verificar = limp.limpiarConsola(para_verificar.toString());
+						lineas_verificar=contenido_verificar.split(Verificaciones.nl);
 						this.limpiador = limp;
 						limpiado = true;
 					}
@@ -338,6 +340,7 @@ public class Consola {
 				if (!limpiado) {
 					this.limpiador = new LimpiadorNingun();
 					contenido_verificar = para_verificar.toString();
+					lineas_verificar=contenido_verificar.split(Verificaciones.nl);
 				}
 
 //				if (contenido_verificar.contains(MonitorDePID.mensaje_de_registro_lanzer_completo)) {
@@ -373,6 +376,7 @@ public class Consola {
 		for (LimpiadorDeRegistro limp : limpiadores) {
 			if (limp.predicado(archivo)) {
 				contenido_verificar = limp.limpiarConsola(contento);
+				lineas_verificar=contenido_verificar.split(Verificaciones.nl);
 				limpiado = true;
 				this.limpiador = limp;
 			}
@@ -380,6 +384,7 @@ public class Consola {
 		if (!limpiado) {
 			this.limpiador = new LimpiadorNingun();
 			contenido_verificar = contento.toString();
+			lineas_verificar=contenido_verificar.split(Verificaciones.nl);
 		}
 
 	}
