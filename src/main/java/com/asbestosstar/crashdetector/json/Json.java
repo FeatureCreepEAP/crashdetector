@@ -45,6 +45,12 @@ public class Json {
 			return new JsonGson();
 		if (claseExiste("org.jboss.dmr.ModelNode"))
 			return new JsonDMR();
+//		if (claseExiste("com.fasterxml.jackson.databind.ObjectMapper"))
+//		    return new JsonJackson();
+
+		if (claseExiste("org.json.simple.parser.JSONParser"))
+		    return new JsonSimple();
+		
 		return null;
 	}
 
