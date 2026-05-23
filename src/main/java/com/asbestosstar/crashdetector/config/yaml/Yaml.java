@@ -1,36 +1,39 @@
-package com.asbestosstar.crashdetector.config.json;
+package com.asbestosstar.crashdetector.config.yaml;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 
 /**
- * Punto de entrada para leer y escribir datos tipo JSON. Detecta Gson o JBoss
- * DMR por clases disponibles. Expone una API estilo ModelNode con nombres en
- * español.
+ * Punto de entrada para leer y escribir YAML. Detecta SnakeYAML o
+ * Configurate-YAML por clases disponibles.
  */
-public class Json {
+public class Yaml {
 
 	private static final Motor motor = seleccionarMotor();
 
-	public Json() {
-	}
-
-	public static Nodo leer(String json) {
+	public static Nodo leer(String yaml) {
 		if (motor == null)
-			throw new IllegalStateException("No se encontro Gson ni JBoss DMR");
-		return motor.leer(json);
+			throw new IllegalStateException("No se encontro SnakeYAML ni Configurate-YAML");
+		return motor.leer(yaml);
 	}
 
 	public static Nodo crearObjeto() {
 		if (motor == null)
-			throw new IllegalStateException("No se encontro Gson ni JBoss DMR");
+			throw new IllegalStateException("No se encontro SnakeYAML ni Configurate-YAML");
 		return motor.crearObjeto();
+	}
+
+	public static Nodo crearArreglo() {
+		if (motor == null)
+			throw new IllegalStateException("No se encontro SnakeYAML ni Configurate-YAML");
+		return motor.crearArreglo();
 	}
 
 	public static String escribir(Nodo nodo) {
 		if (motor == null)
-			throw new IllegalStateException("No se encontro Gson ni JBoss DMR");
+			throw new IllegalStateException("No se encontro SnakeYAML ni Configurate-YAML");
 		return motor.escribir(nodo);
 	}
 
@@ -41,54 +44,43 @@ public class Json {
 	}
 
 	private static Motor seleccionarMotor() {
-		if (claseExiste("com.google.gson.JsonElement"))
-			return new JsonGson();
-		if (claseExiste("org.jboss.dmr.ModelNode"))
-			return new JsonDMR();
-//		if (claseExiste("com.fasterxml.jackson.databind.ObjectMapper"))
-//		    return new JsonJackson();
+		if (claseExiste("org.yaml.snakeyaml.Yaml"))
+			return new YamlSnakeYaml();
 
-		if (claseExiste("org.json.simple.parser.JSONParser"))
-			return new JsonSimple();
+//		if (claseExiste("org.spongepowered.configurate.yaml.YamlConfigurationLoader"))
+//			return new YamlConfigurate();
+
+//		if (claseExiste("com.fasterxml.jackson.dataformat.yaml.YAMLFactory"))
+//			return new YamlJackson();
 
 		return null;
 	}
 
 	private static boolean claseExiste(String cn) {
 		try {
-			Class.forName(cn, false, Json.class.getClassLoader());
-			CrashDetectorLogger.log("JSON clase " + cn);
+			Class.forName(cn, false, Yaml.class.getClassLoader());
+			CrashDetectorLogger.log("YAML clase " + cn);
 			return true;
 		} catch (Throwable t) {
 			return false;
 		}
 	}
 
-	/**
-	 * Nodo inspirado en ModelNode con nombres en español. Puede representar objeto,
-	 * arreglo o valor.
-	 */
 	public static class Nodo {
-		/**
-		 * Referencia interna del motor (Gson / DMR). Nota: se mantiene publico por
-		 * compatibilidad, pero se recomienda NO usarlo directamente fuera de este
-		 * paquete. Use los metodos de Nodo/Motor.
-		 */
+
 		public Object interno;
 
 		final Motor motorRef;
 
-		// contexto para operaciones del tipo obtener y agregar
-		Object padre; // objeto padre o arreglo padre
-		String claveEnPadre; // clave si el padre es objeto
-		Integer indiceEnPadre; // indice si el padre es arreglo
+		Object padre;
+		String claveEnPadre;
+		Integer indiceEnPadre;
 
 		public Nodo(Object interno, Motor motorRef) {
 			this.interno = interno;
 			this.motorRef = motorRef;
 		}
 
-		// constructor con contexto
 		public Nodo(Object interno, Motor motorRef, Object padre, String clave, Integer indice) {
 			this.interno = interno;
 			this.motorRef = motorRef;
@@ -105,28 +97,18 @@ public class Json {
 			return motorRef.esArreglo(this);
 		}
 
-		/**
-		 * Devuelve las claves de un objeto JSON sin exponer clases internas (Gson/DMR).
-		 * Si el nodo no es objeto, devuelve una lista vacia.
-		 */
-		public java.util.List<String> claves() {
+		public List<String> claves() {
 			return motorRef.claves(this);
 		}
 
-		// objeto
 		public Nodo obtener(String nombre) {
 			return motorRef.obtener(this, nombre);
 		}
 
-		/**
-		 * Elimina una propiedad del objeto. Si el nodo no es objeto, lanza
-		 * IllegalStateException.
-		 */
 		public boolean eliminar(String nombre) {
 			return motorRef.eliminar(this, nombre);
 		}
 
-		// poner sobre el nodo actual
 		public Nodo poner(String valor) {
 			return motorRef.poner(this, valor);
 		}
@@ -151,7 +133,6 @@ public class Json {
 			return motorRef.poner(this, valorNodo);
 		}
 
-		// arreglo sobre el nodo actual
 		public Nodo agregar(String valor) {
 			return motorRef.agregar(this, valor);
 		}
@@ -184,7 +165,6 @@ public class Json {
 			return motorRef.en(this, indice);
 		}
 
-		// conversiones
 		public String comoCadena() {
 			return motorRef.comoCadena(this);
 		}
@@ -205,7 +185,6 @@ public class Json {
 			return motorRef.comoDouble(this);
 		}
 
-		// serializacion del nodo actual
 		public String escribir() {
 			return motorRef.escribir(this);
 		}
@@ -215,15 +194,15 @@ public class Json {
 		}
 	}
 
-	/**
-	 * Contrato de motores.
-	 */
 	public interface Motor {
+
 		String nombre();
 
-		Nodo leer(String json);
+		Nodo leer(String yaml);
 
 		Nodo crearObjeto();
+
+		Nodo crearArreglo();
 
 		String escribir(Nodo nodo);
 
@@ -231,24 +210,14 @@ public class Json {
 
 		boolean esArreglo(Nodo nodo);
 
-		/**
-		 * Devuelve claves de un objeto JSON. Para nodos que no son objeto, debe
-		 * devolver lista vacia.
-		 */
-		java.util.List<String> claves(Nodo objeto);
+		List<String> claves(Nodo objeto);
 
 		Nodo obtener(Nodo actual, String nombre);
 
-		/**
-		 * Elimina una propiedad de un objeto JSON. Devuelve true si existia y fue
-		 * eliminada, false si no existia.
-		 */
 		boolean eliminar(Nodo actual, String nombre);
 
-		// poner actua sobre el nodo actual
 		Nodo poner(Nodo actual, Object valor);
 
-		// agregar actua sobre el nodo actual
 		Nodo agregar(Nodo actual, Object valor);
 
 		Nodo agregarNodo(Nodo actual, Nodo valorNodo);

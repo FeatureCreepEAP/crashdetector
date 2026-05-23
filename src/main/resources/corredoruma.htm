@@ -1,682 +1,686 @@
 <!doctype html>
 <html lang="ja">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>240i ファミコン風ウマランナー</title>
-<style>
-  :root {
-    --escala: 3;
-    --crema: #f8e8b0;
-  }
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>240i ファミコン風ウマランナー</title>
+	<style>
+		:root {
+			--escala: 3;
+			--crema: #f8e8b0;
+		}
 
-  html, body {
-    margin: 0;
-    min-height: 100%;
-    background: #050508;
-    color: var(--crema);
-    font-family: monospace;
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-  }
+		html,
+		body {
+			margin: 0;
+			min-height: 100%;
+			background: #050508;
+			color: var(--crema);
+			font-family: monospace;
+			display: grid;
+			place-items: center;
+			overflow: hidden;
+		}
 
-  .gabinete {
-    position: relative;
-    padding: 22px;
-    background: linear-gradient(#2a2930, #111116);
-    border: 4px solid #050508;
-    box-shadow: 0 0 0 4px #383040, 0 24px 80px #000;
-  }
+		.gabinete {
+			position: relative;
+			padding: 22px;
+			background: linear-gradient(#2a2930, #111116);
+			border: 4px solid #050508;
+			box-shadow: 0 0 0 4px #383040, 0 24px 80px #000;
+		}
 
-  .envoltura-pantalla {
-    position: relative;
-    width: calc(256px * var(--escala));
-    height: calc(240px * var(--escala));
-    overflow: hidden;
-    background: #000;
-    image-rendering: pixelated;
-    border: 6px solid #07070a;
-    box-shadow: inset 0 0 40px rgba(0,0,0,.75);
-  }
+		.envoltura-pantalla {
+			position: relative;
+			width: calc(256px * var(--escala));
+			height: calc(240px * var(--escala));
+			overflow: hidden;
+			background: #000;
+			image-rendering: pixelated;
+			border: 6px solid #07070a;
+			box-shadow: inset 0 0 40px rgba(0, 0, 0, .75);
+		}
 
-  canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-    background: #78a8e8;
-  }
+		canvas {
+			width: 100%;
+			height: 100%;
+			display: block;
+			image-rendering: pixelated;
+			image-rendering: crisp-edges;
+			background: #78a8e8;
+		}
 
-  .marquesina {
-    margin-top: 14px;
-    text-align: center;
-    font-size: 14px;
-    color: #f8e8b0;
-    text-shadow: 2px 2px #000;
-  }
+		.marquesina {
+			margin-top: 14px;
+			text-align: center;
+			font-size: 14px;
+			color: #f8e8b0;
+			text-shadow: 2px 2px #000;
+		}
 
-  kbd {
-    background: #050508;
-    border: 1px solid #605870;
-    padding: 2px 6px;
-    color: #fff0b8;
-  }
-</style>
+		kbd {
+			background: #050508;
+			border: 1px solid #605870;
+			padding: 2px 6px;
+			color: #fff0b8;
+		}
+	</style>
 </head>
+
 <body>
-  <div class="gabinete">
-    <div class="envoltura-pantalla">
-      <canvas id="juego" width="256" height="240"></canvas>
-    </div>
-    <div class="marquesina"><kbd>←</kbd>/<kbd>→</kbd> 選択 / 速度調整 &nbsp; <kbd>SPACE</kbd> ジャンプ &nbsp; <kbd>↓</kbd> しゃがむ</div>
-  </div>
-
-<script>
-(() => {
-  "use strict";
-
-  const lienzo = document.getElementById("juego");
-  const contexto = lienzo.getContext("2d", { alpha: false });
-  contexto.imageSmoothingEnabled = false;
-
-  const ANCHO = 256;
-  const ALTO = 240;
-  const SUELO_Y = 188;
-  const ACERA_Y = SUELO_Y + 3;
-
-  const color = {
-    // Paleta aproximada de Famicom/NES. No se usan colores fuera de esta tabla.
-    cielo: "#5C94FC",
-    nube: "#FCFCFC",
-    crema: "#F8B800",
-    piel: "#FCE0A8",
-    pielSombra: "#F8B878",
-    blanco: "#FCFCFC",
-    negro: "#000000",
-    oscuro: "#3CBCFC",
-    marron: "#503000",
-    marronClaro: "#AC7C00",
-    peloOscuro: "#442800",
-    tostado: "#F8B878",
-    rojo: "#E40058",
-    rosa: "#F878F8",
-    morado: "#9878F8",
-    moradoMedio: "#6844FC",
-    moradoOscuro: "#4428BC",
-    azul: "#0058F8",
-    uniforme: "#B8B8F8",
-    verde: "#00A800",
-    pasto: "#007800",
-    amarillo: "#F8D800",
-    gris: "#BCBCBC",
-    grisClaro: "#D8D8D8",
-    grisOscuro: "#7C7C7C",
-    sombra: "#3C3C3C",
-    asfalto: "#545454",
-    asfaltoOscuro: "#2C2C2C"
-  };
-
-  let estado = "seleccion";
-  let fotograma = 0;
-  let velocidadBase = 1.55;
-  let velocidad = velocidadBase;
-  let impulsoVelocidad = 0;
-  let puntaje = 0;
-  let record = Number(localStorage.getItem("umaRunnerRecord") || 0);
-  let sacudida = 0;
-  let personajeElegido = Number(localStorage.getItem("umaRunnerPersonaje") || 0);
-  personajeElegido = personajeElegido === 1 ? 1 : 0;
-
-  const personajes = [
-    { id: "corredora_roja", nombre: "ルビー", dibujar: dibujarCorredoraRoja, retrato: dibujarRetratoRoja },
-    { id: "semana_especial", nombre: "スペシャル", dibujar: dibujarSemanaEspecial, retrato: dibujarRetratoEspecial }
-  ];
-
-  const teclas = { salto: false, abajo: false, izquierda: false, derecha: false };
-
-  const jugador = {
-    x: 42,
-    y: SUELO_Y - 34,
-    ancho: 22,
-    alto: 34,
-    vy: 0,
-    enSuelo: true,
-    agachado: false
-  };
-
-  const obstaculos = [];
-  const particulas = [];
-  const colinas = [];
-  const nubes = [];
-
-  for (let i = 0; i < 5; i++) nubes.push({ x: i * 58, y: 22 + (i % 3) * 13, v: .25 + i * .06 });
-  for (let i = 0; i < 6; i++) colinas.push({ x: i * 50, y: 156 + (i % 2) * 8, ancho: 80, alto: 26 });
-
-  function reiniciar() {
-    localStorage.setItem("umaRunnerPersonaje", String(personajeElegido));
-    estado = "jugando";
-    fotograma = 0;
-    velocidadBase = 1.55;
-    velocidad = velocidadBase;
-    impulsoVelocidad = 0;
-    puntaje = 0;
-    sacudida = 0;
-    obstaculos.length = 0;
-    particulas.length = 0;
-    jugador.y = SUELO_Y - 34;
-    jugador.vy = 0;
-    jugador.enSuelo = true;
-    jugador.agachado = false;
-  }
-
-  function presionarSalto() {
-    if (estado === "seleccion" || estado === "fin") {
-      reiniciar();
-      return;
-    }
-    if (jugador.enSuelo) {
-      jugador.vy = -5.8;
-      jugador.enSuelo = false;
-      crearPolvo(jugador.x + 8, ACERA_Y - 4, 5);
-    }
-  }
-
-  function elegirPersonaje(cambio) {
-    if (estado !== "seleccion") return;
-    personajeElegido = (personajeElegido + cambio + personajes.length) % personajes.length;
-  }
-
-  addEventListener("keydown", e => {
-    if (["Space", "ArrowUp", "KeyW", "Enter"].includes(e.code)) {
-      e.preventDefault();
-      if (!teclas.salto) presionarSalto();
-      teclas.salto = true;
-    }
-    if (["ArrowDown", "KeyS"].includes(e.code)) {
-      e.preventDefault();
-      teclas.abajo = true;
-    }
-    if (["ArrowLeft", "KeyA"].includes(e.code)) {
-      e.preventDefault();
-      if (!teclas.izquierda) elegirPersonaje(-1);
-      teclas.izquierda = true;
-    }
-    if (["ArrowRight", "KeyD"].includes(e.code)) {
-      e.preventDefault();
-      if (!teclas.derecha) elegirPersonaje(1);
-      teclas.derecha = true;
-    }
-  });
-
-  addEventListener("keyup", e => {
-    if (["Space", "ArrowUp", "KeyW", "Enter"].includes(e.code)) teclas.salto = false;
-    if (["ArrowDown", "KeyS"].includes(e.code)) teclas.abajo = false;
-    if (["ArrowLeft", "KeyA"].includes(e.code)) teclas.izquierda = false;
-    if (["ArrowRight", "KeyD"].includes(e.code)) teclas.derecha = false;
-  });
-
-  lienzo.addEventListener("pointerdown", e => {
-    if (estado === "seleccion") {
-      const rectangulo = lienzo.getBoundingClientRect();
-      const x = (e.clientX - rectangulo.left) / rectangulo.width * ANCHO;
-      personajeElegido = x < ANCHO / 2 ? 0 : 1;
-      return;
-    }
-    presionarSalto();
-  });
-
-  lienzo.addEventListener("dblclick", () => {
-    if (estado === "seleccion") reiniciar();
-  });
-
-  function rect(x, y, ancho, alto, relleno) {
-    contexto.fillStyle = relleno;
-    contexto.fillRect(Math.round(x), Math.round(y), Math.round(ancho), Math.round(alto));
-  }
-
-  function bordeRect(x, y, ancho, alto, relleno) {
-    rect(x, y, ancho, 1, relleno);
-    rect(x, y + alto - 1, ancho, 1, relleno);
-    rect(x, y, 1, alto, relleno);
-    rect(x + ancho - 1, y, 1, alto, relleno);
-  }
-
-  function texto(cadena, x, y, relleno = color.blanco) {
-    contexto.fillStyle = color.negro;
-    contexto.font = "8px monospace";
-    contexto.fillText(cadena, x + 1, y + 1);
-    contexto.fillStyle = relleno;
-    contexto.fillText(cadena, x, y);
-  }
-
-  function textoGrande(cadena, x, y, relleno = color.amarillo) {
-    contexto.save();
-    contexto.scale(2, 2);
-    texto(cadena, Math.floor(x / 2), Math.floor(y / 2), relleno);
-    contexto.restore();
-  }
-
-  function crearPolvo(x, y, cantidad) {
-    for (let i = 0; i < cantidad; i++) {
-      particulas.push({
-        x, y,
-        vx: -Math.random() * 1.5,
-        vy: -Math.random() * 1.4,
-        vida: 18 + Math.random() * 10
-      });
-    }
-  }
-
-  function crearObstaculo() {
-    const azar = Math.random();
-    if (azar < .55) {
-      obstaculos.push({ tipo: "valla", x: ANCHO + 12, y: ACERA_Y - 20, ancho: 15, alto: 20 });
-    } else if (azar < .82) {
-      obstaculos.push({ tipo: "cono", x: ANCHO + 12, y: ACERA_Y - 17, ancho: 14, alto: 17 });
-    } else {
-      obstaculos.push({ tipo: "bandera", x: ANCHO + 12, y: ACERA_Y - 45, ancho: 18, alto: 45 });
-    }
-  }
-
-  function actualizar() {
-    fotograma++;
-
-    if (estado === "jugando") {
-      if (teclas.derecha) impulsoVelocidad += 0.028;
-      else if (teclas.izquierda) impulsoVelocidad -= 0.018;
-      else impulsoVelocidad *= 0.965;
-
-      impulsoVelocidad = Math.max(-0.45, Math.min(1.45, impulsoVelocidad));
-      velocidadBase = Math.min(4.2, velocidadBase + 0.00075);
-      velocidad = Math.max(1.05, Math.min(5.55, velocidadBase + impulsoVelocidad));
-
-      puntaje += velocidad * 0.11;
-      jugador.agachado = teclas.abajo && jugador.enSuelo;
-
-      jugador.vy += 0.28;
-      jugador.y += jugador.vy;
-      jugador.alto = jugador.agachado ? 24 : 34;
-      if (jugador.y + jugador.alto >= SUELO_Y) {
-        jugador.y = SUELO_Y - jugador.alto;
-        if (!jugador.enSuelo) crearPolvo(jugador.x + 6, ACERA_Y - 4, 3);
-        jugador.vy = 0;
-        jugador.enSuelo = true;
-      }
-
-      if (fotograma % Math.max(44, Math.floor(102 - velocidad * 10)) === 0) crearObstaculo();
-
-      for (const obstaculo of obstaculos) obstaculo.x -= velocidad;
-      while (obstaculos.length && obstaculos[0].x < -40) obstaculos.shift();
-
-      const cajaJugador = cajaDeGolpeJugador();
-      for (const obstaculo of obstaculos) {
-        const cajaObstaculo = { x: obstaculo.x + 2, y: obstaculo.y + 2, ancho: obstaculo.ancho - 4, alto: obstaculo.alto - 3 };
-        if (hayChoque(cajaJugador, cajaObstaculo)) terminarJuego();
-      }
-    }
-
-    for (const nube of nubes) {
-      nube.x -= nube.v * (estado === "jugando" ? Math.max(1, velocidad * .25) : 1);
-      if (nube.x < -40) nube.x = ANCHO + 20;
-    }
-    for (const colina of colinas) {
-      colina.x -= velocidad * .22;
-      if (colina.x < -90) colina.x = ANCHO + 20;
-    }
-    for (const particula of particulas) {
-      particula.x += particula.vx;
-      particula.y += particula.vy;
-      particula.vy += .08;
-      particula.vida--;
-    }
-    for (let i = particulas.length - 1; i >= 0; i--) if (particulas[i].vida <= 0) particulas.splice(i, 1);
-
-    if (sacudida > 0) sacudida--;
-  }
-
-  function terminarJuego() {
-    estado = "fin";
-    sacudida = 12;
-    record = Math.max(record, Math.floor(puntaje));
-    localStorage.setItem("umaRunnerRecord", String(record));
-  }
-
-  function cajaDeGolpeJugador() {
-    return jugador.agachado
-      ? { x: jugador.x + 3, y: jugador.y + 8, ancho: 18, alto: 16 }
-      : { x: jugador.x + 4, y: jugador.y + 3, ancho: 15, alto: 29 };
-  }
-
-  function hayChoque(a, b) {
-    return a.x < b.x + b.ancho && a.x + a.ancho > b.x && a.y < b.y + b.alto && a.y + a.alto > b.y;
-  }
-
-  function dibujarFondo() {
-    // Fondo plano para CRT real. El detalle de la acera se hace con líneas alternadas
-    // de paleta Famicom: en un CRT, las scanlines mezclan visualmente esos tonos.
-    rect(0, 0, ANCHO, SUELO_Y, color.cielo);
-
-    for (const nube of nubes) dibujarNube(nube.x, nube.y);
-    for (const colina of colinas) dibujarColina(colina.x, colina.y, colina.ancho, colina.alto);
-
-    dibujarAceraCRT();
-  }
-
-  function dibujarAceraCRT() {
-    // Base de cemento con filas alternadas. En CRT se percibe como textura suave.
-    for (let y = SUELO_Y; y < ALTO; y++) {
-      const par = y % 2 === 0;
-      let tono = par ? color.grisClaro : color.gris;
-      if (y > SUELO_Y + 35) tono = par ? color.sombra : color.asfalto;
-      if (y > SUELO_Y + 43) tono = par ? color.asfalto : color.asfaltoOscuro;
-      rect(0, y, ANCHO, 1, tono);
-    }
-
-    // Borde superior verde y blanco, también con tonos alternados para CRT.
-    rect(0, SUELO_Y, ANCHO, 1, color.blanco);
-    rect(0, SUELO_Y + 1, ANCHO, 1, color.grisClaro);
-    rect(0, SUELO_Y + 2, ANCHO, 1, color.pasto);
-    rect(0, SUELO_Y + 3, ANCHO, 1, color.verde);
-
-    // Baldosas grandes. Las líneas verticales se mueven con el suelo.
-    const desplazamiento = -((fotograma * velocidad * 2) % 32);
-    for (let x = desplazamiento; x < ANCHO; x += 32) {
-      rect(x, SUELO_Y + 4, 2, 32, color.grisOscuro);
-      rect(x + 2, SUELO_Y + 4, 1, 32, color.blanco);
-      rect(x + 16, SUELO_Y + 20, 2, 16, color.grisOscuro);
-    }
-
-    // Microdetalle tipo dithering horizontal: se apoya en la scanline física del CRT.
-    const desplazamientoFino = -((fotograma * velocidad * 4) % 8);
-    for (let y = SUELO_Y + 7; y < SUELO_Y + 35; y += 4) {
-      const tono = (y / 4) % 2 === 0 ? color.blanco : color.grisOscuro;
-      for (let x = desplazamientoFino; x < ANCHO; x += 16) {
-        rect(x, y, 7, 1, tono);
-      }
-    }
-
-    // Zona inferior como grava/asfalto, usando solamente colores Famicom.
-    const grava = -((fotograma * velocidad * 3) % 12);
-    for (let y = SUELO_Y + 39; y < ALTO; y += 3) {
-      for (let x = grava + ((y % 2) * 6); x < ANCHO; x += 12) {
-        rect(x, y, 4, 1, color.grisOscuro);
-        rect(x + 5, y + 1, 3, 1, color.sombra);
-      }
-    }
-
-    rect(0, SUELO_Y + 35, ANCHO, 2, color.negro);
-    rect(0, ALTO - 1, ANCHO, 1, color.negro);
-  }
-
-  function dibujarNube(x, y) {
-    rect(x, y + 5, 24, 8, color.nube);
-    rect(x + 5, y, 10, 7, color.nube);
-    rect(x + 14, y + 2, 12, 7, color.nube);
-  }
-
-  function dibujarColina(x, y, ancho, alto) {
-    rect(x, y, ancho, alto, color.verde);
-    rect(x + 8, y - 7, ancho - 18, 8, color.verde);
-    rect(x + 20, y - 12, ancho - 42, 8, color.verde);
-    rect(x, y + alto - 4, ancho, 4, color.pasto);
-  }
-
-  function dibujarJugador() {
-    personajes[personajeElegido].dibujar(jugador.x, jugador.y, jugador.agachado, jugador.enSuelo);
-  }
-
-  function dibujarCorredoraRoja(px, py, agachado, enSuelo) {
-    const x = Math.round(px);
-    const y = Math.round(py);
-    const paso = Math.floor(fotograma / 6) % 2;
-
-    rect(x - 5, y + 9, 8, 5, color.marronClaro);
-    rect(x - 8, y + 14, 8, 4, color.marronClaro);
-    rect(x + 5, y + 14, 12, agachado ? 9 : 16, color.rojo);
-    rect(x + 7, y + 17, 8, 5, color.blanco);
-    rect(x + 4, y + 21, 14, 4, color.azul);
-    rect(x + 7, y + 4, 11, 11, color.piel);
-    rect(x + 6, y + 2, 9, 4, color.marronClaro);
-    rect(x + 9, y - 2, 3, 5, color.marronClaro);
-    rect(x + 15, y - 1, 3, 5, color.marronClaro);
-    rect(x + 16, y + 8, 2, 2, color.negro);
-    rect(x + 18, y + 11, 2, 2, color.rosa);
-    rect(x + 2, y + 16, 4, 8, color.piel);
-    rect(x + 16, y + 15, 5, 4, color.piel);
-    dibujarPiernasBasicas(x, y, agachado, enSuelo, paso);
-    rect(x + 1, SUELO_Y + 3, 24, 3, color.sombra);
-  }
-
-  function dibujarSemanaEspecial(px, py, agachado, enSuelo) {
-    const x = Math.round(px);
-    const y = Math.round(py);
-    const paso = Math.floor(fotograma / 5) % 2;
-    const inclinacion = agachado ? 1 : 0;
-
-    // Cola larga, lazo morado y mechón blanco para parecerse más a la referencia.
-    rect(x - 13, y + 19, 11, 4, color.peloOscuro);
-    rect(x - 18, y + 21, 12, 5, color.marron);
-    rect(x - 21, y + 24, 10, 4, color.marron);
-    rect(x - 14, y + 26, 8, 4, color.peloOscuro);
-    rect(x - 2, y + 4, 20, 8, color.marron);
-    rect(x - 5, y + 9, 9, 13, color.marron);
-    rect(x + 14, y + 8, 8, 12, color.marron);
-    rect(x + 0, y + 2, 16, 5, color.peloOscuro);
-    rect(x - 4, y + 7, 5, 4, color.morado);
-    rect(x + 1, y + 8, 4, 3, color.moradoMedio);
-    rect(x - 2, y + 5, 3, 3, color.morado);
-
-    rect(x + 7, y + 1, 8, 4, color.blanco);
-    rect(x + 6, y + 5, 9, 4, color.blanco);
-    rect(x + 7, y + 9, 7, 4, color.blanco);
-    rect(x + 8, y + 13, 4, 3, color.blanco);
-
-    rect(x + 3, y - 5, 4, 8, color.marron);
-    rect(x + 4, y - 3, 2, 4, color.rosa);
-    rect(x + 17, y - 5, 4, 8, color.marron);
-    rect(x + 18, y - 3, 2, 4, color.rosa);
-
-    rect(x + 5, y + 8, 15, 10, color.piel);
-    rect(x + 8, y + 11, 2, 2, color.morado);
-    rect(x + 16, y + 11, 2, 2, color.morado);
-    rect(x + 18, y + 14, 2, 2, color.rosa);
-    rect(x + 11, y + 15, 4, 1, color.oscuro);
-
-    rect(x + 3, y + 19 + inclinacion, 15, 6, color.uniforme);
-    rect(x + 0, y + 23 + inclinacion, 18, 6, color.blanco);
-    rect(x + 4, y + 21 + inclinacion, 13, 2, color.morado);
-    rect(x + 4, y + 27 + inclinacion, 16, 4, color.morado);
-    rect(x + 8, y + 23 + inclinacion, 5, 8, color.moradoOscuro);
-    rect(x + 13, y + 23 + inclinacion, 3, 3, color.amarillo);
-    rect(x - 1, y + 28 + inclinacion, 12, 3, color.rosa);
-
-    if (agachado) {
-      rect(x - 2, y + 20, 8, 4, color.piel);
-      rect(x + 17, y + 20, 5, 4, color.piel);
-    } else {
-      rect(x - 8, y + 20, 10, 4, color.piel);
-      rect(x - 10, y + 18, 4, 4, color.piel);
-      rect(x + 18, y + 17, 4, 8, color.piel);
-      rect(x + 20, y + 15, 4, 4, color.piel);
-      rect(x - 1, y + 19, 4, 4, color.uniforme);
-      rect(x + 17, y + 18, 4, 4, color.uniforme);
-    }
-
-    dibujarPiernasEspeciales(x, y, agachado, enSuelo, paso);
-    rect(x - 2, SUELO_Y + 3, 29, 3, color.sombra);
-  }
-
-  function dibujarPiernasEspeciales(x, y, agachado, enSuelo, paso) {
-    if (agachado) {
-      rect(x + 4, y + 30, 11, 4, color.blanco);
-      rect(x + 14, y + 29, 10, 4, color.blanco);
-      rect(x + 1, y + 33, 8, 3, color.morado);
-      rect(x + 19, y + 32, 7, 3, color.morado);
-      return;
-    }
-
-    if (paso === 0 && enSuelo) {
-      rect(x + 10, y + 31, 5, 10, color.blanco);
-      rect(x + 13, y + 39, 8, 3, color.morado);
-      rect(x + 2, y + 30, 8, 4, color.blanco);
-      rect(x - 2, y + 32, 7, 3, color.morado);
-    } else if (enSuelo) {
-      rect(x + 5, y + 31, 5, 10, color.blanco);
-      rect(x + 1, y + 39, 8, 3, color.morado);
-      rect(x + 14, y + 29, 8, 4, color.blanco);
-      rect(x + 20, y + 31, 7, 3, color.morado);
-    } else {
-      rect(x + 5, y + 30, 5, 10, color.blanco);
-      rect(x + 0, y + 38, 8, 3, color.morado);
-      rect(x + 15, y + 29, 5, 10, color.blanco);
-      rect(x + 18, y + 37, 8, 3, color.morado);
-    }
-
-    rect(x + 5, y + 37, 4, 3, color.rosa);
-    rect(x + 17, y + 34, 4, 3, color.rosa);
-  }
-
-  function dibujarPiernasBasicas(x, y, agachado, enSuelo, paso) {
-    if (agachado) {
-      rect(x + 4, y + 25, 9, 4, color.oscuro);
-      rect(x + 14, y + 25, 9, 4, color.oscuro);
-      rect(x + 2, y + 29, 7, 3, color.blanco);
-      rect(x + 17, y + 29, 7, 3, color.blanco);
-    } else if (enSuelo) {
-      rect(x + 5, y + 30, 5, 8, color.oscuro);
-      rect(x + 14, y + 28, 5, 10, color.oscuro);
-      rect(x + (paso ? 1 : 4), y + 37, 8, 3, color.blanco);
-      rect(x + (paso ? 16 : 12), y + 37, 8, 3, color.blanco);
-    } else {
-      rect(x + 5, y + 28, 5, 9, color.oscuro);
-      rect(x + 14, y + 28, 5, 9, color.oscuro);
-      rect(x + 3, y + 36, 7, 3, color.blanco);
-      rect(x + 15, y + 36, 7, 3, color.blanco);
-    }
-  }
-
-  function dibujarObstaculo(obstaculo) {
-    const x = Math.round(obstaculo.x);
-    if (obstaculo.tipo === "valla") {
-      rect(x, ACERA_Y + 1, 16, 3, color.sombra);
-      rect(x, obstaculo.y + 6, 16, 5, color.marronClaro);
-      rect(x + 2, obstaculo.y, 4, 20, color.marronClaro);
-      rect(x + 11, obstaculo.y, 4, 20, color.marronClaro);
-      rect(x, obstaculo.y + 14, 16, 4, color.marronClaro);
-      rect(x + 1, obstaculo.y + 2, 2, 16, color.tostado);
-    } else if (obstaculo.tipo === "cono") {
-      rect(x, ACERA_Y + 1, 15, 3, color.sombra);
-      rect(x + 5, obstaculo.y, 5, 4, color.rojo);
-      rect(x + 3, obstaculo.y + 4, 9, 5, color.rojo);
-      rect(x + 1, obstaculo.y + 9, 13, 5, color.rojo);
-      rect(x, obstaculo.y + 14, 15, 3, color.blanco);
-    } else {
-      rect(x + 4, ACERA_Y + 1, 16, 3, color.sombra);
-      rect(x + 7, obstaculo.y, 3, 45, color.negro);
-      rect(x + 10, obstaculo.y, 17, 12, color.amarillo);
-      rect(x + 12, obstaculo.y + 3, 11, 3, color.rojo);
-    }
-  }
-
-  function dibujarParticulas() {
-    for (const particula of particulas) rect(particula.x, particula.y, 2, 2, color.crema);
-  }
-
-  function dibujarMarcador() {
-    texto("スコア " + Math.floor(puntaje).toString().padStart(5, "0"), 8, 13, color.blanco);
-    texto("ベスト " + record.toString().padStart(5, "0"), 168, 13, color.amarillo);
-    if (estado === "jugando") dibujarMedidorVelocidad();
-  }
-
-  function dibujarMedidorVelocidad() {
-    const x = 75;
-    const y = 224;
-    texto("速度", 8, y, color.morado);
-    texto("<<", 49, y, color.morado);
-    texto(">>", 194, y, color.morado);
-    const barras = 12;
-    const t = (velocidad - 1.05) / (5.55 - 1.05);
-    const llenas = Math.max(1, Math.min(barras, Math.round(t * barras)));
-    for (let i = 0; i < barras; i++) {
-      rect(x + i * 7, y - 6, 5, 8, i < llenas ? color.morado : color.sombra);
-    }
-  }
-
-  function dibujarSeleccion() {
-    rect(0, 0, ANCHO, ALTO, color.negro);
-    textoGrande("えらんで", 58, 20, color.blanco);
-    texto("← / →", 106, 45, color.morado);
-
-    dibujarTarjetaPersonaje(22, 68, 86, 98, 0);
-    dibujarTarjetaPersonaje(148, 68, 86, 98, 1);
-
-    texto("スペースでスタート", 60, 190, color.amarillo);
-    texto("ゲーム中: ← おそい / → はやい", 34, 206, color.morado);
-    texto("ベスト " + record.toString().padStart(5, "0"), 86, 222, color.blanco);
-  }
-
-  function dibujarTarjetaPersonaje(x, y, ancho, alto, indice) {
-    const activo = personajeElegido === indice;
-    rect(x - 3, y - 3, ancho + 6, alto + 6, activo ? color.morado : color.gris);
-    rect(x, y, ancho, alto, color.negro);
-    bordeRect(x + 2, y + 2, ancho - 4, alto - 4, activo ? color.morado : color.gris);
-    if (activo) texto("1P", x + 6, y + 13, color.amarillo);
-    personajes[indice].retrato(x + 22, y + 22);
-    texto(personajes[indice].nombre, x + 18, y + 84, activo ? color.amarillo : color.blanco);
-  }
-
-  function dibujarRetratoRoja(x, y) {
-    dibujarCorredoraRoja(x, y, false, true);
-    rect(x + 1, SUELO_Y + 3, 24, 3, color.negro);
-  }
-
-  function dibujarRetratoEspecial(x, y) {
-    dibujarSemanaEspecial(x, y, false, true);
-    rect(x + 1, SUELO_Y + 3, 24, 3, color.negro);
-    rect(x + 19, y - 3, 4, 23, color.piel);
-    rect(x + 18, y - 5, 6, 4, color.piel);
-  }
-
-  function dibujarFin() {
-    dibujarCampo();
-    rect(44, 70, 168, 70, color.negro);
-    rect(48, 74, 160, 62, color.rojo);
-    rect(52, 78, 152, 54, color.negro);
-    textoGrande("ゴール!", 74, 88, color.amarillo);
-    texto("スコア " + Math.floor(puntaje), 91, 112, color.blanco);
-    texto("スペースでもういちど", 58, 128, color.crema);
-  }
-
-  function dibujarCampo() {
-    dibujarFondo();
-    for (const obstaculo of obstaculos) dibujarObstaculo(obstaculo);
-    dibujarParticulas();
-    dibujarJugador();
-    dibujarMarcador();
-  }
-
-  function dibujar() {
-    contexto.save();
-    if (sacudida > 0) contexto.translate((Math.random() * 2 - 1) | 0, (Math.random() * 2 - 1) | 0);
-
-    if (estado === "seleccion") dibujarSeleccion();
-    else if (estado === "fin") dibujarFin();
-    else dibujarCampo();
-
-    contexto.restore();
-  }
-
-  function bucle() {
-    actualizar();
-    dibujar();
-    requestAnimationFrame(bucle);
-  }
-
-  bucle();
-})();
-</script>
+	<div class="gabinete">
+		<div class="envoltura-pantalla">
+			<canvas id="juego" width="256" height="240"></canvas>
+		</div>
+		<div class="marquesina"><kbd>←</kbd>/<kbd>→</kbd> 選択 / 速度調整 &nbsp; <kbd>SPACE</kbd> ジャンプ &nbsp; <kbd>↓</kbd>
+			しゃがむ</div>
+	</div>
+
+	<script>
+		(() => {
+			"use strict";
+
+			const lienzo = document.getElementById("juego");
+			const contexto = lienzo.getContext("2d", {alpha: false});
+			contexto.imageSmoothingEnabled = false;
+
+			const ANCHO = 256;
+			const ALTO = 240;
+			const SUELO_Y = 188;
+			const ACERA_Y = SUELO_Y + 3;
+
+			const color = {
+				// Paleta aproximada de Famicom/NES. No se usan colores fuera de esta tabla.
+				cielo: "#5C94FC",
+				nube: "#FCFCFC",
+				crema: "#F8B800",
+				piel: "#FCE0A8",
+				pielSombra: "#F8B878",
+				blanco: "#FCFCFC",
+				negro: "#000000",
+				oscuro: "#3CBCFC",
+				marron: "#503000",
+				marronClaro: "#AC7C00",
+				peloOscuro: "#442800",
+				tostado: "#F8B878",
+				rojo: "#E40058",
+				rosa: "#F878F8",
+				morado: "#9878F8",
+				moradoMedio: "#6844FC",
+				moradoOscuro: "#4428BC",
+				azul: "#0058F8",
+				uniforme: "#B8B8F8",
+				verde: "#00A800",
+				pasto: "#007800",
+				amarillo: "#F8D800",
+				gris: "#BCBCBC",
+				grisClaro: "#D8D8D8",
+				grisOscuro: "#7C7C7C",
+				sombra: "#3C3C3C",
+				asfalto: "#545454",
+				asfaltoOscuro: "#2C2C2C"
+			};
+
+			let estado = "seleccion";
+			let fotograma = 0;
+			let velocidadBase = 1.55;
+			let velocidad = velocidadBase;
+			let impulsoVelocidad = 0;
+			let puntaje = 0;
+			let record = Number(localStorage.getItem("umaRunnerRecord") || 0);
+			let sacudida = 0;
+			let personajeElegido = Number(localStorage.getItem("umaRunnerPersonaje") || 0);
+			personajeElegido = personajeElegido === 1 ? 1 : 0;
+
+			const personajes = [
+				{id: "corredora_roja", nombre: "ルビー", dibujar: dibujarCorredoraRoja, retrato: dibujarRetratoRoja},
+				{id: "semana_especial", nombre: "スペシャル", dibujar: dibujarSemanaEspecial, retrato: dibujarRetratoEspecial}
+			];
+
+			const teclas = {salto: false, abajo: false, izquierda: false, derecha: false};
+
+			const jugador = {
+				x: 42,
+				y: SUELO_Y - 34,
+				ancho: 22,
+				alto: 34,
+				vy: 0,
+				enSuelo: true,
+				agachado: false
+			};
+
+			const obstaculos = [];
+			const particulas = [];
+			const colinas = [];
+			const nubes = [];
+
+			for (let i = 0; i < 5; i++) nubes.push({x: i * 58, y: 22 + (i % 3) * 13, v: .25 + i * .06});
+			for (let i = 0; i < 6; i++) colinas.push({x: i * 50, y: 156 + (i % 2) * 8, ancho: 80, alto: 26});
+
+			function reiniciar() {
+				localStorage.setItem("umaRunnerPersonaje", String(personajeElegido));
+				estado = "jugando";
+				fotograma = 0;
+				velocidadBase = 1.55;
+				velocidad = velocidadBase;
+				impulsoVelocidad = 0;
+				puntaje = 0;
+				sacudida = 0;
+				obstaculos.length = 0;
+				particulas.length = 0;
+				jugador.y = SUELO_Y - 34;
+				jugador.vy = 0;
+				jugador.enSuelo = true;
+				jugador.agachado = false;
+			}
+
+			function presionarSalto() {
+				if (estado === "seleccion" || estado === "fin") {
+					reiniciar();
+					return;
+				}
+				if (jugador.enSuelo) {
+					jugador.vy = -5.8;
+					jugador.enSuelo = false;
+					crearPolvo(jugador.x + 8, ACERA_Y - 4, 5);
+				}
+			}
+
+			function elegirPersonaje(cambio) {
+				if (estado !== "seleccion") return;
+				personajeElegido = (personajeElegido + cambio + personajes.length) % personajes.length;
+			}
+
+			addEventListener("keydown", e => {
+				if (["Space", "ArrowUp", "KeyW", "Enter"].includes(e.code)) {
+					e.preventDefault();
+					if (!teclas.salto) presionarSalto();
+					teclas.salto = true;
+				}
+				if (["ArrowDown", "KeyS"].includes(e.code)) {
+					e.preventDefault();
+					teclas.abajo = true;
+				}
+				if (["ArrowLeft", "KeyA"].includes(e.code)) {
+					e.preventDefault();
+					if (!teclas.izquierda) elegirPersonaje(-1);
+					teclas.izquierda = true;
+				}
+				if (["ArrowRight", "KeyD"].includes(e.code)) {
+					e.preventDefault();
+					if (!teclas.derecha) elegirPersonaje(1);
+					teclas.derecha = true;
+				}
+			});
+
+			addEventListener("keyup", e => {
+				if (["Space", "ArrowUp", "KeyW", "Enter"].includes(e.code)) teclas.salto = false;
+				if (["ArrowDown", "KeyS"].includes(e.code)) teclas.abajo = false;
+				if (["ArrowLeft", "KeyA"].includes(e.code)) teclas.izquierda = false;
+				if (["ArrowRight", "KeyD"].includes(e.code)) teclas.derecha = false;
+			});
+
+			lienzo.addEventListener("pointerdown", e => {
+				if (estado === "seleccion") {
+					const rectangulo = lienzo.getBoundingClientRect();
+					const x = (e.clientX - rectangulo.left) / rectangulo.width * ANCHO;
+					personajeElegido = x < ANCHO / 2 ? 0 : 1;
+					return;
+				}
+				presionarSalto();
+			});
+
+			lienzo.addEventListener("dblclick", () => {
+				if (estado === "seleccion") reiniciar();
+			});
+
+			function rect(x, y, ancho, alto, relleno) {
+				contexto.fillStyle = relleno;
+				contexto.fillRect(Math.round(x), Math.round(y), Math.round(ancho), Math.round(alto));
+			}
+
+			function bordeRect(x, y, ancho, alto, relleno) {
+				rect(x, y, ancho, 1, relleno);
+				rect(x, y + alto - 1, ancho, 1, relleno);
+				rect(x, y, 1, alto, relleno);
+				rect(x + ancho - 1, y, 1, alto, relleno);
+			}
+
+			function texto(cadena, x, y, relleno = color.blanco) {
+				contexto.fillStyle = color.negro;
+				contexto.font = "8px monospace";
+				contexto.fillText(cadena, x + 1, y + 1);
+				contexto.fillStyle = relleno;
+				contexto.fillText(cadena, x, y);
+			}
+
+			function textoGrande(cadena, x, y, relleno = color.amarillo) {
+				contexto.save();
+				contexto.scale(2, 2);
+				texto(cadena, Math.floor(x / 2), Math.floor(y / 2), relleno);
+				contexto.restore();
+			}
+
+			function crearPolvo(x, y, cantidad) {
+				for (let i = 0; i < cantidad; i++) {
+					particulas.push({
+						x, y,
+						vx: -Math.random() * 1.5,
+						vy: -Math.random() * 1.4,
+						vida: 18 + Math.random() * 10
+					});
+				}
+			}
+
+			function crearObstaculo() {
+				const azar = Math.random();
+				if (azar < .55) {
+					obstaculos.push({tipo: "valla", x: ANCHO + 12, y: ACERA_Y - 20, ancho: 15, alto: 20});
+				} else if (azar < .82) {
+					obstaculos.push({tipo: "cono", x: ANCHO + 12, y: ACERA_Y - 17, ancho: 14, alto: 17});
+				} else {
+					obstaculos.push({tipo: "bandera", x: ANCHO + 12, y: ACERA_Y - 45, ancho: 18, alto: 45});
+				}
+			}
+
+			function actualizar() {
+				fotograma++;
+
+				if (estado === "jugando") {
+					if (teclas.derecha) impulsoVelocidad += 0.028;
+					else if (teclas.izquierda) impulsoVelocidad -= 0.018;
+					else impulsoVelocidad *= 0.965;
+
+					impulsoVelocidad = Math.max(-0.45, Math.min(1.45, impulsoVelocidad));
+					velocidadBase = Math.min(4.2, velocidadBase + 0.00075);
+					velocidad = Math.max(1.05, Math.min(5.55, velocidadBase + impulsoVelocidad));
+
+					puntaje += velocidad * 0.11;
+					jugador.agachado = teclas.abajo && jugador.enSuelo;
+
+					jugador.vy += 0.28;
+					jugador.y += jugador.vy;
+					jugador.alto = jugador.agachado ? 24 : 34;
+					if (jugador.y + jugador.alto >= SUELO_Y) {
+						jugador.y = SUELO_Y - jugador.alto;
+						if (!jugador.enSuelo) crearPolvo(jugador.x + 6, ACERA_Y - 4, 3);
+						jugador.vy = 0;
+						jugador.enSuelo = true;
+					}
+
+					if (fotograma % Math.max(44, Math.floor(102 - velocidad * 10)) === 0) crearObstaculo();
+
+					for (const obstaculo of obstaculos) obstaculo.x -= velocidad;
+					while (obstaculos.length && obstaculos[0].x < -40) obstaculos.shift();
+
+					const cajaJugador = cajaDeGolpeJugador();
+					for (const obstaculo of obstaculos) {
+						const cajaObstaculo = {x: obstaculo.x + 2, y: obstaculo.y + 2, ancho: obstaculo.ancho - 4, alto: obstaculo.alto - 3};
+						if (hayChoque(cajaJugador, cajaObstaculo)) terminarJuego();
+					}
+				}
+
+				for (const nube of nubes) {
+					nube.x -= nube.v * (estado === "jugando" ? Math.max(1, velocidad * .25) : 1);
+					if (nube.x < -40) nube.x = ANCHO + 20;
+				}
+				for (const colina of colinas) {
+					colina.x -= velocidad * .22;
+					if (colina.x < -90) colina.x = ANCHO + 20;
+				}
+				for (const particula of particulas) {
+					particula.x += particula.vx;
+					particula.y += particula.vy;
+					particula.vy += .08;
+					particula.vida--;
+				}
+				for (let i = particulas.length - 1; i >= 0; i--) if (particulas[i].vida <= 0) particulas.splice(i, 1);
+
+				if (sacudida > 0) sacudida--;
+			}
+
+			function terminarJuego() {
+				estado = "fin";
+				sacudida = 12;
+				record = Math.max(record, Math.floor(puntaje));
+				localStorage.setItem("umaRunnerRecord", String(record));
+			}
+
+			function cajaDeGolpeJugador() {
+				return jugador.agachado
+					? {x: jugador.x + 3, y: jugador.y + 8, ancho: 18, alto: 16}
+					: {x: jugador.x + 4, y: jugador.y + 3, ancho: 15, alto: 29};
+			}
+
+			function hayChoque(a, b) {
+				return a.x < b.x + b.ancho && a.x + a.ancho > b.x && a.y < b.y + b.alto && a.y + a.alto > b.y;
+			}
+
+			function dibujarFondo() {
+				// Fondo plano para CRT real. El detalle de la acera se hace con líneas alternadas
+				// de paleta Famicom: en un CRT, las scanlines mezclan visualmente esos tonos.
+				rect(0, 0, ANCHO, SUELO_Y, color.cielo);
+
+				for (const nube of nubes) dibujarNube(nube.x, nube.y);
+				for (const colina of colinas) dibujarColina(colina.x, colina.y, colina.ancho, colina.alto);
+
+				dibujarAceraCRT();
+			}
+
+			function dibujarAceraCRT() {
+				// Base de cemento con filas alternadas. En CRT se percibe como textura suave.
+				for (let y = SUELO_Y; y < ALTO; y++) {
+					const par = y % 2 === 0;
+					let tono = par ? color.grisClaro : color.gris;
+					if (y > SUELO_Y + 35) tono = par ? color.sombra : color.asfalto;
+					if (y > SUELO_Y + 43) tono = par ? color.asfalto : color.asfaltoOscuro;
+					rect(0, y, ANCHO, 1, tono);
+				}
+
+				// Borde superior verde y blanco, también con tonos alternados para CRT.
+				rect(0, SUELO_Y, ANCHO, 1, color.blanco);
+				rect(0, SUELO_Y + 1, ANCHO, 1, color.grisClaro);
+				rect(0, SUELO_Y + 2, ANCHO, 1, color.pasto);
+				rect(0, SUELO_Y + 3, ANCHO, 1, color.verde);
+
+				// Baldosas grandes. Las líneas verticales se mueven con el suelo.
+				const desplazamiento = -((fotograma * velocidad * 2) % 32);
+				for (let x = desplazamiento; x < ANCHO; x += 32) {
+					rect(x, SUELO_Y + 4, 2, 32, color.grisOscuro);
+					rect(x + 2, SUELO_Y + 4, 1, 32, color.blanco);
+					rect(x + 16, SUELO_Y + 20, 2, 16, color.grisOscuro);
+				}
+
+				// Microdetalle tipo dithering horizontal: se apoya en la scanline física del CRT.
+				const desplazamientoFino = -((fotograma * velocidad * 4) % 8);
+				for (let y = SUELO_Y + 7; y < SUELO_Y + 35; y += 4) {
+					const tono = (y / 4) % 2 === 0 ? color.blanco : color.grisOscuro;
+					for (let x = desplazamientoFino; x < ANCHO; x += 16) {
+						rect(x, y, 7, 1, tono);
+					}
+				}
+
+				// Zona inferior como grava/asfalto, usando solamente colores Famicom.
+				const grava = -((fotograma * velocidad * 3) % 12);
+				for (let y = SUELO_Y + 39; y < ALTO; y += 3) {
+					for (let x = grava + ((y % 2) * 6); x < ANCHO; x += 12) {
+						rect(x, y, 4, 1, color.grisOscuro);
+						rect(x + 5, y + 1, 3, 1, color.sombra);
+					}
+				}
+
+				rect(0, SUELO_Y + 35, ANCHO, 2, color.negro);
+				rect(0, ALTO - 1, ANCHO, 1, color.negro);
+			}
+
+			function dibujarNube(x, y) {
+				rect(x, y + 5, 24, 8, color.nube);
+				rect(x + 5, y, 10, 7, color.nube);
+				rect(x + 14, y + 2, 12, 7, color.nube);
+			}
+
+			function dibujarColina(x, y, ancho, alto) {
+				rect(x, y, ancho, alto, color.verde);
+				rect(x + 8, y - 7, ancho - 18, 8, color.verde);
+				rect(x + 20, y - 12, ancho - 42, 8, color.verde);
+				rect(x, y + alto - 4, ancho, 4, color.pasto);
+			}
+
+			function dibujarJugador() {
+				personajes[personajeElegido].dibujar(jugador.x, jugador.y, jugador.agachado, jugador.enSuelo);
+			}
+
+			function dibujarCorredoraRoja(px, py, agachado, enSuelo) {
+				const x = Math.round(px);
+				const y = Math.round(py);
+				const paso = Math.floor(fotograma / 6) % 2;
+
+				rect(x - 5, y + 9, 8, 5, color.marronClaro);
+				rect(x - 8, y + 14, 8, 4, color.marronClaro);
+				rect(x + 5, y + 14, 12, agachado ? 9 : 16, color.rojo);
+				rect(x + 7, y + 17, 8, 5, color.blanco);
+				rect(x + 4, y + 21, 14, 4, color.azul);
+				rect(x + 7, y + 4, 11, 11, color.piel);
+				rect(x + 6, y + 2, 9, 4, color.marronClaro);
+				rect(x + 9, y - 2, 3, 5, color.marronClaro);
+				rect(x + 15, y - 1, 3, 5, color.marronClaro);
+				rect(x + 16, y + 8, 2, 2, color.negro);
+				rect(x + 18, y + 11, 2, 2, color.rosa);
+				rect(x + 2, y + 16, 4, 8, color.piel);
+				rect(x + 16, y + 15, 5, 4, color.piel);
+				dibujarPiernasBasicas(x, y, agachado, enSuelo, paso);
+				rect(x + 1, SUELO_Y + 3, 24, 3, color.sombra);
+			}
+
+			function dibujarSemanaEspecial(px, py, agachado, enSuelo) {
+				const x = Math.round(px);
+				const y = Math.round(py);
+				const paso = Math.floor(fotograma / 5) % 2;
+				const inclinacion = agachado ? 1 : 0;
+
+				// Cola larga, lazo morado y mechón blanco para parecerse más a la referencia.
+				rect(x - 13, y + 19, 11, 4, color.peloOscuro);
+				rect(x - 18, y + 21, 12, 5, color.marron);
+				rect(x - 21, y + 24, 10, 4, color.marron);
+				rect(x - 14, y + 26, 8, 4, color.peloOscuro);
+				rect(x - 2, y + 4, 20, 8, color.marron);
+				rect(x - 5, y + 9, 9, 13, color.marron);
+				rect(x + 14, y + 8, 8, 12, color.marron);
+				rect(x + 0, y + 2, 16, 5, color.peloOscuro);
+				rect(x - 4, y + 7, 5, 4, color.morado);
+				rect(x + 1, y + 8, 4, 3, color.moradoMedio);
+				rect(x - 2, y + 5, 3, 3, color.morado);
+
+				rect(x + 7, y + 1, 8, 4, color.blanco);
+				rect(x + 6, y + 5, 9, 4, color.blanco);
+				rect(x + 7, y + 9, 7, 4, color.blanco);
+				rect(x + 8, y + 13, 4, 3, color.blanco);
+
+				rect(x + 3, y - 5, 4, 8, color.marron);
+				rect(x + 4, y - 3, 2, 4, color.rosa);
+				rect(x + 17, y - 5, 4, 8, color.marron);
+				rect(x + 18, y - 3, 2, 4, color.rosa);
+
+				rect(x + 5, y + 8, 15, 10, color.piel);
+				rect(x + 8, y + 11, 2, 2, color.morado);
+				rect(x + 16, y + 11, 2, 2, color.morado);
+				rect(x + 18, y + 14, 2, 2, color.rosa);
+				rect(x + 11, y + 15, 4, 1, color.oscuro);
+
+				rect(x + 3, y + 19 + inclinacion, 15, 6, color.uniforme);
+				rect(x + 0, y + 23 + inclinacion, 18, 6, color.blanco);
+				rect(x + 4, y + 21 + inclinacion, 13, 2, color.morado);
+				rect(x + 4, y + 27 + inclinacion, 16, 4, color.morado);
+				rect(x + 8, y + 23 + inclinacion, 5, 8, color.moradoOscuro);
+				rect(x + 13, y + 23 + inclinacion, 3, 3, color.amarillo);
+				rect(x - 1, y + 28 + inclinacion, 12, 3, color.rosa);
+
+				if (agachado) {
+					rect(x - 2, y + 20, 8, 4, color.piel);
+					rect(x + 17, y + 20, 5, 4, color.piel);
+				} else {
+					rect(x - 8, y + 20, 10, 4, color.piel);
+					rect(x - 10, y + 18, 4, 4, color.piel);
+					rect(x + 18, y + 17, 4, 8, color.piel);
+					rect(x + 20, y + 15, 4, 4, color.piel);
+					rect(x - 1, y + 19, 4, 4, color.uniforme);
+					rect(x + 17, y + 18, 4, 4, color.uniforme);
+				}
+
+				dibujarPiernasEspeciales(x, y, agachado, enSuelo, paso);
+				rect(x - 2, SUELO_Y + 3, 29, 3, color.sombra);
+			}
+
+			function dibujarPiernasEspeciales(x, y, agachado, enSuelo, paso) {
+				if (agachado) {
+					rect(x + 4, y + 30, 11, 4, color.blanco);
+					rect(x + 14, y + 29, 10, 4, color.blanco);
+					rect(x + 1, y + 33, 8, 3, color.morado);
+					rect(x + 19, y + 32, 7, 3, color.morado);
+					return;
+				}
+
+				if (paso === 0 && enSuelo) {
+					rect(x + 10, y + 31, 5, 10, color.blanco);
+					rect(x + 13, y + 39, 8, 3, color.morado);
+					rect(x + 2, y + 30, 8, 4, color.blanco);
+					rect(x - 2, y + 32, 7, 3, color.morado);
+				} else if (enSuelo) {
+					rect(x + 5, y + 31, 5, 10, color.blanco);
+					rect(x + 1, y + 39, 8, 3, color.morado);
+					rect(x + 14, y + 29, 8, 4, color.blanco);
+					rect(x + 20, y + 31, 7, 3, color.morado);
+				} else {
+					rect(x + 5, y + 30, 5, 10, color.blanco);
+					rect(x + 0, y + 38, 8, 3, color.morado);
+					rect(x + 15, y + 29, 5, 10, color.blanco);
+					rect(x + 18, y + 37, 8, 3, color.morado);
+				}
+
+				rect(x + 5, y + 37, 4, 3, color.rosa);
+				rect(x + 17, y + 34, 4, 3, color.rosa);
+			}
+
+			function dibujarPiernasBasicas(x, y, agachado, enSuelo, paso) {
+				if (agachado) {
+					rect(x + 4, y + 25, 9, 4, color.oscuro);
+					rect(x + 14, y + 25, 9, 4, color.oscuro);
+					rect(x + 2, y + 29, 7, 3, color.blanco);
+					rect(x + 17, y + 29, 7, 3, color.blanco);
+				} else if (enSuelo) {
+					rect(x + 5, y + 30, 5, 8, color.oscuro);
+					rect(x + 14, y + 28, 5, 10, color.oscuro);
+					rect(x + (paso ? 1 : 4), y + 37, 8, 3, color.blanco);
+					rect(x + (paso ? 16 : 12), y + 37, 8, 3, color.blanco);
+				} else {
+					rect(x + 5, y + 28, 5, 9, color.oscuro);
+					rect(x + 14, y + 28, 5, 9, color.oscuro);
+					rect(x + 3, y + 36, 7, 3, color.blanco);
+					rect(x + 15, y + 36, 7, 3, color.blanco);
+				}
+			}
+
+			function dibujarObstaculo(obstaculo) {
+				const x = Math.round(obstaculo.x);
+				if (obstaculo.tipo === "valla") {
+					rect(x, ACERA_Y + 1, 16, 3, color.sombra);
+					rect(x, obstaculo.y + 6, 16, 5, color.marronClaro);
+					rect(x + 2, obstaculo.y, 4, 20, color.marronClaro);
+					rect(x + 11, obstaculo.y, 4, 20, color.marronClaro);
+					rect(x, obstaculo.y + 14, 16, 4, color.marronClaro);
+					rect(x + 1, obstaculo.y + 2, 2, 16, color.tostado);
+				} else if (obstaculo.tipo === "cono") {
+					rect(x, ACERA_Y + 1, 15, 3, color.sombra);
+					rect(x + 5, obstaculo.y, 5, 4, color.rojo);
+					rect(x + 3, obstaculo.y + 4, 9, 5, color.rojo);
+					rect(x + 1, obstaculo.y + 9, 13, 5, color.rojo);
+					rect(x, obstaculo.y + 14, 15, 3, color.blanco);
+				} else {
+					rect(x + 4, ACERA_Y + 1, 16, 3, color.sombra);
+					rect(x + 7, obstaculo.y, 3, 45, color.negro);
+					rect(x + 10, obstaculo.y, 17, 12, color.amarillo);
+					rect(x + 12, obstaculo.y + 3, 11, 3, color.rojo);
+				}
+			}
+
+			function dibujarParticulas() {
+				for (const particula of particulas) rect(particula.x, particula.y, 2, 2, color.crema);
+			}
+
+			function dibujarMarcador() {
+				texto("スコア " + Math.floor(puntaje).toString().padStart(5, "0"), 8, 13, color.blanco);
+				texto("ベスト " + record.toString().padStart(5, "0"), 168, 13, color.amarillo);
+				if (estado === "jugando") dibujarMedidorVelocidad();
+			}
+
+			function dibujarMedidorVelocidad() {
+				const x = 75;
+				const y = 224;
+				texto("速度", 8, y, color.morado);
+				texto("<<", 49, y, color.morado);
+				texto(">>", 194, y, color.morado);
+				const barras = 12;
+				const t = (velocidad - 1.05) / (5.55 - 1.05);
+				const llenas = Math.max(1, Math.min(barras, Math.round(t * barras)));
+				for (let i = 0; i < barras; i++) {
+					rect(x + i * 7, y - 6, 5, 8, i < llenas ? color.morado : color.sombra);
+				}
+			}
+
+			function dibujarSeleccion() {
+				rect(0, 0, ANCHO, ALTO, color.negro);
+				textoGrande("えらんで", 58, 20, color.blanco);
+				texto("← / →", 106, 45, color.morado);
+
+				dibujarTarjetaPersonaje(22, 68, 86, 98, 0);
+				dibujarTarjetaPersonaje(148, 68, 86, 98, 1);
+
+				texto("スペースでスタート", 60, 190, color.amarillo);
+				texto("ゲーム中: ← おそい / → はやい", 34, 206, color.morado);
+				texto("ベスト " + record.toString().padStart(5, "0"), 86, 222, color.blanco);
+			}
+
+			function dibujarTarjetaPersonaje(x, y, ancho, alto, indice) {
+				const activo = personajeElegido === indice;
+				rect(x - 3, y - 3, ancho + 6, alto + 6, activo ? color.morado : color.gris);
+				rect(x, y, ancho, alto, color.negro);
+				bordeRect(x + 2, y + 2, ancho - 4, alto - 4, activo ? color.morado : color.gris);
+				if (activo) texto("1P", x + 6, y + 13, color.amarillo);
+				personajes[indice].retrato(x + 22, y + 22);
+				texto(personajes[indice].nombre, x + 18, y + 84, activo ? color.amarillo : color.blanco);
+			}
+
+			function dibujarRetratoRoja(x, y) {
+				dibujarCorredoraRoja(x, y, false, true);
+				rect(x + 1, SUELO_Y + 3, 24, 3, color.negro);
+			}
+
+			function dibujarRetratoEspecial(x, y) {
+				dibujarSemanaEspecial(x, y, false, true);
+				rect(x + 1, SUELO_Y + 3, 24, 3, color.negro);
+				rect(x + 19, y - 3, 4, 23, color.piel);
+				rect(x + 18, y - 5, 6, 4, color.piel);
+			}
+
+			function dibujarFin() {
+				dibujarCampo();
+				rect(44, 70, 168, 70, color.negro);
+				rect(48, 74, 160, 62, color.rojo);
+				rect(52, 78, 152, 54, color.negro);
+				textoGrande("ゴール!", 74, 88, color.amarillo);
+				texto("スコア " + Math.floor(puntaje), 91, 112, color.blanco);
+				texto("スペースでもういちど", 58, 128, color.crema);
+			}
+
+			function dibujarCampo() {
+				dibujarFondo();
+				for (const obstaculo of obstaculos) dibujarObstaculo(obstaculo);
+				dibujarParticulas();
+				dibujarJugador();
+				dibujarMarcador();
+			}
+
+			function dibujar() {
+				contexto.save();
+				if (sacudida > 0) contexto.translate((Math.random() * 2 - 1) | 0, (Math.random() * 2 - 1) | 0);
+
+				if (estado === "seleccion") dibujarSeleccion();
+				else if (estado === "fin") dibujarFin();
+				else dibujarCampo();
+
+				contexto.restore();
+			}
+
+			function bucle() {
+				actualizar();
+				dibujar();
+				requestAnimationFrame(bucle);
+			}
+
+			bucle();
+		})();
+	</script>
 </body>
-</html>
 
+</html>

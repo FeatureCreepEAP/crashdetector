@@ -10,8 +10,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 /**
- * Motor basado en json-simple. Es un respaldo liviano cuando no existe
- * DMR, Gson ni Jackson.
+ * Motor basado en json-simple. Es un respaldo liviano cuando no existe DMR,
+ * Gson ni Jackson.
  */
 public class JsonSimple implements Json.Motor {
 

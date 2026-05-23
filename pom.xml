@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.asbestosstar</groupId>
 	<artifactId>crashdetector</artifactId>
-	<version>0.8.5</version>
+	<version>0.8.6</version>
 
 
 	<!-- Add necessary metadata for Maven Central -->
@@ -472,6 +472,8 @@
     <groupId>com.asbestosstar</groupId>
     <artifactId>flintloader-flintmodule-stub</artifactId>
     <version>0.0.1</version>
+        <scope>provided</scope>
+
 </dependency>
 
 
@@ -482,20 +484,52 @@
     <groupId>com.asbestosstar</groupId>
     <artifactId>ifmlloadingplugin-172</artifactId>
     <version>0.0.1</version>
+        <scope>provided</scope>
+
 </dependency>
 
 
 
 
 
+  <dependency>
+        <groupId>de.marhali</groupId>
+        <artifactId>json5-java</artifactId>
+        <version>3.0.0</version>
+            <scope>provided</scope>
 
-<!-- Source: https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+    </dependency>
+
+
+		<!-- Source: https://mvnrepository.com/artifact/org.apache.commons/commons-configuration2 -->
 <dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.21.3</version>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-configuration2</artifactId>
+    <version>2.15.0</version>
+    <scope>provided</scope>
+
+</dependency>
+
+
+		<!-- Source: https://mvnrepository.com/artifact/org.ini4j/ini4j -->
+<dependency>
+    <groupId>org.ini4j</groupId>
+    <artifactId>ini4j</artifactId>
+    <version>0.5.4</version>
     <scope>provided</scope>
 </dependency>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
