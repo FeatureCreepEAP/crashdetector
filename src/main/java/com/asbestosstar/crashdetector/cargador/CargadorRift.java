@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json;
 
 /**
  * Cargador para mods de Rift.

@@ -18,9 +18,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.curseforge.CFModDesdeJar;
 import com.asbestosstar.crashdetector.dto.modpack.modrinth.MRModDesdeJar;
-import com.asbestosstar.crashdetector.json.Json;
 
 /**
  * Actualiza TLauncherAdditional.json en la carpeta actual.

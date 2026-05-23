@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.json;
+package com.asbestosstar.crashdetector.config.json;
 
 import java.util.ArrayList;
 import java.util.List;

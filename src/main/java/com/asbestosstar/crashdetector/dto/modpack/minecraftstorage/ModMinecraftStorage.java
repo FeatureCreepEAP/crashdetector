@@ -1,8 +1,8 @@
 package com.asbestosstar.crashdetector.dto.modpack.minecraftstorage;
 
+import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
 import com.asbestosstar.crashdetector.dto.modpack.VersionJuego;
-import com.asbestosstar.crashdetector.json.Json;
 
 public class ModMinecraftStorage extends InternetMod {
 

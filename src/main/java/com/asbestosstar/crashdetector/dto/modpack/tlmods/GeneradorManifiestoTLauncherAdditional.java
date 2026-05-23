@@ -11,7 +11,7 @@ import com.asbestosstar.crashdetector.cargador.obtener.ObtenerVersionFabric;
 import com.asbestosstar.crashdetector.cargador.obtener.ObtenerVersionFeatureCreep;
 import com.asbestosstar.crashdetector.cargador.obtener.ObtenerVersionMCForge;
 import com.asbestosstar.crashdetector.cargador.obtener.ObtenerVersionNeoForge;
-import com.asbestosstar.crashdetector.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json;
 
 public class GeneradorManifiestoTLauncherAdditional {
 

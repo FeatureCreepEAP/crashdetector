@@ -15,9 +15,9 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
+import com.asbestosstar.crashdetector.config.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
-import com.asbestosstar.crashdetector.json.Json;
-import com.asbestosstar.crashdetector.json.Json.Nodo;
 
 public class PirataMC implements Verificaciones {
 

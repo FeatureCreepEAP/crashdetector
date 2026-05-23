@@ -19,9 +19,9 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.config.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
-import com.asbestosstar.crashdetector.json.Json;
-import com.asbestosstar.crashdetector.json.Json.Nodo;
 
 /**
  * Detecta mods que están en la lista de mods recomendados ("animados") pero que

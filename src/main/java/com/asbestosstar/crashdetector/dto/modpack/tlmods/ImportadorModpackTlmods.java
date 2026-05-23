@@ -16,6 +16,7 @@ import java.util.zip.ZipInputStream;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.config.ConfigString;
+import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.curseforge.ProveedorModsCurseForge;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ConflictoImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ImportadorModpack;
@@ -23,7 +24,6 @@ import com.asbestosstar.crashdetector.dto.modpack.importar.InfoEntradaImportacio
 import com.asbestosstar.crashdetector.dto.modpack.importar.PoliticaImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ResolutorConflictosImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ResultadoImportacion;
-import com.asbestosstar.crashdetector.json.Json;
 
 public class ImportadorModpackTlmods implements ImportadorModpack {
 

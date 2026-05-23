@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.cargador.ml.AnalizadorModsTomlForge;
-import com.asbestosstar.crashdetector.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json;
 
 /**
  * Es para MinecraftForge, no para JBoss Forge.

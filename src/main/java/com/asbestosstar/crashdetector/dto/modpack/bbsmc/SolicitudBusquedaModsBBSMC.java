@@ -8,8 +8,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
-import com.asbestosstar.crashdetector.json.Json;
 
 public class SolicitudBusquedaModsBBSMC {
 

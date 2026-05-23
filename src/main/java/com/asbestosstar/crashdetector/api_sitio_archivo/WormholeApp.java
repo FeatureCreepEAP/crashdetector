@@ -34,8 +34,8 @@ import com.asbestosstar.crashdetector.api_sitio_archivo.wormholeapp.CifradorDeFl
 import com.asbestosstar.crashdetector.api_sitio_archivo.wormholeapp.CriptoWormhole;
 import com.asbestosstar.crashdetector.api_sitio_archivo.wormholeapp.HasheadorDePiezas;
 import com.asbestosstar.crashdetector.api_sitio_archivo.wormholeapp.TorrentWormhole;
-import com.asbestosstar.crashdetector.json.Json;
-import com.asbestosstar.crashdetector.json.Json.Nodo;
+import com.asbestosstar.crashdetector.config.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 
 /**
  * Implementación real de wormhole.app usando el flujo web del CLI en Rust.

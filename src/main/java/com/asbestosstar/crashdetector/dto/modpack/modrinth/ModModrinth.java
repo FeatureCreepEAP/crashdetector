@@ -1,7 +1,7 @@
 package com.asbestosstar.crashdetector.dto.modpack.modrinth;
 
+import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.bbsmc.ModBBSMC;
-import com.asbestosstar.crashdetector.json.Json;
 
 public class ModModrinth extends ModBBSMC {
 

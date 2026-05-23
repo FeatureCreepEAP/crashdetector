@@ -1,7 +1,8 @@
 package com.asbestosstar.crashdetector.dto.modpack.curseforge;
 
+import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
-import com.asbestosstar.crashdetector.json.Json;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

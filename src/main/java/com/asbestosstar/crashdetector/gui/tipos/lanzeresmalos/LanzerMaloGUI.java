@@ -15,12 +15,12 @@ import javax.swing.JDialog;
 
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.analizador.general.LanzerDesAnimado;
+import com.asbestosstar.crashdetector.config.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 import com.asbestosstar.crashdetector.detectorlanzer.DetectorLanzer;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
-import com.asbestosstar.crashdetector.json.Json;
-import com.asbestosstar.crashdetector.json.Json.Nodo;
 
 public abstract class LanzerMaloGUI extends JDialog implements CrashDetectorGUI, BotonDeBarraLateralDerecha {
 	public static Map<String, Supplier<LanzerMaloGUI>> GUIS = new HashMap<String, Supplier<LanzerMaloGUI>>();

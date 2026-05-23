@@ -15,8 +15,8 @@ import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
-import com.asbestosstar.crashdetector.json.Json;
-import com.asbestosstar.crashdetector.json.Json.Nodo;
+import com.asbestosstar.crashdetector.config.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 
 /**
  * Parser / escritor / builder para el esquema V0 (schema = 0) de firmas.json

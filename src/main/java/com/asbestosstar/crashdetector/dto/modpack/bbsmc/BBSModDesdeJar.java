@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.CRC32;
 
-import com.asbestosstar.crashdetector.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json;
 
 public class BBSModDesdeJar {
 

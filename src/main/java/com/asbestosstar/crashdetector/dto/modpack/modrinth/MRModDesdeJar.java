@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.bbsmc.BBSModDesdeJar;
-import com.asbestosstar.crashdetector.json.Json;
 
 public class MRModDesdeJar extends BBSModDesdeJar {
 

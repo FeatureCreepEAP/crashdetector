@@ -8,7 +8,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import com.asbestosstar.crashdetector.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json;
 
 public class SolicitudHTTPModrinth {
 

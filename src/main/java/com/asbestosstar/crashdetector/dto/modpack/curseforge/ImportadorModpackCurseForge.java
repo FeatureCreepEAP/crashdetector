@@ -15,13 +15,13 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ImportadorModpack;
 import com.asbestosstar.crashdetector.dto.modpack.importar.InfoEntradaImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.importar.PoliticaImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ResolutorConflictosImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ResultadoImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.tlmods.ActualizadorTLauncherAdditional;
-import com.asbestosstar.crashdetector.json.Json;
 
 public class ImportadorModpackCurseForge implements ImportadorModpack {
 

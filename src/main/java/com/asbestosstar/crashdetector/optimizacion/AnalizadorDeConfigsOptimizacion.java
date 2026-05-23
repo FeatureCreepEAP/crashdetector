@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Properties;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.json.Json;
-import com.asbestosstar.crashdetector.json.Json.Nodo;
+import com.asbestosstar.crashdetector.config.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 
 public class AnalizadorDeConfigsOptimizacion {
 

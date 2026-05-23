@@ -20,9 +20,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.CopiaDeSeguridadDeArchivos;
 import com.asbestosstar.crashdetector.dto.modpack.tlmods.ActualizadorTLauncherAdditional;
-import com.asbestosstar.crashdetector.json.Json;
 
 public class ExportadorModpackPackwiz {
 

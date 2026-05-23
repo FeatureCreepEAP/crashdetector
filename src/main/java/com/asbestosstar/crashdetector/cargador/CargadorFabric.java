@@ -3,7 +3,7 @@ package com.asbestosstar.crashdetector.cargador;
 import java.util.Locale;
 
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json;
 
 public class CargadorFabric implements Cargador {
 

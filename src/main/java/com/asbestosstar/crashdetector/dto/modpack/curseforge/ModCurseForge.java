@@ -1,8 +1,8 @@
 package com.asbestosstar.crashdetector.dto.modpack.curseforge;
 
+import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
 import com.asbestosstar.crashdetector.dto.modpack.VersionJuego;
-import com.asbestosstar.crashdetector.json.Json;
 
 public class ModCurseForge extends InternetMod {
 

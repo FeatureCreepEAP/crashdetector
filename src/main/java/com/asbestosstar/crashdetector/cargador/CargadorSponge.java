@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json;
 
 /**
  * Detector de entorno y metadatos para plataformas SpongePowered.

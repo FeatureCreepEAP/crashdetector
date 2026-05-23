@@ -2,9 +2,9 @@ package com.asbestosstar.crashdetector.dto.modpack.bbsmc;
 
 import java.util.zip.CRC32;
 
+import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
 import com.asbestosstar.crashdetector.dto.modpack.VersionJuego;
-import com.asbestosstar.crashdetector.json.Json;
 
 public class ModBBSMC extends InternetMod {
 

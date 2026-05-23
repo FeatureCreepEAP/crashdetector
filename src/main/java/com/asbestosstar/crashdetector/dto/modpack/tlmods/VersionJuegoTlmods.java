@@ -1,7 +1,7 @@
 package com.asbestosstar.crashdetector.dto.modpack.tlmods;
 
+import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.VersionJuego;
-import com.asbestosstar.crashdetector.json.Json;
 
 public class VersionJuegoTlmods extends VersionJuego {
 

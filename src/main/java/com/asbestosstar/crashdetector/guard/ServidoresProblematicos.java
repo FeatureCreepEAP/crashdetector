@@ -14,8 +14,8 @@ import java.util.Locale;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.json.Json;
-import com.asbestosstar.crashdetector.json.Json.Nodo;
+import com.asbestosstar.crashdetector.config.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 
 /**
  * Busca servidores problemáticos dentro de ./servers.dat usando la lista de

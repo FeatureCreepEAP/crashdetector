@@ -14,12 +14,12 @@ import java.util.Map;
 import javax.swing.JDialog;
 
 import com.asbestosstar.crashdetector.analizador.general.LanzerNoAnimado;
+import com.asbestosstar.crashdetector.config.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 import com.asbestosstar.crashdetector.detectorlanzer.DetectorLanzer;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
-import com.asbestosstar.crashdetector.json.Json;
-import com.asbestosstar.crashdetector.json.Json.Nodo;
 
 /**
  * GUI base para gestionar lanzadores "animados" (recomendados/alentados).

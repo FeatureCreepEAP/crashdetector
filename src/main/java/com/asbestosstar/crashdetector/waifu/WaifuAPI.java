@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
-import com.asbestosstar.crashdetector.json.Json;
+import com.asbestosstar.crashdetector.config.json.Json;
 
 /**
  * API de Waifu/NeoForged para buscar mods por clase.
