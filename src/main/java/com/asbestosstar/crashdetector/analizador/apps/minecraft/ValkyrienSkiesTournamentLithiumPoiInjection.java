@@ -62,7 +62,7 @@ public class ValkyrienSkiesTournamentLithiumPoiInjection implements Verificacion
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int num) {
+	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Solo activar cuando ya están presentes los indicios globales
 		if (activado || !indicioInvalidInjection || !indicioLithiumPoiMixin || !indicioVSPoiMixin) {
 			return;

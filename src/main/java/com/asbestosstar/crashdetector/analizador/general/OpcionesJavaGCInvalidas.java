@@ -40,7 +40,7 @@ public class OpcionesJavaGCInvalidas implements Verificaciones {
 	 * Verificación por línea. Detecta la línea exacta y agrega enlace al lector.
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleGCInvalido || activado || linea == null || linea.isEmpty()) {
 			return;
 		}

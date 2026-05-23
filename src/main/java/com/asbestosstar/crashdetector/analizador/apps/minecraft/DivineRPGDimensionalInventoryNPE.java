@@ -25,7 +25,7 @@ public class DivineRPGDimensionalInventoryNPE implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int num) {
+	public void verificarPorLinea(Consola consola, String linea, int num) {
 
 		if (!posibleError)
 			return;

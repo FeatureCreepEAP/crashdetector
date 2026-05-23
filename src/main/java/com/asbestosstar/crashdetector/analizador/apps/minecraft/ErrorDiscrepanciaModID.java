@@ -55,7 +55,7 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó o el chequeo global dijo que no es posible,
 		// no seguimos revisando líneas.
 		if (activado || !posible) {

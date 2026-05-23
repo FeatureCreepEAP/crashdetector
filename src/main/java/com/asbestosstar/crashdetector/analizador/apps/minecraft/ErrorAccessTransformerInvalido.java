@@ -28,8 +28,8 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 	 * Verificación global no utilizada en este verificador.
 	 * <p>
 	 * La detección real se hace por línea en
-	 * {@link #verificar(Consola, String, int)}, que es llamado por el sistema de
-	 * análisis línea a línea.
+	 * {@link #verificarPorLinea(Consola, String, int)}, que es llamado por el
+	 * sistema de análisis línea a línea.
 	 * </p>
 	 */
 	@Override
@@ -48,7 +48,7 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó o el chequeo global dijo que no es posible,
 		// no seguimos revisando líneas.
 		if (activado || !posible) {

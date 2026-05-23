@@ -52,7 +52,7 @@ public class ErrorMetodoInexistente implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numLinea) {
+	public void verificarPorLinea(Consola consola, String linea, int numLinea) {
 		if (activado || !posibleNoSuchMethodError || linea == null) {
 			return;
 		}

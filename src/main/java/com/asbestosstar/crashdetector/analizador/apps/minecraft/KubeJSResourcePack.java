@@ -22,8 +22,8 @@ public class KubeJSResourcePack implements Verificaciones {
 	 * Verificación global no utilizada en este verificador.
 	 * <p>
 	 * La detección real se hace por línea en
-	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
-	 * línea.
+	 * {@link #verificarPorLinea(Consola, String, int)}, llamada por el analizador
+	 * línea a línea.
 	 * </p>
 	 */
 	@Override
@@ -44,7 +44,7 @@ public class KubeJSResourcePack implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!linea.contains("from pack KubeJS Resource Pack [data]") || !linea.contains("Failed to parse ")) {
 			return;
 		}

@@ -51,7 +51,7 @@ public class ProblemaModFaltanteEnDatapack implements Verificaciones {
 	 * Aquí se detecta el mod exacto y se agrega el enlace a la línea del log.
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleModFaltanteEnDatapack || linea == null || linea.isEmpty()) {
 			return;
 		}

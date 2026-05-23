@@ -56,7 +56,7 @@ public class ProblemaModIncompatibleFabric implements Verificaciones {
 	 * Aquí se detectan los mods exactos y se guarda el enlace a la linea.
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleModIncompatibleFabric || activado || linea == null || linea.isEmpty()) {
 			return;
 		}

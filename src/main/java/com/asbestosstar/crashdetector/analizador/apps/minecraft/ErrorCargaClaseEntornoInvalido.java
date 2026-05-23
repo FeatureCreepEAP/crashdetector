@@ -56,7 +56,7 @@ public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si el chequeo global no encontró las señales principales, no analizamos
 		// línea por línea.
 		if (!analizarLineas) {

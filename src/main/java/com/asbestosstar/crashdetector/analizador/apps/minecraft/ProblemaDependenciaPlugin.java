@@ -30,8 +30,9 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 	 * Verifica si el log contiene errores de dependencias faltantes.
 	 * 
 	 * En esta implementación, el análisis real se realiza línea a línea en
-	 * {@link #verificar(Consola, String, int)}, aprovechando el estado interno para
-	 * relacionar la línea de carga del plugin con las líneas de dependencias.
+	 * {@link #verificarPorLinea(Consola, String, int)}, aprovechando el estado
+	 * interno para relacionar la línea de carga del plugin con las líneas de
+	 * dependencias.
 	 */
 	@Override
 	public void verificar(Consola consola) {
@@ -40,7 +41,7 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// 1. Detecta carga fallida de plugin
 		if (linea.contains("Could not load 'plugins/")) {
 			extraerNombrePluginDesdeRuta(linea, numero_de_linea, consola);

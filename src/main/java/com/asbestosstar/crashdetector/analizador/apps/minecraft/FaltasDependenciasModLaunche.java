@@ -89,7 +89,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 	 * 
 	 * Toda la lógica de análisis se ha centralizado en el método
 	 * 
-	 * {@link #verificar(Consola, String, int)} para un procesamiento más
+	 * {@link #verificarPorLinea(Consola, String, int)} para un procesamiento más
 	 * 
 	 * eficiente línea por línea.
 	 *
@@ -139,7 +139,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 	@Override
 
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 
 		// Si el array de líneas no ha sido inicializado, se divide el contenido total.
 

@@ -51,7 +51,7 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int i) {
+	public void verificarPorLinea(Consola consola, String linea, int i) {
 		if (linea.contains("The specified resource '") && linea.contains("' was invalid or could not be read")) {
 			int ini = linea.indexOf("The specified resource '") + "The specified resource '".length();
 			int fin = linea.indexOf("'", ini);

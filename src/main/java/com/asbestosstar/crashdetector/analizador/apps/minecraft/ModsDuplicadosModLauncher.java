@@ -39,7 +39,7 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si globalmente no se detectaron duplicados, no hay nada que hacer por línea.
 		if (!hayDuplicados) {
 			return;

@@ -31,7 +31,7 @@ public class IndependenteFlywheel implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int num) {
+	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// TODO Auto-generated method stub
 		if (tiene_uno) {
 

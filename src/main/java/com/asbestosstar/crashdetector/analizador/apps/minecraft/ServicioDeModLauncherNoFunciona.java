@@ -26,9 +26,9 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 	 * Verificación global del contenido de la consola.
 	 * <p>
 	 * En este verificador no es necesario hacer un análisis global pesado: la
-	 * detección real se hace por línea en {@link #verificar(Consola, String, int)},
-	 * que es llamado para cada línea del log. Este método existe para mantener el
-	 * contrato de la interfaz.
+	 * detección real se hace por línea en
+	 * {@link #verificarPorLinea(Consola, String, int)}, que es llamado para cada
+	 * línea del log. Este método existe para mantener el contrato de la interfaz.
 	 * </p>
 	 */
 	@Override
@@ -37,7 +37,7 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (linea == null) {
 			return;
 		}

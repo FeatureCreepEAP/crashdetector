@@ -22,7 +22,7 @@ public class TickLargoServidorMinecraft implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int num) {
+	public void verificarPorLinea(Consola consola, String linea, int num) {
 		if (!posibleTickLargo)
 			return;
 

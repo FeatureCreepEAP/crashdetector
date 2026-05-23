@@ -45,7 +45,7 @@ public class ProblemaDependenciaPTRLib implements Verificaciones {
 	 * Verificación por línea: activa detector y agrega enlace exacto a la línea
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posiblePTRLib || linea == null || linea.isEmpty() || activado)
 			return;
 

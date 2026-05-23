@@ -41,7 +41,7 @@ public class CobblemonPinkanIslandsRhyhornModelo implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int num) {
+	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Salir temprano si no hay indicios globales o si ya fue activado
 		if (!posibleError || activado) {
 			return;

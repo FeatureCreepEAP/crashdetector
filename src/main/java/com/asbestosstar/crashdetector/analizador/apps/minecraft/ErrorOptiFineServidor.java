@@ -56,7 +56,7 @@ public class ErrorOptiFineServidor implements Verificaciones {
 	 * Solo se ejecuta si el método global encontró OptiFine en el log.
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (activado || !posibleOptiFineServidor || linea == null || linea.isEmpty()) {
 			return;
 		}

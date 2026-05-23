@@ -37,7 +37,7 @@ public class ErrorIronSpellbooksVersion implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (activado) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;

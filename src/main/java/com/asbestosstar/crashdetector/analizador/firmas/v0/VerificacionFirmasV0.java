@@ -98,7 +98,7 @@ public class VerificacionFirmasV0 implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (filtro != null && filtro.tipo.equals(TipoDeFiltrodeCodice.DE_LINEA)) {
 			if (filtro.activar(linea, para_buscar)) {
 				this.activado = true;

@@ -43,7 +43,7 @@ public class ErrorImmersiveTooltipsSinDependencia implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleError || linea == null || linea.isEmpty() || activado)
 			return;
 

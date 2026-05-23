@@ -67,7 +67,7 @@ public class ProblemaVersionAPIIncompatible implements Verificaciones {
 	 * Detecta el plugin exacto, la version API exacta y agrega enlace a la linea.
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleVersionAPIIncompatible || linea == null || linea.isEmpty()) {
 			return;
 		}

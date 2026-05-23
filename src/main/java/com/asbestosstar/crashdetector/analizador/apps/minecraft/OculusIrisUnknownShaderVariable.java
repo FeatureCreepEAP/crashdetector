@@ -53,7 +53,7 @@ public class OculusIrisUnknownShaderVariable implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int num) {
+	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Si no están ambos indicios globales, esta verificación no aplica
 		if (activado || !indicioResolver || !indicioVariableDesconocida) {
 			return;

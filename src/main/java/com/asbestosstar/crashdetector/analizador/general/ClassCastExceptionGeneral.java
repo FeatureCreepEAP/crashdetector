@@ -40,7 +40,7 @@ public class ClassCastExceptionGeneral implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int num) {
+	public void verificarPorLinea(Consola consola, String linea, int num) {
 		if (!posibleError || activado || linea == null) {
 			return;
 		}

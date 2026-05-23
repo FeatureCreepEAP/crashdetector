@@ -39,7 +39,7 @@ public class RailwaysCreate6Alfa implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó o el contexto global no coincide, no hacemos nada
 		if (activado || !tieneObjects || !tieneRegistrate || !tieneRailways || linea == null) {
 			return;

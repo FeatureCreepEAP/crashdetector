@@ -33,7 +33,7 @@ public class FallosEjecucionTareas implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Verificación rápida por línea para mejor rendimiento
 		// Buscamos el patrón de error de ejecución de tarea
 		if (linea.contains("Failed to execute task") && linea.contains(".class")) {

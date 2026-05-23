@@ -43,8 +43,8 @@ public class ErrorRutaModLauncher implements Verificaciones {
 	 * Verificación global no utilizada en este verificador.
 	 * <p>
 	 * La detección real se hace por línea en
-	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
-	 * línea.
+	 * {@link #verificarPorLinea(Consola, String, int)}, llamada por el analizador
+	 * línea a línea.
 	 * </p>
 	 */
 	@Override
@@ -66,7 +66,7 @@ public class ErrorRutaModLauncher implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Comprobación global del tipo de error (igual que en la versión original).
 		if (!no_UnixUriUtils) {
 			return;

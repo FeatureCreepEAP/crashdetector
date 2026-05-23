@@ -35,7 +35,7 @@ public class ErrorDeMonitorLWJGL implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó o sabemos que no hay rastro del error en el log, no hacemos
 		// nada.
 		if (activado || !posibleErrorMonitor || linea == null) {

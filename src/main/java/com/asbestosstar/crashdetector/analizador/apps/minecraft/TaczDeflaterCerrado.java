@@ -34,7 +34,7 @@ public class TaczDeflaterCerrado implements Verificaciones {
 	 * java.lang.NullPointerException: Deflater has been closed" en el texto
 	 * completo del log. La detección de la línea concreta del stack de
 	 * {@code GetJarResources.backupFiles} se hace en
-	 * {@link #verificar(Consola, String, int)}.
+	 * {@link #verificarPorLinea(Consola, String, int)}.
 	 * </p>
 	 */
 	@Override
@@ -45,7 +45,7 @@ public class TaczDeflaterCerrado implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (activado || linea == null) {
 			return;
 		}

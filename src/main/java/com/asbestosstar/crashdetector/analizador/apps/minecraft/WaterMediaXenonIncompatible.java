@@ -36,9 +36,9 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 	 * Verificación global.
 	 * <p>
 	 * En este verificador no es necesario un análisis global costoso; toda la
-	 * detección se hace por línea en {@link #verificar(Consola, String, int)}, que
-	 * es llamado para cada línea del log. Este método se mantiene para cumplir con
-	 * la interfaz.
+	 * detección se hace por línea en
+	 * {@link #verificarPorLinea(Consola, String, int)}, que es llamado para cada
+	 * línea del log. Este método se mantiene para cumplir con la interfaz.
 	 * </p>
 	 */
 	@Override
@@ -47,7 +47,7 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó o la línea es nula, no seguimos
 		if (activado || linea == null) {
 			return;

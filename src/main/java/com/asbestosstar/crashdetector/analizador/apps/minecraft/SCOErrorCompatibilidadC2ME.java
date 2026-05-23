@@ -27,7 +27,8 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 	 * Aquí solo se detecta la presencia de C2ME y de los mods de conexión en el
 	 * texto completo del log. La detección de la línea concreta con el
 	 * IllegalAccessException se realiza en
-	 * {@link #verificar(Consola, String, int)}, que es llamado para cada línea.
+	 * {@link #verificarPorLinea(Consola, String, int)}, que es llamado para cada
+	 * línea.
 	 * </p>
 	 */
 	@Override
@@ -57,7 +58,7 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó, o no tenemos el contexto necesario, no seguimos
 		if (activado || linea == null || !c2mePresente || !connectorPresente) {
 			return;

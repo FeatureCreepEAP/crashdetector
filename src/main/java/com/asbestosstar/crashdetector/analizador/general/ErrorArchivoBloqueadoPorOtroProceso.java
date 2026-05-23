@@ -36,7 +36,7 @@ public class ErrorArchivoBloqueadoPorOtroProceso implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó este verificador, o el log ni siquiera contiene el texto
 		// característico, no hacemos nada más.
 		if (this.activado || !this.posibleArchivoBloqueado) {

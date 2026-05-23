@@ -55,7 +55,7 @@ public class ErrorContextoOpenGL implements Verificaciones {
 	 * Detecta la línea exacta del error y agrega el enlace al lector.
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleContextoOpenGL || activado || linea == null || linea.isEmpty()) {
 			return;
 		}

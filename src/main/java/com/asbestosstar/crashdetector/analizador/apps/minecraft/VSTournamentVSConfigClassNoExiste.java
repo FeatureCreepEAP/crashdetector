@@ -53,7 +53,7 @@ public class VSTournamentVSConfigClassNoExiste implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int num) {
+	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Solo activar cuando ya están presentes ambos indicios globales
 		if (activado || !indicioClaseFaltante || !indicioTournamentInit) {
 			return;

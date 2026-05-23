@@ -69,7 +69,7 @@ public class ModIncompatibleConCargadorActivo implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// No se usa análisis por línea; todo se hace en verificar(Consola)
 	}
 

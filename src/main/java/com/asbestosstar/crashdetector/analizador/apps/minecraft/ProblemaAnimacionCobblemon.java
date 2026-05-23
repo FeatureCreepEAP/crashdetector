@@ -38,7 +38,7 @@ public class ProblemaAnimacionCobblemon implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 
 		if (!analizarLineas || linea == null || activado)
 			return;

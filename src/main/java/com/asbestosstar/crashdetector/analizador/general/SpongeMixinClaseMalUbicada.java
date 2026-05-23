@@ -42,7 +42,7 @@ public class SpongeMixinClaseMalUbicada implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int numeroLinea) {
+	public void verificarPorLinea(Consola consola, String linea, int numeroLinea) {
 
 		if (!posibleErrorMixin || activado || linea == null)
 			return;

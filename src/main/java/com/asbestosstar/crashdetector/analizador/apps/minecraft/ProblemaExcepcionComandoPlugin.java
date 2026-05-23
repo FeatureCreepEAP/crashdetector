@@ -53,7 +53,7 @@ public class ProblemaExcepcionComandoPlugin implements Verificaciones {
 	 * hacia la linea del log.
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleExcepcionComandoPlugin || activado || linea == null || linea.isEmpty()) {
 			return;
 		}

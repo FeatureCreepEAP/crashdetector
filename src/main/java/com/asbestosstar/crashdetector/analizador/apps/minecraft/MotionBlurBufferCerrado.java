@@ -31,7 +31,7 @@ public class MotionBlurBufferCerrado implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String linea, int num) {
+	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Salir temprano si no hay indicios globales
 		if (!posibleProblemaMotionBlur) {
 			return;

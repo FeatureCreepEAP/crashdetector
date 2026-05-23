@@ -484,7 +484,7 @@ public class Analizador {
 							for (Verificaciones ver : normales) {
 								try {
 									synchronized (ver) {
-										ver.verificar(consola, linea, i);
+										ver.verificarPorLinea(consola, linea, i);
 									}
 								} catch (Exception e) {
 									CrashDetectorLogger.logException(e);
@@ -514,7 +514,7 @@ public class Analizador {
 				for (Verificaciones ver : verificaciones_tardias_activadas) {
 					for (int i = 0; i < lineas.length; i++) {
 						try {
-							ver.verificar(consola, lineas[i], i);
+							ver.verificarPorLinea(consola, lineas[i], i);
 						} catch (Exception e) {
 							CrashDetectorLogger.logException(e);
 						}

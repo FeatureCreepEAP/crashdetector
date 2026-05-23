@@ -42,7 +42,7 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 	 * detecta las cadenas relevantes.
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Detecta el error específico de AzureLib inicializada demasiado pronto.
 		if (linea.contains(azure)) {
 			azureLibError = true;

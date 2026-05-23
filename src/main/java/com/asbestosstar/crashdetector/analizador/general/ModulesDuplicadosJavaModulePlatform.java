@@ -46,7 +46,7 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola, String lineaOriginal, int i) {
+	public void verificarPorLinea(Consola consola, String lineaOriginal, int i) {
 		String linea = lineaOriginal.trim();
 		String lineaMinuscula = linea.toLowerCase();
 

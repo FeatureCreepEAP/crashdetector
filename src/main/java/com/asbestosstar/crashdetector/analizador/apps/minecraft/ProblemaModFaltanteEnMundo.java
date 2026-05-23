@@ -54,7 +54,7 @@ public class ProblemaModFaltanteEnMundo implements Verificaciones {
 	 * Aquí se detecta el mod exacto y se guarda el enlace hacia la linea del log.
 	 */
 	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleModFaltanteEnMundo || linea == null || linea.isEmpty()) {
 			return;
 		}
