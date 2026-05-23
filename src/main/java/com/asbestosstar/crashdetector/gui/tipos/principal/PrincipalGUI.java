@@ -19,14 +19,11 @@ import java.util.function.Supplier;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import com.asbestosstar.crashdetector.Config;
-import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
@@ -54,6 +51,8 @@ import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosem
 import com.asbestosstar.crashdetector.gui.tipos.mixins.MixinsGUIChiarru;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.CDModsEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
+import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncherVShojo;
+import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroLanzadorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlayers;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.TodosQuickFixesGUI;
 import com.asbestosstar.crashdetector.gui.tipos.rendimiento.AdministradorDeRendimientoNightcore;
@@ -220,25 +219,13 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	}
 
 	public void anadirRegistro() {
-		// TODO Auto-generated method stub
-		JFileChooser selectorArchivo = new JFileChooser();
-		selectorArchivo.setDialogTitle("Seleccione un archivo");
-		int resultado = selectorArchivo.showOpenDialog(null);
-		if (resultado == JFileChooser.APPROVE_OPTION) {
-			File archivoSeleccionado = selectorArchivo.getSelectedFile();
-			try {
-				Consola cons = new Consola(archivoSeleccionado.toPath());
-				cons.finalizarContenido(tiempoFallo, true);
-				MonitorDePID.consolas.add(cons);
-				recargar();
-			} catch (IOException e) {
-				// Registramos la excepción
-				CrashDetectorLogger.logException(e);
-				// Mostramos un mensaje de error al usuario
-				JOptionPane.showMessageDialog(null, "Error al abrir el archivo: " + e.getMessage(), "Error",
-						JOptionPane.ERROR_MESSAGE);
-			}
-		}
+		NoRegistroLanzadorGUI gui = TipoGUI.NO_REGISTRO_LANZER.obtenerGUIPredeterminado(NoRegistroDeLauncherVShojo.ID,
+				() -> new NoRegistroDeLauncherVShojo());
+
+		gui.preparar(this, tiempoFallo);
+		gui.init();
+
+		recargar();
 	}
 
 	public void estilizarBoton(JButton boton) {

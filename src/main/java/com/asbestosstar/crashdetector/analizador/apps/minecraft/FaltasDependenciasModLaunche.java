@@ -107,11 +107,14 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 		String contenido = consola.contenido_verificar;
 
-		boolean posible = contenido.indexOf("requires") >= 0 || contenido.indexOf("Requires") >= 0
-				|| contenido.indexOf("only supports") >= 0 || contenido.indexOf("Only supports") >= 0
-				|| contenido.indexOf("Missing or unsupported mandatory dependencies:") >= 0
-				|| contenido.indexOf("Failure message: Mod ") >= 0 || contenido.indexOf("which is missing") >= 0
-				|| contenido.indexOf("Currently,") >= 0;
+		boolean posible = contenido.contains("Missing or unsupported mandatory dependencies:")
+				|| (contenido.contains("requires any version of") && contenido.contains("which is missing"))
+				|| (contenido.contains("only supports") && contenido.contains("or above")
+						&& contenido.contains(".Remove "))
+				|| (contenido.contains("Failure message: Mod ")
+						&& (contenido.contains(" requires ") || contenido.contains(" only supports ")))
+				|| (contenido.contains("Remove Iris/Oculus & GeckoLib Compat") && contenido.contains("geckoanimfix"))
+				|| (contenido.contains("Currently,") && contenido.contains("not installed"));
 
 		if (posible) {
 			posiblePorConsola = true;

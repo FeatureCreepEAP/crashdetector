@@ -30,10 +30,26 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 
 		String c = consola.contenido_verificar;
 
-		this.posibleProblemaDependenciaFabric = c.indexOf("Install") >= 0 || c.indexOf("install") >= 0
-				|| c.indexOf("Replace") >= 0 || c.indexOf("replace") >= 0 || c.indexOf("requires") >= 0
-				|| c.indexOf("Requires") >= 0 || c.indexOf("wrong version is present") >= 0
-				|| c.indexOf("which is missing") >= 0;
+		this.posibleProblemaDependenciaFabric =
+				// - Install dep, version x or later
+				(c.contains("- Install ") && c.contains(", version ") && c.contains(" or later"))
+
+						// - Replace mod (...) with any version between x and y
+						|| (c.contains("- Replace ") && c.contains(" with any version between ")
+								&& c.contains(" (inclusive)") && c.contains(" (exclusive)"))
+
+						// - Mod (...) requires version x or later of dep, which is missing
+						|| (c.contains("- Mod ") && c.contains(" requires version ") && c.contains(" or later of ")
+								&& c.contains("which is missing"))
+
+						// - Mod (...) requires any x version of dep, which is missing
+						|| (c.contains("- Mod ") && c.contains(" requires any ") && c.contains(" version of ")
+								&& c.contains("which is missing"))
+
+						// - Mod (...) requires any version between x and y ... wrong version is present
+						|| (c.contains("- Mod ") && c.contains(" requires any version between ")
+								&& c.contains(" (inclusive)") && c.contains(" (exclusive)")
+								&& c.contains("wrong version is present:"));
 	}
 
 	@Override

@@ -107,7 +107,7 @@ public class Consola {
 		APIdeSitioDeRegistro.APIS.add(new GnomeBotDevAPI());
 
 		divisores.add(new TLauncherConsolaDivisor());
-		divisores.add(new HolaMundoConsolaDivisidor());
+		// divisores.add(new HolaMundoConsolaDivisidor());
 		// divisores.add(new VainillaConsolaDivisor());
 		tipos_de_registros_de_launcher.add("../../logs/ftb-app-electron.log");
 		tipos_de_registros_de_launcher.add(NoRegistroDeLauncherVShojo.cd_launcherlog.getName());
@@ -332,7 +332,7 @@ public class Consola {
 				for (LimpiadorDeRegistro limp : limpiadores) {
 					if (limp.predicado(archivo)) {
 						contenido_verificar = limp.limpiarConsola(para_verificar.toString());
-						lineas_verificar=contenido_verificar.split(Verificaciones.nl);
+						lineas_verificar = contenido_verificar.split(Verificaciones.nl);
 						this.limpiador = limp;
 						limpiado = true;
 					}
@@ -340,7 +340,7 @@ public class Consola {
 				if (!limpiado) {
 					this.limpiador = new LimpiadorNingun();
 					contenido_verificar = para_verificar.toString();
-					lineas_verificar=contenido_verificar.split(Verificaciones.nl);
+					lineas_verificar = contenido_verificar.split(Verificaciones.nl);
 				}
 
 //				if (contenido_verificar.contains(MonitorDePID.mensaje_de_registro_lanzer_completo)) {
@@ -376,7 +376,7 @@ public class Consola {
 		for (LimpiadorDeRegistro limp : limpiadores) {
 			if (limp.predicado(archivo)) {
 				contenido_verificar = limp.limpiarConsola(contento);
-				lineas_verificar=contenido_verificar.split(Verificaciones.nl);
+				lineas_verificar = contenido_verificar.split(Verificaciones.nl);
 				limpiado = true;
 				this.limpiador = limp;
 			}
@@ -384,7 +384,7 @@ public class Consola {
 		if (!limpiado) {
 			this.limpiador = new LimpiadorNingun();
 			contenido_verificar = contento.toString();
-			lineas_verificar=contenido_verificar.split(Verificaciones.nl);
+			lineas_verificar = contenido_verificar.split(Verificaciones.nl);
 		}
 
 	}
@@ -689,13 +689,12 @@ public class Consola {
 	}
 
 	public String obtenerMensajeUltimaTrace() {
-		List<VerificacionDeStackTrace.TraceInfo> tracesInfo = VerificacionDeStackTrace
-				.obtenerTracesConLinea(contenido_verificar);
+		List<VerificacionDeStackTrace.TraceInfo> tracesInfo = VerificacionDeStackTrace.obtenerTracesConLinea(this);
 		if (!tracesInfo.isEmpty()) {
 			// La última traza en el log es la más reciente (está al final de la lista)
 			VerificacionDeStackTrace.TraceInfo ultimaTraceInfo = tracesInfo.get(tracesInfo.size() - 1);
 			String ultimaTrace = ultimaTraceInfo.trace;
-			String[] lineas = ultimaTrace.split(VerificacionDeStackTrace.nl);
+			String[] lineas = ultimaTrace.split(Verificaciones.nl);
 
 			// Buscar la primera línea con un mensaje real de error
 			for (String linea : lineas) {
@@ -723,14 +722,13 @@ public class Consola {
 	}
 
 	public String obtainerMensajeFatalUltimaTrace() {
-		List<VerificacionDeStackTrace.TraceInfo> tracesInfo = VerificacionDeStackTrace
-				.obtenerTracesFatalConLinea(contenido_verificar);
+		List<VerificacionDeStackTrace.TraceInfo> tracesInfo = VerificacionDeStackTrace.obtenerTracesFatalConLinea(this);
 		if (!tracesInfo.isEmpty()) {
 			// La última traza fatal en el log es la más reciente (está al final de la
 			// lista)
 			VerificacionDeStackTrace.TraceInfo ultimaTraceInfo = tracesInfo.get(tracesInfo.size() - 1);
 			String ultimaTrace = ultimaTraceInfo.trace;
-			String[] lineas = ultimaTrace.split(VerificacionDeStackTrace.nl);
+			String[] lineas = ultimaTrace.split(Verificaciones.nl);
 
 			// Buscar el mensaje fatal en las líneas
 			for (String linea : lineas) {

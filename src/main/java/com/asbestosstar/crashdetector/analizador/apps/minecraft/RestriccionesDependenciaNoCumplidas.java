@@ -31,112 +31,171 @@ public class RestriccionesDependenciaNoCumplidas implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		String log = consola.contenido_verificar;
-		if (log == null)
-			return;
 
-		// Paso 1: Buscar la línea de la excepción principal
-		int indexException = log.indexOf("EarlyLoadingException");
-		if (indexException == -1)
-			return;
-
-		// Extraer la cantidad de errores
-		int lineEnd = log.indexOf("\n", indexException);
-		String exceptionLine = lineEnd > indexException ? log.substring(indexException, lineEnd)
-				: log.substring(indexException);
-
-		if (exceptionLine.contains("Dependency restrictions were not met")) {
-			int colonIndex = exceptionLine.indexOf(": ");
-			if (colonIndex != -1) {
-				String temp = exceptionLine.substring(colonIndex + 2);
-				String[] partes = temp.split(" ");
-				if (partes.length > 0) {
-					this.cantidad = partes[0];
-				}
-			}
-		} else {
-			return;
-		}
-
-		// Paso 2: Localizar el bloque de error detallado
-		int selectJarsStart = log.lastIndexOf("[main/ERROR]: Failed to select jars", indexException);
-		if (selectJarsStart == -1) {
-			selectJarsStart = log.lastIndexOf("ResolutionFailureInformation", indexException);
-			if (selectJarsStart != -1) {
-				selectJarsStart = log.lastIndexOf("\n", selectJarsStart) + 1;
-			}
-		}
-
-		if (selectJarsStart != -1 && selectJarsStart < indexException) {
-			int selectJarsEnd = log.indexOf("\n", selectJarsStart);
-			String errorContent = log.substring(selectJarsStart, selectJarsEnd != -1 ? selectJarsEnd : log.length());
-
-			parsearConflictosAgrupados(errorContent);
+		// Global check barato: solo activa si están las piezas necesarias.
+		if (log.contains("EarlyLoadingException") && log.contains("Dependency restrictions were not met")
+				&& (log.contains("Failed to select jars") || log.contains("ResolutionFailureInformation"))) {
 			activado = true;
-			this.enlace = consola.agregarErrorALectador(log.substring(0, indexException).split("\n").length, this);
-		}
-	}
-
-	private void parsearConflictosAgrupados(String texto) {
-		conflictosPorMod.clear();
-
-		// Dividir por bloques de información de resolución
-		String[] bloques = texto.split("ResolutionFailureInformation\\{");
-
-		for (String bloque : bloques) {
-			if (!bloque.contains("artifact=") || !bloque.contains("Mod File:"))
-				continue;
-
-			String dependencia = "Desconocida";
-
-			// 1. Extraer Nombre de la Dependencia
-			int idxArt = bloque.indexOf("artifact=");
-			if (idxArt != -1) {
-				String sub = bloque.substring(idxArt + 8);
-				int fin = sub.indexOf("]");
-				int coma = sub.indexOf(",");
-				int minFin = Math.min(fin != -1 ? fin : 9999, coma != -1 ? coma : 9999);
-				if (minFin != 9999) {
-					dependencia = sub.substring(0, minFin).trim();
-				}
-			}
-
-			// 2. Buscar TODOS los archivos que referencian esta dependencia en este bloque
-			int idxSource = 0;
-			while ((idxSource = bloque.indexOf("Mod File:", idxSource)) != -1) {
-				String sub = bloque.substring(idxSource + 9);
-				int fin = sub.indexOf("]");
-				int coma = sub.indexOf(",");
-				int minFin = Math.min(fin != -1 ? fin : 9999, coma != -1 ? coma : 9999);
-
-				String archivo = "Desconocido";
-				if (minFin != 9999) {
-					archivo = sub.substring(0, minFin).trim();
-				}
-
-				// Limpiar ruta
-				if (archivo.contains("\\"))
-					archivo = archivo.substring(archivo.lastIndexOf("\\") + 1);
-				else if (archivo.contains("/"))
-					archivo = archivo.substring(archivo.lastIndexOf("/") + 1);
-
-				// Agregar al Mapa
-				if (!archivo.isEmpty()) {
-					conflictosPorMod.computeIfAbsent(archivo, k -> new ArrayList<>());
-					// Evitar duplicados si el log es redundante
-					List<String> deps = conflictosPorMod.get(archivo);
-					if (!deps.contains(dependencia)) {
-						deps.add(dependencia);
-					}
-				}
-				idxSource += 9;
-			}
 		}
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// No se usa en este enfoque
+		if (!activado || consola == null || linea == null) {
+			return;
+		}
+
+		// Línea principal con la cantidad.
+		if (linea.contains("EarlyLoadingException") && linea.contains("Dependency restrictions were not met")) {
+			extraerCantidadDesdeLinea(linea);
+
+			if (this.enlace == null || this.enlace.isEmpty()) {
+				this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
+			}
+
+			return;
+		}
+
+		// Línea detallada donde vienen los ResolutionFailureInformation.
+		if (linea.contains("ResolutionFailureInformation{") && linea.contains("artifact=")
+				&& linea.contains("Mod File:")) {
+			parsearConflictosAgrupados(linea);
+		}
+	}
+
+	private void extraerCantidadDesdeLinea(String linea) {
+		int dosPuntos = linea.indexOf(": ");
+		if (dosPuntos == -1) {
+			return;
+		}
+
+		int inicio = dosPuntos + 2;
+		int fin = linea.indexOf(' ', inicio);
+
+		if (fin == -1) {
+			fin = linea.length();
+		}
+
+		if (inicio < fin) {
+			this.cantidad = linea.substring(inicio, fin).trim();
+		}
+	}
+
+	private void parsearConflictosAgrupados(String texto) {
+		if (texto == null || texto.isEmpty()) {
+			return;
+		}
+
+		int pos = 0;
+
+		while (true) {
+			int inicioBloque = texto.indexOf("ResolutionFailureInformation{", pos);
+			if (inicioBloque == -1) {
+				break;
+			}
+
+			int siguienteBloque = texto.indexOf("ResolutionFailureInformation{", inicioBloque + 29);
+			int finBloque = siguienteBloque == -1 ? texto.length() : siguienteBloque;
+
+			parsearBloque(texto, inicioBloque, finBloque);
+
+			pos = finBloque;
+		}
+	}
+
+	private void parsearBloque(String texto, int inicioBloque, int finBloque) {
+		int idxArt = texto.indexOf("artifact=", inicioBloque);
+		if (idxArt == -1 || idxArt >= finBloque) {
+			return;
+		}
+
+		String dependencia = extraerValorHastaSeparador(texto, idxArt + 9, finBloque);
+
+		if (dependencia == null || dependencia.isEmpty()) {
+			dependencia = "Desconocida";
+		}
+
+		int pos = inicioBloque;
+
+		while (true) {
+			int idxSource = texto.indexOf("Mod File:", pos);
+			if (idxSource == -1 || idxSource >= finBloque) {
+				break;
+			}
+
+			String archivo = extraerValorHastaSeparador(texto, idxSource + 9, finBloque);
+
+			if (archivo == null || archivo.isEmpty()) {
+				archivo = "Desconocido";
+			}
+
+			archivo = limpiarNombreArchivo(archivo);
+
+			if (!archivo.isEmpty()) {
+				List<String> deps = conflictosPorMod.get(archivo);
+
+				if (deps == null) {
+					deps = new ArrayList<>();
+					conflictosPorMod.put(archivo, deps);
+				}
+
+				if (!deps.contains(dependencia)) {
+					deps.add(dependencia);
+				}
+			}
+
+			pos = idxSource + 9;
+		}
+	}
+
+	private String extraerValorHastaSeparador(String texto, int inicio, int limite) {
+		if (inicio < 0 || inicio >= texto.length()) {
+			return "";
+		}
+
+		if (limite > texto.length()) {
+			limite = texto.length();
+		}
+
+		int finCorchete = texto.indexOf(']', inicio);
+		int finComa = texto.indexOf(',', inicio);
+
+		int fin = limite;
+
+		if (finCorchete != -1 && finCorchete < fin) {
+			fin = finCorchete;
+		}
+
+		if (finComa != -1 && finComa < fin) {
+			fin = finComa;
+		}
+
+		if (fin <= inicio) {
+			return "";
+		}
+
+		return texto.substring(inicio, fin).trim();
+	}
+
+	private String limpiarNombreArchivo(String archivo) {
+		if (archivo == null || archivo.isEmpty()) {
+			return "";
+		}
+
+		int barraWindows = archivo.lastIndexOf('\\');
+		int barraUnix = archivo.lastIndexOf('/');
+		int barra = Math.max(barraWindows, barraUnix);
+
+		if (barra != -1 && barra + 1 < archivo.length()) {
+			return archivo.substring(barra + 1).trim();
+		}
+
+		return archivo.trim();
 	}
 
 	@Override

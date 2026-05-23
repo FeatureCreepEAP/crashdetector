@@ -220,7 +220,6 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
 		String[] lineas = consola.lineas_verificar;
 
 		boolean encontradoModSospechoso = false;

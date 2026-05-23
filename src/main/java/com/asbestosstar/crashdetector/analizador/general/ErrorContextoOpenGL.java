@@ -94,8 +94,7 @@ public class ErrorContextoOpenGL implements Verificaciones {
 	private void activar(Consola consola, int numero_de_linea) {
 		mensaje = MonitorDePID.idioma.errorContextoOpenGL();
 
-		origen = detectarOrigenConVDST(consola.verificacion_de_stacktrace, consola.contenido_verificar,
-				numero_de_linea);
+		origen = detectarOrigenConVDST(consola.verificacion_de_stacktrace, consola, numero_de_linea);
 
 		if (!origen.isEmpty()) {
 			mensaje = mensaje + " <b>(" + origen + ")</b>";
@@ -109,7 +108,7 @@ public class ErrorContextoOpenGL implements Verificaciones {
 	 * Busca un trace cercano usando vdst y extrae el primer origen plausible
 	 * (jar/modid/paquete) con los métodos utilitarios de VerificacionDeStackTrace.
 	 */
-	private String detectarOrigenConVDST(VerificacionDeStackTrace vdst, String log, int lineaInicio) {
+	private String detectarOrigenConVDST(VerificacionDeStackTrace vdst, Consola log, int lineaInicio) {
 		VerificacionDeStackTrace.TraceInfo candidato = null;
 		int ventanaSuperior = lineaInicio + 60;
 

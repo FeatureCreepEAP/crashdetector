@@ -142,7 +142,7 @@ public class NullPointer implements Verificaciones {
 			return;
 		}
 
-		if (contieneIgnoreCase(linea, "NullPointerException") && !linea.contains("at ")
+		if (linea.contains("NullPointerException") && !linea.contains("at ")
 				&& VerificacionDeStackTrace.tracePermite(linea)) {
 			procesarLineaSinTraza(linea, consola.verificacion_de_stacktrace, i, consola);
 		}

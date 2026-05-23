@@ -94,25 +94,22 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 		});
 	}
 
-	// ====== Construcción técnica de la UI (ahora en la implementación concreta)
-	// ======
 	public JPanel construirContenido() {
 		building = true;
 
 		raizPanel = new JPanel(new BorderLayout(8, 0));
 		raizPanel.setBorder(new EmptyBorder(8, 10, 0, 10));
-		raizPanel.setBackground(colorFondoVentana.obtener()); // Aplicar color
+		raizPanel.setBackground(colorFondoVentana.obtener());
 
 		// Encabezado
 		encabezadoPanel = new JPanel(new BorderLayout(6, 6));
-		encabezadoPanel.setBackground(colorFondoVentana.obtener()); // Aplicar color
+		encabezadoPanel.setBackground(colorFondoVentana.obtener());
 
-		JLabel titulo = new JLabel("CrashDetector – " + MonitorDePID.idioma.noRegistroLauncherTitulo());
+		JLabel titulo = new JLabel(MonitorDePID.idioma.noRegistroLauncherTitulo());
 		titulo.setFont(negrita(titulo.getFont(), 18f));
-		titulo.setForeground(colorTexto.obtener()); // Aplicar color
+		titulo.setForeground(colorTexto.obtener());
 		encabezadoPanel.add(titulo, BorderLayout.NORTH);
 
-		// Descripción HTML
 		descripcionHtml = new javax.swing.JEditorPane();
 		descripcionHtml.setContentType("text/html");
 		descripcionHtml.setEditable(false);
@@ -135,32 +132,31 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 
 		descScroll = new JScrollPane(descripcionHtml);
 		descScroll.setPreferredSize(new Dimension(10, 84));
-		descScroll.getViewport().setBackground(colorCajaTexto.obtener()); // Aplicar color
-		descScroll.setBorder(javax.swing.BorderFactory.createLineBorder(colorBoton.obtener().darker(), 1)); // Aplicar
-																											// color
+		descScroll.getViewport().setBackground(colorCajaTexto.obtener());
+		descScroll.setBorder(javax.swing.BorderFactory.createLineBorder(colorBoton.obtener().darker(), 1));
 		encabezadoPanel.add(descScroll, BorderLayout.CENTER);
 
-		// Fila de controles (selector + idiomas)
+		// Fila de controles
 		JPanel filaControles = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
-		filaControles.setBackground(colorFondoVentana.obtener()); // Aplicar color
+		filaControles.setBackground(colorFondoVentana.obtener());
 
 		selector = new JComboBox<>(
 				new String[] { GEN, CURSE, PRISM, HMCL, FENIX, ATL, GD, BATTLY, NIGHTWORLD, MCSERVER, ENLACE_MD });
-		estilizarCombo(selector); // Aplicar estilo
+		estilizarCombo(selector);
 		selector.setPreferredSize(new Dimension(360, 34));
 		selector.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				if (!building)
+				if (!building) {
 					refrescarInterfaz();
+				}
 			}
 		});
 
 		LinkedHashMap<String, String> banderas = Idioma.mapaParaComboBoxIdiomas();
 		comboBoxIdioma = new ComboIdiomasConIcono(banderas);
-		estilizarCombo(comboBoxIdioma); // Aplicar estilo
+		estilizarCombo(comboBoxIdioma);
 
-		// Selección por idioma actual usando el registro dinámico
 		String codigoActual = MonitorDePID.idioma.codigo();
 		String nombreIdiomaActual = Idioma.nombreDeIdiomaDesdeCodigo(codigoActual);
 		comboBoxIdioma.setSelectedItem(nombreIdiomaActual);
@@ -177,13 +173,11 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 
 				if (codigo != null) {
 					try {
-						// Guardar el idioma seleccionado en la configuración mundial
 						ConfigMundial.obtenerInstancia().guardarIdioma(codigo);
 					} catch (Exception ex) {
 						CrashDetectorLogger.logException(ex);
 					}
 
-					// Recalcular desde el registro dinámico actual del proceso
 					MonitorDePID.recalcularIdioma();
 					actualizarTextos();
 				}
@@ -197,23 +191,22 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 
 		raizPanel.add(encabezadoPanel, BorderLayout.NORTH);
 
-		// Centro: imagen + botón HMCL debajo + (opcional) área de pegado
+		// Centro
 		centroPanel = new JPanel(new BorderLayout(6, 6));
-		centroPanel.setBackground(colorFondoVentana.obtener()); // Aplicar color
+		centroPanel.setBackground(colorFondoVentana.obtener());
 
 		panelImagenYBoton = new JPanel(new BorderLayout());
-		panelImagenYBoton.setBackground(colorFondoVentana.obtener()); // Aplicar color
+		panelImagenYBoton.setBackground(colorFondoVentana.obtener());
 
 		imagenLbl.setOpaque(true);
-		imagenLbl.setBackground(colorFondoVentana.obtener()); // Aplicar color
-		imagenLbl.setBorder(javax.swing.BorderFactory.createLineBorder(colorBoton.obtener().darker(), 1)); // Aplicar
-																											// color
+		imagenLbl.setBackground(colorFondoVentana.obtener());
+		imagenLbl.setBorder(javax.swing.BorderFactory.createLineBorder(colorBoton.obtener().darker(), 1));
 		panelImagenYBoton.add(imagenLbl, BorderLayout.CENTER);
 
 		panelBajoImagen = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 6));
-		panelBajoImagen.setBackground(colorFondoVentana.obtener()); // Aplicar color
+		panelBajoImagen.setBackground(colorFondoVentana.obtener());
 
-		estilizarBoton(seleccionarCarpetaBtn); // Aplicar estilo
+		estilizarBoton(seleccionarCarpetaBtn);
 		seleccionarCarpetaBtn.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ev) {
@@ -225,23 +218,34 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 		panelImagenYBoton.add(panelBajoImagen, BorderLayout.SOUTH);
 		centroPanel.add(panelImagenYBoton, BorderLayout.NORTH);
 
-		// Área de pegado (AWT)
+		// Área de archivo + pegado
 		areaTexto = new java.awt.TextArea("", 24, 100, java.awt.TextArea.SCROLLBARS_BOTH);
 		areaTexto.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 13));
-		areaTexto.setBackground(colorCajaTexto.obtener()); // Aplicar color
-		areaTexto.setForeground(colorEnlace.obtener()); // Aplicar color
+		areaTexto.setBackground(colorCajaTexto.obtener());
+		areaTexto.setForeground(colorEnlace.obtener());
 
-		panelAreaTexto = new JPanel(new BorderLayout());
-		panelAreaTexto.setBackground(colorFondoVentana.obtener()); // Aplicar color
+		panelAreaTexto = new JPanel(new BorderLayout(4, 4));
+		panelAreaTexto.setBackground(colorFondoVentana.obtener());
+		panelAreaTexto.setBorder(bordeTitulado(MonitorDePID.idioma.pegaLosRegistrosAqui()));
+
+		// Botón nuevo: permite subir/cargar un archivo en vez de pegar texto.
+		estilizarBoton(botonSubirArchivo, 4);
+		botonSubirArchivo.addActionListener(new java.awt.event.ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ev) {
+				abrirSelectorArchivoLog();
+			}
+		});
+
+		panelAreaTexto.add(botonSubirArchivo, BorderLayout.NORTH);
 		panelAreaTexto.add(areaTexto, BorderLayout.CENTER);
-		panelAreaTexto.setBorder(bordeTitulado(MonitorDePID.idioma.pegaLosRegistrosAqui())); // Aplicar borde
-		centroPanel.add(panelAreaTexto, BorderLayout.CENTER);
 
+		centroPanel.add(panelAreaTexto, BorderLayout.CENTER);
 		raizPanel.add(centroPanel, BorderLayout.CENTER);
 
-		// Pie: logo + botones
+		// Pie
 		piePanel = new JPanel(new GridBagLayout());
-		piePanel.setBackground(colorFondoVentana.obtener()); // Aplicar color
+		piePanel.setBackground(colorFondoVentana.obtener());
 
 		javax.swing.ImageIcon vshojoIcon = cargarIconoEncajado("imagenes/vshojo.png", 140, 90, true);
 		int filaAltura = (vshojoIcon != null ? vshojoIcon.getIconHeight() : 90);
@@ -253,10 +257,10 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 		} else {
 			vshojoLbl.setText("VShojo");
 		}
-		vshojoLbl.setForeground(colorTexto.obtener()); // Aplicar color
+		vshojoLbl.setForeground(colorTexto.obtener());
 
 		botonesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-		botonesPanel.setBackground(colorFondoVentana.obtener()); // Aplicar color
+		botonesPanel.setBackground(colorFondoVentana.obtener());
 		botonesPanel.setPreferredSize(new Dimension(10, filaAltura));
 		botonesPanel.setMinimumSize(new Dimension(10, filaAltura));
 		botonesPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, filaAltura));
@@ -264,9 +268,10 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 		botonProxy = new JButton("ProxySysOutSysErr");
 		botonGuardar = new JButton(MonitorDePID.idioma.guardarYCerrar());
 		botonOmitir = new JButton(MonitorDePID.idioma.omitirYCerrar());
-		estilizarBoton(botonProxy, 4); // Aplicar estilo
-		estilizarBoton(botonGuardar, 4); // Aplicar estilo
-		estilizarBoton(botonOmitir, 4); // Aplicar estilo
+
+		estilizarBoton(botonProxy, 4);
+		estilizarBoton(botonGuardar, 4);
+		estilizarBoton(botonOmitir, 4);
 
 		botonProxy.addActionListener(new java.awt.event.ActionListener() {
 			@Override
@@ -275,6 +280,7 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 				int r = JOptionPane.showConfirmDialog(NoRegistroDeLauncherVShojo.this, msg,
 						MonitorDePID.idioma.confirmacionTitulo(), JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE);
+
 				if (r == JOptionPane.YES_OPTION) {
 					Config.obtenerInstancia().guardarProxySysOutSysErr(true);
 					JOptionPane.showMessageDialog(NoRegistroDeLauncherVShojo.this,
@@ -283,12 +289,14 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 				}
 			}
 		});
+
 		botonGuardar.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				guardarRegistros();
 			}
 		});
+
 		botonOmitir.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -296,7 +304,6 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 			}
 		});
 
-		// Orden: Guardar, Omitir, Proxy
 		botonesPanel.add(botonGuardar);
 		botonesPanel.add(botonOmitir);
 		botonesPanel.add(botonProxy);
@@ -318,10 +325,15 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 
 		raizPanel.add(piePanel, BorderLayout.SOUTH);
 
-		// Selección automática por ruta
+		// Drag & drop: permite soltar un archivo dentro de la ventana.
+		instalarArrastrarArchivo(raizPanel);
+		instalarArrastrarArchivo(imagenLbl);
+		instalarArrastrarArchivo(panelAreaTexto);
+
 		selector.setSelectedItem(detectarPorDirectorio());
 		building = false;
 		refrescarInterfaz();
+
 		return raizPanel;
 	}
 

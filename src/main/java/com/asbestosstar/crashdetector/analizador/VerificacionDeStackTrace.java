@@ -26,7 +26,6 @@ public class VerificacionDeStackTrace {
 	public static List<ListaDenegadosTrace> denegados = new ArrayList<ListaDenegadosTrace>();
 
 	Consola consola;
-	public static String nl = System.lineSeparator();
 
 	// Patrón para coincidir con rastros de pila de excepciones de Java
 	private static final Pattern STACK_TRACE_PATTERN = Pattern
@@ -105,53 +104,414 @@ public class VerificacionDeStackTrace {
 		nivel_trazo.clear();
 		trazos_completos.clear();
 
+		String[] lineas = consola.lineas_verificar;
+		if (lineas == null || lineas.length == 0) {
+			return;
+		}
+
+		List<TraceInfo> tracesFatal = new ArrayList<>();
+		List<TraceInfo> tracesNormales = new ArrayList<>();
+
+		// === Una sola pasada para encontrar trazos fatales y normales ===
+		int i = 0;
+		while (i < lineas.length) {
+
+			String header = lineas[i];
+			if (header == null || header.isEmpty()) {
+				i++;
+				continue;
+			}
+
+			boolean esFatal = header.contains("/FATAL]");
+			boolean esNormal = false;
+
+			if (!esFatal && i + 1 < lineas.length && !Character.isWhitespace(header.charAt(0))) {
+				String next = normalizarLineaStack(lineas[i + 1]);
+				esNormal = next != null && next.trim().startsWith("at ");
+			}
+
+			if (!esFatal && !esNormal) {
+				i++;
+				continue;
+			}
+
+			int inicio = i;
+			int j = i + 1;
+
+			while (j < lineas.length && esParteDeStack(lineas[j])) {
+				j++;
+			}
+
+			int fin = j - 1;
+
+			if (tracePermitePorRango(lineas, inicio, fin)) {
+				TraceInfo base = new TraceInfo(null, inicio, -1, esFatal);
+				base.consolaLineaTerminar = fin;
+
+				if (esFatal) {
+					tracesFatal.add(base);
+				} else {
+					tracesNormales.add(base);
+				}
+			}
+
+			i = Math.max(j, i + 1);
+		}
+
 		int nivel_prioridad = 0;
-		String contenido = consola.contenido_verificar;
 
 		// === FATALES ===
-		List<TraceInfo> tracesFatal = obtenerTracesFatalConLinea(contenido);
-		Collections.reverse(tracesFatal); // últimos = mayor prioridad
+		Collections.reverse(tracesFatal);
 
 		for (TraceInfo base : tracesFatal) {
 			nivel_prioridad++;
 
-			TraceInfo info = construirTraceInfo(base.trace, base.consolaLineaComenzar, nivel_prioridad, true);
+			TraceInfo info = construirYProcesarTraceInfo(lineas, base.consolaLineaComenzar,
+					base.consolaLineaTerminar - 1, nivel_prioridad, true);
 
-			// Registro canónico
 			trazos_completos.add(info);
-
-			// Registro legacy / lookup
 			nivel_trazo.put(nivel_prioridad, info);
-
-			// Compatibilidad antigua (JSON / clases faltantes)
-			procesarTrace(base.trace, true, nivel_prioridad, base.consolaLineaComenzar);
 		}
 
 		// === NORMALES ===
-		List<TraceInfo> tracesNormales = obtenerTracesConLinea(contenido);
-		Collections.reverse(tracesNormales); // últimos = mayor prioridad
+		Collections.reverse(tracesNormales);
 
 		for (TraceInfo base : tracesNormales) {
 			nivel_prioridad++;
 
-			TraceInfo info = construirTraceInfo(base.trace, base.consolaLineaComenzar, nivel_prioridad, false);
+			TraceInfo info = construirYProcesarTraceInfo(lineas, base.consolaLineaComenzar, base.consolaLineaTerminar,
+					nivel_prioridad, false);
 
-			// Registro canónico
 			trazos_completos.add(info);
-
-			// Registro legacy / lookup
 			nivel_trazo.put(nivel_prioridad, info);
-
-			// Compatibilidad antigua
-			procesarTrace(base.trace, false, nivel_prioridad, base.consolaLineaComenzar);
 		}
+	}
+
+	private static boolean tracePermitePorRango(String[] lineas, int inicio, int fin) {
+
+		if (denegados == null || denegados.isEmpty()) {
+			return true;
+		}
+
+		// Primero probar cada línea individualmente.
+		// Esto evita construir un String grande para la mayoría de reglas,
+		// porque casi todas tus reglas usan contains(), startsWith(), equals(), etc.
+		for (int i = inicio; i <= fin && i < lineas.length; i++) {
+			String linea = lineas[i];
+
+			if (linea == null) {
+				continue;
+			}
+
+			for (ListaDenegadosTrace pred : denegados) {
+				if (pred.predicado(linea)) {
+					return false;
+				}
+			}
+		}
+
+		// Solo si ninguna línea individual coincidió, probar el trace completo.
+		// Esto mantiene compatibilidad con reglas que necesitan varias líneas a la vez,
+		// por ejemplo reglas con A && B donde A y B podrían estar en líneas diferentes.
+		StringBuilder sb = null;
+
+		for (int i = inicio; i <= fin && i < lineas.length; i++) {
+			if (sb == null) {
+				sb = new StringBuilder();
+			} else {
+				sb.append(Verificaciones.nl);
+			}
+
+			sb.append(lineas[i]);
+		}
+
+		if (sb == null) {
+			return true;
+		}
+
+		String traceCompleto = sb.toString();
+
+		for (ListaDenegadosTrace pred : denegados) {
+			if (pred.predicado(traceCompleto)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private TraceInfo construirYProcesarTraceInfo(String[] lineas, int inicio, int fin, int nivel, boolean fatal) {
+
+		TraceInfo info = new TraceInfo(null, inicio, nivel, fatal);
+		info.consolaLineaTerminar = fin;
+
+		String claseFaltantePendiente = null;
+		int lineaClaseFaltantePendiente = -1;
+
+		for (int i = inicio; i <= fin && i < lineas.length; i++) {
+
+			String lineaOriginal = lineas[i];
+			String normalizada = normalizarLineaStack(lineaOriginal);
+			if (normalizada == null) {
+				continue;
+			}
+
+			String t = normalizada.trim();
+			if (t.isEmpty()) {
+				continue;
+			}
+
+			// === SpongeMixin JSON, sin split extra ===
+			if (t.contains("org.spongepowered.asm.mixin")) {
+				procesarJsonMixinEnLinea(t, inicio, fatal);
+			}
+
+			// === ClassNotFound / NoClassDef, sin volver a escanear todo el trace ===
+			if ((t.contains("ClassNotFoundException") || t.contains("NoClassDefFoundError"))
+					&& !esLineaDeAdvertenciaEstandar(t)) {
+
+				claseFaltantePendiente = extraerClaseFaltanteDeLinea(t);
+				lineaClaseFaltantePendiente = i;
+			}
+
+			if (t.contains("org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException:")) {
+				String clase = extraerClaseDeMetadataNoEncontrada(t);
+				if (clase != null && !clase.isEmpty()) {
+					clases_fatales_no_existentes.put(clase, nivel, i, "");
+				}
+			}
+
+			// Solo las líneas "at ..." producen LineaTrazo
+			if (!t.startsWith("at ")) {
+				continue;
+			}
+
+			LineaTrazo lt = construirLineaTrazoDesdeLinea(t, nivel, i, fatal);
+			if (lt == null) {
+				continue;
+			}
+
+			info.lineas.add(lt);
+
+			// Si antes vimos una clase faltante, usamos el primer origen válido posterior
+			// como sospechoso. Esto evita re-escanear el trace entero.
+			if (claseFaltantePendiente != null) {
+				clases_fatales_no_existentes.put(claseFaltantePendiente, nivel, lineaClaseFaltantePendiente, lt.origen);
+
+				claseFaltantePendiente = null;
+				lineaClaseFaltantePendiente = -1;
+			}
+		}
+
+		return info;
+	}
+
+	private static String extraerClaseFaltanteDeLinea(String linea) {
+
+		if (linea == null) {
+			return null;
+		}
+
+		String claseFaltante;
+
+		if (linea.contains("ClassNotFoundException")) {
+			int startIdx = linea.indexOf("ClassNotFoundException:") + "ClassNotFoundException:".length();
+			claseFaltante = linea.substring(startIdx).trim();
+		} else if (linea.contains("NoClassDefFoundError")) {
+			int startIdx = linea.indexOf("NoClassDefFoundError:") + "NoClassDefFoundError:".length();
+			claseFaltante = linea.substring(startIdx).trim();
+		} else {
+			return null;
+		}
+
+		if (claseFaltante.startsWith("Could not initialize class ")) {
+			claseFaltante = claseFaltante.substring("Could not initialize class ".length()).trim();
+		}
+
+		int espacio = claseFaltante.indexOf(' ');
+		if (espacio >= 0) {
+			claseFaltante = claseFaltante.substring(0, espacio).trim();
+		}
+
+		int paren = claseFaltante.indexOf('(');
+		if (paren >= 0) {
+			claseFaltante = claseFaltante.substring(0, paren).trim();
+		}
+
+		if (claseFaltante.isEmpty()) {
+			return null;
+		}
+
+		return claseFaltante.replace('.', '/');
+	}
+
+	private void procesarJsonMixinEnLinea(String linea, int consolaLineaInicio, boolean fatal) {
+
+		if (linea == null || linea.indexOf(".json") < 0) {
+			return;
+		}
+
+		Matcher matcher = JSON_PATTERN.matcher(linea.trim());
+
+		while (matcher.find()) {
+			String nombreJson = matcher.group(1);
+
+			if (nombreJson == null) {
+				continue;
+			}
+
+			nombreJson = nombreJson.trim();
+
+			if (nombreJson.startsWith("[")) {
+				nombreJson = nombreJson.substring(1);
+			}
+
+			if (!sm_config.containsKey0(nombreJson)) {
+				sm_config.put(nombreJson, consolaLineaInicio, fatal);
+				CrashDetectorLogger.log("Agregando JSON " + nombreJson);
+			}
+		}
+	}
+
+	private LineaTrazo construirLineaTrazoDesdeLinea(String normalizada, int nivel, int lineaConsola, boolean fatal) {
+
+		if (normalizada == null) {
+			return null;
+		}
+
+		String t = normalizada.trim();
+		if (!t.startsWith("at ")) {
+			return null;
+		}
+
+		// 1. JAR primero porque tiene prioridad y evita extraer modid/paquete si ya hay
+		// origen bueno.
+		String jar = extraerPrimerJarDeLinea(t);
+		if (jar != null) {
+			if (isJarNoPermite(jar)) {
+				return null;
+			}
+
+			String clase = extraerClaseDeLinea(t);
+			if (clase == null || clase.isEmpty()) {
+				return null;
+			}
+
+			LineaTrazo lt = new LineaTrazo();
+			lt.origen = jar;
+			lt.clase = clase;
+			lt.nivel = nivel;
+			lt.lineaConsola = lineaConsola;
+			lt.fatal = fatal;
+			lt.llaves = t.indexOf('{') >= 0 ? extraerLlavesDeLinea(t) : Collections.<String>emptyList();
+
+			return lt;
+		}
+
+		String clase = extraerClaseDeLinea(t);
+		if (clase == null || clase.isEmpty()) {
+			return null;
+		}
+
+		String origen = null;
+
+		// 2. ModID
+		String modid = extraerModidDeLinea(t);
+		if (modid != null) {
+			if (esModNoPermite(modid)) {
+				return null;
+			}
+			origen = modid;
+		}
+
+		// 3. Paquete
+		if (origen == null) {
+			String paquete = extraerPaqueteDeLinea(t);
+			if (paquete != null) {
+				String dec = nivel + "," + lineaConsola;
+
+				if (packNoEsPermite(paquete, dec, fatal)) {
+					return null;
+				}
+
+				origen = paquete;
+			}
+		}
+
+		// 4. Clase fallback
+		if (origen == null) {
+			if (claseNoEsPermitida(clase)) {
+				return null;
+			}
+
+			origen = clase;
+		}
+
+		LineaTrazo lt = new LineaTrazo();
+		lt.origen = origen;
+		lt.clase = clase;
+		lt.nivel = nivel;
+		lt.lineaConsola = lineaConsola;
+		lt.fatal = fatal;
+		lt.llaves = t.indexOf('{') >= 0 ? extraerLlavesDeLinea(t) : Collections.<String>emptyList();
+
+		return lt;
+	}
+
+	private static String extraerPrimerJarDeLinea(String linea) {
+
+		if (linea == null) {
+			return null;
+		}
+
+		int inicio = 0;
+
+		while (true) {
+			int abrir = linea.indexOf('[', inicio);
+			if (abrir < 0) {
+				return null;
+			}
+
+			int cerrar = linea.indexOf(']', abrir + 1);
+			if (cerrar < 0) {
+				return null;
+			}
+
+			int jar = linea.indexOf(".jar", abrir + 1);
+			if (jar >= 0 && jar < cerrar) {
+				return linea.substring(abrir + 1, jar + 4);
+			}
+
+			inicio = cerrar + 1;
+		}
+	}
+
+	private static boolean claseNoEsPermitida(String clase) {
+
+		if (clase == null || clase.isEmpty()) {
+			return true;
+		}
+
+		for (String pref : package_no_permite) {
+			if (pref == null || pref.isEmpty()) {
+				continue;
+			}
+
+			String prefSlash = pref.replace('.', '/');
+
+			if (clase.startsWith(prefSlash)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private TraceInfo construirTraceInfo(String trace, int consolaLineaInicio, int nivel, boolean fatal) {
 
 		TraceInfo info = new TraceInfo(trace, consolaLineaInicio, nivel, fatal);
 
-		String[] lineas = trace.split(nl);
+		String[] lineas = trace.split(Verificaciones.nl);
 
 		for (int i = 0; i < lineas.length; i++) {
 
@@ -267,7 +627,7 @@ public class VerificacionDeStackTrace {
 			TraceInfo info = entrada.getValue();
 
 			boolean fatal = info.trace.contains("/FATAL]");
-			String[] lineas = info.trace.split(nl);
+			String[] lineas = info.trace.split(Verificaciones.nl);
 
 			for (int i = 0; i < lineas.length; i++) {
 
@@ -338,6 +698,7 @@ public class VerificacionDeStackTrace {
 	 */
 	public static class TraceInfo {
 
+		public int consolaLineaTerminar = -1;
 		public final String trace;
 		public final int consolaLineaComenzar;
 
@@ -533,10 +894,10 @@ public class VerificacionDeStackTrace {
 	/**
 	 * Obtiene stack traces fatales junto con su línea inicial en la consola
 	 */
-	public static List<TraceInfo> obtenerTracesFatalConLinea(String log) {
+	public static List<TraceInfo> obtenerTracesFatalConLinea(Consola log) {
 
 		List<TraceInfo> resultado = new ArrayList<>();
-		String[] lineas = log.split(nl);
+		String[] lineas = log.lineas_verificar;
 
 		for (int i = 0; i < lineas.length; i++) {
 
@@ -549,7 +910,7 @@ public class VerificacionDeStackTrace {
 			int j = i + 1;
 
 			while (j < lineas.length && esParteDeStack(lineas[j])) {
-				traza.append(nl).append(lineas[j]);
+				traza.append(Verificaciones.nl).append(lineas[j]);
 				j++;
 			}
 
@@ -570,10 +931,10 @@ public class VerificacionDeStackTrace {
 	/**
 	 * Obtiene stack traces normales junto con su línea inicial en la consola
 	 */
-	public static List<TraceInfo> obtenerTracesConLinea(String log) {
+	public static List<TraceInfo> obtenerTracesConLinea(Consola log) {
 
 		List<TraceInfo> resultado = new ArrayList<>();
-		String[] lineas = log.split(nl);
+		String[] lineas = log.lineas_verificar;
 
 		int i = 0;
 		while (i < lineas.length - 1) {
@@ -599,7 +960,7 @@ public class VerificacionDeStackTrace {
 			int j = i + 1;
 
 			while (j < lineas.length && esParteDeStack(lineas[j])) {
-				traza.append(nl).append(lineas[j]);
+				traza.append(Verificaciones.nl).append(lineas[j]);
 				j++;
 			}
 
@@ -626,7 +987,7 @@ public class VerificacionDeStackTrace {
 		}
 
 		// === ClassNotFound / NoClassDef ===
-		String[] arr = trace.split(nl);
+		String[] arr = trace.split(Verificaciones.nl);
 
 		for (int i = 0; i < arr.length; i++) {
 

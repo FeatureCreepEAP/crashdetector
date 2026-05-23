@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.TextArea;
+import java.awt.datatransfer.DataFlavor;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -29,6 +31,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
+import javax.swing.TransferHandler;
+import javax.swing.TransferHandler.TransferSupport;
 import javax.swing.border.Border;
 
 import com.asbestosstar.crashdetector.Config;
@@ -105,6 +109,9 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 
 	public static File cd_launcherlog = new File("cd_launcherlog");
 	public Instant instant;
+
+	public final JButton botonSubirArchivo = new JButton(MonitorDePID.idioma.agregarArchivo());
+	public File archivoLogSeleccionado;
 
 	/**
 	 * Prepara y construye la UI. Este método es abstracto para forzar a las
@@ -266,6 +273,12 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 	}
 
 	public void guardarRegistros() {
+
+		if (archivoLogSeleccionado != null) {
+			guardarArchivoLogSeleccionado();
+			return;
+		}
+
 		String tipo = (String) selector.getSelectedItem();
 
 		if (HMCL.equals(tipo) || CURSE.equals(tipo) || BATTLY.equals(tipo)) {
@@ -465,5 +478,96 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 
 	@Override
 	public abstract void init();
+
+	public void abrirSelectorArchivoLog() {
+		JFileChooser fc = new JFileChooser();
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fc.setDialogTitle("Seleccione un archivo de log");
+
+		if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+			cargarArchivoLog(fc.getSelectedFile());
+		}
+	}
+
+	public void cargarArchivoLog(File archivo) {
+		if (archivo == null || !archivo.isFile()) {
+			JOptionPane.showMessageDialog(this, "El archivo no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		archivoLogSeleccionado = archivo;
+
+		if (areaTexto != null) {
+			areaTexto.setText("Archivo seleccionado:\n" + archivo.getAbsolutePath()
+					+ "\n\nPresione Guardar y cerrar para agregarlo al análisis.");
+		}
+
+		CrashDetectorLogger.log("Archivo de log seleccionado: " + archivo.getAbsolutePath());
+	}
+
+	public void instalarArrastrarArchivo(java.awt.Component c) {
+		if (c instanceof javax.swing.JComponent) {
+			((javax.swing.JComponent) c).setTransferHandler(new TransferHandler() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public boolean canImport(TransferSupport support) {
+					return support.isDataFlavorSupported(DataFlavor.javaFileListFlavor);
+				}
+
+				@Override
+				public boolean importData(TransferSupport support) {
+					if (!canImport(support)) {
+						return false;
+					}
+
+					try {
+						@SuppressWarnings("unchecked")
+						List<File> archivos = (List<File>) support.getTransferable()
+								.getTransferData(DataFlavor.javaFileListFlavor);
+
+						if (archivos == null || archivos.isEmpty()) {
+							return false;
+						}
+
+						cargarArchivoLog(archivos.get(0));
+						return true;
+					} catch (Exception ex) {
+						CrashDetectorLogger.logException(ex);
+						JOptionPane.showMessageDialog(NoRegistroLanzadorGUI.this,
+								"Error al cargar archivo arrastrado: " + ex.getMessage(), "Error",
+								JOptionPane.ERROR_MESSAGE);
+						return false;
+					}
+				}
+			});
+		}
+
+		if (c instanceof java.awt.Container) {
+			java.awt.Component[] hijos = ((java.awt.Container) c).getComponents();
+			for (int i = 0; i < hijos.length; i++) {
+				instalarArrastrarArchivo(hijos[i]);
+			}
+		}
+	}
+
+	public void guardarArchivoLogSeleccionado() {
+		if (archivoLogSeleccionado == null) {
+			guardarRegistros();
+			return;
+		}
+
+		try {
+			Consola cons = new Consola(archivoLogSeleccionado.toPath());
+			cons.finalizarContenido(instant, true);
+			MonitorDePID.consolas.add(cons);
+			MonitorDePID.consola_de_launcher_inyectado = true;
+			dispose();
+		} catch (IOException ex) {
+			CrashDetectorLogger.logException(ex);
+			JOptionPane.showMessageDialog(this, "Error al abrir el archivo: " + ex.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
 
 }

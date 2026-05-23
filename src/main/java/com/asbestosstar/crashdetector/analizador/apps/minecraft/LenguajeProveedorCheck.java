@@ -41,10 +41,9 @@ public class LenguajeProveedorCheck implements Verificaciones {
 
 		String contenido = consola.contenido_verificar;
 
-		boolean posible = contenido.indexOf("language provider") >= 0 || contenido.indexOf("Language Provider") >= 0
-				|| contenido.indexOf("languageprovider") >= 0 || contenido.indexOf("LanguageProvider") >= 0
-				|| contenido.indexOf("Failed to load language provider") >= 0
-				|| contenido.indexOf("Loading language provider") >= 0;
+		boolean posible = contenido.contains("needs language provider")
+				|| contenido.contains("Failed to load language provider")
+				|| contenido.contains("Loading language provider");
 
 		if (posible) {
 			posiblePorConsola = true;

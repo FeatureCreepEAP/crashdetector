@@ -92,8 +92,8 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 	 */
 	private void procesarTrazos(Consola consola) {
 		List<VerificacionDeStackTrace.TraceInfo> trazosInfo = new ArrayList<>();
-		trazosInfo.addAll(VerificacionDeStackTrace.obtenerTracesConLinea(consola.contenido_verificar));
-		trazosInfo.addAll(VerificacionDeStackTrace.obtenerTracesFatalConLinea(consola.contenido_verificar));
+		trazosInfo.addAll(VerificacionDeStackTrace.obtenerTracesConLinea(consola));
+		trazosInfo.addAll(VerificacionDeStackTrace.obtenerTracesFatalConLinea(consola));
 
 		for (VerificacionDeStackTrace.TraceInfo traceInfo : trazosInfo) {
 			String trazo = traceInfo.trace;
