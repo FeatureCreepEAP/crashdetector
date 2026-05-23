@@ -12,6 +12,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.Icon;
+
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.idioma.Arabe;
 import com.asbestosstar.crashdetector.idioma.Chino;
@@ -4003,5 +4005,70 @@ public interface Idioma {
 	public String noHayCentroSoporteConfigurado();
 
 	public String centroDeSoporte();
+	
+	
+	
+public	String historialMCLogs();
+public 	String endpoint();
+public	String slug();
+public	String tokenEliminacion();
+public	String enlace();
+public	String lineas();
+public	String errores();
+public	String eliminarRegistroMCLogs();
+public	String faltanDatosParaEliminarMCLogs();
+public	String confirmarEliminarMCLogs();
+public	String registroEliminadoMCLogs();
+public	String confirmar();
+public	String colorCampoTexto();
+
+
+
+
+public	String historialCDPaste();
+public	String enlaceRaw();
+public	String tamano();
+public	String eliminarRegistroCDPaste();
+public	String faltanDatosParaEliminarCDPaste();
+public	String confirmarEliminarCDPaste();
+public	String registroEliminadoCDPaste();
+
+
+public String eliminarRegistros();
+public String descargandoYPreparandoEnlaces();
+public String seleccioneArchivoLog();
+public String archivoNoValido();
+public String archivoSeleccionado();
+public String presioneGuardarParaAgregarAnalisis();
+public String errorDosPuntos();
+public String errorAlCargarArchivoArrastrado();
+public String errorAlAbrirArchivo();
+
+
+
+
+
+
+
+
+public String editorConfigsMods();
+public String abrirConfig();
+public String guardarConfig();
+public String recargarConfig();
+public String rutaConfig();
+public String tipoConfig();
+public String claveConfig();
+public String valorConfig();
+public String buscarConfig();
+public String sinArchivoSeleccionado();
+public String archivoNoSoportado();
+public String configGuardada();
+public String errorCargandoConfig();
+public String errorGuardandoConfig();
+public String seleccionarArchivoConfig();
+
+
+
+	
 
 }

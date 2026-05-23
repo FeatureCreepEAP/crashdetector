@@ -10723,5 +10723,149 @@ public class Suajili implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "Hakuna kituo cha usaidizi kilichosanidiwa.";
 	}
+	
+	public String historialMCLogs() { return "Historia ya MCLogs"; }
+	public String endpoint() { return "Mwisho wa nukta (Endpoint)"; }
+	public String slug() { return "Slug"; }
+	public String tokenEliminacion() { return "Token ya kufuta"; }
+	public String enlace() { return "Kiungo"; }
+	public String lineas() { return "Mistari"; }
+	public String errores() { return "Makosa"; }
+	public String eliminarRegistroMCLogs() { return "Futa rekodi"; }
+	public String faltanDatosParaEliminarMCLogs() { return "Slug au token ya kufuta haipo."; }
+	public String confirmarEliminarMCLogs() { return "Je, una uhakika unataka kufuta rekodi hii ya MCLogs?"; }
+	public String registroEliminadoMCLogs() { return "Rekodi imefutwa kwa mafanikio."; }
+	public String confirmar() { return "Thibitisha"; }
+	public String colorCampoTexto() { return "Rangi ya uga wa maandishi"; }
+	
+	public String historialCDPaste() { return "Historia ya CDPaste"; }
+	public String enlaceRaw() { return "Kiungo cha Raw"; }
+	public String tamano() { return "Ukubwa"; }
+	public String eliminarRegistroCDPaste() { return "Futa rekodi ya CDPaste"; }
+	public String faltanDatosParaEliminarCDPaste() { return "Slug ya rekodi ya CDPaste haipo."; }
+	public String confirmarEliminarCDPaste() { return "Je, una uhakika unataka kufuta rekodi hii ya CDPaste?"; }
+	public String registroEliminadoCDPaste() { return "Rekodi ya CDPaste imefutwa kwa mafanikio."; }
+	
+	public String launcherGenerico() { return "Jumla"; }
+	public String launcherServidorMinecraft() { return "Seva ya Minecraft"; }
+	public String descargandoYPreparandoEnlaces() { return "Inapakua na kuandaa viungo..."; }
+	public String seleccioneArchivoLog() { return "Chagua faili ya logi"; }
+	public String archivoNoValido() { return "Faili si sahihi."; }
+	public String archivoSeleccionado() { return "Faili iliyochaguliwa:"; }
+	public String presioneGuardarParaAgregarAnalisis() { return "Bonyeza 'Hifadhi na ufunge' ili kuiongeza kwenye uchambuzi."; }
+	public String errorAlCargarArchivoArrastrado() { return "Hitilafu katika kupakia faili iliyovutwa"; }
+	public String errorAlAbrirArchivo() { return "Hitilafu katika kufungua faili"; }
+	public String errorDosPuntos() { return "Hitilafu"; }
+	
+	public String eliminarRegistros() {
+	    return "Futa rekodi";
+	}
+	
+	public String editorConfigsMods() {
+	    return "Kihariri cha Mipangilio ya Mod";
+	}
+
+	public String abrirConfig() {
+	    return "Fungua Config";
+	}
+
+	public String guardarConfig() {
+	    return "Hifadhi Config";
+	}
+
+	public String recargarConfig() {
+	    return "Pakia upya";
+	}
+
+	public String rutaConfig() {
+	    return "Njia";
+	}
+
+	public String tipoConfig() {
+	    return "Aina";
+	}
+
+	public String claveConfig() {
+	    return "Ufunguo";
+	}
+
+	public String valorConfig() {
+	    return "Thamani";
+	}
+
+	public String buscarConfig() {
+	    return "Tafuta";
+	}
+
+	public String sinArchivoSeleccionado() {
+	    return "Hakuna faili iliyochaguliwa";
+	}
+
+	public String archivoNoSoportado() {
+	    return "Faili haiungwi mkono na injini yoyote iliyopo";
+	}
+
+	public String configGuardada() {
+	    return "Mipangilio imehifadhiwa kwa mafanikio";
+	}
+
+	public String errorCargandoConfig() {
+	    return "Hitilafu katika kupakia mipangilio";
+	}
+
+	public String errorGuardandoConfig() {
+	    return "Hitilafu katika kuhifadhi mipangilio";
+	}
+
+	public String seleccionarArchivoConfig() {
+	    return "Chagua faili ya mipangilio";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

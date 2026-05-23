@@ -213,6 +213,24 @@ public class Json {
 		public byte[] aBytesUtf8() {
 			return escribir().getBytes(StandardCharsets.UTF_8);
 		}
+		
+		
+		public Nodo ponerValorFlexible(Object valor) {
+			if (valor instanceof Boolean)
+				return poner(((Boolean) valor).booleanValue());
+			if (valor instanceof Integer)
+				return poner(((Integer) valor).intValue());
+			if (valor instanceof Long)
+				return poner(((Long) valor).longValue());
+			if (valor instanceof Double)
+				return poner(((Double) valor).doubleValue());
+			if (valor instanceof Number)
+				return poner(((Number) valor).doubleValue());
+			return poner(valor == null ? "" : String.valueOf(valor));
+		}
+		
+		
+		
 	}
 
 	/**

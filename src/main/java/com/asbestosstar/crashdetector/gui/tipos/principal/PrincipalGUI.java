@@ -38,6 +38,7 @@ import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
+import com.asbestosstar.crashdetector.gui.tipos.configmods.ConfigsModsGUIYunenoms;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
 import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUINimu;
 import com.asbestosstar.crashdetector.gui.tipos.docs.LectadorDeDocumentosStudyJuche;
@@ -137,6 +138,11 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		registrarBotonDeBarraLateralDerecha(TipoGUI.JGIT_HUB, JGitHubIzzy.ID, () -> new JGitHubIzzy());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.ADMINISTRADOR_DE_RENDIMIENTO,
 				AdministradorDeRendimientoNightcore.ID, () -> new AdministradorDeRendimientoNightcore());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.CONFIG_MODS,
+				ConfigsModsGUIYunenoms.ID, () -> new ConfigsModsGUIYunenoms());	
+		
+		
+		
 
 	}
 

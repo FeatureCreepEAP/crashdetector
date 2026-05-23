@@ -45,7 +45,7 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
-@Deprecated
+
 /**
  * Clase abstracta que define la funcionalidad base para la GUI de no registro
  * de lanzador. La apariencia, el layout y la creación de componentes se manejan
@@ -329,8 +329,9 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 					MonitorDePID.consola_de_launcher_inyectado = true;
 
 				} catch (IOException ex) {
-					JOptionPane.showMessageDialog(NoRegistroLanzadorGUI.this, "Error: " + ex.getMessage(), "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(NoRegistroLanzadorGUI.this,
+							MonitorDePID.idioma.errorDosPuntos() + " " + ex.getMessage(),
+							MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -359,8 +360,9 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 					tarea.run();
 				} catch (Throwable t) {
 					CrashDetectorLogger.logException(t);
-					JOptionPane.showMessageDialog(NoRegistroLanzadorGUI.this, "Error: " + t.getMessage(), "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(NoRegistroLanzadorGUI.this,
+							MonitorDePID.idioma.errorDosPuntos() + " " + t.getMessage(),
+							MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 				}
 				return null;
 			}
@@ -482,7 +484,7 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 	public void abrirSelectorArchivoLog() {
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		fc.setDialogTitle("Seleccione un archivo de log");
+		fc.setDialogTitle(MonitorDePID.idioma.seleccioneArchivoLog());
 
 		if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 			cargarArchivoLog(fc.getSelectedFile());
@@ -491,15 +493,16 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 
 	public void cargarArchivoLog(File archivo) {
 		if (archivo == null || !archivo.isFile()) {
-			JOptionPane.showMessageDialog(this, "El archivo no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.archivoNoValido(),
+					MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		archivoLogSeleccionado = archivo;
 
 		if (areaTexto != null) {
-			areaTexto.setText("Archivo seleccionado:\n" + archivo.getAbsolutePath()
-					+ "\n\nPresione Guardar y cerrar para agregarlo al análisis.");
+			areaTexto.setText(MonitorDePID.idioma.archivoSeleccionado() + "\n" + archivo.getAbsolutePath()
+					+ "\n\n" + MonitorDePID.idioma.presioneGuardarParaAgregarAnalisis());
 		}
 
 		CrashDetectorLogger.log("Archivo de log seleccionado: " + archivo.getAbsolutePath());
@@ -535,8 +538,8 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 					} catch (Exception ex) {
 						CrashDetectorLogger.logException(ex);
 						JOptionPane.showMessageDialog(NoRegistroLanzadorGUI.this,
-								"Error al cargar archivo arrastrado: " + ex.getMessage(), "Error",
-								JOptionPane.ERROR_MESSAGE);
+								MonitorDePID.idioma.errorAlCargarArchivoArrastrado() + ": " + ex.getMessage(),
+								MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 						return false;
 					}
 				}
@@ -565,8 +568,9 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 			dispose();
 		} catch (IOException ex) {
 			CrashDetectorLogger.logException(ex);
-			JOptionPane.showMessageDialog(this, "Error al abrir el archivo: " + ex.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this,
+					MonitorDePID.idioma.errorAlAbrirArchivo() + ": " + ex.getMessage(),
+					MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

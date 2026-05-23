@@ -10228,5 +10228,141 @@ public class Persa implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "هیچ مرکز پشتیبانی‌ای پیکربندی نشده است.";
 	}
+	
+	public String historialMCLogs() { return "تاریخچه MCLogs"; }
+	public String endpoint() { return "اندپوینت"; }
+	public String slug() { return "اسلاگ"; }
+	public String tokenEliminacion() { return "توکن حذف"; }
+	public String enlace() { return "لینک"; }
+	public String lineas() { return "خطوط"; }
+	public String errores() { return "خطاها"; }
+	public String eliminarRegistroMCLogs() { return "حذف رکورد"; }
+	public String faltanDatosParaEliminarMCLogs() { return "اسلاگ یا توکن حذف وجود ندارد."; }
+	public String confirmarEliminarMCLogs() { return "آیا مطمئن هستید که می‌خواهید این رکورد MCLogs را حذف کنید؟"; }
+	public String registroEliminadoMCLogs() { return "رکورد با موفقیت حذف شد."; }
+	public String confirmar() { return "تأیید"; }
+	public String colorCampoTexto() { return "رنگ فیلد متنی"; }
+	
+	public String historialCDPaste() { return "تاریخچه CDPaste"; }
+	public String enlaceRaw() { return "لینک Raw"; }
+	public String tamano() { return "اندازه"; }
+	public String eliminarRegistroCDPaste() { return "حذف رکورد CDPaste"; }
+	public String faltanDatosParaEliminarCDPaste() { return "اسلاگ رکورد CDPaste وجود ندارد."; }
+	public String confirmarEliminarCDPaste() { return "آیا مطمئن هستید که می‌خواهید این رکورد CDPaste را حذف کنید؟"; }
+	public String registroEliminadoCDPaste() { return "رکورد CDPaste با موفقیت حذف شد."; }
+	public String launcherGenerico() { return "عمومی"; }
+	public String launcherServidorMinecraft() { return "سرور ماینکرفت"; }
+	public String descargandoYPreparandoEnlaces() { return "در حال دانلود و آماده‌سازی لینک‌ها..."; }
+	public String seleccioneArchivoLog() { return "یک فایل لاگ انتخاب کنید"; }
+	public String archivoNoValido() { return "فایل معتبر نیست."; }
+	public String archivoSeleccionado() { return "فایل انتخاب شده:"; }
+	public String presioneGuardarParaAgregarAnalisis() { return "برای افزودن به تحلیل، روی 'ذخیره و بستن' کلیک کنید."; }
+	public String errorAlCargarArchivoArrastrado() { return "خطا در بارگذاری فایل کشیده شده"; }
+	public String errorAlAbrirArchivo() { return "خطا در باز کردن فایل"; }
+	public String errorDosPuntos() { return "خطا"; }
+	
+	
+	public String eliminarRegistros() {
+	    return "حذف رکوردها";
+	}
+	
+	public String editorConfigsMods() {
+	    return "ویرایشگر پیکربندی مادهای";
+	}
+
+	public String abrirConfig() {
+	    return "باز کردن Config";
+	}
+
+	public String guardarConfig() {
+	    return "ذخیره Config";
+	}
+
+	public String recargarConfig() {
+	    return "بارگذاری مجدد";
+	}
+
+	public String rutaConfig() {
+	    return "مسیر";
+	}
+
+	public String tipoConfig() {
+	    return "نوع";
+	}
+
+	public String claveConfig() {
+	    return "کلید";
+	}
+
+	public String valorConfig() {
+	    return "مقدار";
+	}
+
+	public String buscarConfig() {
+	    return "جستجو";
+	}
+
+	public String sinArchivoSeleccionado() {
+	    return "هیچ فایلی انتخاب نشده است";
+	}
+
+	public String archivoNoSoportado() {
+	    return "فایل توسط هیچ موتور موجودی پشتیبانی نمی‌شود";
+	}
+
+	public String configGuardada() {
+	    return "پیکربندی با موفقیت ذخیره شد";
+	}
+
+	public String errorCargandoConfig() {
+	    return "خطا در بارگذاری پیکربندی";
+	}
+
+	public String errorGuardandoConfig() {
+	    return "خطا در ذخیره پیکربندی";
+	}
+
+	public String seleccionarArchivoConfig() {
+	    return "انتخاب فایل پیکربندی";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

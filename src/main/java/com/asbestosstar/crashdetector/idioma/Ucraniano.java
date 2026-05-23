@@ -9594,5 +9594,151 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String noHayCentroSoporteConfigurado() {
 		return "Центр підтримки не налаштовано.";
 	}
+	
+	public String historialMCLogs() { return "Історія MCLogs"; }
+	public String endpoint() { return "Ендпоінт"; }
+	public String slug() { return "Слаг"; }
+	public String tokenEliminacion() { return "Токен видалення"; }
+	public String enlace() { return "Посилання"; }
+	public String lineas() { return "Рядки"; }
+	public String errores() { return "Помилки"; }
+	public String eliminarRegistroMCLogs() { return "Видалити запис"; }
+	public String faltanDatosParaEliminarMCLogs() { return "Відсутній слаг або токен видалення."; }
+	public String confirmarEliminarMCLogs() { return "Ви впевнені, що хочете видалити цей запис MCLogs?"; }
+	public String registroEliminadoMCLogs() { return "Запис успішно видалено."; }
+	public String confirmar() { return "Підтвердити"; }
+	public String colorCampoTexto() { return "Колір текстового поля"; }
+	
+	public String historialCDPaste() { return "Історія CDPaste"; }
+	public String enlaceRaw() { return "Сире посилання"; }
+	public String tamano() { return "Розмір"; }
+	public String eliminarRegistroCDPaste() { return "Видалити запис CDPaste"; }
+	public String faltanDatosParaEliminarCDPaste() { return "Відсутній слаг запису CDPaste."; }
+	public String confirmarEliminarCDPaste() { return "Ви впевнені, що хочете видалити цей запис CDPaste?"; }
+	public String registroEliminadoCDPaste() { return "Запис CDPaste успішно видалено."; }
+	
+	public String launcherGenerico() { return "Загальний"; }
+	public String launcherServidorMinecraft() { return "Сервер Minecraft"; }
+	public String descargandoYPreparandoEnlaces() { return "Завантаження та підготовка посилань..."; }
+	public String seleccioneArchivoLog() { return "Виберіть файл логу"; }
+	public String archivoNoValido() { return "Файл недійсний."; }
+	public String archivoSeleccionado() { return "Вибраний файл:"; }
+	public String presioneGuardarParaAgregarAnalisis() { return "Натисніть 'Зберегти та закрити', щоб додати його до аналізу."; }
+	public String errorAlCargarArchivoArrastrado() { return "Помилка при завантаженні перетягнутого файлу"; }
+	public String errorAlAbrirArchivo() { return "Помилка при відкритті файлу"; }
+	public String errorDosPuntos() { return "Помилка"; }
+	
+	public String eliminarRegistros() {
+	    return "Видалити записи";
+	}
+	
+	public String editorConfigsMods() {
+	    return "Редактор конфігурацій модів";
+	}
+
+	public String abrirConfig() {
+	    return "Відкрити Config";
+	}
+
+	public String guardarConfig() {
+	    return "Зберегти Config";
+	}
+
+	public String recargarConfig() {
+	    return "Перезавантажити";
+	}
+
+	public String rutaConfig() {
+	    return "Шлях";
+	}
+
+	public String tipoConfig() {
+	    return "Тип";
+	}
+
+	public String claveConfig() {
+	    return "Ключ";
+	}
+
+	public String valorConfig() {
+	    return "Значення";
+	}
+
+	public String buscarConfig() {
+	    return "Пошук";
+	}
+
+	public String sinArchivoSeleccionado() {
+	    return "Файл не вибрано";
+	}
+
+	public String archivoNoSoportado() {
+	    return "Файл не підтримується жодним доступним рушієм";
+	}
+
+	public String configGuardada() {
+	    return "Конфігурацію успішно збережено";
+	}
+
+	public String errorCargandoConfig() {
+	    return "Помилка завантаження конфігурації";
+	}
+
+	public String errorGuardandoConfig() {
+	    return "Помилка збереження конфігурації";
+	}
+
+	public String seleccionarArchivoConfig() {
+	    return "Вибрати файл конфігурації";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

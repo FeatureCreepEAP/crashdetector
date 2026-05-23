@@ -11,11 +11,12 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.zip.GZIPOutputStream;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
-import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro.ParteInfo;
+import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 
 /**
@@ -120,7 +121,7 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 			String endpoint = normalizarEndpoint(APIdeSitioDeRegistro.sitioDeConfig());
 			URL url = new URL(endpoint);
 
-			// Comprimir y enviar con longitud fija para evitar transferencia chunked
+			// Comprimir y enviar con longitud fija para evitar transferencia chunked.
 			byte[] gzData = comprimirGZIP(datos);
 
 			HttpURLConnection con = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
@@ -131,7 +132,7 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 			con.setRequestProperty("Content-Type", "application/octet-stream");
 			con.setRequestProperty("Content-Encoding", "gzip");
 			con.setDoOutput(true);
-			con.setFixedLengthStreamingMode(gzData.length); // ← importante
+			con.setFixedLengthStreamingMode(gzData.length);
 
 			try (OutputStream os = con.getOutputStream()) {
 				os.write(gzData);
@@ -145,9 +146,28 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 
 			String body = leer(con.getInputStream());
 			String link = extraerLinkDeJson(body);
-			if (link == null || link.isEmpty())
+
+			if (link == null || link.isEmpty()) {
 				throw new ErrorConPublicar("Respuesta sin link");
-			return link.replace("\\/", "/");
+			}
+
+			link = link.replace("\\/", "/");
+
+			// Guardar historial local para poder abrir/eliminar después desde la GUI.
+			HistoriaCDPaste.EntradaCDPaste entrada = new HistoriaCDPaste.EntradaCDPaste();
+			entrada.endpoint = endpoint;
+			entrada.url = link;
+			entrada.raw = extraerRawLinkDeJson(body);
+			entrada.id = extraerIdDesdeLink(link);
+			entrada.source = nombreSugerido == null ? "" : nombreSugerido;
+			entrada.size = datos.length;
+			entrada.lines = contarLineas(contenido);
+
+			HistoriaCDPaste.agregar(entrada);
+
+			return link;
+		} catch (ErrorConPublicar e) {
+			throw e;
 		} catch (Exception ex) {
 			throw new ErrorConPublicar(ex.getMessage());
 		}
@@ -312,4 +332,121 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 		String nombre = (indiceParte > 1) ? base + " (parte " + indiceParte + ")" : base;
 		return publicarTexto(nombre, texto);
 	}
+
+
+
+
+	private static String extraerRawLinkDeJson(String json) {
+		if (json == null)
+			return "";
+
+		String clave = "\"raw_link\"";
+		int i = json.indexOf(clave);
+		if (i < 0)
+			return "";
+
+		int dosPuntos = json.indexOf(':', i);
+		if (dosPuntos < 0)
+			return "";
+
+		int pos = dosPuntos + 1;
+		while (pos < json.length() && Character.isWhitespace(json.charAt(pos)))
+			pos++;
+
+		if (pos >= json.length() || json.charAt(pos) != '"')
+			return "";
+
+		int fin = json.indexOf('"', pos + 1);
+		if (fin < 0)
+			return "";
+
+		return json.substring(pos + 1, fin).replace("\\/", "/");
+	}
+
+	private static String extraerIdDesdeLink(String link) {
+		if (link == null)
+			return "";
+
+		int i = link.indexOf("id=");
+		if (i < 0)
+			return "";
+
+		i += 3;
+		int fin = link.indexOf('&', i);
+		if (fin < 0)
+			fin = link.length();
+
+		return link.substring(i, fin).replaceAll("[^a-fA-F0-9]", "");
+	}
+
+	private static int contarLineas(String texto) {
+		if (texto == null || texto.isEmpty())
+			return 0;
+
+		return texto.split("\n", -1).length;
+	}
+
+	/**
+	 * Elimina un registro CDPaste usando el ID local.
+	 */
+	public boolean eliminarRegistro(String endpointBase, String id) throws ErrorConPublicar {
+		if (endpointBase == null || endpointBase.trim().isEmpty()) {
+			endpointBase = "https://asbestosstar.egoism.jp/crash_detector/paste/endpoint.php";
+		}
+
+		if (id == null || id.trim().isEmpty()) {
+			throw new ErrorConPublicar("Falta el ID del registro");
+		}
+
+		try {
+			String endpoint = endpointBase.trim();
+
+			int q = endpoint.indexOf('?');
+			if (q >= 0) {
+				endpoint = endpoint.substring(0, q);
+			}
+
+			URL url = new URL(endpoint);
+
+			String post = "delete=" + java.net.URLEncoder.encode(id.trim(), StandardCharsets.UTF_8.toString());
+			byte[] body = post.getBytes(StandardCharsets.UTF_8);
+
+			HttpURLConnection con = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
+			con.setRequestMethod("POST");
+			con.setConnectTimeout(TIMEOUT);
+			con.setReadTimeout(TIMEOUT);
+			con.setRequestProperty("User-Agent", UA);
+			con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+			con.setDoOutput(true);
+			con.setFixedLengthStreamingMode(body.length);
+
+			try (OutputStream os = con.getOutputStream()) {
+				os.write(body);
+			}
+
+			int code = con.getResponseCode();
+			String respuesta = leer(code >= 200 && code < 300 ? con.getInputStream() : con.getErrorStream());
+
+			if (code == HttpURLConnection.HTTP_OK && respuesta != null && respuesta.contains("\"status\":\"success\"")) {
+				return true;
+			}
+
+			throw new ErrorConPublicar("No se pudo eliminar el registro CDPaste");
+		} catch (Exception e) {
+			throw new ErrorConPublicar(e.getMessage());
+		}
+	}
+
+	/**
+	 * Devuelve la GUI opcional para ver historial y eliminar registros CDPaste.
+	 */
+	@Override
+	public Supplier<TipoGUI> eliminador() {
+		return () -> TipoGUI.CDPASTE_HISTORIAL;
+	}
+
+
+
+
+
 }

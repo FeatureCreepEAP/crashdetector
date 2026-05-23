@@ -40,12 +40,14 @@ import com.asbestosstar.crashdetector.gui.tipos.aplic.ActaDeProteccionDelIdiomaC
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
 import com.asbestosstar.crashdetector.gui.tipos.canario.CanarioDeOrdenJudicialGUI1984;
 import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUISaliorMoon;
+import com.asbestosstar.crashdetector.gui.tipos.cdpaste.CDPasteHistorialGUIWilhelmiaFrost;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.BuscarParaCFR;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirPrimitiva;
 import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
+import com.asbestosstar.crashdetector.gui.tipos.configmods.ConfigsModsGUIYunenoms;
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUITL;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
@@ -73,6 +75,7 @@ import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUISylen
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasMinimalista;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos;
+import com.asbestosstar.crashdetector.gui.tipos.mclogs.MCLogsHistorialGUIDoodleBob;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
 import com.asbestosstar.crashdetector.gui.tipos.miranda.DerechosPiratasGUIOnePiece;
 import com.asbestosstar.crashdetector.gui.tipos.mixins.MixinsGUIChiarru;
@@ -330,7 +333,14 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/optimus_prime.png",
 				Statics.carpeta.resolve("imagenes/optimus_prime.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/nightcore.png", Statics.carpeta.resolve("imagenes/nightcore.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/doodlebob.png", Statics.carpeta.resolve("imagenes/doodlebob.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/yunenoms.png", Statics.carpeta.resolve("imagenes/yunenoms.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/wilhelmia_frost.png", Statics.carpeta.resolve("imagenes/wilhelmia_frost.png").toFile());
 
+		
+		
+		
+		
 //docs		
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Launchers.md",
@@ -571,6 +581,15 @@ public class MonitorDePID {
 		TipoGUI.LECTADOR_DE_CONSOLAS.registrarGUI(LectadorDeConsolasMinimalista.ID,
 				() -> new LectadorDeConsolasMinimalista());
 		TipoGUI.DOCS.registrarGUI(LectadorDeDocumentosMinimalista.ID, LectadorDeDocumentosMinimalista::new);
+		TipoGUI.MCLOGS_HISTORIAL.registrarGUI(MCLogsHistorialGUIDoodleBob.ID, MCLogsHistorialGUIDoodleBob::new);
+		TipoGUI.CDPASTE_HISTORIAL.registrarGUI(CDPasteHistorialGUIWilhelmiaFrost.ID, CDPasteHistorialGUIWilhelmiaFrost::new);
+		TipoGUI.CONFIG_MODS.registrarGUI(ConfigsModsGUIYunenoms.ID, ConfigsModsGUIYunenoms::new);
+
+		
+		
+		
+		
+		
 
 	}
 

@@ -3,11 +3,12 @@ package com.asbestosstar.crashdetector.api_sito_registro;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.function.Supplier;
 
-import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro.ParteInfo;
+import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 import com.asbestosstar.crashdetector.mapas.BiMap.DoubleKey;
-import com.asbestosstar.crashdetector.Consola;
 
 public interface APIdeSitioDeRegistro {
 
@@ -143,4 +144,18 @@ public interface APIdeSitioDeRegistro {
 		indicePartes().put(grupoId, parteIndexBase1, new ParteInfo(url, desde, hasta));
 	}
 
+	
+	/**
+	 * Lo opcional eliminador de registros gui
+	 * @return
+	 */
+	public default Supplier<TipoGUI> eliminador(){
+		return null;
+	}
+	
+	
+	
+	
+	
+	
 }

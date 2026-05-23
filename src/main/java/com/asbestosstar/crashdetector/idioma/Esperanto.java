@@ -10251,5 +10251,149 @@ public class Esperanto implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "Neniu subtena centro estas agordita.";
 	}
+	
+	// Esperanto (Esperanto)
+	public String historialMCLogs() { return "Historio de MCLogs"; }
+	public String endpoint() { return "Finpunkto (Endpoint)"; }
+	public String slug() { return "Ŝlimo (Slug)"; }
+	public String tokenEliminacion() { return "Foriga ĵetono"; }
+	public String enlace() { return "Ligilo"; }
+	public String lineas() { return "Linioj"; }
+	public String errores() { return "Eraroj"; }
+	public String eliminarRegistroMCLogs() { return "Forigi registron"; }
+	public String faltanDatosParaEliminarMCLogs() { return "Mankas la ŝlimo (slug) aŭ la foriga ĵetono."; }
+	public String confirmarEliminarMCLogs() { return "Ĉu vi certe volas forigi ĉi tiun registron de MCLogs?"; }
+	public String registroEliminadoMCLogs() { return "Registro sukcese forigita."; }
+	public String confirmar() { return "Konfirmi"; }
+	public String colorCampoTexto() { return "Koloro de teksta kampo"; }
+	// Esperanto (Esperanto)
+	public String historialCDPaste() { return "Historio de CDPaste"; }
+	public String enlaceRaw() { return "Ligilo kruda (raw)"; }
+	public String tamano() { return "Grandeco"; }
+	public String eliminarRegistroCDPaste() { return "Forigi registron de CDPaste"; }
+	public String faltanDatosParaEliminarCDPaste() { return "Mankas la identigilo (slug) de la registro CDPaste."; }
+	public String confirmarEliminarCDPaste() { return "Ĉu vi certe volas forigi ĉi tiun registron de CDPaste?"; }
+	public String registroEliminadoCDPaste() { return "Registro de CDPaste sukcese forigita."; }
+	
+	// Esperanto (Esperanto)
+	public String launcherGenerico() { return "Ĝenerala"; }
+	public String launcherServidorMinecraft() { return "Minecraft-servilo"; }
+	public String descargandoYPreparandoEnlaces() { return "Elŝutante kaj preparante ligilojn..."; }
+	public String seleccioneArchivoLog() { return "Elektu protokoldosieron"; }
+	public String archivoNoValido() { return "La dosiero ne estas valida."; }
+	public String archivoSeleccionado() { return "Elektita dosiero:"; }
+	public String presioneGuardarParaAgregarAnalisis() { return "Premu Konservi kaj fermi por aldoni ĝin al la analizo."; }
+	public String errorAlCargarArchivoArrastrado() { return "Eraro dum ŝargo de trenita dosiero"; }
+	public String errorAlAbrirArchivo() { return "Eraro dum malfermo de dosiero"; }
+	public String errorDosPuntos() { return "Eraro"; }
+	
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	public String eliminarRegistros() {
+	    return "기록 삭제";
+	}
+	// Esperanto (Esperanto)
+	public String editorConfigsMods() {
+	    return "Redaktilo de Agordoj de Modoj";
+	}
+
+	public String abrirConfig() {
+	    return "Malfermi Agordon";
+	}
+
+	public String guardarConfig() {
+	    return "Konservi Agordon";
+	}
+
+	public String recargarConfig() {
+	    return "Reŝargi";
+	}
+
+	public String rutaConfig() {
+	    return "Vojo";
+	}
+
+	public String tipoConfig() {
+	    return "Tipo";
+	}
+
+	public String claveConfig() {
+	    return "Ŝlosilo";
+	}
+
+	public String valorConfig() {
+	    return "Valoro";
+	}
+
+	public String buscarConfig() {
+	    return "Serĉi";
+	}
+
+	public String sinArchivoSeleccionado() {
+	    return "Neniu dosiero estis elektita";
+	}
+
+	public String archivoNoSoportado() {
+	    return "La dosiero ne estas subtenata de iu ajn disponebla motoro";
+	}
+
+	public String configGuardada() {
+	    return "La agordo estis konservita sukcese";
+	}
+
+	public String errorCargandoConfig() {
+	    return "Eraro dum ŝargo de agordo";
+	}
+
+	public String errorGuardandoConfig() {
+	    return "Eraro dum konservo de agordo";
+	}
+
+	public String seleccionarArchivoConfig() {
+	    return "Elekti dosieron de agordo";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

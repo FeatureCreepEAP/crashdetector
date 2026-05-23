@@ -65,6 +65,7 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 	public JButton botonCompartirTodos;
 	public JButton botonCompartirMarkdown;
 	public JButton botonCompartirInstanciaOModpack;
+	public JButton botonEliminarRegistros;
 
 	// Variables internas para la lógica
 	public JEditorPane textoExplicacion;
@@ -417,4 +418,92 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 		copiarAlPortapapeles(markdown);
 		mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
 	}
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	/**
+	 * Busca la API actualmente seleccionada en el combo.
+	 */
+	public APIdeSitioDeRegistro obtenerApiSeleccionadaEnCombo() {
+		if (comboAPI == null)
+			return null;
+
+		String nombreApi = (String) comboAPI.getSelectedItem();
+		if (nombreApi == null)
+			return null;
+
+		for (APIdeSitioDeRegistro api : APIdeSitioDeRegistro.APIS) {
+			if (api != null && nombreApi.equals(api.nombre())) {
+				return api;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Actualiza el botón opcional para abrir el eliminador de registros.
+	 */
+	public void actualizarBotonEliminador() {
+		if (botonEliminarRegistros == null)
+			return;
+
+		APIdeSitioDeRegistro api = obtenerApiSeleccionadaEnCombo();
+
+		boolean visible = api != null && api.eliminador() != null;
+		botonEliminarRegistros.setVisible(visible);
+		botonEliminarRegistros.setEnabled(visible);
+
+		if (panelConfig != null) {
+			panelConfig.revalidate();
+			panelConfig.repaint();
+		}
+	}
+
+	/**
+	 * Abre la GUI eliminadora de registros de la API seleccionada.
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void abrirEliminadorDeApiSeleccionada() {
+		try {
+			APIdeSitioDeRegistro api = obtenerApiSeleccionadaEnCombo();
+
+			if (api == null || api.eliminador() == null)
+				return;
+
+			TipoGUI tipo = api.eliminador().get();
+			if (tipo == null)
+				return;
+
+			Map guis = tipo.obtenerGUIs();
+			if (guis == null || guis.isEmpty())
+				return;
+
+			Object primerValor = guis.values().iterator().next();
+			if (!(primerValor instanceof Supplier))
+				return;
+
+			Supplier proveedor = (Supplier) primerValor;
+			Object gui = proveedor.get();
+
+			if (gui instanceof CrashDetectorGUI) {
+				((CrashDetectorGUI) gui).init();
+			}
+		} catch (Throwable t) {
+			mostrarError(MonitorDePID.idioma.error_inesperado_al_procesar_boton(), t);
+		}
+	}
+	
+	
+	
+	
+	
 }

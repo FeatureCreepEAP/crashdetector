@@ -10279,5 +10279,132 @@ public class Portuges implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "Não há uma central de suporte configurada.";
 	}
+	
+	public String historialMCLogs() { return "Histórico de MCLogs"; }
+	public String endpoint() { return "Endpoint"; }
+	public String slug() { return "Slug"; }
+	public String tokenEliminacion() { return "Token de exclusão"; }
+	public String enlace() { return "Link"; }
+	public String lineas() { return "Linhas"; }
+	public String errores() { return "Erros"; }
+	public String eliminarRegistroMCLogs() { return "Excluir registro"; }
+	public String faltanDatosParaEliminarMCLogs() { return "Faltam o slug ou o token de exclusão."; }
+	public String confirmarEliminarMCLogs() { return "Tem certeza de que deseja excluir este registro do MCLogs?"; }
+	public String registroEliminadoMCLogs() { return "Registro excluído com sucesso."; }
+	public String confirmar() { return "Confirmar"; }
+	public String colorCampoTexto() { return "Cor do campo de texto"; }
+	
+	public String historialCDPaste() { return "Histórico de CDPaste"; }
+	public String enlaceRaw() { return "Link raw"; }
+	public String tamano() { return "Tamanho"; }
+	public String eliminarRegistroCDPaste() { return "Excluir registro CDPaste"; }
+	public String faltanDatosParaEliminarCDPaste() { return "Falta o slug do registro CDPaste."; }
+	public String confirmarEliminarCDPaste() { return "Tem certeza de que deseja excluir este registro do CDPaste?"; }
+	public String registroEliminadoCDPaste() { return "Registro CDPaste excluído com sucesso."; }
+	
+	
+	public String launcherGenerico() { return "Genérico"; }
+	public String launcherServidorMinecraft() { return "Servidor de Minecraft"; }
+	public String descargandoYPreparandoEnlaces() { return "Baixando e preparando links..."; }
+	public String seleccioneArchivoLog() { return "Selecione um arquivo de log"; }
+	public String archivoNoValido() { return "O arquivo não é válido."; }
+	public String archivoSeleccionado() { return "Arquivo selecionado:"; }
+	public String presioneGuardarParaAgregarAnalisis() { return "Pressione 'Salvar e fechar' para adicioná-lo à análise."; }
+	public String errorAlCargarArchivoArrastrado() { return "Erro ao carregar arquivo arrastado"; }
+	public String errorAlAbrirArchivo() { return "Erro ao abrir o arquivo"; }
+	public String errorDosPuntos() { return "Erro"; }
+	
+	public String eliminarRegistros() {
+	    return "Excluir registros";
+	}
+	
+	
+	public String editorConfigsMods() {
+	    return "Editor de Configurações de Mods";
+	}
+
+	public String abrirConfig() {
+	    return "Abrir Config";
+	}
+
+	public String guardarConfig() {
+	    return "Salvar Config";
+	}
+
+	public String recargarConfig() {
+	    return "Recarregar";
+	}
+
+	public String rutaConfig() {
+	    return "Caminho";
+	}
+
+	public String tipoConfig() {
+	    return "Tipo";
+	}
+
+	public String claveConfig() {
+	    return "Chave";
+	}
+
+	public String valorConfig() {
+	    return "Valor";
+	}
+
+	public String buscarConfig() {
+	    return "Buscar";
+	}
+
+	public String sinArchivoSeleccionado() {
+	    return "Nenhum arquivo foi selecionado";
+	}
+
+	public String archivoNoSoportado() {
+	    return "O arquivo não é suportado por nenhum motor disponível";
+	}
+
+	public String configGuardada() {
+	    return "A configuração foi salva corretamente";
+	}
+
+	public String errorCargandoConfig() {
+	    return "Erro ao carregar configuração";
+	}
+
+	public String errorGuardandoConfig() {
+	    return "Erro ao salvar configuração";
+	}
+
+	public String seleccionarArchivoConfig() {
+	    return "Selecionar arquivo de configuração";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

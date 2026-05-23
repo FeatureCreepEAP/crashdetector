@@ -195,31 +195,58 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		tabla.getColumnModel().getColumn(4).setCellEditor(new URLEditor());
 	}
 
+
+
+	
 	private void inicializarPanelConfiguracion() {
 		panelConfig = new JPanel(new GridBagLayout());
 		panelConfig.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.titulo_configuracion()));
+
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.WEST;
-
-		gbc.gridx = 0;
-		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1.0;
+
+		int y = 0;
+
+		// Endpoint del informe
+		gbc.gridx = 0;
+		gbc.gridy = y;
+		gbc.weightx = 0.0;
+		gbc.gridwidth = 1;
 		panelConfig.add(new JLabel(MonitorDePID.idioma.endpointDeInforme()), gbc);
-		gbc.gridx++;
+
+		gbc.gridx = 1;
+		gbc.gridy = y;
 		gbc.weightx = 3.0;
 		campoEndpoint = new JTextField(Config.obtenerInstancia().obtenerSitoDeInformes(), 50);
 		campoEndpoint.setMinimumSize(new Dimension(400, 25));
 		panelConfig.add(campoEndpoint, gbc);
 
+		y++;
+
+		// Botón opcional para eliminar registros de la API seleccionada
+		gbc.gridx = 1;
+		gbc.gridy = y;
+		gbc.weightx = 3.0;
+		gbc.gridwidth = 1;
+
+		botonEliminarRegistros = new JButton(MonitorDePID.idioma.eliminarRegistros());
+		botonEliminarRegistros.addActionListener(e -> abrirEliminadorDeApiSeleccionada());
+		panelConfig.add(botonEliminarRegistros, gbc);
+
+		y++;
+
+		// API de logging
 		gbc.gridx = 0;
-		gbc.gridy++;
-		gbc.weightx = 0;
+		gbc.gridy = y;
+		gbc.weightx = 0.0;
+		gbc.gridwidth = 1;
 		panelConfig.add(new JLabel(MonitorDePID.idioma.apiDeLogging()), gbc);
-		gbc.gridx++;
+
+		gbc.gridx = 1;
+		gbc.gridy = y;
+		gbc.weightx = 3.0;
 
 		String sito_actual = Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
 		APIdeSitioDeRegistro api_def;
@@ -238,11 +265,15 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		Map<String, Set<String>> apis = new HashMap<>();
 		for (APIdeSitioDeRegistro api : APIdeSitioDeRegistro.APIS) {
 			Set<String> sits = new LinkedHashSet<>();
+
 			if (api != null && api.equals(api_def) && !error_de_api && sito_actual != null) {
 				sits.add(sito_actual);
 			}
-			sits.addAll(api.sitiosPorDefecto());
-			apis.put(api.nombre(), sits);
+
+			if (api != null) {
+				sits.addAll(api.sitiosPorDefecto());
+				apis.put(api.nombre(), sits);
+			}
 		}
 
 		comboAPI = new JComboBox<>(apis.keySet().toArray(new String[0]));
@@ -250,10 +281,18 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		comboAPI.setPreferredSize(new Dimension(300, 25));
 		panelConfig.add(comboAPI, gbc);
 
+		y++;
+
+		// Sitio de logging
 		gbc.gridx = 0;
-		gbc.gridy++;
+		gbc.gridy = y;
+		gbc.weightx = 0.0;
 		panelConfig.add(new JLabel(MonitorDePID.idioma.sitoDeLogging()), gbc);
-		gbc.gridx++;
+
+		gbc.gridx = 1;
+		gbc.gridy = y;
+		gbc.weightx = 3.0;
+
 		comboSitioRegistro = new JComboBox<>(new String[] {});
 		comboSitioRegistro.setPreferredSize(new Dimension(300, 25));
 		panelConfig.add(comboSitioRegistro, gbc);
@@ -263,35 +302,67 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		comboAPI.addActionListener(e -> {
 			String apiSeleccionada = (String) comboAPI.getSelectedItem();
 			Set<String> sitios = apis.get(apiSeleccionada);
+
 			actualizarComboSitios(apiSeleccionada, sitios, null);
+			actualizarBotonEliminador();
 		});
 
+		y++;
+
+		// Anonimizar registros
 		gbc.gridx = 0;
-		gbc.gridy++;
+		gbc.gridy = y;
 		gbc.gridwidth = 2;
+		gbc.weightx = 1.0;
+
 		checkAnonimizar = new JCheckBox(MonitorDePID.idioma.anonimizarRegistros());
 		checkAnonimizar.setSelected(ConfigMundial.obtenerInstancia().esAnonimizarRegistros());
 		panelConfig.add(checkAnonimizar, gbc);
 
-		gbc.gridy++;
+		y++;
+
+		// Guardar configuración
 		gbc.gridx = 0;
+		gbc.gridy = y;
 		gbc.gridwidth = 2;
 		gbc.anchor = GridBagConstraints.WEST;
+
 		JButton boton_guardar_de_config = new JButton(MonitorDePID.idioma.guardarConfigDeCompartir());
 		boton_guardar_de_config.addActionListener(e -> guardarConfig());
 		panelConfig.add(boton_guardar_de_config, gbc);
 
-		gbc.gridy++;
+		y++;
+
+		// Canario
 		gbc.gridx = 0;
+		gbc.gridy = y;
 		gbc.gridwidth = 2;
 		gbc.anchor = GridBagConstraints.WEST;
+
 		JButton botonCanario = new JButton(MonitorDePID.idioma.buscador_canario_de_orden_label());
 		botonCanario.addActionListener(e -> {
 			TipoGUI.CANARIO.obtenerGUIPredeterminado(CanarioDeOrdenJudicialGUI1984.ID,
 					() -> new CanarioDeOrdenJudicialGUI1984()).init();
 		});
 		panelConfig.add(botonCanario, gbc);
+
+		actualizarBotonEliminador();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	private static class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
 		public CheckBoxRenderer() {

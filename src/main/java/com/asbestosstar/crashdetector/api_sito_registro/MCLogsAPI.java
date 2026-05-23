@@ -11,9 +11,10 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import com.asbestosstar.crashdetector.Consola;
-import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro.ParteInfo;
+import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 
 public class MCLogsAPI implements APIdeSitioDeRegistro {
@@ -91,7 +92,11 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 
 			String respuestaStr = respuesta.toString();
 			if (respuestaStr.contains("\"success\":true")) {
-				return extraerUrlDeRespuesta(respuestaStr);
+
+				HistoriaMCLogs.EntradaMCLogs entrada = extraerEntradaDeRespuesta(respuestaStr, APIdeSitioDeRegistro.sitioDeConfig());
+				HistoriaMCLogs.agregar(entrada);
+				return entrada.url;
+			
 			} else {
 				String error = extraerErrorDeRespuesta(respuestaStr);
 				throw new ErrorConPublicar("Error del servidor: " + error);
@@ -187,7 +192,13 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 
 			String respuestaStr = respuesta.toString();
 			if (respuestaStr.contains("\"success\":true")) {
-				return extraerUrlDeRespuesta(respuestaStr);
+
+				HistoriaMCLogs.EntradaMCLogs entrada = extraerEntradaDeRespuesta(respuestaStr, APIdeSitioDeRegistro.sitioDeConfig());
+				HistoriaMCLogs.agregar(entrada);
+				return entrada.url;
+			
+			
+			
 			} else {
 				String error = extraerErrorDeRespuesta(respuestaStr);
 				throw new ErrorConPublicar("Error del servidor: " + error);
@@ -280,6 +291,193 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 		}
 		return enlaces;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	private HistoriaMCLogs.EntradaMCLogs extraerEntradaDeRespuesta(String respuestaJson, String endpoint) {
+		HistoriaMCLogs.EntradaMCLogs e = new HistoriaMCLogs.EntradaMCLogs();
+
+		e.endpoint = endpoint;
+		e.id = extraerString(respuestaJson, "id");
+		e.url = extraerString(respuestaJson, "url");
+		e.raw = extraerString(respuestaJson, "raw");
+		e.token = extraerString(respuestaJson, "token");
+		e.source = extraerString(respuestaJson, "source");
+
+		e.created = extraerLong(respuestaJson, "created");
+		e.expires = extraerLong(respuestaJson, "expires");
+		e.size = extraerLong(respuestaJson, "size");
+		e.lines = extraerLong(respuestaJson, "lines");
+		e.errors = extraerLong(respuestaJson, "errors");
+
+		return e;
+	}
+
+	/**
+	 * Extrae un string simple de una respuesta JSON plana.
+	 */
+	private String extraerString(String json, String key) {
+		if (json == null || key == null)
+			return "";
+
+		String patron = "\"" + key + "\":";
+		int p = json.indexOf(patron);
+		if (p < 0)
+			return "";
+
+		p += patron.length();
+
+		while (p < json.length() && Character.isWhitespace(json.charAt(p)))
+			p++;
+
+		if (p >= json.length())
+			return "";
+
+		if (json.startsWith("null", p))
+			return "";
+
+		if (json.charAt(p) != '"')
+			return "";
+
+		p++;
+		StringBuilder sb = new StringBuilder();
+		boolean escape = false;
+
+		for (; p < json.length(); p++) {
+			char c = json.charAt(p);
+
+			if (escape) {
+				sb.append(c);
+				escape = false;
+				continue;
+			}
+
+			if (c == '\\') {
+				escape = true;
+				continue;
+			}
+
+			if (c == '"')
+				break;
+
+			sb.append(c);
+		}
+
+		return sb.toString().replace("\\/", "/");
+	}
+
+	/**
+	 * Extrae un número largo de una respuesta JSON plana.
+	 */
+	private long extraerLong(String json, String key) {
+		if (json == null || key == null)
+			return 0L;
+
+		String patron = "\"" + key + "\":";
+		int p = json.indexOf(patron);
+		if (p < 0)
+			return 0L;
+
+		p += patron.length();
+
+		while (p < json.length() && Character.isWhitespace(json.charAt(p)))
+			p++;
+
+		int inicio = p;
+		while (p < json.length()) {
+			char c = json.charAt(p);
+			if ((c >= '0' && c <= '9') || c == '-') {
+				p++;
+			} else {
+				break;
+			}
+		}
+
+		try {
+			return Long.parseLong(json.substring(inicio, p));
+		} catch (Exception e) {
+			return 0L;
+		}
+	}
+	
+	/**
+	 * Elimina un registro MCLogs usando el token recibido al publicarlo.
+	 */
+	public boolean eliminarRegistro(String endpointBase, String id, String token) throws ErrorConPublicar {
+		if (endpointBase == null || endpointBase.trim().isEmpty())
+			endpointBase = "https://api.mclo.gs/1/log";
+
+		if (id == null || id.trim().isEmpty())
+			throw new ErrorConPublicar("Falta el ID del registro");
+
+		if (token == null || token.trim().isEmpty())
+			throw new ErrorConPublicar("Falta el token de eliminación");
+
+		try {
+			String endpoint = endpointBase.trim();
+			if (!endpoint.endsWith("/")) {
+				endpoint += "/";
+			}
+			endpoint += id.trim();
+
+			URL url = new URL(endpoint);
+			HttpURLConnection conexion = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
+
+			conexion.setRequestMethod("DELETE");
+			conexion.setConnectTimeout(TIMEOUT_MS);
+			conexion.setReadTimeout(TIMEOUT_MS);
+			conexion.setRequestProperty("User-Agent", UA);
+			conexion.setRequestProperty("Authorization", "Bearer " + token.trim());
+
+			int codigo = conexion.getResponseCode();
+
+			StringBuilder respuesta = new StringBuilder();
+			try (BufferedReader lector = new BufferedReader(new InputStreamReader(
+					(codigo >= 200 && codigo < 300) ? conexion.getInputStream() : conexion.getErrorStream(),
+					StandardCharsets.UTF_8))) {
+				String linea;
+				while ((linea = lector.readLine()) != null) {
+					respuesta.append(linea);
+				}
+			}
+
+			String r = respuesta.toString();
+			if (codigo == HttpURLConnection.HTTP_OK && r.contains("\"success\":true")) {
+				return true;
+			}
+
+			throw new ErrorConPublicar(extraerErrorDeRespuesta(r));
+		} catch (IOException e) {
+			throw new ErrorConPublicar("Error de red: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Devuelve la GUI opcional para ver historial y eliminar registros MCLogs.
+	 */
+	@Override
+	public Supplier<TipoGUI> eliminador() {
+		return () -> TipoGUI.MCLOGS_HISTORIAL;
+	}
+	
+	
+	
 
 	@Override
 	public boolean soporteEnlacesALinea() {

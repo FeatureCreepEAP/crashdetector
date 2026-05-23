@@ -9897,5 +9897,142 @@ public class Japones implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "サポートセンターが構成されていません。";
 	}
+	
+	// Japanese (日本語)
+	public String historialMCLogs() { return "MCLogs 履歴"; }
+	public String endpoint() { return "エンドポイント"; }
+	public String slug() { return "スラグ"; }
+	public String tokenEliminacion() { return "削除トークン"; }
+	public String enlace() { return "リンク"; }
+	public String lineas() { return "行数"; }
+	public String errores() { return "エラー"; }
+	public String eliminarRegistroMCLogs() { return "記録を削除"; }
+	public String faltanDatosParaEliminarMCLogs() { return "スラグまたは削除トークンがありません。"; }
+	public String confirmarEliminarMCLogs() { return "この MCLogs の記録を削除してもよろしいですか？"; }
+	public String registroEliminadoMCLogs() { return "記録が正常に削除されました。"; }
+	public String confirmar() { return "確認"; }
+	public String colorCampoTexto() { return "テキストフィールドの色"; }
+	
+	// Japanese (日本語)
+	public String historialCDPaste() { return "CDPaste 履歴"; }
+	public String enlaceRaw() { return "Raw リンク"; }
+	public String tamano() { return "サイズ"; }
+	public String eliminarRegistroCDPaste() { return "CDPaste 記録を削除"; }
+	public String faltanDatosParaEliminarCDPaste() { return "CDPaste 記録の識別子 (slug) がありません。"; }
+	public String confirmarEliminarCDPaste() { return "この CDPaste の記録を削除してもよろしいですか？"; }
+	public String registroEliminadoCDPaste() { return "CDPaste 記録が正常に削除されました。"; }
+	// Japanese (日本語)
+	public String launcherGenerico() { return "一般"; }
+	public String launcherServidorMinecraft() { return "Minecraft サーバー"; }
+	public String descargandoYPreparandoEnlaces() { return "リンクをダウンロードして準備中..."; }
+	public String seleccioneArchivoLog() { return "ログファイルを選択"; }
+	public String archivoNoValido() { return "ファイルが無効です。"; }
+	public String archivoSeleccionado() { return "選択されたファイル："; }
+	public String presioneGuardarParaAgregarAnalisis() { return "保存して閉じるを押して分析に追加してください。"; }
+	public String errorAlCargarArchivoArrastrado() { return "ドラッグされたファイルの読み込みエラー"; }
+	public String errorAlAbrirArchivo() { return "ファイルを開くエラー"; }
+	public String errorDosPuntos() { return "エラー"; }
+	
+	
+
+	// Japanese (日本語)
+	public String eliminarRegistros() {
+	    return "記録を削除";
+	}
+	// Japanese (日本語)
+	public String editorConfigsMods() {
+	    return "Mod 設定エディタ";
+	}
+
+	public String abrirConfig() {
+	    return "設定を開く";
+	}
+
+	public String guardarConfig() {
+	    return "設定を保存";
+	}
+
+	public String recargarConfig() {
+	    return "再読み込み";
+	}
+
+	public String rutaConfig() {
+	    return "パス";
+	}
+
+	public String tipoConfig() {
+	    return "タイプ";
+	}
+
+	public String claveConfig() {
+	    return "キー";
+	}
+
+	public String valorConfig() {
+	    return "値";
+	}
+
+	public String buscarConfig() {
+	    return "検索";
+	}
+
+	public String sinArchivoSeleccionado() {
+	    return "ファイルが選択されていません";
+	}
+
+	public String archivoNoSoportado() {
+	    return "利用可能なエンジンでサポートされていないファイルです";
+	}
+
+	public String configGuardada() {
+	    return "設定が正常に保存されました";
+	}
+
+	public String errorCargandoConfig() {
+	    return "設定の読み込み中にエラーが発生しました";
+	}
+
+	public String errorGuardandoConfig() {
+	    return "設定の保存中にエラーが発生しました";
+	}
+
+	public String seleccionarArchivoConfig() {
+	    return "設定ファイルを選択";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

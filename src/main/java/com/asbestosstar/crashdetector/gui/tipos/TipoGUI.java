@@ -17,10 +17,13 @@ import com.asbestosstar.crashdetector.gui.tipos.aplic.ActaDeProteccionDelIdiomaC
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.canario.CanarioDeOrdenJudicialGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUI;
+import com.asbestosstar.crashdetector.gui.tipos.cdpaste.CDPasteHistorialGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
 import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaGUI;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
+import com.asbestosstar.crashdetector.gui.tipos.configmods.ConfigsModsGUI;
+import com.asbestosstar.crashdetector.gui.tipos.configmods.ConfigsModsGUIYunenoms;
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoBase;
 import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUI;
@@ -41,6 +44,7 @@ import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI;
+import com.asbestosstar.crashdetector.gui.tipos.mclogs.MCLogsHistorialGUI;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.miranda.DerechosPiratasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.mixins.MixinsGUI;
@@ -324,7 +328,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
-	@Deprecated
+	
 	/**
 	 * No registro de Launcher
 	 */
@@ -1148,6 +1152,104 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return AdministradorDeRendimientoGUI.GUIS;
 		}
 	};
+	
+	
+	/**
+	 * Historial y eliminador de registros MCLogs.
+	 */
+	public static TipoGUI<MCLogsHistorialGUI> MCLOGS_HISTORIAL = new TipoGUI<MCLogsHistorialGUI>() {
+		@Override
+		public String id() {
+			return "mclogs_historial";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.historialMCLogs();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<MCLogsHistorialGUI> gui) {
+			MCLogsHistorialGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<MCLogsHistorialGUI>> obtenerGUIs() {
+			return MCLogsHistorialGUI.GUIS;
+		}
+	};
+	
+	
+	/**
+	 * Historial y eliminador de registros CDPaste.
+	 */
+	public static TipoGUI<CDPasteHistorialGUI> CDPASTE_HISTORIAL = new TipoGUI<CDPasteHistorialGUI>() {
+		@Override
+		public String id() {
+			return "cdpaste_historial";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.historialCDPaste();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<CDPasteHistorialGUI> gui) {
+			CDPasteHistorialGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<CDPasteHistorialGUI>> obtenerGUIs() {
+			return CDPasteHistorialGUI.GUIS;
+		}
+	};
+	
+	public static TipoGUI<ConfigsModsGUI> CONFIG_MODS = new TipoGUI<ConfigsModsGUI>() {
+		@Override
+		public String id() {
+			return "config_mods";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.editorConfigsMods();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<ConfigsModsGUI> gui) {
+			ConfigsModsGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<ConfigsModsGUI>> obtenerGUIs() {
+			return ConfigsModsGUI.GUIS;
+		}
+	};
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
@@ -1196,6 +1298,9 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(JGIT_HUB);
 		TIPOS_DE_GUI.add(GPU_FIX);
 		TIPOS_DE_GUI.add(ADMINISTRADOR_DE_RENDIMIENTO);
+		TIPOS_DE_GUI.add(MCLOGS_HISTORIAL);
+		TIPOS_DE_GUI.add(CDPASTE_HISTORIAL);
+		TIPOS_DE_GUI.add(CONFIG_MODS);
 
 	}
 }
