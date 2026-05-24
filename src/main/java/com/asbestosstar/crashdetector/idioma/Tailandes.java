@@ -10459,141 +10459,189 @@ public class Tailandes implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "ไม่ได้กำหนดค่าศูนย์ช่วยเหลือ";
 	}
-	
-	public String historialMCLogs() { return "ประวัติ MCLogs"; }
-	public String endpoint() { return "Endpoint"; }
-	public String slug() { return "Slug"; }
-	public String tokenEliminacion() { return "โทเค็นสำหรับลบ"; }
-	public String enlace() { return "ลิงก์"; }
-	public String lineas() { return "บรรทัด"; }
-	public String errores() { return "ข้อผิดพลาด"; }
-	public String eliminarRegistroMCLogs() { return "ลบบันทึก"; }
-	public String faltanDatosParaEliminarMCLogs() { return "ขาด slug หรือโทเค็นสำหรับลบ"; }
-	public String confirmarEliminarMCLogs() { return "คุณแน่ใจหรือไม่ว่าต้องการลบบันทึก MCLogs นี้?"; }
-	public String registroEliminadoMCLogs() { return "ลบบันทึกสำเร็จ"; }
-	public String confirmar() { return "ยืนยัน"; }
-	public String colorCampoTexto() { return "สีของช่องข้อความ"; }
-	
-	public String historialCDPaste() { return "ประวัติ CDPaste"; }
-	public String enlaceRaw() { return "ลิงก์ Raw"; }
-	public String tamano() { return "ขนาด"; }
-	public String eliminarRegistroCDPaste() { return "ลบบันทึก CDPaste"; }
-	public String faltanDatosParaEliminarCDPaste() { return "ขาด slug ของบันทึก CDPaste"; }
-	public String confirmarEliminarCDPaste() { return "คุณแน่ใจหรือไม่ว่าต้องการลบบันทึก CDPaste นี้?"; }
-	public String registroEliminadoCDPaste() { return "ลบบันทึก CDPaste สำเร็จ"; }
-	
-	public String launcherGenerico() { return "ทั่วไป"; }
-	public String launcherServidorMinecraft() { return "เซิร์ฟเวอร์ Minecraft"; }
-	public String descargandoYPreparandoEnlaces() { return "กำลังดาวน์โหลดและเตรียมลิงก์..."; }
-	public String seleccioneArchivoLog() { return "เลือกไฟล์บันทึก (log)"; }
-	public String archivoNoValido() { return "ไฟล์ไม่ถูกต้อง"; }
-	public String archivoSeleccionado() { return "ไฟล์ที่เลือก:"; }
-	public String presioneGuardarParaAgregarAnalisis() { return "กด 'บันทึกและปิด' เพื่อเพิ่มลงใน การวิเคราะห์"; }
-	public String errorAlCargarArchivoArrastrado() { return "เกิดข้อผิดพลาดในการโหลดไฟล์ที่ลากมา"; }
-	public String errorAlAbrirArchivo() { return "เกิดข้อผิดพลาดในการเปิดไฟล์"; }
-	public String errorDosPuntos() { return "ข้อผิดพลาด"; }
-	
-	public String eliminarRegistros() {
-	    return "ลบบันทึก";
+
+	public String historialMCLogs() {
+		return "ประวัติ MCLogs";
 	}
-	
+
+	public String endpoint() {
+		return "Endpoint";
+	}
+
+	public String slug() {
+		return "Slug";
+	}
+
+	public String tokenEliminacion() {
+		return "โทเค็นสำหรับลบ";
+	}
+
+	public String enlace() {
+		return "ลิงก์";
+	}
+
+	public String lineas() {
+		return "บรรทัด";
+	}
+
+	public String errores() {
+		return "ข้อผิดพลาด";
+	}
+
+	public String eliminarRegistroMCLogs() {
+		return "ลบบันทึก";
+	}
+
+	public String faltanDatosParaEliminarMCLogs() {
+		return "ขาด slug หรือโทเค็นสำหรับลบ";
+	}
+
+	public String confirmarEliminarMCLogs() {
+		return "คุณแน่ใจหรือไม่ว่าต้องการลบบันทึก MCLogs นี้?";
+	}
+
+	public String registroEliminadoMCLogs() {
+		return "ลบบันทึกสำเร็จ";
+	}
+
+	public String confirmar() {
+		return "ยืนยัน";
+	}
+
+	public String colorCampoTexto() {
+		return "สีของช่องข้อความ";
+	}
+
+	public String historialCDPaste() {
+		return "ประวัติ CDPaste";
+	}
+
+	public String enlaceRaw() {
+		return "ลิงก์ Raw";
+	}
+
+	public String tamano() {
+		return "ขนาด";
+	}
+
+	public String eliminarRegistroCDPaste() {
+		return "ลบบันทึก CDPaste";
+	}
+
+	public String faltanDatosParaEliminarCDPaste() {
+		return "ขาด slug ของบันทึก CDPaste";
+	}
+
+	public String confirmarEliminarCDPaste() {
+		return "คุณแน่ใจหรือไม่ว่าต้องการลบบันทึก CDPaste นี้?";
+	}
+
+	public String registroEliminadoCDPaste() {
+		return "ลบบันทึก CDPaste สำเร็จ";
+	}
+
+	public String launcherGenerico() {
+		return "ทั่วไป";
+	}
+
+	public String launcherServidorMinecraft() {
+		return "เซิร์ฟเวอร์ Minecraft";
+	}
+
+	public String descargandoYPreparandoEnlaces() {
+		return "กำลังดาวน์โหลดและเตรียมลิงก์...";
+	}
+
+	public String seleccioneArchivoLog() {
+		return "เลือกไฟล์บันทึก (log)";
+	}
+
+	public String archivoNoValido() {
+		return "ไฟล์ไม่ถูกต้อง";
+	}
+
+	public String archivoSeleccionado() {
+		return "ไฟล์ที่เลือก:";
+	}
+
+	public String presioneGuardarParaAgregarAnalisis() {
+		return "กด 'บันทึกและปิด' เพื่อเพิ่มลงใน การวิเคราะห์";
+	}
+
+	public String errorAlCargarArchivoArrastrado() {
+		return "เกิดข้อผิดพลาดในการโหลดไฟล์ที่ลากมา";
+	}
+
+	public String errorAlAbrirArchivo() {
+		return "เกิดข้อผิดพลาดในการเปิดไฟล์";
+	}
+
+	public String errorDosPuntos() {
+		return "ข้อผิดพลาด";
+	}
+
+	public String eliminarRegistros() {
+		return "ลบบันทึก";
+	}
+
 	public String editorConfigsMods() {
-	    return "ตัวแก้ไขการตั้งค่า Mods";
+		return "ตัวแก้ไขการตั้งค่า Mods";
 	}
 
 	public String abrirConfig() {
-	    return "เปิด Config";
+		return "เปิด Config";
 	}
 
 	public String guardarConfig() {
-	    return "บันทึก Config";
+		return "บันทึก Config";
 	}
 
 	public String recargarConfig() {
-	    return "โหลดใหม่";
+		return "โหลดใหม่";
 	}
 
 	public String rutaConfig() {
-	    return "เส้นทาง";
+		return "เส้นทาง";
 	}
 
 	public String tipoConfig() {
-	    return "ประเภท";
+		return "ประเภท";
 	}
 
 	public String claveConfig() {
-	    return "คีย์";
+		return "คีย์";
 	}
 
 	public String valorConfig() {
-	    return "ค่า";
+		return "ค่า";
 	}
 
 	public String buscarConfig() {
-	    return "ค้นหา";
+		return "ค้นหา";
 	}
 
 	public String sinArchivoSeleccionado() {
-	    return "ไม่ได้เลือกไฟล์";
+		return "ไม่ได้เลือกไฟล์";
 	}
 
 	public String archivoNoSoportado() {
-	    return "ไฟล์ไม่ได้รับการสนับสนุนโดยเอนจिनที่มีอยู่";
+		return "ไฟล์ไม่ได้รับการสนับสนุนโดยเอนจिनที่มีอยู่";
 	}
 
 	public String configGuardada() {
-	    return "บันทึกการตั้งค่าสำเร็จ";
+		return "บันทึกการตั้งค่าสำเร็จ";
 	}
 
 	public String errorCargandoConfig() {
-	    return "เกิดข้อผิดพลาดในการโหลดการตั้งค่า";
+		return "เกิดข้อผิดพลาดในการโหลดการตั้งค่า";
 	}
 
 	public String errorGuardandoConfig() {
-	    return "เกิดข้อผิดพลาดในการบันทึกการตั้งค่า";
+		return "เกิดข้อผิดพลาดในการบันทึกการตั้งค่า";
 	}
 
 	public String seleccionarArchivoConfig() {
-	    return "เลือกไฟล์การตั้งค่า";
+		return "เลือกไฟล์การตั้งค่า";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

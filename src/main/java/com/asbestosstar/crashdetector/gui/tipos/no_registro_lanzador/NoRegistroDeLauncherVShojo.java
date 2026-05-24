@@ -34,7 +34,6 @@ import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.ComboIdiomasConIcono;
 
-
 public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 
 	private static final long serialVersionUID = 1L;

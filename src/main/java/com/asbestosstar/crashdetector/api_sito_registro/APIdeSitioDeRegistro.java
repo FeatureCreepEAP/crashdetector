@@ -144,18 +144,13 @@ public interface APIdeSitioDeRegistro {
 		indicePartes().put(grupoId, parteIndexBase1, new ParteInfo(url, desde, hasta));
 	}
 
-	
 	/**
 	 * Lo opcional eliminador de registros gui
+	 * 
 	 * @return
 	 */
-	public default Supplier<TipoGUI> eliminador(){
+	public default Supplier<TipoGUI> eliminador() {
 		return null;
 	}
-	
-	
-	
-	
-	
-	
+
 }

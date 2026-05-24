@@ -20,6 +20,7 @@ import java.util.concurrent.CountDownLatch;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
@@ -30,6 +31,7 @@ import com.asbestosstar.crashdetector.buscarparajava.BuscarParaJava8Windows;
 import com.asbestosstar.crashdetector.canario.CanarioDeOrdenJudicial;
 import com.asbestosstar.crashdetector.canario.pordefecto.CDInformesAsbestosstarEgoismJPCanario;
 import com.asbestosstar.crashdetector.canario.pordefecto.CDPasteAsbestosstarEgoismJPCanario;
+import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.detectorlanzer.DetectorLanzer;
 import com.asbestosstar.crashdetector.dto.modpack.CopiaDeSeguridadDeArchivos;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
@@ -335,12 +337,9 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/nightcore.png", Statics.carpeta.resolve("imagenes/nightcore.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/doodlebob.png", Statics.carpeta.resolve("imagenes/doodlebob.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/yunenoms.png", Statics.carpeta.resolve("imagenes/yunenoms.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/wilhelmia_frost.png", Statics.carpeta.resolve("imagenes/wilhelmia_frost.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/wilhelmia_frost.png",
+				Statics.carpeta.resolve("imagenes/wilhelmia_frost.png").toFile());
 
-		
-		
-		
-		
 //docs		
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Launchers.md",
@@ -478,44 +477,127 @@ public class MonitorDePID {
 	}
 
 	public static String obtenerClassPath(String jar) {
-		// ClassPath base de la JVM actual
-		StringBuilder classPath = new StringBuilder(System.getProperty("java.class.path"));
+		StringBuilder classPath = new StringBuilder(System.getProperty("java.class.path", ""));
+		List<String> nombresYaAgregados = obtenerNombresJarsDelClasspath(classPath.toString());
 
-		// Añadir el JAR proporcionado si no es null/vacío
-		if (jar != null && !jar.isEmpty()) {
-			classPath.append(File.pathSeparator).append(jar);
+		if (jar != null && !jar.trim().isEmpty()) {
+			agregarJarAlClasspathSiNoConflicta(classPath, nombresYaAgregados, new File(jar));
 		}
 
-		// Intentar añadir CFR si está instalado
 		try {
-			File cfrJar = BuscarParaCFR.encontrarCfr(); // Usando BuscarParaCFR para obtener el JAR de CFR
-			if (cfrJar != null && cfrJar.exists()) {
-				String rutaCfr = cfrJar.getAbsolutePath();
-				// Evitar duplicarlo en el classpath
-				if (!classPath.toString().contains(rutaCfr)) {
-					classPath.append(File.pathSeparator).append(rutaCfr);
-				}
-			}
+			File cfrJar = BuscarParaCFR.encontrarCfr();
+			agregarJarAlClasspathSiNoConflicta(classPath, nombresYaAgregados, cfrJar);
 		} catch (Throwable t) {
-			// En caso de error con la búsqueda del JAR de CFR, se ignora
+			// En caso de error con la búsqueda del JAR de CFR, se ignora.
 		}
 
-		// Intentar añadir JGit si está instalado en ~/crash_detector/jgit/
 		try {
 			for (File jgitJar : BuscarParaJGit.encontrarJarsInstalados()) {
-				if (jgitJar != null && jgitJar.exists()) {
-					String rutaJGit = jgitJar.getAbsolutePath();
-
-					if (!classPath.toString().contains(rutaJGit)) {
-						classPath.append(File.pathSeparator).append(rutaJGit);
-					}
-				}
+				agregarJarAlClasspathSiNoConflicta(classPath, nombresYaAgregados, jgitJar);
 			}
 		} catch (Throwable t) {
 			// Si falla la búsqueda de JGit, se ignora.
 		}
 
+		File universal_deps = new File(System.getProperty("user.home"), "crash_detector/deps");
+		File instancia_deps = Statics.carpeta.resolve("deps").toFile();
+
+		universal_deps.mkdirs();
+		instancia_deps.mkdirs();
+
+		agregarJarsDeCarpetaAlClasspath(classPath, nombresYaAgregados, universal_deps);
+		agregarJarsDeCarpetaAlClasspath(classPath, nombresYaAgregados, instancia_deps);
+
 		return classPath.toString();
+	}
+
+	private static List<String> obtenerNombresJarsDelClasspath(String classPath) {
+		List<String> nombres = new ArrayList<String>();
+
+		if (classPath == null || classPath.trim().isEmpty()) {
+			return nombres;
+		}
+
+		String[] partes = classPath.split(java.util.regex.Pattern.quote(File.pathSeparator));
+
+		for (String parte : partes) {
+			if (parte == null || parte.trim().isEmpty()) {
+				continue;
+			}
+
+			String nombre = new File(parte).getName().toLowerCase();
+
+			if (nombre.endsWith(".jar") && !nombres.contains(nombre)) {
+				nombres.add(nombre);
+			}
+		}
+
+		return nombres;
+	}
+
+	private static void agregarJarsDeCarpetaAlClasspath(StringBuilder classPath, List<String> nombresYaAgregados,
+			File carpeta) {
+		if (carpeta == null || !carpeta.exists() || !carpeta.isDirectory()) {
+			return;
+		}
+
+		File[] archivos = carpeta.listFiles();
+
+		if (archivos == null) {
+			return;
+		}
+
+		for (File archivo : archivos) {
+			agregarJarAlClasspathSiNoConflicta(classPath, nombresYaAgregados, archivo);
+		}
+	}
+
+	private static void agregarJarAlClasspathSiNoConflicta(StringBuilder classPath, List<String> nombresYaAgregados,
+			File archivo) {
+		if (archivo == null || !archivo.exists() || !archivo.isFile()) {
+			return;
+		}
+
+		String nombre = archivo.getName().toLowerCase();
+
+		if (!nombre.endsWith(".jar")) {
+			return;
+		}
+
+		if (nombresYaAgregados.contains(nombre)) {
+			return;
+		}
+
+		nombresYaAgregados.add(nombre);
+		classPath.append(File.pathSeparator).append(archivo.getAbsolutePath());
+	}
+
+	public static void agregarJarsDeCarpetaAlClasspath(StringBuilder classPath, File carpeta) {
+		if (carpeta == null || !carpeta.exists() || !carpeta.isDirectory()) {
+			return;
+		}
+
+		File[] archivos = carpeta.listFiles();
+		if (archivos == null) {
+			return;
+		}
+
+		for (File archivo : archivos) {
+			if (archivo == null || !archivo.isFile()) {
+				continue;
+			}
+
+			String nombre = archivo.getName().toLowerCase();
+			if (!nombre.endsWith(".jar")) {
+				continue;
+			}
+
+			String ruta = archivo.getAbsolutePath();
+
+			if (!classPath.toString().contains(ruta)) {
+				classPath.append(File.pathSeparator).append(ruta);
+			}
+		}
 	}
 
 	public static void registrarGUISPredeterminado() {
@@ -582,14 +664,9 @@ public class MonitorDePID {
 				() -> new LectadorDeConsolasMinimalista());
 		TipoGUI.DOCS.registrarGUI(LectadorDeDocumentosMinimalista.ID, LectadorDeDocumentosMinimalista::new);
 		TipoGUI.MCLOGS_HISTORIAL.registrarGUI(MCLogsHistorialGUIDoodleBob.ID, MCLogsHistorialGUIDoodleBob::new);
-		TipoGUI.CDPASTE_HISTORIAL.registrarGUI(CDPasteHistorialGUIWilhelmiaFrost.ID, CDPasteHistorialGUIWilhelmiaFrost::new);
+		TipoGUI.CDPASTE_HISTORIAL.registrarGUI(CDPasteHistorialGUIWilhelmiaFrost.ID,
+				CDPasteHistorialGUIWilhelmiaFrost::new);
 		TipoGUI.CONFIG_MODS.registrarGUI(ConfigsModsGUIYunenoms.ID, ConfigsModsGUIYunenoms::new);
-
-		
-		
-		
-		
-		
 
 	}
 
@@ -711,6 +788,7 @@ public class MonitorDePID {
 				}
 
 				if (activar() && !GraphicsEnvironment.isHeadless()) {
+					establecerLookAndFeel();
 					if (!Consola.tiene_registro_de_launcher(consolas)) {
 						obtenerConsolaDeLauncher(utc);
 					}
@@ -732,6 +810,7 @@ public class MonitorDePID {
 						fin(latch);
 
 					} else {
+						establecerLookAndFeel();
 						registrarCanariosPorDefecto();
 
 						CrashDetectorLogger.log("no headless ");
@@ -769,6 +848,33 @@ public class MonitorDePID {
 //				Thread.currentThread().interrupt();
 //				break;
 //			}
+		}
+	}
+
+	public static void establecerLookAndFeel() {
+		ConfigString lf = ConfigString.de("lf", "javax.swing.plaf.metal.MetalLookAndFeel");
+		String valor = lf.obtener();
+
+		String metal = "javax.swing.plaf.metal.MetalLookAndFeel";
+
+		if (valor == null || valor.trim().isEmpty()) {
+			valor = metal;
+		} else {
+			valor = valor.trim();
+		}
+
+		if ("nativo".equalsIgnoreCase(valor)) {
+			valor = UIManager.getSystemLookAndFeelClassName();
+		}
+
+		try {
+			UIManager.setLookAndFeel(valor);
+		} catch (Exception e) {
+			try {
+				UIManager.setLookAndFeel(metal);
+			} catch (Exception ignorado) {
+				// Metal debería existir siempre en Swing.
+			}
 		}
 	}
 
@@ -871,6 +977,7 @@ public class MonitorDePID {
 			/* GUI: SOLO si no es headless */
 			if (!java.awt.GraphicsEnvironment.isHeadless()) {
 				if (gui_principal_activo != null) {
+					establecerLookAndFeel();
 					javax.swing.SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
@@ -925,6 +1032,7 @@ public class MonitorDePID {
 	public static void abrirConsola() {
 		// Check if the environment is not headless
 		if (!GraphicsEnvironment.isHeadless() && consola_des == null) {
+			establecerLookAndFeel();
 			if (ConfigMundial.obtenerInstancia().obtenerConsolaDesarrollo()) {
 				ConsolaDesarrolladorGUI cons = TipoGUI.CONSOLA_DESARROLLADOR
 						.obtenerGUIPredeterminado(ConsolaDesarrolladorGUITL.ID, () -> new ConsolaDesarrolladorGUITL());

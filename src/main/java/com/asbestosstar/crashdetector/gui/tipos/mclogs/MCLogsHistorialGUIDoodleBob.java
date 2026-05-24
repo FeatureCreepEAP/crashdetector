@@ -160,14 +160,9 @@ public class MCLogsHistorialGUIDoodleBob extends MCLogsHistorialGUI {
 	private JPanel crearPanelCentro() {
 		JPanel panel = new JPanel(new BorderLayout());
 
-		modelo = new DefaultTableModel(new Object[] {
-				MonitorDePID.idioma.endpoint(),
-				MonitorDePID.idioma.slug(),
-				MonitorDePID.idioma.enlace(),
-				MonitorDePID.idioma.tokenEliminacion(),
-				MonitorDePID.idioma.lineas(),
-				MonitorDePID.idioma.errores()
-		}, 0) {
+		modelo = new DefaultTableModel(new Object[] { MonitorDePID.idioma.endpoint(), MonitorDePID.idioma.slug(),
+				MonitorDePID.idioma.enlace(), MonitorDePID.idioma.tokenEliminacion(), MonitorDePID.idioma.lineas(),
+				MonitorDePID.idioma.errores() }, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -210,14 +205,8 @@ public class MCLogsHistorialGUIDoodleBob extends MCLogsHistorialGUI {
 			if (n == null || !n.esObjeto())
 				continue;
 
-			modelo.addRow(new Object[] {
-					cadena(n, "endpoint"),
-					cadena(n, "id"),
-					cadena(n, "url"),
-					cadena(n, "token"),
-					cadena(n, "lines"),
-					cadena(n, "errors")
-			});
+			modelo.addRow(new Object[] { cadena(n, "endpoint"), cadena(n, "id"), cadena(n, "url"), cadena(n, "token"),
+					cadena(n, "lines"), cadena(n, "errors") });
 		}
 	}
 
@@ -259,17 +248,13 @@ public class MCLogsHistorialGUIDoodleBob extends MCLogsHistorialGUI {
 		String token = campoToken.getText();
 
 		if (slug == null || slug.trim().isEmpty() || token == null || token.trim().isEmpty()) {
-			JOptionPane.showMessageDialog(this,
-					MonitorDePID.idioma.faltanDatosParaEliminarMCLogs(),
-					MonitorDePID.idioma.error(),
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.faltanDatosParaEliminarMCLogs(),
+					MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
-		int confirmar = JOptionPane.showConfirmDialog(this,
-				MonitorDePID.idioma.confirmarEliminarMCLogs(),
-				MonitorDePID.idioma.confirmar(),
-				JOptionPane.YES_NO_OPTION);
+		int confirmar = JOptionPane.showConfirmDialog(this, MonitorDePID.idioma.confirmarEliminarMCLogs(),
+				MonitorDePID.idioma.confirmar(), JOptionPane.YES_NO_OPTION);
 
 		if (confirmar != JOptionPane.YES_OPTION)
 			return;
@@ -278,14 +263,10 @@ public class MCLogsHistorialGUIDoodleBob extends MCLogsHistorialGUI {
 			MCLogsAPI api = new MCLogsAPI();
 			api.eliminarRegistro(endpoint, slug, token);
 
-			JOptionPane.showMessageDialog(this,
-					MonitorDePID.idioma.registroEliminadoMCLogs(),
-					MonitorDePID.idioma.informacion(),
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.registroEliminadoMCLogs(),
+					MonitorDePID.idioma.informacion(), JOptionPane.INFORMATION_MESSAGE);
 		} catch (ErrorConPublicar ex) {
-			JOptionPane.showMessageDialog(this,
-					ex.getMessage(),
-					MonitorDePID.idioma.error(),
+			JOptionPane.showMessageDialog(this, ex.getMessage(), MonitorDePID.idioma.error(),
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}

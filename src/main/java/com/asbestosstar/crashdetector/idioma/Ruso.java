@@ -10275,138 +10275,189 @@ public class Ruso implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "Центр поддержки не настроен.";
 	}
-	
-	public String historialMCLogs() { return "История MCLogs"; }
-	public String endpoint() { return "Эндпоинт"; }
-	public String slug() { return "Слаг"; }
-	public String tokenEliminacion() { return "Токен удаления"; }
-	public String enlace() { return "Ссылка"; }
-	public String lineas() { return "Строки"; }
-	public String errores() { return "Ошибки"; }
-	public String eliminarRegistroMCLogs() { return "Удалить запись"; }
-	public String faltanDatosParaEliminarMCLogs() { return "Отсутствует слаг или токен удаления."; }
-	public String confirmarEliminarMCLogs() { return "Вы уверены, что хотите удалить эту запись MCLogs?"; }
-	public String registroEliminadoMCLogs() { return "Запись успешно удалена."; }
-	public String confirmar() { return "Подтвердить"; }
-	public String colorCampoTexto() { return "Цвет текстового поля"; }
-	
-	public String historialCDPaste() { return "История CDPaste"; }
-	public String enlaceRaw() { return "Сырая ссылка"; }
-	public String tamano() { return "Размер"; }
-	public String eliminarRegistroCDPaste() { return "Удалить запись CDPaste"; }
-	public String faltanDatosParaEliminarCDPaste() { return "Отсутствует слаг записи CDPaste."; }
-	public String confirmarEliminarCDPaste() { return "Вы уверены, что хотите удалить эту запись CDPaste?"; }
-	public String registroEliminadoCDPaste() { return "Запись CDPaste успешно удалена."; }
-	
-	
-	public String launcherGenerico() { return "Общий"; }
-	public String launcherServidorMinecraft() { return "Сервер Minecraft"; }
-	public String descargandoYPreparandoEnlaces() { return "Загрузка и подготовка ссылок..."; }
-	public String seleccioneArchivoLog() { return "Выберите файл лога"; }
-	public String archivoNoValido() { return "Файл недействителен."; }
-	public String archivoSeleccionado() { return "Выбранный файл:"; }
-	public String presioneGuardarParaAgregarAnalisis() { return "Нажмите 'Сохранить и закрыть', чтобы добавить его в анализ."; }
-	public String errorAlCargarArchivoArrastrado() { return "Ошибка при загрузке перетащенного файла"; }
-	public String errorAlAbrirArchivo() { return "Ошибка при открытии файла"; }
-	public String errorDosPuntos() { return "Ошибка"; }
-	
-	public String eliminarRegistros() {
-	    return "Удалить записи";
+
+	public String historialMCLogs() {
+		return "История MCLogs";
 	}
-	
+
+	public String endpoint() {
+		return "Эндпоинт";
+	}
+
+	public String slug() {
+		return "Слаг";
+	}
+
+	public String tokenEliminacion() {
+		return "Токен удаления";
+	}
+
+	public String enlace() {
+		return "Ссылка";
+	}
+
+	public String lineas() {
+		return "Строки";
+	}
+
+	public String errores() {
+		return "Ошибки";
+	}
+
+	public String eliminarRegistroMCLogs() {
+		return "Удалить запись";
+	}
+
+	public String faltanDatosParaEliminarMCLogs() {
+		return "Отсутствует слаг или токен удаления.";
+	}
+
+	public String confirmarEliminarMCLogs() {
+		return "Вы уверены, что хотите удалить эту запись MCLogs?";
+	}
+
+	public String registroEliminadoMCLogs() {
+		return "Запись успешно удалена.";
+	}
+
+	public String confirmar() {
+		return "Подтвердить";
+	}
+
+	public String colorCampoTexto() {
+		return "Цвет текстового поля";
+	}
+
+	public String historialCDPaste() {
+		return "История CDPaste";
+	}
+
+	public String enlaceRaw() {
+		return "Сырая ссылка";
+	}
+
+	public String tamano() {
+		return "Размер";
+	}
+
+	public String eliminarRegistroCDPaste() {
+		return "Удалить запись CDPaste";
+	}
+
+	public String faltanDatosParaEliminarCDPaste() {
+		return "Отсутствует слаг записи CDPaste.";
+	}
+
+	public String confirmarEliminarCDPaste() {
+		return "Вы уверены, что хотите удалить эту запись CDPaste?";
+	}
+
+	public String registroEliminadoCDPaste() {
+		return "Запись CDPaste успешно удалена.";
+	}
+
+	public String launcherGenerico() {
+		return "Общий";
+	}
+
+	public String launcherServidorMinecraft() {
+		return "Сервер Minecraft";
+	}
+
+	public String descargandoYPreparandoEnlaces() {
+		return "Загрузка и подготовка ссылок...";
+	}
+
+	public String seleccioneArchivoLog() {
+		return "Выберите файл лога";
+	}
+
+	public String archivoNoValido() {
+		return "Файл недействителен.";
+	}
+
+	public String archivoSeleccionado() {
+		return "Выбранный файл:";
+	}
+
+	public String presioneGuardarParaAgregarAnalisis() {
+		return "Нажмите 'Сохранить и закрыть', чтобы добавить его в анализ.";
+	}
+
+	public String errorAlCargarArchivoArrastrado() {
+		return "Ошибка при загрузке перетащенного файла";
+	}
+
+	public String errorAlAbrirArchivo() {
+		return "Ошибка при открытии файла";
+	}
+
+	public String errorDosPuntos() {
+		return "Ошибка";
+	}
+
+	public String eliminarRegistros() {
+		return "Удалить записи";
+	}
+
 	public String editorConfigsMods() {
-	    return "Редактор конфигураций модов";
+		return "Редактор конфигураций модов";
 	}
 
 	public String abrirConfig() {
-	    return "Открыть Config";
+		return "Открыть Config";
 	}
 
 	public String guardarConfig() {
-	    return "Сохранить Config";
+		return "Сохранить Config";
 	}
 
 	public String recargarConfig() {
-	    return "Перезагрузить";
+		return "Перезагрузить";
 	}
 
 	public String rutaConfig() {
-	    return "Путь";
+		return "Путь";
 	}
 
 	public String tipoConfig() {
-	    return "Тип";
+		return "Тип";
 	}
 
 	public String claveConfig() {
-	    return "Ключ";
+		return "Ключ";
 	}
 
 	public String valorConfig() {
-	    return "Значение";
+		return "Значение";
 	}
 
 	public String buscarConfig() {
-	    return "Поиск";
+		return "Поиск";
 	}
 
 	public String sinArchivoSeleccionado() {
-	    return "Файл не выбран";
+		return "Файл не выбран";
 	}
 
 	public String archivoNoSoportado() {
-	    return "Файл не поддерживается ни одним доступным движком";
+		return "Файл не поддерживается ни одним доступным движком";
 	}
 
 	public String configGuardada() {
-	    return "Конфигурация успешно сохранена";
+		return "Конфигурация успешно сохранена";
 	}
 
 	public String errorCargandoConfig() {
-	    return "Ошибка загрузки конфигурации";
+		return "Ошибка загрузки конфигурации";
 	}
 
 	public String errorGuardandoConfig() {
-	    return "Ошибка сохранения конфигурации";
+		return "Ошибка сохранения конфигурации";
 	}
 
 	public String seleccionarArchivoConfig() {
-	    return "Выбрать файл конфигурации";
+		return "Выбрать файл конфигурации";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

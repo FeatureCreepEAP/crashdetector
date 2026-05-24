@@ -195,9 +195,6 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		tabla.getColumnModel().getColumn(4).setCellEditor(new URLEditor());
 	}
 
-
-
-	
 	private void inicializarPanelConfiguracion() {
 		panelConfig = new JPanel(new GridBagLayout());
 		panelConfig.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.titulo_configuracion()));
@@ -348,21 +345,6 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 
 		actualizarBotonEliminador();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	private static class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
 		public CheckBoxRenderer() {

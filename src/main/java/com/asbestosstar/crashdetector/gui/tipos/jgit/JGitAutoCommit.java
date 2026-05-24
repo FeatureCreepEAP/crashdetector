@@ -6,6 +6,7 @@ import java.util.Date;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
+import com.asbestosstar.crashdetector.dto.modpack.tlmods.ActualizadorTLauncherAdditional;
 
 /**
  * Ejecuta commits automáticos después del backup si JGit está disponible.
@@ -26,6 +27,7 @@ public class JGitAutoCommit {
 				return;
 			}
 
+			ActualizadorTLauncherAdditional.actualizarCarpetaActual();
 			File carpeta = new File(System.getProperty("user.dir")).getAbsoluteFile();
 
 			if (!JGitReflexivo.repositorioExiste(carpeta)) {

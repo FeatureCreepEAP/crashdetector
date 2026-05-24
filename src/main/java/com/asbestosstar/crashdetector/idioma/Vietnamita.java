@@ -10491,152 +10491,189 @@ public class Vietnamita implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "Chưa cấu hình trung tâm hỗ trợ.";
 	}
-	
-	public String historialMCLogs() { return "Lịch sử MCLogs"; }
-	public String endpoint() { return "Endpoint"; }
-	public String slug() { return "Slug"; }
-	public String tokenEliminacion() { return "Token xóa"; }
-	public String enlace() { return "Liên kết"; }
-	public String lineas() { return "Dòng"; }
-	public String errores() { return "Lỗi"; }
-	public String eliminarRegistroMCLogs() { return "Xóa bản ghi"; }
-	public String faltanDatosParaEliminarMCLogs() { return "Thiếu slug hoặc token xóa."; }
-	public String confirmarEliminarMCLogs() { return "Bạn có chắc chắn muốn xóa bản ghi MCLogs này không?"; }
-	public String registroEliminadoMCLogs() { return "Đã xóa bản ghi thành công."; }
-	public String confirmar() { return "Xác nhận"; }
-	public String colorCampoTexto() { return "Màu trường văn bản"; }
-	public String historialCDPaste() { return "Lịch sử CDPaste"; }
-	public String enlaceRaw() { return "Liên kết Raw"; }
-	public String tamano() { return "Kích thước"; }
-	public String eliminarRegistroCDPaste() { return "Xóa bản ghi CDPaste"; }
-	public String faltanDatosParaEliminarCDPaste() { return "Thiếu slug của bản ghi CDPaste."; }
-	public String confirmarEliminarCDPaste() { return "Bạn có chắc chắn muốn xóa bản ghi CDPaste này không?"; }
-	public String registroEliminadoCDPaste() { return "Đã xóa bản ghi CDPaste thành công."; }
-	
-	public String launcherGenerico() { return "Chung"; }
-	public String launcherServidorMinecraft() { return "Máy chủ Minecraft"; }
-	public String descargandoYPreparandoEnlaces() { return "Đang tải xuống và chuẩn bị liên kết..."; }
-	public String seleccioneArchivoLog() { return "Chọn một tệp nhật ký (log)"; }
-	public String archivoNoValido() { return "Tệp không hợp lệ."; }
-	public String archivoSeleccionado() { return "Tệp đã chọn:"; }
-	public String presioneGuardarParaAgregarAnalisis() { return "Nhấn 'Lưu và đóng' để thêm vào phân tích."; }
-	public String errorAlCargarArchivoArrastrado() { return "Lỗi khi tải tệp được kéo thả"; }
-	public String errorAlAbrirArchivo() { return "Lỗi khi mở tệp"; }
-	public String errorDosPuntos() { return "Lỗi"; }
-	
-	public String eliminarRegistros() {
-	    return "Xóa bản ghi";
+
+	public String historialMCLogs() {
+		return "Lịch sử MCLogs";
 	}
-	
-	
+
+	public String endpoint() {
+		return "Endpoint";
+	}
+
+	public String slug() {
+		return "Slug";
+	}
+
+	public String tokenEliminacion() {
+		return "Token xóa";
+	}
+
+	public String enlace() {
+		return "Liên kết";
+	}
+
+	public String lineas() {
+		return "Dòng";
+	}
+
+	public String errores() {
+		return "Lỗi";
+	}
+
+	public String eliminarRegistroMCLogs() {
+		return "Xóa bản ghi";
+	}
+
+	public String faltanDatosParaEliminarMCLogs() {
+		return "Thiếu slug hoặc token xóa.";
+	}
+
+	public String confirmarEliminarMCLogs() {
+		return "Bạn có chắc chắn muốn xóa bản ghi MCLogs này không?";
+	}
+
+	public String registroEliminadoMCLogs() {
+		return "Đã xóa bản ghi thành công.";
+	}
+
+	public String confirmar() {
+		return "Xác nhận";
+	}
+
+	public String colorCampoTexto() {
+		return "Màu trường văn bản";
+	}
+
+	public String historialCDPaste() {
+		return "Lịch sử CDPaste";
+	}
+
+	public String enlaceRaw() {
+		return "Liên kết Raw";
+	}
+
+	public String tamano() {
+		return "Kích thước";
+	}
+
+	public String eliminarRegistroCDPaste() {
+		return "Xóa bản ghi CDPaste";
+	}
+
+	public String faltanDatosParaEliminarCDPaste() {
+		return "Thiếu slug của bản ghi CDPaste.";
+	}
+
+	public String confirmarEliminarCDPaste() {
+		return "Bạn có chắc chắn muốn xóa bản ghi CDPaste này không?";
+	}
+
+	public String registroEliminadoCDPaste() {
+		return "Đã xóa bản ghi CDPaste thành công.";
+	}
+
+	public String launcherGenerico() {
+		return "Chung";
+	}
+
+	public String launcherServidorMinecraft() {
+		return "Máy chủ Minecraft";
+	}
+
+	public String descargandoYPreparandoEnlaces() {
+		return "Đang tải xuống và chuẩn bị liên kết...";
+	}
+
+	public String seleccioneArchivoLog() {
+		return "Chọn một tệp nhật ký (log)";
+	}
+
+	public String archivoNoValido() {
+		return "Tệp không hợp lệ.";
+	}
+
+	public String archivoSeleccionado() {
+		return "Tệp đã chọn:";
+	}
+
+	public String presioneGuardarParaAgregarAnalisis() {
+		return "Nhấn 'Lưu và đóng' để thêm vào phân tích.";
+	}
+
+	public String errorAlCargarArchivoArrastrado() {
+		return "Lỗi khi tải tệp được kéo thả";
+	}
+
+	public String errorAlAbrirArchivo() {
+		return "Lỗi khi mở tệp";
+	}
+
+	public String errorDosPuntos() {
+		return "Lỗi";
+	}
+
+	public String eliminarRegistros() {
+		return "Xóa bản ghi";
+	}
+
 	public String editorConfigsMods() {
-	    return "Trình chỉnh sửa cấu hình Mod";
+		return "Trình chỉnh sửa cấu hình Mod";
 	}
 
 	public String abrirConfig() {
-	    return "Mở Config";
+		return "Mở Config";
 	}
 
 	public String guardarConfig() {
-	    return "Lưu Config";
+		return "Lưu Config";
 	}
 
 	public String recargarConfig() {
-	    return "Tải lại";
+		return "Tải lại";
 	}
 
 	public String rutaConfig() {
-	    return "Đường dẫn";
+		return "Đường dẫn";
 	}
 
 	public String tipoConfig() {
-	    return "Loại";
+		return "Loại";
 	}
 
 	public String claveConfig() {
-	    return "Khóa";
+		return "Khóa";
 	}
 
 	public String valorConfig() {
-	    return "Giá trị";
+		return "Giá trị";
 	}
 
 	public String buscarConfig() {
-	    return "Tìm kiếm";
+		return "Tìm kiếm";
 	}
 
 	public String sinArchivoSeleccionado() {
-	    return "Chưa chọn tệp nào";
+		return "Chưa chọn tệp nào";
 	}
 
 	public String archivoNoSoportado() {
-	    return "Tệp không được hỗ trợ bởi bất kỳ engine nào có sẵn";
+		return "Tệp không được hỗ trợ bởi bất kỳ engine nào có sẵn";
 	}
 
 	public String configGuardada() {
-	    return "Cấu hình đã được lưu thành công";
+		return "Cấu hình đã được lưu thành công";
 	}
 
 	public String errorCargandoConfig() {
-	    return "Lỗi khi tải cấu hình";
+		return "Lỗi khi tải cấu hình";
 	}
 
 	public String errorGuardandoConfig() {
-	    return "Lỗi khi lưu cấu hình";
+		return "Lỗi khi lưu cấu hình";
 	}
 
 	public String seleccionarArchivoConfig() {
-	    return "Chọn tệp cấu hình";
+		return "Chọn tệp cấu hình";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

@@ -261,6 +261,22 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 
 		panel.add(comboDev);
 
+		// Campo: Look&Feel
+		JLabel labelLookAndFeel = new JLabel("Look&Feel");
+		labelLookAndFeel.setForeground(colorDeTextoDeGui);
+		panel.add(labelLookAndFeel);
+
+		ConfigString lookAndFeel = ConfigString.de("lf", "javax.swing.plaf.metal.MetalLookAndFeel");
+
+		JTextField lookAndFeelField = crearCampoTextoConfig(lookAndFeel.obtener(), lookAndFeel::escribir);
+
+		if (!esMac) {
+			lookAndFeelField.setBackground(colorCajaTexto.obtener());
+			lookAndFeelField.setForeground(colorDeTextoDeGui);
+		}
+
+		panel.add(lookAndFeelField);
+
 		// Campo: Sitio de informes
 		JLabel labelSitio = new JLabel(MonitorDePID.idioma.endpointDeInforme());
 		labelSitio.setForeground(colorDeTextoDeGui);

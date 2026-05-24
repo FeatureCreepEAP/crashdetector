@@ -10451,139 +10451,194 @@ public class Khmer implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "មិនមានមជ្ឈមណ្ឌលគាំទ្រដែលបានកំណត់រចនាសម្ព័ន្ធទេ។";
 	}
-	
+
 	// Khmer (ភាសាខ្មែរ)
-	public String historialMCLogs() { return "ប្រវត្តិ MCLogs"; }
-	public String endpoint() { return "ចំណុចបញ្ចប់ (Endpoint)"; }
-	public String slug() { return "Slug"; }
-	public String tokenEliminacion() { return "តូកែនលុប"; }
-	public String enlace() { return "តំណភ្ជាប់"; }
-	public String lineas() { return "ជួរដេក"; }
-	public String errores() { return "កំហុស"; }
-	public String eliminarRegistroMCLogs() { return "លុបកំណត់ត្រា"; }
-	public String faltanDatosParaEliminarMCLogs() { return "ខ្វះ Slug ឬតូកែនលុប។"; }
-	public String confirmarEliminarMCLogs() { return "តើអ្នកប្រាកដជាចង់លុបកំណត់ត្រា MCLogs នេះមែនទេ?"; }
-	public String registroEliminadoMCLogs() { return "កំណត់ត្រាត្រូវបានលុបដោយជោគជ័យ។"; }
-	public String confirmar() { return "បញ្ជាក់"; }
-	public String colorCampoTexto() { return "ពណ៌វាលអក្សរ"; }
+	public String historialMCLogs() {
+		return "ប្រវត្តិ MCLogs";
+	}
+
+	public String endpoint() {
+		return "ចំណុចបញ្ចប់ (Endpoint)";
+	}
+
+	public String slug() {
+		return "Slug";
+	}
+
+	public String tokenEliminacion() {
+		return "តូកែនលុប";
+	}
+
+	public String enlace() {
+		return "តំណភ្ជាប់";
+	}
+
+	public String lineas() {
+		return "ជួរដេក";
+	}
+
+	public String errores() {
+		return "កំហុស";
+	}
+
+	public String eliminarRegistroMCLogs() {
+		return "លុបកំណត់ត្រា";
+	}
+
+	public String faltanDatosParaEliminarMCLogs() {
+		return "ខ្វះ Slug ឬតូកែនលុប។";
+	}
+
+	public String confirmarEliminarMCLogs() {
+		return "តើអ្នកប្រាកដជាចង់លុបកំណត់ត្រា MCLogs នេះមែនទេ?";
+	}
+
+	public String registroEliminadoMCLogs() {
+		return "កំណត់ត្រាត្រូវបានលុបដោយជោគជ័យ។";
+	}
+
+	public String confirmar() {
+		return "បញ្ជាក់";
+	}
+
+	public String colorCampoTexto() {
+		return "ពណ៌វាលអក្សរ";
+	}
+
 	// Khmer (ភាសាខ្មែរ)
-	public String historialCDPaste() { return "ប្រវត្តិ CDPaste"; }
-	public String enlaceRaw() { return "តំណភ្ជាប់ Raw"; }
-	public String tamano() { return "ទំហំ"; }
-	public String eliminarRegistroCDPaste() { return "លុបកំណត់ត្រា CDPaste"; }
-	public String faltanDatosParaEliminarCDPaste() { return "ខ្វះឈ្មោះកាត់ (slug) នៃកំណត់ត្រា CDPaste។"; }
-	public String confirmarEliminarCDPaste() { return "តើអ្នកប្រាកដជាចង់លុបកំណត់ត្រា CDPaste នេះមែនទេ?"; }
-	public String registroEliminadoCDPaste() { return "កំណត់ត្រា CDPaste ត្រូវបានលុបដោយជោគជ័យ។"; }
-	
+	public String historialCDPaste() {
+		return "ប្រវត្តិ CDPaste";
+	}
+
+	public String enlaceRaw() {
+		return "តំណភ្ជាប់ Raw";
+	}
+
+	public String tamano() {
+		return "ទំហំ";
+	}
+
+	public String eliminarRegistroCDPaste() {
+		return "លុបកំណត់ត្រា CDPaste";
+	}
+
+	public String faltanDatosParaEliminarCDPaste() {
+		return "ខ្វះឈ្មោះកាត់ (slug) នៃកំណត់ត្រា CDPaste។";
+	}
+
+	public String confirmarEliminarCDPaste() {
+		return "តើអ្នកប្រាកដជាចង់លុបកំណត់ត្រា CDPaste នេះមែនទេ?";
+	}
+
+	public String registroEliminadoCDPaste() {
+		return "កំណត់ត្រា CDPaste ត្រូវបានលុបដោយជោគជ័យ។";
+	}
+
 	// Khmer (ភាសាខ្មែរ)
-	public String launcherGenerico() { return "ទូទៅ"; }
-	public String launcherServidorMinecraft() { return "ម៉ាស៊ីនបម្រើ Minecraft"; }
-	public String descargandoYPreparandoEnlaces() { return "កំពុងទាញយក និងត្រៀមតំណភ្ជាប់..."; }
-	public String seleccioneArchivoLog() { return "ជ្រើសរើសឯកសារកំណត់ហេតុ"; }
-	public String archivoNoValido() { return "ឯកសារមិនត្រឹមត្រូវ។"; }
-	public String archivoSeleccionado() { return "ឯកសារដែលបានជ្រើសរើស៖"; }
-	public String presioneGuardarParaAgregarAnalisis() { return "ចុច រក្សាទុក និងបិទ ដើម្បីបន្ថែមវាទៅក្នុងការវិភាគ។"; }
-	public String errorAlCargarArchivoArrastrado() { return "កំហុសក្នុងការផ្ទុកឯកសារដែលអូស"; }
-	public String errorAlAbrirArchivo() { return "កំហុសក្នុងការបើកឯកសារ"; }
-	public String errorDosPuntos() { return "កំហុស"; }
-	
+	public String launcherGenerico() {
+		return "ទូទៅ";
+	}
+
+	public String launcherServidorMinecraft() {
+		return "ម៉ាស៊ីនបម្រើ Minecraft";
+	}
+
+	public String descargandoYPreparandoEnlaces() {
+		return "កំពុងទាញយក និងត្រៀមតំណភ្ជាប់...";
+	}
+
+	public String seleccioneArchivoLog() {
+		return "ជ្រើសរើសឯកសារកំណត់ហេតុ";
+	}
+
+	public String archivoNoValido() {
+		return "ឯកសារមិនត្រឹមត្រូវ។";
+	}
+
+	public String archivoSeleccionado() {
+		return "ឯកសារដែលបានជ្រើសរើស៖";
+	}
+
+	public String presioneGuardarParaAgregarAnalisis() {
+		return "ចុច រក្សាទុក និងបិទ ដើម្បីបន្ថែមវាទៅក្នុងការវិភាគ។";
+	}
+
+	public String errorAlCargarArchivoArrastrado() {
+		return "កំហុសក្នុងការផ្ទុកឯកសារដែលអូស";
+	}
+
+	public String errorAlAbrirArchivo() {
+		return "កំហុសក្នុងការបើកឯកសារ";
+	}
+
+	public String errorDosPuntos() {
+		return "កំហុស";
+	}
+
 	// Khmer (ភាសាខ្មែរ)
 	public String eliminarRegistros() {
-	    return "លុបកំណត់ត្រា";
+		return "លុបកំណត់ត្រា";
 	}
+
 	// Khmer (ភាសាខ្មែរ)
 	public String editorConfigsMods() {
-	    return "កម្មវិធីកែសម្រួលការកំណត់ Mod";
+		return "កម្មវិធីកែសម្រួលការកំណត់ Mod";
 	}
 
 	public String abrirConfig() {
-	    return "បើកការកំណត់";
+		return "បើកការកំណត់";
 	}
 
 	public String guardarConfig() {
-	    return "រក្សាទុកការកំណត់";
+		return "រក្សាទុកការកំណត់";
 	}
 
 	public String recargarConfig() {
-	    return "ផ្ទុកឡើងវិញ";
+		return "ផ្ទុកឡើងវិញ";
 	}
 
 	public String rutaConfig() {
-	    return "ផ្លូវ";
+		return "ផ្លូវ";
 	}
 
 	public String tipoConfig() {
-	    return "ប្រភេទ";
+		return "ប្រភេទ";
 	}
 
 	public String claveConfig() {
-	    return "កូនសោ";
+		return "កូនសោ";
 	}
 
 	public String valorConfig() {
-	    return "តម្លៃ";
+		return "តម្លៃ";
 	}
 
 	public String buscarConfig() {
-	    return "ស្វែងរក";
+		return "ស្វែងរក";
 	}
 
 	public String sinArchivoSeleccionado() {
-	    return "មិនមានឯកសារដែលបានជ្រើសរើស";
+		return "មិនមានឯកសារដែលបានជ្រើសរើស";
 	}
 
 	public String archivoNoSoportado() {
-	    return "ឯកសារមិនត្រូវបានគាំទ្រដោយម៉ាស៊ីនណាមួយដែលមាន";
+		return "ឯកសារមិនត្រូវបានគាំទ្រដោយម៉ាស៊ីនណាមួយដែលមាន";
 	}
 
 	public String configGuardada() {
-	    return "ការកំណត់ត្រូវបានរក្សាទុកដោយជោគជ័យ";
+		return "ការកំណត់ត្រូវបានរក្សាទុកដោយជោគជ័យ";
 	}
 
 	public String errorCargandoConfig() {
-	    return "កំហុសក្នុងការផ្ទុកការកំណត់";
+		return "កំហុសក្នុងការផ្ទុកការកំណត់";
 	}
 
 	public String errorGuardandoConfig() {
-	    return "កំហុសក្នុងការរក្សាទុកការកំណត់";
+		return "កំហុសក្នុងការរក្សាទុកការកំណត់";
 	}
 
 	public String seleccionarArchivoConfig() {
-	    return "ជ្រើសរើសឯកសារការកំណត់";
+		return "ជ្រើសរើសឯកសារការកំណត់";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

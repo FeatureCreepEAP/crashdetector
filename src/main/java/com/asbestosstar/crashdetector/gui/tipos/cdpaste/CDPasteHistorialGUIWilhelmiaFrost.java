@@ -158,14 +158,10 @@ public class CDPasteHistorialGUIWilhelmiaFrost extends CDPasteHistorialGUI {
 	private JPanel crearPanelCentro() {
 		JPanel panel = new JPanel(new BorderLayout());
 
-		modelo = new DefaultTableModel(new Object[] {
-				MonitorDePID.idioma.endpoint(),
-				MonitorDePID.idioma.slug(),
-				MonitorDePID.idioma.enlace(),
-				MonitorDePID.idioma.enlaceRaw(),
-				MonitorDePID.idioma.lineas(),
-				MonitorDePID.idioma.tamano()
-		}, 0) {
+		modelo = new DefaultTableModel(
+				new Object[] { MonitorDePID.idioma.endpoint(), MonitorDePID.idioma.slug(), MonitorDePID.idioma.enlace(),
+						MonitorDePID.idioma.enlaceRaw(), MonitorDePID.idioma.lineas(), MonitorDePID.idioma.tamano() },
+				0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -208,14 +204,8 @@ public class CDPasteHistorialGUIWilhelmiaFrost extends CDPasteHistorialGUI {
 			if (n == null || !n.esObjeto())
 				continue;
 
-			modelo.addRow(new Object[] {
-					cadena(n, "endpoint"),
-					cadena(n, "id"),
-					cadena(n, "url"),
-					cadena(n, "raw"),
-					cadena(n, "lines"),
-					cadena(n, "size")
-			});
+			modelo.addRow(new Object[] { cadena(n, "endpoint"), cadena(n, "id"), cadena(n, "url"), cadena(n, "raw"),
+					cadena(n, "lines"), cadena(n, "size") });
 		}
 	}
 
@@ -256,17 +246,13 @@ public class CDPasteHistorialGUIWilhelmiaFrost extends CDPasteHistorialGUI {
 		String slug = campoSlug.getText();
 
 		if (slug == null || slug.trim().isEmpty()) {
-			JOptionPane.showMessageDialog(this,
-					MonitorDePID.idioma.faltanDatosParaEliminarCDPaste(),
-					MonitorDePID.idioma.error(),
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.faltanDatosParaEliminarCDPaste(),
+					MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
-		int confirmar = JOptionPane.showConfirmDialog(this,
-				MonitorDePID.idioma.confirmarEliminarCDPaste(),
-				MonitorDePID.idioma.confirmar(),
-				JOptionPane.YES_NO_OPTION);
+		int confirmar = JOptionPane.showConfirmDialog(this, MonitorDePID.idioma.confirmarEliminarCDPaste(),
+				MonitorDePID.idioma.confirmar(), JOptionPane.YES_NO_OPTION);
 
 		if (confirmar != JOptionPane.YES_OPTION)
 			return;
@@ -275,14 +261,10 @@ public class CDPasteHistorialGUIWilhelmiaFrost extends CDPasteHistorialGUI {
 			CrashDetectorPasteAPI api = new CrashDetectorPasteAPI();
 			api.eliminarRegistro(endpoint, slug);
 
-			JOptionPane.showMessageDialog(this,
-					MonitorDePID.idioma.registroEliminadoCDPaste(),
-					MonitorDePID.idioma.informacion(),
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.registroEliminadoCDPaste(),
+					MonitorDePID.idioma.informacion(), JOptionPane.INFORMATION_MESSAGE);
 		} catch (ErrorConPublicar ex) {
-			JOptionPane.showMessageDialog(this,
-					ex.getMessage(),
-					MonitorDePID.idioma.error(),
+			JOptionPane.showMessageDialog(this, ex.getMessage(), MonitorDePID.idioma.error(),
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}

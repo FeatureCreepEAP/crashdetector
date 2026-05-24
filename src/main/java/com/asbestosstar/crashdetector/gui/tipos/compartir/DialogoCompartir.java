@@ -418,17 +418,7 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 		copiarAlPortapapeles(markdown);
 		mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
 	}
-	
-	
-	
-	
-	
 
-	
-	
-	
-	
-	
 	/**
 	 * Busca la API actualmente seleccionada en el combo.
 	 */
@@ -501,9 +491,5 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 			mostrarError(MonitorDePID.idioma.error_inesperado_al_procesar_boton(), t);
 		}
 	}
-	
-	
-	
-	
-	
+
 }

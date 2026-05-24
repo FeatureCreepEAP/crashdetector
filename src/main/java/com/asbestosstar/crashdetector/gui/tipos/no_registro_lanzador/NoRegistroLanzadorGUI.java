@@ -45,7 +45,6 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
-
 /**
  * Clase abstracta que define la funcionalidad base para la GUI de no registro
  * de lanzador. La apariencia, el layout y la creación de componentes se manejan
@@ -330,8 +329,8 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 
 				} catch (IOException ex) {
 					JOptionPane.showMessageDialog(NoRegistroLanzadorGUI.this,
-							MonitorDePID.idioma.errorDosPuntos() + " " + ex.getMessage(),
-							MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
+							MonitorDePID.idioma.errorDosPuntos() + " " + ex.getMessage(), MonitorDePID.idioma.error(),
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -361,8 +360,8 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 				} catch (Throwable t) {
 					CrashDetectorLogger.logException(t);
 					JOptionPane.showMessageDialog(NoRegistroLanzadorGUI.this,
-							MonitorDePID.idioma.errorDosPuntos() + " " + t.getMessage(),
-							MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
+							MonitorDePID.idioma.errorDosPuntos() + " " + t.getMessage(), MonitorDePID.idioma.error(),
+							JOptionPane.ERROR_MESSAGE);
 				}
 				return null;
 			}
@@ -493,16 +492,16 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 
 	public void cargarArchivoLog(File archivo) {
 		if (archivo == null || !archivo.isFile()) {
-			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.archivoNoValido(),
-					MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.archivoNoValido(), MonitorDePID.idioma.error(),
+					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		archivoLogSeleccionado = archivo;
 
 		if (areaTexto != null) {
-			areaTexto.setText(MonitorDePID.idioma.archivoSeleccionado() + "\n" + archivo.getAbsolutePath()
-					+ "\n\n" + MonitorDePID.idioma.presioneGuardarParaAgregarAnalisis());
+			areaTexto.setText(MonitorDePID.idioma.archivoSeleccionado() + "\n" + archivo.getAbsolutePath() + "\n\n"
+					+ MonitorDePID.idioma.presioneGuardarParaAgregarAnalisis());
 		}
 
 		CrashDetectorLogger.log("Archivo de log seleccionado: " + archivo.getAbsolutePath());
@@ -568,8 +567,7 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 			dispose();
 		} catch (IOException ex) {
 			CrashDetectorLogger.logException(ex);
-			JOptionPane.showMessageDialog(this,
-					MonitorDePID.idioma.errorAlAbrirArchivo() + ": " + ex.getMessage(),
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.errorAlAbrirArchivo() + ": " + ex.getMessage(),
 					MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 		}
 	}

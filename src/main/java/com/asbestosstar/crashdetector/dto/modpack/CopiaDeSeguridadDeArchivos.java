@@ -24,6 +24,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigDouble;
 import com.asbestosstar.crashdetector.config.ConfigString;
+import com.asbestosstar.crashdetector.gui.tipos.jgit.JGitAutoCommit;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
 
 public class CopiaDeSeguridadDeArchivos {

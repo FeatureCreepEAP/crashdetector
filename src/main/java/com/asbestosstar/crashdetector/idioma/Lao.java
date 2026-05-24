@@ -10695,136 +10695,189 @@ public class Lao implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "ບໍ່ມີສູນຊ່ວຍເຫຼືອທີ່ຕັ້ງຄ່າໄວ້.";
 	}
-	
-	public String historialMCLogs() { return "ປະຫວັດ MCLogs"; }
-	public String endpoint() { return "Endpoint"; }
-	public String slug() { return "Slug"; }
-	public String tokenEliminacion() { return "ໂທເຄັນລຶບ"; }
-	public String enlace() { return "ລິ້ງ"; }
-	public String lineas() { return "ແຖວ"; }
-	public String errores() { return "ຂໍ້ຜິດພາດ"; }
-	public String eliminarRegistroMCLogs() { return "ລຶບບັນທຶກ"; }
-	public String faltanDatosParaEliminarMCLogs() { return "ຂາດ slug ຫຼື ໂທເຄັນລຶບ."; }
-	public String confirmarEliminarMCLogs() { return "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບບັນທຶກ MCLogs ນີ້?"; }
-	public String registroEliminadoMCLogs() { return "ລຶບບັນທຶກສຳເລັດ."; }
-	public String confirmar() { return "ຢືນຢັນ"; }
-	public String colorCampoTexto() { return "ສີຊ່ອງຂໍ້ຄວາມ"; }
-	
-	public String historialCDPaste() { return "ປະຫວັດ CDPaste"; }
-	public String enlaceRaw() { return "ລິ້ງ Raw"; }
-	public String tamano() { return "ຂະໜາດ"; }
-	public String eliminarRegistroCDPaste() { return "ລຶບບັນທຶກ CDPaste"; }
-	public String faltanDatosParaEliminarCDPaste() { return "ຂາດ slug ຂອງບັນທຶກ CDPaste."; }
-	public String confirmarEliminarCDPaste() { return "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບບັນທຶກ CDPaste ນີ້?"; }
-	public String registroEliminadoCDPaste() { return "ລຶບບັນທຶກ CDPaste ສຳເລັດ."; }
-	
-	public String launcherGenerico() { return "ທົ່ວໄປ"; }
-	public String launcherServidorMinecraft() { return "ເຊີບເວີ Minecraft"; }
-	public String descargandoYPreparandoEnlaces() { return "ກຳລັງດາວໂຫຼດ ແລະ ກະກຽມລິ້ງ..."; }
-	public String seleccioneArchivoLog() { return "ເລືອກໄຟລ໌ log"; }
-	public String archivoNoValido() { return "ໄຟລ໌ບໍ່ຖືກຕ້ອງ."; }
-	public String archivoSeleccionado() { return "ໄຟລ໌ທີ່ເລືອກ:"; }
-	public String presioneGuardarParaAgregarAnalisis() { return "ກົດ 'ບັນທຶກ ແລະ ປິດ' ເພື່ອເພີ່ມໃສ່ການວິເຄາະ."; }
-	public String errorAlCargarArchivoArrastrado() { return "ຜິດພາດໃນການໂຫຼດໄຟລ໌ທີ່ລາກມາ"; }
-	public String errorAlAbrirArchivo() { return "ຜິດພາດໃນການເປີດໄຟລ໌"; }
-	public String errorDosPuntos() { return "ຜິດພາດ"; }
-	
-	
-	public String eliminarRegistros() {
-	    return "ລຶບບັນທຶກ";
+
+	public String historialMCLogs() {
+		return "ປະຫວັດ MCLogs";
 	}
-	
+
+	public String endpoint() {
+		return "Endpoint";
+	}
+
+	public String slug() {
+		return "Slug";
+	}
+
+	public String tokenEliminacion() {
+		return "ໂທເຄັນລຶບ";
+	}
+
+	public String enlace() {
+		return "ລິ້ງ";
+	}
+
+	public String lineas() {
+		return "ແຖວ";
+	}
+
+	public String errores() {
+		return "ຂໍ້ຜິດພາດ";
+	}
+
+	public String eliminarRegistroMCLogs() {
+		return "ລຶບບັນທຶກ";
+	}
+
+	public String faltanDatosParaEliminarMCLogs() {
+		return "ຂາດ slug ຫຼື ໂທເຄັນລຶບ.";
+	}
+
+	public String confirmarEliminarMCLogs() {
+		return "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບບັນທຶກ MCLogs ນີ້?";
+	}
+
+	public String registroEliminadoMCLogs() {
+		return "ລຶບບັນທຶກສຳເລັດ.";
+	}
+
+	public String confirmar() {
+		return "ຢືນຢັນ";
+	}
+
+	public String colorCampoTexto() {
+		return "ສີຊ່ອງຂໍ້ຄວາມ";
+	}
+
+	public String historialCDPaste() {
+		return "ປະຫວັດ CDPaste";
+	}
+
+	public String enlaceRaw() {
+		return "ລິ້ງ Raw";
+	}
+
+	public String tamano() {
+		return "ຂະໜາດ";
+	}
+
+	public String eliminarRegistroCDPaste() {
+		return "ລຶບບັນທຶກ CDPaste";
+	}
+
+	public String faltanDatosParaEliminarCDPaste() {
+		return "ຂາດ slug ຂອງບັນທຶກ CDPaste.";
+	}
+
+	public String confirmarEliminarCDPaste() {
+		return "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບບັນທຶກ CDPaste ນີ້?";
+	}
+
+	public String registroEliminadoCDPaste() {
+		return "ລຶບບັນທຶກ CDPaste ສຳເລັດ.";
+	}
+
+	public String launcherGenerico() {
+		return "ທົ່ວໄປ";
+	}
+
+	public String launcherServidorMinecraft() {
+		return "ເຊີບເວີ Minecraft";
+	}
+
+	public String descargandoYPreparandoEnlaces() {
+		return "ກຳລັງດາວໂຫຼດ ແລະ ກະກຽມລິ້ງ...";
+	}
+
+	public String seleccioneArchivoLog() {
+		return "ເລືອກໄຟລ໌ log";
+	}
+
+	public String archivoNoValido() {
+		return "ໄຟລ໌ບໍ່ຖືກຕ້ອງ.";
+	}
+
+	public String archivoSeleccionado() {
+		return "ໄຟລ໌ທີ່ເລືອກ:";
+	}
+
+	public String presioneGuardarParaAgregarAnalisis() {
+		return "ກົດ 'ບັນທຶກ ແລະ ປິດ' ເພື່ອເພີ່ມໃສ່ການວິເຄາະ.";
+	}
+
+	public String errorAlCargarArchivoArrastrado() {
+		return "ຜິດພາດໃນການໂຫຼດໄຟລ໌ທີ່ລາກມາ";
+	}
+
+	public String errorAlAbrirArchivo() {
+		return "ຜິດພາດໃນການເປີດໄຟລ໌";
+	}
+
+	public String errorDosPuntos() {
+		return "ຜິດພາດ";
+	}
+
+	public String eliminarRegistros() {
+		return "ລຶບບັນທຶກ";
+	}
+
 	public String editorConfigsMods() {
-	    return "ແກ້ໄຂການຕັ້ງຄ່າ Mods";
+		return "ແກ້ໄຂການຕັ້ງຄ່າ Mods";
 	}
 
 	public String abrirConfig() {
-	    return "ເປີດ Config";
+		return "ເປີດ Config";
 	}
 
 	public String guardarConfig() {
-	    return "ບັນທຶກ Config";
+		return "ບັນທຶກ Config";
 	}
 
 	public String recargarConfig() {
-	    return "ໂຫຼດໃໝ່";
+		return "ໂຫຼດໃໝ່";
 	}
 
 	public String rutaConfig() {
-	    return "ເສັ້ນທາງ";
+		return "ເສັ້ນທາງ";
 	}
 
 	public String tipoConfig() {
-	    return "ປະເພດ";
+		return "ປະເພດ";
 	}
 
 	public String claveConfig() {
-	    return "ຄີ";
+		return "ຄີ";
 	}
 
 	public String valorConfig() {
-	    return "ຄ່າ";
+		return "ຄ່າ";
 	}
 
 	public String buscarConfig() {
-	    return "ຊອກຫາ";
+		return "ຊອກຫາ";
 	}
 
 	public String sinArchivoSeleccionado() {
-	    return "ບໍ່ມີໄຟລ໌ທີ່ຖືກເລືອກ";
+		return "ບໍ່ມີໄຟລ໌ທີ່ຖືກເລືອກ";
 	}
 
 	public String archivoNoSoportado() {
-	    return "ໄຟລ໌ບໍ່ຖືກຮອງຮັບໂດຍເຄື່ອງຈັກທີ່ມີຢູ່";
+		return "ໄຟລ໌ບໍ່ຖືກຮອງຮັບໂດຍເຄື່ອງຈັກທີ່ມີຢູ່";
 	}
 
 	public String configGuardada() {
-	    return "ການຕັ້ງຄ່າຖືກບັນທຶກຢ່າງຖືກຕ້ອງ";
+		return "ການຕັ້ງຄ່າຖືກບັນທຶກຢ່າງຖືກຕ້ອງ";
 	}
 
 	public String errorCargandoConfig() {
-	    return "ຜິດພາດໃນການໂຫຼດການຕັ້ງຄ່າ";
+		return "ຜິດພາດໃນການໂຫຼດການຕັ້ງຄ່າ";
 	}
 
 	public String errorGuardandoConfig() {
-	    return "ຜິດພາດໃນການບັນທຶກການຕັ້ງຄ່າ";
+		return "ຜິດພາດໃນການບັນທຶກການຕັ້ງຄ່າ";
 	}
 
 	public String seleccionarArchivoConfig() {
-	    return "ເລືອກໄຟລ໌ການຕັ້ງຄ່າ";
+		return "ເລືອກໄຟລ໌ການຕັ້ງຄ່າ";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

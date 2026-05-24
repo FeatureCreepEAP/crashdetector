@@ -11,14 +11,13 @@ import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 /**
  * Maneja el historial local de registros publicados en MCLogs.
  * 
- * Archivo:
- * ~/crash_detector/historia_mclogs.txt
+ * Archivo: ~/crash_detector/historia_mclogs.txt
  */
 public class HistoriaMCLogs {
 
-	public static final Path ARCHIVO = Paths.get(System.getProperty("user.home"), "crash_detector", "historia_mclogs.txt");
+	public static final Path ARCHIVO = Paths.get(System.getProperty("user.home"), "crash_detector",
+			"historia_mclogs.txt");
 
-	
 	/**
 	 * Agrega una entrada nueva al historial.
 	 */
@@ -34,20 +33,20 @@ public class HistoriaMCLogs {
 
 			// Formato JSON real:
 			// [
-			//   {
-			//     "endpoint": "...",
-			//     "id": "...",
-			//     "url": "...",
-			//     "raw": "...",
-			//     "token": "...",
-			//     "source": "...",
-			//     "created": 123,
-			//     "expires": 123,
-			//     "size": 123,
-			//     "lines": 123,
-			//     "errors": 123,
-			//     "fecha_local": 123
-			//   }
+			// {
+			// "endpoint": "...",
+			// "id": "...",
+			// "url": "...",
+			// "raw": "...",
+			// "token": "...",
+			// "source": "...",
+			// "created": 123,
+			// "expires": 123,
+			// "size": 123,
+			// "lines": 123,
+			// "errors": 123,
+			// "fecha_local": 123
+			// }
 			// ]
 
 			obj.obtener("endpoint").poner(nuloSeguro(entrada.endpoint));

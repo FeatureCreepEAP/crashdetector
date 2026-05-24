@@ -161,10 +161,8 @@ public class ConfigsModsGUIYunenoms extends ConfigsModsGUI {
 		filtros.add(new JLabel(MonitorDePID.idioma.tipoConfig()));
 		filtros.add(comboTipo);
 
-		modeloValores = new DefaultTableModel(
-				new Object[] { MonitorDePID.idioma.claveConfig(), MonitorDePID.idioma.tipoConfig(),
-						MonitorDePID.idioma.valorConfig() },
-				0) {
+		modeloValores = new DefaultTableModel(new Object[] { MonitorDePID.idioma.claveConfig(),
+				MonitorDePID.idioma.tipoConfig(), MonitorDePID.idioma.valorConfig() }, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -274,7 +272,8 @@ public class ConfigsModsGUIYunenoms extends ConfigsModsGUI {
 		modeloValores.setRowCount(0);
 		entradasFiltradas.clear();
 
-		String buscar = campoBuscar == null || campoBuscar.getText() == null ? "" : campoBuscar.getText().trim().toLowerCase();
+		String buscar = campoBuscar == null || campoBuscar.getText() == null ? ""
+				: campoBuscar.getText().trim().toLowerCase();
 		String tipo = comboTipo == null || comboTipo.getSelectedItem() == null ? "Todos"
 				: String.valueOf(comboTipo.getSelectedItem());
 
@@ -389,7 +388,8 @@ public class ConfigsModsGUIYunenoms extends ConfigsModsGUI {
 		colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
 		colorTabla.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBordeListas());
 		colorBorde.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBorde());
-		//colorAcento.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorAcento());
+		// colorAcento.establecerNombreParaMostrar(() ->
+		// MonitorDePID.idioma.colorAcento());
 
 		ret.add(colorFondo);
 		ret.add(colorPanel);

@@ -18,8 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 public abstract class CDPasteHistorialGUI extends JDialog implements CrashDetectorGUI, BotonDeBarraLateralDerecha {
 	private static final long serialVersionUID = 1L;
 
-	public static Map<String, Supplier<CDPasteHistorialGUI>> GUIS =
-			new HashMap<String, Supplier<CDPasteHistorialGUI>>();
+	public static Map<String, Supplier<CDPasteHistorialGUI>> GUIS = new HashMap<String, Supplier<CDPasteHistorialGUI>>();
 
 	protected Nodo historial;
 

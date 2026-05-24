@@ -49,11 +49,8 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI, BotonDeBarraLateralDerecha {
 
-	
 	public static Map<String, Supplier<ConfigsModsGUI>> GUIS = new java.util.HashMap<String, Supplier<ConfigsModsGUI>>();
-	
-	
-	
+
 	private static final long serialVersionUID = 1L;
 
 	protected final List<File> archivosConfigs = new ArrayList<File>();
@@ -286,8 +283,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 			((Element) e.nodo).setTextContent(String.valueOf(valor));
 		}
 	}
-	
-	
+
 	private void ponerYaml(Yaml.Nodo n, Object valor) {
 		if (valor instanceof Boolean) {
 			n.poner(((Boolean) valor).booleanValue());

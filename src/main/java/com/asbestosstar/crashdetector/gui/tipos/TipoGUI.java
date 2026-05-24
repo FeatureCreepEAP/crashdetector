@@ -328,7 +328,6 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
-	
 	/**
 	 * No registro de Launcher
 	 */
@@ -1152,8 +1151,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return AdministradorDeRendimientoGUI.GUIS;
 		}
 	};
-	
-	
+
 	/**
 	 * Historial y eliminador de registros MCLogs.
 	 */
@@ -1178,8 +1176,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return MCLogsHistorialGUI.GUIS;
 		}
 	};
-	
-	
+
 	/**
 	 * Historial y eliminador de registros CDPaste.
 	 */
@@ -1204,7 +1201,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return CDPasteHistorialGUI.GUIS;
 		}
 	};
-	
+
 	public static TipoGUI<ConfigsModsGUI> CONFIG_MODS = new TipoGUI<ConfigsModsGUI>() {
 		@Override
 		public String id() {
@@ -1226,30 +1223,6 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return ConfigsModsGUI.GUIS;
 		}
 	};
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.

@@ -10987,58 +10987,131 @@ public class Espanol implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "No hay un centro de soporte configurado.";
 	}
-	
-	
-	public String historialMCLogs() { return "Historial de MCLogs"; }
-	public String endpoint() { return "Endpoint"; }
-	public String slug() { return "Slug"; }
-	public String tokenEliminacion() { return "Token de eliminación"; }
-	public String enlace() { return "Enlace"; }
-	public String lineas() { return "Líneas"; }
-	public String errores() { return "Errores"; }
-	public String eliminarRegistroMCLogs() { return "Eliminar registro"; }
-	public String faltanDatosParaEliminarMCLogs() { return "Faltan el slug o el token de eliminación."; }
-	public String confirmarEliminarMCLogs() { return "¿Seguro que quieres eliminar este registro de MCLogs?"; }
-	public String registroEliminadoMCLogs() { return "Registro eliminado correctamente."; }
-	public String confirmar() { return "Confirmar"; }
-	public String colorCampoTexto() { return "Color de campo de texto"; }
-	
-	public String historialCDPaste() { return "Historial de CDPaste"; }
-	public String enlaceRaw() { return "Enlace raw"; }
-	public String tamano() { return "Tamaño"; }
-	public String eliminarRegistroCDPaste() { return "Eliminar registro CDPaste"; }
-	public String faltanDatosParaEliminarCDPaste() { return "Falta el slug del registro CDPaste."; }
-	public String confirmarEliminarCDPaste() { return "¿Seguro que quieres eliminar este registro de CDPaste?"; }
-	public String registroEliminadoCDPaste() { return "Registro CDPaste eliminado correctamente."; }
-	
-	
-	
-	
-	
-	
-	
+
+	public String historialMCLogs() {
+		return "Historial de MCLogs";
+	}
+
+	public String endpoint() {
+		return "Endpoint";
+	}
+
+	public String slug() {
+		return "Slug";
+	}
+
+	public String tokenEliminacion() {
+		return "Token de eliminación";
+	}
+
+	public String enlace() {
+		return "Enlace";
+	}
+
+	public String lineas() {
+		return "Líneas";
+	}
+
+	public String errores() {
+		return "Errores";
+	}
+
+	public String eliminarRegistroMCLogs() {
+		return "Eliminar registro";
+	}
+
+	public String faltanDatosParaEliminarMCLogs() {
+		return "Faltan el slug o el token de eliminación.";
+	}
+
+	public String confirmarEliminarMCLogs() {
+		return "¿Seguro que quieres eliminar este registro de MCLogs?";
+	}
+
+	public String registroEliminadoMCLogs() {
+		return "Registro eliminado correctamente.";
+	}
+
+	public String confirmar() {
+		return "Confirmar";
+	}
+
+	public String colorCampoTexto() {
+		return "Color de campo de texto";
+	}
+
+	public String historialCDPaste() {
+		return "Historial de CDPaste";
+	}
+
+	public String enlaceRaw() {
+		return "Enlace raw";
+	}
+
+	public String tamano() {
+		return "Tamaño";
+	}
+
+	public String eliminarRegistroCDPaste() {
+		return "Eliminar registro CDPaste";
+	}
+
+	public String faltanDatosParaEliminarCDPaste() {
+		return "Falta el slug del registro CDPaste.";
+	}
+
+	public String confirmarEliminarCDPaste() {
+		return "¿Seguro que quieres eliminar este registro de CDPaste?";
+	}
+
+	public String registroEliminadoCDPaste() {
+		return "Registro CDPaste eliminado correctamente.";
+	}
+
 	public String eliminarRegistros() {
 		return "Eliminar registros";
 	}
 
+	public String launcherGenerico() {
+		return "Genérico";
+	}
 
+	public String launcherServidorMinecraft() {
+		return "Servidor de Minecraft";
+	}
 
-	public String launcherGenerico() { return "Genérico"; }
-	public String launcherServidorMinecraft() { return "Servidor de Minecraft"; }
-	public String descargandoYPreparandoEnlaces() { return "Descargando y preparando enlaces..."; }
-	public String seleccioneArchivoLog() { return "Seleccione un archivo de log"; }
-	public String archivoNoValido() { return "El archivo no es válido."; }
-	public String archivoSeleccionado() { return "Archivo seleccionado:"; }
-	public String presioneGuardarParaAgregarAnalisis() { return "Presione Guardar y cerrar para agregarlo al análisis."; }
-	public String errorAlCargarArchivoArrastrado() { return "Error al cargar archivo arrastrado"; }
-	public String errorAlAbrirArchivo() { return "Error al abrir el archivo"; }
-	public String errorDosPuntos() { return "Error"; }
+	public String descargandoYPreparandoEnlaces() {
+		return "Descargando y preparando enlaces...";
+	}
 
+	public String seleccioneArchivoLog() {
+		return "Seleccione un archivo de log";
+	}
 
+	public String archivoNoValido() {
+		return "El archivo no es válido.";
+	}
 
-	
-	
-	
+	public String archivoSeleccionado() {
+		return "Archivo seleccionado:";
+	}
+
+	public String presioneGuardarParaAgregarAnalisis() {
+		return "Presione Guardar y cerrar para agregarlo al análisis.";
+	}
+
+	public String errorAlCargarArchivoArrastrado() {
+		return "Error al cargar archivo arrastrado";
+	}
+
+	public String errorAlAbrirArchivo() {
+		return "Error al abrir el archivo";
+	}
+
+	public String errorDosPuntos() {
+		return "Error";
+	}
+
 	public String editorConfigsMods() {
 		return "Editor de Configuraciones de Mods";
 	}
@@ -11098,10 +11171,5 @@ public class Espanol implements Idioma {
 	public String seleccionarArchivoConfig() {
 		return "Seleccionar archivo de configuracion";
 	}
-	
-	
-	
-	
-	
 
 }

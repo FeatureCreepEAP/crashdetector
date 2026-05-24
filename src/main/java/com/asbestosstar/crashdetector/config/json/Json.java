@@ -213,8 +213,7 @@ public class Json {
 		public byte[] aBytesUtf8() {
 			return escribir().getBytes(StandardCharsets.UTF_8);
 		}
-		
-		
+
 		public Nodo ponerValorFlexible(Object valor) {
 			if (valor instanceof Boolean)
 				return poner(((Boolean) valor).booleanValue());
@@ -228,9 +227,7 @@ public class Json {
 				return poner(((Number) valor).doubleValue());
 			return poner(valor == null ? "" : String.valueOf(valor));
 		}
-		
-		
-		
+
 	}
 
 	/**

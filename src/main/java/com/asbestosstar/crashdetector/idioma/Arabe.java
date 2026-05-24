@@ -10164,134 +10164,193 @@ public class Arabe implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "لم يتم تكوين مركز دعم.";
 	}
-	
-	
+
 	// Arabic (العربية)
-	public String historialMCLogs() { return "سجل MCLogs"; }
-	public String endpoint() { return "نقطة النهاية (Endpoint)"; }
-	public String slug() { return "المعرف (Slug)"; }
-	public String tokenEliminacion() { return "رمز الحذف"; }
-	public String enlace() { return "الرابط"; }
-	public String lineas() { return "الأسطر"; }
-	public String errores() { return "الأخطاء"; }
-	public String eliminarRegistroMCLogs() { return "حذف السجل"; }
-	public String faltanDatosParaEliminarMCLogs() { return "المعرف (slug) أو رمز الحذف مفقود."; }
-	public String confirmarEliminarMCLogs() { return "هل أنت متأكد من رغبتك في حذف هذا السجل من MCLogs؟"; }
-	public String registroEliminadoMCLogs() { return "تم حذف السجل بنجاح."; }
-	public String confirmar() { return "تأكيد"; }
-	public String colorCampoTexto() { return "لون حقل النص"; }
-	// Arabic (العربية)
-	public String historialCDPaste() { return "سجل CDPaste"; }
-	public String enlaceRaw() { return "الرابط الخام (Raw)"; }
-	public String tamano() { return "الحجم"; }
-	public String eliminarRegistroCDPaste() { return "حذف سجل CDPaste"; }
-	public String faltanDatosParaEliminarCDPaste() { return "معرف السجل (slug) لـ CDPaste مفقود."; }
-	public String confirmarEliminarCDPaste() { return "هل أنت متأكد من رغبتك في حذف هذا السجل من CDPaste؟"; }
-	public String registroEliminadoCDPaste() { return "تم حذف سجل CDPaste بنجاح."; }
-	
-	// Arabic (العربية)
-	public String launcherGenerico() { return "عام"; }
-	public String launcherServidorMinecraft() { return "خادم Minecraft"; }
-	public String descargandoYPreparandoEnlaces() { return "جاري التنزيل وإعداد الروابط..."; }
-	public String seleccioneArchivoLog() { return "اختر ملف سجل"; }
-	public String archivoNoValido() { return "الملف غير صالح."; }
-	public String archivoSeleccionado() { return "تم اختيار الملف:"; }
-	public String presioneGuardarParaAgregarAnalisis() { return "اضغط على حفظ وإغلاق لإضافته إلى التحليل."; }
-	public String errorAlCargarArchivoArrastrado() { return "خطأ في تحميل الملف المسحوب"; }
-	public String errorAlAbrirArchivo() { return "خطأ في فتح الملف"; }
-	public String errorDosPuntos() { return "خطأ"; }
-	
-	public String eliminarRegistros() {
-	    return "حذف السجلات";
+	public String historialMCLogs() {
+		return "سجل MCLogs";
 	}
-	
-	
-	
+
+	public String endpoint() {
+		return "نقطة النهاية (Endpoint)";
+	}
+
+	public String slug() {
+		return "المعرف (Slug)";
+	}
+
+	public String tokenEliminacion() {
+		return "رمز الحذف";
+	}
+
+	public String enlace() {
+		return "الرابط";
+	}
+
+	public String lineas() {
+		return "الأسطر";
+	}
+
+	public String errores() {
+		return "الأخطاء";
+	}
+
+	public String eliminarRegistroMCLogs() {
+		return "حذف السجل";
+	}
+
+	public String faltanDatosParaEliminarMCLogs() {
+		return "المعرف (slug) أو رمز الحذف مفقود.";
+	}
+
+	public String confirmarEliminarMCLogs() {
+		return "هل أنت متأكد من رغبتك في حذف هذا السجل من MCLogs؟";
+	}
+
+	public String registroEliminadoMCLogs() {
+		return "تم حذف السجل بنجاح.";
+	}
+
+	public String confirmar() {
+		return "تأكيد";
+	}
+
+	public String colorCampoTexto() {
+		return "لون حقل النص";
+	}
+
+	// Arabic (العربية)
+	public String historialCDPaste() {
+		return "سجل CDPaste";
+	}
+
+	public String enlaceRaw() {
+		return "الرابط الخام (Raw)";
+	}
+
+	public String tamano() {
+		return "الحجم";
+	}
+
+	public String eliminarRegistroCDPaste() {
+		return "حذف سجل CDPaste";
+	}
+
+	public String faltanDatosParaEliminarCDPaste() {
+		return "معرف السجل (slug) لـ CDPaste مفقود.";
+	}
+
+	public String confirmarEliminarCDPaste() {
+		return "هل أنت متأكد من رغبتك في حذف هذا السجل من CDPaste؟";
+	}
+
+	public String registroEliminadoCDPaste() {
+		return "تم حذف سجل CDPaste بنجاح.";
+	}
+
+	// Arabic (العربية)
+	public String launcherGenerico() {
+		return "عام";
+	}
+
+	public String launcherServidorMinecraft() {
+		return "خادم Minecraft";
+	}
+
+	public String descargandoYPreparandoEnlaces() {
+		return "جاري التنزيل وإعداد الروابط...";
+	}
+
+	public String seleccioneArchivoLog() {
+		return "اختر ملف سجل";
+	}
+
+	public String archivoNoValido() {
+		return "الملف غير صالح.";
+	}
+
+	public String archivoSeleccionado() {
+		return "تم اختيار الملف:";
+	}
+
+	public String presioneGuardarParaAgregarAnalisis() {
+		return "اضغط على حفظ وإغلاق لإضافته إلى التحليل.";
+	}
+
+	public String errorAlCargarArchivoArrastrado() {
+		return "خطأ في تحميل الملف المسحوب";
+	}
+
+	public String errorAlAbrirArchivo() {
+		return "خطأ في فتح الملف";
+	}
+
+	public String errorDosPuntos() {
+		return "خطأ";
+	}
+
+	public String eliminarRegistros() {
+		return "حذف السجلات";
+	}
+
 	// Arabic (العربية)
 	public String editorConfigsMods() {
-	    return "محرر إعدادات المودات";
+		return "محرر إعدادات المودات";
 	}
 
 	public String abrirConfig() {
-	    return "فتح الإعدادات";
+		return "فتح الإعدادات";
 	}
 
 	public String guardarConfig() {
-	    return "حفظ الإعدادات";
+		return "حفظ الإعدادات";
 	}
 
 	public String recargarConfig() {
-	    return "إعادة تحميل";
+		return "إعادة تحميل";
 	}
 
 	public String rutaConfig() {
-	    return "المسار";
+		return "المسار";
 	}
 
 	public String tipoConfig() {
-	    return "النوع";
+		return "النوع";
 	}
 
 	public String claveConfig() {
-	    return "المفتاح";
+		return "المفتاح";
 	}
 
 	public String valorConfig() {
-	    return "القيمة";
+		return "القيمة";
 	}
 
 	public String buscarConfig() {
-	    return "بحث";
+		return "بحث";
 	}
 
 	public String sinArchivoSeleccionado() {
-	    return "لم يتم اختيار أي ملف";
+		return "لم يتم اختيار أي ملف";
 	}
 
 	public String archivoNoSoportado() {
-	    return "الملف غير مدعوم من قبل أي محرك متاح";
+		return "الملف غير مدعوم من قبل أي محرك متاح";
 	}
 
 	public String configGuardada() {
-	    return "تم حفظ الإعدادات بنجاح";
+		return "تم حفظ الإعدادات بنجاح";
 	}
 
 	public String errorCargandoConfig() {
-	    return "خطأ في تحميل الإعدادات";
+		return "خطأ في تحميل الإعدادات";
 	}
 
 	public String errorGuardandoConfig() {
-	    return "خطأ في حفظ الإعدادات";
+		return "خطأ في حفظ الإعدادات";
 	}
 
 	public String seleccionarArchivoConfig() {
-	    return "اختر ملف الإعدادات";
+		return "اختر ملف الإعدادات";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

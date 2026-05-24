@@ -333,9 +333,6 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 		return publicarTexto(nombre, texto);
 	}
 
-
-
-
 	private static String extraerRawLinkDeJson(String json) {
 		if (json == null)
 			return "";
@@ -427,7 +424,8 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 			int code = con.getResponseCode();
 			String respuesta = leer(code >= 200 && code < 300 ? con.getInputStream() : con.getErrorStream());
 
-			if (code == HttpURLConnection.HTTP_OK && respuesta != null && respuesta.contains("\"status\":\"success\"")) {
+			if (code == HttpURLConnection.HTTP_OK && respuesta != null
+					&& respuesta.contains("\"status\":\"success\"")) {
 				return true;
 			}
 
@@ -444,9 +442,5 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 	public Supplier<TipoGUI> eliminador() {
 		return () -> TipoGUI.CDPASTE_HISTORIAL;
 	}
-
-
-
-
 
 }

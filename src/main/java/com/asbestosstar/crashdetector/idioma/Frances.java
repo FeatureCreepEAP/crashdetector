@@ -10822,164 +10822,194 @@ public class Frances implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "Aucun centre de support n'est configuré.";
 	}
-	
+
 	// French (Burkina Faso variant) (Français)
-	public String historialMCLogs() { return "Historique de MCLogs"; }
-	public String endpoint() { return "Point de terminaison (Endpoint)"; }
-	public String slug() { return "Identifiant (Slug)"; }
-	public String tokenEliminacion() { return "Jeton de suppression"; }
-	public String enlace() { return "Lien"; }
-	public String lineas() { return "Lignes"; }
-	public String errores() { return "Erreurs"; }
-	public String eliminarRegistroMCLogs() { return "Supprimer l'enregistrement"; }
-	public String faltanDatosParaEliminarMCLogs() { return "L'identifiant (slug) ou le jeton de suppression est manquant."; }
-	public String confirmarEliminarMCLogs() { return "Êtes-vous sûr de vouloir supprimer cet enregistrement de MCLogs ?"; }
-	public String registroEliminadoMCLogs() { return "Enregistrement supprimé avec succès."; }
-	public String confirmar() { return "Confirmer"; }
-	public String colorCampoTexto() { return "Couleur du champ de texte"; }
+	public String historialMCLogs() {
+		return "Historique de MCLogs";
+	}
+
+	public String endpoint() {
+		return "Point de terminaison (Endpoint)";
+	}
+
+	public String slug() {
+		return "Identifiant (Slug)";
+	}
+
+	public String tokenEliminacion() {
+		return "Jeton de suppression";
+	}
+
+	public String enlace() {
+		return "Lien";
+	}
+
+	public String lineas() {
+		return "Lignes";
+	}
+
+	public String errores() {
+		return "Erreurs";
+	}
+
+	public String eliminarRegistroMCLogs() {
+		return "Supprimer l'enregistrement";
+	}
+
+	public String faltanDatosParaEliminarMCLogs() {
+		return "L'identifiant (slug) ou le jeton de suppression est manquant.";
+	}
+
+	public String confirmarEliminarMCLogs() {
+		return "Êtes-vous sûr de vouloir supprimer cet enregistrement de MCLogs ?";
+	}
+
+	public String registroEliminadoMCLogs() {
+		return "Enregistrement supprimé avec succès.";
+	}
+
+	public String confirmar() {
+		return "Confirmer";
+	}
+
+	public String colorCampoTexto() {
+		return "Couleur du champ de texte";
+	}
+
 	// French (Burkina Faso variant) (Français)
-	public String historialCDPaste() { return "Historique de CDPaste"; }
-	public String enlaceRaw() { return "Lien brut (raw)"; }
-	public String tamano() { return "Taille"; }
-	public String eliminarRegistroCDPaste() { return "Supprimer l'enregistrement CDPaste"; }
-	public String faltanDatosParaEliminarCDPaste() { return "L'identifiant (slug) de l'enregistrement CDPaste est manquant."; }
-	public String confirmarEliminarCDPaste() { return "Êtes-vous sûr de vouloir supprimer cet enregistrement de CDPaste ?"; }
-	public String registroEliminadoCDPaste() { return "Enregistrement CDPaste supprimé avec succès."; }
-	
-	
+	public String historialCDPaste() {
+		return "Historique de CDPaste";
+	}
+
+	public String enlaceRaw() {
+		return "Lien brut (raw)";
+	}
+
+	public String tamano() {
+		return "Taille";
+	}
+
+	public String eliminarRegistroCDPaste() {
+		return "Supprimer l'enregistrement CDPaste";
+	}
+
+	public String faltanDatosParaEliminarCDPaste() {
+		return "L'identifiant (slug) de l'enregistrement CDPaste est manquant.";
+	}
+
+	public String confirmarEliminarCDPaste() {
+		return "Êtes-vous sûr de vouloir supprimer cet enregistrement de CDPaste ?";
+	}
+
+	public String registroEliminadoCDPaste() {
+		return "Enregistrement CDPaste supprimé avec succès.";
+	}
+
 	// French (Burkina Faso variant) (Français)
-	public String launcherGenerico() { return "Générique"; }
-	public String launcherServidorMinecraft() { return "Serveur Minecraft"; }
-	public String descargandoYPreparandoEnlaces() { return "Téléchargement et préparation des liens..."; }
-	public String seleccioneArchivoLog() { return "Sélectionnez un fichier journal"; }
-	public String archivoNoValido() { return "Le fichier n'est pas valide."; }
-	public String archivoSeleccionado() { return "Fichier sélectionné :"; }
-	public String presioneGuardarParaAgregarAnalisis() { return "Appuyez sur Enregistrer et fermer pour l'ajouter à l'analyse."; }
-	public String errorAlCargarArchivoArrastrado() { return "Erreur lors du chargement du fichier glissé"; }
-	public String errorAlAbrirArchivo() { return "Erreur lors de l'ouverture du fichier"; }
-	public String errorDosPuntos() { return "Erreur"; }
-	
+	public String launcherGenerico() {
+		return "Générique";
+	}
+
+	public String launcherServidorMinecraft() {
+		return "Serveur Minecraft";
+	}
+
+	public String descargandoYPreparandoEnlaces() {
+		return "Téléchargement et préparation des liens...";
+	}
+
+	public String seleccioneArchivoLog() {
+		return "Sélectionnez un fichier journal";
+	}
+
+	public String archivoNoValido() {
+		return "Le fichier n'est pas valide.";
+	}
+
+	public String archivoSeleccionado() {
+		return "Fichier sélectionné :";
+	}
+
+	public String presioneGuardarParaAgregarAnalisis() {
+		return "Appuyez sur Enregistrer et fermer pour l'ajouter à l'analyse.";
+	}
+
+	public String errorAlCargarArchivoArrastrado() {
+		return "Erreur lors du chargement du fichier glissé";
+	}
+
+	public String errorAlAbrirArchivo() {
+		return "Erreur lors de l'ouverture du fichier";
+	}
+
+	public String errorDosPuntos() {
+		return "Erreur";
+	}
 
 	// French (Burkina Faso variant) (Français)
 	public String eliminarRegistros() {
-	    return "Supprimer les enregistrements";
+		return "Supprimer les enregistrements";
 	}
+
 	// French (Burkina Faso variant) (Français)
 	public String editorConfigsMods() {
-	    return "Éditeur de configurations de mods";
+		return "Éditeur de configurations de mods";
 	}
 
 	public String abrirConfig() {
-	    return "Ouvrir la config";
+		return "Ouvrir la config";
 	}
 
 	public String guardarConfig() {
-	    return "Enregistrer la config";
+		return "Enregistrer la config";
 	}
 
 	public String recargarConfig() {
-	    return "Recharger";
+		return "Recharger";
 	}
 
 	public String rutaConfig() {
-	    return "Chemin";
+		return "Chemin";
 	}
 
 	public String tipoConfig() {
-	    return "Type";
+		return "Type";
 	}
 
 	public String claveConfig() {
-	    return "Clé";
+		return "Clé";
 	}
 
 	public String valorConfig() {
-	    return "Valeur";
+		return "Valeur";
 	}
 
 	public String buscarConfig() {
-	    return "Rechercher";
+		return "Rechercher";
 	}
 
 	public String sinArchivoSeleccionado() {
-	    return "Aucun fichier sélectionné";
+		return "Aucun fichier sélectionné";
 	}
 
 	public String archivoNoSoportado() {
-	    return "Le fichier n'est pris en charge par aucun moteur disponible";
+		return "Le fichier n'est pris en charge par aucun moteur disponible";
 	}
 
 	public String configGuardada() {
-	    return "La configuration a été enregistrée avec succès";
+		return "La configuration a été enregistrée avec succès";
 	}
 
 	public String errorCargandoConfig() {
-	    return "Erreur lors du chargement de la configuration";
+		return "Erreur lors du chargement de la configuration";
 	}
 
 	public String errorGuardandoConfig() {
-	    return "Erreur lors de l'enregistrement de la configuration";
+		return "Erreur lors de l'enregistrement de la configuration";
 	}
 
 	public String seleccionarArchivoConfig() {
-	    return "Sélectionner un fichier de configuration";
+		return "Sélectionner un fichier de configuration";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

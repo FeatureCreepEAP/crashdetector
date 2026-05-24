@@ -9887,141 +9887,194 @@ public class Coreano implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "구성된 지원 센터가 없습니다.";
 	}
-	
-	
+
 	// Korean (Munhwaŏ / Standard Korean) (한국어)
-	public String historialMCLogs() { return "MCLogs 기록"; }
-	public String endpoint() { return "엔드포인트 (Endpoint)"; }
-	public String slug() { return "슬러그 (Slug)"; }
-	public String tokenEliminacion() { return "삭제 토큰"; }
-	public String enlace() { return "링크"; }
-	public String lineas() { return "줄 수"; }
-	public String errores() { return "오류"; }
-	public String eliminarRegistroMCLogs() { return "기록 삭제"; }
-	public String faltanDatosParaEliminarMCLogs() { return "슬러그 또는 삭제 토큰이 없습니다."; }
-	public String confirmarEliminarMCLogs() { return "이 MCLogs 기록을 삭제하시겠습니까?"; }
-	public String registroEliminadoMCLogs() { return "기록이 성공적으로 삭제되었습니다."; }
-	public String confirmar() { return "확인"; }
-	public String colorCampoTexto() { return "텍스트 필드 색상"; }
+	public String historialMCLogs() {
+		return "MCLogs 기록";
+	}
+
+	public String endpoint() {
+		return "엔드포인트 (Endpoint)";
+	}
+
+	public String slug() {
+		return "슬러그 (Slug)";
+	}
+
+	public String tokenEliminacion() {
+		return "삭제 토큰";
+	}
+
+	public String enlace() {
+		return "링크";
+	}
+
+	public String lineas() {
+		return "줄 수";
+	}
+
+	public String errores() {
+		return "오류";
+	}
+
+	public String eliminarRegistroMCLogs() {
+		return "기록 삭제";
+	}
+
+	public String faltanDatosParaEliminarMCLogs() {
+		return "슬러그 또는 삭제 토큰이 없습니다.";
+	}
+
+	public String confirmarEliminarMCLogs() {
+		return "이 MCLogs 기록을 삭제하시겠습니까?";
+	}
+
+	public String registroEliminadoMCLogs() {
+		return "기록이 성공적으로 삭제되었습니다.";
+	}
+
+	public String confirmar() {
+		return "확인";
+	}
+
+	public String colorCampoTexto() {
+		return "텍스트 필드 색상";
+	}
+
 	// Korean (Munhwaŏ / Standard Korean) (한국어)
-	public String historialCDPaste() { return "CDPaste 기록"; }
-	public String enlaceRaw() { return "Raw 링크"; }
-	public String tamano() { return "크기"; }
-	public String eliminarRegistroCDPaste() { return "CDPaste 기록 삭제"; }
-	public String faltanDatosParaEliminarCDPaste() { return "CDPaste 기록의 식별자(slug)가 없습니다."; }
-	public String confirmarEliminarCDPaste() { return "이 CDPaste 기록을 삭제하시겠습니까?"; }
-	public String registroEliminadoCDPaste() { return "CDPaste 기록이 성공적으로 삭제되었습니다."; }
+	public String historialCDPaste() {
+		return "CDPaste 기록";
+	}
+
+	public String enlaceRaw() {
+		return "Raw 링크";
+	}
+
+	public String tamano() {
+		return "크기";
+	}
+
+	public String eliminarRegistroCDPaste() {
+		return "CDPaste 기록 삭제";
+	}
+
+	public String faltanDatosParaEliminarCDPaste() {
+		return "CDPaste 기록의 식별자(slug)가 없습니다.";
+	}
+
+	public String confirmarEliminarCDPaste() {
+		return "이 CDPaste 기록을 삭제하시겠습니까?";
+	}
+
+	public String registroEliminadoCDPaste() {
+		return "CDPaste 기록이 성공적으로 삭제되었습니다.";
+	}
+
 	// Korean (Munhwaŏ / Standard Korean) (한국어)
-	public String launcherGenerico() { return "일반"; }
-	public String launcherServidorMinecraft() { return "Minecraft 서버"; }
-	public String descargandoYPreparandoEnlaces() { return "링크 다운로드 및 준비 중..."; }
-	public String seleccioneArchivoLog() { return "로그 파일 선택"; }
-	public String archivoNoValido() { return "파일이 유효하지 않습니다."; }
-	public String archivoSeleccionado() { return "선택된 파일:"; }
-	public String presioneGuardarParaAgregarAnalisis() { return "저장 및 닫기를 눌러 분석에 추가하십시오."; }
-	public String errorAlCargarArchivoArrastrado() { return "드래그한 파일 로드 오류"; }
-	public String errorAlAbrirArchivo() { return "파일 열기 오류"; }
-	public String errorDosPuntos() { return "오류"; }
+	public String launcherGenerico() {
+		return "일반";
+	}
+
+	public String launcherServidorMinecraft() {
+		return "Minecraft 서버";
+	}
+
+	public String descargandoYPreparandoEnlaces() {
+		return "링크 다운로드 및 준비 중...";
+	}
+
+	public String seleccioneArchivoLog() {
+		return "로그 파일 선택";
+	}
+
+	public String archivoNoValido() {
+		return "파일이 유효하지 않습니다.";
+	}
+
+	public String archivoSeleccionado() {
+		return "선택된 파일:";
+	}
+
+	public String presioneGuardarParaAgregarAnalisis() {
+		return "저장 및 닫기를 눌러 분석에 추가하십시오.";
+	}
+
+	public String errorAlCargarArchivoArrastrado() {
+		return "드래그한 파일 로드 오류";
+	}
+
+	public String errorAlAbrirArchivo() {
+		return "파일 열기 오류";
+	}
+
+	public String errorDosPuntos() {
+		return "오류";
+	}
+
 	// Korean (Munhwaŏ / Standard Korean) (한국어)
 	public String eliminarRegistros() {
-	    return "기록 삭제";
+		return "기록 삭제";
 	}
+
 	// Korean (Munhwaŏ / Standard Korean) (한국어)
 	public String editorConfigsMods() {
-	    return "Mod 구성 편집기";
+		return "Mod 구성 편집기";
 	}
 
 	public String abrirConfig() {
-	    return "구성 열기";
+		return "구성 열기";
 	}
 
 	public String guardarConfig() {
-	    return "구성 저장";
+		return "구성 저장";
 	}
 
 	public String recargarConfig() {
-	    return "다시 로드";
+		return "다시 로드";
 	}
 
 	public String rutaConfig() {
-	    return "경로";
+		return "경로";
 	}
 
 	public String tipoConfig() {
-	    return "유형";
+		return "유형";
 	}
 
 	public String claveConfig() {
-	    return "키";
+		return "키";
 	}
 
 	public String valorConfig() {
-	    return "값";
+		return "값";
 	}
 
 	public String buscarConfig() {
-	    return "검색";
+		return "검색";
 	}
 
 	public String sinArchivoSeleccionado() {
-	    return "선택된 파일이 없습니다";
+		return "선택된 파일이 없습니다";
 	}
 
 	public String archivoNoSoportado() {
-	    return "사용 가능한 엔진에서 지원하지 않는 파일입니다";
+		return "사용 가능한 엔진에서 지원하지 않는 파일입니다";
 	}
 
 	public String configGuardada() {
-	    return "구성이 성공적으로 저장되었습니다";
+		return "구성이 성공적으로 저장되었습니다";
 	}
 
 	public String errorCargandoConfig() {
-	    return "구성 로드 중 오류 발생";
+		return "구성 로드 중 오류 발생";
 	}
 
 	public String errorGuardandoConfig() {
-	    return "구성 저장 중 오류 발생";
+		return "구성 저장 중 오류 발생";
 	}
 
 	public String seleccionarArchivoConfig() {
-	    return "구성 파일 선택";
+		return "구성 파일 선택";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

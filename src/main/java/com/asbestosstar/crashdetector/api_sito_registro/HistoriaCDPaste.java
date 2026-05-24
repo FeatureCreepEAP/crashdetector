@@ -11,8 +11,7 @@ import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 /**
  * Maneja el historial local de registros publicados en CDPaste.
  *
- * Archivo:
- * ~/crash_detector/historia_cdpaste.txt
+ * Archivo: ~/crash_detector/historia_cdpaste.txt
  */
 public class HistoriaCDPaste {
 

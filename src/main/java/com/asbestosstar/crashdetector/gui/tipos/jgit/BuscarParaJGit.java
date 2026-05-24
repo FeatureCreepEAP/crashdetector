@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.Statics;
 
 /**
  * Localizador de JGit. Busca los JARs de JGit en el classpath actual y en
@@ -15,7 +16,12 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
  */
 public class BuscarParaJGit {
 
-	public static final File CARPETA_JGIT = new File(System.getProperty("user.home"), "crash_detector/jgit");
+	public static final File CARPETA_JGIT = new File(System.getProperty("user.home"), "crash_detector/deps");
+
+	public static final File CARPETA_JGIT_INSTANCIA = Statics.carpeta.resolve("deps").toFile();
+
+	// Compatibilidad legacy: ubicación vieja.
+	public static final File CARPETA_JGIT_LEGACY = new File(System.getProperty("user.home"), "crash_detector/jgit");
 
 	private static final String VERSION_JGIT = "5.13.3.202401111512-r";
 
@@ -196,26 +202,139 @@ public class BuscarParaJGit {
 		}
 	}
 
+	/**
+	 * Localizador de JGit. Busca los JARs de JGit en el classpath actual, en
+	 * ~/crash_detector/deps/ y, por compatibilidad legacy, en
+	 * ~/crash_detector/jgit/.
+	 *
+	 * Esta clase NO importa JGit. Debe ser segura aunque JGit no exista.
+	 */
 	public static List<File> encontrarJarsInstalados() {
 		List<File> ret = new ArrayList<File>();
+		List<String> nombresYaAgregados = new ArrayList<String>();
 
-		if (!CARPETA_JGIT.exists() || !CARPETA_JGIT.isDirectory()) {
-			return ret;
+		CARPETA_JGIT.mkdirs();
+
+		// Primero la ubicación nueva/oficial.
+		agregarJarsDeCarpetaSinDuplicarPorNombre(ret, nombresYaAgregados, CARPETA_JGIT);
+
+		// Después la carpeta deps de la instancia.
+		agregarJarsDeCarpetaSinDuplicarPorNombre(ret, nombresYaAgregados, CARPETA_JGIT_INSTANCIA);
+
+		// Legacy: intentar mover a la ubicación universal; si falla, usar como
+		// fallback.
+		moverLegacyAUniversal();
+
+		// Legacy solo si el mismo nombre de JAR no existe en deps o instancia.
+		agregarJarsDeCarpetaSinDuplicarPorNombre(ret, nombresYaAgregados, CARPETA_JGIT_LEGACY);
+
+		return ret;
+	}
+
+	private static void moverLegacyAUniversal() {
+		if (CARPETA_JGIT_LEGACY == null || !CARPETA_JGIT_LEGACY.exists() || !CARPETA_JGIT_LEGACY.isDirectory()) {
+			return;
 		}
 
-		File[] archivos = CARPETA_JGIT.listFiles();
+		CARPETA_JGIT.mkdirs();
+
+		File[] archivos = CARPETA_JGIT_LEGACY.listFiles();
 
 		if (archivos == null) {
-			return ret;
+			return;
 		}
 
 		for (File archivo : archivos) {
-			if (archivo.isFile() && archivo.getName().toLowerCase().endsWith(".jar")) {
+			if (archivo == null || !archivo.isFile()) {
+				continue;
+			}
+
+			String nombre = archivo.getName();
+
+			if (!nombre.toLowerCase().endsWith(".jar")) {
+				continue;
+			}
+
+			File destino = new File(CARPETA_JGIT, nombre);
+
+			if (!destino.exists()) {
+				moverArchivo(archivo, destino);
+			}
+		}
+	}
+
+	private static boolean moverArchivo(File origen, File destino) {
+		if (origen == null || destino == null || !origen.exists() || !origen.isFile()) {
+			return false;
+		}
+
+		try {
+			File carpetaDestino = destino.getParentFile();
+
+			if (carpetaDestino != null) {
+				carpetaDestino.mkdirs();
+			}
+
+			if (destino.exists()) {
+				return true;
+			}
+
+			return origen.renameTo(destino);
+		} catch (Throwable t) {
+			return false;
+		}
+	}
+
+	private static void agregarJarsDeCarpetaSinDuplicarPorNombre(List<File> ret, List<String> nombresYaAgregados,
+			File carpeta) {
+		if (carpeta == null || !carpeta.exists() || !carpeta.isDirectory()) {
+			return;
+		}
+
+		File[] archivos = carpeta.listFiles();
+
+		if (archivos == null) {
+			return;
+		}
+
+		for (File archivo : archivos) {
+			if (archivo == null || !archivo.isFile()) {
+				continue;
+			}
+
+			String nombre = archivo.getName();
+
+			if (!nombre.toLowerCase().endsWith(".jar")) {
+				continue;
+			}
+
+			String nombreNormalizado = nombre.toLowerCase();
+
+			if (nombresYaAgregados.contains(nombreNormalizado)) {
+				continue;
+			}
+
+			nombresYaAgregados.add(nombreNormalizado);
+			ret.add(archivo);
+		}
+	}
+
+	private static void agregarJarsDeCarpeta(List<File> ret, File carpeta) {
+		if (carpeta == null || !carpeta.exists() || !carpeta.isDirectory()) {
+			return;
+		}
+
+		File[] archivos = carpeta.listFiles();
+
+		if (archivos == null) {
+			return;
+		}
+
+		for (File archivo : archivos) {
+			if (archivo != null && archivo.isFile() && archivo.getName().toLowerCase().endsWith(".jar")) {
 				ret.add(archivo);
 			}
 		}
-
-		return ret;
 	}
 
 	public static boolean carpetaTieneJarsJGit() {
@@ -225,26 +344,25 @@ public class BuscarParaJGit {
 	public static List<DependenciaJGit> dependenciasFaltantesEnCarpetaInstalacion() {
 		List<DependenciaJGit> faltantes = new ArrayList<DependenciaJGit>();
 
-		if (!CARPETA_JGIT.exists() || !CARPETA_JGIT.isDirectory()) {
-			faltantes.addAll(dependenciasRequeridas());
-			return faltantes;
-		}
-
-		File[] archivos = CARPETA_JGIT.listFiles();
+		/*
+		 * Nueva lógica: - La carpeta oficial actual es ~/crash_detector/deps/. - La
+		 * carpeta legacy ~/crash_detector/jgit/ solo cuenta como fallback. - Si el
+		 * mismo JAR existe en deps, se ignora el legacy. - Para instalaciones futuras,
+		 * los faltantes se deben descargar solo en deps.
+		 */
+		List<File> jarsInstalados = encontrarJarsInstalados();
 
 		for (DependenciaJGit dep : dependenciasRequeridas()) {
 			boolean encontrada = false;
 
-			if (archivos != null) {
-				for (File archivo : archivos) {
-					if (archivo == null || !archivo.isFile()) {
-						continue;
-					}
+			for (File archivo : jarsInstalados) {
+				if (archivo == null || !archivo.isFile()) {
+					continue;
+				}
 
-					if (dep.coincideConNombreJar(archivo.getName()) && archivo.length() > 0L) {
-						encontrada = true;
-						break;
-					}
+				if (dep.coincideConNombreJar(archivo.getName()) && archivo.length() > 0L) {
+					encontrada = true;
+					break;
 				}
 			}
 

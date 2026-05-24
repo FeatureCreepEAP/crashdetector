@@ -20,7 +20,6 @@ public abstract class MCLogsHistorialGUI extends JDialog implements CrashDetecto
 
 	public static Map<String, Supplier<MCLogsHistorialGUI>> GUIS = new HashMap<String, Supplier<MCLogsHistorialGUI>>();
 
-
 	protected Nodo historial;
 
 	protected void cargarDatos() {

@@ -10303,150 +10303,194 @@ public class Ingles implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "No support centre is configured.";
 	}
-	
+
 	// English (UK)
-	public String historialMCLogs() { return "MCLogs History"; }
-	public String endpoint() { return "Endpoint"; }
-	public String slug() { return "Slug"; }
-	public String tokenEliminacion() { return "Deletion token"; }
-	public String enlace() { return "Link"; }
-	public String lineas() { return "Lines"; }
-	public String errores() { return "Errors"; }
-	public String eliminarRegistroMCLogs() { return "Delete record"; }
-	public String faltanDatosParaEliminarMCLogs() { return "The slug or deletion token is missing."; }
-	public String confirmarEliminarMCLogs() { return "Are you sure you want to delete this MCLogs record?"; }
-	public String registroEliminadoMCLogs() { return "Record deleted successfully."; }
-	public String confirmar() { return "Confirm"; }
-	public String colorCampoTexto() { return "Text field colour"; }
-	
+	public String historialMCLogs() {
+		return "MCLogs History";
+	}
+
+	public String endpoint() {
+		return "Endpoint";
+	}
+
+	public String slug() {
+		return "Slug";
+	}
+
+	public String tokenEliminacion() {
+		return "Deletion token";
+	}
+
+	public String enlace() {
+		return "Link";
+	}
+
+	public String lineas() {
+		return "Lines";
+	}
+
+	public String errores() {
+		return "Errors";
+	}
+
+	public String eliminarRegistroMCLogs() {
+		return "Delete record";
+	}
+
+	public String faltanDatosParaEliminarMCLogs() {
+		return "The slug or deletion token is missing.";
+	}
+
+	public String confirmarEliminarMCLogs() {
+		return "Are you sure you want to delete this MCLogs record?";
+	}
+
+	public String registroEliminadoMCLogs() {
+		return "Record deleted successfully.";
+	}
+
+	public String confirmar() {
+		return "Confirm";
+	}
+
+	public String colorCampoTexto() {
+		return "Text field colour";
+	}
+
 	// English (UK)
-	public String historialCDPaste() { return "CDPaste History"; }
-	public String enlaceRaw() { return "Raw link"; }
-	public String tamano() { return "Size"; }
-	public String eliminarRegistroCDPaste() { return "Delete CDPaste record"; }
-	public String faltanDatosParaEliminarCDPaste() { return "The CDPaste record slug is missing."; }
-	public String confirmarEliminarCDPaste() { return "Are you sure you want to delete this CDPaste record?"; }
-	public String registroEliminadoCDPaste() { return "CDPaste record deleted successfully."; }
-	
+	public String historialCDPaste() {
+		return "CDPaste History";
+	}
+
+	public String enlaceRaw() {
+		return "Raw link";
+	}
+
+	public String tamano() {
+		return "Size";
+	}
+
+	public String eliminarRegistroCDPaste() {
+		return "Delete CDPaste record";
+	}
+
+	public String faltanDatosParaEliminarCDPaste() {
+		return "The CDPaste record slug is missing.";
+	}
+
+	public String confirmarEliminarCDPaste() {
+		return "Are you sure you want to delete this CDPaste record?";
+	}
+
+	public String registroEliminadoCDPaste() {
+		return "CDPaste record deleted successfully.";
+	}
+
 	// English (UK)
-	public String launcherGenerico() { return "Generic"; }
-	public String launcherServidorMinecraft() { return "Minecraft Server"; }
-	public String descargandoYPreparandoEnlaces() { return "Downloading and preparing links..."; }
-	public String seleccioneArchivoLog() { return "Select a log file"; }
-	public String archivoNoValido() { return "The file is not valid."; }
-	public String archivoSeleccionado() { return "Selected file:"; }
-	public String presioneGuardarParaAgregarAnalisis() { return "Press Save and close to add it to the analysis."; }
-	public String errorAlCargarArchivoArrastrado() { return "Error loading dragged file"; }
-	public String errorAlAbrirArchivo() { return "Error opening file"; }
-	public String errorDosPuntos() { return "Error"; }
-	
-	
+	public String launcherGenerico() {
+		return "Generic";
+	}
+
+	public String launcherServidorMinecraft() {
+		return "Minecraft Server";
+	}
+
+	public String descargandoYPreparandoEnlaces() {
+		return "Downloading and preparing links...";
+	}
+
+	public String seleccioneArchivoLog() {
+		return "Select a log file";
+	}
+
+	public String archivoNoValido() {
+		return "The file is not valid.";
+	}
+
+	public String archivoSeleccionado() {
+		return "Selected file:";
+	}
+
+	public String presioneGuardarParaAgregarAnalisis() {
+		return "Press Save and close to add it to the analysis.";
+	}
+
+	public String errorAlCargarArchivoArrastrado() {
+		return "Error loading dragged file";
+	}
+
+	public String errorAlAbrirArchivo() {
+		return "Error opening file";
+	}
+
+	public String errorDosPuntos() {
+		return "Error";
+	}
 
 	// English (UK)
 	public String eliminarRegistros() {
-	    return "Delete records";
+		return "Delete records";
 	}
 
 	// English (UK)
 	public String editorConfigsMods() {
-	    return "Mod Configuration Editor";
+		return "Mod Configuration Editor";
 	}
 
 	public String abrirConfig() {
-	    return "Open Config";
+		return "Open Config";
 	}
 
 	public String guardarConfig() {
-	    return "Save Config";
+		return "Save Config";
 	}
 
 	public String recargarConfig() {
-	    return "Reload";
+		return "Reload";
 	}
 
 	public String rutaConfig() {
-	    return "Path";
+		return "Path";
 	}
 
 	public String tipoConfig() {
-	    return "Type";
+		return "Type";
 	}
 
 	public String claveConfig() {
-	    return "Key";
+		return "Key";
 	}
 
 	public String valorConfig() {
-	    return "Value";
+		return "Value";
 	}
 
 	public String buscarConfig() {
-	    return "Search";
+		return "Search";
 	}
 
 	public String sinArchivoSeleccionado() {
-	    return "No file selected";
+		return "No file selected";
 	}
 
 	public String archivoNoSoportado() {
-	    return "The file is not supported by any available engine";
+		return "The file is not supported by any available engine";
 	}
 
 	public String configGuardada() {
-	    return "The configuration was saved successfully";
+		return "The configuration was saved successfully";
 	}
 
 	public String errorCargandoConfig() {
-	    return "Error loading configuration";
+		return "Error loading configuration";
 	}
 
 	public String errorGuardandoConfig() {
-	    return "Error saving configuration";
+		return "Error saving configuration";
 	}
 
 	public String seleccionarArchivoConfig() {
-	    return "Select configuration file";
+		return "Select configuration file";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

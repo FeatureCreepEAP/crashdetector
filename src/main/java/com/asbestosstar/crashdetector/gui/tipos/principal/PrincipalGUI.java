@@ -138,11 +138,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		registrarBotonDeBarraLateralDerecha(TipoGUI.JGIT_HUB, JGitHubIzzy.ID, () -> new JGitHubIzzy());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.ADMINISTRADOR_DE_RENDIMIENTO,
 				AdministradorDeRendimientoNightcore.ID, () -> new AdministradorDeRendimientoNightcore());
-		registrarBotonDeBarraLateralDerecha(TipoGUI.CONFIG_MODS,
-				ConfigsModsGUIYunenoms.ID, () -> new ConfigsModsGUIYunenoms());	
-		
-		
-		
+		registrarBotonDeBarraLateralDerecha(TipoGUI.CONFIG_MODS, ConfigsModsGUIYunenoms.ID,
+				() -> new ConfigsModsGUIYunenoms());
 
 	}
 

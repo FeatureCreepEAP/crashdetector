@@ -10837,135 +10837,194 @@ public class Indonesia implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "Tidak ada pusat dukungan yang dikonfigurasi.";
 	}
+
 	// Indonesian (Bahasa Indonesia)
-	public String historialMCLogs() { return "Riwayat MCLogs"; }
-	public String endpoint() { return "Titik Akhir (Endpoint)"; }
-	public String slug() { return "Slug"; }
-	public String tokenEliminacion() { return "Token penghapusan"; }
-	public String enlace() { return "Tautan"; }
-	public String lineas() { return "Baris"; }
-	public String errores() { return "Kesalahan"; }
-	public String eliminarRegistroMCLogs() { return "Hapus catatan"; }
-	public String faltanDatosParaEliminarMCLogs() { return "Slug atau token penghapusan tidak ada."; }
-	public String confirmarEliminarMCLogs() { return "Apakah Anda yakin ingin menghapus catatan MCLogs ini?"; }
-	public String registroEliminadoMCLogs() { return "Catatan berhasil dihapus."; }
-	public String confirmar() { return "Konfirmasi"; }
-	public String colorCampoTexto() { return "Warna bidang teks"; }
+	public String historialMCLogs() {
+		return "Riwayat MCLogs";
+	}
+
+	public String endpoint() {
+		return "Titik Akhir (Endpoint)";
+	}
+
+	public String slug() {
+		return "Slug";
+	}
+
+	public String tokenEliminacion() {
+		return "Token penghapusan";
+	}
+
+	public String enlace() {
+		return "Tautan";
+	}
+
+	public String lineas() {
+		return "Baris";
+	}
+
+	public String errores() {
+		return "Kesalahan";
+	}
+
+	public String eliminarRegistroMCLogs() {
+		return "Hapus catatan";
+	}
+
+	public String faltanDatosParaEliminarMCLogs() {
+		return "Slug atau token penghapusan tidak ada.";
+	}
+
+	public String confirmarEliminarMCLogs() {
+		return "Apakah Anda yakin ingin menghapus catatan MCLogs ini?";
+	}
+
+	public String registroEliminadoMCLogs() {
+		return "Catatan berhasil dihapus.";
+	}
+
+	public String confirmar() {
+		return "Konfirmasi";
+	}
+
+	public String colorCampoTexto() {
+		return "Warna bidang teks";
+	}
+
 	// Indonesian (Bahasa Indonesia)
-	public String historialCDPaste() { return "Riwayat CDPaste"; }
-	public String enlaceRaw() { return "Tautan raw"; }
-	public String tamano() { return "Ukuran"; }
-	public String eliminarRegistroCDPaste() { return "Hapus catatan CDPaste"; }
-	public String faltanDatosParaEliminarCDPaste() { return "Identifikasi (slug) catatan CDPaste tidak ada."; }
-	public String confirmarEliminarCDPaste() { return "Apakah Anda yakin ingin menghapus catatan CDPaste ini?"; }
-	public String registroEliminadoCDPaste() { return "Catatan CDPaste berhasil dihapus."; }
-	
-	
+	public String historialCDPaste() {
+		return "Riwayat CDPaste";
+	}
+
+	public String enlaceRaw() {
+		return "Tautan raw";
+	}
+
+	public String tamano() {
+		return "Ukuran";
+	}
+
+	public String eliminarRegistroCDPaste() {
+		return "Hapus catatan CDPaste";
+	}
+
+	public String faltanDatosParaEliminarCDPaste() {
+		return "Identifikasi (slug) catatan CDPaste tidak ada.";
+	}
+
+	public String confirmarEliminarCDPaste() {
+		return "Apakah Anda yakin ingin menghapus catatan CDPaste ini?";
+	}
+
+	public String registroEliminadoCDPaste() {
+		return "Catatan CDPaste berhasil dihapus.";
+	}
+
 	// Indonesian (Bahasa Indonesia)
-	public String launcherGenerico() { return "Umum"; }
-	public String launcherServidorMinecraft() { return "Server Minecraft"; }
-	public String descargandoYPreparandoEnlaces() { return "Mengunduh dan menyiapkan tautan..."; }
-	public String seleccioneArchivoLog() { return "Pilih file log"; }
-	public String archivoNoValido() { return "File tidak valid."; }
-	public String archivoSeleccionado() { return "File dipilih:"; }
-	public String presioneGuardarParaAgregarAnalisis() { return "Tekan Simpan dan tutup untuk menambahkannya ke analisis."; }
-	public String errorAlCargarArchivoArrastrado() { return "Kesalahan saat memuat file yang diseret"; }
-	public String errorAlAbrirArchivo() { return "Kesalahan saat membuka file"; }
-	public String errorDosPuntos() { return "Kesalahan"; }
-	
+	public String launcherGenerico() {
+		return "Umum";
+	}
+
+	public String launcherServidorMinecraft() {
+		return "Server Minecraft";
+	}
+
+	public String descargandoYPreparandoEnlaces() {
+		return "Mengunduh dan menyiapkan tautan...";
+	}
+
+	public String seleccioneArchivoLog() {
+		return "Pilih file log";
+	}
+
+	public String archivoNoValido() {
+		return "File tidak valid.";
+	}
+
+	public String archivoSeleccionado() {
+		return "File dipilih:";
+	}
+
+	public String presioneGuardarParaAgregarAnalisis() {
+		return "Tekan Simpan dan tutup untuk menambahkannya ke analisis.";
+	}
+
+	public String errorAlCargarArchivoArrastrado() {
+		return "Kesalahan saat memuat file yang diseret";
+	}
+
+	public String errorAlAbrirArchivo() {
+		return "Kesalahan saat membuka file";
+	}
+
+	public String errorDosPuntos() {
+		return "Kesalahan";
+	}
 
 	// Indonesian (Bahasa Indonesia)
 	public String eliminarRegistros() {
-	    return "Hapus catatan";
+		return "Hapus catatan";
 	}
 
 	// Indonesian (Bahasa Indonesia)
 	public String editorConfigsMods() {
-	    return "Editor Konfigurasi Mod";
+		return "Editor Konfigurasi Mod";
 	}
 
 	public String abrirConfig() {
-	    return "Buka Config";
+		return "Buka Config";
 	}
 
 	public String guardarConfig() {
-	    return "Simpan Config";
+		return "Simpan Config";
 	}
 
 	public String recargarConfig() {
-	    return "Muat Ulang";
+		return "Muat Ulang";
 	}
 
 	public String rutaConfig() {
-	    return "Jalur";
+		return "Jalur";
 	}
 
 	public String tipoConfig() {
-	    return "Tipe";
+		return "Tipe";
 	}
 
 	public String claveConfig() {
-	    return "Kunci";
+		return "Kunci";
 	}
 
 	public String valorConfig() {
-	    return "Nilai";
+		return "Nilai";
 	}
 
 	public String buscarConfig() {
-	    return "Cari";
+		return "Cari";
 	}
 
 	public String sinArchivoSeleccionado() {
-	    return "Tidak ada file yang dipilih";
+		return "Tidak ada file yang dipilih";
 	}
 
 	public String archivoNoSoportado() {
-	    return "File tidak didukung oleh mesin apa pun yang tersedia";
+		return "File tidak didukung oleh mesin apa pun yang tersedia";
 	}
 
 	public String configGuardada() {
-	    return "Konfigurasi berhasil disimpan";
+		return "Konfigurasi berhasil disimpan";
 	}
 
 	public String errorCargandoConfig() {
-	    return "Kesalahan saat memuat konfigurasi";
+		return "Kesalahan saat memuat konfigurasi";
 	}
 
 	public String errorGuardandoConfig() {
-	    return "Kesalahan saat menyimpan konfigurasi";
+		return "Kesalahan saat menyimpan konfigurasi";
 	}
 
 	public String seleccionarArchivoConfig() {
-	    return "Pilih file konfigurasi";
+		return "Pilih file konfigurasi";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

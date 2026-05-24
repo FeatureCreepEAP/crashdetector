@@ -115,7 +115,7 @@ public abstract class CfrBase extends JFrame implements CrashDetectorGUI {
 		});
 
 		btnAbrirCarpeta.addActionListener(e -> {
-			Path carpeta = java.nio.file.Paths.get(System.getProperty("user.home"), "crash_detector", "cfr");
+			Path carpeta = java.nio.file.Paths.get(System.getProperty("user.home"), "crash_detector", "deps");
 			try {
 				if (!Files.exists(carpeta)) {
 					Files.createDirectories(carpeta);

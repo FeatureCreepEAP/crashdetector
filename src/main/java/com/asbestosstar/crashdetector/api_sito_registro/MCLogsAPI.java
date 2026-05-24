@@ -93,10 +93,11 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 			String respuestaStr = respuesta.toString();
 			if (respuestaStr.contains("\"success\":true")) {
 
-				HistoriaMCLogs.EntradaMCLogs entrada = extraerEntradaDeRespuesta(respuestaStr, APIdeSitioDeRegistro.sitioDeConfig());
+				HistoriaMCLogs.EntradaMCLogs entrada = extraerEntradaDeRespuesta(respuestaStr,
+						APIdeSitioDeRegistro.sitioDeConfig());
 				HistoriaMCLogs.agregar(entrada);
 				return entrada.url;
-			
+
 			} else {
 				String error = extraerErrorDeRespuesta(respuestaStr);
 				throw new ErrorConPublicar("Error del servidor: " + error);
@@ -193,12 +194,11 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 			String respuestaStr = respuesta.toString();
 			if (respuestaStr.contains("\"success\":true")) {
 
-				HistoriaMCLogs.EntradaMCLogs entrada = extraerEntradaDeRespuesta(respuestaStr, APIdeSitioDeRegistro.sitioDeConfig());
+				HistoriaMCLogs.EntradaMCLogs entrada = extraerEntradaDeRespuesta(respuestaStr,
+						APIdeSitioDeRegistro.sitioDeConfig());
 				HistoriaMCLogs.agregar(entrada);
 				return entrada.url;
-			
-			
-			
+
 			} else {
 				String error = extraerErrorDeRespuesta(respuestaStr);
 				throw new ErrorConPublicar("Error del servidor: " + error);
@@ -291,25 +291,7 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 		}
 		return enlaces;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	private HistoriaMCLogs.EntradaMCLogs extraerEntradaDeRespuesta(String respuestaJson, String endpoint) {
 		HistoriaMCLogs.EntradaMCLogs e = new HistoriaMCLogs.EntradaMCLogs();
 
@@ -415,7 +397,7 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 			return 0L;
 		}
 	}
-	
+
 	/**
 	 * Elimina un registro MCLogs usando el token recibido al publicarlo.
 	 */
@@ -467,7 +449,7 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 			throw new ErrorConPublicar("Error de red: " + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Devuelve la GUI opcional para ver historial y eliminar registros MCLogs.
 	 */
@@ -475,9 +457,6 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 	public Supplier<TipoGUI> eliminador() {
 		return () -> TipoGUI.MCLOGS_HISTORIAL;
 	}
-	
-	
-	
 
 	@Override
 	public boolean soporteEnlacesALinea() {

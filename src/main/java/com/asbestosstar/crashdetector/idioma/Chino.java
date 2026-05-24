@@ -9677,137 +9677,193 @@ public class Chino implements Idioma {
 	public String noHayCentroSoporteConfigurado() {
 		return "未配置支持中心。";
 	}
+
 	// Chinese (Simplified) (中文)
-	public String historialMCLogs() { return "MCLogs 历史记录"; }
-	public String endpoint() { return "端点 (Endpoint)"; }
-	public String slug() { return "标识符 (Slug)"; }
-	public String tokenEliminacion() { return "删除令牌"; }
-	public String enlace() { return "链接"; }
-	public String lineas() { return "行数"; }
-	public String errores() { return "错误"; }
-	public String eliminarRegistroMCLogs() { return "删除记录"; }
-	public String faltanDatosParaEliminarMCLogs() { return "缺少标识符 (slug) 或删除令牌。"; }
-	public String confirmarEliminarMCLogs() { return "确定要删除此 MCLogs 记录吗？"; }
-	public String registroEliminadoMCLogs() { return "记录已成功删除。"; }
-	public String confirmar() { return "确认"; }
-	public String colorCampoTexto() { return "文本字段颜色"; }
-	// Arabic (العربية)
-	public String historialCDPaste() { return "سجل CDPaste"; }
-	public String enlaceRaw() { return "الرابط الخام (Raw)"; }
-	public String tamano() { return "الحجم"; }
-	public String eliminarRegistroCDPaste() { return "حذف سجل CDPaste"; }
-	public String faltanDatosParaEliminarCDPaste() { return "معرف السجل (slug) لـ CDPaste مفقود."; }
-	public String confirmarEliminarCDPaste() { return "هل أنت متأكد من رغبتك في حذف هذا السجل من CDPaste؟"; }
-	public String registroEliminadoCDPaste() { return "تم حذف سجل CDPaste بنجاح."; }
-	// Chinese (Simplified) (中文)
-	public String launcherGenerico() { return "通用"; }
-	public String launcherServidorMinecraft() { return "Minecraft 服务器"; }
-	public String descargandoYPreparandoEnlaces() { return "正在下载并准备链接..."; }
-	public String seleccioneArchivoLog() { return "选择日志文件"; }
-	public String archivoNoValido() { return "文件无效。"; }
-	public String archivoSeleccionado() { return "已选择文件："; }
-	public String presioneGuardarParaAgregarAnalisis() { return "点击保存并关闭以将其添加到分析中。"; }
-	public String errorAlCargarArchivoArrastrado() { return "加载拖放文件时出错"; }
-	public String errorAlAbrirArchivo() { return "打开文件时出错"; }
-	public String errorDosPuntos() { return "错误"; }
-	
-	public String eliminarRegistros() {
-	    return "删除记录";
+	public String historialMCLogs() {
+		return "MCLogs 历史记录";
 	}
-	
+
+	public String endpoint() {
+		return "端点 (Endpoint)";
+	}
+
+	public String slug() {
+		return "标识符 (Slug)";
+	}
+
+	public String tokenEliminacion() {
+		return "删除令牌";
+	}
+
+	public String enlace() {
+		return "链接";
+	}
+
+	public String lineas() {
+		return "行数";
+	}
+
+	public String errores() {
+		return "错误";
+	}
+
+	public String eliminarRegistroMCLogs() {
+		return "删除记录";
+	}
+
+	public String faltanDatosParaEliminarMCLogs() {
+		return "缺少标识符 (slug) 或删除令牌。";
+	}
+
+	public String confirmarEliminarMCLogs() {
+		return "确定要删除此 MCLogs 记录吗？";
+	}
+
+	public String registroEliminadoMCLogs() {
+		return "记录已成功删除。";
+	}
+
+	public String confirmar() {
+		return "确认";
+	}
+
+	public String colorCampoTexto() {
+		return "文本字段颜色";
+	}
+
+	// Arabic (العربية)
+	public String historialCDPaste() {
+		return "سجل CDPaste";
+	}
+
+	public String enlaceRaw() {
+		return "الرابط الخام (Raw)";
+	}
+
+	public String tamano() {
+		return "الحجم";
+	}
+
+	public String eliminarRegistroCDPaste() {
+		return "حذف سجل CDPaste";
+	}
+
+	public String faltanDatosParaEliminarCDPaste() {
+		return "معرف السجل (slug) لـ CDPaste مفقود.";
+	}
+
+	public String confirmarEliminarCDPaste() {
+		return "هل أنت متأكد من رغبتك في حذف هذا السجل من CDPaste؟";
+	}
+
+	public String registroEliminadoCDPaste() {
+		return "تم حذف سجل CDPaste بنجاح.";
+	}
+
+	// Chinese (Simplified) (中文)
+	public String launcherGenerico() {
+		return "通用";
+	}
+
+	public String launcherServidorMinecraft() {
+		return "Minecraft 服务器";
+	}
+
+	public String descargandoYPreparandoEnlaces() {
+		return "正在下载并准备链接...";
+	}
+
+	public String seleccioneArchivoLog() {
+		return "选择日志文件";
+	}
+
+	public String archivoNoValido() {
+		return "文件无效。";
+	}
+
+	public String archivoSeleccionado() {
+		return "已选择文件：";
+	}
+
+	public String presioneGuardarParaAgregarAnalisis() {
+		return "点击保存并关闭以将其添加到分析中。";
+	}
+
+	public String errorAlCargarArchivoArrastrado() {
+		return "加载拖放文件时出错";
+	}
+
+	public String errorAlAbrirArchivo() {
+		return "打开文件时出错";
+	}
+
+	public String errorDosPuntos() {
+		return "错误";
+	}
+
+	public String eliminarRegistros() {
+		return "删除记录";
+	}
+
 	// Chinese (Simplified) (中文)
 	public String editorConfigsMods() {
-	    return "Mod 配置编辑器";
+		return "Mod 配置编辑器";
 	}
 
 	public String abrirConfig() {
-	    return "打开配置";
+		return "打开配置";
 	}
 
 	public String guardarConfig() {
-	    return "保存配置";
+		return "保存配置";
 	}
 
 	public String recargarConfig() {
-	    return "重新加载";
+		return "重新加载";
 	}
 
 	public String rutaConfig() {
-	    return "路径";
+		return "路径";
 	}
 
 	public String tipoConfig() {
-	    return "类型";
+		return "类型";
 	}
 
 	public String claveConfig() {
-	    return "键";
+		return "键";
 	}
 
 	public String valorConfig() {
-	    return "值";
+		return "值";
 	}
 
 	public String buscarConfig() {
-	    return "搜索";
+		return "搜索";
 	}
 
 	public String sinArchivoSeleccionado() {
-	    return "未选择任何文件";
+		return "未选择任何文件";
 	}
 
 	public String archivoNoSoportado() {
-	    return "没有任何可用引擎支持该文件";
+		return "没有任何可用引擎支持该文件";
 	}
 
 	public String configGuardada() {
-	    return "配置已成功保存";
+		return "配置已成功保存";
 	}
 
 	public String errorCargandoConfig() {
-	    return "加载配置时出错";
+		return "加载配置时出错";
 	}
 
 	public String errorGuardandoConfig() {
-	    return "保存配置时出错";
+		return "保存配置时出错";
 	}
 
 	public String seleccionarArchivoConfig() {
-	    return "选择配置文件";
+		return "选择配置文件";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
