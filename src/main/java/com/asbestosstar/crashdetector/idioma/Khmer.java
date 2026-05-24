@@ -10641,4 +10641,13 @@ public class Khmer implements Idioma {
 		return "ជ្រើសរើសឯកសារការកំណត់";
 	}
 
+	// Khmer (ភាសាខ្មែរ)
+	public String suprimirConsolaCD() {
+		return "លាក់កុងសូល CrashDetector";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "លាក់ការត្រួតពិនិត្យ stack trace";
+	}
+
 }

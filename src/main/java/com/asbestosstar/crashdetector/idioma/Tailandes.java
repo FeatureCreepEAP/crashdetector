@@ -10644,4 +10644,12 @@ public class Tailandes implements Idioma {
 		return "เลือกไฟล์การตั้งค่า";
 	}
 
+	public String suprimirConsolaCD() {
+		return "ซ่อนคอนโซลของ CrashDetector";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "ซ่อนการตรวจสอบ stacktraces";
+	}
+
 }

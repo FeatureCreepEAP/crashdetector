@@ -10460,4 +10460,12 @@ public class Ruso implements Idioma {
 		return "Выбрать файл конфигурации";
 	}
 
+	public String suprimirConsolaCD() {
+		return "Скрыть консоль CrashDetector";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "Скрыть проверку стектрейсов";
+	}
+
 }

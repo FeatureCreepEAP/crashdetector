@@ -9866,4 +9866,13 @@ public class Chino implements Idioma {
 		return "选择配置文件";
 	}
 
+	// Chinese (Simplified) (中文)
+	public String suprimirConsolaCD() {
+		return "隐藏 CrashDetector 控制台";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "隐藏堆栈跟踪检查";
+	}
+
 }

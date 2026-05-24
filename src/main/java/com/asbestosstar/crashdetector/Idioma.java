@@ -4094,4 +4094,8 @@ public interface Idioma {
 
 	public String seleccionarArchivoConfig();
 
+	public String suprimirConsolaCD();
+
+	public String suprimirVerificacionDeStacktrazos();
+
 }

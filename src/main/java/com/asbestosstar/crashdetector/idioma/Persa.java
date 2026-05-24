@@ -10413,4 +10413,12 @@ public class Persa implements Idioma {
 		return "انتخاب فایل پیکربندی";
 	}
 
+	public String suprimirConsolaCD() {
+		return "سرکوب کنسول CrashDetector";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "سرکوب بررسی استک‌تریس‌ها";
+	}
+
 }

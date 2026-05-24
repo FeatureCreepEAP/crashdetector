@@ -10464,4 +10464,12 @@ public class Portuges implements Idioma {
 		return "Selecionar arquivo de configuração";
 	}
 
+	public String suprimirConsolaCD() {
+		return "Suprimir console do CrashDetector";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "Suprimir verificação de stacktraces";
+	}
+
 }

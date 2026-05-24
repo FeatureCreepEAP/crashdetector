@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.StackTracesDenegadosDeMinecraftPorDefecto;
+import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 import com.asbestosstar.crashdetector.mapas.TriMap;
 
@@ -94,6 +95,11 @@ public class VerificacionDeStackTrace {
 	}
 
 	public void reiniciar() {
+
+		ConfigBoolean suprimir = ConfigBoolean.de("suprimir_verificacion_de_stacktrazos", false);
+		if (suprimir.obtener()) {
+			return;
+		}
 
 		// === Reset estado ===
 		sm_config.clear();

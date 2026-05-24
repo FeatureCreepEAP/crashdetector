@@ -77,26 +77,24 @@ public class CorpoSAO extends CorpoBase {
 	private JButton botonDerechosMaranda; // New button for Maranda rights
 	private JButton botonVerificaciones; // New button for verifications
 	private JPanel panelDerechos; // Panel to hold the Maranda rights button
+	private JCheckBox checkSuprimirConsolaCD;
+	private JCheckBox checkSuprimirVDST;
 
 	@Override
 	public void init() {
 
-		// Construir la interfaz
 		setTitle(MonitorDePID.idioma.configuracionCorporativa());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(true);
-		setMinimumSize(new Dimension(800, 600));
-		setPreferredSize(new Dimension(850, 600));
+		setMinimumSize(new Dimension(800, 650));
+		setPreferredSize(new Dimension(850, 650));
 
-		// Asegurar que no está siempre en primer plano
 		setAlwaysOnTop(false);
 		setModal(false);
 
-		// Crear el contenido principal
 		raizPanel = new JPanel(new BorderLayout(10, 10));
 		raizPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-		// Panel izquierdo para la imagen de SAO
 		panelIzquierdo = new JPanel(new BorderLayout());
 		panelIzquierdo.setPreferredSize(new Dimension(244, 338));
 		panelIzquierdo.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
@@ -107,11 +105,9 @@ public class CorpoSAO extends CorpoBase {
 		imagenSAO.setVerticalAlignment(JLabel.CENTER);
 		panelIzquierdo.add(imagenSAO, BorderLayout.CENTER);
 
-		// Panel derecho para la configuración
 		panelDerecho = new JPanel(new BorderLayout(10, 10));
 		panelDerecho.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
-		// Panel de configuración
 		panelConfiguracion = new JPanel(new GridBagLayout());
 		panelConfiguracion.setBorder(
 				BorderFactory.createTitledBorder(BorderFactory.createLineBorder(colorBordePanel.obtener(), 1),
@@ -123,7 +119,6 @@ public class CorpoSAO extends CorpoBase {
 		gbc.weightx = 1.0;
 		gbc.gridwidth = 1;
 
-		// Idioma de respaldo
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weightx = 0.3;
@@ -134,12 +129,10 @@ public class CorpoSAO extends CorpoBase {
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.weightx = 0.7;
-		// Using ComboIdiomasConIcono to show flags
 		comboIdiomaRespaldo = new ComboIdiomasConIcono(getMapaIdiomas());
 		comboIdiomaRespaldo.setPreferredSize(new Dimension(150, 30));
 		panelConfiguracion.add(comboIdiomaRespaldo, gbc);
 
-		// Buscardor habilitado
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.weightx = 0.3;
@@ -153,7 +146,6 @@ public class CorpoSAO extends CorpoBase {
 		checkBuscardor = new JCheckBox();
 		panelConfiguracion.add(checkBuscardor, gbc);
 
-		// Nombre de la herramienta
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.weightx = 0.3;
@@ -167,7 +159,6 @@ public class CorpoSAO extends CorpoBase {
 		campoNombreHerramienta = new JTextField();
 		panelConfiguracion.add(campoNombreHerramienta, gbc);
 
-		// Condenar piratería
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.weightx = 0.3;
@@ -181,9 +172,34 @@ public class CorpoSAO extends CorpoBase {
 		checkCondenarPirata = new JCheckBox();
 		panelConfiguracion.add(checkCondenarPirata, gbc);
 
-		// Panel para botón de derechos Maranda (inicialmente invisible)
 		gbc.gridx = 0;
 		gbc.gridy = 4;
+		gbc.weightx = 0.3;
+		JLabel labelSuprimirConsolaCD = new JLabel(MonitorDePID.idioma.suprimirConsolaCD());
+		labelSuprimirConsolaCD.setForeground(colorTexto.obtener());
+		panelConfiguracion.add(labelSuprimirConsolaCD, gbc);
+
+		gbc.gridx = 1;
+		gbc.gridy = 4;
+		gbc.weightx = 0.7;
+		checkSuprimirConsolaCD = new JCheckBox();
+		panelConfiguracion.add(checkSuprimirConsolaCD, gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy = 5;
+		gbc.weightx = 0.3;
+		JLabel labelSuprimirVDST = new JLabel(MonitorDePID.idioma.suprimirVerificacionDeStacktrazos());
+		labelSuprimirVDST.setForeground(colorTexto.obtener());
+		panelConfiguracion.add(labelSuprimirVDST, gbc);
+
+		gbc.gridx = 1;
+		gbc.gridy = 5;
+		gbc.weightx = 0.7;
+		checkSuprimirVDST = new JCheckBox();
+		panelConfiguracion.add(checkSuprimirVDST, gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy = 6;
 		gbc.gridwidth = 2;
 		gbc.weightx = 1.0;
 		panelDerechos = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -195,7 +211,6 @@ public class CorpoSAO extends CorpoBase {
 
 		panelDerecho.add(panelConfiguracion, BorderLayout.NORTH);
 
-		// Panel de botones
 		panelBotones = new JPanel(new GridBagLayout());
 		panelBotones.setBorder(BorderFactory.createTitledBorder(
 				BorderFactory.createLineBorder(colorBordePanel.obtener(), 1), MonitorDePID.idioma.funcionalidades()));
@@ -205,35 +220,30 @@ public class CorpoSAO extends CorpoBase {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1.0;
 
-		// Lanzadores recomendados
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weightx = 0.5;
 		botonLanzadoresRecomendados = new JButton(MonitorDePID.idioma.lanzadoresRecomendados());
 		panelBotones.add(botonLanzadoresRecomendados, gbc);
 
-		// Lanzadores desaconsejados
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.weightx = 0.5;
 		botonLanzadoresDesaconsejados = new JButton(MonitorDePID.idioma.lanzadoresDesaconsejados());
 		panelBotones.add(botonLanzadoresDesaconsejados, gbc);
 
-		// Mods recomendados
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.weightx = 0.5;
 		botonModsRecomendados = new JButton(MonitorDePID.idioma.modsRecomendados());
 		panelBotones.add(botonModsRecomendados, gbc);
 
-		// Mods desaconsejados
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.weightx = 0.5;
 		botonModsDesaconsejados = new JButton(MonitorDePID.idioma.modsDesaconsejados());
 		panelBotones.add(botonModsDesaconsejados, gbc);
 
-		// AntiTamper
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
@@ -241,7 +251,6 @@ public class CorpoSAO extends CorpoBase {
 		botonAntiTamper = new JButton(MonitorDePID.idioma.antiTamper());
 		panelBotones.add(botonAntiTamper, gbc);
 
-		// Firmas
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
@@ -249,7 +258,6 @@ public class CorpoSAO extends CorpoBase {
 		botonFirmas = new JButton(TipoGUI.EDITOR_FIRMAS.etiquetaDelBoton());
 		panelBotones.add(botonFirmas, gbc);
 
-		// Verificaciones (new button)
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.gridwidth = 2;
@@ -259,26 +267,18 @@ public class CorpoSAO extends CorpoBase {
 
 		panelDerecho.add(panelBotones, BorderLayout.CENTER);
 
-		// Agregar paneles a raíz
 		raizPanel.add(panelIzquierdo, BorderLayout.WEST);
 		raizPanel.add(panelDerecho, BorderLayout.CENTER);
 
 		getContentPane().add(raizPanel);
 
-		// Cargar imagen de SAO
 		cargarImagenSAO();
-
-		// Aplicar apariencia
 		aplicarApariencia();
-
-		// Establecer valores iniciales
 		actualizarValores();
-
-		// Agregar listeners de acción
 		agregarListeners();
 
 		pack();
-		setSize(850, 600);
+		setSize(850, 650);
 		setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
@@ -327,7 +327,7 @@ public class CorpoSAO extends CorpoBase {
 		estilizarBoton(botonAntiTamper);
 		estilizarBoton(botonFirmas);
 		estilizarBoton(botonDerechosMaranda);
-		estilizarBoton(botonVerificaciones); // Estilizar el nuevo botón
+		estilizarBoton(botonVerificaciones);
 
 		// Estilizar campo de texto
 		estilizarCampo(campoNombreHerramienta);
@@ -335,6 +335,8 @@ public class CorpoSAO extends CorpoBase {
 		// Actualizar checkboxes
 		checkBuscardor.setForeground(colorTexto.obtener());
 		checkCondenarPirata.setForeground(colorTexto.obtener());
+		checkSuprimirConsolaCD.setForeground(colorTexto.obtener());
+		checkSuprimirVDST.setForeground(colorTexto.obtener());
 
 		// Actualizar bordes de los paneles
 		TitledBorder configBorder = (TitledBorder) panelConfiguracion.getBorder();
@@ -381,6 +383,8 @@ public class CorpoSAO extends CorpoBase {
 		checkBuscardor.setSelected(obtenerBuscardorHablicar());
 		campoNombreHerramienta.setText(obtenerNombreCD());
 		checkCondenarPirata.setSelected(obtenerCondenarPirata());
+		checkSuprimirConsolaCD.setSelected(obtenerSuprimirConsolaCD());
+		checkSuprimirVDST.setSelected(obtenerSuprimirVerificacionDeStacktrazos());
 
 		// Actualizar visibilidad del botón de derechos Maranda
 		botonDerechosMaranda.setVisible(obtenerCondenarPirata());
@@ -413,24 +417,32 @@ public class CorpoSAO extends CorpoBase {
 			botonDerechosMaranda.setVisible(checkCondenarPirata.isSelected());
 		});
 
-		// Los botones solo muestran mensaje "Próximamente" por ahora
-		java.awt.event.ActionListener proximamenteListener = e -> {
-			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.proximamente(), MonitorDePID.idioma.informacion(),
-					JOptionPane.INFORMATION_MESSAGE);
-		};
+		// Guardar configuración para suprimir consola CD
+		checkSuprimirConsolaCD.addActionListener(e -> {
+			escribirSuprimirConsolaCD(checkSuprimirConsolaCD.isSelected());
+		});
+
+		// Guardar configuración para suprimir verificación de stacktrazos
+		checkSuprimirVDST.addActionListener(e -> {
+			escribirSuprimirVerificacionDeStacktrazos(checkSuprimirVDST.isSelected());
+		});
 
 		botonLanzadoresRecomendados.addActionListener(e -> {
 			abrirLanzeresBuenos();
 		});
+
 		botonLanzadoresDesaconsejados.addActionListener(e -> {
 			abrirLanzeresMalos();
 		});
+
 		botonModsRecomendados.addActionListener(e -> {
 			abrirModsBuenas();
 		});
+
 		botonModsDesaconsejados.addActionListener(e -> {
 			abrirModsMalas();
 		});
+
 		botonAntiTamper.addActionListener(e -> {
 			abrirAntiManipulacion();
 		});
@@ -439,12 +451,10 @@ public class CorpoSAO extends CorpoBase {
 			abrirEditorCodice();
 		});
 
-		// Botón de verificaciones
 		botonVerificaciones.addActionListener(e -> {
 			abrirVerificaciones();
 		});
 
-		// Botón de derechos Maranda
 		botonDerechosMaranda.addActionListener(e -> {
 			abrirMiranda();
 		});

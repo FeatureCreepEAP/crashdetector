@@ -11012,4 +11012,13 @@ public class Frances implements Idioma {
 		return "Sélectionner un fichier de configuration";
 	}
 
+	// French (Burkina Faso variant) (Français)
+	public String suprimirConsolaCD() {
+		return "Masquer la console de CrashDetector";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "Masquer la vérification des traces de pile";
+	}
+
 }

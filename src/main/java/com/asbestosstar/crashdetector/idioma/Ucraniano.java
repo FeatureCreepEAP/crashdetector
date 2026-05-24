@@ -9779,4 +9779,12 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Вибрати файл конфігурації";
 	}
 
+	public String suprimirConsolaCD() {
+		return "Приховати консоль CrashDetector";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "Приховати перевірку стектрейсів";
+	}
+
 }

@@ -10087,4 +10087,13 @@ public class Japones implements Idioma {
 		return "設定ファイルを選択";
 	}
 
+	// Japanese (日本語)
+	public String suprimirConsolaCD() {
+		return "CrashDetector コンソールを非表示";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "スタックトレースチェックを非表示";
+	}
+
 }

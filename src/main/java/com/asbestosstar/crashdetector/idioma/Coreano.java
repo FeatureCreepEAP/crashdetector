@@ -10077,4 +10077,13 @@ public class Coreano implements Idioma {
 		return "구성 파일 선택";
 	}
 
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	public String suprimirConsolaCD() {
+		return "CrashDetector 콘솔 숨기기";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "스택 추적 검사 숨기기";
+	}
+
 }

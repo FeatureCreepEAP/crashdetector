@@ -9,6 +9,7 @@ import javax.swing.JDialog;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.PirataMC;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
@@ -95,6 +96,22 @@ public abstract class CorpoBase extends JDialog implements CrashDetectorGUI, Bot
 	public static void abrirAntiManipulacion() {
 		TipoGUI.ANTI_MANIPULACION
 				.obtenerGUIPredeterminado(AntiManipulacionGUIPanko.ID, () -> new AntiManipulacionGUIPanko()).init();
+	}
+
+	public static void escribirSuprimirConsolaCD(boolean valor) {
+		ConfigBoolean.de("suprimir_consola_cd", false).escribir(valor);
+	}
+
+	public static boolean obtenerSuprimirConsolaCD() {
+		return ConfigBoolean.de("suprimir_consola_cd", false).obtener();
+	}
+
+	public static void escribirSuprimirVerificacionDeStacktrazos(boolean valor) {
+		ConfigBoolean.de("suprimir_verificacion_de_stacktrazos", false).escribir(valor);
+	}
+
+	public static boolean obtenerSuprimirVerificacionDeStacktrazos() {
+		return ConfigBoolean.de("suprimir_verificacion_de_stacktrazos", false).obtener();
 	}
 
 	@Override

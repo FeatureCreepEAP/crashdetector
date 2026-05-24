@@ -11172,4 +11172,12 @@ public class Espanol implements Idioma {
 		return "Seleccionar archivo de configuracion";
 	}
 
+	public String suprimirConsolaCD() {
+		return "Suprimir consola de CrashDetector";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "Suprimir verificación de stacktrazos";
+	}
+
 }

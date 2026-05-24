@@ -11027,4 +11027,13 @@ public class Indonesia implements Idioma {
 		return "Pilih file konfigurasi";
 	}
 
+	// Indonesian (Bahasa Indonesia)
+	public String suprimirConsolaCD() {
+		return "Sembunyikan konsol CrashDetector";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "Sembunyikan pemeriksaan stack trace";
+	}
+
 }

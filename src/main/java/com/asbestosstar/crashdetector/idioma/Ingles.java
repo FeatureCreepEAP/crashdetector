@@ -10493,4 +10493,13 @@ public class Ingles implements Idioma {
 		return "Select configuration file";
 	}
 
+	// English (UK)
+	public String suprimirConsolaCD() {
+		return "Hide CrashDetector console";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "Hide stack trace check";
+	}
+
 }

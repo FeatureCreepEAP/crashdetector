@@ -10676,4 +10676,12 @@ public class Vietnamita implements Idioma {
 		return "Chọn tệp cấu hình";
 	}
 
+	public String suprimirConsolaCD() {
+		return "Ẩn bảng điều khiển của CrashDetector";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "Ẩn kiểm tra stacktraces";
+	}
+
 }

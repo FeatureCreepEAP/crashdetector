@@ -31,6 +31,7 @@ import com.asbestosstar.crashdetector.buscarparajava.BuscarParaJava8Windows;
 import com.asbestosstar.crashdetector.canario.CanarioDeOrdenJudicial;
 import com.asbestosstar.crashdetector.canario.pordefecto.CDInformesAsbestosstarEgoismJPCanario;
 import com.asbestosstar.crashdetector.canario.pordefecto.CDPasteAsbestosstarEgoismJPCanario;
+import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.detectorlanzer.DetectorLanzer;
 import com.asbestosstar.crashdetector.dto.modpack.CopiaDeSeguridadDeArchivos;
@@ -1031,6 +1032,11 @@ public class MonitorDePID {
 
 	public static void abrirConsola() {
 		// Check if the environment is not headless
+		ConfigBoolean suprimir = ConfigBoolean.de("suprimir_consola_cd", false);
+		if (suprimir.obtener()) {
+			return;
+		}
+
 		if (!GraphicsEnvironment.isHeadless() && consola_des == null) {
 			establecerLookAndFeel();
 			if (ConfigMundial.obtenerInstancia().obtenerConsolaDesarrollo()) {

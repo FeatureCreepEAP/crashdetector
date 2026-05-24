@@ -10880,4 +10880,12 @@ public class Lao implements Idioma {
 		return "ເລືອກໄຟລ໌ການຕັ້ງຄ່າ";
 	}
 
+	public String suprimirConsolaCD() {
+		return "ປິດການສະແດງຄອນໂຊລຂອງ CrashDetector";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "ປິດການກວດສອບ stacktraces";
+	}
+
 }

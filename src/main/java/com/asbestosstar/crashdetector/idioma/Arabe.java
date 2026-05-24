@@ -10353,4 +10353,13 @@ public class Arabe implements Idioma {
 		return "اختر ملف الإعدادات";
 	}
 
+	// Arabic (العربية)
+	public String suprimirConsolaCD() {
+		return "إخفاء وحدة تحكم CrashDetector";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "إخفاء فحص تتبع المكدس (stacktrace)";
+	}
+
 }

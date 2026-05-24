@@ -10908,4 +10908,12 @@ public class Suajili implements Idioma {
 		return "Chagua faili ya mipangilio";
 	}
 
+	public String suprimirConsolaCD() {
+		return "Ficha konsole ya CrashDetector";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "Ficha ukaguzi wa stacktraces";
+	}
+
 }

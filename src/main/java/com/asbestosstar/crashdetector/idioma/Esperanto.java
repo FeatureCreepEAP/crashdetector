@@ -10441,4 +10441,13 @@ public class Esperanto implements Idioma {
 		return "Elekti dosieron de agordo";
 	}
 
+	// Esperanto (Esperanto)
+	public String suprimirConsolaCD() {
+		return "Kaŝi konzolon de CrashDetector";
+	}
+
+	public String suprimirVerificacionDeStacktrazos() {
+		return "Kaŝi kontrolon de stakspuroj";
+	}
+
 }
