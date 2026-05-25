@@ -686,14 +686,11 @@ public class JGitHubIzzy extends JGitHubBase {
 				int descargadas = 0;
 				StringBuilder errores = new StringBuilder();
 
-				for (DependenciaJGit dep : faltantes) {
-					ResultadoDescargaJGit r = descargarDependencia(dep);
-
-					if (r.exito) {
-						descargadas++;
-					} else {
-						errores.append(dep.nombreVisible()).append(": ").append(r.mensaje).append("\n");
-					}
+				try {
+					descargadas = descargarTodasLasDependenciasFaltantes();
+				} catch (Throwable t) {
+					CrashDetectorLogger.logException(t);
+					errores.append(t.getMessage());
 				}
 
 				final int totalDescargadas = descargadas;

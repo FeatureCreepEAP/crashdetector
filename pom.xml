@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.asbestosstar</groupId>
 	<artifactId>crashdetector</artifactId>
-	<version>0.9.1</version>
+	<version>0.9.2</version>
 
 
 	<!-- Add necessary metadata for Maven Central -->
@@ -518,6 +518,22 @@
     <version>0.5.4</version>
     <scope>provided</scope>
 </dependency>
+
+
+
+
+<dependency>
+	<groupId>com.github.Querz</groupId>
+	<artifactId>NBT</artifactId>
+	<version>6.1</version>
+	    <scope>provided</scope>
+</dependency>
+
+
+
+
+
+
 
 
 

@@ -5,6 +5,9 @@ import com.asbestosstar.crashdetector.config.json.Json;
 
 /**
  * Punto de entrada para JSON5.
+ *
+ * JSON5 se lee con json5-java y luego se convierte al sistema Json normal. Esto
+ * evita crear Json.Nodo con motorRef null.
  */
 public class Json5 {
 

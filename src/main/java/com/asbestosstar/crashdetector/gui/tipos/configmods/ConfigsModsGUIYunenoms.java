@@ -52,6 +52,7 @@ public class ConfigsModsGUIYunenoms extends ConfigsModsGUI {
 	private JButton botonGuardar;
 	private JButton botonRecargar;
 	private JButton botonCerrar;
+	private JButton botonDescargarDeps;
 
 	private final List<EntradaConfig> entradasFiltradas = new ArrayList<EntradaConfig>();
 
@@ -186,22 +187,100 @@ public class ConfigsModsGUIYunenoms extends ConfigsModsGUI {
 	private JPanel crearPanelBotones() {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 8));
 
+		botonDescargarDeps = new JButton("Descargar deps");
 		botonAbrir = new JButton(MonitorDePID.idioma.abrirConfig());
 		botonGuardar = new JButton(MonitorDePID.idioma.guardarConfig());
 		botonRecargar = new JButton(MonitorDePID.idioma.recargarConfig());
 		botonCerrar = new JButton(MonitorDePID.idioma.cancelar());
 
+		botonDescargarDeps.addActionListener(e -> accionDescargarDependencias());
 		botonAbrir.addActionListener(e -> seleccionarArchivoDesdeTabla());
 		botonGuardar.addActionListener(e -> guardar());
 		botonRecargar.addActionListener(e -> recargarTodo());
 		botonCerrar.addActionListener(e -> dispose());
 
+		panel.add(botonDescargarDeps);
 		panel.add(botonAbrir);
 		panel.add(botonGuardar);
 		panel.add(botonRecargar);
 		panel.add(botonCerrar);
 
+		actualizarBotonDeps();
+
 		return panel;
+	}
+
+	private void actualizarBotonDeps() {
+		if (botonDescargarDeps == null) {
+			return;
+		}
+
+		List<DependenciaConfigMods> faltantes = dependenciasConfigsFaltantesEnCarpetaInstalacion();
+		botonDescargarDeps.setEnabled(faltantes != null && !faltantes.isEmpty());
+	}
+
+	private void accionDescargarDependencias() {
+		final List<DependenciaConfigMods> faltantes = dependenciasConfigsFaltantesEnCarpetaInstalacion();
+
+		if (faltantes == null || faltantes.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "No faltan dependencias.");
+			actualizarBotonDeps();
+			return;
+		}
+
+		StringBuilder lista = new StringBuilder();
+
+		for (DependenciaConfigMods dep : faltantes) {
+			lista.append(" - ").append(dep.nombreVisible()).append("\n");
+		}
+
+		int confirmar = JOptionPane.showConfirmDialog(this,
+				"Se descargaran " + faltantes.size() + " dependencias para el editor de configs:\n\n" + lista.toString()
+						+ "\nDespues puede ser necesario reiniciar para que entren al classpath.",
+				"Descargar deps", JOptionPane.YES_NO_OPTION);
+
+		if (confirmar != JOptionPane.YES_OPTION) {
+			return;
+		}
+
+		botonDescargarDeps.setEnabled(false);
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				int descargadas = 0;
+				String error = "";
+
+				try {
+					descargadas = descargarTodasLasDependenciasConfigsFaltantes();
+				} catch (Throwable t) {
+					com.asbestosstar.crashdetector.CrashDetectorLogger.logException(t);
+					error = t.getMessage();
+				}
+
+				final int totalDescargadas = descargadas;
+				final String textoError = error;
+
+				javax.swing.SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						actualizarBotonDeps();
+						buscarConfigsEditables();
+						recargarTablaArchivos();
+
+						String mensaje = "Dependencias descargadas: " + totalDescargadas;
+
+						if (textoError != null && !textoError.trim().isEmpty()) {
+							mensaje += "\n\nError:\n" + textoError;
+						}
+
+						mensaje += "\n\nReinicie CrashDetector si las clases todavia no aparecen en el classpath.";
+
+						JOptionPane.showMessageDialog(ConfigsModsGUIYunenoms.this, mensaje);
+					}
+				});
+			}
+		}).start();
 	}
 
 	private void recargarTodo() {
@@ -214,6 +293,8 @@ public class ConfigsModsGUIYunenoms extends ConfigsModsGUI {
 				cargarArchivo(seleccionado);
 				recargarTablaValores();
 			}
+
+			actualizarBotonDeps();
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.errorCargandoConfig() + ": " + ex.getMessage(),
 					MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
@@ -321,6 +402,7 @@ public class ConfigsModsGUIYunenoms extends ConfigsModsGUI {
 		estilizarTabla(tablaArchivos, tabla, texto, borde, acento);
 		estilizarTabla(tablaValores, tabla, texto, borde, acento);
 
+		estilizarBoton(botonDescargarDeps, boton, Color.WHITE, borde);
 		estilizarBoton(botonAbrir, boton, Color.WHITE, borde);
 		estilizarBoton(botonGuardar, boton, Color.WHITE, borde);
 		estilizarBoton(botonRecargar, boton, Color.WHITE, borde);

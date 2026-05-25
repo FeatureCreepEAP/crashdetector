@@ -2,10 +2,7 @@ package com.asbestosstar.crashdetector.gui.tipos.jgit;
 
 import java.awt.Desktop;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +11,7 @@ import java.util.function.Supplier;
 import javax.swing.JFrame;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.deps.DescargadorDependenciasMaven;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
@@ -23,6 +21,10 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
  *
  * La base contiene la lógica general. Las implementaciones contienen
  * apariencia.
+ *
+ * Esta clase ya no descarga JARs manualmente desde Maven Central. Ahora usa
+ * DescargadorDependenciasMaven, que resuelve dependencias transitivas y usa
+ * todos los repositorios configurados.
  */
 public abstract class JGitHubBase extends JFrame implements CrashDetectorGUI, BotonDeBarraLateralDerecha {
 
@@ -90,9 +92,19 @@ public abstract class JGitHubBase extends JFrame implements CrashDetectorGUI, Bo
 		}
 	}
 
+	/**
+	 * Descarga una dependencia raiz usando el descargador Maven general.
+	 *
+	 * Importante: este metodo descarga tambien dependencias transitivas. El archivo
+	 * devuelto es la carpeta de instalacion, no necesariamente un JAR individual.
+	 */
 	protected ResultadoDescargaJGit descargarDependencia(DependenciaJGit dependencia) {
 		if (dependencia == null) {
 			return new ResultadoDescargaJGit(false, null, "Dependencia nula.");
+		}
+
+		if (!dependencia.coordenadaValida()) {
+			return new ResultadoDescargaJGit(false, null, "Coordenada Maven invalida: " + dependencia.nombreVisible());
 		}
 
 		try {
@@ -100,68 +112,88 @@ public abstract class JGitHubBase extends JFrame implements CrashDetectorGUI, Bo
 				BuscarParaJGit.CARPETA_JGIT.mkdirs();
 			}
 
-			File destino = new File(BuscarParaJGit.CARPETA_JGIT, dependencia.nombreJar());
+			DescargadorDependenciasMaven.ResultadoDescarga r = DescargadorDependenciasMaven
+					.descargarDependencia(dependencia.groupId, dependencia.artifactId, dependencia.version);
 
-			if (destino.exists() && destino.isFile() && destino.length() > 0L) {
-				return new ResultadoDescargaJGit(true, destino, "Ya existe: " + destino.getAbsolutePath());
-			}
-
-			URL url = new URL(dependencia.urlMavenCentral());
-			HttpURLConnection con = (HttpURLConnection) url.openConnection();
-			con.setConnectTimeout(15000);
-			con.setReadTimeout(30000);
-			con.setRequestProperty("User-Agent", "CrashDetector-JGit-Installer");
-
-			int codigo = con.getResponseCode();
-
-			if (codigo < 200 || codigo >= 300) {
-				return new ResultadoDescargaJGit(false, destino,
-						"HTTP " + codigo + " descargando " + dependencia.urlMavenCentral());
-			}
-
-			InputStream in = con.getInputStream();
-
-			try {
-				FileOutputStream out = new FileOutputStream(destino);
-
-				try {
-					byte[] buffer = new byte[8192];
-					int leido;
-
-					while ((leido = in.read(buffer)) >= 0) {
-						out.write(buffer, 0, leido);
-					}
-				} finally {
-					out.close();
-				}
-			} finally {
-				in.close();
-			}
-
-			if (!destino.exists() || destino.length() <= 0L) {
-				return new ResultadoDescargaJGit(false, destino, "El archivo descargado quedó vacío.");
-			}
-
-			return new ResultadoDescargaJGit(true, destino, "Descargado: " + destino.getAbsolutePath());
-
+			return new ResultadoDescargaJGit(r.exito, r.carpeta, r.mensaje);
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
 			return new ResultadoDescargaJGit(false, null, t.getMessage());
 		}
 	}
 
+	/**
+	 * Descarga todas las dependencias raiz faltantes en la carpeta de instalacion.
+	 *
+	 * Como el descargador nuevo resuelve transitivas, esta funcion manda solo las
+	 * dependencias raiz que BuscarParaJGit considere necesarias.
+	 */
 	protected int descargarTodasLasDependenciasFaltantes() {
-		int descargadas = 0;
+		List<DependenciaJGit> faltantes = dependenciasFaltantesEnCarpetaInstalacion();
 
-		for (DependenciaJGit dep : dependenciasFaltantes()) {
-			ResultadoDescargaJGit r = descargarDependencia(dep);
+		if (faltantes == null || faltantes.isEmpty()) {
+			return 0;
+		}
 
-			if (r.exito) {
-				descargadas++;
+		List<DescargadorDependenciasMaven.CoordenadaMaven> coordenadas = new ArrayList<DescargadorDependenciasMaven.CoordenadaMaven>();
+
+		for (DependenciaJGit dep : faltantes) {
+			if (dep == null || !dep.coordenadaValida()) {
+				continue;
+			}
+
+			coordenadas.add(new DescargadorDependenciasMaven.CoordenadaMaven(dep.groupId, dep.artifactId, dep.version));
+		}
+
+		if (coordenadas.isEmpty()) {
+			return 0;
+		}
+
+		DescargadorDependenciasMaven.ResultadoDescarga r = DescargadorDependenciasMaven
+				.descargarDependencias(coordenadas);
+
+		if (!r.exito) {
+			CrashDetectorLogger.log("Error descargando dependencias JGit: " + r.mensaje);
+		}
+
+		/*
+		 * Contamos cuantas de las dependencias raiz que faltaban ahora aparecen en la
+		 * carpeta. Las transitivas no se cuentan aqui porque la GUI habla de las
+		 * dependencias principales faltantes.
+		 */
+		return contarDependenciasInstaladas(faltantes);
+	}
+
+	private int contarDependenciasInstaladas(List<DependenciaJGit> deps) {
+		if (deps == null || deps.isEmpty()) {
+			return 0;
+		}
+
+		int total = 0;
+		List<File> jars = BuscarParaJGit.encontrarJarsInstalados();
+
+		for (DependenciaJGit dep : deps) {
+			if (dep == null) {
+				continue;
+			}
+
+			for (File jar : jars) {
+				if (jar == null || !jar.isFile()) {
+					continue;
+				}
+
+				if (jar.length() <= 0L) {
+					continue;
+				}
+
+				if (dep.coincideConNombreJar(jar.getName())) {
+					total++;
+					break;
+				}
 			}
 		}
 
-		return descargadas;
+		return total;
 	}
 
 	protected abstract void actualizarEstadoBotones();

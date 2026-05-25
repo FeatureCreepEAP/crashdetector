@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.dmr.Dmr;
 import com.asbestosstar.crashdetector.config.hocon.Hocon;
@@ -41,8 +43,11 @@ import com.asbestosstar.crashdetector.config.ini.Ini;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.config.json5.Json5;
 import com.asbestosstar.crashdetector.config.jsonc.Jsonc;
+import com.asbestosstar.crashdetector.config.nbt.Nbt;
+import com.asbestosstar.crashdetector.config.snbt.Snbt;
 import com.asbestosstar.crashdetector.config.toml.Toml;
 import com.asbestosstar.crashdetector.config.yaml.Yaml;
+import com.asbestosstar.crashdetector.deps.DescargadorDependenciasMaven;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
@@ -81,6 +86,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		archivosConfigs.clear();
 		buscarEnCarpeta(new File("./config"));
 		buscarEnCarpeta(new File("./etc"));
+		buscarEnCarpeta(new File("./serverconfig"));
 		Collections.sort(archivosConfigs, (a, b) -> a.getPath().compareToIgnoreCase(b.getPath()));
 	}
 
@@ -145,6 +151,14 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 			return motorDisponible(Dmr.nombreMotor());
 		}
 
+		if ("nbt".equals(ext) || "dat".equals(ext)) {
+			return motorDisponible(Nbt.nombreMotor());
+		}
+
+		if ("snbt".equals(ext)) {
+			return motorDisponible(Snbt.nombreMotor());
+		}
+
 		return false;
 	}
 
@@ -175,40 +189,48 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		extensionActual = extension(archivo);
 		entradas.clear();
 
-		String texto = new String(Files.readAllBytes(archivo.toPath()), StandardCharsets.UTF_8);
-
-		if ("json".equals(extensionActual)) {
-			nodoActual = Json.leer(texto);
-			extraerJson((Json.Nodo) nodoActual, "");
-		} else if ("jsonc".equals(extensionActual)) {
-			nodoActual = Jsonc.leer(texto);
-			extraerJson((Json.Nodo) nodoActual, "");
-		} else if ("json5".equals(extensionActual)) {
-			nodoActual = Json5.leer(texto);
-			extraerJson((Json.Nodo) nodoActual, "");
-		} else if ("yaml".equals(extensionActual) || "yml".equals(extensionActual)) {
-			nodoActual = Yaml.leer(texto);
-			extraerYaml((Yaml.Nodo) nodoActual, "");
-		} else if ("toml".equals(extensionActual)) {
-			nodoActual = Toml.leer(texto);
-			extraerToml((Toml.Nodo) nodoActual, "");
-		} else if ("ini".equals(extensionActual) || "cfg".equals(extensionActual)) {
-			nodoActual = Ini.leer(texto);
-			extraerIni((Ini.Nodo) nodoActual);
-		} else if ("conf".equals(extensionActual) || "hocon".equals(extensionActual)) {
-			nodoActual = Hocon.leer(texto);
-			extraerHocon((Hocon.Nodo) nodoActual, "");
-		} else if ("dmr".equals(extensionActual)) {
-			nodoActual = Dmr.leer(texto);
-			extraerJson((Json.Nodo) nodoActual, "");
-		} else if ("properties".equals(extensionActual)) {
-			nodoActual = leerProperties(archivo);
-			extraerProperties((Properties) nodoActual);
-		} else if ("xml".equals(extensionActual)) {
-			nodoActual = leerXml(archivo);
-			extraerXml(((Document) nodoActual).getDocumentElement(), "");
+		if ("nbt".equals(extensionActual) || "dat".equals(extensionActual)) {
+			nodoActual = Nbt.leerArchivo(archivo);
+			extraerNbt((Nbt.Nodo) nodoActual, "");
 		} else {
-			throw new IllegalStateException(MonitorDePID.idioma.archivoNoSoportado());
+			String texto = new String(Files.readAllBytes(archivo.toPath()), StandardCharsets.UTF_8);
+
+			if ("json".equals(extensionActual)) {
+				nodoActual = Json.leer(texto);
+				extraerJson((Json.Nodo) nodoActual, "");
+			} else if ("jsonc".equals(extensionActual)) {
+				nodoActual = Jsonc.leer(texto);
+				extraerJson((Json.Nodo) nodoActual, "");
+			} else if ("json5".equals(extensionActual)) {
+				nodoActual = Json5.leer(texto);
+				extraerJson((Json.Nodo) nodoActual, "");
+			} else if ("yaml".equals(extensionActual) || "yml".equals(extensionActual)) {
+				nodoActual = Yaml.leer(texto);
+				extraerYaml((Yaml.Nodo) nodoActual, "");
+			} else if ("toml".equals(extensionActual)) {
+				nodoActual = Toml.leer(texto);
+				extraerToml((Toml.Nodo) nodoActual, "");
+			} else if ("ini".equals(extensionActual) || "cfg".equals(extensionActual)) {
+				nodoActual = Ini.leer(texto);
+				extraerIni((Ini.Nodo) nodoActual);
+			} else if ("conf".equals(extensionActual) || "hocon".equals(extensionActual)) {
+				nodoActual = Hocon.leer(texto);
+				extraerHocon((Hocon.Nodo) nodoActual, "");
+			} else if ("dmr".equals(extensionActual)) {
+				nodoActual = Dmr.leer(texto);
+				extraerJson((Json.Nodo) nodoActual, "");
+			} else if ("snbt".equals(extensionActual)) {
+				nodoActual = Snbt.leer(texto);
+				extraerNbt((Nbt.Nodo) nodoActual, "");
+			} else if ("properties".equals(extensionActual)) {
+				nodoActual = leerProperties(archivo);
+				extraerProperties((Properties) nodoActual);
+			} else if ("xml".equals(extensionActual)) {
+				nodoActual = leerXml(archivo);
+				extraerXml(((Document) nodoActual).getDocumentElement(), "");
+			} else {
+				throw new IllegalStateException(MonitorDePID.idioma.archivoNoSoportado());
+			}
 		}
 
 		for (EntradaConfig e : entradas) {
@@ -239,6 +261,10 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 			escribirTexto(Hocon.escribir((Hocon.Nodo) nodoActual));
 		} else if ("dmr".equals(extensionActual)) {
 			escribirTexto(Dmr.escribir((Json.Nodo) nodoActual));
+		} else if ("snbt".equals(extensionActual)) {
+			escribirTexto(Snbt.escribir((Nbt.Nodo) nodoActual));
+		} else if ("nbt".equals(extensionActual) || "dat".equals(extensionActual)) {
+			Nbt.escribirArchivo((Nbt.Nodo) nodoActual, archivoActual);
 		} else if ("properties".equals(extensionActual)) {
 			escribirProperties((Properties) nodoActual);
 		} else if ("xml".equals(extensionActual)) {
@@ -277,11 +303,58 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 			((Ini.Nodo) e.nodo).poner(String.valueOf(valor));
 		} else if (e.nodo instanceof Hocon.Nodo) {
 			((Hocon.Nodo) e.nodo).poner(valor);
+		} else if (e.nodo instanceof Nbt.Nodo) {
+			ponerNbt((Nbt.Nodo) e.nodo, valor);
 		} else if (e.nodo instanceof Properties) {
 			((Properties) e.nodo).setProperty(e.ruta, String.valueOf(valor));
 		} else if (e.nodo instanceof Element) {
 			((Element) e.nodo).setTextContent(String.valueOf(valor));
 		}
+	}
+
+	private void ponerNbt(Nbt.Nodo n, Object valor) {
+		if (valor instanceof Boolean) {
+			n.poner(((Boolean) valor).booleanValue());
+		} else if (valor instanceof Integer) {
+			n.poner(((Integer) valor).intValue());
+		} else if (valor instanceof Long) {
+			n.poner(((Long) valor).longValue());
+		} else if (valor instanceof Double) {
+			n.poner(((Double) valor).doubleValue());
+		} else if (valor instanceof Number) {
+			n.poner(((Number) valor).doubleValue());
+		} else {
+			n.poner(valor == null ? "" : String.valueOf(valor));
+		}
+	}
+
+	private void extraerNbt(Nbt.Nodo nodo, String ruta) {
+		if (nodo == null) {
+			return;
+		}
+
+		if (nodo.esObjeto()) {
+			for (String k : nodo.claves()) {
+				extraerNbt(nodo.obtener(k), unirRuta(ruta, k));
+			}
+			return;
+		}
+
+		if (nodo.esLista()) {
+			for (int i = 0; i < nodo.tamano(); i++) {
+				extraerNbt(nodo.en(i), ruta + "[" + i + "]");
+			}
+			return;
+		}
+
+		if (nodo.esByteArray() || nodo.esIntArray() || nodo.esLongArray()) {
+			// Arrays NBT tipados no son seguros de editar como un solo campo simple.
+			// Se muestran como SNBT para referencia.
+			agregarEntrada(ruta, nodo.escribirSnbt(), nodo);
+			return;
+		}
+
+		agregarEntrada(ruta, nodo.comoCadena(), nodo);
 	}
 
 	private void ponerYaml(Yaml.Nodo n, Object valor) {
@@ -598,4 +671,193 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 			return editorActual;
 		}
 	}
+
+	protected static final File CARPETA_DEPS_CONFIGS = new File(System.getProperty("user.home"), "crash_detector/deps");
+
+	protected static class DependenciaConfigMods {
+
+		public final String groupId;
+		public final String artifactId;
+		public final String version;
+
+		public DependenciaConfigMods(String groupId, String artifactId, String version) {
+			this.groupId = groupId;
+			this.artifactId = artifactId;
+			this.version = version;
+		}
+
+		public String nombreVisible() {
+			return groupId + ":" + artifactId + ":" + version;
+		}
+
+		public String nombreJar() {
+			return artifactId + "-" + version + ".jar";
+		}
+
+		public boolean coincideConNombreJar(String nombreArchivo) {
+			if (nombreArchivo == null) {
+				return false;
+			}
+
+			String n = nombreArchivo.trim().toLowerCase();
+
+			return n.equals(nombreJar().toLowerCase()) || n.startsWith((artifactId + "-").toLowerCase());
+		}
+
+		public boolean coordenadaValida() {
+			return groupId != null && !groupId.trim().isEmpty() && artifactId != null && !artifactId.trim().isEmpty()
+					&& version != null && !version.trim().isEmpty();
+		}
+	}
+
+	/*
+	 * Dependencias opcionales usadas por el editor de configs.
+	 *
+	 * El descargador Maven resolvera tambien las transitivas.
+	 */
+	protected static final List<DependenciaConfigMods> DEPENDENCIAS_CONFIGS_REQUERIDAS = Arrays.asList(
+			// JSON
+			new DependenciaConfigMods("com.google.code.gson", "gson", "2.10.1"),
+			new DependenciaConfigMods("org.jboss", "jboss-dmr", "1.6.1.Final"),
+			new DependenciaConfigMods("com.googlecode.json-simple", "json-simple", "1.1.1"),
+
+			// JSON5
+			new DependenciaConfigMods("de.marhali", "json5-java", "3.0.0"),
+
+			// YAML
+			new DependenciaConfigMods("org.yaml", "snakeyaml", "1.33"),
+
+			// TOML
+			new DependenciaConfigMods("com.electronwill.night-config", "toml", "3.6.0"),
+
+			// HOCON
+			new DependenciaConfigMods("org.spongepowered", "configurate-hocon", "4.2.0"),
+
+			// INI / CFG / HOCON extra fallback helpers
+			new DependenciaConfigMods("org.apache.commons", "commons-configuration2", "2.15.0"),
+			new DependenciaConfigMods("org.ini4j", "ini4j", "0.5.4"),
+
+			// NBT / SNBT
+			new DependenciaConfigMods("com.github.Querz", "NBT", "6.1"));
+
+	protected List<DependenciaConfigMods> dependenciasConfigsFaltantesEnCarpetaInstalacion() {
+		List<DependenciaConfigMods> faltantes = new ArrayList<DependenciaConfigMods>();
+
+		List<File> jars = encontrarJarsDepsConfigs();
+
+		for (DependenciaConfigMods dep : DEPENDENCIAS_CONFIGS_REQUERIDAS) {
+			boolean encontrada = false;
+
+			for (File jar : jars) {
+				if (jar == null || !jar.isFile()) {
+					continue;
+				}
+
+				if (jar.length() <= 0L) {
+					continue;
+				}
+
+				if (dep.coincideConNombreJar(jar.getName())) {
+					encontrada = true;
+					break;
+				}
+			}
+
+			if (!encontrada) {
+				faltantes.add(dep);
+			}
+		}
+
+		return faltantes;
+	}
+
+	protected List<File> encontrarJarsDepsConfigs() {
+		List<File> ret = new ArrayList<File>();
+
+		if (!CARPETA_DEPS_CONFIGS.exists() || !CARPETA_DEPS_CONFIGS.isDirectory()) {
+			return ret;
+		}
+
+		File[] archivos = CARPETA_DEPS_CONFIGS.listFiles();
+
+		if (archivos == null) {
+			return ret;
+		}
+
+		for (File archivo : archivos) {
+			if (archivo != null && archivo.isFile() && archivo.getName().toLowerCase().endsWith(".jar")) {
+				ret.add(archivo);
+			}
+		}
+
+		return ret;
+	}
+
+	protected int descargarTodasLasDependenciasConfigsFaltantes() {
+		List<DependenciaConfigMods> faltantes = dependenciasConfigsFaltantesEnCarpetaInstalacion();
+
+		if (faltantes == null || faltantes.isEmpty()) {
+			return 0;
+		}
+
+		if (!CARPETA_DEPS_CONFIGS.exists()) {
+			CARPETA_DEPS_CONFIGS.mkdirs();
+		}
+
+		List<DescargadorDependenciasMaven.CoordenadaMaven> coordenadas = new ArrayList<DescargadorDependenciasMaven.CoordenadaMaven>();
+
+		for (DependenciaConfigMods dep : faltantes) {
+			if (dep == null || !dep.coordenadaValida()) {
+				continue;
+			}
+
+			coordenadas.add(new DescargadorDependenciasMaven.CoordenadaMaven(dep.groupId, dep.artifactId, dep.version));
+		}
+
+		if (coordenadas.isEmpty()) {
+			return 0;
+		}
+
+		DescargadorDependenciasMaven.ResultadoDescarga r = DescargadorDependenciasMaven
+				.descargarDependencias(coordenadas);
+
+		if (!r.exito) {
+			CrashDetectorLogger.log("Error descargando dependencias del editor de configs: " + r.mensaje);
+		}
+
+		return contarDependenciasConfigsInstaladas(faltantes);
+	}
+
+	private int contarDependenciasConfigsInstaladas(List<DependenciaConfigMods> deps) {
+		if (deps == null || deps.isEmpty()) {
+			return 0;
+		}
+
+		int total = 0;
+		List<File> jars = encontrarJarsDepsConfigs();
+
+		for (DependenciaConfigMods dep : deps) {
+			if (dep == null) {
+				continue;
+			}
+
+			for (File jar : jars) {
+				if (jar == null || !jar.isFile()) {
+					continue;
+				}
+
+				if (jar.length() <= 0L) {
+					continue;
+				}
+
+				if (dep.coincideConNombreJar(jar.getName())) {
+					total++;
+					break;
+				}
+			}
+		}
+
+		return total;
+	}
+
 }

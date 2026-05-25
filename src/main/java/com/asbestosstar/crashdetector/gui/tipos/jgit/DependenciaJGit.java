@@ -1,8 +1,11 @@
 package com.asbestosstar.crashdetector.gui.tipos.jgit;
 
 /**
- * Representa una dependencia JAR que se puede comprobar y descargar desde Maven
- * Central.
+ * Representa una dependencia Maven que se puede comprobar y descargar.
+ *
+ * Ya no conoce Maven Central directamente. La descarga real la hace
+ * DescargadorDependenciasMaven, que puede usar varios repositorios y resolver
+ * dependencias transitivas.
  */
 public class DependenciaJGit {
 
@@ -20,13 +23,12 @@ public class DependenciaJGit {
 		return artifactId + "-" + version + ".jar";
 	}
 
-	public String nombreVisible() {
-		return groupId + ":" + artifactId + ":" + version;
+	public String nombrePom() {
+		return artifactId + "-" + version + ".pom";
 	}
 
-	public String urlMavenCentral() {
-		return "https://repo1.maven.org/maven2/" + groupId.replace('.', '/') + "/" + artifactId + "/" + version + "/"
-				+ nombreJar();
+	public String nombreVisible() {
+		return groupId + ":" + artifactId + ":" + version;
 	}
 
 	public boolean coincideConNombreJar(String nombreArchivo) {
@@ -37,5 +39,10 @@ public class DependenciaJGit {
 		String n = nombreArchivo.trim().toLowerCase();
 
 		return n.equals(nombreJar().toLowerCase()) || n.startsWith((artifactId + "-").toLowerCase());
+	}
+
+	public boolean coordenadaValida() {
+		return groupId != null && !groupId.trim().isEmpty() && artifactId != null && !artifactId.trim().isEmpty()
+				&& version != null && !version.trim().isEmpty();
 	}
 }

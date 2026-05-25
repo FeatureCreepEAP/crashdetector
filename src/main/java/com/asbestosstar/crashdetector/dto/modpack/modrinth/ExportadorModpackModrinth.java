@@ -100,68 +100,79 @@ public class ExportadorModpackModrinth {
 		return index;
 	}
 
-	private static void agregarArchivosIndex(Json.Nodo files, Json.Nodo arreglo) throws IOException {
-		if (arreglo == null || !arreglo.esArreglo()) {
-			return;
+private static void agregarArchivosIndex(Json.Nodo files, Json.Nodo arreglo) throws IOException {
+	if (arreglo == null || !arreglo.esArreglo()) {
+		return;
+	}
+
+	for (int i = 0; i < arreglo.tamano(); i++) {
+		Json.Nodo entrada = arreglo.en(i);
+		Json.Nodo version = entrada.obtener("version");
+		Json.Nodo metadata = version.obtener("metadata");
+
+		String path = obtenerCadenaSeguro(metadata.obtener("path"), "");
+		String sha1 = obtenerCadenaSeguro(metadata.obtener("sha1"), "");
+		String versionId = obtenerCadenaSeguro(version.obtener("modrinthVersionId"), "");
+		String entradaVersionId = obtenerCadenaSeguro(entrada.obtener("modrinthVersionId"), "");
+
+		if (versionId.trim().isEmpty()) {
+			versionId = entradaVersionId;
 		}
 
-		for (int i = 0; i < arreglo.tamano(); i++) {
-			Json.Nodo entrada = arreglo.en(i);
-			Json.Nodo version = entrada.obtener("version");
-			Json.Nodo metadata = version.obtener("metadata");
+		if (path.trim().isEmpty()) {
+			continue;
+		}
 
-			String path = obtenerCadenaSeguro(metadata.obtener("path"), "");
-			String sha1 = obtenerCadenaSeguro(metadata.obtener("sha1"), "");
-			String versionId = obtenerCadenaSeguro(version.obtener("modrinthVersionId"), "");
-			String entradaVersionId = obtenerCadenaSeguro(entrada.obtener("modrinthVersionId"), "");
+		Json.Nodo versionMR = null;
 
-			if (versionId.trim().isEmpty()) {
-				versionId = entradaVersionId;
-			}
-
-			Json.Nodo versionMR = null;
-
+		try {
 			if (!versionId.trim().isEmpty()) {
 				versionMR = solicitarVersionModrinth(versionId);
 			} else if (!sha1.trim().isEmpty()) {
-				versionMR = MRModDesdeJar.solicitarVersionPorSha1Modrinth(sha1);
+				versionMR = MRModDesdeJar.solicitarVersionPorSha1ModrinthSeguro(sha1);
 			}
-
-			if (versionMR == null || path.trim().isEmpty()) {
-				continue;
-			}
-
-			Json.Nodo archivoPrimario = obtenerArchivoPrimario(versionMR);
-			String url = obtenerCadenaSeguro(archivoPrimario.obtener("url"), "");
-			String sha1Api = obtenerCadenaSeguro(archivoPrimario.obtener("hashes").obtener("sha1"), sha1);
-			String sha512Api = obtenerCadenaSeguro(archivoPrimario.obtener("hashes").obtener("sha512"), "");
-			long size = obtenerLargoSeguro(archivoPrimario.obtener("size"),
-					obtenerLargoSeguro(metadata.obtener("size"), 0L));
-
-			if (url.trim().isEmpty() || sha1Api.trim().isEmpty()) {
-				continue;
-			}
-
-			Json.Nodo f = Json.crearObjeto();
-			f.obtener("path").poner(path.replace('\\', '/'));
-
-			Json.Nodo hashes = f.obtener("hashes");
-			hashes.obtener("sha1").poner(sha1Api);
-
-			if (!sha512Api.trim().isEmpty()) {
-				hashes.obtener("sha512").poner(sha512Api);
-			}
-
-			Json.Nodo env = f.obtener("env");
-			env.obtener("client").poner("required");
-			env.obtener("server").poner("required");
-
-			f.obtener("downloads").agregar(url);
-			f.obtener("fileSize").poner(size);
-
-			files.agregar(f);
+		} catch (Throwable t) {
+			// No se debe romper todo el exportador por un solo archivo.
+			// Si no existe en Modrinth, quedara como override local.
+			CrashDetectorLogger.logException(t);
+			versionMR = null;
 		}
+
+		if (versionMR == null) {
+			continue;
+		}
+
+		Json.Nodo archivoPrimario = obtenerArchivoPrimario(versionMR);
+		String url = obtenerCadenaSeguro(archivoPrimario.obtener("url"), "");
+		String sha1Api = obtenerCadenaSeguro(archivoPrimario.obtener("hashes").obtener("sha1"), sha1);
+		String sha512Api = obtenerCadenaSeguro(archivoPrimario.obtener("hashes").obtener("sha512"), "");
+		long size = obtenerLargoSeguro(archivoPrimario.obtener("size"),
+				obtenerLargoSeguro(metadata.obtener("size"), 0L));
+
+		if (url.trim().isEmpty() || sha1Api.trim().isEmpty()) {
+			continue;
+		}
+
+		Json.Nodo f = Json.crearObjeto();
+		f.obtener("path").poner(path.replace('\\', '/'));
+
+		Json.Nodo hashes = f.obtener("hashes");
+		hashes.obtener("sha1").poner(sha1Api);
+
+		if (!sha512Api.trim().isEmpty()) {
+			hashes.obtener("sha512").poner(sha512Api);
+		}
+
+		Json.Nodo env = f.obtener("env");
+		env.obtener("client").poner("required");
+		env.obtener("server").poner("required");
+
+		f.obtener("downloads").agregar(url);
+		f.obtener("fileSize").poner(size);
+
+		files.agregar(f);
 	}
+}
 
 	private static Json.Nodo solicitarVersionModrinth(String versionId) throws IOException {
 		String url = MRModDesdeJar.ENDPOINT_MODRINTH + "/version/" + java.net.URLEncoder.encode(versionId, "UTF-8");
