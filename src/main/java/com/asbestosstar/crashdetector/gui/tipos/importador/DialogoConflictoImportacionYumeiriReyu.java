@@ -76,6 +76,8 @@ public class DialogoConflictoImportacionYumeiriReyu extends DialogoConflictoImpo
 		estilizarBoton(botonReemplazar, boton, botonTexto);
 		estilizarBoton(botonSaltar, boton, botonTexto);
 		estilizarBoton(botonRenombrar, boton, botonTexto);
+		estilizarBoton(botonFusionar, boton, botonTexto);
+		estilizarBoton(botonDescargarDepsNbt, boton, botonTexto);
 		estilizarBoton(botonCancelar, suave, botonTexto);
 
 		revalidate();

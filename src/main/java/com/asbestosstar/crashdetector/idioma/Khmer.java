@@ -10650,4 +10650,9 @@ public class Khmer implements Idioma {
 		return "លាក់ការត្រួតពិនិត្យ stack trace";
 	}
 
+	// Khmer (ភាសាខ្មែរ)
+	public String importadorBotonFusionar() {
+		return "បញ្ចូលគ្នា";
+	}
+
 }

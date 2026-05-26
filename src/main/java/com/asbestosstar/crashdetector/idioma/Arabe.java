@@ -10362,4 +10362,8 @@ public class Arabe implements Idioma {
 		return "إخفاء فحص تتبع المكدس (stacktrace)";
 	}
 
+	public String importadorBotonFusionar() {
+		return "دمج";
+	}
+
 }

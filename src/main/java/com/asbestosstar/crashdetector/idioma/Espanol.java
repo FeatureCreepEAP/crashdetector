@@ -11180,4 +11180,8 @@ public class Espanol implements Idioma {
 		return "Suprimir verificación de stacktrazos";
 	}
 
+	public String importadorBotonFusionar() {
+		return "Fusionar";
+	}
+
 }

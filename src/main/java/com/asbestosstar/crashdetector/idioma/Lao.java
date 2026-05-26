@@ -10888,4 +10888,8 @@ public class Lao implements Idioma {
 		return "ປິດການກວດສອບ stacktraces";
 	}
 
+	public String importadorBotonFusionar() {
+		return "ລວມ";
+	}
+
 }

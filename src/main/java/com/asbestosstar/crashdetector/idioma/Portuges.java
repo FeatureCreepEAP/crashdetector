@@ -10472,4 +10472,8 @@ public class Portuges implements Idioma {
 		return "Suprimir verificação de stacktraces";
 	}
 
+	public String importadorBotonFusionar() {
+		return "Mesclar";
+	}
+
 }

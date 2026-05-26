@@ -9875,4 +9875,8 @@ public class Chino implements Idioma {
 		return "隐藏堆栈跟踪检查";
 	}
 
+	public String importadorBotonFusionar() {
+		return "合并";
+	}
+
 }

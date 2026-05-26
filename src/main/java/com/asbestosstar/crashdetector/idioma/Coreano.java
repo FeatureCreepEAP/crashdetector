@@ -10086,4 +10086,9 @@ public class Coreano implements Idioma {
 		return "스택 추적 검사 숨기기";
 	}
 
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	public String importadorBotonFusionar() {
+		return "병합";
+	}
+
 }

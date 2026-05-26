@@ -9,13 +9,16 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ImportadorModpack;
+import com.asbestosstar.crashdetector.dto.modpack.importar.ImportadorParalelo;
 import com.asbestosstar.crashdetector.dto.modpack.importar.InfoEntradaImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.importar.PoliticaImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ResolutorConflictosImportacion;
@@ -103,12 +106,11 @@ public class ImportadorModpackPackwiz implements ImportadorModpack {
 	private ResultadoImportacion instalarDesdeIndex(Map<String, EntradaZipLeida> entradas, EntradaZipLeida indexEntrada,
 			Path carpetaDestino, PoliticaImportacion politica) throws IOException {
 
-		ResultadoImportacion total = new ResultadoImportacion();
-
 		String texto = new String(indexEntrada.bytes, StandardCharsets.UTF_8);
 		String hashFormatIndex = "sha256";
 
 		EntradaIndexPackwiz actual = null;
+		List<EntradaIndexPackwiz> lista = new ArrayList<EntradaIndexPackwiz>();
 
 		for (String lineaOriginal : texto.split("\\r?\\n")) {
 			String linea = limpiarComentario(lineaOriginal).trim();
@@ -119,7 +121,7 @@ public class ImportadorModpackPackwiz implements ImportadorModpack {
 
 			if ("[[files]]".equals(linea)) {
 				if (actual != null) {
-					mezclar(total, instalarEntradaIndex(actual, entradas, carpetaDestino, politica));
+					lista.add(actual);
 				}
 
 				actual = new EntradaIndexPackwiz();
@@ -150,10 +152,24 @@ public class ImportadorModpackPackwiz implements ImportadorModpack {
 		}
 
 		if (actual != null) {
-			mezclar(total, instalarEntradaIndex(actual, entradas, carpetaDestino, politica));
+			lista.add(actual);
 		}
 
-		return total;
+		final List<ImportadorParalelo.TrabajoImportacion> trabajos = ImportadorParalelo.listaSincronizada();
+		final PoliticaImportacion politicaFinal = politica;
+		final Path carpetaDestinoFinal = carpetaDestino;
+		final Map<String, EntradaZipLeida> entradasFinal = entradas;
+
+		for (final EntradaIndexPackwiz entrada : lista) {
+			trabajos.add(new ImportadorParalelo.TrabajoImportacion() {
+				@Override
+				public ResultadoImportacion ejecutar() throws Exception {
+					return instalarEntradaIndex(entrada, entradasFinal, carpetaDestinoFinal, politicaFinal);
+				}
+			});
+		}
+
+		return ImportadorParalelo.ejecutar(trabajos);
 	}
 
 	private ResultadoImportacion instalarEntradaIndex(EntradaIndexPackwiz entrada,
@@ -534,16 +550,7 @@ public class ImportadorModpackPackwiz implements ImportadorModpack {
 	}
 
 	private static void mezclar(ResultadoImportacion total, ResultadoImportacion r) {
-		if (r == null) {
-			return;
-		}
-
-		total.copiados += r.copiados;
-		total.reemplazados += r.reemplazados;
-		total.saltados += r.saltados;
-		total.renombrados += r.renombrados;
-		total.errores += r.errores;
-		total.mensajes.addAll(r.mensajes);
+		ImportadorModpack.mezclar(total, r);
 	}
 
 	private static boolean rutaSegura(String ruta) {

@@ -9787,4 +9787,8 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Приховати перевірку стектрейсів";
 	}
 
+	public String importadorBotonFusionar() {
+		return "Об'єднати";
+	}
+
 }

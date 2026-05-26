@@ -11021,4 +11021,9 @@ public class Frances implements Idioma {
 		return "Masquer la vérification des traces de pile";
 	}
 
+	// French (Burkina Faso variant) (Français)
+	public String importadorBotonFusionar() {
+		return "Fusionner";
+	}
+
 }

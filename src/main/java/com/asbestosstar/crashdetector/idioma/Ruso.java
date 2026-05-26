@@ -10468,4 +10468,8 @@ public class Ruso implements Idioma {
 		return "Скрыть проверку стектрейсов";
 	}
 
+	public String importadorBotonFusionar() {
+		return "Объединить";
+	}
+
 }

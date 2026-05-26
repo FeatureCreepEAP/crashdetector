@@ -2,20 +2,26 @@ package com.asbestosstar.crashdetector.gui.tipos.importador;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.deps.DescargadorDependenciasMaven;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ConflictoImportacion;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
@@ -34,6 +40,12 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 	protected JButton botonSaltar;
 	protected JButton botonRenombrar;
 	protected JButton botonCancelar;
+	protected JButton botonFusionar;
+	protected JButton botonDescargarDepsNbt;
+	
+	
+	
+	
 
 	protected JPanel panelIzquierdo;
 	protected JPanel panelCentro;
@@ -84,16 +96,29 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 		botonReemplazar = new JButton(MonitorDePID.idioma.importadorBotonReemplazar());
 		botonSaltar = new JButton(MonitorDePID.idioma.importadorBotonSaltar());
 		botonRenombrar = new JButton(MonitorDePID.idioma.importadorBotonRenombrar());
+		botonFusionar = new JButton(MonitorDePID.idioma.importadorBotonFusionar());
+		botonDescargarDepsNbt = new JButton("Descargar NBT PARA QUESTS");
 		botonCancelar = new JButton(MonitorDePID.idioma.cancelar());
 
 		botonReemplazar.addActionListener(e -> cerrar(ConflictoImportacion.Decision.REEMPLAZAR));
 		botonSaltar.addActionListener(e -> cerrar(ConflictoImportacion.Decision.SALTAR));
 		botonRenombrar.addActionListener(e -> cerrar(ConflictoImportacion.Decision.RENOMBRAR));
+		botonFusionar.addActionListener(e -> cerrar(ConflictoImportacion.Decision.FUSIONAR));
+		botonDescargarDepsNbt.addActionListener(e -> accionDescargarDependenciasNbt());
 		botonCancelar.addActionListener(e -> cerrar(ConflictoImportacion.Decision.CANCELAR));
 
 		panelBotones.add(botonReemplazar);
 		panelBotones.add(botonSaltar);
 		panelBotones.add(botonRenombrar);
+
+		if (puedeMostrarBotonFusionar()) {
+			panelBotones.add(botonFusionar);
+
+			if (!dependenciaNbtDisponible()) {
+				panelBotones.add(botonDescargarDepsNbt);
+			}
+		}
+
 		panelBotones.add(botonCancelar);
 
 		add(panelIzquierdo, BorderLayout.WEST);
@@ -161,6 +186,21 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 		return sb.toString();
 	}
 
+	protected boolean puedeMostrarBotonFusionar() {
+		if (conflicto == null || conflicto.rutaRelativa == null) {
+			return false;
+		}
+
+		String r = conflicto.rutaRelativa.replace('\\', '/').toLowerCase();
+
+		if (!r.endsWith(".snbt")) {
+			return false;
+		}
+
+		return r.contains("config/ftbquests/") || r.contains("/ftbquests/") || r.startsWith("ftbquests/")
+				|| r.startsWith("config/ftbquests/");
+	}
+
 	protected String valor(String texto) {
 		return texto == null ? "" : texto;
 	}
@@ -172,4 +212,123 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(fecha));
 	}
+	
+	
+	
+	
+	protected static final File CARPETA_DEPS_IMPORTADOR = new File(System.getProperty("user.home"), "crash_detector/deps");
+
+	protected boolean dependenciaNbtDisponible() {
+		if (nombreMotorNbtDisponible()) {
+			return true;
+		}
+
+		if (!CARPETA_DEPS_IMPORTADOR.exists() || !CARPETA_DEPS_IMPORTADOR.isDirectory()) {
+			return false;
+		}
+
+		File[] archivos = CARPETA_DEPS_IMPORTADOR.listFiles();
+
+		if (archivos == null) {
+			return false;
+		}
+
+		for (File archivo : archivos) {
+			if (archivo == null || !archivo.isFile()) {
+				continue;
+			}
+
+			String n = archivo.getName().toLowerCase();
+
+			if (archivo.length() > 0L && (n.equals("nbt-6.1.jar") || n.startsWith("nbt-"))) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean nombreMotorNbtDisponible() {
+		try {
+			return !"ninguno".equalsIgnoreCase(com.asbestosstar.crashdetector.config.nbt.Nbt.nombreMotor());
+		} catch (Throwable t) {
+			return false;
+		}
+	}
+
+	protected void accionDescargarDependenciasNbt() {
+		int confirmar = JOptionPane.showConfirmDialog(this,
+				"Se descargara la dependencia NBT/SNBT necesaria para fusionar quests:\n\n"
+						+ " - com.github.Querz:NBT:6.1\n\n"
+						+ "Despues puede ser necesario reiniciar CrashDetector para que entre al classpath.",
+				"Descargar NBT", JOptionPane.YES_NO_OPTION);
+
+		if (confirmar != JOptionPane.YES_OPTION) {
+			return;
+		}
+
+		if (botonDescargarDepsNbt != null) {
+			botonDescargarDepsNbt.setEnabled(false);
+		}
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				boolean exito = false;
+				String mensaje = "";
+
+				try {
+					if (!CARPETA_DEPS_IMPORTADOR.exists()) {
+						CARPETA_DEPS_IMPORTADOR.mkdirs();
+					}
+
+					List<DescargadorDependenciasMaven.CoordenadaMaven> coordenadas =
+							new ArrayList<DescargadorDependenciasMaven.CoordenadaMaven>();
+
+					coordenadas.add(new DescargadorDependenciasMaven.CoordenadaMaven("com.github.Querz", "NBT", "6.1"));
+
+					DescargadorDependenciasMaven.ResultadoDescarga r =
+							DescargadorDependenciasMaven.descargarDependencias(coordenadas);
+
+					exito = r != null && r.exito;
+					mensaje = r == null ? "Resultado nulo." : r.mensaje;
+				} catch (Throwable t) {
+					CrashDetectorLogger.logException(t);
+					mensaje = t.getMessage();
+				}
+
+				final boolean exitoFinal = exito;
+				final String mensajeFinal = mensaje;
+
+				javax.swing.SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						if (botonDescargarDepsNbt != null) {
+							botonDescargarDepsNbt.setEnabled(!dependenciaNbtDisponible());
+						}
+
+						String texto;
+
+						if (exitoFinal) {
+							texto = "Dependencia NBT descargada.\n\n"
+									+ "Reinicie CrashDetector si la fusion de SNBT todavia dice que falta el motor NBT.";
+						} else {
+							texto = "No se pudo descargar la dependencia NBT.";
+
+							if (mensajeFinal != null && !mensajeFinal.trim().isEmpty()) {
+								texto += "\n\n" + mensajeFinal;
+							}
+						}
+
+						JOptionPane.showMessageDialog(DialogoConflictoImportacionGUI.this, texto);
+					}
+				});
+			}
+		}).start();
+	}
+	
+	
+	
+	
+	
 }

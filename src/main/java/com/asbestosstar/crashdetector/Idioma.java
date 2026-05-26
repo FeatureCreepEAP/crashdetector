@@ -4098,4 +4098,6 @@ public interface Idioma {
 
 	public String suprimirVerificacionDeStacktrazos();
 
+	public String importadorBotonFusionar();
+
 }

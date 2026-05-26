@@ -11036,4 +11036,9 @@ public class Indonesia implements Idioma {
 		return "Sembunyikan pemeriksaan stack trace";
 	}
 
+	// Indonesian (Bahasa Indonesia)
+	public String importadorBotonFusionar() {
+		return "Gabungkan";
+	}
+
 }

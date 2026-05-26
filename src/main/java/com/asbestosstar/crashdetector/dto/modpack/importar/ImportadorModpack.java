@@ -23,53 +23,76 @@ public interface ImportadorModpack {
 	default ResultadoImportacion instalarEntradaConConflictos(byte[] bytesEntrada, InfoEntradaImportacion info,
 			Path destino, PoliticaImportacion politica) throws IOException {
 
-		ResultadoImportacion resultado = new ResultadoImportacion();
+		synchronized (ImportadorParalelo.BLOQUEO_CONFLICTOS) {
+			ResultadoImportacion resultado = new ResultadoImportacion();
 
-		if (politica == null) {
-			politica = new PoliticaImportacion();
-		}
+			if (politica == null) {
+				politica = new PoliticaImportacion();
+			}
 
-		if (bytesEntrada == null) {
-			resultado.errores++;
-			resultado.mensajes.add("Entrada sin bytes: " + destino);
+			if (bytesEntrada == null) {
+				resultado.errores++;
+				resultado.mensajes.add("Entrada sin bytes: " + destino);
+				return resultado;
+			}
+
+			if (destino == null) {
+				resultado.errores++;
+				resultado.mensajes.add("Destino nulo.");
+				return resultado;
+			}
+
+			if (destino.getParent() != null) {
+				Files.createDirectories(destino.getParent());
+			}
+
+			if (!Files.exists(destino)) {
+				Files.write(destino, bytesEntrada, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+				resultado.copiados++;
+				return resultado;
+			}
+
+			ConflictoImportacion conflicto = crearConflictoDesdeEntrada(bytesEntrada, info, destino);
+
+			ConflictoImportacion.Decision decision = resolverConflictoConGUI(conflicto, politica);
+
+			if (decision == ConflictoImportacion.Decision.REEMPLAZAR) {
+				Files.write(destino, bytesEntrada, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+				resultado.reemplazados++;
+				return resultado;
+			}
+
+			if (decision == ConflictoImportacion.Decision.FUSIONAR) {
+				if (!FusionadorFTBQuestsSnbt.puedeFusionar(info, destino)) {
+					resultado.saltados++;
+					resultado.mensajes.add("No se puede fusionar este archivo: " + destino);
+					return resultado;
+				}
+
+				try {
+					byte[] fusionado = FusionadorFTBQuestsSnbt.fusionar(bytesEntrada, destino);
+					Files.write(destino, fusionado, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+					resultado.fusionados++;
+					resultado.mensajes.add("Archivo FTB Quests fusionado: " + destino);
+					return resultado;
+				} catch (Throwable t) {
+					resultado.errores++;
+					resultado.mensajes.add("No se pudo fusionar FTB Quests " + destino + ": " + t.getMessage());
+					return resultado;
+				}
+			}
+
+			if (decision == ConflictoImportacion.Decision.RENOMBRAR) {
+				Path renombrado = crearRutaRenombrada(destino);
+				Files.write(renombrado, bytesEntrada, StandardOpenOption.CREATE_NEW);
+				resultado.renombrados++;
+				return resultado;
+			}
+
+			resultado.saltados++;
 			return resultado;
 		}
-
-		if (destino == null) {
-			resultado.errores++;
-			resultado.mensajes.add("Destino nulo.");
-			return resultado;
-		}
-
-		if (destino.getParent() != null) {
-			Files.createDirectories(destino.getParent());
-		}
-
-		if (!Files.exists(destino)) {
-			Files.write(destino, bytesEntrada, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-			resultado.copiados++;
-			return resultado;
-		}
-
-		ConflictoImportacion conflicto = crearConflictoDesdeEntrada(bytesEntrada, info, destino);
-
-		ConflictoImportacion.Decision decision = resolverConflictoConGUI(conflicto, politica);
-
-		if (decision == ConflictoImportacion.Decision.REEMPLAZAR) {
-			Files.write(destino, bytesEntrada, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-			resultado.reemplazados++;
-			return resultado;
-		}
-
-		if (decision == ConflictoImportacion.Decision.RENOMBRAR) {
-			Path renombrado = crearRutaRenombrada(destino);
-			Files.write(renombrado, bytesEntrada, StandardOpenOption.CREATE_NEW);
-			resultado.renombrados++;
-			return resultado;
-		}
-
-		resultado.saltados++;
-		return resultado;
 	}
 
 	default ConflictoImportacion crearConflictoDesdeEntrada(byte[] bytesEntrada, InfoEntradaImportacion info,
@@ -125,6 +148,20 @@ public interface ImportadorModpack {
 
 		gui.establecerConflicto(conflicto);
 		return gui.mostrarYObtenerDecision();
+	}
+
+	public static void mezclar(ResultadoImportacion total, ResultadoImportacion r) {
+		if (r == null) {
+			return;
+		}
+
+		total.copiados += r.copiados;
+		total.reemplazados += r.reemplazados;
+		total.saltados += r.saltados;
+		total.renombrados += r.renombrados;
+		total.fusionados += r.fusionados;
+		total.errores += r.errores;
+		total.mensajes.addAll(r.mensajes);
 	}
 
 	default Path crearRutaRenombrada(Path destino) {

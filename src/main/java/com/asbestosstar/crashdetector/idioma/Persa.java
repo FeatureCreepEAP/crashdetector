@@ -10421,4 +10421,8 @@ public class Persa implements Idioma {
 		return "سرکوب بررسی استک‌تریس‌ها";
 	}
 
+	public String importadorBotonFusionar() {
+		return "ادغام";
+	}
+
 }

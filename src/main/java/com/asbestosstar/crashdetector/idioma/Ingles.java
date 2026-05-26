@@ -10502,4 +10502,9 @@ public class Ingles implements Idioma {
 		return "Hide stack trace check";
 	}
 
+	// English (UK)
+	public String importadorBotonFusionar() {
+		return "Merge";
+	}
+
 }

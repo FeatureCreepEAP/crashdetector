@@ -10684,4 +10684,8 @@ public class Vietnamita implements Idioma {
 		return "Ẩn kiểm tra stacktraces";
 	}
 
+	public String importadorBotonFusionar() {
+		return "Hợp nhất";
+	}
+
 }

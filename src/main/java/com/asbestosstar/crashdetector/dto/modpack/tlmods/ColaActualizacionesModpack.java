@@ -13,7 +13,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -82,20 +84,79 @@ public class ColaActualizacionesModpack {
 		String loader = obtenerCadenaSeguro(version.obtener("loader"), "");
 		String gameVersion = obtenerCadenaSeguro(version.obtener("gameVersion"), "");
 
-		List<ActualizacionPendiente> ret = Collections.synchronizedList(new ArrayList<ActualizacionPendiente>());
+		List<ActualizacionPendiente> bases = new ArrayList<ActualizacionPendiente>();
 
-		int hilos = Math.max(1, Runtime.getRuntime().availableProcessors() * 2);
+		agregarBasesActualizaciones(bases, carpetaInstancia, version.obtener("mods"), loader, gameVersion);
+		agregarBasesActualizaciones(bases, carpetaInstancia, version.obtener("resourcePacks"), loader, gameVersion);
+		agregarBasesActualizaciones(bases, carpetaInstancia, version.obtener("shaderPacks"), loader, gameVersion);
+		agregarBasesActualizaciones(bases, carpetaInstancia, version.obtener("dataPacks"), loader, gameVersion);
+
+		if (bases.isEmpty()) {
+			return new ArrayList<ActualizacionPendiente>();
+		}
+
+		Map<String, ResultadoBusquedaActualizacion> resultados = Collections
+				.synchronizedMap(new LinkedHashMap<String, ResultadoBusquedaActualizacion>());
+
+		for (ActualizacionPendiente base : bases) {
+			ResultadoBusquedaActualizacion r = new ResultadoBusquedaActualizacion();
+			r.base = base;
+			resultados.put(claveActualizacion(base), r);
+		}
+
+		/*
+		 * Para revisiones de internet, usar solo 1 hilo por CPU suele ser lento porque
+		 * muchos hilos quedan esperando HTTP. Este valor usa todos los hilos logicos
+		 * disponibles y duplica para cubrir espera de red sin crear miles de threads.
+		 */
+		int hilos = Math.max(2, Runtime.getRuntime().availableProcessors() * 2);
+
 		ExecutorService executor = Executors.newFixedThreadPool(hilos);
 		List<Future<?>> futuros = new ArrayList<Future<?>>();
 
-		agregarTrabajosActualizaciones(futuros, executor, ret, carpetaInstancia, version.obtener("mods"), loader,
-				gameVersion);
-		agregarTrabajosActualizaciones(futuros, executor, ret, carpetaInstancia, version.obtener("resourcePacks"),
-				loader, gameVersion);
-		agregarTrabajosActualizaciones(futuros, executor, ret, carpetaInstancia, version.obtener("shaderPacks"), loader,
-				gameVersion);
-		agregarTrabajosActualizaciones(futuros, executor, ret, carpetaInstancia, version.obtener("dataPacks"), loader,
-				gameVersion);
+		for (final ActualizacionPendiente base : bases) {
+			if (base.curseForgeProjectIdActual > 0L && base.curseForgeFileIdActual > 0L) {
+				futuros.add(executor.submit(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							ActualizacionPendiente cf = buscarActualizacionCurseForge(base);
+
+							if (cf != null) {
+								ResultadoBusquedaActualizacion r = resultados.get(claveActualizacion(base));
+
+								if (r != null) {
+									r.curseForge = cf;
+								}
+							}
+						} catch (Throwable t) {
+							CrashDetectorLogger.logException(t);
+						}
+					}
+				}));
+			}
+
+			if (base.sha1Actual != null && !base.sha1Actual.trim().isEmpty()) {
+				futuros.add(executor.submit(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							ActualizacionPendiente mr = buscarActualizacionModrinth(base);
+
+							if (mr != null) {
+								ResultadoBusquedaActualizacion r = resultados.get(claveActualizacion(base));
+
+								if (r != null) {
+									r.modrinth = mr;
+								}
+							}
+						} catch (Throwable t) {
+							CrashDetectorLogger.logException(t);
+						}
+					}
+				}));
+			}
+		}
 
 		executor.shutdown();
 
@@ -107,7 +168,145 @@ public class ColaActualizacionesModpack {
 			}
 		}
 
-		return new ArrayList<ActualizacionPendiente>(ret);
+		List<ActualizacionPendiente> ret = new ArrayList<ActualizacionPendiente>();
+
+		for (ResultadoBusquedaActualizacion r : resultados.values()) {
+			try {
+				ActualizacionPendiente act = combinarActualizaciones(r.base, r.curseForge, r.modrinth);
+
+				if (act != null && act.tieneActualizacion()) {
+					ret.add(act);
+				}
+			} catch (Throwable t) {
+				CrashDetectorLogger.logException(t);
+			}
+		}
+
+		return ret;
+	}
+
+	private static void agregarBasesActualizaciones(List<ActualizacionPendiente> ret, Path carpetaInstancia,
+			Json.Nodo arreglo, String loader, String gameVersion) {
+
+		if (arreglo == null || !arreglo.esArreglo()) {
+			return;
+		}
+
+		for (int i = 0; i < arreglo.tamano(); i++) {
+			Json.Nodo entrada = arreglo.en(i);
+
+			try {
+				ActualizacionPendiente base = crearBaseActualizacionParaEntrada(carpetaInstancia, entrada, loader,
+						gameVersion);
+
+				if (base != null) {
+					ret.add(base);
+				}
+			} catch (Throwable t) {
+				CrashDetectorLogger.logException(t);
+			}
+		}
+	}
+
+	private static ActualizacionPendiente crearBaseActualizacionParaEntrada(Path carpetaInstancia, Json.Nodo entrada,
+			String loader, String gameVersion) {
+
+		ActualizacionPendiente act = new ActualizacionPendiente();
+		act.loader = loader;
+		act.gameVersion = gameVersion;
+		act.entradaJsonActual = entrada;
+
+		Json.Nodo versionActual = entrada.obtener("version");
+		Json.Nodo metadata = versionActual.obtener("metadata");
+
+		act.rutaRelativa = obtenerCadenaSeguro(metadata.obtener("path"), "");
+
+		if (act.rutaRelativa == null || act.rutaRelativa.trim().isEmpty()) {
+			return null;
+		}
+
+		act.nombreActual = nombreArchivo(act.rutaRelativa);
+		act.archivoActual = carpetaInstancia.resolve(act.rutaRelativa).toAbsolutePath().normalize();
+
+		act.sha1Actual = obtenerCadenaSeguro(metadata.obtener("sha1"), "");
+
+		act.curseForgeProjectIdActual = obtenerLargoSeguro(entrada.obtener("id"), 0L);
+		act.curseForgeFileIdActual = obtenerLargoSeguro(versionActual.obtener("id"), 0L);
+
+		act.modrinthProjectIdActual = obtenerCadenaSeguro(entrada.obtener("modrinthProjectId"), "");
+		act.modrinthVersionIdActual = obtenerCadenaSeguro(versionActual.obtener("modrinthVersionId"), "");
+
+		return act;
+	}
+
+	private static ActualizacionPendiente combinarActualizaciones(ActualizacionPendiente base,
+			ActualizacionPendiente cf, ActualizacionPendiente mr) {
+
+		if (base == null) {
+			return null;
+		}
+
+		if (cf == null && mr == null) {
+			return null;
+		}
+
+		ActualizacionPendiente act = base;
+
+		if (cf != null && mr != null) {
+			copiarDatosNuevos(act, cf);
+			act.fuente = "ambos";
+
+			act.modrinthProjectIdNuevo = mr.modrinthProjectIdNuevo;
+			act.modrinthVersionIdNuevo = mr.modrinthVersionIdNuevo;
+			act.versionJsonNuevaMR = mr.versionJsonNuevaMR;
+
+			return act;
+		}
+
+		if (mr != null) {
+			copiarDatosNuevos(act, mr);
+			act.fuente = "modrinth";
+			return act;
+		}
+
+		copiarDatosNuevos(act, cf);
+		act.fuente = "curseforge";
+		return act;
+	}
+
+	private static String claveActualizacion(ActualizacionPendiente act) {
+		if (act == null) {
+			return "";
+		}
+
+		if (act.rutaRelativa != null && !act.rutaRelativa.trim().isEmpty()) {
+			return act.rutaRelativa.replace('\\', '/');
+		}
+
+		if (act.nombreActual != null && !act.nombreActual.trim().isEmpty()) {
+			return act.nombreActual;
+		}
+
+		if (act.sha1Actual != null && !act.sha1Actual.trim().isEmpty()) {
+			return act.sha1Actual;
+		}
+
+		return String.valueOf(System.identityHashCode(act));
+	}
+
+	private static ActualizacionPendiente crearActualizacionParaEntrada(Path carpetaInstancia, Json.Nodo entrada,
+			String loader, String gameVersion) throws IOException {
+
+		ActualizacionPendiente base = crearBaseActualizacionParaEntrada(carpetaInstancia, entrada, loader, gameVersion);
+
+		if (base == null) {
+			return null;
+		}
+
+		ActualizacionPendiente cf = buscarActualizacionCurseForge(base);
+		ActualizacionPendiente mr = buscarActualizacionModrinth(base);
+
+		return combinarActualizaciones(base, cf, mr);
 	}
 
 	private static void agregarTrabajosActualizaciones(List<Future<?>> futuros, ExecutorService executor,
@@ -160,58 +359,6 @@ public class ColaActualizacionesModpack {
 				CrashDetectorLogger.logException(t);
 			}
 		}
-	}
-
-	private static ActualizacionPendiente crearActualizacionParaEntrada(Path carpetaInstancia, Json.Nodo entrada,
-			String loader, String gameVersion) throws IOException {
-
-		ActualizacionPendiente act = new ActualizacionPendiente();
-		act.loader = loader;
-		act.gameVersion = gameVersion;
-		act.entradaJsonActual = entrada;
-
-		Json.Nodo versionActual = entrada.obtener("version");
-		Json.Nodo metadata = versionActual.obtener("metadata");
-
-		act.rutaRelativa = obtenerCadenaSeguro(metadata.obtener("path"), "");
-		act.nombreActual = nombreArchivo(act.rutaRelativa);
-		act.archivoActual = carpetaInstancia.resolve(act.rutaRelativa).toAbsolutePath().normalize();
-
-		act.sha1Actual = obtenerCadenaSeguro(metadata.obtener("sha1"), "");
-
-		act.curseForgeProjectIdActual = obtenerLargoSeguro(entrada.obtener("id"), 0L);
-		act.curseForgeFileIdActual = obtenerLargoSeguro(versionActual.obtener("id"), 0L);
-
-		act.modrinthProjectIdActual = obtenerCadenaSeguro(entrada.obtener("modrinthProjectId"), "");
-		act.modrinthVersionIdActual = obtenerCadenaSeguro(versionActual.obtener("modrinthVersionId"), "");
-
-		ActualizacionPendiente cf = buscarActualizacionCurseForge(act);
-		ActualizacionPendiente mr = buscarActualizacionModrinth(act);
-
-		if (cf == null && mr == null) {
-			return null;
-		}
-
-		if (cf != null && mr != null) {
-			copiarDatosNuevos(act, cf);
-			act.fuente = "ambos";
-
-			act.modrinthProjectIdNuevo = mr.modrinthProjectIdNuevo;
-			act.modrinthVersionIdNuevo = mr.modrinthVersionIdNuevo;
-			act.versionJsonNuevaMR = mr.versionJsonNuevaMR;
-
-			return act;
-		}
-
-		if (mr != null) {
-			copiarDatosNuevos(act, mr);
-			act.fuente = "modrinth";
-			return act;
-		}
-
-		copiarDatosNuevos(act, cf);
-		act.fuente = "curseforge";
-		return act;
 	}
 
 	private static ActualizacionPendiente buscarActualizacionCurseForge(ActualizacionPendiente base) {
@@ -858,6 +1005,12 @@ public class ColaActualizacionesModpack {
 		}
 
 		return false;
+	}
+
+	private static class ResultadoBusquedaActualizacion {
+		public ActualizacionPendiente base;
+		public ActualizacionPendiente curseForge;
+		public ActualizacionPendiente modrinth;
 	}
 
 }

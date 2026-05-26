@@ -10916,4 +10916,8 @@ public class Suajili implements Idioma {
 		return "Ficha ukaguzi wa stacktraces";
 	}
 
+	public String importadorBotonFusionar() {
+		return "Unganisha";
+	}
+
 }

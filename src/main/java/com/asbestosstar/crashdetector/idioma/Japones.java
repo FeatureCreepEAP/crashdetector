@@ -10096,4 +10096,9 @@ public class Japones implements Idioma {
 		return "スタックトレースチェックを非表示";
 	}
 
+	// Japanese (日本語)
+	public String importadorBotonFusionar() {
+		return "マージ";
+	}
+
 }

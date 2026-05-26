@@ -10450,4 +10450,9 @@ public class Esperanto implements Idioma {
 		return "Kaŝi kontrolon de stakspuroj";
 	}
 
+	// Esperanto (Esperanto)
+	public String importadorBotonFusionar() {
+		return "Kunfandi";
+	}
+
 }

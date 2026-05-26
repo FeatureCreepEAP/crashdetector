@@ -10652,4 +10652,8 @@ public class Tailandes implements Idioma {
 		return "ซ่อนการตรวจสอบ stacktraces";
 	}
 
+	public String importadorBotonFusionar() {
+		return "รวม";
+	}
+
 }

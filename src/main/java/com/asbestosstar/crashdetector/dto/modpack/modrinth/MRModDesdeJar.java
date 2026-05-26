@@ -30,8 +30,7 @@ public class MRModDesdeJar extends BBSModDesdeJar {
 			throw new IOException("SHA-1 vacio para consulta Modrinth.");
 		}
 
-		String url = ENDPOINT_MODRINTH + "/version_file/" + URLEncoder.encode(sha1.trim(), "UTF-8")
-				+ "?algorithm=sha1";
+		String url = ENDPOINT_MODRINTH + "/version_file/" + URLEncoder.encode(sha1.trim(), "UTF-8") + "?algorithm=sha1";
 
 		return getJsonModrinth(url);
 	}

@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -17,6 +18,7 @@ import java.util.zip.ZipInputStream;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ImportadorModpack;
+import com.asbestosstar.crashdetector.dto.modpack.importar.ImportadorParalelo;
 import com.asbestosstar.crashdetector.dto.modpack.importar.InfoEntradaImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.importar.PoliticaImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ResolutorConflictosImportacion;
@@ -97,130 +99,189 @@ public class ImportadorModpackModrinth implements ImportadorModpack {
 	private ResultadoImportacion instalarOverrides(Map<String, EntradaZipLeida> entradas, Path carpetaDestino,
 			PoliticaImportacion politica) throws IOException {
 
-		ResultadoImportacion total = new ResultadoImportacion();
+		final List<ImportadorParalelo.TrabajoImportacion> trabajos = ImportadorParalelo.listaSincronizada();
 
-		for (EntradaZipLeida entrada : entradas.values()) {
+		for (final EntradaZipLeida entrada : entradas.values()) {
 			String nombre = entrada.nombre.replace('\\', '/');
 
 			if (!nombre.startsWith("overrides/")) {
 				continue;
 			}
 
-			String rutaRelativa = nombre.substring("overrides/".length());
+			final String rutaRelativa = nombre.substring("overrides/".length());
 
 			if (rutaRelativa.trim().isEmpty()) {
 				continue;
 			}
 
 			if (!rutaSegura(rutaRelativa)) {
-				total.saltados++;
-				total.mensajes.add("Ruta insegura omitida: " + nombre);
+				final String nombreEntrada = nombre;
+
+				trabajos.add(new ImportadorParalelo.TrabajoImportacion() {
+					@Override
+					public ResultadoImportacion ejecutar() {
+						ResultadoImportacion r = new ResultadoImportacion();
+						r.saltados++;
+						r.mensajes.add("Ruta insegura omitida: " + nombreEntrada);
+						return r;
+					}
+				});
+
 				continue;
 			}
 
-			Path destino = carpetaDestino.resolve(rutaRelativa).normalize();
+			final Path destino = carpetaDestino.resolve(rutaRelativa).normalize();
 
 			if (!destino.toAbsolutePath().normalize().startsWith(carpetaDestino)) {
-				total.saltados++;
-				total.mensajes.add("Ruta intenta salir de la carpeta destino: " + nombre);
+				final String nombreEntrada = nombre;
+
+				trabajos.add(new ImportadorParalelo.TrabajoImportacion() {
+					@Override
+					public ResultadoImportacion ejecutar() {
+						ResultadoImportacion r = new ResultadoImportacion();
+						r.saltados++;
+						r.mensajes.add("Ruta intenta salir de la carpeta destino: " + nombreEntrada);
+						return r;
+					}
+				});
+
 				continue;
 			}
 
-			InfoEntradaImportacion info = crearInfoSimple(rutaRelativa);
-			info.nombreEntrada = nombre;
-			info.fechaModificacion = entrada.fechaModificacion;
-			info.tamanoDeclarado = entrada.bytes.length;
-			info.esMod = rutaRelativa.startsWith("mods/");
+			final String nombreEntrada = nombre;
+			final PoliticaImportacion politicaFinal = politica;
 
-			mezclar(total, instalarEntradaConConflictos(entrada.bytes, info, destino, politica));
+			trabajos.add(new ImportadorParalelo.TrabajoImportacion() {
+				@Override
+				public ResultadoImportacion ejecutar() throws Exception {
+					InfoEntradaImportacion info = crearInfoSimple(rutaRelativa);
+					info.nombreEntrada = nombreEntrada;
+					info.fechaModificacion = entrada.fechaModificacion;
+					info.tamanoDeclarado = entrada.bytes.length;
+					info.esMod = rutaRelativa.startsWith("mods/");
+
+					return instalarEntradaConConflictos(entrada.bytes, info, destino, politicaFinal);
+				}
+			});
 		}
 
-		return total;
+		return ImportadorParalelo.ejecutar(trabajos);
 	}
 
 	private ResultadoImportacion descargarArchivosDesdeIndex(Json.Nodo index, Path carpetaDestino,
 			PoliticaImportacion politica) throws IOException {
 
-		ResultadoImportacion total = new ResultadoImportacion();
-
 		Json.Nodo files = index.obtener("files");
 		if (files == null || !files.esArreglo()) {
-			return total;
+			return new ResultadoImportacion();
 		}
 
-		for (int i = 0; i < files.tamano(); i++) {
-			Json.Nodo file = files.en(i);
+		final List<ImportadorParalelo.TrabajoImportacion> trabajos = ImportadorParalelo.listaSincronizada();
 
-			String path = obtenerCadenaSeguro(file.obtener("path"), "");
-			String sha1 = obtenerCadenaSeguro(file.obtener("hashes").obtener("sha1"), "");
-			String sha512 = obtenerCadenaSeguro(file.obtener("hashes").obtener("sha512"), "");
-			long fileSize = obtenerLargoSeguro(file.obtener("fileSize"), 0L);
+		for (int i = 0; i < files.tamano(); i++) {
+			final Json.Nodo file = files.en(i);
+
+			final String path = obtenerCadenaSeguro(file.obtener("path"), "");
+			final String sha1 = obtenerCadenaSeguro(file.obtener("hashes").obtener("sha1"), "");
+			final String sha512 = obtenerCadenaSeguro(file.obtener("hashes").obtener("sha512"), "");
+			final long fileSize = obtenerLargoSeguro(file.obtener("fileSize"), 0L);
 
 			if (path.trim().isEmpty()) {
-				total.saltados++;
-				total.mensajes.add("Archivo Modrinth sin path.");
+				trabajos.add(new ImportadorParalelo.TrabajoImportacion() {
+					@Override
+					public ResultadoImportacion ejecutar() {
+						ResultadoImportacion r = new ResultadoImportacion();
+						r.saltados++;
+						r.mensajes.add("Archivo Modrinth sin path.");
+						return r;
+					}
+				});
 				continue;
 			}
 
 			if (!rutaSegura(path)) {
-				total.saltados++;
-				total.mensajes.add("Ruta insegura omitida: " + path);
+				trabajos.add(new ImportadorParalelo.TrabajoImportacion() {
+					@Override
+					public ResultadoImportacion ejecutar() {
+						ResultadoImportacion r = new ResultadoImportacion();
+						r.saltados++;
+						r.mensajes.add("Ruta insegura omitida: " + path);
+						return r;
+					}
+				});
 				continue;
 			}
 
-			Path destino = carpetaDestino.resolve(path).normalize();
+			final Path destino = carpetaDestino.resolve(path).normalize();
 
 			if (!destino.toAbsolutePath().normalize().startsWith(carpetaDestino)) {
-				total.saltados++;
-				total.mensajes.add("Ruta intenta salir de la carpeta destino: " + path);
+				trabajos.add(new ImportadorParalelo.TrabajoImportacion() {
+					@Override
+					public ResultadoImportacion ejecutar() {
+						ResultadoImportacion r = new ResultadoImportacion();
+						r.saltados++;
+						r.mensajes.add("Ruta intenta salir de la carpeta destino: " + path);
+						return r;
+					}
+				});
 				continue;
 			}
 
-			try {
-				String url = obtenerPrimeraDescarga(file);
+			final PoliticaImportacion politicaFinal = politica;
 
-				if (url.trim().isEmpty()) {
-					total.saltados++;
-					total.mensajes.add("Archivo Modrinth sin URL de descarga: " + path);
-					continue;
-				}
+			trabajos.add(new ImportadorParalelo.TrabajoImportacion() {
+				@Override
+				public ResultadoImportacion ejecutar() {
+					ResultadoImportacion total = new ResultadoImportacion();
 
-				byte[] bytes = descargarBytes(url);
+					try {
+						String url = obtenerPrimeraDescarga(file);
 
-				if (!sha1.trim().isEmpty()) {
-					verificarSha1SiExiste(bytes, sha1, path);
-				}
+						if (url.trim().isEmpty()) {
+							total.saltados++;
+							total.mensajes.add("Archivo Modrinth sin URL de descarga: " + path);
+							return total;
+						}
 
-				if (!sha512.trim().isEmpty()) {
-					verificarSha512SiExiste(bytes, sha512, path);
-				}
+						byte[] bytes = descargarBytes(url);
 
-				InfoEntradaImportacion info = crearInfoSimple(path);
-				info.sha1 = sha1;
-				info.tamanoDeclarado = fileSize > 0L ? fileSize : bytes.length;
-				info.esMod = path.startsWith("mods/");
+						if (!sha1.trim().isEmpty()) {
+							verificarSha1SiExiste(bytes, sha1, path);
+						}
 
-				try {
-					if (!sha1.trim().isEmpty()) {
-						Json.Nodo versionMR = MRModDesdeJar.solicitarVersionPorSha1Modrinth(sha1);
-						info.modrinthProjectId = obtenerCadenaSeguro(versionMR.obtener("project_id"), "");
-						info.modrinthVersionId = obtenerCadenaSeguro(versionMR.obtener("id"), "");
-						info.fechaModificacion = parsearFecha(
-								obtenerCadenaSeguro(versionMR.obtener("date_published"), ""));
+						if (!sha512.trim().isEmpty()) {
+							verificarSha512SiExiste(bytes, sha512, path);
+						}
+
+						InfoEntradaImportacion info = crearInfoSimple(path);
+						info.sha1 = sha1;
+						info.tamanoDeclarado = fileSize > 0L ? fileSize : bytes.length;
+						info.esMod = path.startsWith("mods/");
+
+						try {
+							if (!sha1.trim().isEmpty()) {
+								Json.Nodo versionMR = MRModDesdeJar.solicitarVersionPorSha1Modrinth(sha1);
+								info.modrinthProjectId = obtenerCadenaSeguro(versionMR.obtener("project_id"), "");
+								info.modrinthVersionId = obtenerCadenaSeguro(versionMR.obtener("id"), "");
+								info.fechaModificacion = parsearFecha(
+										obtenerCadenaSeguro(versionMR.obtener("date_published"), ""));
+							}
+						} catch (Throwable t) {
+							CrashDetectorLogger.logException(t);
+						}
+
+						return instalarEntradaConConflictos(bytes, info, destino, politicaFinal);
+					} catch (Throwable t) {
+						CrashDetectorLogger.logException(t);
+						total.errores++;
+						total.mensajes.add("No se pudo instalar archivo Modrinth " + path + ": " + t.getMessage());
+						return total;
 					}
-				} catch (Throwable t) {
-					CrashDetectorLogger.logException(t);
 				}
-
-				mezclar(total, instalarEntradaConConflictos(bytes, info, destino, politica));
-			} catch (Throwable t) {
-				CrashDetectorLogger.logException(t);
-				total.errores++;
-				total.mensajes.add("No se pudo instalar archivo Modrinth " + path + ": " + t.getMessage());
-			}
+			});
 		}
 
-		return total;
+		return ImportadorParalelo.ejecutar(trabajos);
 	}
 
 	private static String obtenerPrimeraDescarga(Json.Nodo file) {
@@ -375,16 +436,7 @@ public class ImportadorModpackModrinth implements ImportadorModpack {
 	}
 
 	private static void mezclar(ResultadoImportacion total, ResultadoImportacion r) {
-		if (r == null) {
-			return;
-		}
-
-		total.copiados += r.copiados;
-		total.reemplazados += r.reemplazados;
-		total.saltados += r.saltados;
-		total.renombrados += r.renombrados;
-		total.errores += r.errores;
-		total.mensajes.addAll(r.mensajes);
+		ImportadorModpack.mezclar(total, r);
 	}
 
 	private static boolean rutaSegura(String ruta) {

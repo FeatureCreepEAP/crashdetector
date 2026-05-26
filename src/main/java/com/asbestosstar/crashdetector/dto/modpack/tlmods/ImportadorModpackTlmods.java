@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -19,7 +20,9 @@ import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.curseforge.ProveedorModsCurseForge;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ConflictoImportacion;
+import com.asbestosstar.crashdetector.dto.modpack.importar.FusionadorFTBQuestsSnbt;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ImportadorModpack;
+import com.asbestosstar.crashdetector.dto.modpack.importar.ImportadorParalelo;
 import com.asbestosstar.crashdetector.dto.modpack.importar.InfoEntradaImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.importar.PoliticaImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ResolutorConflictosImportacion;
@@ -87,46 +90,74 @@ public class ImportadorModpackTlmods implements ImportadorModpack {
 		Json.Nodo tla = leerTLauncherAdditionalDesdeZip(entradas, prefijoRaiz);
 		Map<String, InfoEntradaImportacion> infoPorRuta = crearIndiceInfoDesdeTLauncherAdditional(tla);
 
-		for (EntradaZipLeida entrada : entradas.values()) {
-			String rutaRelativa = quitarPrefijoRaiz(entrada.nombre, prefijoRaiz);
+		final List<ImportadorParalelo.TrabajoImportacion> trabajosZip = ImportadorParalelo.listaSincronizada();
+		final Path carpetaDestinoFinal = carpetaDestino;
+		final PoliticaImportacion politicaFinal = politica;
+		final ResolutorConflictosImportacion resolutorFinal = resolutor;
+		final String prefijoRaizFinal = prefijoRaiz;
+		final Map<String, InfoEntradaImportacion> infoPorRutaFinal = infoPorRuta;
+
+		for (final EntradaZipLeida entrada : entradas.values()) {
+			final String rutaRelativa = quitarPrefijoRaiz(entrada.nombre, prefijoRaizFinal);
 
 			if (rutaRelativa == null || rutaRelativa.trim().isEmpty()) {
 				continue;
 			}
 
 			if (!rutaSegura(rutaRelativa)) {
-				total.saltados++;
-				total.mensajes.add("Ruta insegura omitida: " + entrada.nombre);
+				trabajosZip.add(new ImportadorParalelo.TrabajoImportacion() {
+					@Override
+					public ResultadoImportacion ejecutar() {
+						ResultadoImportacion r = new ResultadoImportacion();
+						r.saltados++;
+						r.mensajes.add("Ruta insegura omitida: " + entrada.nombre);
+						return r;
+					}
+				});
 				continue;
 			}
 
-			InfoEntradaImportacion info = infoPorRuta.get(rutaRelativa);
-			if (info == null) {
-				info = new InfoEntradaImportacion();
-			}
+			final Path destino = carpetaDestinoFinal.resolve(rutaRelativa).normalize();
 
-			info.rutaRelativa = rutaRelativa;
-			info.nombreEntrada = entrada.nombre;
-			info.fechaModificacion = entrada.fechaModificacion;
-			info.tamanoDeclarado = entrada.bytes.length;
-			info.esMod = esRutaMod(rutaRelativa);
-
-			Path destino = carpetaDestino.resolve(rutaRelativa).normalize();
-
-			if (!destino.toAbsolutePath().normalize().startsWith(carpetaDestino)) {
-				total.saltados++;
-				total.mensajes.add("Ruta intenta salir de la carpeta destino: " + entrada.nombre);
+			if (!destino.toAbsolutePath().normalize().startsWith(carpetaDestinoFinal)) {
+				trabajosZip.add(new ImportadorParalelo.TrabajoImportacion() {
+					@Override
+					public ResultadoImportacion ejecutar() {
+						ResultadoImportacion r = new ResultadoImportacion();
+						r.saltados++;
+						r.mensajes.add("Ruta intenta salir de la carpeta destino: " + entrada.nombre);
+						return r;
+					}
+				});
 				continue;
 			}
 
-			ResultadoImportacion r = instalarEntradaConConflictos(entrada.bytes, info, destino, politica, resolutor);
-			mezclar(total, r);
+			trabajosZip.add(new ImportadorParalelo.TrabajoImportacion() {
+				@Override
+				public ResultadoImportacion ejecutar() throws Exception {
+					InfoEntradaImportacion info = infoPorRutaFinal.get(rutaRelativa);
+
+					if (info == null) {
+						info = new InfoEntradaImportacion();
+					}
+
+					info.rutaRelativa = rutaRelativa;
+					info.nombreEntrada = entrada.nombre;
+					info.fechaModificacion = entrada.fechaModificacion;
+					info.tamanoDeclarado = entrada.bytes.length;
+					info.esMod = esRutaMod(rutaRelativa);
+
+					return instalarEntradaConConflictos(entrada.bytes, info, destino, politicaFinal, resolutorFinal);
+				}
+			});
 		}
+
+		ImportadorParalelo.mezclar(total, ImportadorParalelo.ejecutar(trabajosZip));
 
 		if (tla != null) {
 			ResultadoImportacion r = descargarArchivosFaltantesDesdeTLauncherAdditional(tla, carpetaDestino, politica,
 					resolutor);
-			mezclar(total, r);
+			ImportadorParalelo.mezclar(total, r);
 		}
 
 		actualizarTLauncherAdditionalDespuesDeImportar(carpetaDestino);
@@ -154,36 +185,53 @@ public class ImportadorModpackTlmods implements ImportadorModpack {
 	public ResultadoImportacion descargarFaltantesDeArreglo(Json.Nodo arreglo, Path carpetaDestino,
 			PoliticaImportacion politica, ResolutorConflictosImportacion resolutor) throws IOException {
 
-		ResultadoImportacion total = new ResultadoImportacion();
-
 		if (arreglo == null || !arreglo.esArreglo()) {
-			return total;
+			return new ResultadoImportacion();
 		}
 
-		for (int i = 0; i < arreglo.tamano(); i++) {
-			Json.Nodo entrada = arreglo.en(i);
-			Json.Nodo version = entrada.obtener("version");
-			Json.Nodo metadata = version.obtener("metadata");
+		final List<ImportadorParalelo.TrabajoImportacion> trabajos = ImportadorParalelo.listaSincronizada();
+		final Path carpetaDestinoFinal = carpetaDestino;
+		final PoliticaImportacion politicaFinal = politica;
+		final ResolutorConflictosImportacion resolutorFinal = resolutor;
 
-			String path = obtenerCadenaSeguro(metadata.obtener("path"), "");
-			String url = obtenerCadenaSeguro(metadata.obtener("url"), "");
-			String sha1Esperado = obtenerCadenaSeguro(metadata.obtener("sha1"), "");
+		for (int i = 0; i < arreglo.tamano(); i++) {
+			final Json.Nodo entrada = arreglo.en(i);
+			final Json.Nodo version = entrada.obtener("version");
+			final Json.Nodo metadata = version.obtener("metadata");
+
+			final String path = obtenerCadenaSeguro(metadata.obtener("path"), "");
+			final String url = obtenerCadenaSeguro(metadata.obtener("url"), "");
+			final String sha1Esperado = obtenerCadenaSeguro(metadata.obtener("sha1"), "");
 
 			if (path == null || path.trim().isEmpty()) {
 				continue;
 			}
 
 			if (!rutaSegura(path)) {
-				total.saltados++;
-				total.mensajes.add("Ruta insegura omitida desde TLauncherAdditional: " + path);
+				trabajos.add(new ImportadorParalelo.TrabajoImportacion() {
+					@Override
+					public ResultadoImportacion ejecutar() {
+						ResultadoImportacion r = new ResultadoImportacion();
+						r.saltados++;
+						r.mensajes.add("Ruta insegura omitida desde TLauncherAdditional: " + path);
+						return r;
+					}
+				});
 				continue;
 			}
 
-			Path destino = carpetaDestino.resolve(path).normalize();
+			final Path destino = carpetaDestinoFinal.resolve(path).normalize();
 
-			if (!destino.toAbsolutePath().normalize().startsWith(carpetaDestino)) {
-				total.saltados++;
-				total.mensajes.add("Ruta intenta salir de la carpeta destino: " + path);
+			if (!destino.toAbsolutePath().normalize().startsWith(carpetaDestinoFinal)) {
+				trabajos.add(new ImportadorParalelo.TrabajoImportacion() {
+					@Override
+					public ResultadoImportacion ejecutar() {
+						ResultadoImportacion r = new ResultadoImportacion();
+						r.saltados++;
+						r.mensajes.add("Ruta intenta salir de la carpeta destino: " + path);
+						return r;
+					}
+				});
 				continue;
 			}
 
@@ -191,48 +239,55 @@ public class ImportadorModpackTlmods implements ImportadorModpack {
 				continue;
 			}
 
-			try {
-				byte[] bytes = null;
+			trabajos.add(new ImportadorParalelo.TrabajoImportacion() {
+				@Override
+				public ResultadoImportacion ejecutar() {
+					ResultadoImportacion total = new ResultadoImportacion();
 
-				long modId = obtenerLargoSeguro(entrada.obtener("id"), 0L);
-				long fileId = obtenerLargoSeguro(version.obtener("id"), 0L);
-
-				// Prioridad 1: CurseForge si existen IDs válidos.
-				if (modId > 0L && fileId > 0L) {
 					try {
-						bytes = descargarBytesDesdeCurseForge(modId, fileId);
+						byte[] bytes = null;
+
+						long modId = obtenerLargoSeguro(entrada.obtener("id"), 0L);
+						long fileId = obtenerLargoSeguro(version.obtener("id"), 0L);
+
+						if (modId > 0L && fileId > 0L) {
+							try {
+								bytes = descargarBytesDesdeCurseForge(modId, fileId);
+							} catch (Throwable t) {
+								CrashDetectorLogger.logException(t);
+							}
+						}
+
+						if (bytes == null) {
+							String urlFinal = normalizarUrlTlmods(url);
+
+							if (urlFinal == null || urlFinal.trim().isEmpty()) {
+								total.saltados++;
+								total.mensajes.add("Archivo TLMods sin URL: " + path);
+								return total;
+							}
+
+							bytes = descargarBytes(urlFinal);
+						}
+
+						verificarSha1SiExiste(bytes, sha1Esperado, path);
+
+						InfoEntradaImportacion info = crearInfoDesdeEntradaTLauncher(entrada, path);
+						info.tamanoDeclarado = bytes.length;
+						info.sha1 = sha1Esperado;
+
+						return instalarEntradaConConflictos(bytes, info, destino, politicaFinal, resolutorFinal);
 					} catch (Throwable t) {
 						CrashDetectorLogger.logException(t);
+						total.errores++;
+						total.mensajes.add("No se pudo descargar archivo TLMods: " + path + " / " + t.getMessage());
+						return total;
 					}
 				}
-
-				// Prioridad 2: URL TLMods o URL completa ya guardada.
-				if (bytes == null) {
-					String urlFinal = normalizarUrlTlmods(url);
-
-					if (urlFinal == null || urlFinal.trim().isEmpty()) {
-						continue;
-					}
-
-					bytes = descargarBytes(urlFinal);
-				}
-
-				verificarSha1SiExiste(bytes, sha1Esperado, path);
-
-				InfoEntradaImportacion info = crearInfoDesdeEntradaTLauncher(entrada, path);
-				info.tamanoDeclarado = bytes.length;
-				info.sha1 = sha1Esperado;
-
-				ResultadoImportacion r = instalarEntradaConConflictos(bytes, info, destino, politica, resolutor);
-				mezclar(total, r);
-			} catch (Throwable t) {
-				CrashDetectorLogger.logException(t);
-				total.errores++;
-				total.mensajes.add("No se pudo descargar archivo TLMods: " + path + " / " + t.getMessage());
-			}
+			});
 		}
 
-		return total;
+		return ImportadorParalelo.ejecutar(trabajos);
 	}
 
 	private static byte[] descargarBytesDesdeCurseForge(long modId, long fileId) throws IOException {
@@ -538,7 +593,7 @@ public class ImportadorModpackTlmods implements ImportadorModpack {
 		} else if (resolutor != null) {
 			decision = resolutor.resolverConflicto(conflicto, politica);
 		} else {
-			decision = ConflictoImportacion.Decision.SALTAR;
+			decision = resolverConflictoConGUI(conflicto, politica);
 		}
 
 		if (decision == ConflictoImportacion.Decision.REEMPLAZAR) {
@@ -546,6 +601,28 @@ public class ImportadorModpackTlmods implements ImportadorModpack {
 					java.nio.file.StandardOpenOption.TRUNCATE_EXISTING);
 			resultado.reemplazados++;
 			return resultado;
+		}
+
+		if (decision == ConflictoImportacion.Decision.FUSIONAR) {
+			if (!FusionadorFTBQuestsSnbt.puedeFusionar(info, destino)) {
+				resultado.saltados++;
+				resultado.mensajes.add("No se puede fusionar este archivo: " + destino);
+				return resultado;
+			}
+
+			try {
+				byte[] fusionado = FusionadorFTBQuestsSnbt.fusionar(bytesEntrada, destino);
+				Files.write(destino, fusionado, java.nio.file.StandardOpenOption.CREATE,
+						java.nio.file.StandardOpenOption.TRUNCATE_EXISTING);
+
+				resultado.fusionados++;
+				resultado.mensajes.add("Archivo FTB Quests fusionado: " + destino);
+				return resultado;
+			} catch (Throwable t) {
+				resultado.errores++;
+				resultado.mensajes.add("No se pudo fusionar FTB Quests " + destino + ": " + t.getMessage());
+				return resultado;
+			}
 		}
 
 		if (decision == ConflictoImportacion.Decision.RENOMBRAR) {
@@ -668,16 +745,7 @@ public class ImportadorModpackTlmods implements ImportadorModpack {
 	}
 
 	private static void mezclar(ResultadoImportacion total, ResultadoImportacion r) {
-		if (r == null) {
-			return;
-		}
-
-		total.copiados += r.copiados;
-		total.reemplazados += r.reemplazados;
-		total.saltados += r.saltados;
-		total.renombrados += r.renombrados;
-		total.errores += r.errores;
-		total.mensajes.addAll(r.mensajes);
+		ImportadorModpack.mezclar(total, r);
 	}
 
 	private static String obtenerCadenaSeguro(Json.Nodo nodo, String def) {

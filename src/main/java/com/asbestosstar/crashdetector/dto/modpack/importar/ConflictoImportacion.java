@@ -9,7 +9,7 @@ public class ConflictoImportacion {
 	}
 
 	public enum Decision {
-		REEMPLAZAR, SALTAR, RENOMBRAR, CANCELAR
+		REEMPLAZAR, SALTAR, RENOMBRAR, FUSIONAR, CANCELAR
 	}
 
 	public Tipo tipo;

@@ -609,14 +609,12 @@ public class ActualizadorTLauncherAdditional {
 				return 0;
 			}
 
-
 			Json.Nodo versionMR = MRModDesdeJar.solicitarVersionPorSha1ModrinthSeguro(sha1);
 
 			if (versionMR == null) {
 				return 0;
 			}
-			
-			
+
 			String projectId = obtenerCadenaSeguro(versionMR.obtener("project_id"), "");
 			String versionId = obtenerCadenaSeguro(versionMR.obtener("id"), "");
 
