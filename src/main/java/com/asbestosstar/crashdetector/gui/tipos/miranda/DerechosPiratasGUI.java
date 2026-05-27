@@ -46,12 +46,12 @@ public abstract class DerechosPiratasGUI extends JDialog implements CrashDetecto
 
 	public static Map<String, Supplier<DerechosPiratasGUI>> GUIS = new HashMap<String, Supplier<DerechosPiratasGUI>>();
 
-	protected final Path archivo = Statics.carpeta.resolve("derechos_piratas.json");
+	public final Path archivo = Statics.carpeta.resolve("derechos_piratas.json");
 
 	/** mapa codigo_idioma -> html */
-	protected final Map<String, String> derechos = new HashMap<String, String>();
+	public final Map<String, String> derechos = new HashMap<String, String>();
 
-	protected void cargarDatos() {
+	public void cargarDatos() {
 		derechos.clear();
 		if (!Files.exists(archivo)) {
 			return;
@@ -81,7 +81,7 @@ public abstract class DerechosPiratasGUI extends JDialog implements CrashDetecto
 		}
 	}
 
-	protected void guardarDatos() {
+	public void guardarDatos() {
 		try {
 			Nodo raiz = Json.crearObjeto();
 
@@ -124,11 +124,11 @@ public abstract class DerechosPiratasGUI extends JDialog implements CrashDetecto
 	 * Convierte el nombre visible del idioma a su código usando el registro
 	 * dinámico actual.
 	 */
-	protected String obtenerCodigoIdiomaDinamico(String nombreVisible) {
+	public String obtenerCodigoIdiomaDinamico(String nombreVisible) {
 		return Idioma.codigoDesdeNombreVisible(nombreVisible);
 	}
 
-	protected void forzarFondo(JComponent c, Color fondo) {
+	public void forzarFondo(JComponent c, Color fondo) {
 		if (c == null) {
 			return;
 		}
@@ -140,7 +140,7 @@ public abstract class DerechosPiratasGUI extends JDialog implements CrashDetecto
 	 * En macOS conviene usar una fuente más segura que Segoe UI, porque Aqua a
 	 * veces combina peor tamaños/preferencias con fuentes no nativas.
 	 */
-	protected Font fuenteUI(int estilo, int tam) {
+	public Font fuenteUI(int estilo, int tam) {
 		if (CrashDetectorGUI.esMac()) {
 			return new Font("SansSerif", estilo, tam);
 		}
@@ -151,7 +151,7 @@ public abstract class DerechosPiratasGUI extends JDialog implements CrashDetecto
 	 * Crea un JTextArea con tamaño explícito para evitar que en macOS colapse a una
 	 * altura casi nula dentro de GridBagLayout.
 	 */
-	protected JTextArea crearAreaMultilinea(String textoInicial, Color fondo, Color texto) {
+	public JTextArea crearAreaMultilinea(String textoInicial, Color fondo, Color texto) {
 		JTextArea area = new JTextArea(textoInicial != null ? textoInicial : "");
 		area.setLineWrap(true);
 		area.setWrapStyleWord(true);
@@ -177,7 +177,7 @@ public abstract class DerechosPiratasGUI extends JDialog implements CrashDetecto
 	 * Crea un JScrollPane robusto para macOS, forzando viewport opaco y tamaño
 	 * mínimo.
 	 */
-	protected JScrollPane crearScrollRobusto(JTextArea area, Color fondoScroll, Color borde) {
+	public JScrollPane crearScrollRobusto(JTextArea area, Color fondoScroll, Color borde) {
 		JScrollPane scroll = new JScrollPane(area);
 		scroll.setBorder(BorderFactory.createLineBorder(borde, 1));
 		scroll.getViewport().setOpaque(true);
@@ -196,7 +196,7 @@ public abstract class DerechosPiratasGUI extends JDialog implements CrashDetecto
 	/**
 	 * Estiliza un botón de forma más determinista para macOS.
 	 */
-	protected void estilizarBoton(JButton boton, Color fondo, Color texto) {
+	public void estilizarBoton(JButton boton, Color fondo, Color texto) {
 		if (boton == null) {
 			return;
 		}
@@ -219,7 +219,7 @@ public abstract class DerechosPiratasGUI extends JDialog implements CrashDetecto
 	 * Fuerza colores/opacidad recursivamente también en componentes que en macOS
 	 * suelen quedar “transparentes” o visualmente incoherentes.
 	 */
-	protected void aplicarTemaRecursivo(Component c, Color fondoBase, Color textoBase) {
+	public void aplicarTemaRecursivo(Component c, Color fondoBase, Color textoBase) {
 		if (c == null) {
 			return;
 		}
@@ -264,7 +264,7 @@ public abstract class DerechosPiratasGUI extends JDialog implements CrashDetecto
 	/**
 	 * Editor multilenguaje HTML robusto para Linux y macOS.
 	 */
-	protected void editarDerechosMultilenguaje(String titulo, Color fondo, Color texto, Color caja, Color borde) {
+	public void editarDerechosMultilenguaje(String titulo, Color fondo, Color texto, Color caja, Color borde) {
 		if (derechos == null) {
 			return;
 		}

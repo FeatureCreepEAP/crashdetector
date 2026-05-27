@@ -6401,19 +6401,24 @@ public class Chino implements Idioma {
 				+ "<p>如果问题持续，请尝试在不使用 AAAParticles 的情况下启动游戏。</p>";
 	}
 
+	// Chinese (Simplified) (中文)
 	@Override
 	public String javaProblematica() {
-		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "检测到 Java 虚拟机（JVM）原生崩溃。</b>"
-				+ "<p>此类错误发生在 Java 虚拟机内部（例如 <code>jvm.dll</code>、<code>libjvm.so</code> 等），" + "并不一定由模组引起。</p>"
-				+ "<p>虽然极少数情况可能源于使用了不兼容原生库的模组，" + "<b>但更可能是因为你使用的 JVM 版本存在缺陷、损坏或已过时</b>。</p>"
-				+ "<p>如果你使用的是非官方或较旧的 Java 构建（例如无支持的社区版本），这种情况尤为常见。</p>" + "<p><b>我们推荐使用可靠且维护良好的 JVM：</b></p>" + "<ul>"
-				+ "<li><b>Red Hat Build of OpenJDK</b>（稳定、经过充分测试，适用于 Windows/Linux）</li>"
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到 Java 运行时环境 (JVM) 原生崩溃。</b>"
+				+ "<p>此类错误发生在 Java 虚拟机内部（例如，在 <code>jvm.dll</code>、<code>libjvm.so</code> 等中）， " + "并不一定是由 mod 引起的。</p>"
+				+ "<p>虽然在极少数情况下，它可能由使用不兼容原生库的 mod 引起， " + "<b>但更可能的原因是 JVM 版本存在缺陷、损坏或过时</b>。</p>"
+				+ "<p>如果您使用的是旧版或非官方的 Java 版本（例如，无支持的社区构建版），这种情况尤其常见。</p>" + "<p><b>我们建议使用可靠且受维护的 JVM：</b></p>" + "<ul>"
+				+ "<li><b>Red Hat Build of OpenJDK</b>（稳定，经过充分测试，适用于 Windows/Linux）</li>"
 				+ "<li><b>OpenLogic OpenJDK</b>（跨平台支持，包括 macOS Intel）</li>"
-				+ "<li><b>Azul Zulu</b>（经过认证，提供免费 LTS 支持）</li>" + "<li><b>Oracle JDK</b>（官方版本，定期更新）</li>" + "</ul>"
-				+ "<p>请避免使用未知、自定义或非常老旧的构建，它们可能包含 JVM 引擎中的严重错误。</p>"
-				+ "<p><b>你使用的是 Prism Launcher 或 TLauncher 吗？</b> 配置自定义 JVM 非常简单："
-				+ "在 Prism Launcher 中，进入 <i>安装</i> → <i>编辑实例</i> → <i>Java 设置</i>；"
-				+ "在 TLauncher 中，进入 <i>Settings</i> → <i>Java Settings</i> 并指定你下载的 JDK/JRE 路径。" + "无需更改系统 JVM！</p>";
+				+ "<li><b>Azul Zulu</b>（已认证，提供免费 LTS 支持）</li>" + "<li><b>Oracle JDK</b>（官方，定期更新）</li>" + "</ul>"
+				+ "<p>避免使用未知、自定义或非常旧的构建版本，因为它们可能在 JVM 引擎中包含关键错误。</p>"
+				+ "<p><b>您使用 Prism Launcher 或 TLauncher 吗？</b> 设置自定义 JVM 非常简单： "
+				+ "在 Prism Launcher 中，前往 <i>Instalaciones</i> → <i>Editar instancia</i> → <i>Configuración de Java</i>； "
+				+ "在 TLauncher 中，前往 <i>Settings</i> → <i>Java Settings</i> 并选择您下载的 JDK/JRE 路径。 "
+				+ "您的垃圾回收器也可能遇到问题；如果是这样，您应该切换到 ZGC。"
+
+				+ "您无需更改系统 JVM！</p>";
 	}
 
 	@Override

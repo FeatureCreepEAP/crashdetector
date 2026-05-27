@@ -6517,23 +6517,26 @@ public class Coreano implements Idioma {
 				+ "<p>문제가 지속되면 AAAParticles 없이 게임을 시작해 보십시오.</p>";
 	}
 
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
 	@Override
 	public String javaProblematica() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "자바 가상 머신(JVM)의 네이티브 크래시가 감지되였습니다.</b>"
-				+ "<p>이러한 오류는 자바 가상 머신 자체 내부(예: <code>jvm.dll</code>, <code>libjvm.so</code> 등)에서 발생하며, "
-				+ "반드시 모드 때문인 것은 아닙니다.</p>" + "<p>드물게는 호환되지 않는 네이티브 라이브러리를 사용하는 모드로 인해 발생할 수 있지만, "
-				+ "<b>JVM 자체가 결함 있거나 손상되였거나 오래되였을 가능성이 훨씬 큽니다</b>.</p>"
-				+ "<p>이는 특히 지원되지 않는 커뮤니티 빌드와 같이 공식적이지 않거나 오래된 자바 빌드를 사용할 때 흔합니다.</p>"
-				+ "<p><b>다음과 같이 신뢰할 수 있고 유지보수되는 JVM 사용을 권장합니다:</b></p>" + "<ul>"
-				+ "<li><b>Red Hat Build of OpenJDK</b> (안정적이고 검증됨, Windows/Linux에 적합)</li>"
-				+ "<li><b>OpenLogic OpenJDK</b> (다중 플랫폼 지원, macOS Intel 포함)</li>"
-				+ "<li><b>Azul Zulu</b> (인증됨, 무료 LTS 지원 제공)</li>" + "<li><b>Oracle JDK</b> (공식, 정기 갱신)</li>" + "</ul>"
-				+ "<p>알 수 없는, 맞춤형, 또는 매우 오래된 빌드는 JVM 엔진에 심각한 오류를 포함할 수 있으므로 피하십시오.</p>"
-				+ "<p><b>Prism Launcher 또는 TLauncher를 사용합니까?</b> 맞춤 JVM 설정은 매우 쉽습니다: "
-				+ "Prism Launcher에서는 <i>인스턴스</i> → <i>편집</i> → <i>자바 설정</i>으로 이동하고, "
-				+ "TLauncher에서는 <i>Settings</i> → <i>Java Settings</i>에서 다운로드한 JDK/JRE 경로를 지정하십시오. "
-				+ "체계 JVM을 변경할 필요 없습니다!</p>";
+				+ "Java 런타임 환경(JVM)의 네이티브 충돌이 감지되었습니다.</b>"
+				+ "<p>이 유형의 오류는 Java 가상 머신 내부(예: <code>jvm.dll</code>, <code>libjvm.so</code> 등)에서 발생하며, "
+				+ "반드시 mod에 의해 발생하는 것은 아닙니다.</p>" + "<p>드문 경우이지만 호환되지 않는 네이티브 라이브러리를 사용하는 mod로 인해 발생할 수 있지만, "
+				+ "<b>JVM의 결함이 있거나 손상되었거나 오래된 버전 때문일 가능성이 훨씬 높습니다</b>.</p>"
+				+ "<p>이는 특히 구형이거나 비공식적인 Java 버전을 사용하는 경우(예: 지원되지 않는 커뮤니티 빌드) 흔합니다.</p>"
+				+ "<p><b>신뢰할 수 있고 유지 관리되는 JVM 사용을 권장합니다:</b></p>" + "<ul>"
+				+ "<li><b>Red Hat Build of OpenJDK</b> (안정적, 잘 테스트됨, Windows/Linux에 이상적)</li>"
+				+ "<li><b>OpenLogic OpenJDK</b> (macOS Intel 포함 다중 플랫폼 지원)</li>"
+				+ "<li><b>Azul Zulu</b> (인증됨, 무료 LTS 지원 제공)</li>" + "<li><b>Oracle JDK</b> (공식, 정기 업데이트 제공)</li>"
+				+ "</ul>" + "<p>알 수 없거나 사용자 정의되거나 매우 오래된 빌드는 JVM 엔진에 치명적인 오류를 포함할 수 있으므로 피하십시오.</p>"
+				+ "<p><b>Prism Launcher 또는 TLauncher를 사용하시나요?</b> 사용자 정의 JVM 설정은 매우 쉽습니다: "
+				+ "Prism Launcher에서는 <i>Instalaciones</i> → <i>Editar instancia</i> → <i>Configuración de Java</i>로 이동하세요; "
+				+ "TLauncher에서는 <i>Settings</i> → <i>Java Settings</i>로 이동하여 다운로드한 JDK/JRE 경로를 선택하세요. "
+				+ "가비지 컬렉터에 문제가 있을 수도 있습니다; 이 경우 ZGC로 전환해야 합니다."
+
+				+ "시스템 JVM을 변경할 필요가 없습니다!</p>";
 	}
 
 	@Override

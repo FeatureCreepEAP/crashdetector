@@ -221,28 +221,28 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 	}
 
 	@Override
-	protected void onSamplerIniciado() {
+	public void onSamplerIniciado() {
 		etiquetaEstado.setText("Activo");
 		botonIniciar.setEnabled(false);
 		botonDetener.setEnabled(true);
 	}
 
 	@Override
-	protected void onSamplerDetenido() {
+	public void onSamplerDetenido() {
 		etiquetaEstado.setText("Detenido");
 		botonIniciar.setEnabled(true);
 		botonDetener.setEnabled(false);
 	}
 
 	@Override
-	protected void onMuestraRecibida(String metodo, StackTraceElement[] stack, long nanos) {
+	public void onMuestraRecibida(String metodo, StackTraceElement[] stack, long nanos) {
 		DatosMuestra d = datos.computeIfAbsent(metodo, DatosMuestra::new);
 		d.muestras.incrementAndGet();
 		d.tiempoTotal.addAndGet(nanos);
 	}
 
 	@Override
-	protected void onLimpiarDatos() {
+	public void onLimpiarDatos() {
 		datos.clear();
 		refrescarTabla();
 	}

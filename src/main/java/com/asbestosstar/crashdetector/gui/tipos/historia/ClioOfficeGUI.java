@@ -50,9 +50,9 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 	private static final long serialVersionUID = 1L;
 
 	// ---------- Imagen de fondo ----------
-	private BufferedImage imagenFondo;
-	private int anchoDiseno = 1200;
-	private int altoDiseno = 800;
+	public BufferedImage imagenFondo;
+	public int anchoDiseno = 1200;
+	public int altoDiseno = 800;
 
 	// ---------- Colores configurables ----------
 	public ConfigColor colorEstadoExito;
@@ -73,29 +73,29 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 	public ConfigColor colorDoradoTexto; // texto dorado de la descripción
 
 	// ---------- Paneles principales ----------
-	private JPanel panelLista1;
-	private JPanel panelLista2;
-	private JPanel panelResultados;
-	private JPanel panelDescripcion;
-	private JPanel panelBotones;
+	public JPanel panelLista1;
+	public JPanel panelLista2;
+	public JPanel panelResultados;
+	public JPanel panelDescripcion;
+	public JPanel panelBotones;
 
-	private JPanel panelLista2Contenido;
+	public JPanel panelLista2Contenido;
 
 	// ---------- Controles ----------
-	private JButton botonComparar;
-	private JButton botonInstantanea;
+	public JButton botonComparar;
+	public JButton botonInstantanea;
 
-	private JScrollPane scrollLista1;
-	private JScrollPane scrollLista2;
-	private JScrollPane scrollResultados;
+	public JScrollPane scrollLista1;
+	public JScrollPane scrollLista2;
+	public JScrollPane scrollResultados;
 
 	// ================== RECTÁNGULOS NORMALIZADOS (x, y, w, h) ==================
-	private static final double[] R_LISTA1 = { 0.030, 0.030, 0.142, 0.690 };
-	private static final double[] R_LISTA2 = { 0.274, 0.035, 0.142, 0.690 };
-	private static final double[] R_RESULT = { 0.675, 0.170, 0.315, 0.580 };
+	public static final double[] R_LISTA1 = { 0.030, 0.030, 0.142, 0.690 };
+	public static final double[] R_LISTA2 = { 0.274, 0.035, 0.142, 0.690 };
+	public static final double[] R_RESULT = { 0.675, 0.170, 0.315, 0.580 };
 	// Subimos más la franja inferior para evitar corte del texto (antes 0.905)
-	private static final double[] R_BOTONES = { 0.025, 0.890, 0.300, 0.070 };
-	private static final double[] R_DESC = { 0.330, 0.890, 0.645, 0.070 };
+	public static final double[] R_BOTONES = { 0.025, 0.890, 0.300, 0.070 };
+	public static final double[] R_DESC = { 0.330, 0.890, 0.645, 0.070 };
 	// ===========================================================================
 
 	@Override
@@ -157,7 +157,7 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 	}
 
 	/** Carga la imagen de fondo y guarda su tamaño real. */
-	private void cargarImagenFondo() {
+	public void cargarImagenFondo() {
 		try {
 			Path ruta = Statics.carpeta.resolve("imagenes/cliosoffice.png");
 			if (!Files.exists(ruta)) {
@@ -178,7 +178,7 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 
 	/** Construye paneles y scrolls. */
 	@Override
-	protected void construirEstructuraBase() {
+	public void construirEstructuraBase() {
 		// Panel que pinta el fondo
 		panelPrincipal = new JPanel() {
 			@Override
@@ -274,7 +274,7 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 	}
 
 	/** Scroll de resultados: transparente y sin borde. */
-	private static JScrollPane crearScrollTransparenteSinBorde() {
+	public static JScrollPane crearScrollTransparenteSinBorde() {
 		JScrollPane sp = new JScrollPane();
 		sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -287,7 +287,7 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 	}
 
 	/** Scroll de listas: fondo beige del tema y borde suave. */
-	private JScrollPane crearScrollConFondoListas() {
+	public JScrollPane crearScrollConFondoListas() {
 		JScrollPane sp = new JScrollPane();
 		sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -299,7 +299,7 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 	}
 
 	/** Botón con estilo de tema (más grande). */
-	private void estilizarBoton(JButton b) {
+	public void estilizarBoton(JButton b) {
 		b.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		b.setBackground(colorBotonFondo.obtener());
 		b.setForeground(colorBotonTexto.obtener());
@@ -311,7 +311,7 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 	}
 
 	// -------------------- Layout proporcional --------------------
-	private void relayout() {
+	public void relayout() {
 		int W = panelPrincipal.getWidth();
 		int H = panelPrincipal.getHeight();
 		if (W <= 0 || H <= 0)
@@ -327,7 +327,7 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 		panelPrincipal.repaint();
 	}
 
-	private static void setBoundsNorm(JPanel p, double[] r, int W, int H) {
+	public static void setBoundsNorm(JPanel p, double[] r, int W, int H) {
 		int x = (int) Math.round(r[0] * W);
 		int y = (int) Math.round(r[1] * H);
 		int w = (int) Math.round(r[2] * W);
@@ -449,7 +449,7 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 	 * base; sólo se formatea el texto mostrado.
 	 */
 	@Override
-	protected void cargarArchivosHistoricos() {
+	public void cargarArchivosHistoricos() {
 		try {
 			Path dir = Statics.carpeta.resolve("historia_mods");
 			if (Files.exists(dir)) {
@@ -498,7 +498,7 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 	/**
 	 * Cambia el texto que se muestra en cada fila sin alterar selección/compare.
 	 */
-	private void formatearFilaNombre(JPanel fila, File f) {
+	public void formatearFilaNombre(JPanel fila, File f) {
 		JRadioButton rb = null;
 		JLabel lbl = null;
 		for (java.awt.Component c : fila.getComponents()) {
@@ -534,14 +534,14 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 	}
 
 	/** Texto de ayuda dorado en la franja inferior. */
-	private void actualizarDescripcion() {
+	public void actualizarDescripcion() {
 		String html = "<html><body style='font-family:sans-serif;font-size:12px;color:"
 				+ aHex(colorDoradoTexto.obtener()) + ";'>" + MonitorDePID.idioma.historaDeModsDesc() + "</body></html>";
 		if (descripcionHTML != null)
 			descripcionHTML.setText(html);
 	}
 
-	private static String aHex(java.awt.Color c) {
+	public static String aHex(java.awt.Color c) {
 		return String.format("#%02X%02X%02X", c.getRed(), c.getGreen(), c.getBlue());
 	}
 

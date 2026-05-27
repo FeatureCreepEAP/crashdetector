@@ -5,12 +5,12 @@ package com.asbestosstar.crashdetector.gui.tipos.arbol;
  * datos estructurales.
  */
 public class PathDescriptor {
-	private final String modUbicacion;
-	private final String paquete; // "" para paquete por defecto
-	private final String clase;
-	private final String metodo; // null si no es método
-	private final String descriptor; // null si no aplica
-	private final String tipo; // "MOD", "PAQUETE", "CLASE", "METODO", "CAMPO", "CONSTANTE", "REFERENCIA"
+	public final String modUbicacion;
+	public final String paquete; // "" para paquete por defecto
+	public final String clase;
+	public final String metodo; // null si no es método
+	public final String descriptor; // null si no aplica
+	public final String tipo; // "MOD", "PAQUETE", "CLASE", "METODO", "CAMPO", "CONSTANTE", "REFERENCIA"
 
 	public PathDescriptor(String modUbicacion, String paquete, String clase, String metodo, String descriptor,
 			String tipo) {

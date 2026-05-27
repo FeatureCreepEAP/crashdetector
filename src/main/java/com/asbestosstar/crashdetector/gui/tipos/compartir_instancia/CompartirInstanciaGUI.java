@@ -204,7 +204,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		setVisible(true);
 	}
 
-	protected void exportarSeleccionAUbicacion() {
+	public void exportarSeleccionAUbicacion() {
 		List<Path> rutas = obtenerSeleccionFinal();
 
 		if (rutas.isEmpty()) {
@@ -270,7 +270,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		}.execute();
 	}
 
-	protected void recargarServicios() {
+	public void recargarServicios() {
 		DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
 
 		for (String nombre : SitioDeArchivoAPI.SERVICIOS_REGISTRADOS.keySet()) {
@@ -280,13 +280,13 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		comboServicio.setModel(modelo);
 	}
 
-	protected void refrescarArbol() {
+	public void refrescarArbol() {
 		DefaultMutableTreeNode raiz = construirArbolSeleccion();
 		modeloArbol.setRoot(raiz);
 		modeloArbol.reload();
 	}
 
-	protected void recargarFormatosExportables() {
+	public void recargarFormatosExportables() {
 		DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<String>();
 
 		for (Map.Entry<String, Supplier<ProveedorMods>> entrada : PanelAPIBase.PROVEEDORES_MODS.entrySet()) {
@@ -304,7 +304,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		comboFormato.setModel(modelo);
 	}
 
-	protected ProveedorMods obtenerProveedorFormatoSeleccionado() {
+	public ProveedorMods obtenerProveedorFormatoSeleccionado() {
 		String formato = (String) comboFormato.getSelectedItem();
 
 		if (formato == null) {
@@ -326,7 +326,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		return proveedor;
 	}
 
-	protected String construirTextoPolitica() {
+	public String construirTextoPolitica() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(MonitorDePID.idioma.compartirInstanciaPolitica1()).append("\n\n");
@@ -340,7 +340,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		return sb.toString();
 	}
 
-	protected DefaultMutableTreeNode construirArbolSeleccion() {
+	public DefaultMutableTreeNode construirArbolSeleccion() {
 		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("ROOT");
 
 		for (Path ruta : obtenerRutasPredeterminadas()) {
@@ -353,7 +353,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		return raiz;
 	}
 
-	protected List<Path> obtenerRutasPredeterminadas() {
+	public List<Path> obtenerRutasPredeterminadas() {
 		List<Path> ret = new ArrayList<>();
 
 		agregarSiExiste(ret, carpetaBase.resolve("mods"));
@@ -377,7 +377,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		return ret;
 	}
 
-	protected void agregarSiExiste(List<Path> lista, Path ruta) {
+	public void agregarSiExiste(List<Path> lista, Path ruta) {
 		try {
 			if (ruta != null && Files.exists(ruta) && !lista.contains(ruta)) {
 				lista.add(ruta.normalize().toAbsolutePath());
@@ -387,7 +387,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		}
 	}
 
-	protected DefaultMutableTreeNode crearNodoRecursivoSiExiste(Path ruta) {
+	public DefaultMutableTreeNode crearNodoRecursivoSiExiste(Path ruta) {
 		try {
 			if (ruta == null || !Files.exists(ruta)) {
 				return null;
@@ -420,7 +420,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		}
 	}
 
-	protected boolean rutaPermitida(Path ruta) {
+	public boolean rutaPermitida(Path ruta) {
 		if (ruta == null) {
 			return false;
 		}
@@ -431,7 +431,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		return normal.startsWith(carpetaBase) || normal.startsWith(statics);
 	}
 
-	protected void establecerSeleccionRecursiva(DefaultMutableTreeNode nodo, boolean seleccionada) {
+	public void establecerSeleccionRecursiva(DefaultMutableTreeNode nodo, boolean seleccionada) {
 		Object user = nodo.getUserObject();
 		if (user instanceof NodoRutaSeleccionable) {
 			((NodoRutaSeleccionable) user).estado = seleccionada ? EstadoSeleccion.SELECCIONADO
@@ -444,7 +444,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		}
 	}
 
-	protected void actualizarPadres(DefaultMutableTreeNode nodo) {
+	public void actualizarPadres(DefaultMutableTreeNode nodo) {
 		if (nodo == null) {
 			return;
 		}
@@ -487,7 +487,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		actualizarPadres((DefaultMutableTreeNode) nodo.getParent());
 	}
 
-	protected List<Path> obtenerSeleccionFinal() {
+	public List<Path> obtenerSeleccionFinal() {
 		List<Path> ret = new ArrayList<>();
 
 		DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modeloArbol.getRoot();
@@ -526,7 +526,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		return ret;
 	}
 
-	protected void compartirSeleccion() {
+	public void compartirSeleccion() {
 		List<Path> rutas = obtenerSeleccionFinal();
 		if (rutas.isEmpty()) {
 			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.compartirInstanciaSinSeleccion(),
@@ -712,13 +712,13 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		}
 	}
 
-	protected void initOverlayCarga() {
+	public void initOverlayCarga() {
 		overlayCarga = new ElementoOverlayCarga();
 		overlayCarga.setVisible(false);
 		setGlassPane(overlayCarga);
 	}
 
-	protected void setCargando(boolean nuevoEstado) {
+	public void setCargando(boolean nuevoEstado) {
 		cargando = nuevoEstado;
 
 		if (overlayCarga != null) {
@@ -728,7 +728,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		}
 	}
 
-	protected void setTextoCarga(String texto) {
+	public void setTextoCarga(String texto) {
 		textoCargaActual = texto != null ? texto : "";
 	}
 

@@ -11,7 +11,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
  */
 public class JGitReflexivo {
 
-	private static final String CLASE_DIRECTA = "com.asbestosstar.crashdetector.gui.tipos.jgit.OperacionesJGitDirectas";
+	public static final String CLASE_DIRECTA = "com.asbestosstar.crashdetector.gui.tipos.jgit.OperacionesJGitDirectas";
 
 	public static boolean disponible() {
 		return BuscarParaJGit.estaJGitBasicoEnClasspath();
@@ -57,7 +57,7 @@ public class JGitReflexivo {
 		llamar("abrirGuiSwing", new Class[] { File.class }, new Object[] { carpeta });
 	}
 
-	private static Object llamar(String metodo, Class[] tipos, Object[] args) {
+	public static Object llamar(String metodo, Class[] tipos, Object[] args) {
 		if (!disponible()) {
 			return null;
 		}

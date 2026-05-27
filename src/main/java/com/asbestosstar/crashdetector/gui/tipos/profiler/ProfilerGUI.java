@@ -14,9 +14,9 @@ public abstract class ProfilerGUI extends JFrame implements CrashDetectorGUI {
 
 	public static Map<String, Supplier<ProfilerGUI>> GUIS = new HashMap<>();
 
-	protected volatile boolean profilerActivo = false;
+	public volatile boolean profilerActivo = false;
 
-	protected ProfilerGUI() {
+	public ProfilerGUI() {
 		super();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
@@ -26,7 +26,7 @@ public abstract class ProfilerGUI extends JFrame implements CrashDetectorGUI {
 		return TipoGUI.PROFILER;
 	}
 
-	protected void inicializarVentana() {
+	public void inicializarVentana() {
 		setTitle(MonitorDePID.idioma.profilerTitulo());
 		setLocationByPlatform(true);
 	}
@@ -69,13 +69,13 @@ public abstract class ProfilerGUI extends JFrame implements CrashDetectorGUI {
 		onLimpiarDatos();
 	}
 
-	protected abstract void onProfilerIniciado();
+	public abstract void onProfilerIniciado();
 
-	protected abstract void onProfilerDetenido();
+	public abstract void onProfilerDetenido();
 
-	protected abstract void onMuestraRecibida(String hilo, StackTraceElement[] stack, long nanos);
+	public abstract void onMuestraRecibida(String hilo, StackTraceElement[] stack, long nanos);
 
-	protected abstract void onLlamadaMetodo(String clase, String metodo, String descriptor, long duracionNs);
+	public abstract void onLlamadaMetodo(String clase, String metodo, String descriptor, long duracionNs);
 
-	protected abstract void onLimpiarDatos();
+	public abstract void onLimpiarDatos();
 }

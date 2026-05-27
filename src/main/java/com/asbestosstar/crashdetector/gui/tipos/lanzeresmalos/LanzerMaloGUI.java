@@ -25,10 +25,10 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 public abstract class LanzerMaloGUI extends JDialog implements CrashDetectorGUI, BotonDeBarraLateralDerecha {
 	public static Map<String, Supplier<LanzerMaloGUI>> GUIS = new HashMap<String, Supplier<LanzerMaloGUI>>();
 
-	protected List<DetectorLanzer> lanzadores;
-	protected Map<String, Map<String, String>> noRecomendados;
+	public List<DetectorLanzer> lanzadores;
+	public Map<String, Map<String, String>> noRecomendados;
 
-	protected Path archivoNoRecomendados = LanzerDesAnimado.ARCHIVO_DESANIMADOS;
+	public Path archivoNoRecomendados = LanzerDesAnimado.ARCHIVO_DESANIMADOS;
 
 	/**
 	 * NOSOTROS dice es malo, pero la corporacion es diferente
@@ -47,7 +47,7 @@ public abstract class LanzerMaloGUI extends JDialog implements CrashDetectorGUI,
 	/**
 	 * Carga los datos iniciales desde los archivos JSON.
 	 */
-	protected void cargarDatos() {
+	public void cargarDatos() {
 		this.lanzadores = DetectorLanzer.DETECTORES_DE_LANZERES;
 		this.noRecomendados = new LinkedHashMap<String, Map<String, String>>();
 
@@ -60,7 +60,7 @@ public abstract class LanzerMaloGUI extends JDialog implements CrashDetectorGUI,
 	 * Soporta cualquier código de idioma presente en el archivo. También normaliza
 	 * códigos históricos erróneos: kp -> ko jp -> ja
 	 */
-	private void cargarNoRecomendados() {
+	public void cargarNoRecomendados() {
 		if (archivoNoRecomendados.toFile().exists() && archivoNoRecomendados.toFile().length() > 0) {
 			try {
 				String contenido = new String(Files.readAllBytes(archivoNoRecomendados), StandardCharsets.UTF_8);
@@ -101,14 +101,14 @@ public abstract class LanzerMaloGUI extends JDialog implements CrashDetectorGUI,
 	/**
 	 * Obtiene las claves de un objeto JSON sin depender de clases internas.
 	 */
-	protected List<String> obtenerClaves(Nodo nodo) {
+	public List<String> obtenerClaves(Nodo nodo) {
 		return nodo.claves();
 	}
 
 	/**
 	 * Guarda los datos en los archivos JSON.
 	 */
-	protected void guardarDatos() {
+	public void guardarDatos() {
 		guardarNoRecomendados();
 	}
 
@@ -117,7 +117,7 @@ public abstract class LanzerMaloGUI extends JDialog implements CrashDetectorGUI,
 	 *
 	 * Guarda usando códigos normalizados y permite cualquier idioma presente.
 	 */
-	private void guardarNoRecomendados() {
+	public void guardarNoRecomendados() {
 		try {
 			Nodo raiz = Json.crearObjeto();
 
@@ -221,7 +221,7 @@ public abstract class LanzerMaloGUI extends JDialog implements CrashDetectorGUI,
 	/**
 	 * Normaliza códigos de idioma y conserva compatibilidad histórica.
 	 */
-	protected String normalizarCodigoIdioma(String codigo) {
+	public String normalizarCodigoIdioma(String codigo) {
 		if (codigo == null) {
 			return null;
 		}
@@ -244,7 +244,7 @@ public abstract class LanzerMaloGUI extends JDialog implements CrashDetectorGUI,
 	/**
 	 * Convierte un nombre visible de idioma a código dinámicamente.
 	 */
-	protected String obtenerCodigoIdiomaDinamico(String nombreVisible) {
+	public String obtenerCodigoIdiomaDinamico(String nombreVisible) {
 		String codigo = Idioma.codigoDesdeNombreVisible(nombreVisible);
 		return normalizarCodigoIdioma(codigo);
 	}

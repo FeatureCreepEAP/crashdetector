@@ -60,17 +60,17 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 	public static Map<String, Supplier<PanelAPIBase>> GUIS = new HashMap<>();
 
-	protected JTextField searchBar;
-	protected JPanel modListPanel;
-	protected JPanel sidebarPanel;
-	protected List<String> archivosJAR;
-	protected ProveedorMods proveedorActual;
-	protected ElementoOverlayCarga overlayCarga;
+	public JTextField searchBar;
+	public JPanel modListPanel;
+	public JPanel sidebarPanel;
+	public List<String> archivosJAR;
+	public ProveedorMods proveedorActual;
+	public ElementoOverlayCarga overlayCarga;
 
 	public static final Map<String, Supplier<ProveedorMods>> PROVEEDORES_MODS = new LinkedHashMap<>();
-	protected static final ConfigString proveedorConfig = ConfigString.de("cdmods.proveedor", "tlmods");
+	public static final ConfigString proveedorConfig = ConfigString.de("cdmods.proveedor", "tlmods");
 
-	protected JComboBox<ProveedorRegistrado> comboProveedores;
+	public JComboBox<ProveedorRegistrado> comboProveedores;
 
 	static {
 		registrarProveedorMods("tlmods", "TLMods", ProveedorModsTlmods::new);
@@ -87,7 +87,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		PROVEEDORES_MODS.put(id, proveedor);
 	}
 
-	protected static class ProveedorRegistrado {
+	public static class ProveedorRegistrado {
 
 		private final String id;
 		private final String nombre;
@@ -107,39 +107,39 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		}
 	}
 
-	protected JScrollPane scrollMods;
-	protected JScrollPane sidebarScroll;
-	private final java.util.List<JPanel> tarjetasMods = new java.util.ArrayList<>();
+	public JScrollPane scrollMods;
+	public JScrollPane sidebarScroll;
+	public final java.util.List<JPanel> tarjetasMods = new java.util.ArrayList<>();
 
-	private PrincipalGUI principalGUI;
+	public PrincipalGUI principalGUI;
 
 	// Métodos abstractos para estilo y proveedor
-	protected abstract void inicializarColores();
+	public abstract void inicializarColores();
 
-	protected abstract void aplicarEstiloVolver(JButton boton);
+	public abstract void aplicarEstiloVolver(JButton boton);
 
-	protected abstract void aplicarEstiloBusqueda(JTextField campo);
+	public abstract void aplicarEstiloBusqueda(JTextField campo);
 
-	protected abstract void aplicarEstiloTarjetaMod(JPanel tarjeta);
+	public abstract void aplicarEstiloTarjetaMod(JPanel tarjeta);
 
-	protected abstract void aplicarEstiloSidebar(JPanel sidebar);
+	public abstract void aplicarEstiloSidebar(JPanel sidebar);
 
-	protected abstract void aplicarEstiloSidebarItem(JPanel item, JCheckBox checkBox, JLabel etiqueta);
+	public abstract void aplicarEstiloSidebarItem(JPanel item, JCheckBox checkBox, JLabel etiqueta);
 
-	protected abstract void aplicarEstiloPrincipal(JPanel panel);
+	public abstract void aplicarEstiloPrincipal(JPanel panel);
 
-	protected abstract ProveedorMods crearProveedorMods();
+	public abstract ProveedorMods crearProveedorMods();
 
 	// Colores
-	protected abstract java.awt.Color obtenerColorFondo();
+	public abstract java.awt.Color obtenerColorFondo();
 
-	protected abstract java.awt.Color obtenerColorTexto();
+	public abstract java.awt.Color obtenerColorTexto();
 
-	protected abstract java.awt.Color obtenerColorBoton();
+	public abstract java.awt.Color obtenerColorBoton();
 
-	protected abstract java.awt.Color obtenerColorCajaTexto();
+	public abstract java.awt.Color obtenerColorCajaTexto();
 
-	protected abstract void aplicarEstiloBotonAccion(JButton boton);
+	public abstract void aplicarEstiloBotonAccion(JButton boton);
 
 	// Constructor mínimo
 	public PanelAPIBase() {
@@ -219,7 +219,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		SwingUtilities.invokeLater(this::actualizarEscalado);
 	}
 
-	protected void actualizarEscalado() {
+	public void actualizarEscalado() {
 
 		int anchoTotal = getWidth();
 		if (anchoTotal <= 0) {
@@ -262,7 +262,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 	// cargarArchivosJAR, etc.)
 	// Pero ahora usan el método `obtenerExtensionDesactivacion()` para decidir la
 	// extensión
-	private JPanel crearPanelBusqueda() {
+	public JPanel crearPanelBusqueda() {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
 		panel.setBackground(obtenerColorFondo());
 
@@ -346,7 +346,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		return panel;
 	}
 
-	private void buscarMods(String termino) {
+	public void buscarMods(String termino) {
 
 		if (proveedorActual == null || !proveedorActual.soportaBusqueda()) {
 			return;
@@ -405,7 +405,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		});
 	}
 
-	private void mostrarCarga(boolean cargando) {
+	public void mostrarCarga(boolean cargando) {
 
 		JRootPane rootPane = SwingUtilities.getRootPane(this);
 
@@ -424,7 +424,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		overlayCarga.repaint();
 	}
 
-	protected JPanel crearTarjetaMod(InternetMod mod) {
+	public JPanel crearTarjetaMod(InternetMod mod) {
 
 		JPanel tarjeta = new JPanel(new BorderLayout(10, 6));
 		tarjeta.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -496,7 +496,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		return tarjeta;
 	}
 
-	private void reconfigurarTarjeta(JPanel tarjeta) {
+	public void reconfigurarTarjeta(JPanel tarjeta) {
 
 		InternetMod mod = (InternetMod) tarjeta.getClientProperty("mod");
 		if (mod == null) {
@@ -595,7 +595,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		tarjeta.repaint();
 	}
 
-	private JLabel crearIconoMod(InternetMod mod) {
+	public JLabel crearIconoMod(InternetMod mod) {
 
 		int size = 48;
 		JLabel label = new JLabel();
@@ -632,7 +632,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		return label;
 	}
 
-	private javax.swing.Icon iconoPlaceholder(int size) {
+	public javax.swing.Icon iconoPlaceholder(int size) {
 
 		java.awt.image.BufferedImage img = new java.awt.image.BufferedImage(size, size,
 				java.awt.image.BufferedImage.TYPE_INT_ARGB);
@@ -649,7 +649,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		return new javax.swing.ImageIcon(img);
 	}
 
-	private String limitarTexto(String texto, int maxCaracteres) {
+	public String limitarTexto(String texto, int maxCaracteres) {
 
 		if (texto == null)
 			return "";
@@ -662,7 +662,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		return texto.substring(0, maxCaracteres).trim() + "...";
 	}
 
-	private void instalarMod(InternetMod mod) {
+	public void instalarMod(InternetMod mod) {
 
 		try {
 
@@ -684,7 +684,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 	}
 
 	// ===== crearSidebar() =====
-	private JPanel crearSidebar() {
+	public JPanel crearSidebar() {
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -702,7 +702,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		return panel;
 	}
 
-	private void cargarArchivosJAR() {
+	public void cargarArchivosJAR() {
 
 		Path modsDir = Paths.get(System.getProperty("user.dir")).resolve("mods");
 		archivosJAR = new ArrayList<>();
@@ -723,7 +723,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 	}
 
 // ===== actualizarSidebar() =====
-	private void actualizarSidebar() {
+	public void actualizarSidebar() {
 
 		if (sidebarPanel == null)
 			return;
@@ -822,7 +822,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		sidebarPanel.repaint();
 	}
 
-	private void agregarBotonActualizadorMods() {
+	public void agregarBotonActualizadorMods() {
 
 		JButton boton = new JButton(TipoGUI.ACTUALIZADOR_MODS.etiquetaDelBoton());
 		boton.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -842,7 +842,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 	}
 
-	private JLabel crearEtiquetaDeslizante(String texto) {
+	public JLabel crearEtiquetaDeslizante(String texto) {
 
 		final int maxChars = 16;
 		final String base = acortarTexto(texto, maxChars);
@@ -888,7 +888,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		return label;
 	}
 
-	private String acortarTexto(String texto, int max) {
+	public String acortarTexto(String texto, int max) {
 		if (texto == null)
 			return "";
 		if (texto.length() <= max)
@@ -900,7 +900,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		actualizarSidebar();
 	}
 
-	private String obtenerNombreBase(String archivo) {
+	public String obtenerNombreBase(String archivo) {
 		if (archivo.endsWith(".jar.disabled")) {
 			return archivo.substring(0, archivo.length() - ".jar.disabled".length());
 		} else if (archivo.endsWith(".nil.jar")) {
@@ -917,7 +917,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		return archivo;
 	}
 
-	private JLabel crearIconoMod(InternetMod mod, int size) {
+	public JLabel crearIconoMod(InternetMod mod, int size) {
 
 		JLabel label = new JLabel();
 		label.setPreferredSize(new Dimension(size, size));
@@ -933,7 +933,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		return label;
 	}
 
-	private javax.swing.Icon crearIconoModEscalado(InternetMod mod, int size) {
+	public javax.swing.Icon crearIconoModEscalado(InternetMod mod, int size) {
 
 		String url = mod.urlIcon();
 
@@ -966,7 +966,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		return TipoGUI.MOD_API_PANEL;
 	}
 
-	protected ProveedorMods crearProveedorSeleccionado() {
+	public ProveedorMods crearProveedorSeleccionado() {
 		String id = proveedorConfig.obtener();
 
 		Supplier<ProveedorMods> proveedor = PROVEEDORES_MODS.get(id);
@@ -987,7 +987,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		return proveedor.get();
 	}
 
-	private void seleccionarProveedorEnCombo(String idProveedor) {
+	public void seleccionarProveedorEnCombo(String idProveedor) {
 		if (comboProveedores == null) {
 			return;
 		}
@@ -1027,7 +1027,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		}
 
 		@Override
-		protected void paintComponent(java.awt.Graphics g) {
+		public void paintComponent(java.awt.Graphics g) {
 
 			java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
 			g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);

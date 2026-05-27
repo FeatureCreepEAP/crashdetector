@@ -28,9 +28,9 @@ public abstract class CDLauncherGUI extends JFrame implements CrashDetectorGUI {
 
 	public static Map<String, Supplier<CDLauncherGUI>> GUIS = new HashMap<>();
 
-	protected PrincipalGUI principal;
+	public PrincipalGUI principal;
 
-	protected CDLauncherGUI() {
+	public CDLauncherGUI() {
 		super();
 	}
 
@@ -50,7 +50,7 @@ public abstract class CDLauncherGUI extends JFrame implements CrashDetectorGUI {
 	/**
 	 * Inicializa este diálogo usando la GUI principal como owner.
 	 */
-	protected void inicializarDialogo(PrincipalGUI principal) {
+	public void inicializarDialogo(PrincipalGUI principal) {
 		this.principal = principal;
 
 		Window owner = SwingUtilities.getWindowAncestor(principal.getRootPane());

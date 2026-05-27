@@ -43,7 +43,7 @@ public class LectadorDeDocumentosMinimalista extends LectadorDeDocumentosGUI {
 	}
 
 	@Override
-	protected void construirInterfazBase() {
+	public void construirInterfazBase() {
 		panelRaiz = new JPanel(new BorderLayout(0, 0));
 		panelRaiz.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 

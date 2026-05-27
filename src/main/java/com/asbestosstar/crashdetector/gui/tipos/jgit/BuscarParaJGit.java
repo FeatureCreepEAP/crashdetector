@@ -23,9 +23,9 @@ public class BuscarParaJGit {
 	// Compatibilidad legacy: ubicación vieja.
 	public static final File CARPETA_JGIT_LEGACY = new File(System.getProperty("user.home"), "crash_detector/jgit");
 
-	private static final String VERSION_JGIT = "5.13.3.202401111512-r";
+	public static final String VERSION_JGIT = "5.13.3.202401111512-r";
 
-	private static final List<DependenciaJGit> DEPENDENCIAS_REQUERIDAS = Arrays.asList(
+	public static final List<DependenciaJGit> DEPENDENCIAS_REQUERIDAS = Arrays.asList(
 			// JGit principales
 			new DependenciaJGit("org.eclipse.jgit", "org.eclipse.jgit", VERSION_JGIT),
 			new DependenciaJGit("org.eclipse.jgit", "org.eclipse.jgit.ssh.apache", VERSION_JGIT),
@@ -57,7 +57,7 @@ public class BuscarParaJGit {
 			new DependenciaJGit("org.bouncycastle", "bcutil-jdk15on", "1.69"),
 			new DependenciaJGit("org.bouncycastle", "bcpkix-jdk15on", "1.69"));
 
-	private static final List<String> CLASES_REQUERIDAS_MINIMAS = Arrays.asList("org.eclipse.jgit.api.Git",
+	public static final List<String> CLASES_REQUERIDAS_MINIMAS = Arrays.asList("org.eclipse.jgit.api.Git",
 			"org.eclipse.jgit.lib.Repository", "org.eclipse.jgit.api.PushCommand");
 
 	public static boolean estaJGitBasicoEnClasspath() {
@@ -106,7 +106,7 @@ public class BuscarParaJGit {
 		return true;
 	}
 
-	private static boolean classpathContieneDependencia(String cp, DependenciaJGit dependencia) {
+	public static boolean classpathContieneDependencia(String cp, DependenciaJGit dependencia) {
 		String[] partes = cp.split(java.io.File.pathSeparator);
 
 		for (String parte : partes) {
@@ -120,7 +120,7 @@ public class BuscarParaJGit {
 		return false;
 	}
 
-	private static boolean classpathContieneArtefacto(String cp, String artefacto) {
+	public static boolean classpathContieneArtefacto(String cp, String artefacto) {
 		String[] partes = cp.split(java.io.File.pathSeparator);
 
 		String buscado = normalizarNombreJar(artefacto);
@@ -142,7 +142,7 @@ public class BuscarParaJGit {
 		return false;
 	}
 
-	private static String normalizarNombreJar(String nombre) {
+	public static String normalizarNombreJar(String nombre) {
 		if (nombre == null) {
 			return "";
 		}
@@ -231,7 +231,7 @@ public class BuscarParaJGit {
 		return ret;
 	}
 
-	private static void moverLegacyAUniversal() {
+	public static void moverLegacyAUniversal() {
 		if (CARPETA_JGIT_LEGACY == null || !CARPETA_JGIT_LEGACY.exists() || !CARPETA_JGIT_LEGACY.isDirectory()) {
 			return;
 		}
@@ -263,7 +263,7 @@ public class BuscarParaJGit {
 		}
 	}
 
-	private static boolean moverArchivo(File origen, File destino) {
+	public static boolean moverArchivo(File origen, File destino) {
 		if (origen == null || destino == null || !origen.exists() || !origen.isFile()) {
 			return false;
 		}
@@ -285,7 +285,7 @@ public class BuscarParaJGit {
 		}
 	}
 
-	private static void agregarJarsDeCarpetaSinDuplicarPorNombre(List<File> ret, List<String> nombresYaAgregados,
+	public static void agregarJarsDeCarpetaSinDuplicarPorNombre(List<File> ret, List<String> nombresYaAgregados,
 			File carpeta) {
 		if (carpeta == null || !carpeta.exists() || !carpeta.isDirectory()) {
 			return;
@@ -319,7 +319,7 @@ public class BuscarParaJGit {
 		}
 	}
 
-	private static void agregarJarsDeCarpeta(List<File> ret, File carpeta) {
+	public static void agregarJarsDeCarpeta(List<File> ret, File carpeta) {
 		if (carpeta == null || !carpeta.exists() || !carpeta.isDirectory()) {
 			return;
 		}

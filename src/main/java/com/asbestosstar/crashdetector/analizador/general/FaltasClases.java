@@ -603,7 +603,8 @@ public class FaltasClases implements Verificaciones {
 				azurelib = true;
 			}
 
-			if (claseFormateada.trim().startsWith("net/minecraftforge") || claseFormateada.trim().startsWith("cpw/mods")) {
+			if (claseFormateada.trim().startsWith("net/minecraftforge")
+					|| claseFormateada.trim().startsWith("cpw/mods")) {
 				minecraftforge = true;
 			}
 			if (claseFormateada.trim().startsWith("featurecreep/")

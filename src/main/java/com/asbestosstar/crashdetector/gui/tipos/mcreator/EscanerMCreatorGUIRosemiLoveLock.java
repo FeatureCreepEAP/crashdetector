@@ -98,42 +98,42 @@ public class EscanerMCreatorGUIRosemiLoveLock extends EscanerMCreatorGUI {
 	}
 
 	@Override
-	protected Font fuenteDescripcion() {
+	public Font fuenteDescripcion() {
 		return new Font("Segoe UI", Font.BOLD, 13);
 	}
 
 	@Override
-	protected Font fuenteResultados() {
+	public Font fuenteResultados() {
 		return new Font("Consolas", Font.PLAIN, 14);
 	}
 
 	@Override
-	protected Font fuenteBoton() {
+	public Font fuenteBoton() {
 		return new Font("Segoe UI", Font.BOLD, 18);
 	}
 
 	@Override
-	protected ImageIcon iconoDecorativo() {
+	public ImageIcon iconoDecorativo() {
 		return null;
 	}
 
 	@Override
-	protected String textoEstadoCargando() {
+	public String textoEstadoCargando() {
 		return MonitorDePID.idioma.escanerMCreatorCargando();
 	}
 
 	@Override
-	protected String textoEstadoCompletado() {
+	public String textoEstadoCompletado() {
 		return MonitorDePID.idioma.escanerMCreatorCompletado();
 	}
 
 	@Override
-	protected String textoEstadoError() {
+	public String textoEstadoError() {
 		return MonitorDePID.idioma.escanerMCreatorError();
 	}
 
 	@Override
-	protected String tituloVentanaNoLocalizado() {
+	public String tituloVentanaNoLocalizado() {
 		return MonitorDePID.idioma.tituloEscanerMCreator() + " - Rosemi LoveLock";
 	}
 
@@ -176,7 +176,7 @@ public class EscanerMCreatorGUIRosemiLoveLock extends EscanerMCreatorGUI {
 	}
 
 	@Override
-	protected void aplicarApariencia() {
+	public void aplicarApariencia() {
 		Color fondo = colorFondoVentana.obtener();
 		Color resultado = colorTarjeta.obtener();
 		Color superior = colorTarjetaSuperior.obtener();
@@ -255,7 +255,7 @@ public class EscanerMCreatorGUIRosemiLoveLock extends EscanerMCreatorGUI {
 	}
 
 	@Override
-	protected void construirEstructuraBase() {
+	public void construirEstructuraBase() {
 		setMinimumSize(new Dimension(720, 455));
 
 		panelContenido = new JPanel(new BorderLayout(4, 4));
@@ -338,7 +338,7 @@ public class EscanerMCreatorGUIRosemiLoveLock extends EscanerMCreatorGUI {
 	}
 
 	@Override
-	protected void iniciarEscaneo() {
+	public void iniciarEscaneo() {
 		areaResultados.setText(MonitorDePID.idioma.escanerMCreatorEscaneandoMods() + "\n\n"
 				+ MonitorDePID.idioma.escanerMCreatorPorFavorEspera());
 
@@ -381,7 +381,7 @@ public class EscanerMCreatorGUIRosemiLoveLock extends EscanerMCreatorGUI {
 	}
 
 	@Override
-	protected String limpiarResultadoEscaner(String resultado) {
+	public String limpiarResultadoEscaner(String resultado) {
 		if (resultado == null) {
 			return "";
 		}

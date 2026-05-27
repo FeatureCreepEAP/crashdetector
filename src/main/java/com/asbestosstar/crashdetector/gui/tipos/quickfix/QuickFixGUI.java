@@ -34,8 +34,8 @@ public abstract class QuickFixGUI extends JFrame implements CrashDetectorGUI {
 
 	public static Map<String, Supplier<QuickFixGUI>> GUIS = new HashMap<>();
 
-	protected QuickFix quickFixActual;
-	protected Component contenidoPrincipal;
+	public QuickFix quickFixActual;
+	public Component contenidoPrincipal;
 
 	// ====== Colores configurables ======
 	public ConfigColor colorFondo = ConfigColor.de("quickfix_fondo", java.awt.Color.WHITE);
@@ -44,7 +44,7 @@ public abstract class QuickFixGUI extends JFrame implements CrashDetectorGUI {
 	public ConfigColor colorResaltado = ConfigColor.de("quickfix_resaltado", new java.awt.Color(255, 230, 0));
 
 	// Panel interno que contiene el contenido real (BoxLayout)
-	protected JPanel panelContenido;
+	public JPanel panelContenido;
 
 	public QuickFixGUI() {
 		super();
@@ -91,24 +91,24 @@ public abstract class QuickFixGUI extends JFrame implements CrashDetectorGUI {
 
 	// ====== Métodos abstractos (igual que antes) ======
 
-	protected abstract Component crearContenido(QuickFix fix);
+	public abstract Component crearContenido(QuickFix fix);
 
-	protected abstract void aplicarApariencia();
+	public abstract void aplicarApariencia();
 
-	protected abstract String rutaImagenDecorativa();
+	public abstract String rutaImagenDecorativa();
 
-	protected abstract int[] dimensionesImagenDecorativa();
+	public abstract int[] dimensionesImagenDecorativa();
 
 	/**
 	 * Aplica layout y estilo básico al panel interno (NO a la JFrame).
 	 */
-	protected void aplicarAparienciaBase() {
+	public void aplicarAparienciaBase() {
 		this.panelContenido.setLayout(new BoxLayout(this.panelContenido, BoxLayout.Y_AXIS));
 		this.panelContenido.setOpaque(true);
 		this.panelContenido.setBorder(new EmptyBorder(8, 12, 8, 12));
 	}
 
-	protected JLabel crearEtiquetaImagenEscalada(String ruta, int ancho, int alto) {
+	public JLabel crearEtiquetaImagenEscalada(String ruta, int ancho, int alto) {
 		if (ruta == null || ruta.isEmpty())
 			return null;
 		try {
@@ -128,7 +128,7 @@ public abstract class QuickFixGUI extends JFrame implements CrashDetectorGUI {
 		}
 	}
 
-	protected String formatearTexto(String texto) {
+	public String formatearTexto(String texto) {
 		if (texto == null || texto.trim().isEmpty())
 			return "";
 		return texto; // HTML ya se maneja en las subclases si se desea

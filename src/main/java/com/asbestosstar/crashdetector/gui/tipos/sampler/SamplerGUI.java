@@ -15,7 +15,7 @@ public abstract class SamplerGUI extends JFrame implements CrashDetectorGUI {
 
 	protected volatile boolean samplerActivo = false;
 
-	protected SamplerGUI() {
+	public SamplerGUI() {
 		super();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
@@ -25,7 +25,7 @@ public abstract class SamplerGUI extends JFrame implements CrashDetectorGUI {
 		return TipoGUI.SAMPLER;
 	}
 
-	protected void inicializarVentana() {
+	public void inicializarVentana() {
 		setTitle("Sampler");
 		setLocationByPlatform(true);
 	}
@@ -65,11 +65,11 @@ public abstract class SamplerGUI extends JFrame implements CrashDetectorGUI {
 		onLimpiarDatos();
 	}
 
-	protected abstract void onSamplerIniciado();
+	public abstract void onSamplerIniciado();
 
-	protected abstract void onSamplerDetenido();
+	public abstract void onSamplerDetenido();
 
-	protected abstract void onMuestraRecibida(String metodo, StackTraceElement[] stack, long nanos);
+	public abstract void onMuestraRecibida(String metodo, StackTraceElement[] stack, long nanos);
 
-	protected abstract void onLimpiarDatos();
+	public abstract void onLimpiarDatos();
 }

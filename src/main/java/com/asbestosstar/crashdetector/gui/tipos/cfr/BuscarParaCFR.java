@@ -63,7 +63,7 @@ public class BuscarParaCFR {
 		return null;
 	}
 
-	private static boolean moverArchivo(File origen, File destino) {
+	public static boolean moverArchivo(File origen, File destino) {
 		if (origen == null || destino == null || !origen.exists() || !origen.isFile()) {
 			return false;
 		}
@@ -85,7 +85,7 @@ public class BuscarParaCFR {
 		}
 	}
 
-	private static File encontrarCfrEnCarpeta(File carpeta) {
+	public static File encontrarCfrEnCarpeta(File carpeta) {
 		if (carpeta == null || !carpeta.exists() || !carpeta.isDirectory()) {
 			return null;
 		}

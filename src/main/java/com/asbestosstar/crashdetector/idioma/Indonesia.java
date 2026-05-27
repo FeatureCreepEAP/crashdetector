@@ -6925,24 +6925,27 @@ public class Indonesia implements Idioma {
 				+ "<p>Jika masalah berlanjut, coba mulai game tanpa AAAParticles.</p>";
 	}
 
+	// Indonesian (Bahasa Indonesia)
 	@Override
 	public String javaProblematica() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "Crash native dari runtime environment Java (JVM) terdeteksi.</b>"
-				+ "<p>Jenis kesalahan ini terjadi dalam Mesin Virtual Java itu sendiri (misalnya dalam <code>jvm.dll</code>, <code>libjvm.so</code>, dll.), "
-				+ "dan tidak tentu disebabkan oleh mod.</p>"
-				+ "<p>Meskipun dalam kasus langka dapat berasal dari mod yang menggunakan library native yang tidak kompatibel, "
-				+ "<b>jauh lebih mungkin bahwa itu disebabkan oleh versi JVM yang cacat, rusak, atau usang</b>.</p>"
+				+ "Terdeteksi crash native dari lingkungan runtime Java (JVM).</b>"
+				+ "<p>Jenis kesalahan ini terjadi di dalam Mesin Virtual Java itu sendiri (misalnya, di <code>jvm.dll</code>, <code>libjvm.so</code>, dll.), "
+				+ "dan tidak selalu disebabkan oleh mod.</p>"
+				+ "<p>Meskipun dalam kasus yang jarang terjadi dapat berasal dari mod yang menggunakan library native yang tidak kompatibel, "
+				+ "<b>jauh lebih mungkin bahwa hal ini disebabkan oleh versi JVM yang cacat, rusak, atau usang</b>.</p>"
 				+ "<p>Ini sangat umum jika Anda menggunakan build lama atau tidak resmi dari versi Java Anda (misalnya, build komunitas tanpa dukungan).</p>"
-				+ "<p><b>Kami merekomendasikan menggunakan JVM yang terpercaya dan terpelihara:</b></p>" + "<ul>"
+				+ "<p><b>Kami merekomendasikan untuk menggunakan JVM yang andal dan terawat:</b></p>" + "<ul>"
 				+ "<li><b>Red Hat Build of OpenJDK</b> (stabil, teruji dengan baik, ideal untuk Windows/Linux)</li>"
-				+ "<li><b>OpenLogic OpenJDK</b> (dukungan multi-platform, termasuk macOS Intel)</li>"
-				+ "<li><b>Azul Zulu</b> (bersertifikat, dengan dukungan LTS gratis)</li>"
-				+ "<li><b>Oracle JDK</b> (resmi, dengan pembaruan reguler)</li>" + "</ul>"
-				+ "<p>Hindari build yang tidak dikenal, dikustomisasi, atau sangat lama, karena mungkin berisi kesalahan kritis dalam mesin JVM.</p>"
-				+ "<p><b>Menggunakan Prism Launcher atau TLauncher?</b> Sangat mudah untuk mengonfigurasi JVM khusus: "
-				+ "di Prism Launcher, buka <i>Instances</i> → <i>Edit instance</i> → <i>Java Denganfiguration</i>; "
-				+ "di TLauncher, buka <i>Settings</i> → <i>Java Settings</i> dan pilih jalur JDK/JRE yang Anda unduh. "
+				+ "<li><b>OpenLogic OpenJDK</b> (dukungan multiplatform, termasuk macOS Intel)</li>"
+				+ "<li><b>Azul Zulu</b> (tersertifikasi, dengan dukungan LTS gratis)</li>"
+				+ "<li><b>Oracle JDK</b> (resmi, dengan pembaruan rutin)</li>" + "</ul>"
+				+ "<p>Hindari build yang tidak dikenal, kustom, atau sangat lama, karena mungkin mengandung kesalahan kritis dalam mesin JVM.</p>"
+				+ "<p><b>Apakah Anda menggunakan Prism Launcher atau TLauncher?</b> Sangat mudah untuk mengatur JVM kustom: "
+				+ "di Prism Launcher, pergi ke <i>Instalaciones</i> → <i>Editar instancia</i> → <i>Configuración de Java</i>; "
+				+ "di TLauncher, pergi ke <i>Settings</i> → <i>Java Settings</i> dan pilih jalur JDK/JRE yang Anda unduh. "
+				+ "Pengumpul sampah Anda juga mungkin mengalami masalah; dalam hal ini, Anda harus beralih ke ZGC."
+
 				+ "Anda tidak perlu mengubah JVM sistem!</p>";
 	}
 

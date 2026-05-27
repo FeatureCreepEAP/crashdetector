@@ -86,7 +86,7 @@ public abstract class CfrBase extends JFrame implements CrashDetectorGUI {
 	 * Muestra un diálogo personalizado con dos botones: "Descargar CFR" y "Abrir
 	 * carpeta de instalación".
 	 */
-	private static void mostrarDialogoInstalacionCFR(String mensajeHtml) {
+	public static void mostrarDialogoInstalacionCFR(String mensajeHtml) {
 		// Crear panel personalizado
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));

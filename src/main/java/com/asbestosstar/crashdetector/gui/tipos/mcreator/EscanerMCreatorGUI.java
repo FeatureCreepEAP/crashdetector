@@ -31,7 +31,7 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 	public static Map<String, Supplier<EscanerMCreatorGUI>> GUIS = new HashMap<>();
 
 	// ====== Componentes técnicos ======
-	protected JTextArea areaResultados;
+	public JTextArea areaResultados;
 
 	/**
 	 * Se conserva por compatibilidad con temas viejos.
@@ -39,14 +39,14 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 	 * Los temas nuevos pueden no usar barra de estado y escribir el estado dentro
 	 * del área principal de resultados.
 	 */
-	protected JLabel etiquetaEstado;
+	public JLabel etiquetaEstado;
 
-	protected JButton botonEscanear;
+	public JButton botonEscanear;
 
 	// Contenedores
-	protected JPanel panelContenido;
-	protected JPanel panelContenidoConImagen;
-	protected JScrollPane panelDesplazamiento;
+	public JPanel panelContenido;
+	public JPanel panelContenidoConImagen;
+	public JScrollPane panelDesplazamiento;
 
 	// ====== Constructor ======
 	public EscanerMCreatorGUI() {
@@ -54,7 +54,7 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 	}
 
 	// ====== Métodos auxiliares para aplicación de colores ======
-	protected void aplicarColor(JLabel label, ConfigColor color) {
+	public void aplicarColor(JLabel label, ConfigColor color) {
 		if (label == null || color == null) {
 			return;
 		}
@@ -62,7 +62,7 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 		label.setForeground(color.obtener());
 	}
 
-	protected void aplicarFondo(JComponent component, ConfigColor color) {
+	public void aplicarFondo(JComponent component, ConfigColor color) {
 		if (component == null || color == null) {
 			return;
 		}
@@ -72,7 +72,7 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 	}
 
 	// ====== Lógica técnica del escaneo ======
-	protected void iniciarEscaneo() {
+	public void iniciarEscaneo() {
 		areaResultados.setText(MonitorDePID.idioma.escanerMCreatorEscaneandoMods() + "\n\n"
 				+ MonitorDePID.idioma.escanerMCreatorPorFavorEspera());
 
@@ -126,7 +126,7 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 		}.execute();
 	}
 
-	protected String limpiarResultadoEscaner(String resultado) {
+	public String limpiarResultadoEscaner(String resultado) {
 		if (resultado == null) {
 			return "";
 		}
@@ -143,35 +143,35 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 
 	// ====== Hooks de apariencia / textos localizados ======
 
-	protected Font fuenteDescripcion() {
+	public Font fuenteDescripcion() {
 		return new Font("Segoe UI", Font.PLAIN, 14);
 	}
 
-	protected Font fuenteResultados() {
+	public Font fuenteResultados() {
 		return new Font("Consolas", Font.PLAIN, 12);
 	}
 
-	protected Font fuenteBoton() {
+	public Font fuenteBoton() {
 		return new Font("Segoe UI", Font.BOLD, 14);
 	}
 
-	protected ImageIcon iconoDecorativo() {
+	public ImageIcon iconoDecorativo() {
 		return null;
 	}
 
-	protected String textoEstadoCargando() {
+	public String textoEstadoCargando() {
 		return MonitorDePID.idioma.escanerMCreatorCargando();
 	}
 
-	protected String textoEstadoCompletado() {
+	public String textoEstadoCompletado() {
 		return MonitorDePID.idioma.escanerMCreatorCompletado();
 	}
 
-	protected String textoEstadoError() {
+	public String textoEstadoError() {
 		return MonitorDePID.idioma.escanerMCreatorError();
 	}
 
-	protected String tituloVentanaNoLocalizado() {
+	public String tituloVentanaNoLocalizado() {
 		return null;
 	}
 
@@ -201,9 +201,9 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 		setVisible(true);
 	}
 
-	protected abstract void construirEstructuraBase();
+	public abstract void construirEstructuraBase();
 
-	protected abstract void aplicarApariencia();
+	public abstract void aplicarApariencia();
 
 	@Override
 	public TipoGUI<EscanerMCreatorGUI> tipo() {

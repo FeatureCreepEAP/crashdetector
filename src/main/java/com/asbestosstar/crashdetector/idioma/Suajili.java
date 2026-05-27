@@ -7248,21 +7248,23 @@ public class Suajili implements Idioma {
 	@Override
 	public String javaProblematica() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "Kuganda asilia kwa mazingira ya utekelezaji wa Java (JVM) kumegunduliwa.</b>"
+				+ "Imegunduliwa crash ya asili ya mazingira ya utendaji wa Java (JVM).</b>"
 				+ "<p>Aina hii ya hitilafu hutokea ndani ya Mashine Binafsi ya Java yenyewe (kwa mfano, katika <code>jvm.dll</code>, <code>libjvm.so</code>, n.k.), "
-				+ "na siyo lazima isababishwe na mod.</p>"
-				+ "<p>Ingawa katika nadra zinaweza kutokana na mods zinazotumia maktaba asilia zisizoendana, "
-				+ "<b>ni uwezekano mkubwa zaidi kutokana na toleo la JVM lililo na kasoro, limeharibika au limepitwa na wakati</b>.</p>"
-				+ "<p>Hii ni ya kawaida hasa ikiwa unatumia build ya zamani au isiyo rasmi ya toleo lako la Java (kwa mfano, builds za jamii zisizopata usaidizi).</p>"
+				+ "na si lazima isababishwe na mod.</p>"
+				+ "<p>Ingawa kwa mara chache inaweza kusababishwa na mod zinazotumia maktaba za asili zisizolingana, "
+				+ "<b>ni uwezekano mkubwa zaidi kwamba inatokana na toleo la JVM lenye kasoro, liliharibika, au la zamani</b>.</p>"
+				+ "<p>Hii ni kawaida hasa ikiwa unatumia jengo la zamani au lisilo rasmi la toleo lako la Java (kwa mfano, majengo ya jamii yasiyo na usaidizi).</p>"
 				+ "<p><b>Tunapendekeza kutumia JVM ya kuaminika na inayodumishwa:</b></p>" + "<ul>"
 				+ "<li><b>Red Hat Build of OpenJDK</b> (thabiti, imejaribiwa vizuri, bora kwa Windows/Linux)</li>"
 				+ "<li><b>OpenLogic OpenJDK</b> (usaidizi wa jukwaa nyingi, ikiwa ni pamoja na macOS Intel)</li>"
-				+ "<li><b>Azul Zulu</b> (imeidhinishwa, na usaidizi wa bure wa LTS)</li>"
-				+ "<li><b>Oracle JDK</b> (rasmi, na visasisho vya mara kwa mara)</li>" + "</ul>"
-				+ "<p>Epuka builds zisizojulikana, zilizobinafsishwa au za zamani sana, kwani zinaweza kuwa na hitilafu kubwa katika injini ya JVM.</p>"
-				+ "<p><b>Unatumia Prism Launcher au TLauncher?</b> Ni rahisi sana kuweka JVM maalum: "
-				+ "katika Prism Launcher, nenda <i>Instalaciones</i> → <i>Editar instancia</i> → <i>Mipangilio de Java</i>; "
-				+ "katika TLauncher, nenda <i>Settings</i> → <i>Java Settings</i> na uchague njia ya JDK/JRE yako iliyopakuliwa. "
+				+ "<li><b>Azul Zulu</b> (imethibitishwa, na usaidizi wa bure wa LTS)</li>"
+				+ "<li><b>Oracle JDK</b> (rasmi, na sasisho za mara kwa mara)</li>" + "</ul>"
+				+ "<p>Epuka majengo yasiyojulikana, yaliyobadilishwa, au ya zamani sana, kwani yanaweza kuwa na makosa muhimu katika injini ya JVM.</p>"
+				+ "<p><b>Unatumia Prism Launcher au TLauncher?</b> Ni rahisi sana kusanidi JVM ya kibinafsi: "
+				+ "katika Prism Launcher, nenda kwa <i>Installations</i> → <i>Edit Instance</i> → <i>Java Settings</i>; "
+				+ "katika TLauncher, nenda kwa <i>Settings</i> → <i>Java Settings</i> na uchague njia ya JDK/JRE uliyopakua. "
+				+ "Pia inawezekana kwamba kikusanyaji taka chako kinakumbana na matatizo; katika hali hiyo, unapaswa kubadilisha hadi ZGC."
+
 				+ "Huhitaji kubadilisha JVM ya mfumo!</p>";
 	}
 

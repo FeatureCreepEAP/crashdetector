@@ -286,7 +286,7 @@ public abstract class GuardiaGUI extends JFrame implements BotonDeBarraLateralDe
 		workerEscaneo.execute();
 	}
 
-	protected List<FilaServidor> escanearServidoresInterno(boolean actualizarDefiniciones) {
+	public List<FilaServidor> escanearServidoresInterno(boolean actualizarDefiniciones) {
 		List<FilaServidor> filas = new ArrayList<>();
 
 		List<String> encontrados = ServidoresProblematicos.obtenerServidoresProblematicos(actualizarDefiniciones);
@@ -332,13 +332,13 @@ public abstract class GuardiaGUI extends JFrame implements BotonDeBarraLateralDe
 		workerEscaneo.execute();
 	}
 
-	protected void cancelarWorkerAnterior() {
+	public void cancelarWorkerAnterior() {
 		if (workerEscaneo != null && !workerEscaneo.isDone()) {
 			workerEscaneo.cancel(true);
 		}
 	}
 
-	protected List<FilaMalware> escanearMalwareInterno() {
+	public List<FilaMalware> escanearMalwareInterno() {
 		List<FilaMalware> filas = new ArrayList<>();
 		List<ArticuloMalware> hallazgos = ModsMalware.escanear();
 
@@ -361,7 +361,7 @@ public abstract class GuardiaGUI extends JFrame implements BotonDeBarraLateralDe
 		return filas;
 	}
 
-	protected List<FilaServidor> escanearServidoresConPoliticaInteractiva() {
+	public List<FilaServidor> escanearServidoresConPoliticaInteractiva() {
 		List<FilaServidor> filas = new ArrayList<>();
 
 		Boolean actualizar = resolverPoliticaDefinicionesServidor();
@@ -382,7 +382,7 @@ public abstract class GuardiaGUI extends JFrame implements BotonDeBarraLateralDe
 	 * ya existen, preguntar si quiere actualizarlas o usar las locales - cancelar
 	 * devuelve null
 	 */
-	protected Boolean resolverPoliticaDefinicionesServidor() {
+	public Boolean resolverPoliticaDefinicionesServidor() {
 		try {
 			if (!ServidoresProblematicos.existenDefiniciones()) {
 				Object[] opciones = new Object[] { MonitorDePID.idioma.guardDefsDescargar(),
@@ -418,7 +418,7 @@ public abstract class GuardiaGUI extends JFrame implements BotonDeBarraLateralDe
 		}
 	}
 
-	protected void descompilarClase(String claseInterna) {
+	public void descompilarClase(String claseInterna) {
 		if (claseInterna == null || claseInterna.trim().isEmpty()) {
 			return;
 		}
@@ -446,7 +446,7 @@ public abstract class GuardiaGUI extends JFrame implements BotonDeBarraLateralDe
 		}
 	}
 
-	protected void setEstado(String texto) {
+	public void setEstado(String texto) {
 		if (etiquetaEstado != null) {
 			etiquetaEstado.setText(texto);
 		}

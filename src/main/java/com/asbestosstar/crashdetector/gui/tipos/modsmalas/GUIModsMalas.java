@@ -49,10 +49,10 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 
 	public static Map<String, Supplier<GUIModsMalas>> GUIS = new HashMap<String, Supplier<GUIModsMalas>>();
 
-	protected final Path archivo = Statics.carpeta.resolve("mods_desanimados.json");
-	protected final List<EntradaMod> mods = new ArrayList<EntradaMod>();
+	public final Path archivo = Statics.carpeta.resolve("mods_desanimados.json");
+	public final List<EntradaMod> mods = new ArrayList<EntradaMod>();
 
-	protected static class EntradaMod {
+	public static class EntradaMod {
 		public String modid;
 		public String ruta;
 		public boolean abrirCD;
@@ -68,7 +68,7 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 		return TipoGUI.MODS_MALAS;
 	}
 
-	protected void cargarDatos() {
+	public void cargarDatos() {
 		mods.clear();
 		if (!Files.exists(archivo)) {
 			return;
@@ -135,7 +135,7 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 		}
 	}
 
-	protected void guardarDatos() {
+	public void guardarDatos() {
 		try {
 			Nodo raiz = Json.leer("[]");
 
@@ -186,11 +186,11 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 		}
 	}
 
-	protected String obtenerCodigoIdiomaDinamico(String nombreVisible) {
+	public String obtenerCodigoIdiomaDinamico(String nombreVisible) {
 		return Idioma.codigoDesdeNombreVisible(nombreVisible);
 	}
 
-	protected String resumenRazones(Map<String, String> razones) {
+	public String resumenRazones(Map<String, String> razones) {
 		if (razones == null || razones.isEmpty()) {
 			return "";
 		}
@@ -242,7 +242,7 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 		return sb.toString();
 	}
 
-	protected void editarRazonesMultilingue(String titulo, Map<String, String> razonesReferencia, java.awt.Color fondo,
+	public void editarRazonesMultilingue(String titulo, Map<String, String> razonesReferencia, java.awt.Color fondo,
 			java.awt.Color texto, java.awt.Color caja, java.awt.Color borde, java.awt.Color botonFondo) {
 		if (razonesReferencia == null) {
 			return;
@@ -389,7 +389,7 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 		dialogo.setVisible(true);
 	}
 
-	protected void estilizarBotonSimple(JButton btn, java.awt.Color fondo, java.awt.Color texto, java.awt.Color borde) {
+	public void estilizarBotonSimple(JButton btn, java.awt.Color fondo, java.awt.Color texto, java.awt.Color borde) {
 		if (btn == null) {
 			return;
 		}
@@ -400,7 +400,7 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 		btn.setBorder(BorderFactory.createLineBorder(borde, 1));
 	}
 
-	protected void forzarFondoEnPanel(JComponent c, java.awt.Color fondo) {
+	public void forzarFondoEnPanel(JComponent c, java.awt.Color fondo) {
 		if (c == null) {
 			return;
 		}

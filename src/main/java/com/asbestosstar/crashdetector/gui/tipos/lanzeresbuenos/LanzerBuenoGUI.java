@@ -29,17 +29,17 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
  * No hay razones por idioma; solo IDs.
  */
 public abstract class LanzerBuenoGUI extends JDialog implements CrashDetectorGUI, BotonDeBarraLateralDerecha {
-	private static final long serialVersionUID = 1L;
+	public static final long serialVersionUID = 1L;
 
 	public static Map<String, Supplier<LanzerBuenoGUI>> GUIS = new HashMap<String, Supplier<LanzerBuenoGUI>>();
 
-	protected List<DetectorLanzer> lanzadores;
+	public List<DetectorLanzer> lanzadores;
 
 	/** Conjunto de IDs recomendados (archivo JSON: arreglo de strings). */
-	protected Set<String> recomendados;
+	public Set<String> recomendados;
 
 	/** Archivo de recomendados: se reutiliza el mismo que usa LanzerNoAnimado. */
-	protected Path archivoRecomendados = LanzerNoAnimado.ARCHIVO_ANIMADOS;
+	public Path archivoRecomendados = LanzerNoAnimado.ARCHIVO_ANIMADOS;
 
 	/**
 	 * NOSOTROS dice es bueno.
@@ -58,7 +58,7 @@ public abstract class LanzerBuenoGUI extends JDialog implements CrashDetectorGUI
 	/**
 	 * Carga datos iniciales desde el archivo JSON.
 	 */
-	protected void cargarDatos() {
+	public void cargarDatos() {
 		this.lanzadores = DetectorLanzer.DETECTORES_DE_LANZERES;
 		this.recomendados = new HashSet<>();
 		cargarRecomendadosDesdeArchivo();
@@ -67,7 +67,7 @@ public abstract class LanzerBuenoGUI extends JDialog implements CrashDetectorGUI
 	/**
 	 * Lee el archivo JSON (arreglo de strings) y llena el conjunto.
 	 */
-	private void cargarRecomendadosDesdeArchivo() {
+	public void cargarRecomendadosDesdeArchivo() {
 		if (archivoRecomendados == null || !archivoRecomendados.toFile().exists()
 				|| archivoRecomendados.toFile().length() <= 0) {
 			return;
@@ -105,7 +105,7 @@ public abstract class LanzerBuenoGUI extends JDialog implements CrashDetectorGUI
 	/**
 	 * Guarda el conjunto de recomendados al archivo JSON como arreglo de strings.
 	 */
-	protected void guardarDatos() {
+	public void guardarDatos() {
 		try {
 			// Como Json no expone crearArreglo(), usamos leer("[]") y agregamos
 			Nodo raiz = Json.leer("[]");

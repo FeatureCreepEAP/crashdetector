@@ -33,11 +33,11 @@ public class CDSkinCape extends EditorGUI {
 	public static String ID = "cdskincape";
 
 	// Colores base (ajustados a TL Skin / Cape)
-	private static final Color TL_FONDO_IZQ = new Color(245, 249, 253);
-	private static final Color TL_TEXTO = new Color(40, 40, 40);
-	private static final Color TL_BOTON_PRIMARIO = new Color(76, 175, 80);
-	private static final Color TL_BOTON_SECUNDARIO = new Color(220, 228, 236);
-	private static final Color TL_BORDE = new Color(190, 200, 210);
+	public static final Color TL_FONDO_IZQ = new Color(245, 249, 253);
+	public static final Color TL_TEXTO = new Color(40, 40, 40);
+	public static final Color TL_BOTON_PRIMARIO = new Color(76, 175, 80);
+	public static final Color TL_BOTON_SECUNDARIO = new Color(220, 228, 236);
+	public static final Color TL_BORDE = new Color(190, 200, 210);
 
 	// Colores TL configurables
 	public ConfigColor tlBlanco = ConfigColor.de("tema.tl.color.blanco", Color.WHITE);
@@ -54,7 +54,7 @@ public class CDSkinCape extends EditorGUI {
 	public ConfigColor colorCajaTexto = ConfigColor.de("tema.cdskincape.editor.color.caja_texto", Color.WHITE);
 	public ConfigColor colorBorde = ConfigColor.de("tema.cdskincape.editor.color.borde", TL_BORDE);
 
-	private JPanel panelConfiguracionGUI;
+	public JPanel panelConfiguracionGUI;
 
 	@Override
 	public String id() {
@@ -67,7 +67,7 @@ public class CDSkinCape extends EditorGUI {
 		setVisible(true);
 	}
 
-	private void inicializarInterfaz() {
+	public void inicializarInterfaz() {
 
 		setTitle("CDSkinCape");
 		setLayout(new BorderLayout());
@@ -150,12 +150,12 @@ public class CDSkinCape extends EditorGUI {
 		}
 	}
 
-	private Object guardarTodo() {
+	public Object guardarTodo() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private JButton crearBotonTL(String texto, Color fondo, Color textoColor) {
+	public JButton crearBotonTL(String texto, Color fondo, Color textoColor) {
 		JButton b = new JButton(texto);
 
 		b.setBackground(fondo);
@@ -179,7 +179,7 @@ public class CDSkinCape extends EditorGUI {
 		actualizarPanelConfiguracionGUI();
 	}
 
-	private void actualizarPanelConfiguracionGUI() {
+	public void actualizarPanelConfiguracionGUI() {
 
 		panelConfiguracionGUI.removeAll();
 
@@ -231,7 +231,7 @@ public class CDSkinCape extends EditorGUI {
 		panelConfiguracionGUI.repaint();
 	}
 
-	private void resetearTodo() {
+	public void resetearTodo() {
 		if (JOptionPane.showConfirmDialog(this, MonitorDePID.idioma.confirmacionReEstablarTodos(),
 				MonitorDePID.idioma.aceptar(), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 			return;
@@ -246,7 +246,7 @@ public class CDSkinCape extends EditorGUI {
 		actualizarPanelConfiguracionGUI();
 	}
 
-	private Component crearComponenteEditable(ElementoConfig<?> elemento) {
+	public Component crearComponenteEditable(ElementoConfig<?> elemento) {
 
 		if (elemento instanceof ConfigBoolean) {
 			JCheckBox cb = new JCheckBox();
@@ -379,7 +379,7 @@ public class CDSkinCape extends EditorGUI {
 		aplicarApariencia();
 	}
 
-	private void aplicarApariencia() {
+	public void aplicarApariencia() {
 		getContentPane().setBackground(colorFondo.obtener());
 		revalidate();
 		repaint();

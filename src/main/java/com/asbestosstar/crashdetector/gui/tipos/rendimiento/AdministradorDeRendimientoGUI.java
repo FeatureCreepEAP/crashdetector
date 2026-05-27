@@ -114,7 +114,7 @@ public abstract class AdministradorDeRendimientoGUI extends JFrame implements Bo
 		setVisible(true);
 	}
 
-	private JTextArea crearAreaTexto() {
+	public JTextArea crearAreaTexto() {
 		JTextArea area = new JTextArea();
 		area.setEditable(false);
 		area.setLineWrap(true);
@@ -164,7 +164,7 @@ public abstract class AdministradorDeRendimientoGUI extends JFrame implements Bo
 		trabajadorAnalisis.execute();
 	}
 
-	protected void renderizar(List<AnalizadorDeFactoresAmbientales.MejoraAmbiental> mejorasAmbientales,
+	public void renderizar(List<AnalizadorDeFactoresAmbientales.MejoraAmbiental> mejorasAmbientales,
 			List<AnalizadorDeModsOptimizacion.MejoraMod> mejorasMods,
 			List<AnalizadorDeConfigsOptimizacion.MejoraConfig> mejorasConfigs) {
 
@@ -174,7 +174,7 @@ public abstract class AdministradorDeRendimientoGUI extends JFrame implements Bo
 		areaConfigs.setText(construirConfigs(mejorasConfigs));
 	}
 
-	protected String construirResumen(List<AnalizadorDeFactoresAmbientales.MejoraAmbiental> mejorasAmbientales,
+	public String construirResumen(List<AnalizadorDeFactoresAmbientales.MejoraAmbiental> mejorasAmbientales,
 			List<AnalizadorDeModsOptimizacion.MejoraMod> mejorasMods,
 			List<AnalizadorDeConfigsOptimizacion.MejoraConfig> mejorasConfigs) {
 
@@ -194,7 +194,7 @@ public abstract class AdministradorDeRendimientoGUI extends JFrame implements Bo
 		return sb.toString();
 	}
 
-	protected String construirAmbiental(List<AnalizadorDeFactoresAmbientales.MejoraAmbiental> mejoras) {
+	public String construirAmbiental(List<AnalizadorDeFactoresAmbientales.MejoraAmbiental> mejoras) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(MonitorDePID.idioma.rendimientoPestanaAmbiental()).append("\n\n");
@@ -215,7 +215,7 @@ public abstract class AdministradorDeRendimientoGUI extends JFrame implements Bo
 		return sb.toString();
 	}
 
-	protected String construirMods(List<AnalizadorDeModsOptimizacion.MejoraMod> mejoras) {
+	public String construirMods(List<AnalizadorDeModsOptimizacion.MejoraMod> mejoras) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(MonitorDePID.idioma.rendimientoPestanaMods()).append("\n\n");
@@ -234,7 +234,7 @@ public abstract class AdministradorDeRendimientoGUI extends JFrame implements Bo
 		return sb.toString();
 	}
 
-	protected String construirConfigs(List<AnalizadorDeConfigsOptimizacion.MejoraConfig> mejoras) {
+	public String construirConfigs(List<AnalizadorDeConfigsOptimizacion.MejoraConfig> mejoras) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(MonitorDePID.idioma.rendimientoPestanaConfigs()).append("\n\n");
@@ -255,11 +255,11 @@ public abstract class AdministradorDeRendimientoGUI extends JFrame implements Bo
 		return sb.toString();
 	}
 
-	private int contar(List<?> lista) {
+	public int contar(List<?> lista) {
 		return lista == null ? 0 : lista.size();
 	}
 
-	protected void abrirGPUFix() {
+	public void abrirGPUFix() {
 		GPUFixGUI gui = TipoGUI.GPU_FIX.obtenerGUIPredeterminado(GPUFixOptimusPrime.ID, GPUFixOptimusPrime::new);
 		gui.init();
 	}

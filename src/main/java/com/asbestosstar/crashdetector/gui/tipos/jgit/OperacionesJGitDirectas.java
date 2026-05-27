@@ -162,7 +162,7 @@ public class OperacionesJGitDirectas {
 		});
 	}
 
-	private static void mostrarVentanaEstado(File carpeta) {
+	public static void mostrarVentanaEstado(File carpeta) {
 		JFrame frame = new JFrame(MonitorDePID.idioma.jgitTituloVentanaSwing());
 		frame.setSize(800, 600);
 		frame.setLayout(new BorderLayout());
@@ -220,7 +220,7 @@ public class OperacionesJGitDirectas {
 		frame.setVisible(true);
 	}
 
-	private static Repository abrirRepo(File carpeta) throws Exception {
+	public static Repository abrirRepo(File carpeta) throws Exception {
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
 		return builder.setGitDir(new File(carpeta, ".git")).readEnvironment().findGitDir().build();
 	}

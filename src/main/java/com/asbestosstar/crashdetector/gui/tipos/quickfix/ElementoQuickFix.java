@@ -11,7 +11,7 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
  * Representación visual de un QuickFix individual con alineación correcta
  */
 public class ElementoQuickFix extends JPanel {
-	private final JCheckBox checkBoxRetener = new JCheckBox();
+	public final JCheckBox checkBoxRetener = new JCheckBox();
 
 	public ElementoQuickFix(QuickFix quickFix) {
 		setLayout(new BorderLayout());

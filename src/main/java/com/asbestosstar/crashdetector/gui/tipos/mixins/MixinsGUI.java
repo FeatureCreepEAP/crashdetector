@@ -303,7 +303,7 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 	/**
 	 * Recolecta recursivamente mods con mixins.
 	 */
-	private void recolectarModsConMixinsRecursivo(ArchivoDeMod mod, List<ArchivoDeMod> salida) {
+	public void recolectarModsConMixinsRecursivo(ArchivoDeMod mod, List<ArchivoDeMod> salida) {
 		if (mod == null) {
 			return;
 		}

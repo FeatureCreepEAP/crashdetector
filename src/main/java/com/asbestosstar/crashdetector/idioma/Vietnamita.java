@@ -7067,22 +7067,24 @@ public class Vietnamita implements Idioma {
 	@Override
 	public String javaProblematica() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "Đã phát hiện crash native của môi trường Java (JVM).</b>"
-				+ "<p>Loại lỗi này xảy ra trong chính Máy ảo Java (ví dụ: <code>jvm.dll</code>, <code>libjvm.so</code>, v.v.), "
+				+ "Đã phát hiện sự cố crash native của môi trường thực thi Java (JVM).</b>"
+				+ "<p>Loại lỗi này xảy ra bên trong chính Máy ảo Java (ví dụ: trong <code>jvm.dll</code>, <code>libjvm.so</code>, v.v.), "
 				+ "và không nhất thiết do mod gây ra.</p>"
-				+ "<p>Mặc dù đôi khi có thể do mod sử dụng thư viện native không tương thích, "
+				+ "<p>Mặc dù trong những trường hợp hiếm hoi có thể bắt nguồn từ các mod sử dụng thư viện native không tương thích, "
 				+ "<b>nhưng khả năng cao hơn là do phiên bản JVM bị lỗi, hỏng hoặc lỗi thời</b>.</p>"
-				+ "<p>Điều này đặc biệt phổ biến nếu bạn đang sử dụng bản Java cũ hoặc không chính thức.</p>"
-				+ "<p><b>Khuyến nghị sử dụng JVM đáng tin cậy:</b></p><ul>"
-				+ "<li><b>Red Hat Build of OpenJDK</b> (ổn định, phù hợp Windows/Linux)</li>"
-				+ "<li><b>OpenLogic OpenJDK</b> (đa nền tảng, bao gồm macOS Intel)</li>"
-				+ "<li><b>Azul Zulu</b> (được chứng nhận, hỗ trợ LTS miễn phí)</li>"
-				+ "<li><b>Oracle JDK</b> (chính thức, cập nhật thường xuyên)</li></ul>"
-				+ "<p>Tránh các bản build không rõ nguồn gốc hoặc quá cũ vì có thể chứa lỗi nghiêm trọng.</p>"
-				+ "<p><b>Bạn dùng Prism Launcher hoặc TLauncher?</b> Có thể cấu hình JVM riêng rất dễ dàng: "
-				+ "trong Prism Launcher: <i>Instalaciones</i> → <i>Editar instancia</i> → <i>Cấu hình Java</i>; "
-				+ "trong TLauncher: <i>Settings</i> → <i>Java Settings</i> và chọn đường dẫn JDK/JRE. "
-				+ "Không cần thay đổi JVM hệ thống!</p>";
+				+ "<p>Điều này đặc biệt phổ biến nếu bạn đang sử dụng bản build cũ hoặc không chính thức của phiên bản Java (ví dụ: các bản build cộng đồng không được hỗ trợ).</p>"
+				+ "<p><b>Chúng tôi khuyên dùng một JVM đáng tin cậy và được duy trì:</b></p>" + "<ul>"
+				+ "<li><b>Red Hat Build of OpenJDK</b> (ổn định, đã được kiểm tra kỹ, lý tưởng cho Windows/Linux)</li>"
+				+ "<li><b>OpenLogic OpenJDK</b> (hỗ trợ đa nền tảng, bao gồm macOS Intel)</li>"
+				+ "<li><b>Azul Zulu</b> (được chứng nhận, với hỗ trợ LTS miễn phí)</li>"
+				+ "<li><b>Oracle JDK</b> (chính thức, với các bản cập nhật thường xuyên)</li>" + "</ul>"
+				+ "<p>Tránh các bản build không rõ nguồn gốc, tùy chỉnh hoặc quá cũ, vì chúng có thể chứa các lỗi nghiêm trọng trong động cơ JVM.</p>"
+				+ "<p><b>Bạn dùng Prism Launcher hoặc TLauncher?</b> Rất dễ để cấu hình một JVM tùy chỉnh: "
+				+ "trong Prism Launcher, hãy vào <i>Installations</i> → <i>Edit Instance</i> → <i>Java Settings</i>; "
+				+ "trong TLauncher, hãy vào <i>Settings</i> → <i>Java Settings</i> và chọn đường dẫn đến JDK/JRE đã tải xuống. "
+				+ "Ngoài ra, bộ thu gom rác (garbage collector) của bạn có thể gặp sự cố; trong trường hợp đó, bạn nên chuyển sang ZGC."
+
+				+ "Bạn không cần thay đổi JVM của hệ thống!</p>";
 	}
 
 	@Override

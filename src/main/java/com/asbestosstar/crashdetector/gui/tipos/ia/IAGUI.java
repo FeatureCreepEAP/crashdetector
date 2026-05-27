@@ -49,22 +49,22 @@ public abstract class IAGUI extends JFrame implements CrashDetectorGUI, BotonDeB
 	/**
 	 * Paneles estructurales.
 	 */
-	protected JPanel panelRaiz;
-	protected JPanel panelCentro;
-	protected JPanel panelSuperior;
-	protected JPanel panelInferior;
-	protected JPanel panelBotones;
-	protected JPanel panelIlustracion;
+	public JPanel panelRaiz;
+	public JPanel panelCentro;
+	public JPanel panelSuperior;
+	public JPanel panelInferior;
+	public JPanel panelBotones;
+	public JPanel panelIlustracion;
 
 	/**
 	 * Componentes principales.
 	 */
-	protected JLabel lblTitulo;
-	protected JEditorPane txtDescripcion;
-	protected JTextField txtEnlace;
-	protected JButton btnCopiar;
-	protected JButton btnAbrir;
-	protected JLabel lblAviso;
+	public JLabel lblTitulo;
+	public JEditorPane txtDescripcion;
+	public JTextField txtEnlace;
+	public JButton btnCopiar;
+	public JButton btnAbrir;
+	public JLabel lblAviso;
 
 	@Override
 	public TipoGUI tipo() {
@@ -82,7 +82,7 @@ public abstract class IAGUI extends JFrame implements CrashDetectorGUI, BotonDeB
 	/**
 	 * Configuración base de la ventana.
 	 */
-	protected void configurarVentana() {
+	public void configurarVentana() {
 		setTitle(MonitorDePID.idioma.iaTituloVentana());
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(820, 560);
@@ -94,7 +94,7 @@ public abstract class IAGUI extends JFrame implements CrashDetectorGUI, BotonDeB
 	/**
 	 * Construcción técnica de la interfaz.
 	 */
-	protected void construirInterfaz() {
+	public void construirInterfaz() {
 		panelRaiz = new JPanel(new BorderLayout(10, 10));
 		panelRaiz.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
@@ -148,7 +148,7 @@ public abstract class IAGUI extends JFrame implements CrashDetectorGUI, BotonDeB
 	/**
 	 * HTML descriptivo del panel.
 	 */
-	protected String descripcionHtml() {
+	public String descripcionHtml() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<b>").append(MonitorDePID.idioma.iaDescripcionTitulo()).append("</b>");
@@ -163,7 +163,7 @@ public abstract class IAGUI extends JFrame implements CrashDetectorGUI, BotonDeB
 	/**
 	 * Copia el enlace al portapapeles.
 	 */
-	protected void copiarEnlace() {
+	public void copiarEnlace() {
 		try {
 			StringSelection selection = new StringSelection(txtEnlace.getText());
 			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
@@ -175,7 +175,7 @@ public abstract class IAGUI extends JFrame implements CrashDetectorGUI, BotonDeB
 	/**
 	 * Abre el enlace en el navegador.
 	 */
-	protected void abrirEnlace() {
+	public void abrirEnlace() {
 		try {
 			Desktop.getDesktop().browse(new URI(txtEnlace.getText()));
 		} catch (Exception ex) {
@@ -186,19 +186,19 @@ public abstract class IAGUI extends JFrame implements CrashDetectorGUI, BotonDeB
 	/**
 	 * Envuelve texto HTML básico.
 	 */
-	protected String envolverHtml(String cuerpo) {
+	public String envolverHtml(String cuerpo) {
 		return "<html><body style='font-family:sans-serif;'>" + cuerpo + "</body></html>";
 	}
 
 	/**
 	 * La implementación concreta aporta la ilustración o panel visual.
 	 */
-	protected abstract JPanel crearPanelIlustracion();
+	public abstract JPanel crearPanelIlustracion();
 
 	/**
 	 * La implementación concreta aplica colores, bordes y apariencia.
 	 */
-	protected abstract void aplicarApariencia();
+	public abstract void aplicarApariencia();
 
 	@Override
 	public void recargarApariencia() {

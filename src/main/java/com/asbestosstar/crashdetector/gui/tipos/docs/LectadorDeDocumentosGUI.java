@@ -74,33 +74,33 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 	/**
 	 * Visor HTML del documento.
 	 */
-	protected final JEditorPane visorDocumento = new JEditorPane();
+	public final JEditorPane visorDocumento = new JEditorPane();
 
 	/**
 	 * Selector de idioma de esta ventana.
 	 */
-	protected JComboBox<String> comboIdiomas;
+	public JComboBox<String> comboIdiomas;
 
 	/**
 	 * Paneles estructurales.
 	 */
-	protected JSplitPane splitPrincipal;
-	protected JScrollPane scrollArbol;
-	protected JScrollPane scrollDocumento;
-	protected JPanel panelInferior;
-	protected JPanel panelInferiorCentro;
-	protected JPanel panelInferiorDerecha;
-	protected JPanel panelRaiz;
+	public JSplitPane splitPrincipal;
+	public JScrollPane scrollArbol;
+	public JScrollPane scrollDocumento;
+	public JPanel panelInferior;
+	public JPanel panelInferiorCentro;
+	public JPanel panelInferiorDerecha;
+	public JPanel panelRaiz;
 
 	/**
 	 * Documento actualmente abierto.
 	 */
-	protected Path documentoActual;
+	public Path documentoActual;
 
 	/**
 	 * Nodo actualmente abierto.
 	 */
-	protected NodoDocumento nodoActual;
+	public NodoDocumento nodoActual;
 
 	/**
 	 * Mapa visible -> código.
@@ -171,14 +171,14 @@ public abstract class LectadorDeDocumentosGUI extends JFrame implements CrashDet
 	/**
 	 * Permite que la implementación añada fondo o capas visuales.
 	 */
-	protected void instalarFondoApariencia(JLayeredPane capa) {
+	public void instalarFondoApariencia(JLayeredPane capa) {
 		// Opcional en implementación concreta
 	}
 
 	/**
 	 * Construcción técnica de la interfaz.
 	 */
-	protected void construirInterfazBase() {
+	public void construirInterfazBase() {
 		panelRaiz = new JPanel(new BorderLayout(8, 8));
 		panelRaiz.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 

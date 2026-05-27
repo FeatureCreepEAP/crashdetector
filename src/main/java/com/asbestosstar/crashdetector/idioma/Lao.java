@@ -7264,21 +7264,23 @@ public class Lao implements Idioma {
 	@Override
 	public String javaProblematica() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "ພົບ crash native ຂອງ Java Runtime Environment (JVM).</b>"
-				+ "<p>ຜິດພາດ ປະເພດນີ້ເກີດຂຶ້ນພາຍໃນ Java Virtual Machine ເອງ (ຕົວຢ່າງ: ໃນ <code>jvm.dll</code>, <code>libjvm.so</code>, ແລະອື່ນໆ), "
+				+ "ກວດພົບການ crash ແບບ native ຂອງສະພາບແວດລ້ອມ Java (JVM).</b>"
+				+ "<p>ຂໍ້ຜິດພາດປະເພດນີ້ເກີດຂຶ້ນພາຍໃນ Java Virtual Machine ເອງ (ຕົວຢ່າງ: ໃນ <code>jvm.dll</code>, <code>libjvm.so</code>, ແລະອື່ນໆ), "
 				+ "ແລະ ບໍ່ຈຳເປັນຕ້ອງເກີດຈາກ mod.</p>"
 				+ "<p>ເຖິງວ່າໃນກໍລະນີຫາຍາກອາດເກີດຈາກ mods ທີ່ໃຊ້ libraries native ທີ່ບໍ່ເຂົ້າກັນ, "
-				+ "<b>ມັນມີໂອກາດສູງກວ່າທີ່ຈະເກີດຈາກ JVM ທີ່ມີບັນຫາ, ເສຍຫາຍ ຫຼື ຕົກຍຸກ</b>.</p>"
-				+ "<p>ສິ່ງນີ້ເປັນເລື່ອງທຳມະດາໂດຍສະເພາະຖ້າທ່ານໃຊ້ build ເກົ່າ ຫຼື ບໍ່ເປັນທາງການຂອງ Java (ຕົວຢ່າງ: builds ຊຸມຊົນທີ່ບໍ່ມີການສະໜັບສະໜູນ).</p>"
+				+ "<b>ແຕ່ມີຄວາມເປັນໄປໄດ້ສູງກວ່າທີ່ຈະເກີດຈາກ JVM ທີ່ມີບັນຫາ, ເສຍຫາຍ ຫຼື ເກົ່າເກີນໄປ</b>.</p>"
+				+ "<p>ສິ່ງນີ້ພົບເລື້ອຍໂດຍສະເພາະຖ້າທ່ານໃຊ້ build ເກົ່າ ຫຼື ບໍ່ເປັນທາງການຂອງ Java (ຕົວຢ່າງ: builds ຊຸມຊົນທີ່ບໍ່ມີການສະໜັບສະໜູນ).</p>"
 				+ "<p><b>ແນະນຳໃຫ້ໃຊ້ JVM ທີ່ໜ້າເຊື່ອຖື ແລະ ມີການບຳລຸງຮັກສາ:</b></p>" + "<ul>"
-				+ "<li><b>Red Hat Build of OpenJDK</b> (ໝັ້ນຄົງ, ທົດສອບມາດີ, ເໝາະສຳລັບ Windows/Linux)</li>"
+				+ "<li><b>Red Hat Build of OpenJDK</b> (ໝັ້ນຄົງ, ທົດສອບດີ, ເໝາະສຳລັບ Windows/Linux)</li>"
 				+ "<li><b>OpenLogic OpenJDK</b> (ຮອງຮັບຫຼາຍແພລດຟອມ, ລວມທັງ macOS Intel)</li>"
 				+ "<li><b>Azul Zulu</b> (ຮັບຮອງ, ມີການສະໜັບສະໜູນ LTS ຟຣີ)</li>"
 				+ "<li><b>Oracle JDK</b> (ທາງການ, ມີການອັບເດດສະໝ່ຳສະເໝີ)</li>" + "</ul>"
-				+ "<p>ຫຼີກລ່ຽງ builds ທີ່ບໍ່ຮູ້ຈັກ, ດັດແປງເອງ ຫຼື ເກົ່າຫຼາຍ, ເພາະອາດມີ ຜິດພາດ ວິກິດໃນ engine ຂອງ JVM.</p>"
-				+ "<p><b>ໃຊ້ Prism Launcher ຫຼື TLauncher?</b> ມັນງ່າຍຫຼາຍທີ່ຈະຕັ້ງຄ່າ JVM ແບບ custom: "
-				+ "ໃນ Prism Launcher, ໄປທີ່ <i>Instalaciones</i> → <i>Editar instancia</i> → <i>ການຕັ້ງຄ່າ de Java</i>; "
-				+ "ໃນ TLauncher, ໄປທີ່ <i>Settings</i> → <i>Java Settings</i> ແລະ ເລືອກເສັ້ນທາງຂອງ JDK/JRE ທີ່ທ່ານດາວໂຫຼດ. "
+				+ "<p>ຫຼີກເວັ້ນ builds ທີ່ບໍ່ຮູ້ຈັກ, ປັບແຕ່ງເອງ ຫຼື ເກົ່າຫຼາຍ, ເພາະອາດມີຂໍ້ຜິດພາດວິກິດໃນເຄື່ອງຈັກ JVM.</p>"
+				+ "<p><b>ໃຊ້ Prism Launcher ຫຼື TLauncher?</b> ມັນງ່າຍຫຼາຍທີ່ຈະຕັ້ງຄ່າ JVM ສ່ວນຕົວ: "
+				+ "ໃນ Prism Launcher, ໄປທີ່ <i>Installations</i> → <i>Edit Instance</i> → <i>Java Settings</i>; "
+				+ "ໃນ TLauncher, ໄປທີ່ <i>Settings</i> → <i>Java Settings</i> ແລະ ເລືອກເສັ້ນທາງຂອງ JDK/JRE ທີ່ດາວໂຫຼດມາ. "
+				+ "ນອກຈາກນີ້, garbage collector ຂອງທ່ານອາດມີບັນຫາ; ໃນກໍລະນີນັ້ນ, ທ່ານຄວນປ່ຽນໄປໃຊ້ ZGC."
+
 				+ "ທ່ານບໍ່ຈຳເປັນຕ້ອງປ່ຽນ JVM ຂອງລະບົບ!</p>";
 	}
 

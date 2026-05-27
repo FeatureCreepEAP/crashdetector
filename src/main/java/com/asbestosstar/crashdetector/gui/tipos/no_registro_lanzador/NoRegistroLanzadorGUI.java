@@ -211,7 +211,7 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 		repaint();
 	}
 
-	protected abstract String htmlWrap(String desc);
+	public abstract String htmlWrap(String desc);
 
 	/** Detecta el launcher a partir de la ruta actual (ruta y padres). */
 	public String detectarPorDirectorio() {
@@ -465,7 +465,7 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 		refrescarInterfaz();
 	}
 
-	protected abstract Border bordeTitulado(String pegaLosRegistrosAqui);
+	public abstract Border bordeTitulado(String pegaLosRegistrosAqui);
 
 	@Override
 	public void recargarApariencia() {

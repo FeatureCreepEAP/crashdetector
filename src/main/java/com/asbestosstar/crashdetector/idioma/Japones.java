@@ -6532,22 +6532,26 @@ public class Japones implements Idioma {
 				+ "<p>問題が続く場合は、AAAParticles を無効にしてゲームを起動してみてください。</p>";
 	}
 
+	// Japanese (日本語)
 	@Override
 	public String javaProblematica() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "Java 仮想マシン（JVM）のネイティブクラッシュが検出されました。</b>"
-				+ "<p>このエラーは JVM 内部（例：<code>jvm.dll</code>、<code>libjvm.so</code> など）で発生し、" + "必ずしも Mod が原因とは限りません。</p>"
-				+ "<p>まれに非互換なネイティブライブラリを使用する Mod が原因となることもありますが、" + "<b>ほとんどの場合、欠陥あり・破損・古くなった JVM が原因です</b>。</p>"
-				+ "<p>これは、非公式または古い Java ビルド（サポートされていないコミュニティビルドなど）を使用している場合に特に起こりやすいです。</p>"
-				+ "<p><b>信頼性が高くメンテナンスされている JVM の使用を推奨します：</b></p>" + "<ul>"
-				+ "<li><b>Red Hat Build of OpenJDK</b>（安定・十分にテスト済み、Windows/Linux 向け最適）</li>"
-				+ "<li><b>OpenLogic OpenJDK</b>（マルチプラットフォーム対応、macOS Intel 含む）</li>"
-				+ "<li><b>Azul Zulu</b>（認定済み、無料 LTS サポート付き）</li>" + "<li><b>Oracle JDK</b>（公式、定期的なアップデートあり）</li>"
-				+ "</ul>" + "<p>未知・カスタム・非常に古いビルドは、JVM エンジンに重大なバグを含む可能性があるため避けてください。</p>"
-				+ "<p><b>Prism Launcher または TLauncher を使用していますか？</b> カスタム JVM の設定は簡単です："
-				+ "Prism Launcher では <i>インストール</i> → <i>インスタンス編集</i> → <i>Java 設定</i> へ進み、"
-				+ "TLauncher では <i>Settings</i> → <i>Java Settings</i> でダウンロードした JDK/JRE のパスを指定してください。"
-				+ "システムの JVM を変更する必要はありません！</p>";
+				+ "Java ランタイム環境 (JVM) のネイティブ クラッシュが検出されました。</b>"
+				+ "<p>この種類のエラーは Java 仮想マシン自体内部（例：<code>jvm.dll</code>、<code>libjvm.so</code> など）で発生し、 "
+				+ "必ずしも mod が原因ではありません。</p>" + "<p>まれに、互換性のないネイティブ ライブラリを使用する mod が原因であることもありますが、 "
+				+ "<b>JVM の欠陥のある、破損した、または古くなったバージョンが原因である可能性の方がはるかに高いです</b>。</p>"
+				+ "<p>これは、特に Java バージョンの古いビルドや非公式ビルド（例：サポートのないコミュニティ ビルド）を使用している場合に一般的です。</p>"
+				+ "<p><b>信頼でき、メンテナンスされている JVM の使用を推奨します：</b></p>" + "<ul>"
+				+ "<li><b>Red Hat Build of OpenJDK</b>（安定性、よくテスト済み、Windows/Linux に最適）</li>"
+				+ "<li><b>OpenLogic OpenJDK</b>（クロスプラットフォーム対応、macOS Intel を含む）</li>"
+				+ "<li><b>Azul Zulu</b>（認証済み、無料の LTS サポート付き）</li>" + "<li><b>Oracle JDK</b>（公式、定期的なアップデートあり）</li>"
+				+ "</ul>" + "<p>不明な、カスタム、または非常に古いビルドは避けてください。JVM エンジンに重大なエラーが含まれている可能性があります。</p>"
+				+ "<p><b>Prism Launcher または TLauncher を使用していますか？</b> カスタム JVM の設定は非常に簡単です： "
+				+ "Prism Launcher では、<i>Instalaciones</i> → <i>Editar instancia</i> → <i>Configuración de Java</i> に移動します； "
+				+ "TLauncher では、<i>Settings</i> → <i>Java Settings</i> に移動し、ダウンロードした JDK/JRE のパスを選択します。 "
+				+ "ガベージ コレクタに問題が発生している可能性もあります；その場合は、ZGC に切り替える必要があります。"
+
+				+ "システム JVM を変更する必要はありません！</p>";
 	}
 
 	@Override

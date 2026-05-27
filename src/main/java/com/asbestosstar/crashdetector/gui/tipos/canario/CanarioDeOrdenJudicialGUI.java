@@ -26,7 +26,7 @@ public abstract class CanarioDeOrdenJudicialGUI extends JDialog
 	/**
 	 * Devuelve mapa nombre del servicio → estado seguro.
 	 */
-	protected static Map<String, Boolean> obtenerEstados() {
+	public static Map<String, Boolean> obtenerEstados() {
 
 		Map<String, Boolean> mapa = new LinkedHashMap<>();
 
@@ -44,7 +44,7 @@ public abstract class CanarioDeOrdenJudicialGUI extends JDialog
 	/**
 	 * Cuenta cuántos servicios están inseguros.
 	 */
-	protected static int contarInseguros() {
+	public static int contarInseguros() {
 		int i = 0;
 		for (Boolean b : obtenerEstados().values()) {
 			if (!b) {

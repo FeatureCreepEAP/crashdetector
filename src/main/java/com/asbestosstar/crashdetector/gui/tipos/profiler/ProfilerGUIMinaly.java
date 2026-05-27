@@ -201,27 +201,27 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 	}
 
 	@Override
-	protected void onProfilerIniciado() {
+	public void onProfilerIniciado() {
 		etiquetaEstado.setText("Activo");
 		botonIniciar.setEnabled(false);
 		botonDetener.setEnabled(true);
 	}
 
 	@Override
-	protected void onProfilerDetenido() {
+	public void onProfilerDetenido() {
 		etiquetaEstado.setText("Detenido");
 		botonIniciar.setEnabled(true);
 		botonDetener.setEnabled(false);
 	}
 
 	@Override
-	protected void onMuestraRecibida(String hilo, StackTraceElement[] stack, long nanos) {
+	public void onMuestraRecibida(String hilo, StackTraceElement[] stack, long nanos) {
 		// Este GUI se enfoca en tiempos por método.
 		// Se deja hook disponible para sampling real si luego quieres flame graph.
 	}
 
 	@Override
-	protected void onLlamadaMetodo(String clase, String metodo, String descriptor, long duracionNs) {
+	public void onLlamadaMetodo(String clase, String metodo, String descriptor, long duracionNs) {
 		String clave = clase + "." + metodo + descriptor;
 
 		DatosMetodo d = datos.computeIfAbsent(clave, k -> new DatosMetodo(clase, metodo, descriptor));
@@ -230,12 +230,12 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 	}
 
 	@Override
-	protected void onLimpiarDatos() {
+	public void onLimpiarDatos() {
 		datos.clear();
 		refrescarTabla();
 	}
 
-	private void refrescarTabla() {
+	public void refrescarTabla() {
 		List<DatosMetodoVista> lista = new ArrayList<>();
 
 		for (DatosMetodo d : datos.values()) {
@@ -272,7 +272,7 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 				+ lista.size() + " | total visible: " + formatearNs(totalGeneral));
 	}
 
-	private String formatearNs(long ns) {
+	public String formatearNs(long ns) {
 		if (ns >= 1_000_000_000L)
 			return String.format("%.2f s", ns / 1_000_000_000.0);
 		if (ns >= 1_000_000L)
@@ -306,7 +306,7 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 		return lista;
 	}
 
-	private static final class DatosMetodo {
+	public static final class DatosMetodo {
 		final String clase;
 		final String metodo;
 		final String descriptor;
@@ -321,7 +321,7 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 		}
 	}
 
-	private static final class DatosMetodoVista {
+	public static final class DatosMetodoVista {
 		final String clase;
 		final String metodo;
 		final String descriptor;
@@ -341,7 +341,7 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 		}
 	}
 
-	private final class ModeloProfiler extends AbstractTableModel {
+	public final class ModeloProfiler extends AbstractTableModel {
 
 		private static final long serialVersionUID = 1L;
 

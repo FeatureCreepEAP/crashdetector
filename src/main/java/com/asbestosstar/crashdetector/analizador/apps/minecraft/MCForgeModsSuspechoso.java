@@ -377,6 +377,10 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 	}
 
 	private static String extraerSeccionMod(String linea) {
+		if (linea == null) {
+			return null;
+		}
+
 		String limpia = linea.trim();
 
 		if (!limpia.startsWith("--") || !limpia.endsWith("--")) {
@@ -384,12 +388,41 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 		}
 
 		String interior = limpia.substring(2, limpia.length() - 2).trim();
+		String lower = interior.toLowerCase();
 
-		if (!interior.toLowerCase().startsWith("mod ")) {
+		// NeoForge crash report section:
+		// -- Mod loading issue for: crashdetector_tutorial_extention_english --
+		if (lower.startsWith("mod loading issue for:")) {
+			String modID = extraerToken(interior.substring("Mod loading issue for:".length()).trim());
+
+			if (esModIdValidoReal(modID)) {
+				return modID;
+			}
+
 			return null;
 		}
 
-		return extraerToken(interior.substring(4).trim());
+		// Generic NeoForge section sin mod id:
+		// -- Mod loading issue --
+		// This must NOT become "loading".
+		if (lower.equals("mod loading issue") || lower.startsWith("mod loading issue ")) {
+			return null;
+		}
+
+		// Normal Forge section:
+		// -- MOD oculus --
+		// -- Mod create --
+		if (!lower.startsWith("mod ")) {
+			return null;
+		}
+
+		String modID = extraerToken(interior.substring(4).trim());
+
+		if (!esModIdValidoReal(modID)) {
+			return null;
+		}
+
+		return modID;
 	}
 
 	private static String extraerSuspectedMod(String linea) {

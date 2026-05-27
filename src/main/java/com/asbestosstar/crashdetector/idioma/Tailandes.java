@@ -7056,9 +7056,24 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String javaProblematica() {
-		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "ตรวจพบ crash ใน JVM</b>"
-				+ "<p>ข้อผิดพลาดเกิดใน Java Virtual Machine</p>" + "<p>มักเกิดจาก JVM ที่ล้าสมัยหรือเสียหาย</p>"
-				+ "<p><b>แนะนำ:</b></p>" + "<ul>" + "<li>ใช้ OpenJDK หรือ Azul Zulu หรือ Oracle JDK</li>" + "</ul>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ตรวจพบการ crash แบบ native ของสภาพแวดล้อมการทำงาน Java (JVM)</b>"
+				+ "<p>ข้อผิดพลาดประเภทนี้เกิดขึ้นภายใน Java Virtual Machine เอง (เช่น ใน <code>jvm.dll</code>, <code>libjvm.so</code> เป็นต้น) "
+				+ "และไม่จำเป็นต้องเกิดจากมอด</p>" + "<p>แม้ในกรณีหายากอาจเกิดจากมอดที่ใช้ไลบรารี native ที่ไม่เข้ากัน "
+				+ "<b>แต่มีโอกาสสูงมากที่จะเกิดจากเวอร์ชัน JVM ที่มีข้อบกพร่อง เสียหาย หรือล้าสมัย</b></p>"
+				+ "<p>สิ่งนี้พบบ่อยเป็นพิเศษหากคุณใช้ build เก่าหรือไม่เป็นทางการของ Java (เช่น build ชุมชนที่ไม่สนับสนุน)</p>"
+				+ "<p><b>แนะนำให้ใช้ JVM ที่น่าเชื่อถือและมีการบำรุงรักษา:</b></p>" + "<ul>"
+				+ "<li><b>Red Hat Build of OpenJDK</b> (เสถียร ทดสอบดี เหมาะกับ Windows/Linux)</li>"
+				+ "<li><b>OpenLogic OpenJDK</b> (รองรับหลายแพลตฟอร์ม รวมถึง macOS Intel)</li>"
+				+ "<li><b>Azul Zulu</b> (ได้รับการรับรอง พร้อมการสนับสนุน LTS ฟรี)</li>"
+				+ "<li><b>Oracle JDK</b> (ทางการ มีการอัปเดตสม่ำเสมอ)</li>" + "</ul>"
+				+ "<p>หลีกเลี่ยง build ที่ไม่รู้จัก ปรับแต่งเอง หรือเก่ามาก เพราะอาจมีข้อผิดพลาดร้ายแรงในเอนจิ้น JVM</p>"
+				+ "<p><b>ใช้ Prism Launcher หรือ TLauncher?</b> การตั้งค่า JVM ส่วนตัวง่ายมาก: "
+				+ "ใน Prism Launcher ไปที่ <i>Installations</i> → <i>Edit Instance</i> → <i>Java Settings</i>; "
+				+ "ใน TLauncher ไปที่ <i>Settings</i> → <i>Java Settings</i> และเลือกเส้นทางของ JDK/JRE ที่ดาวน์โหลดมา "
+				+ "นอกจากนี้ garbage collector ของคุณอาจมีปัญหา; ในกรณีนั้น คุณควรเปลี่ยนไปใช้ ZGC"
+
+				+ "คุณไม่จำเป็นต้องเปลี่ยน JVM ของระบบ!</p>";
 	}
 
 	@Override

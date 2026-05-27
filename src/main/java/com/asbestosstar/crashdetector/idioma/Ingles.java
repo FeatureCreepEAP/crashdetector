@@ -6827,25 +6827,28 @@ public class Ingles implements Idioma {
 				+ "<p>If the issue persists, try launching the game without AAAParticles.</p>";
 	}
 
+	// English (UK)
 	@Override
 	public String javaProblematica() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "A native crash in the Java Runtime Environment (JVM) was detected.</b>"
-				+ "<p>This type of error occurs inside the Java Virtual Machine itself (e.g., in <code>jvm.dll</code>, <code>libjvm.so</code>, etc.), "
+				+ "A native crash of the Java runtime environment (JVM) was detected.</b>"
+				+ "<p>This type of error occurs within the Java Virtual Machine itself (for example, in <code>jvm.dll</code>, <code>libjvm.so</code>, etc.), "
 				+ "and is not necessarily caused by a mod.</p>"
-				+ "<p>Although rarely it may stem from mods using incompatible native libraries, "
-				+ "<b>it is far more likely due to a defective, corrupted, or outdated JVM</b>.</p>"
-				+ "<p>This is especially common if you are using an old or unofficial Java build (e.g., unsupported community builds).</p>"
-				+ "<p><b>We recommend using a reliable, maintained JVM:</b></p>" + "<ul>"
+				+ "<p>Although in rare cases it may originate from mods using incompatible native libraries, "
+				+ "<b>it is much more likely to be due to a faulty, corrupt, or outdated version of the JVM</b>.</p>"
+				+ "<p>This is especially common if you are using an old or unofficial build of your Java version (for example, community builds without support).</p>"
+				+ "<p><b>We recommend using a reliable and maintained JVM:</b></p>" + "<ul>"
 				+ "<li><b>Red Hat Build of OpenJDK</b> (stable, well-tested, ideal for Windows/Linux)</li>"
-				+ "<li><b>OpenLogic OpenJDK</b> (multiplatform support, including macOS Intel)</li>"
+				+ "<li><b>OpenLogic OpenJDK</b> (cross-platform support, including macOS Intel)</li>"
 				+ "<li><b>Azul Zulu</b> (certified, with free LTS support)</li>"
 				+ "<li><b>Oracle JDK</b> (official, with regular updates)</li>" + "</ul>"
 				+ "<p>Avoid unknown, custom, or very old builds, as they may contain critical errors in the JVM engine.</p>"
-				+ "<p><b>Do you use Prism Launcher or TLauncher?</b> It’s very easy to configure a custom JVM: "
-				+ "in Prism Launcher, go to <i>Installations</i> → <i>Edit Instance</i> → <i>Java Settings</i>; "
-				+ "in TLauncher, go to <i>Settings</i> → <i>Java Settings</i> and set the path to your downloaded JDK/JRE. "
-				+ "You don’t need to change your system JVM!</p>";
+				+ "<p><b>Do you use Prism Launcher or TLauncher?</b> It is very easy to set up a custom JVM: "
+				+ "in Prism Launcher, go to <i>Instalaciones</i> → <i>Editar instancia</i> → <i>Configuración de Java</i>; "
+				+ "in TLauncher, go to <i>Settings</i> → <i>Java Settings</i> and select the path of your downloaded JDK/JRE. "
+				+ "It is also possible that your garbage collector is experiencing issues; in such a case, you should switch to ZGC."
+
+				+ "You do not need to change the system JVM!</p>";
 	}
 
 	@Override

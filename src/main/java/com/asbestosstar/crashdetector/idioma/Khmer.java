@@ -7088,17 +7088,28 @@ public class Khmer implements Idioma {
 				+ "<p>បើបញ្ហានៅតែបន្ត សាកល្បងដំណើរការហ្គេមដោយមិនប្រើ AAAParticles។</p>";
 	}
 
+	// Khmer (ភាសាខ្មែរ)
 	@Override
 	public String javaProblematica() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "បានរកឃើញ crash នៃ JVM (Java Virtual Machine)។</b>"
-				+ "<p>កំហុសប្រភេទនេះកើតឡើងនៅក្នុង JVM ខ្លួនវា (ឧ. <code>jvm.dll</code>, <code>libjvm.so</code>) មិនមែនតែងតែដោយសារម៉ូដទេ។</p>"
-				+ "<p>ភាគច្រើនវាបណ្តាលមកពីកំណែ JVM ខូច ចាស់ ឬមិនមានការគាំទ្រ។</p>"
-				+ "<p>វាជារឿងធម្មតា ប្រសិនបើអ្នកប្រើ build មិនផ្លូវការ ឬចាស់។</p>"
-				+ "<p><b>សូមប្រើ JVM ដែលទុកចិត្តបាន:</b></p><ul>" + "<li><b>Red Hat OpenJDK</b></li>"
-				+ "<li><b>OpenLogic OpenJDK</b></li>" + "<li><b>Azul Zulu</b></li>" + "<li><b>Oracle JDK</b></li>"
-				+ "</ul>" + "<p>ជៀសវាង build មិនស្គាល់ ឬចាស់ពេក។</p>"
-				+ "<p>អ្នកអាចកំណត់ JVM ផ្ទាល់ខ្លួនក្នុង launcher ដោយមិនប៉ះពាល់ប្រព័ន្ធ។</p>";
+				+ "បានរកឃើញការដួល native នៃបរិយាកាសដំណើរការ Java (JVM)។</b>"
+				+ "<p>ប្រភេទកំហុសនេះកើតឡើងនៅក្នុងម៉ាស៊ីន Virtual Java ខ្លួនឯង (ឧទាហរណ៍ នៅក្នុង <code>jvm.dll</code>, <code>libjvm.so</code> ជាដើម), "
+				+ "ហើយមិនចាំបាច់បណ្តាលមកពី mod នោះទេ។</p>"
+				+ "<p>ទោះបីជាក្នុងករណីកម្រវាអាចកើតចេញពី mods ដែលប្រើបណ្ណាល័យ native ដែលមិនស៊ីសង្វាក់គ្នា, "
+				+ "<b>វាទំនងជាបណ្តាលមកពីកំណែ JVM ដែលមានកំហុស ខូច ឬចាស់</b>។</p>"
+				+ "<p>វាជាទូទៅប្រសិនបើអ្នកកំពុងប្រើ build ចាស់ ឬមិនផ្លូវការនៃកំណែ Java របស់អ្នក (ឧទាហរណ៍ builds សហគមន៍ដែលគ្មានការគាំទ្រ)។</p>"
+				+ "<p><b>យើងណែនាំឱ្យប្រើ JVM ដែលអាចទុកចិត្តបាន និងថែរក្សា៖</b></p>" + "<ul>"
+				+ "<li><b>Red Hat Build of OpenJDK</b> (ស្ថិតស្ថេរ បានធ្វើតេស្តល្អ ល្អឥតខ្ចោះសម្រាប់ Windows/Linux)</li>"
+				+ "<li><b>OpenLogic OpenJDK</b> (ការគាំទ្រច្រើនវេទិកា រួមទាំង macOS Intel)</li>"
+				+ "<li><b>Azul Zulu</b> (បានវាយតម្លៃ មានការគាំទ្រ LTS ឥតគិតថ្លៃ)</li>"
+				+ "<li><b>Oracle JDK</b> (ផ្លូវការ មានការធ្វើបច្ចុប្បន្នភាពទៀងទាត់)</li>" + "</ul>"
+				+ "<p>ជៀសវាង builds ដែលមិនស្គាល់ ផ្ទាល់ខ្លួន ឬចាស់ពេក ព្រោះវាអាចមានកំហុសសំខាន់នៅក្នុងម៉ាស៊ីន JVM។</p>"
+				+ "<p><b>តើអ្នកប្រើ Prism Launcher ឬ TLauncher ទេ?</b> វាងាយស្រួលណាស់ក្នុងការកំណត់ JVM ផ្ទាល់ខ្លួន៖ "
+				+ "នៅក្នុង Prism Launcher សូមទៅ <i>Instalaciones</i> → <i>Editar instancia</i> → <i>Configuración de Java</i>; "
+				+ "នៅក្នុង TLauncher សូមទៅ <i>Settings</i> → <i>Java Settings</i> និងជ្រើសរើសផ្លូវនៃ JDK/JRE ដែលអ្នកបានទាញយក។ "
+				+ "វាក៏អាចថា garbage collector របស់អ្នកកំពុងជួបប្រទះបញ្ហា; ក្នុងករណីនេះ អ្នកគួរតែប្តូរទៅ ZGC។"
+
+				+ "អ្នកមិនចាំបាច់ផ្លាស់ប្តូរ JVM ប្រព័ន្ធទេ!</p>";
 	}
 
 	@Override

@@ -180,111 +180,112 @@ public class ImportadorModpackCurseForge implements ImportadorModpack {
 		return ImportadorParalelo.ejecutar(trabajos);
 	}
 
-private ResultadoImportacion descargarArchivosDesdeManifest(Json.Nodo manifest, Path carpetaDestino,
-		PoliticaImportacion politica) throws IOException {
+	private ResultadoImportacion descargarArchivosDesdeManifest(Json.Nodo manifest, Path carpetaDestino,
+			PoliticaImportacion politica) throws IOException {
 
-	Json.Nodo files = manifest.obtener("files");
+		Json.Nodo files = manifest.obtener("files");
 
-	if (files == null || !files.esArreglo()) {
-		return new ResultadoImportacion();
-	}
-
-	final Path carpetaDestinoFinal = carpetaDestino;
-	final PoliticaImportacion politicaFinal = politica;
-	final List<ImportadorParalelo.TrabajoImportacion> trabajos = ImportadorParalelo.listaSincronizada();
-
-	for (int i = 0; i < files.tamano(); i++) {
-		final Json.Nodo f = files.en(i);
-
-		final long projectId = obtenerLargoSeguro(f.obtener("projectID"), 0L);
-		final long fileId = obtenerLargoSeguro(f.obtener("fileID"), 0L);
-
-		if (projectId <= 0L || fileId <= 0L) {
-			continue;
+		if (files == null || !files.esArreglo()) {
+			return new ResultadoImportacion();
 		}
 
-		trabajos.add(new ImportadorParalelo.TrabajoImportacion() {
-			@Override
-			public ResultadoImportacion ejecutar() {
-				ResultadoImportacion total = new ResultadoImportacion();
+		final Path carpetaDestinoFinal = carpetaDestino;
+		final PoliticaImportacion politicaFinal = politica;
+		final List<ImportadorParalelo.TrabajoImportacion> trabajos = ImportadorParalelo.listaSincronizada();
 
-				try {
-					Json.Nodo modCF = solicitarModCurseForge(projectId);
-					Json.Nodo archivoCF = solicitarArchivoCurseForge(projectId, fileId);
+		for (int i = 0; i < files.tamano(); i++) {
+			final Json.Nodo f = files.en(i);
 
-					Json.Nodo dataArchivo = archivoCF.obtener("data");
+			final long projectId = obtenerLargoSeguro(f.obtener("projectID"), 0L);
+			final long fileId = obtenerLargoSeguro(f.obtener("fileID"), 0L);
 
-					String nombreArchivo = obtenerCadenaSeguro(dataArchivo.obtener("fileName"), "");
-					String downloadUrl = obtenerCadenaSeguro(dataArchivo.obtener("downloadUrl"), "");
-
-					if (nombreArchivo == null || nombreArchivo.trim().isEmpty()) {
-						total.saltados++;
-						total.mensajes.add("Archivo CurseForge sin nombre: " + projectId + "/" + fileId);
-						return total;
-					}
-
-					if (downloadUrl == null || downloadUrl.trim().isEmpty()) {
-						downloadUrl = solicitarUrlDescargaCurseForge(projectId, fileId);
-					}
-
-					if (downloadUrl == null || downloadUrl.trim().isEmpty()) {
-						String manual = crearUrlDescargaManualCurseForge(projectId, fileId);
-
-						total.saltados++;
-						total.mensajes.add("Descarga manual requerida para CurseForge " + projectId + "/" + fileId
-								+ " (" + nombreArchivo + "). Abra este enlace en el navegador y coloque el archivo en la carpeta mods: "
-								+ manual);
-
-						return total;
-					}
-
-					String carpetaTipo = obtenerCarpetaDestinoPorTipoCurseForge(modCF, archivoCF, nombreArchivo);
-					String rutaRelativa = carpetaTipo + "/" + nombreArchivo;
-
-					if (!rutaSegura(rutaRelativa)) {
-						total.saltados++;
-						total.mensajes.add("Ruta insegura calculada desde CurseForge: " + rutaRelativa);
-						return total;
-					}
-
-					Path destino = carpetaDestinoFinal.resolve(rutaRelativa).normalize();
-
-					if (!destino.toAbsolutePath().normalize().startsWith(carpetaDestinoFinal)) {
-						total.saltados++;
-						total.mensajes.add("Ruta intenta salir de la carpeta destino: " + rutaRelativa);
-						return total;
-					}
-
-					byte[] bytes = descargarBytes(downloadUrl);
-
-					String sha1Api = obtenerHashDesdeArchivoCF(dataArchivo, 1);
-
-					if (sha1Api != null && !sha1Api.trim().isEmpty()) {
-						verificarSha1SiExiste(bytes, sha1Api, rutaRelativa);
-					}
-
-					InfoEntradaImportacion info = crearInfoSimple(rutaRelativa);
-					info.esMod = rutaRelativa.startsWith("mods/");
-					info.curseForgeProjectId = String.valueOf(projectId);
-					info.curseForgeFileId = String.valueOf(fileId);
-					info.sha1 = sha1Api;
-					info.fechaModificacion = parsearFecha(obtenerCadenaSeguro(dataArchivo.obtener("fileDate"), ""));
-					info.tamanoDeclarado = obtenerLargoSeguro(dataArchivo.obtener("fileLength"), bytes.length);
-
-					return instalarEntradaConConflictos(bytes, info, destino, politicaFinal);
-				} catch (Throwable t) {
-					CrashDetectorLogger.logException(t);
-					total.errores++;
-					total.mensajes
-							.add("No se pudo descargar CurseForge " + projectId + "/" + fileId + ": " + t.getMessage());
-					return total;
-				}
+			if (projectId <= 0L || fileId <= 0L) {
+				continue;
 			}
-		});
-	}
 
-	return ImportadorParalelo.ejecutar(trabajos);
-}
+			trabajos.add(new ImportadorParalelo.TrabajoImportacion() {
+				@Override
+				public ResultadoImportacion ejecutar() {
+					ResultadoImportacion total = new ResultadoImportacion();
+
+					try {
+						Json.Nodo modCF = solicitarModCurseForge(projectId);
+						Json.Nodo archivoCF = solicitarArchivoCurseForge(projectId, fileId);
+
+						Json.Nodo dataArchivo = archivoCF.obtener("data");
+
+						String nombreArchivo = obtenerCadenaSeguro(dataArchivo.obtener("fileName"), "");
+						String downloadUrl = obtenerCadenaSeguro(dataArchivo.obtener("downloadUrl"), "");
+
+						if (nombreArchivo == null || nombreArchivo.trim().isEmpty()) {
+							total.saltados++;
+							total.mensajes.add("Archivo CurseForge sin nombre: " + projectId + "/" + fileId);
+							return total;
+						}
+
+						if (downloadUrl == null || downloadUrl.trim().isEmpty()) {
+							downloadUrl = solicitarUrlDescargaCurseForge(projectId, fileId);
+						}
+
+						if (downloadUrl == null || downloadUrl.trim().isEmpty()) {
+							String manual = crearUrlDescargaManualCurseForge(projectId, fileId);
+
+							total.saltados++;
+							total.mensajes.add("Descarga manual requerida para CurseForge " + projectId + "/" + fileId
+									+ " (" + nombreArchivo
+									+ "). Abra este enlace en el navegador y coloque el archivo en la carpeta mods: "
+									+ manual);
+
+							return total;
+						}
+
+						String carpetaTipo = obtenerCarpetaDestinoPorTipoCurseForge(modCF, archivoCF, nombreArchivo);
+						String rutaRelativa = carpetaTipo + "/" + nombreArchivo;
+
+						if (!rutaSegura(rutaRelativa)) {
+							total.saltados++;
+							total.mensajes.add("Ruta insegura calculada desde CurseForge: " + rutaRelativa);
+							return total;
+						}
+
+						Path destino = carpetaDestinoFinal.resolve(rutaRelativa).normalize();
+
+						if (!destino.toAbsolutePath().normalize().startsWith(carpetaDestinoFinal)) {
+							total.saltados++;
+							total.mensajes.add("Ruta intenta salir de la carpeta destino: " + rutaRelativa);
+							return total;
+						}
+
+						byte[] bytes = descargarBytes(downloadUrl);
+
+						String sha1Api = obtenerHashDesdeArchivoCF(dataArchivo, 1);
+
+						if (sha1Api != null && !sha1Api.trim().isEmpty()) {
+							verificarSha1SiExiste(bytes, sha1Api, rutaRelativa);
+						}
+
+						InfoEntradaImportacion info = crearInfoSimple(rutaRelativa);
+						info.esMod = rutaRelativa.startsWith("mods/");
+						info.curseForgeProjectId = String.valueOf(projectId);
+						info.curseForgeFileId = String.valueOf(fileId);
+						info.sha1 = sha1Api;
+						info.fechaModificacion = parsearFecha(obtenerCadenaSeguro(dataArchivo.obtener("fileDate"), ""));
+						info.tamanoDeclarado = obtenerLargoSeguro(dataArchivo.obtener("fileLength"), bytes.length);
+
+						return instalarEntradaConConflictos(bytes, info, destino, politicaFinal);
+					} catch (Throwable t) {
+						CrashDetectorLogger.logException(t);
+						total.errores++;
+						total.mensajes.add(
+								"No se pudo descargar CurseForge " + projectId + "/" + fileId + ": " + t.getMessage());
+						return total;
+					}
+				}
+			});
+		}
+
+		return ImportadorParalelo.ejecutar(trabajos);
+	}
 
 	private static Json.Nodo solicitarModCurseForge(long projectId) throws IOException {
 		String endpoint = ProveedorModsCurseForge.ENDPOINT;
@@ -327,13 +328,10 @@ private ResultadoImportacion descargarArchivosDesdeManifest(Json.Nodo manifest, 
 			throw e;
 		}
 	}
-	
+
 	private static String crearUrlDescargaManualCurseForge(long projectId, long fileId) {
 		return "https://www.curseforge.com/api/v1/mods/" + projectId + "/files/" + fileId + "/download";
 	}
-	
-	
-	
 
 	private static String obtenerCarpetaDestinoPorTipoCurseForge(Json.Nodo modCF, Json.Nodo archivoCF,
 			String nombreArchivo) {

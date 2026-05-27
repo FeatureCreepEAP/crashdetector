@@ -51,12 +51,12 @@ public abstract class ModsBuenasGUI extends JDialog implements CrashDetectorGUI,
 	public static Map<String, Supplier<ModsBuenasGUI>> GUIS = new HashMap<String, Supplier<ModsBuenasGUI>>();
 
 	/** Archivo usado por el verificador FaltaModAnimado */
-	protected final Path archivo = Statics.carpeta.resolve("mods_animados.json");
+	public final Path archivo = Statics.carpeta.resolve("mods_animados.json");
 
 	/** Lista de entradas de mods */
-	protected final List<EntradaMod> mods = new ArrayList<EntradaMod>();
+	public final List<EntradaMod> mods = new ArrayList<EntradaMod>();
 
-	protected static class EntradaMod {
+	public static class EntradaMod {
 		public String modid;
 		public String ruta;
 		/** En JSON: "abrir_cd_si_coincide". En UI: "Override normal". */
@@ -77,7 +77,7 @@ public abstract class ModsBuenasGUI extends JDialog implements CrashDetectorGUI,
 	 * ========================= CARGA / GUARDADO =========================
 	 */
 
-	protected void cargarDatos() {
+	public void cargarDatos() {
 		mods.clear();
 		if (!Files.exists(archivo)) {
 			return;
@@ -144,7 +144,7 @@ public abstract class ModsBuenasGUI extends JDialog implements CrashDetectorGUI,
 		}
 	}
 
-	protected void guardarDatos() {
+	public void guardarDatos() {
 		try {
 			Nodo raiz = Json.leer("[]");
 
@@ -202,14 +202,14 @@ public abstract class ModsBuenasGUI extends JDialog implements CrashDetectorGUI,
 	/**
 	 * Convierte nombre visible -> código usando el registro dinámico actual.
 	 */
-	protected String obtenerCodigoIdiomaDinamico(String nombreVisible) {
+	public String obtenerCodigoIdiomaDinamico(String nombreVisible) {
 		return Idioma.codigoDesdeNombreVisible(nombreVisible);
 	}
 
 	/**
 	 * Devuelve un texto compacto para mostrar razones en la tabla.
 	 */
-	protected String resumenRazones(Map<String, String> razones) {
+	public String resumenRazones(Map<String, String> razones) {
 		if (razones == null || razones.isEmpty()) {
 			return "";
 		}
@@ -267,7 +267,7 @@ public abstract class ModsBuenasGUI extends JDialog implements CrashDetectorGUI,
 	 * Muestra: - todos los idiomas registrados dinámicamente - además, cualquier
 	 * código extra ya presente en el JSON
 	 */
-	protected void editarRazonesMultilingue(String titulo, Map<String, String> razonesReferencia, java.awt.Color fondo,
+	public void editarRazonesMultilingue(String titulo, Map<String, String> razonesReferencia, java.awt.Color fondo,
 			java.awt.Color texto, java.awt.Color caja, java.awt.Color borde, java.awt.Color botonFondo) {
 		if (razonesReferencia == null) {
 			return;
@@ -416,7 +416,7 @@ public abstract class ModsBuenasGUI extends JDialog implements CrashDetectorGUI,
 		dialogo.setVisible(true);
 	}
 
-	protected void estilizarBotonSimple(JButton btn, java.awt.Color fondo, java.awt.Color texto, java.awt.Color borde) {
+	public void estilizarBotonSimple(JButton btn, java.awt.Color fondo, java.awt.Color texto, java.awt.Color borde) {
 		if (btn == null) {
 			return;
 		}
@@ -444,7 +444,7 @@ public abstract class ModsBuenasGUI extends JDialog implements CrashDetectorGUI,
 		}
 	}
 
-	protected void forzarFondoEnPanel(JComponent c, java.awt.Color fondo) {
+	public void forzarFondoEnPanel(JComponent c, java.awt.Color fondo) {
 		if (c == null) {
 			return;
 		}

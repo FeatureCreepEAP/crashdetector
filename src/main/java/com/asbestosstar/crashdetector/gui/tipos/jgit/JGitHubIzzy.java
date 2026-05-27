@@ -540,7 +540,7 @@ public class JGitHubIzzy extends JGitHubBase {
 	}
 
 	@Override
-	protected void actualizarEstadoBotones() {
+	public void actualizarEstadoBotones() {
 		boolean jgit = jgitDisponible();
 		boolean repo = jgit && repoExiste();
 		boolean remote = repo && JGitReflexivo.tieneRemote(carpetaActual());

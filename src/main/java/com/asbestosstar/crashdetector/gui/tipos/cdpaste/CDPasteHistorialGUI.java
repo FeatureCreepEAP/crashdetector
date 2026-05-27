@@ -20,9 +20,9 @@ public abstract class CDPasteHistorialGUI extends JDialog implements CrashDetect
 
 	public static Map<String, Supplier<CDPasteHistorialGUI>> GUIS = new HashMap<String, Supplier<CDPasteHistorialGUI>>();
 
-	protected Nodo historial;
+	public Nodo historial;
 
-	protected void cargarDatos() {
+	public void cargarDatos() {
 		historial = HistoriaCDPaste.cargarRaiz();
 	}
 

@@ -115,7 +115,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 	 * "com/a/B.class" y también "Lcom/a/B;" - Devuelve SIEMPRE formato interno
 	 * "com/a/B" (sin ".class", sin "L...;")
 	 */
-	private static String normalizarNombreClaseInterno(String nombre) {
+	public static String normalizarNombreClaseInterno(String nombre) {
 		if (nombre == null)
 			return null;
 		String s = nombre.trim();
@@ -420,7 +420,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		indice.computeIfAbsent(termino, k -> new ArrayList<>()).add(descriptor);
 	}
 
-	private static java.util.Set<String> extraerClavesIndice(String texto) {
+	public static java.util.Set<String> extraerClavesIndice(String texto) {
 		java.util.LinkedHashSet<String> claves = new java.util.LinkedHashSet<>();
 		if (texto == null)
 			return claves;
@@ -447,7 +447,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		return claves;
 	}
 
-	private static java.util.Set<String> extraerClavesConsulta(String consulta) {
+	public static java.util.Set<String> extraerClavesConsulta(String consulta) {
 		java.util.LinkedHashSet<String> claves = new java.util.LinkedHashSet<>();
 		if (consulta == null)
 			return claves;
@@ -812,7 +812,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		iniciarCargaPesada();
 	}
 
-	private void mostrarCodigoClaseSeleccionada() {
+	public void mostrarCodigoClaseSeleccionada() {
 		TreePath rutaSeleccionada = arbolModulos.getSelectionPath();
 
 		if (rutaSeleccionada == null) {
@@ -855,11 +855,11 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		abrirClaseEnCfr(nombreClase);
 	}
 
-	private void mostrarCodigoDescompilado(ArchivoDeMod mod, String nombreClase) {
+	public void mostrarCodigoDescompilado(ArchivoDeMod mod, String nombreClase) {
 		abrirClaseEnCfr(nombreClase);
 	}
 
-	private void abrirClaseEnCfr(String nombreClase) {
+	public void abrirClaseEnCfr(String nombreClase) {
 		if (nombreClase == null || nombreClase.trim().isEmpty()) {
 			return;
 		}
@@ -1601,7 +1601,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		return coincidencias;
 	}
 
-	private DefaultMutableTreeNode construirArbolResultadosJerarquico(List<PathDescriptor> coincidencias) {
+	public DefaultMutableTreeNode construirArbolResultadosJerarquico(List<PathDescriptor> coincidencias) {
 		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(MonitorDePID.idioma.resultadosBusqueda());
 		if (coincidencias == null || coincidencias.isEmpty()) {
 			raiz.add(new DefaultMutableTreeNode(MonitorDePID.idioma.noSeEncontraronResultados()));
@@ -1696,7 +1696,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		return raiz;
 	}
 
-	private DefaultMutableTreeNode asegurarNodoPaquete(DefaultMutableTreeNode nodoMod, String paquete) {
+	public DefaultMutableTreeNode asegurarNodoPaquete(DefaultMutableTreeNode nodoMod, String paquete) {
 		String etiqueta = (paquete == null || paquete.isEmpty()) ? "(paquete por defecto)" : paquete;
 		for (int i = 0; i < nodoMod.getChildCount(); i++) {
 			DefaultMutableTreeNode h = (DefaultMutableTreeNode) nodoMod.getChildAt(i);
@@ -1714,7 +1714,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		return nuevo;
 	}
 
-	private String textoBuscableDe(PathDescriptor d) {
+	public String textoBuscableDe(PathDescriptor d) {
 		if (d == null)
 			return null;
 		String tipo = d.obtenerTipo();
@@ -1734,7 +1734,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		return null;
 	}
 
-	private Map<String, ArchivoDeMod> obtenerMapaModsPorUbicacion() {
+	public Map<String, ArchivoDeMod> obtenerMapaModsPorUbicacion() {
 		Map<String, ArchivoDeMod> mapa = new HashMap<>();
 		for (ArchivoDeMod m : Buscardor.mods) {
 			rellenarMapaModsRecursivo(m, mapa);
@@ -1742,7 +1742,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		return mapa;
 	}
 
-	private void rellenarMapaModsRecursivo(ArchivoDeMod mod, Map<String, ArchivoDeMod> mapa) {
+	public void rellenarMapaModsRecursivo(ArchivoDeMod mod, Map<String, ArchivoDeMod> mapa) {
 		if (mod == null)
 			return;
 		mapa.put(mod.ubicacion_para_publicar(), mod);
@@ -2055,7 +2055,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		}.execute();
 	}
 
-	private String normalizarTipoFiltroUI(String seleccionado) {
+	public String normalizarTipoFiltroUI(String seleccionado) {
 		if (seleccionado == null)
 			return "*";
 		String s = seleccionado.trim();
@@ -2129,7 +2129,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		}
 	}
 
-	private ArchivoDeMod.InfoMetodo resolverInfoMetodoReal(ArchivoDeMod mod, String clasePuntos, String nombreMetodo,
+	public ArchivoDeMod.InfoMetodo resolverInfoMetodoReal(ArchivoDeMod mod, String clasePuntos, String nombreMetodo,
 			String descriptor) {
 		if (mod == null || clasePuntos == null || nombreMetodo == null || descriptor == null)
 			return null;
@@ -2148,7 +2148,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		return null;
 	}
 
-	private ArchivoDeMod.InfoCampo resolverInfoCampoReal(ArchivoDeMod mod, String clasePuntos, String nombreCampo,
+	public ArchivoDeMod.InfoCampo resolverInfoCampoReal(ArchivoDeMod mod, String clasePuntos, String nombreCampo,
 			String descriptor) {
 		if (mod == null || clasePuntos == null || nombreCampo == null)
 			return null;

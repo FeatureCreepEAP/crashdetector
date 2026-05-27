@@ -7530,6 +7530,8 @@ public class Espanol implements Idioma {
 				+ "<p><b>¿Usas Prism Launcher o TLauncher?</b> Es muy fácil configurar una JVM personalizada: "
 				+ "en Prism Launcher, ve a <i>Instalaciones</i> → <i>Editar instancia</i> → <i>Configuración de Java</i>; "
 				+ "en TLauncher, ve a <i>Settings</i> → <i>Java Settings</i> y selecciona la ruta de tu JDK/JRE descargado. "
+				+ "También es posible que tu recolector de basura esté experimentando problemas; en tal caso, deberías cambiar a ZGC."
+
 				+ "¡No necesitas cambiar la JVM del sistema!</p>";
 	}
 

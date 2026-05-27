@@ -43,7 +43,7 @@ public class ElementoQuickFixDemonSlayers extends QuickFixGUI {
 	}
 
 	@Override
-	protected Component crearContenido(QuickFix fix) {
+	public Component crearContenido(QuickFix fix) {
 		if (fix == null) {
 			return crearEtiquetaFallback("(QuickFix nulo)");
 		}
@@ -119,26 +119,26 @@ public class ElementoQuickFixDemonSlayers extends QuickFixGUI {
 	}
 
 	@Override
-	protected void aplicarApariencia() {
+	public void aplicarApariencia() {
 		// El fondo lo maneja el panel interno; no se necesita más
 		this.revalidate();
 		this.repaint();
 	}
 
 	@Override
-	protected void aplicarAparienciaBase() {
+	public void aplicarAparienciaBase() {
 		super.aplicarAparienciaBase();
 		this.panelContenido.setOpaque(true);
 		this.panelContenido.setBackground(colorFondoDemon.obtener());
 	}
 
 	@Override
-	protected String rutaImagenDecorativa() {
+	public String rutaImagenDecorativa() {
 		return Statics.carpeta.resolve("imagenes/demonslayers.png").toString();
 	}
 
 	@Override
-	protected int[] dimensionesImagenDecorativa() {
+	public int[] dimensionesImagenDecorativa() {
 		return new int[] { 128, 128 }; // igual que en el scrollable para coherencia
 	}
 

@@ -118,7 +118,7 @@ public class HistoriaModsGUILegacy extends HistoriaDeModsGUI {
 	}
 
 	@Override
-	protected void construirEstructuraBase() {
+	public void construirEstructuraBase() {
 		panelPrincipal = new JPanel(new BorderLayout(10, 10));
 		panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		add(panelPrincipal, BorderLayout.CENTER);

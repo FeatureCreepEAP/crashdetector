@@ -7336,15 +7336,16 @@ public class Frances implements Idioma {
 				+ "<p>Si le problème persiste, essayez de lancer le jeu sans AAAParticles.</p>";
 	}
 
+	// French (Burkina Faso variant) (Français)
 	@Override
 	public String javaProblematica() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
 				+ "Un crash natif de l'environnement d'exécution Java (JVM) a été détecté.</b>"
-				+ "<p>Ce type d'erreur se produit au sein de la Machine Virtuelle Java elle-même (par exemple, dans <code>jvm.dll</code>, <code>libjvm.so</code>, etc.), "
+				+ "<p>Ce type d'erreur se produit au sein même de la Machine Virtuelle Java (par exemple, dans <code>jvm.dll</code>, <code>libjvm.so</code>, etc.), "
 				+ "et n'est pas nécessairement causé par un mod.</p>"
-				+ "<p>Bien que dans de rares cas, cela puisse provenir de mods utilisant des bibliothèques natives incompatibles, "
-				+ "<b>il est beaucoup plus probable que cela soit dû à une version défectueuse, corrompue ou obsolète de la JVM</b>.</p>"
-				+ "<p>Cela est particulièrement courant si vous utilisez une compilation ancienne ou non officielle de votre version de Java (par exemple, des builds communautaires non supportées).</p>"
+				+ "<p>Bien que dans de rares cas, il puisse provenir de mods utilisant des bibliothèques natives incompatibles, "
+				+ "<b>il est beaucoup plus probable qu'il soit dû à une version défectueuse, corrompue ou obsolète de la JVM</b>.</p>"
+				+ "<p>Cela est particulièrement courant si vous utilisez une compilation ancienne ou non officielle de votre version de Java (par exemple, des builds communautaires sans support).</p>"
 				+ "<p><b>Nous recommandons d'utiliser une JVM fiable et maintenue :</b></p>" + "<ul>"
 				+ "<li><b>Red Hat Build of OpenJDK</b> (stable, bien testée, idéale pour Windows/Linux)</li>"
 				+ "<li><b>OpenLogic OpenJDK</b> (support multiplateforme, y compris macOS Intel)</li>"
@@ -7352,8 +7353,10 @@ public class Frances implements Idioma {
 				+ "<li><b>Oracle JDK</b> (officielle, avec mises à jour régulières)</li>" + "</ul>"
 				+ "<p>Évitez les builds inconnues, personnalisées ou très anciennes, car elles peuvent contenir des erreurs critiques dans le moteur de la JVM.</p>"
 				+ "<p><b>Vous utilisez Prism Launcher ou TLauncher ?</b> Il est très facile de configurer une JVM personnalisée : "
-				+ "dans Prism Launcher, allez dans <i>Instalaciones</i> → <i>Editar instancia</i> → <i>Configuration de Java</i>; "
+				+ "dans Prism Launcher, allez dans <i>Instalaciones</i> → <i>Editar instancia</i> → <i>Configuración de Java</i> ; "
 				+ "dans TLauncher, allez dans <i>Settings</i> → <i>Java Settings</i> et sélectionnez le chemin de votre JDK/JRE téléchargé. "
+				+ "Il est également possible que votre ramasse-miettes rencontre des problèmes ; dans ce cas, vous devriez passer à ZGC."
+
 				+ "Vous n'avez pas besoin de changer la JVM du système !</p>";
 	}
 

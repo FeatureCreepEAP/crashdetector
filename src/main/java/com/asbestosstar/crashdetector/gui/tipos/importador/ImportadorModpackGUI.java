@@ -123,7 +123,7 @@ public abstract class ImportadorModpackGUI extends JFrame implements CrashDetect
 		setVisible(true);
 	}
 
-	protected void recargarFormatosImportables() {
+	public void recargarFormatosImportables() {
 		DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<String>();
 
 		for (Map.Entry<String, Supplier<ProveedorMods>> entrada : PanelAPIBase.PROVEEDORES_MODS.entrySet()) {
@@ -141,7 +141,7 @@ public abstract class ImportadorModpackGUI extends JFrame implements CrashDetect
 		comboFormato.setModel(modelo);
 	}
 
-	protected void instalarDragDrop() {
+	public void instalarDragDrop() {
 		panelDrop.setTransferHandler(new TransferHandler() {
 			@Override
 			public boolean canImport(TransferSupport support) {
@@ -173,7 +173,7 @@ public abstract class ImportadorModpackGUI extends JFrame implements CrashDetect
 		});
 	}
 
-	protected void seleccionarArchivo() {
+	public void seleccionarArchivo() {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setDialogTitle(MonitorDePID.idioma.importadorModpackSeleccionarArchivo());
 
@@ -184,7 +184,7 @@ public abstract class ImportadorModpackGUI extends JFrame implements CrashDetect
 		}
 	}
 
-	protected void establecerArchivoSeleccionado(Path archivo) {
+	public void establecerArchivoSeleccionado(Path archivo) {
 		archivoSeleccionado = archivo.toAbsolutePath().normalize();
 
 		if (etiquetaArchivo != null) {
@@ -192,7 +192,7 @@ public abstract class ImportadorModpackGUI extends JFrame implements CrashDetect
 		}
 	}
 
-	protected ProveedorMods obtenerProveedorSeleccionado() {
+	public ProveedorMods obtenerProveedorSeleccionado() {
 		String id = (String) comboFormato.getSelectedItem();
 
 		if (id == null) {
@@ -214,7 +214,7 @@ public abstract class ImportadorModpackGUI extends JFrame implements CrashDetect
 		return proveedor;
 	}
 
-	protected void importarAsync() {
+	public void importarAsync() {
 		final ProveedorMods proveedor = obtenerProveedorSeleccionado();
 
 		if (proveedor == null) {
@@ -278,13 +278,13 @@ public abstract class ImportadorModpackGUI extends JFrame implements CrashDetect
 		workerImportar.execute();
 	}
 
-	protected void setEstado(String texto) {
+	public void setEstado(String texto) {
 		if (etiquetaEstado != null) {
 			etiquetaEstado.setText(texto);
 		}
 	}
 
-	protected void setBotonesActivos(boolean activo) {
+	public void setBotonesActivos(boolean activo) {
 		if (botonSeleccionar != null) {
 			botonSeleccionar.setEnabled(activo);
 		}

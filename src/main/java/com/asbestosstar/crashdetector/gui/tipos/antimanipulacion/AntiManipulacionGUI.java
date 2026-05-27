@@ -24,18 +24,18 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 public abstract class AntiManipulacionGUI extends JDialog implements CrashDetectorGUI {
 
-	private static final long serialVersionUID = 1L;
+	public static final long serialVersionUID = 1L;
 
 	public static final Map<String, Supplier<AntiManipulacionGUI>> GUIS = new HashMap<String, Supplier<AntiManipulacionGUI>>();
 
-	protected static final Path ARCHIVO = Statics.carpeta.resolve("antimanipulacion.json");
+	public static final Path ARCHIVO = Statics.carpeta.resolve("antimanipulacion.json");
 
-	protected final Path baseDir = Paths.get(System.getProperty("user.dir")).toAbsolutePath();
+	public final Path baseDir = Paths.get(System.getProperty("user.dir")).toAbsolutePath();
 
-	protected final Set<String> rutasProtegidas = new LinkedHashSet<String>();
+	public final Set<String> rutasProtegidas = new LinkedHashSet<String>();
 
-	protected JTable tabla;
-	protected DefaultTableModel modelo;
+	public JTable tabla;
+	public DefaultTableModel modelo;
 
 	protected void inicializarModeloTabla() {
 		modelo = new DefaultTableModel(new Object[] { MonitorDePID.idioma.rutaArchivo() }, 0) {

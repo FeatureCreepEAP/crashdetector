@@ -145,7 +145,7 @@ public class DescompilarCFR {
 	 * com.ejemplo.Clase - com/ejemplo/Clase - com/ejemplo/Clase.class -
 	 * Lcom/ejemplo/Clase;
 	 */
-	private static String normalizarNombreClaseInterno(String nombre) {
+	public static String normalizarNombreClaseInterno(String nombre) {
 		if (nombre == null)
 			return null;
 		String s = nombre.trim();

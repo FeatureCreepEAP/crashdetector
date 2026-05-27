@@ -1450,19 +1450,19 @@ public abstract class MapaDeDependenciasGUI extends JFrame implements BotonDeBar
 
 	public class GrafoDependenciasPanel extends JPanel {
 
-		private double zoom = 0.28;
-		private double desplazamientoX = 0.0;
-		private double desplazamientoY = 0.0;
+		public double zoom = 0.28;
+		public double desplazamientoX = 0.0;
+		public double desplazamientoY = 0.0;
 
-		private int ultimoMouseX = 0;
-		private int ultimoMouseY = 0;
-		private boolean arrastrando = false;
+		public int ultimoMouseX = 0;
+		public int ultimoMouseY = 0;
+		public boolean arrastrando = false;
 
-		private final Map<ArchivoDeMod, java.awt.geom.Ellipse2D.Double> hitboxes = new LinkedHashMap<>();
-		private final Map<ArchivoDeMod, java.awt.Point> posicionesActuales = new LinkedHashMap<>();
+		public final Map<ArchivoDeMod, java.awt.geom.Ellipse2D.Double> hitboxes = new LinkedHashMap<>();
+		public final Map<ArchivoDeMod, java.awt.Point> posicionesActuales = new LinkedHashMap<>();
 
-		private ArchivoDeMod modSeleccionado = null;
-		private boolean vistaInicialAplicada = false;
+		public ArchivoDeMod modSeleccionado = null;
+		public boolean vistaInicialAplicada = false;
 
 		public GrafoDependenciasPanel() {
 			setPreferredSize(new Dimension(2200, 1800));
@@ -1550,7 +1550,7 @@ public abstract class MapaDeDependenciasGUI extends JFrame implements BotonDeBar
 		}
 
 		@Override
-		protected void paintComponent(Graphics g) {
+		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 
 			Graphics2D g2 = (Graphics2D) g.create();
@@ -1714,7 +1714,7 @@ public abstract class MapaDeDependenciasGUI extends JFrame implements BotonDeBar
 			g2.dispose();
 		}
 
-		private int obtenerTamNodo(ArchivoDeMod mod) {
+		public int obtenerTamNodo(ArchivoDeMod mod) {
 			int deps = dependenciasDirectas.getOrDefault(mod, Collections.emptySet()).size();
 			int dependientes = dependientesDirectos.getOrDefault(mod, Collections.emptySet()).size();
 
@@ -1722,11 +1722,11 @@ public abstract class MapaDeDependenciasGUI extends JFrame implements BotonDeBar
 			return Math.min(120, Math.max(50, tam));
 		}
 
-		private double obtenerRadioNodo(ArchivoDeMod mod) {
+		public double obtenerRadioNodo(ArchivoDeMod mod) {
 			return obtenerTamNodo(mod) / 2.0;
 		}
 
-		private void ajustarVistaInicial(List<ArchivoDeMod> visibles) {
+		public void ajustarVistaInicial(List<ArchivoDeMod> visibles) {
 			if (visibles.isEmpty() || posicionesActuales.isEmpty()) {
 				vistaInicialAplicada = true;
 				return;
@@ -1791,7 +1791,7 @@ public abstract class MapaDeDependenciasGUI extends JFrame implements BotonDeBar
 			vistaInicialAplicada = true;
 		}
 
-		private void dibujarFlechaSimple(Graphics2D g2, double cx1, double cy1, double radio1, double cx2, double cy2,
+		public void dibujarFlechaSimple(Graphics2D g2, double cx1, double cy1, double radio1, double cx2, double cy2,
 				double radio2, Color color) {
 
 			double dx = cx2 - cx1;
@@ -1814,7 +1814,7 @@ public abstract class MapaDeDependenciasGUI extends JFrame implements BotonDeBar
 			dibujarPuntaFlecha(g2, x1, y1, x2, y2, color);
 		}
 
-		private void dibujarFlechaCurvaDoble(Graphics2D g2, double cx1, double cy1, double radio1, double cx2,
+		public void dibujarFlechaCurvaDoble(Graphics2D g2, double cx1, double cy1, double radio1, double cx2,
 				double cy2, double radio2, Color color) {
 
 			double dx = cx2 - cx1;
@@ -1858,7 +1858,7 @@ public abstract class MapaDeDependenciasGUI extends JFrame implements BotonDeBar
 			dibujarPuntaFlecha(g2, bx1, by1, bx2, by2, color);
 		}
 
-		private void dibujarPuntaFlecha(Graphics2D g2, double x1, double y1, double x2, double y2, Color color) {
+		public void dibujarPuntaFlecha(Graphics2D g2, double x1, double y1, double x2, double y2, Color color) {
 			double phi = Math.toRadians(34);
 			int barb = 36;
 
@@ -1877,7 +1877,7 @@ public abstract class MapaDeDependenciasGUI extends JFrame implements BotonDeBar
 			}
 		}
 
-		private ArchivoDeMod encontrarNodoEn(int xPantalla, int yPantalla) {
+		public ArchivoDeMod encontrarNodoEn(int xPantalla, int yPantalla) {
 			double xModelo = (xPantalla - desplazamientoX) / zoom;
 			double yModelo = (yPantalla - desplazamientoY) / zoom;
 

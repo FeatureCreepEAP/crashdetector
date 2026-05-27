@@ -119,16 +119,16 @@ public abstract class ActualizadorModsGUI extends JFrame implements CrashDetecto
 		setBotonesActivos(false);
 
 		worker = new SwingWorker<Void, Void>() {
-			private List<ColaActualizacionesModpack.ActualizacionPendiente> encontradas = new ArrayList<>();
+			public List<ColaActualizacionesModpack.ActualizacionPendiente> encontradas = new ArrayList<>();
 
 			@Override
-			protected Void doInBackground() throws Exception {
+			public Void doInBackground() throws Exception {
 				encontradas = ColaActualizacionesModpack.crearCola(carpetaInstancia);
 				return null;
 			}
 
 			@Override
-			protected void done() {
+			public void done() {
 				try {
 					get();
 					cola = encontradas;
@@ -207,19 +207,19 @@ public abstract class ActualizadorModsGUI extends JFrame implements CrashDetecto
 		worker.execute();
 	}
 
-	protected void cancelarWorker() {
+	public void cancelarWorker() {
 		if (worker != null && !worker.isDone()) {
 			worker.cancel(true);
 		}
 	}
 
-	protected void setEstado(String texto) {
+	public void setEstado(String texto) {
 		if (etiquetaEstado != null) {
 			etiquetaEstado.setText(texto);
 		}
 	}
 
-	protected void setBotonesActivos(boolean activo) {
+	public void setBotonesActivos(boolean activo) {
 		if (botonEscanear != null) {
 			botonEscanear.setEnabled(activo);
 		}

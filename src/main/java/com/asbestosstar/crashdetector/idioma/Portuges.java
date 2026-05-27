@@ -6815,22 +6815,24 @@ public class Portuges implements Idioma {
 	@Override
 	public String javaProblematica() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "Foi detectado um travamento nativo no ambiente de execução do Java (JVM).</b>"
-				+ "<p>Esse tipo de erro ocorre dentro da própria Máquina Virtual Java (por exemplo, em <code>jvm.dll</code>, <code>libjvm.so</code>, etc.), "
+				+ "Foi detectado um crash nativo do ambiente de execução Java (JVM).</b>"
+				+ "<p>Este tipo de erro ocorre dentro da própria Máquina Virtual Java (por exemplo, em <code>jvm.dll</code>, <code>libjvm.so</code>, etc.), "
 				+ "e não é necessariamente causado por um mod.</p>"
-				+ "<p>Embora raramente possa vir de mods que usam bibliotecas nativas incompatíveis, "
-				+ "<b>é muito mais provável que seja devido a uma JVM defeituosa, corrompida ou desatualizada</b>.</p>"
-				+ "<p>Isso é especialmente comum se você estiver usando uma compilação antiga ou não oficial do Java (por exemplo, builds comunitárias sem suporte).</p>"
+				+ "<p>Embora em raras ocasiões possa ser originado por mods que usam bibliotecas nativas incompatíveis, "
+				+ "<b>é muito mais provável que se deva a uma versão defeituosa, corrompida ou desatualizada da JVM</b>.</p>"
+				+ "<p>Isso é especialmente comum se você estiver usando uma compilação antiga ou não oficial da sua versão de Java (por exemplo, builds comunitárias sem suporte).</p>"
 				+ "<p><b>Recomendamos usar uma JVM confiável e mantida:</b></p>" + "<ul>"
 				+ "<li><b>Red Hat Build of OpenJDK</b> (estável, bem testada, ideal para Windows/Linux)</li>"
 				+ "<li><b>OpenLogic OpenJDK</b> (suporte multiplataforma, incluindo macOS Intel)</li>"
 				+ "<li><b>Azul Zulu</b> (certificada, com suporte LTS gratuito)</li>"
 				+ "<li><b>Oracle JDK</b> (oficial, com atualizações regulares)</li>" + "</ul>"
-				+ "<p>Evite builds desconhecidas, personalizadas ou muito antigas, pois podem conter erros críticos no mecanismo da JVM.</p>"
-				+ "<p><b>Você usa Prism Launcher ou TLauncher?</b> É muito fácil configurar uma JVM personalizada: "
-				+ "no Prism Launcher, vá em <i>Instalações</i> → <i>Editar Instância</i> → <i>Configurações do Java</i>; "
-				+ "no TLauncher, vá em <i>Settings</i> → <i>Java Settings</i> e defina o caminho para seu JDK/JRE baixado. "
-				+ "Você não precisa alterar a JVM do sistema!</p>";
+				+ "<p>Evite builds desconhecidas, personalizadas ou muito antigas, pois podem conter erros críticos no motor da JVM.</p>"
+				+ "<p><b>Usa Prism Launcher ou TLauncher?</b> É muito fácil configurar uma JVM personalizada: "
+				+ "no Prism Launcher, vá para <i>Installations</i> → <i>Edit Instance</i> → <i>Java Settings</i>; "
+				+ "no TLauncher, vá para <i>Settings</i> → <i>Java Settings</i> e selecione o caminho do seu JDK/JRE baixado. "
+				+ "Também é possível que seu coletor de lixo esteja enfrentando problemas; nesse caso, você deve mudar para ZGC."
+
+				+ "Você não precisa mudar a JVM do sistema!</p>";
 	}
 
 	@Override

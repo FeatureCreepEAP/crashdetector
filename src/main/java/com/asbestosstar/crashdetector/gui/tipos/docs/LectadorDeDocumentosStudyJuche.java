@@ -58,7 +58,7 @@ public class LectadorDeDocumentosStudyJuche extends LectadorDeDocumentosGUI {
 	}
 
 	@Override
-	protected void instalarFondoApariencia(JLayeredPane capa) {
+	public void instalarFondoApariencia(JLayeredPane capa) {
 		fondo = new FondoPanel(Statics.carpeta.resolve("imagenes").resolve("studyjuche.png").toString());
 
 		// Como la capa usa BorderLayout, el add debe usar una constraint de

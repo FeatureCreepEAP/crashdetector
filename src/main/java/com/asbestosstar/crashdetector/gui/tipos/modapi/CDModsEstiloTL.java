@@ -49,39 +49,39 @@ public class CDModsEstiloTL extends PanelAPIBase {
 	}
 
 	@Override
-	protected void inicializarColores() {
+	public void inicializarColores() {
 
 	}
 
 	@Override
-	protected ProveedorMods crearProveedorMods() {
+	public ProveedorMods crearProveedorMods() {
 		return crearProveedorSeleccionado();
 	}
 
 	// Getters de color
 	@Override
-	protected Color obtenerColorFondo() {
+	public Color obtenerColorFondo() {
 		return colorFondo.obtener();
 	}
 
 	@Override
-	protected Color obtenerColorTexto() {
+	public Color obtenerColorTexto() {
 		return colorTexto.obtener();
 	}
 
 	@Override
-	protected Color obtenerColorBoton() {
+	public Color obtenerColorBoton() {
 		return colorBoton.obtener();
 	}
 
 	@Override
-	protected Color obtenerColorCajaTexto() {
+	public Color obtenerColorCajaTexto() {
 		return colorCajaTexto.obtener();
 	}
 
 	// Estilos visuales
 	@Override
-	protected void aplicarEstiloVolver(JButton boton) {
+	public void aplicarEstiloVolver(JButton boton) {
 		if (!CrashDetectorGUI.esMac()) {
 			boton.setForeground(colorTexto.obtener());
 			boton.setBackground(colorBoton.obtener());
@@ -90,7 +90,7 @@ public class CDModsEstiloTL extends PanelAPIBase {
 	}
 
 	@Override
-	protected void aplicarEstiloBusqueda(JTextField campo) {
+	public void aplicarEstiloBusqueda(JTextField campo) {
 		if (!CrashDetectorGUI.esMac()) {
 			campo.setBackground(colorCajaTexto.obtener());
 			campo.setForeground(colorTexto.obtener());
@@ -98,17 +98,17 @@ public class CDModsEstiloTL extends PanelAPIBase {
 	}
 
 	@Override
-	protected void aplicarEstiloTarjetaMod(JPanel tarjeta) {
+	public void aplicarEstiloTarjetaMod(JPanel tarjeta) {
 		tarjeta.setBackground(Color.decode("#2d2d2d"));
 	}
 
 	@Override
-	protected void aplicarEstiloSidebar(JPanel sidebar) {
+	public void aplicarEstiloSidebar(JPanel sidebar) {
 		sidebar.setBackground(colorFondo.obtener().darker());
 	}
 
 	@Override
-	protected void aplicarEstiloSidebarItem(JPanel item, JCheckBox checkBox, JLabel etiqueta) {
+	public void aplicarEstiloSidebarItem(JPanel item, JCheckBox checkBox, JLabel etiqueta) {
 		item.setBackground(colorFondo.obtener().darker());
 		checkBox.setBackground(colorFondo.obtener().darker());
 		checkBox.setForeground(colorTexto.obtener());
@@ -116,7 +116,7 @@ public class CDModsEstiloTL extends PanelAPIBase {
 	}
 
 	@Override
-	protected void aplicarEstiloPrincipal(JPanel panel) {
+	public void aplicarEstiloPrincipal(JPanel panel) {
 		panel.setBackground(colorFondo.obtener());
 	}
 
@@ -133,7 +133,7 @@ public class CDModsEstiloTL extends PanelAPIBase {
 	}
 
 	@Override
-	protected void aplicarEstiloBotonAccion(JButton boton) {
+	public void aplicarEstiloBotonAccion(JButton boton) {
 		if (!CrashDetectorGUI.esMac()) {
 			boton.setBackground(colorBoton.obtener());
 			boton.setForeground(Color.WHITE);

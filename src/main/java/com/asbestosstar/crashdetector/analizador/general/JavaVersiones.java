@@ -36,6 +36,13 @@ public class JavaVersiones implements Verificaciones {
 
 	private final List<ArchivoDeMod> modsRelacionados = new ArrayList<>();
 
+	private boolean posibleFrameJavaProblematico = false;
+	private boolean dentroDeFrameProblematico = false;
+
+	private static final String TEXTO_PROBLEMATIC_FRAME = "Problematic frame:";
+	private static final String TEXTO_LIBJVM_LINUX = "libjvm.so";
+	private static final String TEXTO_JVM_WINDOWS = "jvm.dll";
+
 	// =========================
 	// Verificación global barata
 	// =========================
@@ -50,6 +57,11 @@ public class JavaVersiones implements Verificaciones {
 				|| contenido.contains(TEXTO_JAVA8)) {
 			posibleErrorJava = true;
 		}
+
+		if (contenido.contains(TEXTO_PROBLEMATIC_FRAME)
+				&& (contenido.contains(TEXTO_LIBJVM_LINUX) || contenido.contains(TEXTO_JVM_WINDOWS))) {
+			posibleFrameJavaProblematico = true;
+		}
 	}
 
 	// =========================
@@ -57,7 +69,38 @@ public class JavaVersiones implements Verificaciones {
 	// =========================
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleErrorJava || linea == null || linea.isEmpty() || activado)
+		if (linea == null || linea.isEmpty() || activado)
+			return;
+
+		if (posibleFrameJavaProblematico) {
+			if (linea.contains(TEXTO_PROBLEMATIC_FRAME)) {
+				dentroDeFrameProblematico = true;
+				return;
+			}
+
+			if (dentroDeFrameProblematico) {
+				if (linea.contains(TEXTO_LIBJVM_LINUX) || linea.contains(TEXTO_JVM_WINDOWS)) {
+					mensajes.add(MonitorDePID.idioma.javaProblematica());
+					enlace = consola.agregarErrorALectador(numero_de_linea, this);
+					activado = true;
+					return;
+				}
+
+				// In hs_err_pid logs, the actual frame normally appears shortly after:
+				// # Problematic frame:
+				// # C [libjvm.so+...]
+				// If we reach a new section before finding libjvm/jvm.dll, stop tracking.
+				String limpia = linea.trim();
+
+				if (limpia.startsWith("---------------") || limpia.startsWith("Stack:")
+						|| limpia.startsWith("Native frames:") || limpia.startsWith("Java frames:")
+						|| limpia.startsWith("siginfo:") || limpia.startsWith("Registers:")) {
+					dentroDeFrameProblematico = false;
+				}
+			}
+		}
+
+		if (!posibleErrorJava)
 			return;
 
 		if (linea.contains(TEXTO_UNSUPPORTED_CLASS)) {

@@ -28,55 +28,55 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
  */
 public abstract class JGitHubBase extends JFrame implements CrashDetectorGUI, BotonDeBarraLateralDerecha {
 
-	private static final long serialVersionUID = 1L;
+	public static final long serialVersionUID = 1L;
 
 	public static final Map<String, Supplier<JGitHubBase>> GUIS = new HashMap<String, Supplier<JGitHubBase>>();
 
-	protected File carpetaActual() {
+	public File carpetaActual() {
 		return new File(System.getProperty("user.dir")).getAbsoluteFile();
 	}
 
-	protected boolean jgitDisponible() {
+	public boolean jgitDisponible() {
 		return BuscarParaJGit.estaJGitBasicoEnClasspath();
 	}
 
-	protected boolean todosLosArtefactosEnClasspath() {
+	public boolean todosLosArtefactosEnClasspath() {
 		return BuscarParaJGit.estanTodosLosArtefactosEnClasspath();
 	}
 
-	protected List<DependenciaJGit> dependenciasFaltantes() {
+	public List<DependenciaJGit> dependenciasFaltantes() {
 		return BuscarParaJGit.dependenciasFaltantesEnClasspath();
 	}
 
-	protected boolean repoExiste() {
+	public boolean repoExiste() {
 		return JGitReflexivo.repositorioExiste(carpetaActual());
 	}
 
-	protected boolean crearRepo() {
+	public boolean crearRepo() {
 		return JGitReflexivo.inicializarRepositorio(carpetaActual());
 	}
 
-	protected boolean establecerRemote(String url) {
+	public boolean establecerRemote(String url) {
 		return JGitReflexivo.establecerRemote(carpetaActual(), url);
 	}
 
-	protected String obtenerRemote() {
+	public String obtenerRemote() {
 		return JGitReflexivo.obtenerRemote(carpetaActual());
 	}
 
-	protected void abrirGuiSwing() {
+	public void abrirGuiSwing() {
 		JGitReflexivo.abrirGuiSwing(carpetaActual());
 	}
 
-	protected boolean hacerCommitManual() {
+	public boolean hacerCommitManual() {
 		return JGitReflexivo.commitAutomatico(carpetaActual(), "Commit manual de CrashDetector");
 	}
 
-	protected boolean hacerPushManual() {
+	public boolean hacerPushManual() {
 		return JGitReflexivo.push(carpetaActual());
 	}
 
-	protected boolean abrirCarpetaDependencias() {
+	public boolean abrirCarpetaDependencias() {
 		try {
 			File carpeta = BuscarParaJGit.CARPETA_JGIT;
 
@@ -98,7 +98,7 @@ public abstract class JGitHubBase extends JFrame implements CrashDetectorGUI, Bo
 	 * Importante: este metodo descarga tambien dependencias transitivas. El archivo
 	 * devuelto es la carpeta de instalacion, no necesariamente un JAR individual.
 	 */
-	protected ResultadoDescargaJGit descargarDependencia(DependenciaJGit dependencia) {
+	public ResultadoDescargaJGit descargarDependencia(DependenciaJGit dependencia) {
 		if (dependencia == null) {
 			return new ResultadoDescargaJGit(false, null, "Dependencia nula.");
 		}
@@ -128,7 +128,7 @@ public abstract class JGitHubBase extends JFrame implements CrashDetectorGUI, Bo
 	 * Como el descargador nuevo resuelve transitivas, esta funcion manda solo las
 	 * dependencias raiz que BuscarParaJGit considere necesarias.
 	 */
-	protected int descargarTodasLasDependenciasFaltantes() {
+	public int descargarTodasLasDependenciasFaltantes() {
 		List<DependenciaJGit> faltantes = dependenciasFaltantesEnCarpetaInstalacion();
 
 		if (faltantes == null || faltantes.isEmpty()) {
@@ -164,7 +164,7 @@ public abstract class JGitHubBase extends JFrame implements CrashDetectorGUI, Bo
 		return contarDependenciasInstaladas(faltantes);
 	}
 
-	private int contarDependenciasInstaladas(List<DependenciaJGit> deps) {
+	public int contarDependenciasInstaladas(List<DependenciaJGit> deps) {
 		if (deps == null || deps.isEmpty()) {
 			return 0;
 		}
@@ -196,9 +196,9 @@ public abstract class JGitHubBase extends JFrame implements CrashDetectorGUI, Bo
 		return total;
 	}
 
-	protected abstract void actualizarEstadoBotones();
+	public abstract void actualizarEstadoBotones();
 
-	protected List<DependenciaJGit> dependenciasFaltantesEnCarpetaInstalacion() {
+	public List<DependenciaJGit> dependenciasFaltantesEnCarpetaInstalacion() {
 		return BuscarParaJGit.dependenciasFaltantesEnCarpetaInstalacion();
 	}
 

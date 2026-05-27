@@ -55,7 +55,7 @@ public class IAGUILuotianyi extends IAGUI {
 	}
 
 	@Override
-	protected JPanel crearPanelIlustracion() {
+	public JPanel crearPanelIlustracion() {
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setPreferredSize(new Dimension(220, 220));
 
@@ -76,7 +76,7 @@ public class IAGUILuotianyi extends IAGUI {
 	}
 
 	@Override
-	protected void aplicarApariencia() {
+	public void aplicarApariencia() {
 		getContentPane().setBackground(colorFondoVentana.obtener());
 
 		if (panelRaiz != null) {

@@ -56,16 +56,16 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 
 	public static Map<String, Supplier<ConfigsModsGUI>> GUIS = new java.util.HashMap<String, Supplier<ConfigsModsGUI>>();
 
-	private static final long serialVersionUID = 1L;
+	public static final long serialVersionUID = 1L;
 
-	protected final List<File> archivosConfigs = new ArrayList<File>();
-	protected final List<EntradaConfig> entradas = new ArrayList<EntradaConfig>();
+	public final List<File> archivosConfigs = new ArrayList<File>();
+	public final List<EntradaConfig> entradas = new ArrayList<EntradaConfig>();
 
-	protected File archivoActual;
-	protected Object nodoActual;
-	protected String extensionActual;
+	public File archivoActual;
+	public Object nodoActual;
+	public String extensionActual;
 
-	protected static class EntradaConfig {
+	public static class EntradaConfig {
 		public String ruta;
 		public String valor;
 		public TipoValor tipo;
@@ -73,7 +73,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		public JComponent editor;
 	}
 
-	protected enum TipoValor {
+	public enum TipoValor {
 		BOOLEANO, ENTERO, LARGO, DECIMAL, TEXTO
 	}
 
@@ -82,7 +82,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		return TipoGUI.CONFIG_MODS;
 	}
 
-	protected void buscarConfigsEditables() {
+	public void buscarConfigsEditables() {
 		archivosConfigs.clear();
 		buscarEnCarpeta(new File("./config"));
 		buscarEnCarpeta(new File("./etc"));
@@ -90,7 +90,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		Collections.sort(archivosConfigs, (a, b) -> a.getPath().compareToIgnoreCase(b.getPath()));
 	}
 
-	private void buscarEnCarpeta(File carpeta) {
+	public void buscarEnCarpeta(File carpeta) {
 		if (carpeta == null || !carpeta.exists() || !carpeta.isDirectory()) {
 			return;
 		}
@@ -116,7 +116,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	protected boolean esConfigEditable(File archivo) {
+	public boolean esConfigEditable(File archivo) {
 		String ext = extension(archivo);
 
 		if ("properties".equals(ext) || "xml".equals(ext)) {
@@ -162,11 +162,11 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		return false;
 	}
 
-	protected boolean motorDisponible(String nombre) {
+	public boolean motorDisponible(String nombre) {
 		return nombre != null && !"ninguno".equalsIgnoreCase(nombre);
 	}
 
-	protected String extension(File archivo) {
+	public String extension(File archivo) {
 		if (archivo == null || archivo.getName() == null) {
 			return "";
 		}
@@ -180,7 +180,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		return n.substring(p + 1);
 	}
 
-	protected void cargarArchivo(File archivo) throws Exception {
+	public void cargarArchivo(File archivo) throws Exception {
 		if (archivo == null) {
 			return;
 		}
@@ -238,7 +238,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	protected void guardarArchivoActual() throws Exception {
+	public void guardarArchivoActual() throws Exception {
 		if (archivoActual == null || nodoActual == null) {
 			throw new IllegalStateException(MonitorDePID.idioma.sinArchivoSeleccionado());
 		}
@@ -272,11 +272,11 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	private void escribirTexto(String texto) throws Exception {
+	public void escribirTexto(String texto) throws Exception {
 		Files.write(archivoActual.toPath(), texto.getBytes(StandardCharsets.UTF_8));
 	}
 
-	protected void actualizarValoresDesdeEditores() {
+	public void actualizarValoresDesdeEditores() {
 		for (EntradaConfig e : entradas) {
 			if (e.editor instanceof JCheckBox) {
 				e.valor = Boolean.toString(((JCheckBox) e.editor).isSelected());
@@ -290,7 +290,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	private void aplicarValor(EntradaConfig e) {
+	public void aplicarValor(EntradaConfig e) {
 		Object valor = convertirValor(e);
 
 		if (e.nodo instanceof Json.Nodo) {
@@ -312,7 +312,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	private void ponerNbt(Nbt.Nodo n, Object valor) {
+	public void ponerNbt(Nbt.Nodo n, Object valor) {
 		if (valor instanceof Boolean) {
 			n.poner(((Boolean) valor).booleanValue());
 		} else if (valor instanceof Integer) {
@@ -328,7 +328,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	private void extraerNbt(Nbt.Nodo nodo, String ruta) {
+	public void extraerNbt(Nbt.Nodo nodo, String ruta) {
 		if (nodo == null) {
 			return;
 		}
@@ -357,7 +357,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		agregarEntrada(ruta, nodo.comoCadena(), nodo);
 	}
 
-	private void ponerYaml(Yaml.Nodo n, Object valor) {
+	public void ponerYaml(Yaml.Nodo n, Object valor) {
 		if (valor instanceof Boolean) {
 			n.poner(((Boolean) valor).booleanValue());
 		} else if (valor instanceof Integer) {
@@ -373,7 +373,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	private Object convertirValor(EntradaConfig e) {
+	public Object convertirValor(EntradaConfig e) {
 		try {
 			if (e.tipo == TipoValor.BOOLEANO) {
 				return Boolean.valueOf(e.valor);
@@ -393,7 +393,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		return e.valor == null ? "" : e.valor;
 	}
 
-	protected JComponent crearEditor(EntradaConfig e) {
+	public JComponent crearEditor(EntradaConfig e) {
 		if (e.tipo == TipoValor.BOOLEANO) {
 			JCheckBox c = new JCheckBox();
 			c.setSelected(Boolean.parseBoolean(e.valor));
@@ -415,7 +415,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		return new JTextField(e.valor == null ? "" : e.valor);
 	}
 
-	private int parseInt(String s) {
+	public int parseInt(String s) {
 		try {
 			return Integer.parseInt(s);
 		} catch (Exception e) {
@@ -423,7 +423,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	private long parseLong(String s) {
+	public long parseLong(String s) {
 		try {
 			return Long.parseLong(s);
 		} catch (Exception e) {
@@ -431,7 +431,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	private double parseDouble(String s) {
+	public double parseDouble(String s) {
 		try {
 			return Double.parseDouble(s);
 		} catch (Exception e) {
@@ -439,7 +439,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	protected TipoValor detectarTipo(String valor) {
+	public TipoValor detectarTipo(String valor) {
 		if (valor == null) {
 			return TipoValor.TEXTO;
 		}
@@ -471,7 +471,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		return TipoValor.TEXTO;
 	}
 
-	private void agregarEntrada(String ruta, String valor, Object nodo) {
+	public void agregarEntrada(String ruta, String valor, Object nodo) {
 		EntradaConfig e = new EntradaConfig();
 		e.ruta = ruta;
 		e.valor = valor == null ? "" : valor;
@@ -480,7 +480,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		entradas.add(e);
 	}
 
-	private void extraerJson(Json.Nodo nodo, String ruta) {
+	public void extraerJson(Json.Nodo nodo, String ruta) {
 		if (nodo == null) {
 			return;
 		}
@@ -502,7 +502,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		agregarEntrada(ruta, nodo.comoCadena(), nodo);
 	}
 
-	private void extraerYaml(Yaml.Nodo nodo, String ruta) {
+	public void extraerYaml(Yaml.Nodo nodo, String ruta) {
 		if (nodo == null) {
 			return;
 		}
@@ -524,7 +524,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		agregarEntrada(ruta, nodo.comoCadena(), nodo);
 	}
 
-	private void extraerToml(Toml.Nodo nodo, String ruta) {
+	public void extraerToml(Toml.Nodo nodo, String ruta) {
 		if (nodo == null) {
 			return;
 		}
@@ -546,7 +546,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		agregarEntrada(ruta, nodo.comoCadena(), nodo);
 	}
 
-	private void extraerIni(Ini.Nodo raiz) {
+	public void extraerIni(Ini.Nodo raiz) {
 		for (String seccion : raiz.secciones()) {
 			Ini.Nodo sec = raiz.obtenerSeccion(seccion);
 			for (String clave : sec.claves()) {
@@ -556,7 +556,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	private void extraerHocon(Hocon.Nodo nodo, String ruta) {
+	public void extraerHocon(Hocon.Nodo nodo, String ruta) {
 		List<String> claves = nodo.claves();
 
 		if (claves != null && !claves.isEmpty()) {
@@ -569,7 +569,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		agregarEntrada(ruta, nodo.comoCadena(), nodo);
 	}
 
-	private Properties leerProperties(File archivo) throws Exception {
+	public Properties leerProperties(File archivo) throws Exception {
 		Properties p = new Properties();
 		FileInputStream in = new FileInputStream(archivo);
 		try {
@@ -580,23 +580,23 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		return p;
 	}
 
-	private void extraerProperties(Properties p) {
+	public void extraerProperties(Properties p) {
 		for (String k : p.stringPropertyNames()) {
 			agregarEntrada(k, p.getProperty(k), p);
 		}
 	}
 
-	private void escribirProperties(Properties p) throws Exception {
+	public void escribirProperties(Properties p) throws Exception {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		p.store(out, MonitorDePID.idioma.editorConfigsMods());
 		Files.write(archivoActual.toPath(), out.toByteArray());
 	}
 
-	private Document leerXml(File archivo) throws Exception {
+	public Document leerXml(File archivo) throws Exception {
 		return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(archivo);
 	}
 
-	private void extraerXml(Element el, String ruta) {
+	public void extraerXml(Element el, String ruta) {
 		String nombre = unirRuta(ruta, el.getNodeName());
 		boolean tieneHijos = false;
 
@@ -612,20 +612,20 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	private void escribirXml(Document doc) throws Exception {
+	public void escribirXml(Document doc) throws Exception {
 		javax.xml.transform.Transformer t = TransformerFactory.newInstance().newTransformer();
 		t.setOutputProperty(OutputKeys.INDENT, "yes");
 		t.transform(new DOMSource(doc), new StreamResult(archivoActual));
 	}
 
-	private String unirRuta(String a, String b) {
+	public String unirRuta(String a, String b) {
 		if (a == null || a.isEmpty()) {
 			return b;
 		}
 		return a + "." + b;
 	}
 
-	protected void estilizarBoton(javax.swing.JButton b, Color fondo, Color texto, Color borde) {
+	public void estilizarBoton(javax.swing.JButton b, Color fondo, Color texto, Color borde) {
 		if (b == null) {
 			return;
 		}
@@ -639,7 +639,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 				BorderFactory.createEmptyBorder(6, 12, 6, 12)));
 	}
 
-	protected class RenderValorConfig extends DefaultTableCellRenderer {
+	public class RenderValorConfig extends DefaultTableCellRenderer {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -652,7 +652,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	protected class EditorValorConfig extends AbstractCellEditor implements TableCellEditor {
+	public class EditorValorConfig extends AbstractCellEditor implements TableCellEditor {
 		private static final long serialVersionUID = 1L;
 		private JComponent editorActual;
 
@@ -672,9 +672,9 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	protected static final File CARPETA_DEPS_CONFIGS = new File(System.getProperty("user.home"), "crash_detector/deps");
+	public static final File CARPETA_DEPS_CONFIGS = new File(System.getProperty("user.home"), "crash_detector/deps");
 
-	protected static class DependenciaConfigMods {
+	public static class DependenciaConfigMods {
 
 		public final String groupId;
 		public final String artifactId;
@@ -715,7 +715,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 	 *
 	 * El descargador Maven resolvera tambien las transitivas.
 	 */
-	protected static final List<DependenciaConfigMods> DEPENDENCIAS_CONFIGS_REQUERIDAS = Arrays.asList(
+	public static final List<DependenciaConfigMods> DEPENDENCIAS_CONFIGS_REQUERIDAS = Arrays.asList(
 			// JSON
 			new DependenciaConfigMods("com.google.code.gson", "gson", "2.10.1"),
 			new DependenciaConfigMods("org.jboss", "jboss-dmr", "1.6.1.Final"),
@@ -740,7 +740,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 			// NBT / SNBT
 			new DependenciaConfigMods("com.github.Querz", "NBT", "6.1"));
 
-	protected List<DependenciaConfigMods> dependenciasConfigsFaltantesEnCarpetaInstalacion() {
+	public List<DependenciaConfigMods> dependenciasConfigsFaltantesEnCarpetaInstalacion() {
 		List<DependenciaConfigMods> faltantes = new ArrayList<DependenciaConfigMods>();
 
 		List<File> jars = encontrarJarsDepsConfigs();
@@ -771,7 +771,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		return faltantes;
 	}
 
-	protected List<File> encontrarJarsDepsConfigs() {
+	public List<File> encontrarJarsDepsConfigs() {
 		List<File> ret = new ArrayList<File>();
 
 		if (!CARPETA_DEPS_CONFIGS.exists() || !CARPETA_DEPS_CONFIGS.isDirectory()) {
@@ -793,7 +793,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		return ret;
 	}
 
-	protected int descargarTodasLasDependenciasConfigsFaltantes() {
+	public int descargarTodasLasDependenciasConfigsFaltantes() {
 		List<DependenciaConfigMods> faltantes = dependenciasConfigsFaltantesEnCarpetaInstalacion();
 
 		if (faltantes == null || faltantes.isEmpty()) {
@@ -828,7 +828,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		return contarDependenciasConfigsInstaladas(faltantes);
 	}
 
-	private int contarDependenciasConfigsInstaladas(List<DependenciaConfigMods> deps) {
+	public int contarDependenciasConfigsInstaladas(List<DependenciaConfigMods> deps) {
 		if (deps == null || deps.isEmpty()) {
 			return 0;
 		}

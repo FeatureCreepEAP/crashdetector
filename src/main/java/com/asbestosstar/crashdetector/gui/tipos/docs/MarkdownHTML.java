@@ -173,19 +173,19 @@ public class MarkdownHTML {
 		return html.toString();
 	}
 
-	private void cerrarListaSiHaceFalta(StringBuilder html, boolean enLista) {
+	public void cerrarListaSiHaceFalta(StringBuilder html, boolean enLista) {
 		if (enLista) {
 			html.append("</ul>");
 		}
 	}
 
-	private void cerrarCitaSiHaceFalta(StringBuilder html, boolean enCita) {
+	public void cerrarCitaSiHaceFalta(StringBuilder html, boolean enCita) {
 		if (enCita) {
 			html.append("</blockquote>");
 		}
 	}
 
-	private int contarHashesIniciales(String texto) {
+	public int contarHashesIniciales(String texto) {
 		int n = 0;
 		while (n < texto.length() && texto.charAt(n) == '#') {
 			n++;
@@ -196,7 +196,7 @@ public class MarkdownHTML {
 	/**
 	 * Procesa elementos inline de markdown.
 	 */
-	private String procesarInlineMarkdown(String texto) {
+	public String procesarInlineMarkdown(String texto) {
 		if (texto == null || texto.isEmpty()) {
 			return "";
 		}
@@ -221,7 +221,7 @@ public class MarkdownHTML {
 		return s;
 	}
 
-	private String reemplazarImagenes(String s) {
+	public String reemplazarImagenes(String s) {
 		Pattern p = Pattern.compile("!\\[([^\\]]*)\\]\\(([^\\s)]+)(?:\\s+\"([^\"]*)\")?\\)");
 		Matcher m = p.matcher(s);
 		StringBuffer sb = new StringBuffer();
@@ -251,7 +251,7 @@ public class MarkdownHTML {
 		return sb.toString();
 	}
 
-	private String reemplazarEnlaces(String s) {
+	public String reemplazarEnlaces(String s) {
 		Pattern p = Pattern.compile("\\[([^\\]]+)\\]\\(([^\\s)]+)(?:\\s+\"([^\"]*)\")?\\)");
 		Matcher m = p.matcher(s);
 		StringBuffer sb = new StringBuffer();
@@ -295,7 +295,7 @@ public class MarkdownHTML {
 	 * @param url enlace original
 	 * @return URL local en formato file: o null si no aplica conversión
 	 */
-	private String convertirEnlaceDeRecursoAURLLocal(String url) {
+	public String convertirEnlaceDeRecursoAURLLocal(String url) {
 		if (url == null || url.isEmpty()) {
 			return null;
 		}
@@ -326,11 +326,11 @@ public class MarkdownHTML {
 		return null;
 	}
 
-	private String escaparHTML(String s) {
+	public String escaparHTML(String s) {
 		return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
 	}
 
-	private String escaparHTMLAtributo(String s) {
+	public String escaparHTMLAtributo(String s) {
 		return escaparHTML(s).replace("\"", "&quot;");
 	}
 }

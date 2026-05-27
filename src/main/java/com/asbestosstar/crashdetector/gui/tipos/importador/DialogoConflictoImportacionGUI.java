@@ -30,26 +30,22 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 
 	public static final Map<String, Supplier<DialogoConflictoImportacionGUI>> GUIS = new HashMap<>();
 
-	protected ConflictoImportacion conflicto;
-	protected ConflictoImportacion.Decision decision = ConflictoImportacion.Decision.CANCELAR;
+	public ConflictoImportacion conflicto;
+	public ConflictoImportacion.Decision decision = ConflictoImportacion.Decision.CANCELAR;
 
-	protected JLabel imagenTema;
-	protected JTextArea areaMensaje;
+	public JLabel imagenTema;
+	public JTextArea areaMensaje;
 
-	protected JButton botonReemplazar;
-	protected JButton botonSaltar;
-	protected JButton botonRenombrar;
-	protected JButton botonCancelar;
-	protected JButton botonFusionar;
-	protected JButton botonDescargarDepsNbt;
-	
-	
-	
-	
+	public JButton botonReemplazar;
+	public JButton botonSaltar;
+	public JButton botonRenombrar;
+	public JButton botonCancelar;
+	public JButton botonFusionar;
+	public JButton botonDescargarDepsNbt;
 
-	protected JPanel panelIzquierdo;
-	protected JPanel panelCentro;
-	protected JPanel panelBotones;
+	public JPanel panelIzquierdo;
+	public JPanel panelCentro;
+	public JPanel panelBotones;
 
 	public DialogoConflictoImportacionGUI() {
 	}
@@ -137,12 +133,12 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 		return decision;
 	}
 
-	protected void cerrar(ConflictoImportacion.Decision decision) {
+	public void cerrar(ConflictoImportacion.Decision decision) {
 		this.decision = decision;
 		dispose();
 	}
 
-	protected String construirTextoConflicto() {
+	public String construirTextoConflicto() {
 		if (conflicto == null) {
 			return "";
 		}
@@ -186,7 +182,7 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 		return sb.toString();
 	}
 
-	protected boolean puedeMostrarBotonFusionar() {
+	public boolean puedeMostrarBotonFusionar() {
 		if (conflicto == null || conflicto.rutaRelativa == null) {
 			return false;
 		}
@@ -201,24 +197,21 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 				|| r.startsWith("config/ftbquests/");
 	}
 
-	protected String valor(String texto) {
+	public String valor(String texto) {
 		return texto == null ? "" : texto;
 	}
 
-	protected String formatearFecha(long fecha) {
+	public String formatearFecha(long fecha) {
 		if (fecha <= 0) {
 			return "";
 		}
 
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(fecha));
 	}
-	
-	
-	
-	
-	protected static final File CARPETA_DEPS_IMPORTADOR = new File(System.getProperty("user.home"), "crash_detector/deps");
 
-	protected boolean dependenciaNbtDisponible() {
+	public static final File CARPETA_DEPS_IMPORTADOR = new File(System.getProperty("user.home"), "crash_detector/deps");
+
+	public boolean dependenciaNbtDisponible() {
 		if (nombreMotorNbtDisponible()) {
 			return true;
 		}
@@ -248,7 +241,7 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 		return false;
 	}
 
-	protected boolean nombreMotorNbtDisponible() {
+	public boolean nombreMotorNbtDisponible() {
 		try {
 			return !"ninguno".equalsIgnoreCase(com.asbestosstar.crashdetector.config.nbt.Nbt.nombreMotor());
 		} catch (Throwable t) {
@@ -256,7 +249,7 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 		}
 	}
 
-	protected void accionDescargarDependenciasNbt() {
+	public void accionDescargarDependenciasNbt() {
 		int confirmar = JOptionPane.showConfirmDialog(this,
 				"Se descargara la dependencia NBT/SNBT necesaria para fusionar quests:\n\n"
 						+ " - com.github.Querz:NBT:6.1\n\n"
@@ -282,13 +275,12 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 						CARPETA_DEPS_IMPORTADOR.mkdirs();
 					}
 
-					List<DescargadorDependenciasMaven.CoordenadaMaven> coordenadas =
-							new ArrayList<DescargadorDependenciasMaven.CoordenadaMaven>();
+					List<DescargadorDependenciasMaven.CoordenadaMaven> coordenadas = new ArrayList<DescargadorDependenciasMaven.CoordenadaMaven>();
 
 					coordenadas.add(new DescargadorDependenciasMaven.CoordenadaMaven("com.github.Querz", "NBT", "6.1"));
 
-					DescargadorDependenciasMaven.ResultadoDescarga r =
-							DescargadorDependenciasMaven.descargarDependencias(coordenadas);
+					DescargadorDependenciasMaven.ResultadoDescarga r = DescargadorDependenciasMaven
+							.descargarDependencias(coordenadas);
 
 					exito = r != null && r.exito;
 					mensaje = r == null ? "Resultado nulo." : r.mensaje;
@@ -326,9 +318,5 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 			}
 		}).start();
 	}
-	
-	
-	
-	
-	
+
 }

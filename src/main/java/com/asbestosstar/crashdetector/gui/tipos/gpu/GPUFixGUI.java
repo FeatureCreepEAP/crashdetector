@@ -33,7 +33,7 @@ public abstract class GPUFixGUI extends JFrame implements BotonDeBarraLateralDer
 	public JButton botonAbrirVirusTotal;
 	public JButton botonAbrirOptimusLinux;
 
-	private boolean inicializada = false;
+	public boolean inicializada = false;
 
 	@Override
 	public void init() {
@@ -83,7 +83,7 @@ public abstract class GPUFixGUI extends JFrame implements BotonDeBarraLateralDer
 		setVisible(true);
 	}
 
-	protected void aplicarFixGPU() {
+	public void aplicarFixGPU() {
 		if (esWindows()) {
 			aplicarFixWindows();
 		} else if (esMac()) {
@@ -95,7 +95,7 @@ public abstract class GPUFixGUI extends JFrame implements BotonDeBarraLateralDer
 		}
 	}
 
-	protected void aplicarFixWindows() {
+	public void aplicarFixWindows() {
 		try {
 			String javaw = obtenerJavawActual();
 			if (javaw == null || javaw.trim().isEmpty()) {
@@ -115,7 +115,7 @@ public abstract class GPUFixGUI extends JFrame implements BotonDeBarraLateralDer
 		}
 	}
 
-	protected void aplicarFixMac() {
+	public void aplicarFixMac() {
 		try {
 			// 1 = GPU dedicada, 2 = cambio automatico. Requiere Mac con GPU dedicada.
 			new ProcessBuilder("sudo", "pmset", "-a", "gpuswitch", "1").start().waitFor();
@@ -126,13 +126,13 @@ public abstract class GPUFixGUI extends JFrame implements BotonDeBarraLateralDer
 		}
 	}
 
-	protected String obtenerJavawActual() {
+	public String obtenerJavawActual() {
 		String home = MonitorDePID.jvm();
 
 		return home;
 	}
 
-	protected void abrirUrl(String url) {
+	public void abrirUrl(String url) {
 		try {
 			Desktop.getDesktop().browse(java.net.URI.create(url));
 		} catch (Throwable t) {
@@ -140,15 +140,15 @@ public abstract class GPUFixGUI extends JFrame implements BotonDeBarraLateralDer
 		}
 	}
 
-	protected boolean esWindows() {
+	public boolean esWindows() {
 		return System.getProperty("os.name", "").toLowerCase().contains("windows");
 	}
 
-	protected boolean esMac() {
+	public boolean esMac() {
 		return System.getProperty("os.name", "").toLowerCase().contains("mac");
 	}
 
-	protected boolean esLinux() {
+	public boolean esLinux() {
 		return System.getProperty("os.name", "").toLowerCase().contains("linux");
 	}
 

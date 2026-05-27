@@ -16,13 +16,13 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
  * Base lógica para el eliminador/historial de MCLogs.
  */
 public abstract class MCLogsHistorialGUI extends JDialog implements CrashDetectorGUI, BotonDeBarraLateralDerecha {
-	private static final long serialVersionUID = 1L;
+	public static final long serialVersionUID = 1L;
 
 	public static Map<String, Supplier<MCLogsHistorialGUI>> GUIS = new HashMap<String, Supplier<MCLogsHistorialGUI>>();
 
-	protected Nodo historial;
+	public Nodo historial;
 
-	protected void cargarDatos() {
+	public void cargarDatos() {
 		historial = HistoriaMCLogs.cargarRaiz();
 	}
 

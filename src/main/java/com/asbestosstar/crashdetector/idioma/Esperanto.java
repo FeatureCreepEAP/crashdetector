@@ -6777,25 +6777,28 @@ public class Esperanto implements Idioma {
 				+ "<p>Se la problemo daŭras, provu lanĉi la ludon sen AAAParticles.</p>";
 	}
 
+	// Esperanto (Esperanto)
 	@Override
 	public String javaProblematica() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "Nativa kraŝo de la Java Virtual Machine (JVM) estis detektita.</b>"
-				+ "<p>Tiu eraro okazas ene de la JVM mem (ekz. <code>jvm.dll</code>, <code>libjvm.so</code>, ktp.), "
-				+ "kaj ne nepre estas kaŭzita de mod.</p>"
-				+ "<p>Kvankam malofte ĝi povas deveni de modoj uzantaj nekongruajn nativajn bibliotekojn, "
-				+ "<b>ĝi plej verŝajne rezultas el difektita, korupta aŭ malaktuala JVM-versio</b>.</p>"
-				+ "<p>Tio estas aparte komuna se vi uzas malnovan aŭ neoficialan Java-konstruaĵon (ekz. senapogaj komunumaj versioj).</p>"
-				+ "<p><b>Ni rekomendas uzi fidindan kaj prizorgatan JVM:</b></p>" + "<ul>"
+				+ "Detektis natan kraŝon de la Java rulmedio (JVM).</b>"
+				+ "<p>Ĉi tiu tipo de eraro okazas ene de la Java Virtuala Maŝino mem (ekzemple, en <code>jvm.dll</code>, <code>libjvm.so</code>, ktp.), "
+				+ "kaj ne nepre estas kaŭzata de modo.</p>"
+				+ "<p>Kvankam en maloftaj okazoj ĝi povas originiĝi de modoj kiuj uzas nekompatiblajn nativajn bibliotekojn, "
+				+ "<b>estas multe pli verŝajne ke ĝi ŝuldiĝas al difekta, korupta aŭ malaktuala versio de la JVM</b>.</p>"
+				+ "<p>Ĉi tio estas aparte komuna se vi uzas malnovan aŭ neoficialan kompilaĵon de via Java versio (ekzemple, komunumajn konstruaĵojn sen subteno).</p>"
+				+ "<p><b>Ni rekomendas uzi fidindan kaj bontenatan JVM:</b></p>" + "<ul>"
 				+ "<li><b>Red Hat Build of OpenJDK</b> (stabila, bone testita, ideala por Windows/Linux)</li>"
-				+ "<li><b>OpenLogic OpenJDK</b> (plursistema subteno, inkluzive de macOS Intel)</li>"
-				+ "<li><b>Azul Zulu</b> (atestita, kun senpaga LTS-apogo)</li>"
+				+ "<li><b>OpenLogic OpenJDK</b> (multiplatforma subteno, inkluzive de macOS Intel)</li>"
+				+ "<li><b>Azul Zulu</b> (certigita, kun senpaga LTS-subteno)</li>"
 				+ "<li><b>Oracle JDK</b> (oficiala, kun regulaj ĝisdatigoj)</li>" + "</ul>"
-				+ "<p>Evitu nekonatajn, proprajn aŭ tre malnovajn konstruaĵojn, ĉar ili povas enhavi kritikajn erarojn en la JVM-motoro.</p>"
-				+ "<p><b>Ĉu vi uzas Prism Launcher aŭ TLauncher?</b> Estas tre facile agordi propran JVM: "
-				+ "en Prism Launcher, iru al <i>Instaloj</i> → <i>Redakti instalaĵon</i> → <i>Java-agordoj</i>; "
-				+ "en TLauncher, iru al <i>Settings</i> → <i>Java Settings</i> kaj elektu la vojon al via elŝutita JDK/JRE. "
-				+ "Vi ne bezonas ŝanĝi la sistem-JVM!</p>";
+				+ "<li>Evitu nekonatajn, personigitajn aŭ tre malnovajn konstruaĵojn, ĉar ili povas enhavi kritikajn erarojn en la JVM-motoro.</li>"
+				+ "<p><b>Ĉu vi uzas Prism Launcher aŭ TLauncher?</b> Estas tre facile agordi personigitan JVM: "
+				+ "en Prism Launcher, iru al <i>Instalaciones</i> → <i>Editar instancia</i> → <i>Configuración de Java</i>; "
+				+ "en TLauncher, iru al <i>Settings</i> → <i>Java Settings</i> kaj elektu la vojon de via elŝutita JDK/JRE. "
+				+ "Ankaŭ eblas, ke via rubkolektisto spertas problemojn; en tia okazo, vi devus ŝanĝi al ZGC."
+
+				+ "Vi ne bezonas ŝanĝi la sisteman JVM!</p>";
 	}
 
 	@Override

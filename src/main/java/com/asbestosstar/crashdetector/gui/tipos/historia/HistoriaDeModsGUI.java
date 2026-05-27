@@ -41,7 +41,7 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
  */
 public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorGUI, BotonDeBarraLateralDerecha {
 
-	private static final long serialVersionUID = 1L;
+	public static final long serialVersionUID = 1L;
 
 	public static Map<String, Supplier<HistoriaDeModsGUI>> GUIS = new HashMap<>();
 
@@ -98,10 +98,10 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 	}
 
 	// ====== Estructura base (ahora abstracta o vacía) ======
-	protected abstract void construirEstructuraBase();
+	public abstract void construirEstructuraBase();
 
 	// ====== Lógica técnica: carga/parseo/normalización/comparación ======
-	protected void cargarArchivosHistoricos() {
+	public void cargarArchivosHistoricos() {
 		try {
 			Path directorioHistorial = Statics.carpeta.resolve("historia_mods");
 			if (Files.exists(directorioHistorial)) {
@@ -154,7 +154,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 		}
 	}
 
-	protected JPanel crearLineaArchivo(File archivo, ButtonGroup grupo) {
+	public JPanel crearLineaArchivo(File archivo, ButtonGroup grupo) {
 		JPanel linea = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
 		linea.setOpaque(false);
 
@@ -195,7 +195,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 // ====== Reemplaza en HistoriaDeModsGUI estos métodos ======
 
 	/** Crea una instantánea del archivo seleccionado en la columna izquierda. */
-	protected void crearInstantanea() {
+	public void crearInstantanea() {
 		String archivoSeleccionado = (grupoIzquierdo == null || grupoIzquierdo.getSelection() == null) ? null
 				: grupoIzquierdo.getSelection().getActionCommand();
 
@@ -244,7 +244,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 	 * original (misma raíz, extensión .instantanea). Si ya existe, agrega _01, _02,
 	 * ...
 	 */
-	private String generarNombreInstantaneaDesdeBase(String base) {
+	public String generarNombreInstantaneaDesdeBase(String base) {
 		Path directorio = Statics.carpeta.resolve("historia_mods");
 		String nombre = base + ".instantanea";
 		Path ruta = directorio.resolve(nombre);
@@ -258,7 +258,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 		return nombre;
 	}
 
-	protected void compararArchivosSeleccionados() {
+	public void compararArchivosSeleccionados() {
 		String archivoIzq = (grupoIzquierdo == null || grupoIzquierdo.getSelection() == null) ? null
 				: grupoIzquierdo.getSelection().getActionCommand();
 		String archivoDer = (grupoDerecho == null || grupoDerecho.getSelection() == null) ? null
@@ -292,7 +292,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 		}
 	}
 
-	protected Map<String, String> leerModsNormalizados(Path rutaArchivo) throws IOException {
+	public Map<String, String> leerModsNormalizados(Path rutaArchivo) throws IOException {
 
 		Map<String, String> mods = new HashMap<>();
 
@@ -329,7 +329,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 		return mods;
 	}
 
-	protected String normalizarNombreMod(String ruta) {
+	public String normalizarNombreMod(String ruta) {
 		String nombre = new File(ruta).getName().toLowerCase();
 		int indicePunto = nombre.lastIndexOf('.');
 		if (indicePunto > 0) {
@@ -338,7 +338,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 		return nombre;
 	}
 
-	protected List<String> compararModsNormalizados(Map<String, String> modsAnt, Map<String, String> modsNuevos) {
+	public List<String> compararModsNormalizados(Map<String, String> modsAnt, Map<String, String> modsNuevos) {
 		List<String> difs = new ArrayList<>();
 
 		Set<String> eliminados = new TreeSet<>(modsAnt.keySet());
