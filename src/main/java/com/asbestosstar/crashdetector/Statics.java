@@ -12,7 +12,6 @@ import com.asbestosstar.crashdetector.detectorlanzer.LanzerOtra;
 
 public class Statics {
 
-	public static ConfigString nombre_cd = ConfigString.de("nombre_cd", "CrashDetector");
 	public static boolean cargador;
 	public static Set<Path> carpetas_de_mods = new HashSet<Path>();
 	public static App APP;// establar en comenzar, es muy importante, predeterminado es Minecraft pero
@@ -31,6 +30,11 @@ public class Statics {
 
 	public static boolean app_en_cdlauncher = false; // Si la app es en modo relanzer
 
+	
+	
+	public static ConfigString nombre_cd = ConfigString.de("nombre_cd", "CrashDetector");
+
+	
 	/**
 	 * PARA JPMS
 	 */
