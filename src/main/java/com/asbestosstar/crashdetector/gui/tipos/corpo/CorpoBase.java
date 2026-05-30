@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 import javax.swing.JDialog;
 
 import com.asbestosstar.crashdetector.Idioma;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.PirataMC;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
@@ -43,11 +44,11 @@ public abstract class CorpoBase extends JDialog implements CrashDetectorGUI, Bot
 	}
 
 	public static void escribirNombreCD(String valor) {
-		ConfigString.de("nombre_cd", "CrashDetector").escribir(valor);
+		Statics.nombre_cd.escribir(valor);
 	}
 
 	public static String obtenerNombreCD() {
-		return ConfigString.de("nombre_cd", "CrashDetector").obtener();
+		return Statics.nombre_cd.obtener();
 	}
 
 	public static void escribirCondenarPirata(boolean valor) {

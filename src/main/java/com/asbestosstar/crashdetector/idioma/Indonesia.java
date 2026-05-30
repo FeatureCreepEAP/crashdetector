@@ -41,8 +41,8 @@ public class Indonesia implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>Tidak tahu di mana file JAR CrashDetector berada</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>Tidak tahu di mana file JAR "
+				+ Statics.nombre_cd.obtener() + " berada</span>";
 	}
 
 	@Override
@@ -104,14 +104,15 @@ public class Indonesia implements Idioma {
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo() + "'>Laporan CrashDetector Anda ada di sini <a href='"
-				+ archivo + "' style='color:#" + config.obtenerColorEnlace() + "'>lihat laporan</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Laporan " + Statics.nombre_cd.obtener()
+				+ " Anda ada di sini <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace()
+				+ "'>lihat laporan</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>Ini adalah GUI CrashDetector. Jika game tertutup tanpa masalah, abaikan ini.</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Ini adalah GUI " + Statics.nombre_cd.obtener()
+				+ ". Jika game tertutup tanpa masalah, abaikan ini.</span>";
 	}
 
 	@Override
@@ -453,11 +454,13 @@ public class Indonesia implements Idioma {
 				+ "Anda menggunakan situs laporan " + Config.obtenerInstancia().obtenerSitoDeInformes()
 				+ " dan situs log " + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
 				+ "Anda juga dapat membagikan log individual tanpa laporan dengan menekan tombol bagikan di samping nama log; "
-				+ "log akan dikirim ke situs log yang dipilih. CrashDetector memiliki anonimisasi log bawaan yang mencoba menghapus nama pengguna, UUID, "
+				+ "log akan dikirim ke situs log yang dipilih. " + Statics.nombre_cd.obtener()
+				+ " memiliki anonimisasi log bawaan yang mencoba menghapus nama pengguna, UUID, "
 				+ "token akses, ID sesi, alamat IP, dan data lainnya. Namun, ini tidak sempurna. Pembuat modpack juga dapat menonaktifkannya. "
 				+ "Anda dapat mengaktifkan atau menonaktifkannya menggunakan kotak centang di bagian bawah layar ini. Anda mengendalikan data Anda sendiri; Anda memutuskan ke mana data Anda diunggah. "
 				+ "Situs log dimiliki oleh pihak ketiga yang kepemilikannya sering disembunyikan demi privasi. Anda bertanggung jawab penuh atas pengelolaan data Anda dan risiko yang terlibat. "
-				+ "Dialog Berbagi CrashDetector hanyalah antarmuka untuk membantu mengelola hal tersebut. "
+				+ "Dialog Berbagi " + Statics.nombre_cd.obtener()
+				+ " hanyalah antarmuka untuk membantu mengelola hal tersebut. "
 				+ "Penting untuk memahami GDPR dan ARCO. "
 				+ "Jika Anda berada di Eropa, Anda dapat menggunakan <a href=\"https://securelogger.top\">securelogger.top</a> yang dihosting di Jerman oleh Hetzner. "
 				+ "Untuk informasi hukum lebih lanjut, lihat tautan berikut: "
@@ -496,7 +499,8 @@ public class Indonesia implements Idioma {
 		return "Anda mengalami kesalahan SSL. Ini umum terjadi pada versi Java lama, "
 				+ "termasuk Java 8 di launcher Minecraft default serta versi dari sun.com dan java.com. "
 				+ "Hal ini memengaruhi banyak hal seperti file JAR installer MinecraftForge, fitur berbagi laporan "
-				+ "CrashDetector saat menggunakan endpoint default, beberapa mod yang membutuhkan internet, "
+				+ Statics.nombre_cd.obtener()
+				+ " saat menggunakan endpoint default, beberapa mod yang membutuhkan internet, "
 				+ "dan beberapa situs logging. Jika ini terjadi saat mencoba membagikan laporan, "
 				+ "cukup lampirkan tangkapan layar dan pilih situs logging yang kompatibel dengan Java 8 lama.";
 	}
@@ -526,7 +530,9 @@ public class Indonesia implements Idioma {
 				+ "PERINGATAN! Crash Assistant adalah detektor malware palsu. Ia secara sengaja memblokir peluncuran game, mengabaikan kebebasan Anda untuk tetap bermain dengan mod yang ditandai. "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Lihat kode MalwareMod.java</a>   "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Lihat kode JarInJarHelper.java</a>. "
-				+ "Saat ini hanya mod ini yang ada dalam daftar mereka dan mereka sebenarnya hanya menargetkan situs logging default, yang dapat diubah oleh pengguna, dan itu hanya terjadi jika Anda secara eksplisit memilih menggunakan fitur berbagi log bawaan. CrashAssistant TIDAK melakukan pemeriksaan untuk menentukan situs logging mana yang digunakan atau menjelaskan cara mengubahnya (ada menu dropdown di bagian bawah dialog berbagi), dan terlepas dari situs mana yang Anda pilih, CrashAssistant tetap akan memblokir peluncuran game. Dalam pesannya mereka menyarankan Anda untuk melakukan riset sendiri—LAKUKAN ITU, pelajari kode CrashDetector dan Crash Assistant, dan pahami apa yang mereka lakukan. JANGAN hanya mengandalkan otoritas.</b>";
+				+ "Saat ini hanya mod ini yang ada dalam daftar mereka dan mereka sebenarnya hanya menargetkan situs logging default, yang dapat diubah oleh pengguna, dan itu hanya terjadi jika Anda secara eksplisit memilih menggunakan fitur berbagi log bawaan. CrashAssistant TIDAK melakukan pemeriksaan untuk menentukan situs logging mana yang digunakan atau menjelaskan cara mengubahnya (ada menu dropdown di bagian bawah dialog berbagi), dan terlepas dari situs mana yang Anda pilih, CrashAssistant tetap akan memblokir peluncuran game. Dalam pesannya mereka menyarankan Anda untuk melakukan riset sendiri—LAKUKAN ITU, pelajari kode "
+				+ Statics.nombre_cd.obtener()
+				+ " dan Crash Assistant, dan pahami apa yang mereka lakukan. JANGAN hanya mengandalkan otoritas.</b>";
 	}
 
 	@Override
@@ -805,7 +811,7 @@ public class Indonesia implements Idioma {
 
 	@Override
 	public String ajustesCrashDetector() {
-		return "Pengaturan CrashDetector";
+		return "Pengaturan " + Statics.nombre_cd.obtener();
 	}
 
 	@Override
@@ -905,7 +911,7 @@ public class Indonesia implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "Hanya buka CrashDetector saat crash";
+		return "Hanya buka " + Statics.nombre_cd.obtener() + " saat crash";
 	}
 
 	@Override
@@ -2135,8 +2141,8 @@ public class Indonesia implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Mungkin Anda memiliki masalah yang terkait dengan IPv6. " + "Ada dua solusi: "
 				+ "1) Tambahkan argumen JVM <code>-Djava.net.preferIPv4Stack=true</code> di launcher Anda, atau "
-				+ "2) Gunakan tombol 'QuickFix' di CrashDetector untuk menerapkan patch yang mengaktifkan konfigurasi ini secara otomatis."
-				+ "</b>";
+				+ "2) Gunakan tombol 'QuickFix' di " + Statics.nombre_cd.obtener()
+				+ " untuk menerapkan patch yang mengaktifkan konfigurasi ini secara otomatis." + "</b>";
 	}
 
 	@Override
@@ -2199,7 +2205,9 @@ public class Indonesia implements Idioma {
 
 	@Override
 	public String noRegistroDeLauncher() {
-		return "GENERIC: Pilih jenis launcher yang Anda gunakan. Log launcher (launcher_log.txt, stdout, dll.) berisi informasi krusial tentang kesalahan yang tidak muncul di latest.log. CrashDetector tidak dapat membaca log Launcher Anda, mungkin itu tidak memiliki file log dan Anda harus menempel log secara manual.<br>"
+		return "GENERIC: Pilih jenis launcher yang Anda gunakan. Log launcher (launcher_log.txt, stdout, dll.) berisi informasi krusial tentang kesalahan yang tidak muncul di latest.log. "
+				+ Statics.nombre_cd.obtener()
+				+ " tidak dapat membaca log Launcher Anda, mungkin itu tidak memiliki file log dan Anda harus menempel log secara manual.<br>"
 				+ "Untuk informasi lebih lanjut, lihat <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">masalah ini</a>. Log ini berisi output standar (STDOUT), diperlukan untuk mendiagnosis banyak jenis kesalahan.";
 	}
 
@@ -3242,8 +3250,8 @@ public class Indonesia implements Idioma {
 	 */
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "Aktifkan ProxySysOutSysErr?\n\n"
-				+ "Opsi ini memberikan CrashDetector akses ke System.out dan System.err ketika launcher tidak menyediakan log.\n\n"
+		return "Aktifkan ProxySysOutSysErr?\n\n" + "Opsi ini memberikan " + Statics.nombre_cd.obtener()
+				+ " akses ke System.out dan System.err ketika launcher tidak menyediakan log.\n\n"
 				+ "Hanya boleh diaktifkan ketika Anda tidak dapat menempel log secara manual.\n\n"
 				+ "Peringatan: Ini dapat mengganggu beberapa mod atau launcher.\n\n"
 				+ "Diperlukan restart game/app agar perubahan berlaku efektif.";
@@ -3266,8 +3274,8 @@ public class Indonesia implements Idioma {
 	 */
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "ProxySysOutSysErr diaktifkan dengan benar.\n\n"
-				+ "Diperlukan restart CrashDetector agar perubahan berlaku efektif.";
+		return "ProxySysOutSysErr diaktifkan dengan benar.\n\n" + "Diperlukan restart " + Statics.nombre_cd.obtener()
+				+ " agar perubahan berlaku efektif.";
 	}
 
 	/**
@@ -3942,9 +3950,8 @@ public class Indonesia implements Idioma {
 				+ "Kesalahan layanan ModLauncher: Jalur dengan karakter tidak valid. "
 				+ "Layanan ModLauncher tidak dapat memproses jalur yang berisi karakter non-ASCII atau karakter khusus. "
 				+ "Karakter bermasalah termasuk: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요, dan terutama karakter '\"' ketika berada di akhir nama. "
-				+ "Komponen layanan umum di ModLauncher termasuk CrashDetector, "
-				+ Config.obtenerInstancia().obtenerNombreCD()
-				+ ", FeatureCreep, Vivicraft, Optifine, Sodium, clone, Iris Shaders/Oculus, MixerLogger, CrashAssistant dan Sintrya Connector. "
+				+ "Komponen layanan umum di ModLauncher termasuk " + Statics.nombre_cd.obtener() + ", "
+				+ "FeatureCreep, Vivicraft, Optifine, Sodium, clone, Iris Shaders/Oculus, MixerLogger, CrashAssistant dan Sintrya Connector. "
 				+ "Anda dapat menghapus semua layanan, tetapi masalah lain dapat muncul karena nama jalur. "
 				+ "Solusi: Ganti nama instance untuk menggunakan hanya karakter ASCII (a-z, A-Z, 0-9), tanpa spasi atau karakter khusus.</b>";
 	}// TODO incluye un Caridor para mods con servicios
@@ -5952,7 +5959,7 @@ public class Indonesia implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "Launcher ini adalah yang disarankan CrashDetector sebagai pilihan yang baik.";
+		return "Launcher ini adalah yang disarankan " + Statics.nombre_cd.obtener() + " sebagai pilihan yang baik.";
 	}
 
 	public String modsNoRecomendados() {
@@ -5980,7 +5987,8 @@ public class Indonesia implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "Di sini Anda dapat mendaftarkan mod yang tidak disarankan agar CrashDetector mendeteksinya jika terpasang.";
+		return "Di sini Anda dapat mendaftarkan mod yang tidak disarankan agar " + Statics.nombre_cd.obtener()
+				+ " mendeteksinya jika terpasang.";
 	}
 
 	@Override
@@ -5992,12 +6000,13 @@ public class Indonesia implements Idioma {
 	@Override
 	public String anularNormalDescripcion() {
 		// TODO: metode dihasilkan secara otomatis
-		return "CrashDetector harus memberi peringatan meskipun tidak crash";
+		return Statics.nombre_cd.obtener() + " harus memberi peringatan meskipun tidak crash";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "Daftarkan mod yang direkomendasikan CrashDetector. Jika belum ada, CrashDetector dapat memberi peringatan.";
+		return "Daftarkan mod yang direkomendasikan " + Statics.nombre_cd.obtener() + ". Jika belum ada, "
+				+ Statics.nombre_cd.obtener() + " dapat memberi peringatan.";
 	}
 
 	@Override
@@ -6022,7 +6031,7 @@ public class Indonesia implements Idioma {
 				+ "nama pengguna atau UUID.\n" + "• Hak untuk tidak menyalahkan diri sendiri.\n"
 				+ "• Hak untuk menolak menjawab pertanyaan yang tidak perlu untuk menyelesaikan masalah.\n"
 				+ "• Hak untuk menerima bimbingan dalam obrolan.\n"
-				+ "• Hak untuk menggunakan anonimisasi log bawaan di CrashDetector.\n\n"
+				+ "• Hak untuk menggunakan anonimisasi log bawaan di " + Statics.nombre_cd.obtener() + ".\n\n"
 
 				+ "Teks ini menerima konten HTML.";
 	}
@@ -6048,8 +6057,8 @@ public class Indonesia implements Idioma {
 		// TODO: metode dihasilkan secara otomatis
 		return "<html><div style='width:150px; text-align:center;'>"
 				+ "Pendapat dan komentar Sylent Bell tidak harus sejalan dengan milik kami; "
-				+ "kami hanya berpikir akan lucu memasukkannya di sini. CrashDetector adalah sekuler."
-				+ "</div></html>";
+				+ "kami hanya berpikir akan lucu memasukkannya di sini. " + Statics.nombre_cd.obtener()
+				+ " adalah sekuler." + "</div></html>";
 	}
 
 	@Override
@@ -6436,10 +6445,11 @@ public class Indonesia implements Idioma {
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-		return "" + "<b>Alat Debugging</b><br><br>"
-				+ "Di sini Anda dapat mengaktifkan fitur lanjutan untuk men-debug CrashDetector dan game Anda.<br><br>"
+		return "" + "<b>Alat Debugging</b><br><br>" + "Di sini Anda dapat mengaktifkan fitur lanjutan untuk men-debug "
+				+ Statics.nombre_cd.obtener() + " dan game Anda.<br><br>"
 				+ "Disarankan untuk mengaktifkan konsol pengembang untuk mendapatkan informasi terperinci, jejak, dan diagnostik selama analisis.<br><br>"
-				+ "Jika Anda perlu menguji server multipemain dalam mode online, mungkin perlu mengizinkan transfer token akses ke proses CrashDetector dari pengaturan privasi. "
+				+ "Jika Anda perlu menguji server multipemain dalam mode online, mungkin perlu mengizinkan transfer token akses ke proses "
+				+ Statics.nombre_cd.obtener() + " dari pengaturan privasi. "
 				+ "Ini umumnya <b>tidak disarankan</b> dalam kasus lain.<br><br>"
 				+ "Instruksi lengkap: <a href='https://example.com'>Tautan!</a>";// TODO
 	}
@@ -8138,7 +8148,8 @@ public class Indonesia implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "Jika Anda menyertakan folder internal CrashDetector, konfigurasi, log, dan data tambahan juga akan berjalan, jadi Anda dapat membatalkan pilihannya jika tidak diperlukan.";
+		return "Jika Anda menyertakan folder internal " + Statics.nombre_cd.obtener()
+				+ ", konfigurasi, log, dan data tambahan juga akan berjalan, jadi Anda dapat membatalkan pilihannya jika tidak diperlukan.";
 	}
 
 	@Override
@@ -9587,7 +9598,7 @@ public class Indonesia implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "Mulai ulang CrashDetector agar JAR baru masuk ke classpath.";
+		return "Mulai ulang " + Statics.nombre_cd.obtener() + " agar JAR baru masuk ke classpath.";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -10619,7 +10630,8 @@ public class Indonesia implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector mendeteksi bahwa Minecraft mungkin tidak menggunakan GPU berkinerja tinggi.\n\n"
+		return Statics.nombre_cd.obtener()
+				+ " mendeteksi bahwa Minecraft mungkin tidak menggunakan GPU berkinerja tinggi.\n\n"
 				+ "Di Windows, kunci registri dapat diatur di "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "untuk memaksa javaw.exe menggunakan GPU dedicated.\n\n"
@@ -10631,7 +10643,7 @@ public class Indonesia implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector mendeteksi masalah potensial terkait NVIDIA Optimus atau PRIME.\n\n"
+		return Statics.nombre_cd.obtener() + " mendeteksi masalah potensial terkait NVIDIA Optimus atau PRIME.\n\n"
 				+ "Tergantung pada distribusi Linux yang digunakan, mungkin perlu mengkonfigurasi NVIDIA Optimus, "
 				+ "nvidia-prime, switcheroo-control, atau sistem hybrid lainnya.\n\n"
 				+ "Di Fedora/RHEL dan turunannya, biasanya disarankan untuk mengikuti dokumentasi RPMFusion.\n\n"
@@ -10640,7 +10652,7 @@ public class Indonesia implements Idioma {
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector mendeteksi masalah potensial dalam pemilihan GPU.\n\n"
+		return Statics.nombre_cd.obtener() + " mendeteksi masalah potensial dalam pemilihan GPU.\n\n"
 				+ "Pada beberapa sistem macOS dengan GPU hybrid, dimungkinkan untuk memaksa penggunaan GPU dedicated "
 				+ "melalui konfigurasi sistem lanjutan.\n\n"
 				+ "Tombol terapkan akan mencoba menjalankan perintah untuk memprioritaskan GPU berkinerja tinggi.";
@@ -10648,7 +10660,7 @@ public class Indonesia implements Idioma {
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector mendeteksi masalah potensial terkait GPU, "
+		return Statics.nombre_cd.obtener() + " mendeteksi masalah potensial terkait GPU, "
 				+ "tetapi tidak ada implementasi spesifik untuk sistem operasi ini.";
 	}
 
@@ -11032,7 +11044,7 @@ public class Indonesia implements Idioma {
 
 	// Indonesian (Bahasa Indonesia)
 	public String suprimirConsolaCD() {
-		return "Sembunyikan konsol CrashDetector";
+		return "Sembunyikan konsol " + Statics.nombre_cd.obtener();
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

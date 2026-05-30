@@ -41,8 +41,8 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>لا يمكن إيجاد ملف JAR الخاص بـCrashDetector</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>لا يمكن إيجاد ملف JAR الخاص بـ"
+				+ Statics.nombre_cd.obtener() + "</span>";
 	}
 
 	@Override
@@ -103,14 +103,15 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo() + "'>تقرير CrashDetector الخاص بك هنا <a href='"
-				+ archivo + "' style='color:#" + config.obtenerColorEnlace() + "'>عرض التقرير</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>تقرير " + Statics.nombre_cd.obtener()
+				+ " الخاص بك هنا <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace()
+				+ "'>عرض التقرير</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>هذه هي واجهة المستخدم الرسومية لـCrashDetector. إذا أغلقت اللعبة بشكل طبيعي، يرجى تجاهل هذه الواجهة.</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>هذه هي واجهة المستخدم الرسومية لـ"
+				+ Statics.nombre_cd.obtener() + ". إذا أغلقت اللعبة بشكل طبيعي، يرجى تجاهل هذه الواجهة.</span>";
 	}
 
 	@Override
@@ -457,11 +458,12 @@ public class Arabe implements Idioma {
 				+ "أنت تستخدم موقع التقارير " + Config.obtenerInstancia().obtenerSitoDeInformes() + " وموقع السجلات "
 				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
 				+ "يمكنك أيضًا مشاركة سجلات فردية دون تقرير بالضغط على أزرار المشاركة بجانب أسماء السجلات الفردية؛ "
-				+ "ستُرسَل السجلات إلى موقع السجلات المحدد. يحتوي CrashDetector على إخفاء هوية السجلات افتراضيًا، الذي يحاول إزالة أسماء المستخدمين، UUID، "
+				+ "ستُرسَل السجلات إلى موقع السجلات المحدد. " + Statics.nombre_cd.obtener()
+				+ " على إخفاء هوية السجلات افتراضيًا، الذي يحاول إزالة أسماء المستخدمين، UUID، "
 				+ "رموز الوصول، معرّفات الجلسة، عناوين IP والبيانات الأخرى. لكنه ليس مثاليًا. ومع ذلك، يمكن لمُنشئ حزمة التعديلات تعطيله. "
 				+ "يمكنك تفعيله أو تعطيله عبر خانة الاختيار في أسفل هذه الشاشة. أنت متحكم في بياناتك؛ القرار لك أين ترفع بياناتك. "
 				+ "مواقع السجلات مملوكة لأطراف ثالثة غالبًا ما تكون ملكيتها مخفية لأسباب تتعلق بالخصوصية. أنت تتحمل المسؤولية الكاملة عن إدارة بياناتك والمخاطر المرتبطة بها. "
-				+ "حوار المشاركة في CrashDetector هو مجرد واجهة تتيح لك إدارة ذلك. "
+				+ "حوار المشاركة في " + Statics.nombre_cd.obtener() + " هو مجرد واجهة تتيح لك إدارة ذلك. "
 				+ "من المهم أن تكون على دراية بـ GDPR و ARCO. "
 				+ "إذا كنت في أوروبا، يمكنك استخدام <a href=\"https://securelogger.top\">securelogger.top</a> المستضاف في ألمانيا بواسطة Hetzner. "
 				+ "لمزيد من المعلومات القانونية، راجع الروابط التالية: "
@@ -499,8 +501,9 @@ public class Arabe implements Idioma {
 	public String errorSSL() {
 		return "لديك خطأ في بروتوكول طبقة المقابس الآمنة (SSL). هذا شائع مع إصدارات قديمة من Java، "
 				+ "بما في ذلك إصدارات Java 8 في مشغل Minecraft الافتراضي والإصدارات الموجودة على sun.com و java.com. "
-				+ "يؤثر هذا على العديد من الجوانب، مثل ملفات JAR الخاصة بمثبت MinecraftForge، "
-				+ "وظيفة مشاركة تقارير CrashDetector عند استخدام نقطة النهاية الافتراضية، وبعض الإضافات التي تتطلب الإنترنت "
+				+ "يؤثر هذا على العديد من الجوانب، مثل ملفات JAR الخاصة بمثبت MinecraftForge، " + "وظيفة مشاركة تقارير "
+				+ Statics.nombre_cd.obtener()
+				+ " عند استخدام نقطة النهاية الافتراضية، وبعض الإضافات التي تتطلب الإنترنت "
 				+ "وبعض مواقع التسجيل. إذا حدث هذا لك أثناء محاولة مشاركة تقرير، "
 				+ "ما عليك سوى إرفاق لقطة شاشة واختيار موقع تسجيل متوافق مع إصدارات Java 8 القديمة.";
 	}
@@ -530,7 +533,9 @@ public class Arabe implements Idioma {
 				+ "تنبيه! Crash Assistant هو كاشف برامج ضارة مزيف. يقوم بحظر اللعبة عن التشغيل بشكل متعمد، مع تجاهل حريتك في متابعة اللعب باستخدام التعديلات التي يستهدفها. "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>عرض كود MalwareMod.java</a>   "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>عرض كود JarInJarHelper.java</a>. "
-				+ "هذا التعديل فقط هو الموجود في قائمتهم حالياً، وهم يستهدفون فقط موقع تسجيل السجلات الافتراضي، والذي يمكن للمستخدم تغييره، وهذا يحدث فقط إذا اخترت صراحة استخدام ميزة مشاركة السجلات المدمجة. CrashAssistant لا يقوم بأي فحوصات لتحديد موقع التسجيل المستخدم ولا يشرح كيفية تغييره (هناك قائمة منسدلة في أسفل مربع الحوار الخاص بالمشاركة)، وبغض النظر عن الموقع الذي قمت بتكوينه، فإن CrashAssistant سيمنع تشغيل اللعبة. في رسالتهم يقولون أن تقوم بإجراء بحثك الخاص، افعل ذلك، انظر إلى كود CrashDetector وCrash Assistant وافهم ما يقومون به، لا تعتمد على استدعاء السلطة.</b>";
+				+ "هذا التعديل فقط هو الموجود في قائمتهم حالياً، وهم يستهدفون فقط موقع تسجيل السجلات الافتراضي، والذي يمكن للمستخدم تغييره، وهذا يحدث فقط إذا اخترت صراحة استخدام ميزة مشاركة السجلات المدمجة. CrashAssistant لا يقوم بأي فحوصات لتحديد موقع التسجيل المستخدم ولا يشرح كيفية تغييره (هناك قائمة منسدلة في أسفل مربع الحوار الخاص بالمشاركة)، وبغض النظر عن الموقع الذي قمت بتكوينه، فإن CrashAssistant سيمنع تشغيل اللعبة. في رسالتهم يقولون أن تقوم بإجراء بحثك الخاص، افعل ذلك، انظر إلى كود "
+				+ Statics.nombre_cd.obtener()
+				+ " وCrash Assistant وافهم ما يقومون به، لا تعتمد على استدعاء السلطة.</b>";
 	}
 
 	@Override
@@ -807,7 +812,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String ajustesCrashDetector() {
-		return "إعدادات كاشف الأعطال";
+		return "إعدادات " + Statics.nombre_cd.obtener();
 	}
 
 	@Override
@@ -907,7 +912,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "فتح CrashDetector فقط عند الفشل";
+		return "فتح " + Statics.nombre_cd.obtener() + " فقط عند الفشل";
 	}
 
 	@Override
@@ -1873,7 +1878,8 @@ public class Arabe implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "من المحتمل أنك تواجه مشكلة متعلقة بـ IPv6. "
 				+ "توجد حلان: "
 				+ "1) أضف المعامل <code>-Djava.net.preferIPv4Stack=true</code> إلى برنامج التشغيل الخاص بك، أو "
-				+ "2) استخدم زر 'QuickFix' في CrashDetector لتثبيت إصلاح يفعّل هذا الإعداد تلقائيًا." + "</b>";
+				+ "2) استخدم زر 'QuickFix' في " + Statics.nombre_cd.obtener()
+				+ " لتثبيت إصلاح يفعّل هذا الإعداد تلقائيًا." + "</b>";
 	}
 
 	@Override
@@ -2736,8 +2742,8 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "هل ترغب في تمكين ProxySysOutSysErr؟\n\n"
-				+ "يمنح هذا الخيار برنامج CrashDetector وصولاً إلى System.out و System.err عندما لا يوفر المشغل سجلات.\n\n"
+		return "هل ترغب في تمكين ProxySysOutSysErr؟\n\n" + "يمنح هذا الخيار برنامج " + Statics.nombre_cd.obtener()
+				+ " وصولاً إلى System.out و System.err عندما لا يوفر المشغل سجلات.\n\n"
 				+ "يجب تمكينه فقط عندما لا تتمكن من لصق السجل يدويًا.\n\n"
 				+ "تحذير: قد يتسبب هذا في تداخل مع بعض التعديلات أو المشغلات.\n\n"
 				+ "يجب إعادة تشغيل اللعبة/التطبيق لتصبح التغييرات سارية.";
@@ -2750,7 +2756,8 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "تم تمكين ProxySysOutSysErr بنجاح.\n\n" + "يجب إعادة تشغيل CrashDetector لتصبح التغييرات سارية.";
+		return "تم تمكين ProxySysOutSysErr بنجاح.\n\n" + "يجب إعادة تشغيل " + Statics.nombre_cd.obtener()
+				+ " لتصبح التغييرات سارية.";
 	}
 
 	@Override
@@ -3337,7 +3344,7 @@ public class Arabe implements Idioma {
 				+ "خطأ في خدمات ModLauncher: المسار يحتوي على أحرف غير صالحة. "
 				+ "لا يمكن لخدمات ModLauncher معالجة المسارات التي تحتوي على أحرف غير ASCII أو أحرف خاصة. "
 				+ "من الأحرف المسببة للمشاكل: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요، وخصوصًا الرمز '\"' عندما يكون في نهاية الاسم. "
-				+ "تشمل مكونات الخدمات الشائعة في ModLauncher كلاً من CrashDetector، "
+				+ "تشمل مكونات الخدمات الشائعة في ModLauncher كلاً من " + Statics.nombre_cd.obtener() + "، "
 				+ Config.obtenerInstancia().obtenerNombreCD()
 				+ "، FeatureCreep، Vivicraft، Optifine، Sodium، clonos، Iris Shaders/Oculus، MixerLogger، CrashAssistant وSintrya Connector. "
 				+ "يمكنك إزالة جميع الخدمات، لكن قد تظهر مشاكل أخرى بسبب اسم المسار. "
@@ -5727,7 +5734,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "هذه المشغّلات هي التي يقترحها CrashDetector كخيار جيد.";
+		return "هذه المشغّلات هي التي يقترحها " + Statics.nombre_cd.obtener() + " كخيار جيد.";
 	}
 
 	@Override
@@ -5760,7 +5767,7 @@ public class Arabe implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "هنا يمكنك تسجيل الوحدات غير الموصى بها ليكتشفها CrashDetector إذا كانت مثبتة.";
+		return "هنا يمكنك تسجيل الوحدات غير الموصى بها ليكتشفها " + Statics.nombre_cd.obtener() + " إذا كانت مثبتة.";
 	}
 
 	@Override
@@ -5770,12 +5777,13 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String anularNormalDescripcion() {
-		return "يجب أن يُحذّر CrashDetector حتى لو لم يحدث تحطيم.";
+		return "يجب أن يُحذّر " + Statics.nombre_cd.obtener() + " حتى لو لم يحدث تحطيم.";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "سجّل الوحدات التي يوصي بها CrashDetector. إذا كانت مفقودة، فقد يُحذّرك CrashDetector.";
+		return "سجّل الوحدات التي يوصي بها " + Statics.nombre_cd.obtener() + ". إذا كانت مفقودة، فقد يُحذّرك "
+				+ Statics.nombre_cd.obtener() + ".";
 	}
 
 	@Override
@@ -5797,8 +5805,8 @@ public class Arabe implements Idioma {
 				+ "ومن أمثلة الحقوق التي يمكن تضمينها:\n"
 				+ "• الحق في عدم تقديم معلومات غير ضرورية للدعم، مثل المشغّل المستخدم، " + "أو اسم المستخدم أو UUID.\n"
 				+ "• الحق في عدم التشهير بنفسك.\n" + "• الحق في رفض الإجابة عن أسئلة غير ضرورية لحل المشكلة.\n"
-				+ "• الحق في تلقي التوجيه داخل الدردشة.\n"
-				+ "• الحق في استخدام أداة إخفاء الهوية المدمجة في CrashDetector للسجلات (logs).\n\n"
+				+ "• الحق في تلقي التوجيه داخل الدردشة.\n" + "• الحق في استخدام أداة إخفاء الهوية المدمجة في "
+				+ Statics.nombre_cd.obtener() + " للسجلات (logs).\n\n"
 
 				+ "يقبل هذا النص محتوى HTML.";
 	}
@@ -5810,7 +5818,8 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String advertenciaHashLento() {
-		return "تحذير: إضافة العديد من الملفات الكبيرة قد يجعل التحقق يستغرق عدة دقائق. سيتعين على CrashDetector حساب الهاش لكل ملف قبل المتابعة. يُوصى بحماية الملفات الضرورية فقط.";
+		return "تحذير: إضافة العديد من الملفات الكبيرة قد يجعل التحقق يستغرق عدة دقائق. سيتعين على "
+				+ Statics.nombre_cd.obtener() + " حساب الهاش لكل ملف قبل المتابعة. يُوصى بحماية الملفات الضرورية فقط.";
 	}
 
 	@Override
@@ -5842,7 +5851,8 @@ public class Arabe implements Idioma {
 	public String mensajeDeSylentBell() {
 		return "<html><div style='width:150px; text-align:center;'>"
 				+ "آراء وتعليقات Sylent Bell لا تتطابق بالضرورة مع آرائنا؛ "
-				+ "فقط اعتقدنا أنه سيكون مضحكًا وضعها هنا. CrashDetector علماني." + "</div></html>";
+				+ "فقط اعتقدنا أنه سيكون مضحكًا وضعها هنا. " + Statics.nombre_cd.obtener() + " علماني."
+				+ "</div></html>";
 	}
 
 	@Override
@@ -6212,10 +6222,11 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-		return "" + "<b>أدوات التصحيح</b><br><br>"
-				+ "هنا يمكنك تفعيل وظائف متقدمة لتصحيح CrashDetector وألعابك.<br><br>"
+		return "" + "<b>أدوات التصحيح</b><br><br>" + "هنا يمكنك تفعيل وظائف متقدمة لتصحيح "
+				+ Statics.nombre_cd.obtener() + " وألعابك.<br><br>"
 				+ "يُوصى بتمكين وحدة تحكم التطوير للحصول على معلومات مفصلة، وتتبعات، وتشخيصات أثناء التحليل.<br><br>"
-				+ "إذا كنت بحاجة إلى اختبار خادم متعدد اللاعبين في الوضع عبر الإنترنت، فقد يكون من الضروري السماح بنقل رمز الوصول (token de acceso) إلى عملية CrashDetector من إعدادات الخصوصية. "
+				+ "إذا كنت بحاجة إلى اختبار خادم متعدد اللاعبين في الوضع عبر الإنترنت، فقد يكون من الضروري السماح بنقل رمز الوصول (token de acceso) إلى عملية "
+				+ Statics.nombre_cd.obtener() + " من إعدادات الخصوصية. "
 				+ "وهذا عادةً <b>غير موصى به</b> في الحالات الأخرى.<br><br>"
 				+ "تعليمات كاملة: <a href='https://example.com'>رابط!</a>";
 	}
@@ -8114,7 +8125,8 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "إذا قمت بتضمين المجلد الداخلي لـ CrashDetector، فستنتقل أيضاً الإعدادات والسجلات والبيانات المساعدة، لذا يمكنك إلغاء تحديدها إذا لم تكن ضرورية.";
+		return "إذا قمت بتضمين المجلد الداخلي لـ " + Statics.nombre_cd.obtener()
+				+ "، فستنتقل أيضاً الإعدادات والسجلات والبيانات المساعدة، لذا يمكنك إلغاء تحديدها إذا لم تكن ضرورية.";
 	}
 
 	@Override
@@ -8926,7 +8938,7 @@ public class Arabe implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "أعد تشغيل CrashDetector لكي يتم تحميل ملفات JAR الجديدة إلى classpath.";
+		return "أعد تشغيل " + Statics.nombre_cd.obtener() + " لكي يتم تحميل ملفات JAR الجديدة إلى classpath.";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -9945,7 +9957,8 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "اكتشف CrashDetector أن Minecraft قد لا يستخدم وحدة معالجة الرسومات عالية الأداء.\n\n"
+		return "اكتشف " + Statics.nombre_cd.obtener()
+				+ " أن Minecraft قد لا يستخدم وحدة معالجة الرسومات عالية الأداء.\n\n"
 				+ "في Windows، يمكن تعيين مفاتيح التسجيل في "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "لفرض استخدام javaw.exe لوحدة معالجة الرسومات المخصصة.\n\n"
@@ -9958,7 +9971,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "اكتشف CrashDetector مشكلة محتملة تتعلق بـ NVIDIA Optimus أو PRIME.\n\n"
+		return "اكتشف " + Statics.nombre_cd.obtener() + " مشكلة محتملة تتعلق بـ NVIDIA Optimus أو PRIME.\n\n"
 				+ "اعتماداً على توزيعة Linux المستخدمة، قد يكون من الضروري إعداد NVIDIA Optimus، "
 				+ "أو nvidia-prime، أو switcheroo-control، أو أنظمة هجينة أخرى.\n\n"
 				+ "في Fedora/RHEL والمشتقات منها، يوصى عادةً باتباع وثائق RPMFusion.\n\n"
@@ -9967,7 +9980,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "اكتشف CrashDetector مشكلة محتملة في اختيار وحدة معالجة الرسومات.\n\n"
+		return "اكتشف " + Statics.nombre_cd.obtener() + " مشكلة محتملة في اختيار وحدة معالجة الرسومات.\n\n"
 				+ "في بعض أنظمة macOS ذات الرسوميات الهجينة، من الممكن فرض استخدام وحدة معالجة الرسومات المخصصة "
 				+ "من خلال إعدادات النظام المتقدمة.\n\n"
 				+ "سيحاول زر التطبيق تنفيذ أمر لإعطاء الأولوية لوحدة معالجة الرسومات عالية الأداء.";
@@ -9975,7 +9988,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "اكتشف CrashDetector مشكلة محتملة تتعلق بوحدة معالجة الرسومات، "
+		return "اكتشف " + Statics.nombre_cd.obtener() + " مشكلة محتملة تتعلق بوحدة معالجة الرسومات، "
 				+ "ولكن لا يوجد تنفيذ خاص لهذا النظام التشغيل.";
 	}
 
@@ -10358,7 +10371,7 @@ public class Arabe implements Idioma {
 
 	// Arabic (العربية)
 	public String suprimirConsolaCD() {
-		return "إخفاء وحدة تحكم CrashDetector";
+		return "إخفاء وحدة تحكم " + Statics.nombre_cd.obtener();
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

@@ -51,8 +51,8 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>Не знаю, де знаходиться JAR-файл CrashDetector</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>Не знаю, де знаходиться JAR-файл "
+				+ Statics.nombre_cd.obtener() + "</span>";
 	}
 
 	@Override
@@ -117,14 +117,15 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo() + "'>Ваш звіт CrashDetector знаходиться тут <a href='"
-				+ archivo + "' style='color:#" + config.obtenerColorEnlace() + "'>переглянути звіт</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Ваш звіт " + Statics.nombre_cd.obtener()
+				+ " знаходиться тут <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace()
+				+ "'>переглянути звіт</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>Це GUI CrashDetector. Якщо гра закривається без проблем, ігноруйте це.</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Це GUI " + Statics.nombre_cd.obtener()
+				+ ". Якщо гра закривається без проблем, ігноруйте це.</span>";
 	}
 
 	@Override
@@ -468,11 +469,12 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 				+ Config.obtenerInstancia().obtenerSitoDeInformes() + " і сайт логів "
 				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
 				+ "Ви також можете ділитися окремими логами без звіту, використовуючи кнопки поруч із ними. "
-				+ "CrashDetector має вбудовану анонімізацію логів, яка намагається приховати імена користувачів, UUID, "
+				+ Statics.nombre_cd.obtener()
+				+ " має вбудовану анонімізацію логів, яка намагається приховати імена користувачів, UUID, "
 				+ "токени доступу, ID сесій, IP-адреси та інші дані. Проте вона не ідеальна і може бути вимкнена автором модпака. "
 				+ "Її можна увімкнути або вимкнути у нижній частині цього вікна. Ви самі контролюєте свої дані та вирішуєте, куди їх надсилати. "
 				+ "Сайти логування належать третім сторонам, власники яких можуть бути приховані. Ви несете повну відповідальність за свої дані та ризики. "
-				+ "Діалог CrashDetector — це лише інтерфейс для управління цим процесом. "
+				+ "Діалог " + Statics.nombre_cd.obtener() + " — це лише інтерфейс для управління цим процесом. "
 				+ "Важливо знати про RGPD і ARCO. "
 				+ "Якщо ви в Європі, можете використовувати <a href=\"https://securelogger.top\">securelogger.top</a> (Німеччина, Hetzner). "
 				+ "Для правової інформації дивіться: "
@@ -512,7 +514,8 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String errorSSL() {
 		return "У вас SSL помилка. Це часто трапляється зі старими версіями Java, "
 				+ "включаючи Java 8 у стандартному Minecraft Launcher, а також версії з sun.com і java.com. "
-				+ "Це впливає на різні функції, включаючи встановлення MinecraftForge, обмін звітами CrashDetector, "
+				+ "Це впливає на різні функції, включаючи встановлення MinecraftForge, обмін звітами "
+				+ Statics.nombre_cd.obtener() + ", "
 				+ "моди, що потребують інтернету, та сайти логування. Якщо це стається під час обміну звітом, "
 				+ "зробіть скріншот і оберіть сайт логування, сумісний зі старими версіями Java.";
 	}
@@ -826,7 +829,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String ajustesCrashDetector() {
-		return "Налаштування CrashDetector";
+		return "Налаштування " + Statics.nombre_cd.obtener();
 	}
 
 	@Override
@@ -926,7 +929,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "Відкривати CrashDetector тільки при помилці";
+		return "Відкривати " + Statics.nombre_cd.obtener() + " тільки при помилці";
 	}
 
 	@Override
@@ -1879,7 +1882,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String tieneErrorIPV6() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Можлива проблема з IPv6. Рішення: "
 				+ "1) Додайте JVM аргумент <code>-Djava.net.preferIPv4Stack=true</code>, або "
-				+ "2) Використайте 'QuickFix' у CrashDetector." + "</b>";
+				+ "2) Використайте 'QuickFix' у " + Statics.nombre_cd.obtener() + "." + "</b>";
 	}
 
 	@Override
@@ -1941,7 +1944,9 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String noRegistroDeLauncher() {
-		return "ЗАГАЛЬНЕ: Оберіть тип лаунчера, який ви використовуєте. Логи лаунчера (launcher_log.txt, stdout тощо) містять критично важливу інформацію про помилки, яка не відображається в latest.log. CrashDetector не може читати логи вашого лаунчера, тому вам може знадобитися вставити їх вручну.<br>"
+		return "ЗАГАЛЬНЕ: Оберіть тип лаунчера, який ви використовуєте. Логи лаунчера (launcher_log.txt, stdout тощо) містять критично важливу інформацію про помилки, яка не відображається в latest.log. "
+				+ Statics.nombre_cd.obtener()
+				+ " не може читати логи вашого лаунчера, тому вам може знадобитися вставити їх вручну.<br>"
 				+ "Для деталей див. <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663\">це обговорення</a>. Ці логи містять STDOUT, необхідний для діагностики багатьох помилок.";
 	}
 
@@ -2672,7 +2677,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "ProxySysOutSysErr увімкнено.\n\nПотрібен перезапуск CrashDetector.";
+		return "ProxySysOutSysErr увімкнено.\n\nПотрібен перезапуск " + Statics.nombre_cd.obtener() + ".";
 	}
 
 	@Override
@@ -5292,7 +5297,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "Се ті пускачі, котрі CrashDetector вважає добрими.";
+		return "Се ті пускачі, котрі " + Statics.nombre_cd.obtener() + " вважає добрими.";
 	}
 
 	@Override
@@ -5325,7 +5330,8 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "Тут можна записати нерадні моди, аби CrashDetector знаходив їх, коли вони стоять.";
+		return "Тут можна записати нерадні моди, аби " + Statics.nombre_cd.obtener()
+				+ " знаходив їх, коли вони стоять.";
 	}
 
 	@Override
@@ -5335,12 +5341,13 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String anularNormalDescripcion() {
-		return "CrashDetector має попередити, навіть коли ще не впало";
+		return Statics.nombre_cd.obtener() + " має попередити, навіть коли ще не впало";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "Записуй сюди моди, котрі CrashDetector радить. Коли їх бракує, CrashDetector може про се сказати.";
+		return "Записуй сюди моди, котрі " + Statics.nombre_cd.obtener() + " радить. Коли їх бракує, "
+				+ Statics.nombre_cd.obtener() + " може про се сказати.";
 	}
 
 	@Override
@@ -5364,8 +5371,8 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 				+ "• Право не давати зайвих відомостей для помочі, як-от який пускач уживається, "
 				+ "ім’я користувача чи UUID.\n" + "• Право не свідчити проти себе самого.\n"
 				+ "• Право відмовитись відповідати на питання, що не потрібні для розв’язання біди.\n"
-				+ "• Право дістати пораду просто в чаті.\n"
-				+ "• Право вживати знеособлення логів, вбудоване в CrashDetector.\n\n"
+				+ "• Право дістати пораду просто в чаті.\n" + "• Право вживати знеособлення логів, вбудоване в "
+				+ Statics.nombre_cd.obtener() + ".\n\n"
 
 				+ "Сей текст приймає HTML-вміст.";
 	}
@@ -5377,8 +5384,8 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String advertenciaHashLento() {
-		return "Засторога: коли додаси багато великих файлів, перевірка може тягтися "
-				+ "кілька хвилин. CrashDetector мусить порахувати геш кожного файлу "
+		return "Засторога: коли додаси багато великих файлів, перевірка може тягтися " + "кілька хвилин. "
+				+ Statics.nombre_cd.obtener() + " мусить порахувати геш кожного файлу "
 				+ "перед тим, як рушити далі. Радиться боронити лише ті файли, що справді потрібні.";
 	}
 
@@ -5412,7 +5419,8 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String mensajeDeSylentBell() {
 		return "<html><div style='width:150px; text-align:center;'>"
 				+ "Думки й слова Sylent Bell не конче сходяться з нашими; "
-				+ "ми лиш гадали, що буде смішно вставити її сюди. CrashDetector є світський." + "</div></html>";
+				+ "ми лиш гадали, що буде смішно вставити її сюди. " + Statics.nombre_cd.obtener() + " є світський."
+				+ "</div></html>";
 	}
 
 	@Override
@@ -5793,9 +5801,11 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	@Override
 	public String cdlauncherDescripcionCompleta() {
 		return "" + "<b>Знаряддя налагодження</b><br><br>"
-				+ "Тут можна ввімкнути розширені можливості для налагодження CrashDetector і гри.<br><br>"
+				+ "Тут можна ввімкнути розширені можливості для налагодження " + Statics.nombre_cd.obtener()
+				+ " і гри.<br><br>"
 				+ "Радиться увімкнути розробничу консоль, аби дістати докладні відомості, трасування й діагностику.<br><br>"
-				+ "Коли треба випробувати багатокористувацький сервер у режимі online, може знадобитись дозволити передачу токена доступу до процесу CrashDetector з налаштувань приватності. "
+				+ "Коли треба випробувати багатокористувацький сервер у режимі online, може знадобитись дозволити передачу токена доступу до процесу "
+				+ Statics.nombre_cd.obtener() + " з налаштувань приватності. "
 				+ "Звичайно се <b>не радиться</b> в інших випадках.<br><br>"
 				+ "Повні настанови: <a href='https://example.com'>Посилання</a>";
 	}
@@ -7336,7 +7346,8 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "Якщо включиш CrashDetector — підуть і конфіги, логи і дані. Можеш прибрати, якщо не треба.";
+		return "Якщо включиш " + Statics.nombre_cd.obtener()
+				+ " — підуть і конфіги, логи і дані. Можеш прибрати, якщо не треба.";
 	}
 
 	@Override
@@ -8373,7 +8384,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "Перезапустіть CrashDetector, щоб нові JAR-файли потрапили до classpath.";
+		return "Перезапустіть " + Statics.nombre_cd.obtener() + ", щоб нові JAR-файли потрапили до classpath.";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -9386,7 +9397,8 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector виявив, що Minecraft, можливо, не використовує високопродуктивний GPU.\n\n"
+		return Statics.nombre_cd.obtener()
+				+ " виявив, що Minecraft, можливо, не використовує високопродуктивний GPU.\n\n"
 				+ "У Windows можна встановити ключі реєстру в "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "щоб примусити javaw.exe використовувати дискретну відеокарту.\n\n"
@@ -9399,7 +9411,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector виявив можливу проблему, пов'язану з NVIDIA Optimus або PRIME.\n\n"
+		return Statics.nombre_cd.obtener() + " виявив можливу проблему, пов'язану з NVIDIA Optimus або PRIME.\n\n"
 				+ "Залежно від використовуваного дистрибутива Linux може знадобитися налаштування NVIDIA Optimus, "
 				+ "nvidia-prime, switcheroo-control або інших гібридних систем.\n\n"
 				+ "У Fedora/RHEL та похідних зазвичай рекомендується дотримуватися документації RPMFusion.\n\n"
@@ -9408,7 +9420,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector виявив можливу проблему вибору GPU.\n\n"
+		return Statics.nombre_cd.obtener() + " виявив можливу проблему вибору GPU.\n\n"
 				+ "У деяких системах macOS з гібридною графікою можна примусово використовувати дискретну відеокарту "
 				+ "через розширені налаштування системи.\n\n"
 				+ "Кнопка застосування спробує виконати команду для пріоритизації високопродуктивного GPU.";
@@ -9416,7 +9428,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector виявив можливу проблему, пов'язану з GPU, "
+		return Statics.nombre_cd.obtener() + " виявив можливу проблему, пов'язану з GPU, "
 				+ "але для цієї операційної системи немає конкретної реалізації.";
 	}
 
@@ -9796,7 +9808,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	}
 
 	public String suprimirConsolaCD() {
-		return "Приховати консоль CrashDetector";
+		return "Приховати консоль " + Statics.nombre_cd.obtener();
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

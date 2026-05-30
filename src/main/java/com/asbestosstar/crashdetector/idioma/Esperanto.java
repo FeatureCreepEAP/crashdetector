@@ -41,8 +41,8 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>Ne troveblas JAR-dosiero de CrashDetector</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>Ne troveblas JAR-dosiero de "
+				+ Statics.nombre_cd.obtener() + "</span>";
 	}
 
 	@Override
@@ -103,15 +103,15 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>Via CrashDetector-raporto troviĝas ĉi tie <a href='" + archivo + "' style='color:#"
-				+ config.obtenerColorEnlace() + "'>Vidi raporton</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Via " + Statics.nombre_cd.obtener()
+				+ "-raporto troviĝas ĉi tie <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace()
+				+ "'>Vidi raporton</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>Ĉi tiu estas la GUI de CrashDetector. Se la ludo normale fermiĝis, ignoru ĉi tiun ekranon.</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Ĉi tiu estas la GUI de "
+				+ Statics.nombre_cd.obtener() + ". Se la ludo normale fermiĝis, ignoru ĉi tiun ekranon.</span>";
 	}
 
 	@Override
@@ -451,11 +451,13 @@ public class Esperanto implements Idioma {
 				+ "Vi uzas la raport-siton " + Config.obtenerInstancia().obtenerSitoDeInformes()
 				+ " kaj la protokol-siton " + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
 				+ "Vi ankaŭ povas kunhavigi unuopajn protokolojn sen raporto per premado de la kunhavig-butonoj apud la nomoj de la unuopaj protokoloj; "
-				+ "la protokoloj iros al la elektita protokol-sito. CrashDetector havas defaŭltan anonimigon de protokoloj, kiu provas forigi uzantnomojn, UUID-ojn, "
+				+ "la protokoloj iros al la elektita protokol-sito. " + Statics.nombre_cd.obtener()
+				+ " havas defaŭltan anonimigon de protokoloj, kiu provas forigi uzantnomojn, UUID-ojn, "
 				+ "alirkodojn, seanco-ID-ojn, IP-adresojn kaj aliajn datumojn. Tamen, ĝi ne estas perfekta. Tamen, la kreinto de la modpakaĵo povas malŝalti ĝin. "
 				+ "Ĝi povas esti ŝaltita aŭ malŝaltita per la markobutono malsupre en ĉi tiu ekrano. Vi estas la reganto de viaj propraj datumoj; vi decidu kien vi alŝutas viajn datumojn. "
 				+ "La protokol-sitoj estas posedataj de triaj partioj, kies posedeco ofte kaŝiĝas pro privateco. Vi prenas tutan respondecon pri administrado de viaj datumoj kaj la implikitaj riskoj. "
-				+ "La Kunhavig-Dialogo de CrashDetector estas simple interfaco, kiu permesas al vi administri tion. "
+				+ "La Kunhavig-Dialogo de " + Statics.nombre_cd.obtener()
+				+ " estas simple interfaco, kiu permesas al vi administri tion. "
 				+ "Estas grava, ke vi sciu pri GDPR kaj ARCO. "
 				+ "Se vi estas en Eŭropo, vi povas uzi <a href=\"https://securelogger.top\">securelogger.top</a> gastigatan en Germanio de Hetzner. "
 				+ "Por pli da jura informo, vidu la jenajn ligilojn: "
@@ -494,7 +496,8 @@ public class Esperanto implements Idioma {
 		return "Vi havas eraron de SSL. Tio estas ofta kun malnovaj versioj de Java, "
 				+ "inkluzive de Java 8 versioj en la defaŭlta Minecraft-Lanĉilo kaj versioj ĉe sun.com kaj java.com. "
 				+ "Tio influas multajn aspektojn, kiel ekzemple la JAR-dosieroj de la instalilo de MinecraftForge, "
-				+ "la funkcio por kunhavigi raportojn de CrashDetector dum vi uzas la defaŭltan finpunkton, "
+				+ "la funkcio por kunhavigi raportojn de " + Statics.nombre_cd.obtener()
+				+ " dum vi uzas la defaŭltan finpunkton, "
 				+ "iu modifoj kiuj bezonas interretan konekton kaj iujn protokolajn retejojn. "
 				+ "Se tio okazas al vi dum provo kunhavigi raporton, simple aldonu ekranbildon "
 				+ "kaj elektu protokolan retejon kiu kongruas kun malnovaj versioj de Java 8.";
@@ -525,7 +528,9 @@ public class Esperanto implements Idioma {
 				+ "ATENTU! Crash Assistant estas falsa malprogram-detektilo. Ĝi intence blokas la lanĉon de la ludo, ignorante vian liberecon daŭrigi ludi kun la celitaj kromprogramoj. "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Vidi kodon de MalwareMod.java</a>   "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Vidi kodon de JarInJarHelper.java</a>. "
-				+ "Nur ĉi tiu kromprogramo estas nuntempe sur ilia listo, kaj ili fakte nur celas la defaŭltan protokolregistran retejon, kiun la uzanto povas ŝanĝi, kaj tio nur okazas se vi elekte uzas la enigitan protokolan kunhavigan funkcion. CrashAssistant NE faras iujn ajn kontroladojn por eĉ determini kiu protokolregistra retejo estas uzata kaj ne klarigas kiel ŝanĝi ĝin (estas falmenuo ĉe la malsupra parto de la kunhaviga dialogo), kaj sendepende de la agordita retejo, CrashAssistant blokos la lanĉon de la ludo. En sia mesaĝo, ili diras fari vian propran esploradon, FARU ĜIN, rigardu la kodon de CrashDetector kaj Crash Assistant kaj komprenu kion ili faras, NE fidas al aŭtoritato.</b>";
+				+ "Nur ĉi tiu kromprogramo estas nuntempe sur ilia listo, kaj ili fakte nur celas la defaŭltan protokolregistran retejon, kiun la uzanto povas ŝanĝi, kaj tio nur okazas se vi elekte uzas la enigitan protokolan kunhavigan funkcion. CrashAssistant NE faras iujn ajn kontroladojn por eĉ determini kiu protokolregistra retejo estas uzata kaj ne klarigas kiel ŝanĝi ĝin (estas falmenuo ĉe la malsupra parto de la kunhaviga dialogo), kaj sendepende de la agordita retejo, CrashAssistant blokos la lanĉon de la ludo. En sia mesaĝo, ili diras fari vian propran esploradon, FARU ĜIN, rigardu la kodon de "
+				+ Statics.nombre_cd.obtener()
+				+ " kaj Crash Assistant kaj komprenu kion ili faras, NE fidas al aŭtoritato.</b>";
 	}
 
 	@Override
@@ -803,7 +808,7 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String ajustesCrashDetector() {
-		return "Agordoj de CrashDetector";
+		return "Agordoj de " + Statics.nombre_cd.obtener();
 	}
 
 	@Override
@@ -903,7 +908,7 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "Malfermu nur CrashDetector dum malsukceso";
+		return "Malfermu nur " + Statics.nombre_cd.obtener() + " dum malsukceso";
 	}
 
 	@Override
@@ -1870,8 +1875,8 @@ public class Esperanto implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Eblas, ke vi havas problemon rilatantan al IPv6. " + "Estas du solvoj: "
 				+ "1) Aldonu la JVM-argumenton <code>-Djava.net.preferIPv4Stack=true</code> al via lanĉilo, aŭ "
-				+ "2) Uzu la butonon 'QuickFix' en CrashDetector por apliki korekton, kiu aŭtomate ŝaltas tiun agordon."
-				+ "</b>";
+				+ "2) Uzu la butonon 'QuickFix' en " + Statics.nombre_cd.obtener()
+				+ " por apliki korekton, kiu aŭtomate ŝaltas tiun agordon." + "</b>";
 	}
 
 	@Override
@@ -1932,7 +1937,9 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String noRegistroDeLauncher() {
-		return "ĜENERALA: Elektu la tipon de lanĉilo kiun vi uzas. La loko-dosieroj de lanĉilo (launcher_log.txt, stdout, ktp.) enhavas gravajn erarinformojn, kiujn latest.log ne montras. CrashDetector ne povas legi viajn loko-dosierojn — eble mankas loko-dosiero kaj vi devas alglui la lokon.<br>"
+		return "ĜENERALA: Elektu la tipon de lanĉilo kiun vi uzas. La loko-dosieroj de lanĉilo (launcher_log.txt, stdout, ktp.) enhavas gravajn erarinformojn, kiujn latest.log ne montras. "
+				+ Statics.nombre_cd.obtener()
+				+ " ne povas legi viajn loko-dosierojn — eble mankas loko-dosiero kaj vi devas alglui la lokon.<br>"
 				+ "Por pli da informo, vidu <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">tiun problemon</a>. Ĉi tiuj lokoj enhavas la norman eliron (STDOUT) necesa por diagnozi multajn erartipojn.";
 	}
 
@@ -2750,8 +2757,8 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "Ĉu ebligi ProxySysOutSysErr?\n\n"
-				+ "Ĉi tiu opcio donas al CrashDetector aliron al System.out kaj System.err kiam la lanĉilo ne provizas logojn.\n\n"
+		return "Ĉu ebligi ProxySysOutSysErr?\n\n" + "Ĉi tiu opcio donas al " + Statics.nombre_cd.obtener()
+				+ " aliron al System.out kaj System.err kiam la lanĉilo ne provizas logojn.\n\n"
 				+ "Ĝi nur devus esti ebligita se vi ne povas alglui registron mane.\n\n"
 				+ "Averto: Ĉi tio povas interferi kun iuj aldonaĵoj aŭ lanĉiloj.\n\n"
 				+ "Necesas restarti la ludon/aplikon por ke la ŝanĝoj efektiviĝu.";
@@ -2764,8 +2771,8 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "ProxySysOutSysErr sukcese ebligita.\n\n"
-				+ "Necesas restarti CrashDetector por ke la ŝanĝoj efektiviĝu.";
+		return "ProxySysOutSysErr sukcese ebligita.\n\n" + "Necesas restarti " + Statics.nombre_cd.obtener()
+				+ " por ke la ŝanĝoj efektiviĝu.";
 	}
 
 	@Override
@@ -3361,7 +3368,8 @@ public class Esperanto implements Idioma {
 				+ "Eraro de ModLauncher-servoj: vojo kun nevalidaj signoj. "
 				+ "ModLauncher-servoj ne povas prilabori vojojn kiuj enhavas ne-ASCII aŭ specialajn signojn. "
 				+ "Problemaj signoj inkludas: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요, kiel ankaŭ precipe la signo '\"' se ĝi troviĝas je fino de nomo. "
-				+ "Komunaj servoj en ModLauncher inkludas CrashDetector, " + Config.obtenerInstancia().obtenerNombreCD()
+				+ "Komunaj servoj en ModLauncher inkludas " + Statics.nombre_cd.obtener() + ", "
+				+ Config.obtenerInstancia().obtenerNombreCD()
 				+ ", FeatureCreep, Vivicraft, Optifine, Sodium, clonos, Iris Shaders/Oculus, MixerLogger, CrashAssistant kaj Sintrya Connector. "
 				+ "Vi povas forigi ĉiujn servojn, sed eble estos aliaj problemoj pro via voja nomo. "
 				+ "Solvado: Ŝanĝu la nomon de via instanco por uzi nur ASCII-signojn (a-z, A-Z, 0-9), sen spacetoj aŭ specialaj signoj.</b>";
@@ -5775,7 +5783,7 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "Ĉi tiuj lanĉiloj estas tiuj, kiujn CrashDetector sugestas kiel bonaj.";
+		return "Ĉi tiuj lanĉiloj estas tiuj, kiujn " + Statics.nombre_cd.obtener() + " sugestas kiel bonaj.";
 	}
 
 	@Override
@@ -5808,7 +5816,8 @@ public class Esperanto implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "Ĉi tie vi povas registri nerekomenditajn modojn por ke CrashDetector detektu ilin, se ili estas instalitaj.";
+		return "Ĉi tie vi povas registri nerekomenditajn modojn por ke " + Statics.nombre_cd.obtener()
+				+ " detektu ilin, se ili estas instalitaj.";
 	}
 
 	@Override
@@ -5818,12 +5827,13 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String anularNormalDescripcion() {
-		return "CrashDetector devus averti eĉ se ne okazas kraŝo.";
+		return Statics.nombre_cd.obtener() + " devus averti eĉ se ne okazas kraŝo.";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "Registru la modojn, kiujn CrashDetector rekomendas. Se ili mankas, CrashDetector povas averti.";
+		return "Registru la modojn, kiujn " + Statics.nombre_cd.obtener() + " rekomendas. Se ili mankas, "
+				+ Statics.nombre_cd.obtener() + " povas averti.";
 	}
 
 	@Override
@@ -5848,7 +5858,8 @@ public class Esperanto implements Idioma {
 				+ "uzantnomo aŭ UUID.\n" + "• La rajto ne memakuzi sin.\n"
 				+ "• La rajto rifuzi respondi demandojn ne necesajn por solvi la problemon.\n"
 				+ "• La rajto ricevi gvidadon en la babilejo.\n"
-				+ "• La rajto uzi la integritan anonimigilon de protokoloj (logs) en CrashDetector.\n\n"
+				+ "• La rajto uzi la integritan anonimigilon de protokoloj (logs) en " + Statics.nombre_cd.obtener()
+				+ ".\n\n"
 
 				+ "Ĉi tiu teksto akceptas HTML-enhavon.";
 	}
@@ -5860,7 +5871,9 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String advertenciaHashLento() {
-		return "Averto: aldoni multajn grandajn dosierojn povas igi la kontrolon daŭri plurajn minutojn. CrashDetector devos kalkuli la haketon de ĉiu dosiero antaŭ ol daŭrigi. Rekomendiĝas protekti nur strikte necesajn dosierojn.";
+		return "Averto: aldoni multajn grandajn dosierojn povas igi la kontrolon daŭri plurajn minutojn. "
+				+ Statics.nombre_cd.obtener()
+				+ " devos kalkuli la haketon de ĉiu dosiero antaŭ ol daŭrigi. Rekomendiĝas protekti nur strikte necesajn dosierojn.";
 	}
 
 	@Override
@@ -5892,7 +5905,8 @@ public class Esperanto implements Idioma {
 	public String mensajeDeSylentBell() {
 		return "<html><div style='width:150px; text-align:center;'>"
 				+ "La opinioj kaj komentoj de Sylent Bell ne nepre kongruas kun niaj; "
-				+ "ni simple pensis, ke estus amuze meti ŝin ĉi tie. CrashDetector estas laika." + "</div></html>";
+				+ "ni simple pensis, ke estus amuze meti ŝin ĉi tie. " + Statics.nombre_cd.obtener() + " estas laika."
+				+ "</div></html>";
 	}
 
 	@Override
@@ -6262,10 +6276,11 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-		return "" + "<b>Debugaj Iloj</b><br><br>"
-				+ "Ĉi tie vi povas aktivigi altnivelajn funkciojn por pritrakti CrashDetector kaj viajn ludojn.<br><br>"
+		return "" + "<b>Debugaj Iloj</b><br><br>" + "Ĉi tie vi povas aktivigi altnivelajn funkciojn por pritrakti "
+				+ Statics.nombre_cd.obtener() + " kaj viajn ludojn.<br><br>"
 				+ "Oni rekomendas ebligi la programistan konzolon por akiri detalajn informojn, spuradojn kaj diagnozojn dum analizado.<br><br>"
-				+ "Se vi bezonas testi multludantan servilon en reta reĝimo, eble necesos permesi transdonon de la alirkodo (token de acceso) al la CrashDetector-procezo el la privatecaj agordoj. "
+				+ "Se vi bezonas testi multludantan servilon en reta reĝimo, eble necesos permesi transdonon de la alirkodo (token de acceso) al la "
+				+ Statics.nombre_cd.obtener() + "-procezo el la privatecaj agordoj. "
 				+ "Tio ĝenerale <b>ne estas rekomendata</b> en aliaj okazoj.<br><br>"
 				+ "Plenaj instrukcioj: <a href='https://example.com'>Ligu!</a>";
 	}
@@ -8191,7 +8206,8 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "Se vi inkluzivas la internan dosierujon de CrashDetector, agordoj, protokoloj kaj helpaj datumoj ankaŭ vojaĝos, do vi povas malselekti ĝin se ne necese.";
+		return "Se vi inkluzivas la internan dosierujon de " + Statics.nombre_cd.obtener()
+				+ ", agordoj, protokoloj kaj helpaj datumoj ankaŭ vojaĝos, do vi povas malselekti ĝin se ne necese.";
 	}
 
 	@Override
@@ -9007,7 +9023,7 @@ public class Esperanto implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "Restartigu CrashDetector por ke la novaj JAR-oj eniru la classpath-on.";
+		return "Restartigu " + Statics.nombre_cd.obtener() + " por ke la novaj JAR-oj eniru la classpath-on.";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -10033,7 +10049,7 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector detektis, ke Minecraft eble ne uzas la altrendimentan GPU.\n\n"
+		return Statics.nombre_cd.obtener() + " detektis, ke Minecraft eble ne uzas la altrendimentan GPU.\n\n"
 				+ "En Windows oni povas starigi ŝlosilojn de registro en "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "por devigi, ke javaw.exe uzu la dedikitan GPU.\n\n"
@@ -10045,7 +10061,7 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector detektis eblan problemon rilatan al NVIDIA Optimus aŭ PRIME.\n\n"
+		return Statics.nombre_cd.obtener() + " detektis eblan problemon rilatan al NVIDIA Optimus aŭ PRIME.\n\n"
 				+ "Depende de la uzata Linux-distribuo, povas esti necese agordi NVIDIA Optimus, "
 				+ "nvidia-prime, switcheroo-control aŭ aliajn hibridajn sistemojn.\n\n"
 				+ "En Fedora/RHEL kaj derivaĵoj kutime rekomendas sekvi la dokumentaron de RPMFusion.\n\n"
@@ -10054,7 +10070,7 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector detektis eblan problemon de selektado de GPU.\n\n"
+		return Statics.nombre_cd.obtener() + " detektis eblan problemon de selektado de GPU.\n\n"
 				+ "En kelkaj sistemoj macOS kun hibrida GPU eblas devigi la uzon de la dedikita GPU "
 				+ "per avancitaj sistemaj agordoj.\n\n"
 				+ "La butono de apliki provos ekzekuti komandon por prioritatigi la altrendimentan GPU.";
@@ -10062,7 +10078,7 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector detektis eblan problemon rilatan al la GPU, "
+		return Statics.nombre_cd.obtener() + " detektis eblan problemon rilatan al la GPU, "
 				+ "sed ne ekzistas specifa implemento por ĉi tiu operaciumo.";
 	}
 
@@ -10446,7 +10462,7 @@ public class Esperanto implements Idioma {
 
 	// Esperanto (Esperanto)
 	public String suprimirConsolaCD() {
-		return "Kaŝi konzolon de CrashDetector";
+		return "Kaŝi konzolon de " + Statics.nombre_cd.obtener();
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

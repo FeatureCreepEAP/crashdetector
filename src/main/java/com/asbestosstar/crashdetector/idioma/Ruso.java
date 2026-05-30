@@ -41,7 +41,8 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError() + "'>JAR-файл CrashDetector не найден</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>JAR-файл " + Statics.nombre_cd.obtener()
+				+ " не найден</span>";
 	}
 
 	@Override
@@ -102,14 +103,15 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo() + "'>Отчет CrashDetector доступен здесь: <a href='"
-				+ archivo + "' style='color:#" + config.obtenerColorEnlace() + "'>Просмотреть отчет</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Отчет " + Statics.nombre_cd.obtener()
+				+ " доступен здесь: <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace()
+				+ "'>Просмотреть отчет</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>Это GUI CrashDetector. Если игра закрылась нормально, игнорируйте это окно.</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Это GUI " + Statics.nombre_cd.obtener()
+				+ ". Если игра закрылась нормально, игнорируйте это окно.</span>";
 	}
 
 	@Override
@@ -449,11 +451,13 @@ public class Ruso implements Idioma {
 				+ "Вы используете сайт отчётов " + Config.obtenerInstancia().obtenerSitoDeInformes() + " и сайт логов "
 				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
 				+ "Вы также можете делиться отдельными логами без отчёта, нажав кнопки «Поделиться» рядом с именами отдельных логов; "
-				+ "логи будут отправлены на выбранный сайт логов. CrashDetector по умолчанию анонимизирует логи, пытаясь удалить имена пользователей, UUID, "
+				+ "логи будут отправлены на выбранный сайт логов. " + Statics.nombre_cd.obtener()
+				+ " по умолчанию анонимизирует логи, пытаясь удалить имена пользователей, UUID, "
 				+ "токены доступа, ID сессий, IP-адреса и другие данные. Однако эта функция не идеальна. Кроме того, автор модпака может её отключить. "
 				+ "Её можно включить или отключить с помощью флажка внизу этого окна. Вы — контролёр своих данных; именно вы решаете, куда их загружать. "
 				+ "Сайты логов принадлежат третьим лицам, чья собственность часто скрыта из соображений приватности. Вы несёте полную ответственность за управление своими данными и связанные с этим риски. "
-				+ "Диалог отправки CrashDetector — это просто интерфейс, позволяющий вам управлять этим процессом. "
+				+ "Диалог отправки " + Statics.nombre_cd.obtener()
+				+ " — это просто интерфейс, позволяющий вам управлять этим процессом. "
 				+ "Важно, чтобы вы знали о GDPR и ARCO. "
 				+ "Если вы находитесь в Европе, вы можете использовать <a href=\"https://securelogger.top\">securelogger.top</a>, размещённый в Германии компанией Hetzner. "
 				+ "Для дополнительной юридической информации см. следующие ссылки: "
@@ -492,7 +496,8 @@ public class Ruso implements Idioma {
 		return "У вас ошибка SSL. Это часто встречается в старых версиях Java, "
 				+ "включая версии Java 8 в стандартном лаунчере Minecraft и версии с sun.com и java.com. "
 				+ "Это влияет на многие аспекты, такие как JAR-файлы установщика MinecraftForge, "
-				+ "функция для отправки отчетов CrashDetector при использовании стандартного конечного пункта, "
+				+ "функция для отправки отчетов " + Statics.nombre_cd.obtener()
+				+ " при использовании стандартного конечного пункта, "
 				+ "некоторые моды, требующие интернета, и некоторые сайты для записи логов. "
 				+ "Если это произошло при попытке поделиться отчетом, просто прикрепите скриншот "
 				+ "и выберите сайт для записи логов, совместимый со старыми версиями Java 8.";
@@ -523,7 +528,9 @@ public class Ruso implements Idioma {
 				+ "ВНИМАНИЕ! Crash Assistant — это поддельный детектор вредоносного ПО. Он намеренно блокирует запуск игры, игнорируя вашу свободу продолжать играть с целевыми модификациями. "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Посмотреть код MalwareMod.java</a>   "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Посмотреть код JarInJarHelper.java</a>. "
-				+ "На данный момент в их списке только этот мод, и они фактически нацелены только на сайт записи по умолчанию, который может быть изменён пользователем, и это происходит только если вы явно выбираете использовать встроенную функцию обмена логами. CrashAssistant НЕ проводит никаких проверок, чтобы определить, какой сайт записи используется, и не объясняет, как его изменить (есть выпадающее меню внизу диалогового окна обмена), и независимо от настроенного сайта, CrashAssistant заблокирует запуск игры. В их сообщении говорится, чтобы вы провели своё собственное исследование, СДЕЛАЙТЕ ЭТО, изучите код CrashDetector и Crash Assistant и поймите, что они делают, НЕ полагайтесь на обращение к авторитету.</b>";
+				+ "На данный момент в их списке только этот мод, и они фактически нацелены только на сайт записи по умолчанию, который может быть изменён пользователем, и это происходит только если вы явно выбираете использовать встроенную функцию обмена логами. CrashAssistant НЕ проводит никаких проверок, чтобы определить, какой сайт записи используется, и не объясняет, как его изменить (есть выпадающее меню внизу диалогового окна обмена), и независимо от настроенного сайта, CrashAssistant заблокирует запуск игры. В их сообщении говорится, чтобы вы провели своё собственное исследование, СДЕЛАЙТЕ ЭТО, изучите код "
+				+ Statics.nombre_cd.obtener()
+				+ " и Crash Assistant и поймите, что они делают, НЕ полагайтесь на обращение к авторитету.</b>";
 	}
 
 	@Override
@@ -907,7 +914,7 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "Открывать CrashDetector только при сбое";
+		return "Открывать " + Statics.nombre_cd.obtener() + " только при сбое";
 	}
 
 	@Override
@@ -1879,8 +1886,8 @@ public class Ruso implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Возможно, у вас есть проблемы, связанные с IPv6. " + "Есть два решения: "
 				+ "1) Добавьте аргумент JVM <code>-Djava.net.preferIPv4Stack=true</code> в свой лаунчер, или "
-				+ "2) Используйте кнопку 'QuickFix' в программе CrashDetector для автоматического применения патча с этой настройкой."
-				+ "</b>";
+				+ "2) Используйте кнопку 'QuickFix' в программе " + Statics.nombre_cd.obtener()
+				+ " для автоматического применения патча с этой настройкой." + "</b>";
 	}
 
 	@Override
@@ -1941,7 +1948,9 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String noRegistroDeLauncher() {
-		return "ОБЩИЙ: Выберите тип используемого лаунчера. Журналы лаунчера (launcher_log.txt, stdout и т. д.) содержат критическую информацию об ошибках, которых нет в latest.log. CrashDetector не может прочитать журналы вашего лаунчера — возможно, он не создаёт файл журнала, и вам нужно вставить журналы вручную.<br>"
+		return "ОБЩИЙ: Выберите тип используемого лаунчера. Журналы лаунчера (launcher_log.txt, stdout и т. д.) содержат критическую информацию об ошибках, которых нет в latest.log. "
+				+ Statics.nombre_cd.obtener()
+				+ " не может прочитать журналы вашего лаунчера — возможно, он не создаёт файл журнала, и вам нужно вставить журналы вручную.<br>"
 				+ "Для получения дополнительной информации см. <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">этот вопрос</a>. Эти журналы содержат стандартный вывод (STDOUT), необходимый для диагностики многих типов ошибок.";
 	}
 
@@ -2760,8 +2769,8 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "Включить ProxySysOutSysErr?\n\n"
-				+ "Эта опция позволяет CrashDetector получать доступ к System.out и System.err, когда лаунчер не предоставляет логи.\n\n"
+		return "Включить ProxySysOutSysErr?\n\n" + "Эта опция позволяет " + Statics.nombre_cd.obtener()
+				+ " получать доступ к System.out и System.err, когда лаунчер не предоставляет логи.\n\n"
 				+ "Следует включать только если вы не можете вручную вставить лог.\n\n"
 				+ "Внимание: это может конфликтовать с некоторыми модами или лаунчерами.\n\n"
 				+ "Требуется перезапуск игры/приложения для применения изменений.";
@@ -2774,8 +2783,8 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "ProxySysOutSysErr успешно включён.\n\n"
-				+ "Требуется перезапуск CrashDetector для применения изменений.";
+		return "ProxySysOutSysErr успешно включён.\n\n" + "Требуется перезапуск " + Statics.nombre_cd.obtener()
+				+ " для применения изменений.";
 	}
 
 	@Override
@@ -3373,7 +3382,7 @@ public class Ruso implements Idioma {
 				+ "Ошибка службы ModLauncher: путь содержит недопустимые символы. "
 				+ "Службы ModLauncher не могут обрабатывать пути, содержащие не-ASCII или специальные символы. "
 				+ "Проблемные символы включают: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요, и особенно символ '\"', если он находится в конце имени. "
-				+ "Распространённые компоненты служб в ModLauncher включают CrashDetector, "
+				+ "Распространённые компоненты служб в ModLauncher включают " + Statics.nombre_cd.obtener() + ", "
 				+ Config.obtenerInstancia().obtenerNombreCD()
 				+ ", FeatureCreep, Vivicraft, Optifine, Sodium, clonos, Iris Shaders/Oculus, MixerLogger, CrashAssistant и Sintrya Connector. "
 				+ "Вы можете удалить все службы, но другие проблемы могут возникнуть из-за имени пути. "
@@ -5790,7 +5799,7 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "Эти лаунчеры рекомендованы CrashDetector как надёжные.";
+		return "Эти лаунчеры рекомендованы " + Statics.nombre_cd.obtener() + " как надёжные.";
 	}
 
 	@Override
@@ -5823,7 +5832,8 @@ public class Ruso implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "Здесь вы можете зарегистрировать нерекомендуемые моды, чтобы CrashDetector обнаруживал их при установке.";
+		return "Здесь вы можете зарегистрировать нерекомендуемые моды, чтобы " + Statics.nombre_cd.obtener()
+				+ " обнаруживал их при установке.";
 	}
 
 	@Override
@@ -5833,12 +5843,13 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String anularNormalDescripcion() {
-		return "CrashDetector должен предупреждать, даже если сбой не произошёл.";
+		return Statics.nombre_cd.obtener() + " должен предупреждать, даже если сбой не произошёл.";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "Зарегистрируйте моды, рекомендованные CrashDetector. Если они отсутствуют, CrashDetector может предупредить вас.";
+		return "Зарегистрируйте моды, рекомендованные " + Statics.nombre_cd.obtener() + ". Если они отсутствуют, "
+				+ Statics.nombre_cd.obtener() + " может предупредить вас.";
 	}
 
 	@Override
@@ -5862,8 +5873,8 @@ public class Ruso implements Idioma {
 				+ "• Право не предоставлять ненужную информацию для поддержки, такую как используемый лаунчер, "
 				+ "имя пользователя или UUID.\n" + "• Право не свидетельствовать против себя.\n"
 				+ "• Право отказаться отвечать на вопросы, не относящиеся к решению проблемы.\n"
-				+ "• Право получать руководство внутри чата.\n"
-				+ "• Право использовать встроенную в CrashDetector функцию анонимизации логов.\n\n"
+				+ "• Право получать руководство внутри чата.\n" + "• Право использовать встроенную в "
+				+ Statics.nombre_cd.obtener() + " функцию анонимизации логов.\n\n"
 
 				+ "Этот текст поддерживает HTML-контент.";
 	}
@@ -5875,7 +5886,9 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String advertenciaHashLento() {
-		return "Предупреждение: добавление множества больших файлов может привести к тому, что проверка займёт несколько минут. CrashDetector должен вычислить хеш каждого файла перед продолжением. Рекомендуется защищать только строго необходимые файлы.";
+		return "Предупреждение: добавление множества больших файлов может привести к тому, что проверка займёт несколько минут. "
+				+ Statics.nombre_cd.obtener()
+				+ " должен вычислить хеш каждого файла перед продолжением. Рекомендуется защищать только строго необходимые файлы.";
 	}
 
 	@Override
@@ -5907,8 +5920,8 @@ public class Ruso implements Idioma {
 	public String mensajeDeSylentBell() {
 		return "<html><div style='width:150px; text-align:center;'>"
 				+ "Мнения и комментарии Sylent Bell не обязательно совпадают с нашими; "
-				+ "мы просто подумали, что будет забавно разместить её здесь. CrashDetector является светским."
-				+ "</div></html>";
+				+ "мы просто подумали, что будет забавно разместить её здесь. " + Statics.nombre_cd.obtener()
+				+ " является светским." + "</div></html>";
 	}
 
 	@Override
@@ -6285,10 +6298,11 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-		return "" + "<b>Инструменты отладки</b><br><br>"
-				+ "Здесь вы можете включить расширенные функции для отладки CrashDetector и ваших игр.<br><br>"
+		return "" + "<b>Инструменты отладки</b><br><br>" + "Здесь вы можете включить расширенные функции для отладки "
+				+ Statics.nombre_cd.obtener() + " и ваших игр.<br><br>"
 				+ "Рекомендуется включить консоль разработчика, чтобы получать подробную информацию, трассировки и диагностику во время анализа.<br><br>"
-				+ "Если вам нужно протестировать многопользовательский сервер в онлайн-режиме, может потребоваться разрешить передачу токена доступа процессу CrashDetector через настройки конфиденциальности. "
+				+ "Если вам нужно протестировать многопользовательский сервер в онлайн-режиме, может потребоваться разрешить передачу токена доступа процессу "
+				+ Statics.nombre_cd.obtener() + " через настройки конфиденциальности. "
 				+ "Это, как правило, <b>не рекомендуется</b> в других случаях.<br><br>"
 				+ "Полная инструкция: <a href='https://example.com'>Ссылка!</a>";
 	}
@@ -8222,7 +8236,8 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "Если вы включите внутреннюю папку CrashDetector, также будут переданы конфигурации, журналы и вспомогательные данные, поэтому вы можете снять выбор, если это не нужно.";
+		return "Если вы включите внутреннюю папку " + Statics.nombre_cd.obtener()
+				+ ", также будут переданы конфигурации, журналы и вспомогательные данные, поэтому вы можете снять выбор, если это не нужно.";
 	}
 
 	@Override
@@ -9039,7 +9054,7 @@ public class Ruso implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "Перезапустите CrashDetector, чтобы новые JAR-файлы попали в classpath.";
+		return "Перезапустите " + Statics.nombre_cd.obtener() + ", чтобы новые JAR-файлы попали в classpath.";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -10053,7 +10068,8 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector обнаружил, что Minecraft, возможно, не использует высокопроизводительный GPU.\n\n"
+		return Statics.nombre_cd.obtener()
+				+ " обнаружил, что Minecraft, возможно, не использует высокопроизводительный GPU.\n\n"
 				+ "В Windows можно установить ключи реестра в "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "чтобы заставить javaw.exe использовать дискретную видеокарту.\n\n"
@@ -10066,7 +10082,7 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector обнаружил возможную проблему, связанную с NVIDIA Optimus или PRIME.\n\n"
+		return Statics.nombre_cd.obtener() + " обнаружил возможную проблему, связанную с NVIDIA Optimus или PRIME.\n\n"
 				+ "В зависимости от используемого дистрибутива Linux может потребоваться настройка NVIDIA Optimus, "
 				+ "nvidia-prime, switcheroo-control или других гибридных систем.\n\n"
 				+ "В Fedora/RHEL и производных обычно рекомендуется следовать документации RPMFusion.\n\n"
@@ -10075,7 +10091,7 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector обнаружил возможную проблему выбора GPU.\n\n"
+		return Statics.nombre_cd.obtener() + " обнаружил возможную проблему выбора GPU.\n\n"
 				+ "В некоторых системах macOS с гибридной графикой можно принудительно использовать дискретную видеокарту "
 				+ "через расширенные настройки системы.\n\n"
 				+ "Кнопка применения попытается выполнить команду для приоритизации высокопроизводительного GPU.";
@@ -10083,7 +10099,7 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector обнаружил возможную проблему, связанную с GPU, "
+		return Statics.nombre_cd.obtener() + " обнаружил возможную проблему, связанную с GPU, "
 				+ "но для этой операционной системы нет конкретной реализации.";
 	}
 
@@ -10463,7 +10479,7 @@ public class Ruso implements Idioma {
 	}
 
 	public String suprimirConsolaCD() {
-		return "Скрыть консоль CrashDetector";
+		return "Скрыть консоль " + Statics.nombre_cd.obtener();
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

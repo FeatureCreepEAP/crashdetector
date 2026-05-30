@@ -24,6 +24,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
 import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
@@ -78,7 +79,7 @@ public class DialogoCompartirPrimitiva extends DialogoCompartir {
 	public void preperar(Instant instant) {
 		this.instant = instant;
 
-		setTitle(ConfigString.de("nombre_cd", "CrashDetector").obtener());
+		setTitle(Statics.nombre_cd.obtener());
 		setResizable(false);
 
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -275,7 +276,7 @@ public class DialogoCompartirPrimitiva extends DialogoCompartir {
 	}
 
 	private void recargarTextos() {
-		setTitle(ConfigString.de("nombre_cd", "CrashDetector").obtener());
+		setTitle(Statics.nombre_cd.obtener());
 
 		if (etiquetaMensaje != null) {
 			etiquetaMensaje.setText(MonitorDePID.idioma.mensajeDialogoCompartirPrimitiva());

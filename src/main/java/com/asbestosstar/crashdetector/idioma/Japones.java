@@ -41,7 +41,8 @@ public class Japones implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError() + "'>CrashDetectorのJARファイルが見つかりません</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + Statics.nombre_cd.obtener()
+				+ "のJARファイルが見つかりません</span>";
 	}
 
 	@Override
@@ -101,14 +102,15 @@ public class Japones implements Idioma {
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo() + "'>CrashDetectorレポートはこちら <a href='" + archivo
-				+ "' style='color:#" + config.obtenerColorEnlace() + "'>レポートを見る</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>" + Statics.nombre_cd.obtener()
+				+ "レポートはこちら <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace()
+				+ "'>レポートを見る</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>これはCrashDetectorのGUIインターフェースです。ゲームが正常に終了した場合は、この画面を無視してください。</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>これは" + Statics.nombre_cd.obtener()
+				+ "のGUIインターフェースです。ゲームが正常に終了した場合は、この画面を無視してください。</span>";
 	}
 
 	@Override
@@ -426,27 +428,26 @@ public class Japones implements Idioma {
 
 	@Override
 	public String arco() {
-		return "This dialogue allows you to share logs using the SecureLogger API "
-				+ "at <a href=\"https://securelogger.net\">securelogger.net</a>. When you press the button to share the report, "
-				+ "your report is sent to the selected endpoint (default: asbestosstar.egoism.jp) (changeable at the bottom). "
-				+ "You can share all selected logs together with the report. If you do not wish to upload, do not use this dialogue! "
-				+ "We do not process your report on the official endpoint (<a href=\"https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb\">https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb</a>); "
-				+ "we only remove disallowed links. The code is here: <a href=\"https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb\">source code</a>. "
-				+ "This is used solely to display information about your crash and the link to the logs. However, you may use a custom endpoint that might not use the same methods. "
-				+ "You are using the report site " + Config.obtenerInstancia().obtenerSitoDeInformes()
-				+ " and the log site " + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
-				+ "You can also share individual logs without a report by pressing the share buttons next to individual log names; "
-				+ "the logs will go to the selected log site. CrashDetector has default log anonymisation, which attempts to remove usernames, UUIDs, "
-				+ "access tokens, session IDs, IP addresses, and other data. However, it is not perfect. Nevertheless, the modpack author can disable it. "
-				+ "It can be enabled or disabled via the checkbox at the bottom of this screen. You are the controller of your own data; you decide where to upload your data. "
-				+ "Log sites are owned by third parties whose ownership is often hidden for privacy reasons. You assume full responsibility for managing your data and the associated risks. "
-				+ "CrashDetector’s Share Dialogue is merely an interface that allows you to manage this. "
-				+ "It is important that you are aware of GDPR and ARCO. "
-				+ "If you are in Europe, you can use <a href=\"https://securelogger.top\">securelogger.top</a> hosted in Germany by Hetzner. "
-				+ "For more legal information, consult the following links: "
-				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf\">LFPDPPP</a>, "
-				+ "<a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32016R0679\">GDPR</a>, "
-				+ "<a href=\"https://www.ppc.go.jp/files/pdf/20220401_personal_basicpolicy.pdf\">Japan’s Basic Policy on Personal Information Protection</a>.";
+		return "このダイアログでは、SecureLogger APIを使用してログを共有できます。"
+				+ "APIは <a href=\"https://securelogger.net\">securelogger.net</a> にあります。レポートを共有するボタンを押すと、"
+				+ "レポートは選択したエンドポイント（デフォルト: asbestosstar.egoism.jp）に送信されます（下部で変更可能）。"
+				+ "選択したすべてのログをレポートと一緒に共有できます。アップロードを希望しない場合は、このダイアログを使用しないでください！"
+				+ "公式エンドポイント（<a href=\"https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb\">https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb</a>）では"
+				+ "レポートを処理しません；許可されていないリンクを削除するのみです。コードはこちら: <a href=\"https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb\">ソースコード</a>。"
+				+ "これはクラッシュに関する情報とログへのリンクを表示するためのみに使用されます。ただし、同じ方法を使用しないカスタムエンドポイントを使用する場合もあります。" + "現在使用しているレポートサイト: "
+				+ Config.obtenerInstancia().obtenerSitoDeInformes() + "、ログサイト: "
+				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "。"
+				+ "個々のログ名の横にある共有ボタンを押すことで、レポートなしで個々のログを共有することもできます；" + "ログは選択されたログサイトに送信されます。"
+				+ Statics.nombre_cd.obtener() + " にはデフォルトのログ匿名化機能があり、ユーザー名、UUID、"
+				+ "アクセストークン、セッションID、IPアドレス、その他のデータを削除しようとします。ただし、完全ではありません。それでも、modpackの作者はこれを無効にすることができます。"
+				+ "この画面の下部にあるチェックボックスで有効または無効にできます。あなたは自分のデータの管理者です；どこにデータをアップロードするかはあなたが決めます。"
+				+ "ログサイトはサードパーティが所有しており、プライバシー上の理由から所有者が非公開の場合が多いです。データの管理と関連リスクについては、すべて自己責任となります。"
+				+ Statics.nombre_cd.obtener() + " の共有ダイアログは、これを管理するためのインターフェースに過ぎません。" + "GDPRおよびARCOについて認識しておくことが重要です。"
+				+ "ヨーロッパにお住まいの場合は、HetznerによってドイツにホストされているEU版の <a href=\"https://securelogger.top\">securelogger.top</a> をご利用いただけます。"
+				+ "法的情報の詳細については、以下のリンクを参照してください: "
+				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf\">LFPDPPP</a>、"
+				+ "<a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32016R0679\">GDPR</a>、"
+				+ "<a href=\"https://www.ppc.go.jp/files/pdf/20220401_personal_basicpolicy.pdf\">個人情報保護に関する基本方针（日本）</a>。";
 	}
 
 	@Override
@@ -478,9 +479,9 @@ public class Japones implements Idioma {
 	public String errorSSL() {
 		return "SSLエラーが発生しています。これは古いバージョンのJavaで一般的であり、"
 				+ "デフォルトのMinecraftランチャー内のJava 8バージョンやsun.com、java.comのバージョンに含まれます。"
-				+ "このエラーは、MinecraftForgeインストーラーのJARファイル、デフォルトエンドポイントを使用した"
-				+ "CrashDetectorレポートの共有機能、インターネットを必要とする一部のMOD、およびいくつかのログサイトに影響を与えます。"
-				+ "これをレポートの共有中に遭遇した場合、スクリーンショットを添付し、" + "古いJava 8バージョンと互換性のあるログサイトを選択してください。";
+				+ "このエラーは、MinecraftForgeインストーラーのJARファイル、デフォルトエンドポイントを使用した" + Statics.nombre_cd.obtener()
+				+ "レポートの共有機能、インターネットを必要とする一部のMOD、およびいくつかのログサイトに影響を与えます。" + "これをレポートの共有中に遭遇した場合、スクリーンショットを添付し、"
+				+ "古いJava 8バージョンと互換性のあるログサイトを選択してください。";
 	}
 
 	@Override
@@ -507,7 +508,8 @@ public class Japones implements Idioma {
 				+ "警告！ Crash Assistant は偽のマルウェア検出ツールです。意図的にゲームの起動をブロックし、ターゲットとなる MOD を使用してプレイする自由を無視します。 "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>MalwareMod.java のコードを見る</a>   "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>JarInJarHelper.java のコードを見る</a>. "
-				+ "現時点ではこの MOD だけがリストに載っており、彼らは実際にはデフォルトのログサイトのみを対象としています。このサイトはユーザーが変更可能で、組み込みのログ共有機能を明示的に選択した場合にのみ動作します。CrashAssistant はどのログサイトが設定されているかチェックせず、また変更方法（共有ダイアログの下部にあるドロップダウン）を説明しません。設定されているサイトに関係なく、CrashAssistant はゲームの起動をブロックします。メッセージの中で彼らは独自の調査をするように言っていますが、その通りにしてください。CrashDetector と Crash Assistant のコードを調べ、何をしているのか理解してください。権威への信頼に頼らないでください。</b>";
+				+ "現時点ではこの MOD だけがリストに載っており、彼らは実際にはデフォルトのログサイトのみを対象としています。このサイトはユーザーが変更可能で、組み込みのログ共有機能を明示的に選択した場合にのみ動作します。CrashAssistant はどのログサイトが設定されているかチェックせず、また変更方法（共有ダイアログの下部にあるドロップダウン）を説明しません。設定されているサイトに関係なく、CrashAssistant はゲームの起動をブロックします。メッセージの中で彼らは独自の調査をするように言っていますが、その通りにしてください。"
+				+ Statics.nombre_cd.obtener() + " と Crash Assistant のコードを調べ、何をしているのか理解してください。権威への信頼に頼らないでください。</b>";
 	}
 
 	@Override
@@ -876,7 +878,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "失敗時にのみCrashDetectorを開く";
+		return "失敗時にのみ" + Statics.nombre_cd.obtener() + "を開く";
 	}
 
 	@Override
@@ -1831,8 +1833,8 @@ public class Japones implements Idioma {
 	@Override
 	public String tieneErrorIPV6() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "IPv6 に関連する問題が発生している可能性があります。" + "解決策は以下の2つです："
-				+ "1) ランチャーに JVM 引数 <code>-Djava.net.preferIPv4Stack=true</code> を追加するか、"
-				+ "2) CrashDetector の 'QuickFix' ボタンをクリックして自動的にこの設定を有効にするパッチを適用してください。" + "</b>";
+				+ "1) ランチャーに JVM 引数 <code>-Djava.net.preferIPv4Stack=true</code> を追加するか、" + "2) "
+				+ Statics.nombre_cd.obtener() + " の 'QuickFix' ボタンをクリックして自動的にこの設定を有効にするパッチを適用してください。" + "</b>";
 	}
 
 	@Override
@@ -1893,7 +1895,9 @@ public class Japones implements Idioma {
 
 	@Override
 	public String noRegistroDeLauncher() {
-		return "汎用：使用しているランチャーの種類を選択してください。ランチャーログ(launcher_log.txt, stdoutなど)は latest.log に現れない重大なエラー情報を含みます。CrashDetectorがあなたのランチャーログを読み込めない可能性があります — ログファイルが生成されていない場合、手動でログを貼り付けなくてはいけません。<br>"
+		return "汎用：使用しているランチャーの種類を選択してください。ランチャーログ(launcher_log.txt, stdoutなど)は latest.log に現れない重大なエラー情報を含みます。"
+				+ Statics.nombre_cd.obtener()
+				+ "があなたのランチャーログを読み込めない可能性があります — ログファイルが生成されていない場合、手動でログを貼り付けなくてはいけません。<br>"
 				+ "詳細については <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">この問題</a> を参照してください。これらのログには多くのエラー診断に必要な標準出力 (STDOUT) が含まれます。";
 	}
 
@@ -2684,10 +2688,9 @@ public class Japones implements Idioma {
 
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "ProxySysOutSysErrを有効にしますか？\n\n"
-				+ "このオプションにより、ランチャーがログを提供しない場合でもCrashDetectorがSystem.outとSystem.errにアクセスできるようになります。\n\n"
-				+ "手動でログを貼り付けられない場合にのみ有効にしてください。\n\n" + "警告：一部のMODやランチャーと干渉する可能性があります。\n\n"
-				+ "変更を適用するには、ゲーム／アプリの再起動が必要です。";
+		return "ProxySysOutSysErrを有効にしますか？\n\n" + "このオプションにより、ランチャーがログを提供しない場合でも" + Statics.nombre_cd.obtener()
+				+ "がSystem.outとSystem.errにアクセスできるようになります。\n\n" + "手動でログを貼り付けられない場合にのみ有効にしてください。\n\n"
+				+ "警告：一部のMODやランチャーと干渉する可能性があります。\n\n" + "変更を適用するには、ゲーム／アプリの再起動が必要です。";
 	}
 
 	@Override
@@ -2697,7 +2700,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "ProxySysOutSysErrが正常に有効化されました。\n\n" + "変更を適用するには、CrashDetectorを再起動する必要があります。";
+		return "ProxySysOutSysErrが正常に有効化されました。\n\n" + "変更を適用するには、" + Statics.nombre_cd.obtener() + "を再起動する必要があります。";
 	}
 
 	@Override
@@ -3273,7 +3276,8 @@ public class Japones implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "ModLauncher サービスエラー：パスに無効な文字が含まれています。 "
 				+ "ModLauncher サービスは、ASCII以外や特殊文字を含むパスを処理できません。 "
 				+ "問題のある文字には ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요 があり、特に名前の末尾にある '\"' 文字は深刻です。 "
-				+ "一般的な ModLauncher サービスコンポーネントには、CrashDetector、" + Config.obtenerInstancia().obtenerNombreCD()
+				+ "一般的な ModLauncher サービスコンポーネントには、" + Statics.nombre_cd.obtener() + "、"
+				+ Config.obtenerInstancia().obtenerNombreCD()
 				+ "、FeatureCreep、Vivicraft、Optifine、Sodium、clonos、Iris Shaders/Oculus、MixerLogger、CrashAssistant、Sintrya Connector などがあります。 "
 				+ "すべてのサービスを削除できますが、パス名自体が原因で他の問題が発生する可能性があります。 "
 				+ "解決策：インスタンス名を ASCII 文字（a-z, A-Z, 0-9）のみを使用するように変更し、スペースや特殊文字は避けてください。</b>";
@@ -5606,7 +5610,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "これらのランチャーは、CrashDetector が良好と推奨するものです。";
+		return "これらのランチャーは、" + Statics.nombre_cd.obtener() + " が良好と推奨するものです。";
 	}
 
 	@Override
@@ -5639,7 +5643,7 @@ public class Japones implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "ここに非推奨 mod を登録することで、インストールされている場合に CrashDetector が検出します。";
+		return "ここに非推奨 mod を登録することで、インストールされている場合に " + Statics.nombre_cd.obtener() + " が検出します。";
 	}
 
 	@Override
@@ -5649,12 +5653,13 @@ public class Japones implements Idioma {
 
 	@Override
 	public String anularNormalDescripcion() {
-		return "クラッシュが発生していなくても、CrashDetector は警告を出すべきです。";
+		return "クラッシュが発生していなくても、" + Statics.nombre_cd.obtener() + " は警告を出すべきです。";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "CrashDetector が推奨する mod を登録します。不足している場合、CrashDetector が警告を出すことがあります。";
+		return Statics.nombre_cd.obtener() + " が推奨する mod を登録します。不足している場合、" + Statics.nombre_cd.obtener()
+				+ " が警告を出すことがあります。";
 	}
 
 	@Override
@@ -5670,8 +5675,8 @@ public class Japones implements Idioma {
 				+ "また、アメリカ合衆国、ロシア連邦、中華人民共和国、イラン・イスラム共和国、" + "朝鮮民主主義人民共和国などで採用されている類似の法的原則も参考になります。\n\n"
 
 				+ "含めることができる権利の例:\n" + "• サポートに不要な情報を提供しない権利（例: 使用中のランチャー、ユーザー名、UUID）。\n" + "• 自己負罪拒否権。\n"
-				+ "• 問題解決に不要な質問に答えることを拒否する権利。\n" + "• チャット内でガイダンスを受ける権利。\n"
-				+ "• CrashDetector に内蔵されたログ匿名化機能を使用する権利。\n\n"
+				+ "• 問題解決に不要な質問に答えることを拒否する権利。\n" + "• チャット内でガイダンスを受ける権利。\n" + "• " + Statics.nombre_cd.obtener()
+				+ " に内蔵されたログ匿名化機能を使用する権利。\n\n"
 
 				+ "このテキストは HTML コンテンツをサポートします。";
 	}
@@ -7895,7 +7900,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "CrashDetectorの内部フォルダを含めると、設定、ログ、および補助データも転送されるため、不要であれば選択を解除できます。";
+		return Statics.nombre_cd.obtener() + "の内部フォルダを含めると、設定、ログ、および補助データも転送されるため、不要であれば選択を解除できます。";
 	}
 
 	@Override
@@ -9712,7 +9717,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector は GPU に関連する潜在的な問題を検出しましたが、" + "このオペレーティングシステム用の特定の実装はありません。";
+		return Statics.nombre_cd.obtener() + " は GPU に関連する潜在的な問題を検出しましたが、" + "このオペレーティングシステム用の特定の実装はありません。";
 	}
 
 	@Override
@@ -10093,7 +10098,7 @@ public class Japones implements Idioma {
 
 	// Japanese (日本語)
 	public String suprimirConsolaCD() {
-		return "CrashDetector コンソールを非表示";
+		return "Hide " + Statics.nombre_cd.obtener() + " consoleを非表示";
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

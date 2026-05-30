@@ -41,8 +41,8 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>No se donde esta el archivo JAR de CrashDetector</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>No se donde esta el archivo JAR de "
+				+ Statics.nombre_cd.obtener() + "</span>";
 	}
 
 	@Override
@@ -105,14 +105,15 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo() + "'>Tu Informe de CrashDetector esta aqui <a href='"
-				+ archivo + "' style='color:#" + config.obtenerColorEnlace() + "'>ver informe</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Tu Informe de " + Statics.nombre_cd.obtener()
+				+ " esta aqui <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace()
+				+ "'>ver informe</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>Esta es el GUI de CrashDetector. Si el juego cierra sin problemas, ignoralo.</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Esta es el GUI de " + Statics.nombre_cd.obtener()
+				+ ". Si el juego cierra sin problemas, ignoralo.</span>";
 	}
 
 	@Override
@@ -487,11 +488,13 @@ public class Espanol implements Idioma {
 				+ "Estás usando el sitio de informes " + Config.obtenerInstancia().obtenerSitoDeInformes()
 				+ " y el sitio de registros " + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
 				+ "También puedes compartir registros individuales sin un informe presionando los botones de compartir junto a los nombres de los registros individuales; "
-				+ "los registros irán al sitio de registros seleccionado. CrashDetector tiene una anonimización de registros predeterminada, que intenta eliminar nombres de usuario, UUID, "
+				+ "los registros irán al sitio de registros seleccionado. " + Statics.nombre_cd.obtener()
+				+ " tiene una anonimización de registros predeterminada, que intenta eliminar nombres de usuario, UUID, "
 				+ "tokens de acceso, IDs de sesión, direcciones IP y otros datos. Sin embargo, no es perfecta. Aún así, el autor del modpack puede desactivarla. "
 				+ "Se puede activar o desactivar con la casilla de verificación en la parte inferior de esta pantalla. Eres el controlador de tus propios datos; tú decides dónde subes tus datos. "
 				+ "Los sitios de registro son propiedad de terceros cuya propiedad a menudo está oculta por privacidad. Asumes toda la responsabilidad de gestionar tus datos y los riesgos involucrados. "
-				+ "El Diálogo de Compartir de CrashDetector es simplemente una interfaz que te permite gestionar eso. "
+				+ "El Diálogo de Compartir de " + Statics.nombre_cd.obtener()
+				+ " es simplemente una interfaz que te permite gestionar eso. "
 				+ "Es importante que estés al tanto del RGPD y ARCO. "
 				+ "Si estás en Europa, puedes usar <a href=\"https://securelogger.top\">securelogger.top</a> alojado en Alemania por Hetzner. "
 				+ "Para más información legal, consulta los siguientes enlaces: "
@@ -531,8 +534,9 @@ public class Espanol implements Idioma {
 		return "Tienes Error SSL. Es común con versiones de Java viejas, "
 				+ "incluye las versiones de Java 8 en el Launcher Minecraft predeterminado "
 				+ "y las versiones en sun.com y java.com. Esto afecta a muchos aspectos, "
-				+ "como los archivos JAR del instalador de MinecraftForge, la función para compartir informes "
-				+ "de CrashDetector al usar el endpoint predeterminado, algunos mods que requieren internet "
+				+ "como los archivos JAR del instalador de MinecraftForge, la función para compartir informes " + "de "
+				+ Statics.nombre_cd.obtener()
+				+ " al usar el endpoint predeterminado, algunos mods que requieren internet "
 				+ "y algunos sitios de registro. Si te ocurre esto al intentar compartir un informe, "
 				+ "simplemente adjunta una captura de pantalla y selecciona un sitio de registro compatible "
 				+ "con versiones anteriores de Java 8.";
@@ -563,7 +567,9 @@ public class Espanol implements Idioma {
 				+ "¡ALERTA! Crash Assistant es un detector de malware falso. Bloquea intencionalmente el lanzamiento del juego, ignorando tu libertad de seguir jugando con los mods que apunta. "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Ver código MalwareMod.java</a>   "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Ver código JarInJarHelper.java</a>. "
-				+ "Solo este mod está en su lista en este momento y solo están yendo realmente tras el sitio de registro predeterminado, que puede ser cambiado por el usuario, y eso solo ocurre si eliges explícitamente usar la función integrada de compartir registros. CrashAssistant NO realiza ninguna verificación para determinar qué sitio de registro se está utilizando ni explica cómo cambiarlo (hay un menú desplegable en la parte inferior del cuadro de diálogo de compartir), y sin importar qué sitio tengas configurado, CrashAssistant bloqueará el lanzamiento del juego. En su mensaje dicen que hagas tu propia investigación, HAZLO, investiga el código de CrashDetector y Crash Assistant y entiende lo que hacen, NO te bases en una apelación a la autoridad.</b>";
+				+ "Solo este mod está en su lista en este momento y solo están yendo realmente tras el sitio de registro predeterminado, que puede ser cambiado por el usuario, y eso solo ocurre si eliges explícitamente usar la función integrada de compartir registros. CrashAssistant NO realiza ninguna verificación para determinar qué sitio de registro se está utilizando ni explica cómo cambiarlo (hay un menú desplegable en la parte inferior del cuadro de diálogo de compartir), y sin importar qué sitio tengas configurado, CrashAssistant bloqueará el lanzamiento del juego. En su mensaje dicen que hagas tu propia investigación, HAZLO, investiga el código de "
+				+ Statics.nombre_cd.obtener()
+				+ " y Crash Assistant y entiende lo que hacen, NO te bases en una apelación a la autoridad.</b>";
 	}
 
 	@Override
@@ -852,7 +858,7 @@ public class Espanol implements Idioma {
 	@Override
 	public String ajustesCrashDetector() {
 		// TODO Auto-generated method stub
-		return "Ajustes CrashDetector";
+		return "Ajustes " + Statics.nombre_cd.obtener();
 	}
 
 	@Override
@@ -960,7 +966,7 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "Solo abrir CrashDetector en falla";
+		return "Solo abrir " + Statics.nombre_cd.obtener() + " en falla";
 	}
 
 	@Override
@@ -2221,8 +2227,8 @@ public class Espanol implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Es posible que tengas un problema relacionado con IPv6. " + "Existen dos soluciones: "
 				+ "1) Agregar el argumento JVM <code>-Djava.net.preferIPv4Stack=true</code> en tu lanzador, o "
-				+ "2) Usar el botón 'QuickFix' en CrashDetector para aplicar un parche que active esta configuración automáticamente."
-				+ "</b>";
+				+ "2) Usar el botón 'QuickFix' en " + Statics.nombre_cd.obtener()
+				+ " para aplicar un parche que active esta configuración automáticamente." + "</b>";
 	}
 
 	@Override
@@ -2285,7 +2291,9 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String noRegistroDeLauncher() {
-		return "GENÉRICO: Seleccione el tipo de launcher que está utilizando. Los registros del launcher (launcher_log.txt, stdout, etc.) contienen información crucial sobre errores que no aparecen en latest.log. CrashDetector no puede leer los registros de tu Launcher, es posible que no tenga un archivo de registro y deba pegar los registros manualmente.<br>"
+		return "GENÉRICO: Seleccione el tipo de launcher que está utilizando. Los registros del launcher (launcher_log.txt, stdout, etc.) contienen información crucial sobre errores que no aparecen en latest.log. "
+				+ Statics.nombre_cd.obtener()
+				+ " no puede leer los registros de tu Launcher, es posible que no tenga un archivo de registro y deba pegar los registros manualmente.<br>"
 				+ "Para más información, consulte <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">este problema</a>. Estos registros contienen la salida estándar (STDOUT), necesaria para diagnosticar muchos tipos de errores.";
 	}
 
@@ -3330,8 +3338,8 @@ public class Espanol implements Idioma {
 	 */
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "¿Habilitar ProxySysOutSysErr?\n\n"
-				+ "Esta opción da a CrashDetector acceso a System.out y System.err cuando el launcher no proporciona registros.\n\n"
+		return "¿Habilitar ProxySysOutSysErr?\n\n" + "Esta opción da a " + Statics.nombre_cd.obtener()
+				+ " acceso a System.out y System.err cuando el launcher no proporciona registros.\n\n"
 				+ "Solo debe habilitarse cuando no puedas pegar un registro manualmente.\n\n"
 				+ "Advertencia: Esto puede interferir con algunos mods o launchers.\n\n"
 				+ "Se requiere reiniciar el juego/app para que los cambios surtan efecto.";
@@ -3354,8 +3362,8 @@ public class Espanol implements Idioma {
 	 */
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "ProxySysOutSysErr habilitado correctamente.\n\n"
-				+ "Se requiere reiniciar CrashDetector para que los cambios surtan efecto.";
+		return "ProxySysOutSysErr habilitado correctamente.\n\n" + "Se requiere reiniciar "
+				+ Statics.nombre_cd.obtener() + " para que los cambios surtan efecto.";
 	}
 
 	/**
@@ -4032,7 +4040,7 @@ public class Espanol implements Idioma {
 				+ "Error de servicios de ModLauncher: Ruta con caracteres no válidos. "
 				+ "Los servicios de ModLauncher no pueden procesar rutas que contienen caracteres no ASCII o caracteres especiales. "
 				+ "Caracteres problemáticos incluyen: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요, y especialmente el carácter '\"' cuando está al final del nombre. "
-				+ "Componentes de servicios comunes en ModLauncher incluyen CrashDetector, "
+				+ "Componentes de servicios comunes en ModLauncher incluyen " + Statics.nombre_cd.obtener() + ", "
 				+ Config.obtenerInstancia().obtenerNombreCD()
 				+ ", FeatureCreep, Vivicraft, Optifine, Sodium, clonos, Iris Shaders/Oculus, MixerLogger, CrashAssistant y Sintrya Connector. "
 				+ "Puedes eliminar todos los servicios, pero otros problemas pueden surgir debido al nombre de la ruta. "
@@ -6474,7 +6482,7 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "Estos lanzadores son los que CrashDetector sugiere como buenos.";
+		return "Estos lanzadores son los que " + Statics.nombre_cd.obtener() + " sugiere como buenos.";
 	}
 
 	@Override
@@ -6507,7 +6515,8 @@ public class Espanol implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "Aquí puedes registrar mods desaconsejados para que CrashDetector los detecte si están instalados.";
+		return "Aquí puedes registrar mods desaconsejados para que " + Statics.nombre_cd.obtener()
+				+ " los detecte si están instalados.";
 	}
 
 	@Override
@@ -6519,12 +6528,13 @@ public class Espanol implements Idioma {
 	@Override
 	public String anularNormalDescripcion() {
 		// TODO Auto-generated method stub
-		return "CrashDetector debería avisar aunque no crashee";
+		return Statics.nombre_cd.obtener() + " debería avisar aunque no crashee";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "Registra mods que CrashDetector recomienda. Si faltan, CrashDetector puede avisar.";
+		return "Registra mods que " + Statics.nombre_cd.obtener() + " recomienda. Si faltan, "
+				+ Statics.nombre_cd.obtener() + " puede avisar.";
 	}
 
 	@Override
@@ -6550,7 +6560,8 @@ public class Espanol implements Idioma {
 				+ "el nombre de usuario o el UUID.\n" + "• El derecho a no autoincriminarse.\n"
 				+ "• El derecho a rechazar responder preguntas que no sean necesarias para la resolución del problema.\n"
 				+ "• El derecho a recibir orientación dentro del chat.\n"
-				+ "• El derecho a utilizar el anonimizado de registros (logs) integrado en CrashDetector.\n\n"
+				+ "• El derecho a utilizar el anonimizado de registros (logs) integrado en "
+				+ Statics.nombre_cd.obtener() + ".\n\n"
 
 				+ "Este texto acepta contenido HTML.";
 	}
@@ -6563,8 +6574,8 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String advertenciaHashLento() {
-		return "Advertencia: añadir muchos archivos grandes puede hacer que la verificación "
-				+ "tarde varios minutos. CrashDetector deberá calcular el hash de cada archivo "
+		return "Advertencia: añadir muchos archivos grandes puede hacer que la verificación " + "tarde varios minutos. "
+				+ Statics.nombre_cd.obtener() + " deberá calcular el hash de cada archivo "
 				+ "antes de continuar. Se recomienda proteger solo los archivos estrictamente necesarios.";
 	}
 
@@ -6599,7 +6610,8 @@ public class Espanol implements Idioma {
 		// TODO Auto-generated method stub
 		return "<html><div style='width:150px; text-align:center;'>"
 				+ "Las opiniones y comentarios de Sylent Bell no necesariamente coinciden con los nuestros; "
-				+ "solo pensamos que sería gracioso ponerla aquí. CrashDetector es secular." + "</div></html>";
+				+ "solo pensamos que sería gracioso ponerla aquí. " + Statics.nombre_cd.obtener() + " es secular."
+				+ "</div></html>";
 	}
 
 	@Override
@@ -6989,9 +7001,11 @@ public class Espanol implements Idioma {
 	@Override
 	public String cdlauncherDescripcionCompleta() {
 		return "" + "<b>Herramientas de depuración</b><br><br>"
-				+ "Aquí puedes activar funciones avanzadas para depurar CrashDetector y tus juegos.<br><br>"
+				+ "Aquí puedes activar funciones avanzadas para depurar " + Statics.nombre_cd.obtener()
+				+ " y tus juegos.<br><br>"
 				+ "Se recomienda habilitar la consola de desarrollo para obtener información detallada, trazas y diagnósticos durante el análisis.<br><br>"
-				+ "Si necesitas probar un servidor multijugador en modo online, puede ser necesario permitir la transferencia del token de acceso al proceso de CrashDetector desde los ajustes de privacidad. "
+				+ "Si necesitas probar un servidor multijugador en modo online, puede ser necesario permitir la transferencia del token de acceso al proceso de "
+				+ Statics.nombre_cd.obtener() + " desde los ajustes de privacidad. "
 				+ "Esto generalmente <b>no se recomienda</b> en otros casos.<br><br>"
 				+ "Instrucciones completas: <a href='https://example.com'>¡Enlace!</a>";// TODO
 	}
@@ -8933,7 +8947,8 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "Si incluyes la carpeta interna de CrashDetector, también viajarán configuraciones, registros y datos auxiliares, así que puedes deseleccionarla si no hace falta.";
+		return "Si incluyes la carpeta interna de " + Statics.nombre_cd.obtener()
+				+ ", también viajarán configuraciones, registros y datos auxiliares, así que puedes deseleccionarla si no hace falta.";
 	}
 
 	@Override
@@ -9753,7 +9768,7 @@ public class Espanol implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "Reinicia CrashDetector para que los nuevos JARs entren al classpath.";
+		return "Reinicia " + Statics.nombre_cd.obtener() + " para que los nuevos JARs entren al classpath.";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -10765,7 +10780,8 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector detectó que Minecraft podría no estar usando la GPU de alto rendimiento.\n\n"
+		return Statics.nombre_cd.obtener()
+				+ " detectó que Minecraft podría no estar usando la GPU de alto rendimiento.\n\n"
 				+ "En Windows se pueden establecer claves de registro en "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "para forzar que javaw.exe use la GPU dedicada.\n\n"
@@ -10778,7 +10794,7 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector detectó un posible problema relacionado con NVIDIA Optimus o PRIME.\n\n"
+		return Statics.nombre_cd.obtener() + " detectó un posible problema relacionado con NVIDIA Optimus o PRIME.\n\n"
 				+ "Dependiendo de la distribución Linux utilizada, puede ser necesario configurar NVIDIA Optimus, "
 				+ "nvidia-prime, switcheroo-control u otros sistemas híbridos.\n\n"
 				+ "En Fedora/RHEL y derivados suele recomendarse seguir la documentación de RPMFusion.\n\n"
@@ -10787,7 +10803,7 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector detectó un posible problema de selección de GPU.\n\n"
+		return Statics.nombre_cd.obtener() + " detectó un posible problema de selección de GPU.\n\n"
 				+ "En algunos sistemas macOS con GPU híbrida es posible forzar el uso de la GPU dedicada "
 				+ "mediante configuraciones avanzadas del sistema.\n\n"
 				+ "El botón de aplicar intentará ejecutar un comando para priorizar la GPU de alto rendimiento.";
@@ -10795,7 +10811,7 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector detectó un posible problema relacionado con la GPU, "
+		return Statics.nombre_cd.obtener() + " detectó un posible problema relacionado con la GPU, "
 				+ "pero no existe una implementación específica para este sistema operativo.";
 	}
 
@@ -11175,7 +11191,7 @@ public class Espanol implements Idioma {
 	}
 
 	public String suprimirConsolaCD() {
-		return "Suprimir consola de CrashDetector";
+		return "Suprimir consola de " + Statics.nombre_cd.obtener();
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

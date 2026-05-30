@@ -28,7 +28,6 @@ public class Config {
 	public static final String VALOR_POR_DEFECTO_API_DE_REGISTROS_SELECCIONADA = "SecureLogger";
 	public static final String VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO = "https://securelogger.net/save/log?";
 	private static final boolean PROXY_SYSOUT_SYSERR = true;
-	public static final String NOMBRE_CD = "CrashDetector";
 
 	// Ruta al archivo de configuración
 	private static final String RUTA_ARCHIVO_CONFIG = Statics.carpeta.resolve("crashdetector_config.properties")
@@ -78,8 +77,6 @@ public class Config {
 			propiedadesConfig.setProperty("sitio_de_registros_seleccionado",
 					VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO);
 			propiedadesConfig.setProperty("proxy_sysout_syserr", String.valueOf(PROXY_SYSOUT_SYSERR));
-
-			propiedadesConfig.setProperty("nombre_cd", NOMBRE_CD);
 
 			guardar();
 		}
@@ -377,12 +374,12 @@ public class Config {
 	 * @param valor
 	 */
 	public void guardarNombreCD(String valor) {
-		propiedadesConfig.setProperty("nombre_cd", valor);
+		Statics.nombre_cd.escribir(valor);
 		this.guardar();
 	}
 
 	public String obtenerNombreCD() {
 		// TODO Auto-generated method stub
-		return propiedadesConfig.getProperty("nombre_cd", NOMBRE_CD);
+		return Statics.nombre_cd.obtener();
 	}
 }

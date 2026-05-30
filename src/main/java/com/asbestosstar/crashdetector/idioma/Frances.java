@@ -41,8 +41,8 @@ public class Frances implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>Je ne sais pas où se trouve le fichier JAR de CrashDetector</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>Je ne sais pas où se trouve le fichier JAR de "
+				+ Statics.nombre_cd.obtener() + "</span>";
 	}
 
 	@Override
@@ -104,14 +104,15 @@ public class Frances implements Idioma {
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo() + "'>Votre rapport CrashDetector est ici <a href='"
-				+ archivo + "' style='color:#" + config.obtenerColorEnlace() + "'>voir le rapport</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Votre rapport " + Statics.nombre_cd.obtener()
+				+ " est ici <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace()
+				+ "'>voir le rapport</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>Ceci est l'interface graphique de CrashDetector. Si le jeu se ferme sans problème, ignorez-la.</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Ceci est l'interface graphique de "
+				+ Statics.nombre_cd.obtener() + ". Si le jeu se ferme sans problème, ignorez-la.</span>";
 	}
 
 	@Override
@@ -460,7 +461,8 @@ public class Frances implements Idioma {
 				+ "Vous utilisez actuellement le site de rapports " + Config.obtenerInstancia().obtenerSitoDeInformes()
 				+ " et le site de journaux " + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
 				+ "Vous pouvez également partager des journaux individuels sans rapport via les boutons correspondants. "
-				+ "CrashDetector propose une anonymisation automatique des journaux, supprimant noms d’utilisateur, UUID, "
+				+ Statics.nombre_cd.obtener()
+				+ " propose une anonymisation automatique des journaux, supprimant noms d’utilisateur, UUID, "
 				+ "tokens, identifiants de session, adresses IP et autres données sensibles. "
 				+ "Cependant, cette anonymisation n’est pas parfaite et peut être désactivée. "
 				+ "Vous gardez le contrôle total de vos données et choisissez où les envoyer. "
@@ -506,8 +508,9 @@ public class Frances implements Idioma {
 		return "Vous avez une erreur SSL. C'est courant avec les anciennes versions de Java, "
 				+ "y compris les versions Java 8 du lanceur Minecraft par défaut "
 				+ "et celles de sun.com ou java.com. Cela affecte plusieurs fonctions, "
-				+ "comme les fichiers JAR de l'installateur MinecraftForge, la fonction de partage de rapports "
-				+ "de CrashDetector (avec le point de terminaison par défaut), certains mods nécessitant Internet "
+				+ "comme les fichiers JAR de l'installateur MinecraftForge, la fonction de partage de rapports " + "de "
+				+ Statics.nombre_cd.obtener()
+				+ " (avec le point de terminaison par défaut), certains mods nécessitant Internet "
 				+ "et certains sites de journaux. Si cela se produit lors du partage d'un rapport, "
 				+ "veuillez joindre une capture d'écran et sélectionner un site de journaux compatible "
 				+ "avec les anciennes versions de Java 8.";
@@ -538,7 +541,9 @@ public class Frances implements Idioma {
 				+ "ALERTE ! Crash Assistant est un faux détecteur de malware. Il bloque intentionnellement le lancement du jeu, ignorant votre liberté de jouer avec les mods qu'il cible. "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Voir le code MalwareMod.java</a>   "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Voir le code JarInJarHelper.java</a>. "
-				+ "Seul ce mod est dans sa liste pour le moment, et ils ciblent principalement le site de journal par défaut, qui peut être changé par l'utilisateur. Cela ne se produit que si vous choisissez explicitement d'utiliser la fonction de partage intégrée. CrashAssistant ne vérifie pas quel site de journal est utilisé ni n'explique comment le changer (il y a un menu déroulant en bas de la boîte de dialogue de partage), et quel que soit le site configuré, CrashAssistant bloquera le lancement du jeu. Leur message vous demande de faire vos propres recherches : FAITES-LE. Examinez le code de CrashDetector et Crash Assistant pour comprendre ce qu'ils font. NE vous fiez pas à un argument d'autorité.</b>";
+				+ "Seul ce mod est dans sa liste pour le moment, et ils ciblent principalement le site de journal par défaut, qui peut être changé par l'utilisateur. Cela ne se produit que si vous choisissez explicitement d'utiliser la fonction de partage intégrée. CrashAssistant ne vérifie pas quel site de journal est utilisé ni n'explique comment le changer (il y a un menu déroulant en bas de la boîte de dialogue de partage), et quel que soit le site configuré, CrashAssistant bloquera le lancement du jeu. Leur message vous demande de faire vos propres recherches : FAITES-LE. Examinez le code de "
+				+ Statics.nombre_cd.obtener()
+				+ " et Crash Assistant pour comprendre ce qu'ils font. NE vous fiez pas à un argument d'autorité.</b>";
 	}
 
 	@Override
@@ -819,7 +824,7 @@ public class Frances implements Idioma {
 
 	@Override
 	public String ajustesCrashDetector() {
-		return "Paramètres CrashDetector";
+		return "Paramètres " + Statics.nombre_cd.obtener();
 	}
 
 	@Override
@@ -919,7 +924,7 @@ public class Frances implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "Ouvrir CrashDetector uniquement en cas d'échec";
+		return "Ouvrir " + Statics.nombre_cd.obtener() + " uniquement en cas d'échec";
 	}
 
 	@Override
@@ -2083,8 +2088,8 @@ public class Frances implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Il est possible que vous ayez un problème lié à IPv6. " + "Il existe deux solutions : "
 				+ "1) Ajouter l’argument JVM <code>-Djava.net.preferIPv4Stack=true</code> dans votre lanceur, ou "
-				+ "2) Utiliser le bouton 'QuickFix' dans CrashDetector pour appliquer automatiquement ce réglage."
-				+ "</b>";
+				+ "2) Utiliser le bouton 'QuickFix' dans " + Statics.nombre_cd.obtener()
+				+ " pour appliquer automatiquement ce réglage." + "</b>";
 	}
 
 	@Override
@@ -2145,7 +2150,9 @@ public class Frances implements Idioma {
 
 	@Override
 	public String noRegistroDeLauncher() {
-		return "GÉNÉRIQUE : sélectionnez le type de launcher que vous utilisez. Les journaux du launcher (launcher_log.txt, stdout, etc.) contiennent des informations importantes sur des erreurs qui n’apparaissent pas dans latest.log. CrashDetector ne peut pas lire les journaux de votre launcher ; il est possible qu’il n’y ait pas de fichier journal et que vous deviez coller les journaux manuellement.<br>"
+		return "GÉNÉRIQUE : sélectionnez le type de launcher que vous utilisez. Les journaux du launcher (launcher_log.txt, stdout, etc.) contiennent des informations importantes sur des erreurs qui n’apparaissent pas dans latest.log. "
+				+ Statics.nombre_cd.obtener()
+				+ " ne peut pas lire les journaux de votre launcher ; il est possible qu’il n’y ait pas de fichier journal et que vous deviez coller les journaux manuellement.<br>"
 				+ "Pour plus d’informations, consultez <a href=\\\"https://github.com/HMCL-dev/HMCL/issues/2663 \\\">ce problème</a>. Ces journaux contiennent la sortie standard (STDOUT), nécessaire pour diagnostiquer beaucoup de types d’erreurs.";
 	}
 
@@ -3182,8 +3189,8 @@ public class Frances implements Idioma {
 	 */
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "Activer ProxySysOutSysErr ?\\n\\n"
-				+ "Cette option donne à CrashDetector l'accès à System.out et System.err lorsque le lanceur ne fournit pas de journaux.\\n\\n"
+		return "Activer ProxySysOutSysErr ?\\n\\n" + "Cette option donne à " + Statics.nombre_cd.obtener()
+				+ " l'accès à System.out et System.err lorsque le lanceur ne fournit pas de journaux.\\n\\n"
 				+ "À activer uniquement si vous ne pouvez pas coller un journal manuellement.\\n\\n"
 				+ "Avertissement : Cela peut interférer avec certains mods ou lanceurs.\\n\\n"
 				+ "Un redémarrage du jeu/de l'application est requis pour que les changements prennent effet.";
@@ -3206,8 +3213,8 @@ public class Frances implements Idioma {
 	 */
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "ProxySysOutSysErr activé avec succès.\\n\\n"
-				+ "Un redémarrage de CrashDetector est requis pour que les changements prennent effet.";
+		return "ProxySysOutSysErr activé avec succès.\\n\\n" + "Un redémarrage de " + Statics.nombre_cd.obtener()
+				+ " est requis pour que les changements prennent effet.";
 	}
 
 	/**
@@ -3879,7 +3886,7 @@ public class Frances implements Idioma {
 				+ "Erreur des services ModLauncher : Chemin contenant des caractères invalides. "
 				+ "Les services ModLauncher ne peuvent pas traiter les chemins contenant des caractères non-ASCII ou spéciaux. "
 				+ "Les caractères problématiques incluent : ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요, et surtout le caractère '\\\"' lorsqu'il est à la fin du nom. "
-				+ "Les composants de services courants dans ModLauncher incluent CrashDetector, "
+				+ "Les composants de services courants dans ModLauncher incluent " + Statics.nombre_cd.obtener() + ", "
 				+ Config.obtenerInstancia().obtenerNombreCD()
 				+ ", FeatureCreep, Vivicraft, Optifine, Sodium, clones, Iris Shaders/Oculus, MixerLogger, CrashAssistant et Sinytra Connector. "
 				+ "Vous pouvez supprimer tous les services, mais d'autres problèmes peuvent survenir en raison du nom du chemin. "
@@ -6304,7 +6311,7 @@ public class Frances implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "Ces lanceurs sont ceux que CrashDetector suggère comme étant bons.";
+		return "Ces lanceurs sont ceux que " + Statics.nombre_cd.obtener() + " suggère comme étant bons.";
 	}
 
 	@Override
@@ -6337,7 +6344,8 @@ public class Frances implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "Ici, vous pouvez enregistrer les mods déconseillés afin que CrashDetector les détecte s'ils sont installés.";
+		return "Ici, vous pouvez enregistrer les mods déconseillés afin que " + Statics.nombre_cd.obtener()
+				+ " les détecte s'ils sont installés.";
 	}
 
 	@Override
@@ -6347,12 +6355,13 @@ public class Frances implements Idioma {
 
 	@Override
 	public String anularNormalDescripcion() {
-		return "CrashDetector devrait avertir même s'il n'y a pas de crash";
+		return Statics.nombre_cd.obtener() + " devrait avertir même s'il n'y a pas de crash";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "Enregistrez les mods que CrashDetector recommande. S'ils manquent, CrashDetector peut avertir.";
+		return "Enregistrez les mods que " + Statics.nombre_cd.obtener() + " recommande. S'ils manquent, "
+				+ Statics.nombre_cd.obtener() + " peut avertir.";
 	}
 
 	@Override
@@ -6378,7 +6387,8 @@ public class Frances implements Idioma {
 				+ "le nom d'utilisateur ou l'UUID.\\n" + "• Le droit de ne pas s'auto-incriminer.\\n"
 				+ "• Le droit de refuser de répondre à des questions qui ne sont pas nécessaires à la résolution du problème.\\n"
 				+ "• Le droit de recevoir des orientations dans le chat.\\n"
-				+ "• Le droit d'utiliser l'anonymisation des journaux (logs) intégrée à CrashDetector.\\n\\n"
+				+ "• Le droit d'utiliser l'anonymisation des journaux (logs) intégrée à " + Statics.nombre_cd.obtener()
+				+ ".\\n\\n"
 
 				+ "Ce texte accepte le contenu HTML.";
 	}
@@ -6391,7 +6401,7 @@ public class Frances implements Idioma {
 	@Override
 	public String advertenciaHashLento() {
 		return "Avertissement : l'ajout de nombreux fichiers volumineux peut faire prendre plusieurs minutes à la vérification. "
-				+ "CrashDetector devra calculer le hachage de chaque fichier avant de continuer. "
+				+ Statics.nombre_cd.obtener() + " devra calculer le hachage de chaque fichier avant de continuer. "
 				+ "Il est recommandé de ne protéger que les fichiers strictement nécessaires.";
 	}
 
@@ -6425,7 +6435,8 @@ public class Frances implements Idioma {
 	public String mensajeDeSylentBell() {
 		return "<html><div style='width:150px; text-align:center;'>"
 				+ "Les opinions et commentaires de Sylent Bell ne coïncident pas nécessairement avec les nôtres ; "
-				+ "nous pensons juste qu'il serait amusant de la mettre ici. CrashDetector est laïc." + "</div></html>";
+				+ "nous pensons juste qu'il serait amusant de la mettre ici. " + Statics.nombre_cd.obtener()
+				+ " est laïc." + "</div></html>";
 	}
 
 	@Override
@@ -6810,9 +6821,11 @@ public class Frances implements Idioma {
 	@Override
 	public String cdlauncherDescripcionCompleta() {
 		return "" + "<b>Outils de débogage</b><br><br>"
-				+ "Ici, vous pouvez activer des fonctions avancées pour déboguer CrashDetector et vos jeux.<br><br>"
+				+ "Ici, vous pouvez activer des fonctions avancées pour déboguer " + Statics.nombre_cd.obtener()
+				+ " et vos jeux.<br><br>"
 				+ "Il est recommandé d'activer la console de développement pour obtenir des informations détaillées, des traces et des diagnostics pendant l'analyse.<br><br>"
-				+ "Si vous devez tester un serveur multijoueur en mode en ligne, il peut être nécessaire d'autoriser le transfert du jeton d'accès au processus de CrashDetector depuis les paramètres de confidentialité. "
+				+ "Si vous devez tester un serveur multijoueur en mode en ligne, il peut être nécessaire d'autoriser le transfert du jeton d'accès au processus de "
+				+ Statics.nombre_cd.obtener() + " depuis les paramètres de confidentialité. "
 				+ "Ceci n'est généralement <b>pas recommandé</b> dans d'autres cas.<br><br>"
 				+ "Instructions complètes : <a href='https://example.com'>Lien !</a>";// TODO
 	}
@@ -8755,7 +8768,8 @@ public class Frances implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "Si vous incluez le dossier interne de CrashDetector, les configurations, journaux et données auxiliaires seront également inclus, vous pouvez donc les désélectionner si ce n'est pas nécessaire.";
+		return "Si vous incluez le dossier interne de " + Statics.nombre_cd.obtener()
+				+ ", les configurations, journaux et données auxiliaires seront également inclus, vous pouvez donc les désélectionner si ce n'est pas nécessaire.";
 	}
 
 	@Override
@@ -9574,7 +9588,7 @@ public class Frances implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "Redémarrez CrashDetector pour que les nouveaux JARs soient ajoutés au classpath.";
+		return "Redémarrez " + Statics.nombre_cd.obtener() + " pour que les nouveaux JARs soient ajoutés au classpath.";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -10603,7 +10617,8 @@ public class Frances implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector a détecté que Minecraft pourrait ne pas utiliser le GPU haute performance.\n\n"
+		return Statics.nombre_cd.obtener()
+				+ " a détecté que Minecraft pourrait ne pas utiliser le GPU haute performance.\n\n"
 				+ "Sous Windows, on peut définir des clés de registre dans "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "pour forcer javaw.exe à utiliser le GPU dédié.\n\n"
@@ -10616,7 +10631,7 @@ public class Frances implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector a détecté un problème possible lié à NVIDIA Optimus ou PRIME.\n\n"
+		return Statics.nombre_cd.obtener() + " a détecté un problème possible lié à NVIDIA Optimus ou PRIME.\n\n"
 				+ "Selon la distribution Linux utilisée, il peut être nécessaire de configurer NVIDIA Optimus, "
 				+ "nvidia-prime, switcheroo-control ou d'autres systèmes hybrides.\n\n"
 				+ "Sur Fedora/RHEL et dérivés, il est généralement recommandé de suivre la documentation de RPMFusion.\n\n"
@@ -10625,7 +10640,7 @@ public class Frances implements Idioma {
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector a détecté un problème possible de sélection de GPU.\n\n"
+		return Statics.nombre_cd.obtener() + " a détecté un problème possible de sélection de GPU.\n\n"
 				+ "Sur certains systèmes macOS avec GPU hybride, il est possible de forcer l'utilisation du GPU dédié "
 				+ "via des configurations système avancées.\n\n"
 				+ "Le bouton appliquer tentera d'exécuter une commande pour prioriser le GPU haute performance.";
@@ -10633,7 +10648,7 @@ public class Frances implements Idioma {
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector a détecté un problème possible lié au GPU, "
+		return Statics.nombre_cd.obtener() + " a détecté un problème possible lié au GPU, "
 				+ "mais il n'existe pas d'implémentation spécifique pour ce système d'exploitation.";
 	}
 
@@ -11017,7 +11032,7 @@ public class Frances implements Idioma {
 
 	// French (Burkina Faso variant) (Français)
 	public String suprimirConsolaCD() {
-		return "Masquer la console de CrashDetector";
+		return "Masquer la console de " + Statics.nombre_cd.obtener();
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

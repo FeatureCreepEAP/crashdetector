@@ -41,7 +41,8 @@ public class Lao implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError() + "'>ບໍ່ພົບໄຟລ໌ JAR ຂອງ CrashDetector</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>ບໍ່ພົບໄຟລ໌ JAR ຂອງ "
+				+ Statics.nombre_cd.obtener() + "</span>";
 	}
 
 	@Override
@@ -102,14 +103,15 @@ public class Lao implements Idioma {
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo() + "'>ລາຍງານ CrashDetector ຂອງທ່ານຢູ່ນີ້ <a href='"
-				+ archivo + "' style='color:#" + config.obtenerColorEnlace() + "'>ເບິ່ງລາຍງານ</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>ລາຍງານ " + Statics.nombre_cd.obtener()
+				+ " ຂອງທ່ານຢູ່ນີ້ <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace()
+				+ "'>ເບິ່ງລາຍງານ</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>ນີ້ແມ່ນ GUI ຂອງ CrashDetector. ຖ້າເກມປິດໂດຍບໍ່ມີບັນຫາ ໃຫ້ລະເລີຍຂໍ້ຄວາມນີ້.</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>ນີ້ແມ່ນ GUI ຂອງ " + Statics.nombre_cd.obtener()
+				+ ". ຖ້າເກມປິດໂດຍບໍ່ມີບັນຫາ ໃຫ້ລະເລີຍຂໍ້ຄວາມນີ້.</span>";
 	}
 
 	@Override
@@ -465,13 +467,12 @@ public class Lao implements Idioma {
 				+ "ຢ່າງໃດກໍຕາມ ທ່ານສາມາດໃຊ້ endpoint ກຳນົດເອງໄດ້. " + "ທ່ານກຳລັງໃຊ້ລາຍງານຈາກ "
 				+ Config.obtenerInstancia().obtenerSitoDeInformes() + " ແລະ logs ຈາກ "
 				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
-				+ "ທ່ານສາມາດແບ່ງປັນ logs ແຍກຕ່າງຫາກໄດ້ໂດຍກົດປຸ່ມແບ່ງປັນ. "
-				+ "CrashDetector ມີການປົກປິດຂໍ້ມູນ logs ເພື່ອລົບ username, UUID, tokens, IP ແລະອື່ນໆ "
-				+ "ແຕ່ບໍ່ແມ່ນສົມບູນ. " + "ຜູ້ສ້າງ modpack ສາມາດປິດຟັງຊັນນີ້ໄດ້. "
-				+ "ທ່ານເປັນຜູ້ຄວບຄຸມຂໍ້ມູນຂອງທ່ານເອງ. " + "ເວັບໄຊ logs ເປັນຂອງ third-party. "
-				+ "CrashDetector ເປັນແຄ່ interface ເທົ່ານັ້ນ. " + "ກະລຸນາຮູ້ກ່ຽວກັບ RGPD ແລະ ARCO. "
-				+ "ຖ້າທ່ານຢູ່ເອີຣົບ ສາມາດໃຊ້ " + "<a href=\"https://securelogger.top\">securelogger.top</a>. "
-				+ "ເບິ່ງຂໍ້ມູນກົດໝາຍເພີ່ມເຕີມ: "
+				+ "ທ່ານສາມາດແບ່ງປັນ logs ແຍກຕ່າງຫາກໄດ້ໂດຍກົດປຸ່ມແບ່ງປັນ. " + Statics.nombre_cd.obtener()
+				+ " ມີການປົກປິດຂໍ້ມູນ logs ເພື່ອລົບ username, UUID, tokens, IP ແລະອື່ນໆ " + "ແຕ່ບໍ່ແມ່ນສົມບູນ. "
+				+ "ຜູ້ສ້າງ modpack ສາມາດປິດຟັງຊັນນີ້ໄດ້. " + "ທ່ານເປັນຜູ້ຄວບຄຸມຂໍ້ມູນຂອງທ່ານເອງ. "
+				+ "ເວັບໄຊ logs ເປັນຂອງ third-party. " + Statics.nombre_cd.obtener() + " ເປັນແຄ່ interface ເທົ່ານັ້ນ. "
+				+ "ກະລຸນາຮູ້ກ່ຽວກັບ RGPD ແລະ ARCO. " + "ຖ້າທ່ານຢູ່ເອີຣົບ ສາມາດໃຊ້ "
+				+ "<a href=\"https://securelogger.top\">securelogger.top</a>. " + "ເບິ່ງຂໍ້ມູນກົດໝາຍເພີ່ມເຕີມ: "
 				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf\">LFPDPPP</a>, "
 				+ "<a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32016R0679\">RGPD</a>, "
 				+ "<a href=\"https://www.ppc.go.jp/files/pdf/20220401_personal_basicpolicy.pdf\">Japan Data Policy</a>.";
@@ -805,7 +806,7 @@ public class Lao implements Idioma {
 
 	@Override
 	public String ajustesCrashDetector() {
-		return "ການຕັ້ງຄ່າ CrashDetector";
+		return "ການຕັ້ງຄ່າ " + Statics.nombre_cd.obtener();
 	}
 
 	@Override
@@ -909,7 +910,7 @@ public class Lao implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "ເປີດ CrashDetector ເມື່ອເກີດຄວາມລົ້ມເຫຼວເທົ່ານັ້ນ";
+		return "ເປີດ " + Statics.nombre_cd.obtener() + " ເມື່ອເກີດຄວາມລົ້ມເຫຼວເທົ່ານັ້ນ";
 	}
 
 	@Override
@@ -2095,7 +2096,8 @@ public class Lao implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "ເຈົ້າອາດຈະມີບັນຫາກ່ຽວກັບ IPv6. "
 				+ "ມີສອງວິທີແກ້ໄຂ: "
 				+ "1) ເພີ່ມອາກິວເມັນ JVM <code>-Djava.net.preferIPv4Stack=true</code> ໃນຕົວເປີດຂອງເຈົ້າ, ຫຼື "
-				+ "2) ໃຊ້ປຸ່ມ 'QuickFix' ໃນ CrashDetector ເພື່ອໃຊ້ patch ທີ່ຈະເປີດການຕັ້ງຄ່ານີ້ໂດຍອັດຕະໂນມັດ." + "</b>";
+				+ "2) ໃຊ້ປຸ່ມ 'QuickFix' ໃນ " + Statics.nombre_cd.obtener()
+				+ " ເພື່ອໃຊ້ patch ທີ່ຈະເປີດການຕັ້ງຄ່ານີ້ໂດຍອັດຕະໂນມັດ." + "</b>";
 	}
 
 	@Override
@@ -2156,7 +2158,9 @@ public class Lao implements Idioma {
 
 	@Override
 	public String noRegistroDeLauncher() {
-		return "ທົ່ວໄປ: ເລືອກປະເພດ launcher ທີ່ເຈົ້າກຳລັງໃຊ້. Logs ຂອງ launcher (launcher_log.txt, stdout, ອື່ນໆ) ບັນຈຸຂໍ້ມູນສຳຄັນກ່ຽວກັບຂໍ້ຜິດພາດທີ່ບໍ່ປາກົດໃນ latest.log. CrashDetector ບໍ່ສາມາດອ່ານ logs ຈາກ Launcher ຂອງເຈົ້າໄດ້, ມັນອາດຈະບໍ່ມີໄຟລ໌ log ແລະ ເຈົ້າຕ້ອງ paste logs ດ້ວຍຕົນເອງ.<br>"
+		return "ທົ່ວໄປ: ເລືອກປະເພດ launcher ທີ່ເຈົ້າກຳລັງໃຊ້. Logs ຂອງ launcher (launcher_log.txt, stdout, ອື່ນໆ) ບັນຈຸຂໍ້ມູນສຳຄັນກ່ຽວກັບຂໍ້ຜິດພາດທີ່ບໍ່ປາກົດໃນ latest.log. "
+				+ Statics.nombre_cd.obtener()
+				+ " ບໍ່ສາມາດອ່ານ logs ຈາກ Launcher ຂອງເຈົ້າໄດ້, ມັນອາດຈະບໍ່ມີໄຟລ໌ log ແລະ ເຈົ້າຕ້ອງ paste logs ດ້ວຍຕົນເອງ.<br>"
 				+ "ສຳລັບຂໍ້ມູນເພີ່ມເຕີມ, ເບິ່ງ <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">ບັນຫານີ້</a>. Logs ເຫຼົ່ານີ້ບັນຈຸ output ມາດຕະຖານ (STDOUT), ທີ່ຈຳເປັນສຳລັບການວິນິດໄສຂໍ້ຜິດພາດຫຼາຍປະເພດ.";
 	}
 
@@ -3182,8 +3186,8 @@ public class Lao implements Idioma {
 	 */
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "ເປີດໃຊ້ ProxySysOutSysErr?\n\n"
-				+ "ຕົວເລືອກນີ້ໃຫ້ CrashDetector ເຂົ້າເຖິງ System.out ແລະ System.err ເມື່ອ launcher ບໍ່ສະໜອງ logs.\n\n"
+		return "ເປີດໃຊ້ ProxySysOutSysErr?\n\n" + "ຕົວເລືອກນີ້ໃຫ້ " + Statics.nombre_cd.obtener()
+				+ " ເຂົ້າເຖິງ System.out ແລະ System.err ເມື່ອ launcher ບໍ່ສະໜອງ logs.\n\n"
 				+ "ຄວນເປີດໃຊ້ເມື່ອເຈົ້າບໍ່ສາມາດ paste log ດ້ວຍຕົນເອງໄດ້ເທົ່ານັ້ນ.\n\n"
 				+ "ຄຳເຕືອນ: ສິ່ງນີ້ອາດຈະຂັດແຍ່ງກັບໂມດ ຫຼື launchers ບາງຕົວ.\n\n"
 				+ "ຕ້ອງການ restart ເກມ/app ເພື່ອໃຫ້ການປ່ຽນແປງມີຜົນ.";
@@ -3206,7 +3210,8 @@ public class Lao implements Idioma {
 	 */
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "ເປີດໃຊ້ ProxySysOutSysErr ສຳເລັດແລ້ວ.\n\n" + "ຕ້ອງການ restart CrashDetector ເພື່ອໃຫ້ການປ່ຽນແປງມີຜົນ.";
+		return "ເປີດໃຊ້ ProxySysOutSysErr ສຳເລັດແລ້ວ.\n\n" + "ຕ້ອງການ restart " + Statics.nombre_cd.obtener()
+				+ " ເພື່ອໃຫ້ການປ່ຽນແປງມີຜົນ.";
 	}
 
 	/**
@@ -3862,7 +3867,7 @@ public class Lao implements Idioma {
 				+ "ຜິດພາດ ModLauncher services: ເສັ້ນທາງ (path) ມີຕົວອັກສອນທີ່ບໍ່ຖືກຕ້ອງ. "
 				+ "ModLauncher services ບໍ່ສາມາດປະມວນຜົນເສັ້ນທາງທີ່ມີຕົວອັກສອນທີ່ບໍ່ແມ່ນ ASCII ຫຼື ຕົວອັກສອນພິເສດ. "
 				+ "ຕົວອັກສອນທີ່ມີບັນຫາລວມມີ: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요, ແລະ ໂດຍສະເພາະຕົວອັກສອນ '\"' ເມື່ອຢູ່ທ້າຍຊື່. "
-				+ "Components ຂອງ services ທົ່ວໄປໃນ ModLauncher ລວມມີ CrashDetector, "
+				+ "Components ຂອງ services ທົ່ວໄປໃນ ModLauncher ລວມມີ " + Statics.nombre_cd.obtener() + ", "
 				+ Config.obtenerInstancia().obtenerNombreCD()
 				+ ", FeatureCreep, Vivicraft, Optifine, Sodium, clones, Iris Shaders/Oculus, MixerLogger, CrashAssistant ແລະ Sinytra Connector. "
 				+ "ເຈົ້າສາມາດ ລົບ services ທັງໝົດໄດ້, ແຕ່ບັນຫາອື່ນໆອາດເກີດຂຶ້ນເນື່ອງຈາກຊື່ຂອງເສັ້ນທາງ. "
@@ -6259,7 +6264,7 @@ public class Lao implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "Launchers ເຫຼົ່ານີ້ແມ່ນໂຕທີ່ CrashDetector ແນະນຳວ່າດີ.";
+		return "Launchers ເຫຼົ່ານີ້ແມ່ນໂຕທີ່ " + Statics.nombre_cd.obtener() + " ແນະນຳວ່າດີ.";
 	}
 
 	@Override
@@ -6292,7 +6297,8 @@ public class Lao implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "ທ່ານສາມາດລົງທະບຽນ mods ທີ່ບໍ່ຄວນໃຊ້ເພື່ອໃຫ້ CrashDetector ກວດພົບຖ້າມັນຖືກຕິດຕັ້ງ.";
+		return "ທ່ານສາມາດລົງທະບຽນ mods ທີ່ບໍ່ຄວນໃຊ້ເພື່ອໃຫ້ " + Statics.nombre_cd.obtener()
+				+ " ກວດພົບຖ້າມັນຖືກຕິດຕັ້ງ.";
 	}
 
 	@Override
@@ -6302,12 +6308,13 @@ public class Lao implements Idioma {
 
 	@Override
 	public String anularNormalDescripcion() {
-		return "CrashDetector ຄວນແຈ້ງເຕືອນເຖິງແມ່ນວ່າຈະບໍ່ມີ crash";
+		return Statics.nombre_cd.obtener() + " ຄວນແຈ້ງເຕືອນເຖິງແມ່ນວ່າຈະບໍ່ມີ crash";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "ລົງທະບຽນ mods ທີ່ CrashDetector ແນະນຳ. ຖ້າຂາດ, CrashDetector ອາດຈະແຈ້ງເຕືອນ.";
+		return "ລົງທະບຽນ mods ທີ່ " + Statics.nombre_cd.obtener() + " ແນະນຳ. ຖ້າຂາດ, " + Statics.nombre_cd.obtener()
+				+ " ອາດຈະແຈ້ງເຕືອນ.";
 	}
 
 	@Override
@@ -6332,7 +6339,8 @@ public class Lao implements Idioma {
 				+ "ຊື່ຜູ້ໃຊ້ ຫຼື UUID.\n" + "• ສິດທີ່ຈະບໍ່ໃຫ້ຄຳໃຫ້ທີ່ເປັນຜົນຮ້າຍຕໍ່ຕົນເອງ.\n"
 				+ "• ສິດທີ່ຈະປະຕິເສດການຕອບຄຳຖາມທີ່ບໍ່ຈຳເປັນສຳລັບການແກ້ໄຂບັນຫາ.\n"
 				+ "• ສິດທີ່ຈະໄດ້ຮັບຄຳແນະນຳພາຍໃນ chat.\n"
-				+ "• ສິດທີ່ຈະໃຊ້ການປິດບັງຊື່ (anonymization) ຂອງ logs ທີ່ມີຢູ່ໃນ CrashDetector.\n\n"
+				+ "• ສິດທີ່ຈະໃຊ້ການປິດບັງຊື່ (anonymization) ຂອງ logs ທີ່ມີຢູ່ໃນ " + Statics.nombre_cd.obtener()
+				+ ".\n\n"
 
 				+ "ຂໍ້ຄວາມນີ້ຍອມຮັບເນື້ອຫາ HTML.";
 	}
@@ -6344,8 +6352,8 @@ public class Lao implements Idioma {
 
 	@Override
 	public String advertenciaHashLento() {
-		return "ຄຳເຕືອນ: ການເພີ່ມໄຟລ໌ຂະໜາດໃຫຍ່ຫຼາຍໆໄຟລ໌ອາດເຮັດໃຫ້ການກວດສອບ "
-				+ "ໃຊ້ເວລາຫຼາຍນາທີ. CrashDetector ຈະຕ້ອງຄິດໄລ່ hash ຂອງແຕ່ລະໄຟລ໌ "
+		return "ຄຳເຕືອນ: ການເພີ່ມໄຟລ໌ຂະໜາດໃຫຍ່ຫຼາຍໆໄຟລ໌ອາດເຮັດໃຫ້ການກວດສອບ " + "ໃຊ້ເວລາຫຼາຍນາທີ. "
+				+ Statics.nombre_cd.obtener() + " ຈະຕ້ອງຄິດໄລ່ hash ຂອງແຕ່ລະໄຟລ໌ "
 				+ "ກ່ອນທີ່ຈະດຳເນີນການຕໍ່. ແນະນຳໃຫ້ປ້ອງກັນສະເພາະໄຟລ໌ທີ່ຈຳເປັນຢ່າງເຂັ້ມງວດ.";
 	}
 
@@ -6379,7 +6387,8 @@ public class Lao implements Idioma {
 	public String mensajeDeSylentBell() {
 		return "<html><div style='width:150px; text-align:center;'>"
 				+ "ຄວາມຄິດເຫັນ ແລະ ຄຳເຫັນຂອງ Sylent Bell ອາດຈະບໍ່ສອດຄ່ອງກັບຂອງເຮົາ; "
-				+ "ເຮົາພຽງແຕ່ຄິດວ່າມັນຈະຕະຫຼົກຖ້າເອົາມາໄວ້ທີ່ນີ້. CrashDetector ແມ່ນ secular." + "</div></html>";
+				+ "ເຮົາພຽງແຕ່ຄິດວ່າມັນຈະຕະຫຼົກຖ້າເອົາມາໄວ້ທີ່ນີ້. " + Statics.nombre_cd.obtener() + " ແມ່ນ secular."
+				+ "</div></html>";
 	}
 
 	@Override
@@ -6754,10 +6763,11 @@ public class Lao implements Idioma {
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-		return "" + "<b>ເຄື່ອງມື Debugging</b><br><br>"
-				+ "ຢູ່ທີ່ນີ້ທ່ານສາມາດເປີດໃຊ້ຟັງຊັນຂັ້ນສູງເພື່ອ debug CrashDetector ແລະ ເກມຂອງທ່ານ.<br><br>"
+		return "" + "<b>ເຄື່ອງມື Debugging</b><br><br>" + "ຢູ່ທີ່ນີ້ທ່ານສາມາດເປີດໃຊ້ຟັງຊັນຂັ້ນສູງເພື່ອ debug "
+				+ Statics.nombre_cd.obtener() + " ແລະ ເກມຂອງທ່ານ.<br><br>"
 				+ "ແນະນຳໃຫ້ເປີດໃຊ້ console ພັດທະນາເພື່ອຮັບຂໍ້ມູນລະອຽດ, traces ແລະ ການວິນິດໄຍໃນລະຫວ່າງການວິເຄາະ.<br><br>"
-				+ "ຖ້າທ່ານຕ້ອງການທົດສອບ server multiplayer ໃນໂໝດ online, ອາດຈະຈຳເປັນຕ້ອງອະນຸຍາດໃຫ້ໂອນ token ການເຂົ້າເຖິງໄປຍັງ process ຂອງ CrashDetector ຈາກການຕັ້ງຄ່າຄວາມເປັນສ່ວນຕົວ. "
+				+ "ຖ້າທ່ານຕ້ອງການທົດສອບ server multiplayer ໃນໂໝດ online, ອາດຈະຈຳເປັນຕ້ອງອະນຸຍາດໃຫ້ໂອນ token ການເຂົ້າເຖິງໄປຍັງ process ຂອງ "
+				+ Statics.nombre_cd.obtener() + " ຈາກການຕັ້ງຄ່າຄວາມເປັນສ່ວນຕົວ. "
 				+ "ສິ່ງນີ້ໂດຍທົ່ວໄປແລ້ວ <b>ບໍ່ແນະນຳ</b> ໃນກໍລະນີອື່ນໆ.<br><br>"
 				+ "ຄຳແນະນຳເຕັມຮູບແບບ: <a href='https://example.com'>ລິ້ງ!</a>";// TODO
 	}
@@ -8663,7 +8673,8 @@ public class Lao implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "ຖ້າທ່ານລວມເອົາໂຟລເດີພາຍໃນຂອງ CrashDetector, ການຕັ້ງຄ່າ, logs ແລະ ຂໍ້ມູນຊ່ວຍເຫຼືອກໍ່ຈະຖືກສົ່ງໄປນຳ, ດັ່ງນັ້ນທ່ານສາມາດຍົກເລີກການເລືອກມັນໄດ້ຖ້າບໍ່ຈຳເປັນ.";
+		return "ຖ້າທ່ານລວມເອົາໂຟລເດີພາຍໃນຂອງ " + Statics.nombre_cd.obtener()
+				+ ", ການຕັ້ງຄ່າ, logs ແລະ ຂໍ້ມູນຊ່ວຍເຫຼືອກໍ່ຈະຖືກສົ່ງໄປນຳ, ດັ່ງນັ້ນທ່ານສາມາດຍົກເລີກການເລືອກມັນໄດ້ຖ້າບໍ່ຈຳເປັນ.";
 	}
 
 	@Override
@@ -9473,7 +9484,7 @@ public class Lao implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "ກະລຸນາເປີດ CrashDetector ໃໝ່ ເພື່ອໃຫ້ JARs ໃໝ່ເຂົ້າສູ່ classpath.";
+		return "ກະລຸນາເປີດ " + Statics.nombre_cd.obtener() + " ໃໝ່ ເພື່ອໃຫ້ JARs ໃໝ່ເຂົ້າສູ່ classpath.";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -10477,7 +10488,7 @@ public class Lao implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector ກວດພົບວ່າ Minecraft ອາດຈະບໍ່ໄດ້ໃຊ້ GPU ປະສິດທິພາບສູງ.\n\n"
+		return Statics.nombre_cd.obtener() + " ກວດພົບວ່າ Minecraft ອາດຈະບໍ່ໄດ້ໃຊ້ GPU ປະສິດທິພາບສູງ.\n\n"
 				+ "ໃນ Windows ສາມາດຕັ້ງຄ່າ Registry Keys ໃນ "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "ເພື່ອບັງຄັບໃຫ້ javaw.exe ໃຊ້ GPU ແຍກ.\n\n" + "GpuPreference=0 = ການຕັດສິນໃຈອັດຕະໂນມັດຂອງ Windows.\n"
@@ -10488,7 +10499,7 @@ public class Lao implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector ກວດພົບບັນຫາທີ່ອາດກ່ຽວຂ້ອງກັບ NVIDIA Optimus ຫຼື PRIME.\n\n"
+		return Statics.nombre_cd.obtener() + " ກວດພົບບັນຫາທີ່ອາດກ່ຽວຂ້ອງກັບ NVIDIA Optimus ຫຼື PRIME.\n\n"
 				+ "ຂຶ້ນກັບການແຈກຢາຍ Linux ທີ່ໃຊ້, ອາດຈຳເປັນຕ້ອງຕັ້ງຄ່າ NVIDIA Optimus, "
 				+ "nvidia-prime, switcheroo-control ຫຼື ລະບົບແບບ Hybrid ອື່ນໆ.\n\n"
 				+ "ໃນ Fedora/RHEL ແລະ ສາຂາຍ່ອຍ ມັກແນະນຳໃຫ້ຕິດຕາມເອກະສານຂອງ RPMFusion.\n\n"
@@ -10497,14 +10508,15 @@ public class Lao implements Idioma {
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector ກວດພົບບັນຫາການເລືອກ GPU ທີ່ອາດເກີດຂຶ້ນ.\n\n"
+		return Statics.nombre_cd.obtener() + " ກວດພົບບັນຫາການເລືອກ GPU ທີ່ອາດເກີດຂຶ້ນ.\n\n"
 				+ "ໃນບາງລະບົບ macOS ທີ່ມີ GPU ແບບ Hybrid ສາມາດບັງຄັບໃຊ້ GPU ແຍກ " + "ຜ່ານການຕັ້ງຄ່າຂັ້ນສູງຂອງລະບົບ.\n\n"
 				+ "ປຸ່ມນຳໃຊ້ຈະພະຍາຍາມເຮັດວຽກຄຳສັ່ງເພື່ອໃຫ້ຄວາມສຳຄັນກັບ GPU ປະສິດທິພາບສູງ.";
 	}
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector ກວດພົບບັນຫາທີ່ອາດກ່ຽວຂ້ອງກັບ GPU, " + "ແຕ່ບໍ່ມີການນຳໃຊ້ສະເພາະສຳລັບລະບົບປະຕິບັດການນີ້.";
+		return Statics.nombre_cd.obtener() + " ກວດພົບບັນຫາທີ່ອາດກ່ຽວຂ້ອງກັບ GPU, "
+				+ "ແຕ່ບໍ່ມີການນຳໃຊ້ສະເພາະສຳລັບລະບົບປະຕິບັດການນີ້.";
 	}
 
 	@Override
@@ -10883,7 +10895,7 @@ public class Lao implements Idioma {
 	}
 
 	public String suprimirConsolaCD() {
-		return "ປິດການສະແດງຄອນໂຊລຂອງ CrashDetector";
+		return "ປິດການສະແດງຄອນໂຊລຂອງ " + Statics.nombre_cd.obtener();
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

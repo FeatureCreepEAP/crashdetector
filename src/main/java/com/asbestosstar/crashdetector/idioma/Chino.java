@@ -41,7 +41,8 @@ public class Chino implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError() + "'>找不到CrashDetector的JAR文件</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>找不到" + Statics.nombre_cd.obtener()
+				+ "的JAR文件</span>";
 	}
 
 	@Override
@@ -100,13 +101,14 @@ public class Chino implements Idioma {
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo() + "'>您的CrashDetector报告在此 <a href='" + archivo
-				+ "' style='color:#" + config.obtenerColorEnlace() + "'>查看报告</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>您的" + Statics.nombre_cd.obtener()
+				+ "报告在此 <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace() + "'>查看报告</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo() + "'>这是CrashDetector的GUI界面。如果游戏正常关闭，请忽略此界面。</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>这是" + Statics.nombre_cd.obtener()
+				+ "的GUI界面。如果游戏正常关闭，请忽略此界面。</span>";
 	}
 
 	@Override
@@ -420,10 +422,10 @@ public class Chino implements Idioma {
 				+ "此功能仅用于显示你的崩溃信息及日志链接。但你也可以使用自定义端点，其处理方式可能不同。" + "你当前使用的报告站点为 "
 				+ Config.obtenerInstancia().obtenerSitoDeInformes() + "，日志站点为 "
 				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "。"
-				+ "你也可以点击单个日志名称旁的分享按钮来单独分享日志（无需报告）；" + "日志将上传至所选日志站点。CrashDetector 默认启用日志匿名化功能，会尝试移除用户名、UUID、"
-				+ "访问令牌、会话 ID、IP 地址等数据。但该功能并非完美，且整合包作者可将其禁用。" + "你可通过本页面底部的复选框启用或禁用该功能。你是自身数据的控制者，由你决定上传位置。"
-				+ "日志站点由第三方运营，其所有权常因隐私原因而隐藏。你需自行承担数据管理及相关风险的全部责任。" + "CrashDetector 的分享对话框仅是一个供你管理这些操作的界面。"
-				+ "请务必了解 GDPR 和 ARCO 的相关规定。"
+				+ "你也可以点击单个日志名称旁的分享按钮来单独分享日志（无需报告）；" + "日志将上传至所选日志站点。" + Statics.nombre_cd.obtener()
+				+ " 默认启用日志匿名化功能，会尝试移除用户名、UUID、" + "访问令牌、会话 ID、IP 地址等数据。但该功能并非完美，且整合包作者可将其禁用。"
+				+ "你可通过本页面底部的复选框启用或禁用该功能。你是自身数据的控制者，由你决定上传位置。" + "日志站点由第三方运营，其所有权常因隐私原因而隐藏。你需自行承担数据管理及相关风险的全部责任。"
+				+ Statics.nombre_cd.obtener() + " 的分享对话框仅是一个供你管理这些操作的界面。" + "请务必了解 GDPR 和 ARCO 的相关规定。"
 				+ "如果你位于欧洲，可使用由 Hetzner 在德国托管的 <a href=\"https://securelogger.top\">securelogger.top</a>。"
 				+ "更多法律信息，请参阅以下链接："
 				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf\">LFPDPPP</a>、"
@@ -459,8 +461,8 @@ public class Chino implements Idioma {
 	@Override
 	public String errorSSL() {
 		return "您遇到了SSL错误。这在旧版本的Java中很常见，" + "包括默认Minecraft启动器中的Java 8版本以及sun.com和java.com上的版本。"
-				+ "这会影响许多方面，例如MinecraftForge安装程序的JAR文件，" + "使用默认端点时分享CrashDetector报告的功能，需要互联网连接的一些模组，"
-				+ "以及一些日志站点。如果在尝试分享报告时遇到此问题，" + "请附上屏幕截图并选择与旧版Java 8兼容的日志站点。";
+				+ "这会影响许多方面，例如MinecraftForge安装程序的JAR文件，" + "使用默认端点时分享" + Statics.nombre_cd.obtener()
+				+ "报告的功能，需要互联网连接的一些模组，" + "以及一些日志站点。如果在尝试分享报告时遇到此问题，" + "请附上屏幕截图并选择与旧版Java 8兼容的日志站点。";
 	}
 
 	@Override
@@ -486,7 +488,8 @@ public class Chino implements Idioma {
 				+ "警告！Crash Assistant 是一个伪造的恶意软件检测器。它故意阻止游戏启动，无视您继续使用目标模组进行游戏的自由。 "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>查看 MalwareMod.java 代码</a>   "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>查看 JarInJarHelper.java 代码</a>. "
-				+ "目前只有这个模组在他们的列表中，并且他们实际上只针对默认的日志站点，而该站点可以由用户更改，只有在明确选择使用内置日志共享功能时才会生效。CrashAssistant 不会检查当前使用的是哪个日志站点，也不会解释如何更改它（共享对话框底部有一个下拉菜单），无论配置了哪个站点，CrashAssistant 都会阻止游戏启动。在他们的消息中，他们说要自己做研究，那就去做吧，查看 CrashDetector 和 Crash Assistant 的代码，了解它们的作用，不要依赖权威的呼吁。</b>";
+				+ "目前只有这个模组在他们的列表中，并且他们实际上只针对默认的日志站点，而该站点可以由用户更改，只有在明确选择使用内置日志共享功能时才会生效。CrashAssistant 不会检查当前使用的是哪个日志站点，也不会解释如何更改它（共享对话框底部有一个下拉菜单），无论配置了哪个站点，CrashAssistant 都会阻止游戏启动。在他们的消息中，他们说要自己做研究，那就去做吧，查看 "
+				+ Statics.nombre_cd.obtener() + " 和 Crash Assistant 的代码，了解它们的作用，不要依赖权威的呼吁。</b>";
 	}
 
 	@Override
@@ -847,7 +850,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "仅在失败时打开CrashDetector";
+		return "仅在失败时打开" + Statics.nombre_cd.obtener();
 	}
 
 	@Override
@@ -1813,8 +1816,8 @@ public class Chino implements Idioma {
 	@Override
 	public String tieneErrorIPV6() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "您可能遇到了与 IPv6 相关的问题。" + "有两种解决方案："
-				+ "1) 在启动器中添加 JVM 参数 <code>-Djava.net.preferIPv4Stack=true</code>，或者"
-				+ "2) 在 CrashDetector 中使用 'QuickFix' 按钮自动启用此设置的补丁。" + "</b>";
+				+ "1) 在启动器中添加 JVM 参数 <code>-Djava.net.preferIPv4Stack=true</code>，或者" + "2) 在 "
+				+ Statics.nombre_cd.obtener() + " 中使用 'QuickFix' 按钮自动启用此设置的补丁。" + "</b>";
 	}
 
 	@Override
@@ -1875,7 +1878,8 @@ public class Chino implements Idioma {
 
 	@Override
 	public String noRegistroDeLauncher() {
-		return "通用：请选择你正在使用的启动器类型。启动器日志（launcher_log.txt、stdout 等）包含了 latest.log 中没有的关键错误信息。CrashDetector 无法读取你的启动器日志 —— 可能是没有生成日志文件，你需要手动粘贴日志内容。<br>"
+		return "通用：请选择你正在使用的启动器类型。启动器日志（launcher_log.txt、stdout 等）包含了 latest.log 中没有的关键错误信息。"
+				+ Statics.nombre_cd.obtener() + " 无法读取你的启动器日志 —— 可能是没有生成日志文件，你需要手动粘贴日志内容。<br>"
 				+ "更多信息请参考 <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">此问题</a>。这些日志包含标准输出（STDOUT），是诊断许多错误所必需的。";
 	}
 
@@ -2657,8 +2661,9 @@ public class Chino implements Idioma {
 
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "是否启用 ProxySysOutSysErr？\n\n" + "此选项允许 CrashDetector 在启动器未提供日志时访问 System.out 和 System.err。\n\n"
-				+ "仅在无法手动粘贴日志时启用。\n\n" + "警告：可能与某些模组或启动器冲突。\n\n" + "需要重启游戏/应用以使更改生效。";
+		return "是否启用 ProxySysOutSysErr？\n\n" + "此选项允许 " + Statics.nombre_cd.obtener()
+				+ " 在启动器未提供日志时访问 System.out 和 System.err。\n\n" + "仅在无法手动粘贴日志时启用。\n\n" + "警告：可能与某些模组或启动器冲突。\n\n"
+				+ "需要重启游戏/应用以使更改生效。";
 	}
 
 	@Override
@@ -2668,7 +2673,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "ProxySysOutSysErr 已成功启用。\n\n" + "需要重启 CrashDetector 以使更改生效。";
+		return "ProxySysOutSysErr 已成功启用。\n\n" + "需要重启 " + Statics.nombre_cd.obtener() + " 以使更改生效。";
 	}
 
 	@Override
@@ -3236,7 +3241,8 @@ public class Chino implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "ModLauncher 服务错误：路径包含无效字符。 "
 				+ "ModLauncher 服务无法处理包含非 ASCII 字符或特殊字符的路径。 "
 				+ "问题字符包括：¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요，尤其是名称末尾的 '\"' 字符。 "
-				+ "常见的 ModLauncher 服务组件包括 CrashDetector、" + Config.obtenerInstancia().obtenerNombreCD()
+				+ "常见的 ModLauncher 服务组件包括 " + Statics.nombre_cd.obtener() + "、"
+				+ Config.obtenerInstancia().obtenerNombreCD()
 				+ "、FeatureCreep、Vivicraft、Optifine、Sodium、clonos、Iris Shaders/Oculus、MixerLogger、CrashAssistant 和 Sintrya Connector。 "
 				+ "你可以移除所有服务，但路径名称仍可能导致其他问题。 " + "解决方案：将实例重命名为仅使用 ASCII 字符（a-z, A-Z, 0-9），避免空格和特殊字符。</b>";
 	}
@@ -5518,7 +5524,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "这些启动器是 CrashDetector 推荐的优质选择。";
+		return "这些启动器是 " + Statics.nombre_cd.obtener() + " 推荐的优质选择。";
 	}
 
 	@Override
@@ -5551,7 +5557,7 @@ public class Chino implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "你可以在此注册不建议的模组，以便 CrashDetector 在它们被安装时进行检测。";
+		return "你可以在此注册不建议的模组，以便 " + Statics.nombre_cd.obtener() + " 在它们被安装时进行检测。";
 	}
 
 	@Override
@@ -5561,12 +5567,12 @@ public class Chino implements Idioma {
 
 	@Override
 	public String anularNormalDescripcion() {
-		return "即使没有崩溃，CrashDetector 也应发出警告。";
+		return "即使没有崩溃，" + Statics.nombre_cd.obtener() + " 也应发出警告。";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "注册 CrashDetector 推荐的模组。如果缺失，CrashDetector 可能会发出警告。";
+		return "注册 " + Statics.nombre_cd.obtener() + " 推荐的模组。如果缺失，" + Statics.nombre_cd.obtener() + " 可能会发出警告。";
 	}
 
 	@Override
@@ -5581,7 +5587,7 @@ public class Chino implements Idioma {
 				+ "以及美国、俄罗斯联邦、中华人民共和国、伊朗伊斯兰共和国和朝鲜民主主义人民共和国等国家采用的类似法律原则。\n\n"
 
 				+ "可包含的权利示例包括：\n" + "• 有权不提供与支持无关的信息，例如所用启动器、用户名或 UUID。\n" + "• 有权不自证其罪。\n" + "• 有权拒绝回答与问题解决无关的问题。\n"
-				+ "• 有权在聊天中获得引导。\n" + "• 有权使用 CrashDetector 内置的日志匿名化功能。\n\n"
+				+ "• 有权在聊天中获得引导。\n" + "• 有权使用 " + Statics.nombre_cd.obtener() + " 内置的日志匿名化功能。\n\n"
 
 				+ "此文本支持 HTML 内容。";
 	}
@@ -5593,7 +5599,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String advertenciaHashLento() {
-		return "警告：添加大量大文件可能导致验证耗时数分钟。CrashDetector 需要先为每个文件计算哈希值才能继续。建议仅保护严格必需的文件。";
+		return "警告：添加大量大文件可能导致验证耗时数分钟。" + Statics.nombre_cd.obtener() + " 需要先为每个文件计算哈希值才能继续。建议仅保护严格必需的文件。";
 	}
 
 	@Override
@@ -5624,7 +5630,7 @@ public class Chino implements Idioma {
 	@Override
 	public String mensajeDeSylentBell() {
 		return "<html><div style='width:150px; text-align:center;'>" + "Sylent Bell 的观点和评论不一定代表我们的立场；"
-				+ "我们只是觉得放在这里挺有趣的。CrashDetector 是世俗的（非宗教的）。" + "</div></html>";
+				+ "我们只是觉得放在这里挺有趣的。" + Statics.nombre_cd.obtener() + " 是世俗的（非宗教的）。" + "</div></html>";
 	}
 
 	@Override
@@ -5963,9 +5969,9 @@ public class Chino implements Idioma {
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-		return "" + "<b>调试工具</b><br><br>" + "在此处，你可以启用高级功能来调试 CrashDetector 和你的游戏。<br><br>"
+		return "" + "<b>调试工具</b><br><br>" + "在此处，你可以启用高级功能来调试 " + Statics.nombre_cd.obtener() + " 和你的游戏。<br><br>"
 				+ "建议启用开发控制台，以便在分析过程中获取详细信息、堆栈跟踪和诊断数据。<br><br>"
-				+ "如果你需要在在线模式下测试多人服务器，可能需要从隐私设置中允许将访问令牌（token de acceso）传递给 CrashDetector 进程。"
+				+ "如果你需要在在线模式下测试多人服务器，可能需要从隐私设置中允许将访问令牌（token de acceso）传递给 " + Statics.nombre_cd.obtener() + " 进程。"
 				+ "在其他情况下，这通常<b>不建议</b>。<br><br>" + "完整说明：<a href='https://example.com'>链接！</a>";
 	}
 
@@ -7714,7 +7720,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "如果你包含 CrashDetector 的内部文件夹，配置、日志和辅助数据也将被传输，因此如果不需要，你可以取消选择它。";
+		return "如果你包含 " + Statics.nombre_cd.obtener() + " 的内部文件夹，配置、日志和辅助数据也将被传输，因此如果不需要，你可以取消选择它。";
 	}
 
 	@Override
@@ -8499,7 +8505,7 @@ public class Chino implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "请重启 CrashDetector，以便将新的 JAR 文件加载到 classpath 中。";
+		return "请重启 " + Statics.nombre_cd.obtener() + "，以便将新的 JAR 文件加载到 classpath 中。";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -9471,7 +9477,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector 检测到 Minecraft 可能未使用高性能 GPU。\n\n" + "在 Windows 中，可以在 "
+		return Statics.nombre_cd.obtener() + " 检测到 Minecraft 可能未使用高性能 GPU。\n\n" + "在 Windows 中，可以在 "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "中设置注册表键，以强制 javaw.exe 使用独立 GPU。\n\n" + "GpuPreference=0 = Windows 自动决定。\n"
 				+ "GpuPreference=1 = 节能 / 集成 GPU。\n" + "GpuPreference=2 = 高性能 GPU。\n\n"
@@ -9480,20 +9486,20 @@ public class Chino implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector 检测到与 NVIDIA Optimus 或 PRIME 相关的潜在问题。\n\n" + "根据使用的 Linux 发行版，可能需要配置 NVIDIA Optimus、"
-				+ "nvidia-prime、switcheroo-control 或其他混合系统。\n\n" + "在 Fedora/RHEL 及其衍生版本中，通常建议遵循 RPMFusion 文档。\n\n"
-				+ "下方按钮将打开推荐的官方文档。";
+		return Statics.nombre_cd.obtener() + " 检测到与 NVIDIA Optimus 或 PRIME 相关的潜在问题。\n\n"
+				+ "根据使用的 Linux 发行版，可能需要配置 NVIDIA Optimus、" + "nvidia-prime、switcheroo-control 或其他混合系统。\n\n"
+				+ "在 Fedora/RHEL 及其衍生版本中，通常建议遵循 RPMFusion 文档。\n\n" + "下方按钮将打开推荐的官方文档。";
 	}
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector 检测到潜在的 GPU 选择问题。\n\n" + "在某些具有混合 GPU 的 macOS 系统上，可以通过高级系统设置强制使用独立 GPU。\n\n"
-				+ "应用按钮将尝试执行命令以优先使用高性能 GPU。";
+		return Statics.nombre_cd.obtener() + " 检测到潜在的 GPU 选择问题。\n\n"
+				+ "在某些具有混合 GPU 的 macOS 系统上，可以通过高级系统设置强制使用独立 GPU。\n\n" + "应用按钮将尝试执行命令以优先使用高性能 GPU。";
 	}
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector 检测到潜在的 GPU 相关问题，" + "但此操作系统没有特定的实现。";
+		return Statics.nombre_cd.obtener() + " 检测到潜在的 GPU 相关问题，" + "但此操作系统没有特定的实现。";
 	}
 
 	@Override
@@ -9873,7 +9879,7 @@ public class Chino implements Idioma {
 
 	// Chinese (Simplified) (中文)
 	public String suprimirConsolaCD() {
-		return "隐藏 CrashDetector 控制台";
+		return "隐藏 " + Statics.nombre_cd.obtener() + " 控制台";
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

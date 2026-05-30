@@ -41,7 +41,8 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError() + "'>CrashDetector의 JAR 파일을 찾을 수 없습니다</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + Statics.nombre_cd.obtener()
+				+ "의 JAR 파일을 찾을 수 없습니다</span>";
 	}
 
 	@Override
@@ -101,14 +102,15 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo() + "'>CrashDetector 보고서는 여기에서 확인할 수 있습니다 <a href='"
-				+ archivo + "' style='color:#" + config.obtenerColorEnlace() + "'>보고서 보기</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>" + Statics.nombre_cd.obtener()
+				+ " 보고서는 여기에서 확인할 수 있습니다 <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace()
+				+ "'>보고서 보기</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>CrashDetector의 GUI 인터페이스입니다. 게임이 정상적으로 종료된 경우 이 인터페이스를 무시하십시오.</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>" + Statics.nombre_cd.obtener()
+				+ "의 GUI 인터페이스입니다. 게임이 정상적으로 종료된 경우 이 인터페이스를 무시하십시오.</span>";
 	}
 
 	@Override
@@ -432,12 +434,13 @@ public class Coreano implements Idioma {
 				+ "이는 단지 오류 정보와 로그 링크를 표시하기 위한 것입니다. 그러나 동일한 방식을 따르지 않을 수 있는 사용자 정의 엔드포인트도 사용 가능합니다. " + "현재 보고서 사이트는 "
 				+ Config.obtenerInstancia().obtenerSitoDeInformes() + ", 로그 사이트는 "
 				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "를 사용 중입니다. "
-				+ "개별 로그 이름 옆의 공유 버튼을 눌러 보고서 없이 개별 로그만 공유할 수도 있습니다; "
-				+ "로그는 선택된 로그 사이트로 전송됩니다. CrashDetector는 기본적으로 로그 익명화 기능을 제공하며, 사용자 이름, UUID, "
+				+ "개별 로그 이름 옆의 공유 버튼을 눌러 보고서 없이 개별 로그만 공유할 수도 있습니다; " + "로그는 선택된 로그 사이트로 전송됩니다. "
+				+ Statics.nombre_cd.obtener() + "는 기본적으로 로그 익명화 기능을 제공하며, 사용자 이름, UUID, "
 				+ "액세스 토큰, 세션 ID, IP 주소 등을 제거하려 시도합니다. 그러나 완벽하지 않으며, 모드팩 제작자가 이를 비활성화할 수도 있습니다. "
 				+ "이 기능은 화면 하단의 체크박스로 활성화/비활성화할 수 있습니다. 귀하는 자신의 데이터를 통제하며, 어디에 데이터를 업로드할지 결정합니다. "
 				+ "로그 사이트는 소유권이 프라이버시로 인해 종종 숨겨진 제3자의 소유입니다. 귀하는 데이터 관리 및 관련 리스크에 대한 모든 책임을 집니다. "
-				+ "CrashDetector의 공유 대화상자는 이를 관리할 수 있도록 하는 단순한 인터페이스일 뿐입니다. " + "GDPR 및 ARCO에 대해 숙지하는 것이 중요합니다. "
+				+ Statics.nombre_cd.obtener() + "의 공유 대화상자는 이를 관리할 수 있도록 하는 단순한 인터페이스일 뿐입니다. "
+				+ "GDPR 및 ARCO에 대해 숙지하는 것이 중요합니다. "
 				+ "유럽에 계신다면 Hetzner가 독일에서 호스팅하는 <a href=\"https://securelogger.top\">securelogger.top</a>을 사용할 수 있습니다. "
 				+ "법적 정보는 다음 링크를 참조하세요: "
 				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf\">LFPDPPP</a>, "
@@ -474,9 +477,9 @@ public class Coreano implements Idioma {
 	public String errorSSL() {
 		return "SSL 오류가 발생했습니다. 이는 구형 Java 버전에서 흔히 발생하며, "
 				+ "기본 Minecraft 런처의 Java 8 버전 및 sun.com과 java.com의 버전에도 포함됩니다. "
-				+ "이 문제는 MinecraftForge 설치 프로그램의 JAR 파일, 기본 엔드포인트를 사용한 "
-				+ "CrashDetector 보고서 공유 기능, 인터넷이 필요한 일부 모드 및 일부 로그 사이트에 영향을 미칩니다. "
-				+ "보고서를 공유하려 할 때 이 문제가 발생하면 스크린샷을 첨부하고 " + "Java 8 이전 버전과 호환되는 로그 사이트를 선택하세요.";
+				+ "이 문제는 MinecraftForge 설치 프로그램의 JAR 파일, 기본 엔드포인트를 사용한 " + Statics.nombre_cd.obtener()
+				+ " 보고서 공유 기능, 인터넷이 필요한 일부 모드 및 일부 로그 사이트에 영향을 미칩니다. " + "보고서를 공유하려 할 때 이 문제가 발생하면 스크린샷을 첨부하고 "
+				+ "Java 8 이전 버전과 호환되는 로그 사이트를 선택하세요.";
 	}
 
 	@Override
@@ -503,7 +506,9 @@ public class Coreano implements Idioma {
 				+ "경고! Crash Assistant는 가짜 악성코드 감지기입니다. 이 프로그램은 의도적으로 게임 실행을 차단하며, 타겟팅된 모드로 계속 플레이할 자유를 무시합니다. "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>MalwareMod.java 코드 보기</a>   "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>JarInJarHelper.java 코드 보기</a>. "
-				+ "현재 리스트에는 이 모드만 있으며, 실제로는 사용자가 변경할 수 있는 기본 로그 사이트만을 대상으로 합니다. 이 기능은 내장된 로그 공유 기능을 명시적으로 선택한 경우에만 작동합니다. CrashAssistant는 어떤 로그 사이트가 설정되었는지 확인하지 않으며, 변경 방법(공유 대화 상자의 하단에 드롭다운 메뉴 있음)도 설명하지 않습니다. 설정된 사이트와 관계없이 CrashAssistant는 게임 실행을 차단합니다. 그들의 메시지에서는 직접 조사하라고 하지만, 실제로 그렇게 하십시오. CrashDetector와 Crash Assistant의 코드를 살펴보고 무엇을 하는지 이해하십시오. 권위에 호소하는 것에 의존하지 마십시오.</b>";
+				+ "현재 리스트에는 이 모드만 있으며, 실제로는 사용자가 변경할 수 있는 기본 로그 사이트만을 대상으로 합니다. 이 기능은 내장된 로그 공유 기능을 명시적으로 선택한 경우에만 작동합니다. CrashAssistant는 어떤 로그 사이트가 설정되었는지 확인하지 않으며, 변경 방법(공유 대화 상자의 하단에 드롭다운 메뉴 있음)도 설명하지 않습니다. 설정된 사이트와 관계없이 CrashAssistant는 게임 실행을 차단합니다. 그들의 메시지에서는 직접 조사하라고 하지만, 실제로 그렇게 하십시오. "
+				+ Statics.nombre_cd.obtener()
+				+ "와 Crash Assistant의 코드를 살펴보고 무엇을 하는지 이해하십시오. 권위에 호소하는 것에 의존하지 마십시오.</b>";
 	}
 
 	@Override
@@ -872,7 +877,7 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "오류 발생 시에만 CrashDetector 열기";
+		return "오류 발생 시에만 " + Statics.nombre_cd.obtener() + " 열기";
 	}
 
 	@Override
@@ -1824,8 +1829,8 @@ public class Coreano implements Idioma {
 	@Override
 	public String tieneErrorIPV6() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "IPv6 관련 문제가 있을 수 있습니다. " + "해결 방법은 두 가지입니다: "
-				+ "1) 런처에 JVM 인수 <code>-Djava.net.preferIPv4Stack=true</code>를 추가하거나, "
-				+ "2) CrashDetector에서 'QuickFix' 버튼을 눌러 자동으로 설정을 활성화하는 패치를 적용하세요." + "</b>";
+				+ "1) 런처에 JVM 인수 <code>-Djava.net.preferIPv4Stack=true</code>를 추가하거나, " + "2) "
+				+ Statics.nombre_cd.obtener() + "에서 'QuickFix' 버튼을 눌러 자동으로 설정을 활성화하는 패치를 적용하세요." + "</b>";
 	}
 
 	@Override
@@ -1886,7 +1891,9 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String noRegistroDeLauncher() {
-		return "일반: 사용 중인 런처 종류를 선택하세요. 런처 로그(launcher_log.txt, stdout 등)는 latest.log에 없는 중요한 오류 정보를 포함합니다. CrashDetector가 런처 로그를 읽지 못할 수도 있는데, 로그 파일이 생성되지 않았을 수 있으므로 수동으로 로그를 붙여넣어야 할 수도 있습니다.<br>"
+		return "일반: 사용 중인 런처 종류를 선택하세요. 런처 로그(launcher_log.txt, stdout 등)는 latest.log에 없는 중요한 오류 정보를 포함합니다. "
+				+ Statics.nombre_cd.obtener()
+				+ "가 런처 로그를 읽지 못할 수도 있는데, 로그 파일이 생성되지 않았을 수 있으므로 수동으로 로그를 붙여넣어야 할 수도 있습니다.<br>"
 				+ "자세한 내용은 <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">이 문제를 참조하세요</a>. 이러한 로그는 표준 출력(STDOUT)을 포함하며, 많은 오류를 진단하는 데 필요합니다.";
 	}
 
@@ -2678,10 +2685,9 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "ProxySysOutSysErr를 활성화하시겠습니까?\n\n"
-				+ "이 옵션은 런처가 로그를 제공하지 않을 때 CrashDetector가 System.out과 System.err에 접근할 수 있게 해줍니다.\n\n"
-				+ "수동으로 로그를 붙여넣을 수 없을 경우에만 활성화해야 합니다.\n\n" + "경고: 일부 모드나 런처와 충돌할 수 있습니다.\n\n"
-				+ "변경 사항을 적용하려면 게임/앱을 다시 시작해야 합니다.";
+		return "ProxySysOutSysErr를 활성화하시겠습니까?\n\n" + "이 옵션은 런처가 로그를 제공하지 않을 때 " + Statics.nombre_cd.obtener()
+				+ "가 System.out과 System.err에 접근할 수 있게 해줍니다.\n\n" + "수동으로 로그를 붙여넣을 수 없을 경우에만 활성화해야 합니다.\n\n"
+				+ "경고: 일부 모드나 런처와 충돌할 수 있습니다.\n\n" + "변경 사항을 적용하려면 게임/앱을 다시 시작해야 합니다.";
 	}
 
 	@Override
@@ -2691,7 +2697,8 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "ProxySysOutSysErr가 성공적으로 활성화되었습니다.\n\n" + "변경 사항을 적용하려면 CrashDetector를 다시 시작해야 합니다.";
+		return "ProxySysOutSysErr가 성공적으로 활성화되었습니다.\n\n" + "변경 사항을 적용하려면 " + Statics.nombre_cd.obtener()
+				+ "를 다시 시작해야 합니다.";
 	}
 
 	@Override
@@ -3267,7 +3274,8 @@ public class Coreano implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "ModLauncher 서비스 오류: 잘못된 문자가 포함된 경로. "
 				+ "ModLauncher 서비스는 ASCII 이외의 문자나 특수 문자를 포함한 경로를 처리할 수 없습니다. "
 				+ "문제가 되는 문자에는 ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요 가 있으며, 특히 이름 끝에 있는 '\"' 문자는 매우 치명적입니다. "
-				+ "ModLauncher에서 흔히 사용되는 서비스 컴포넌트로는 CrashDetector, " + Config.obtenerInstancia().obtenerNombreCD()
+				+ "ModLauncher에서 흔히 사용되는 서비스 컴포넌트로는 " + Statics.nombre_cd.obtener() + ", "
+				+ Config.obtenerInstancia().obtenerNombreCD()
 				+ ", FeatureCreep, Vivicraft, Optifine, Sodium, clonos, Iris Shaders/Oculus, MixerLogger, CrashAssistant 및 Sintrya Connector 등이 있습니다. "
 				+ "모든 서비스를 제거할 수는 있지만, 경로 이름 자체로 인해 다른 문제가 발생할 수 있습니다. "
 				+ "해결 방법: 공백이나 특수 문자 없이 ASCII 문자(a-z, A-Z, 0-9)만 사용하도록 인스턴스 이름을 변경하세요.</b>";
@@ -5595,7 +5603,7 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "이 런처들은 CrashDetector가 좋은 선택으로 제안하는 것들입니다.";
+		return "이 런처들은 " + Statics.nombre_cd.obtener() + "가 좋은 선택으로 제안하는 것들입니다.";
 	}
 
 	@Override
@@ -5628,7 +5636,7 @@ public class Coreano implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "여기에 비추천 모드를 등록하여 설치된 경우 CrashDetector가 감지하도록 할 수 있습니다.";
+		return "여기에 비추천 모드를 등록하여 설치된 경우 " + Statics.nombre_cd.obtener() + "가 감지하도록 할 수 있습니다.";
 	}
 
 	@Override
@@ -5638,12 +5646,13 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String anularNormalDescripcion() {
-		return "크래시가 발생하지 않더라도 CrashDetector가 경고해야 합니다.";
+		return "크래시가 발생하지 않더라도 " + Statics.nombre_cd.obtener() + "가 경고해야 합니다.";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "CrashDetector가 추천하는 모드를 등록하세요. 누락된 경우 CrashDetector가 경고할 수 있습니다.";
+		return Statics.nombre_cd.obtener() + "가 추천하는 모드를 등록하세요. 누락된 경우 " + Statics.nombre_cd.obtener()
+				+ "가 경고할 수 있습니다.";
 	}
 
 	@Override
@@ -5659,8 +5668,8 @@ public class Coreano implements Idioma {
 				+ "또한 미국, 러시아 연방, 중화인민공화국, 이란 이슬람 공화국, 조선민주주의인민공화국 등 다른 국가에서 사용되는 유사한 법적 원칙도 참고할 수 있습니다.\n\n"
 
 				+ "포함할 수 있는 권리의 예:\n" + "• 지원에 불필요한 정보(예: 사용 중인 런처, 사용자 이름, UUID)를 제공하지 않을 권리.\n"
-				+ "• 자기 자신을 고발하지 않을 권리.\n" + "• 문제 해결에 불필요한 질문에 답하지 않을 권리.\n" + "• 채팅 내에서 안내를 받을 권리.\n"
-				+ "• CrashDetector에 내장된 로그 익명화 기능을 사용할 권리.\n\n"
+				+ "• 자기 자신을 고발하지 않을 권리.\n" + "• 문제 해결에 불필요한 질문에 답하지 않을 권리.\n" + "• 채팅 내에서 안내를 받을 권리.\n" + "• "
+				+ Statics.nombre_cd.obtener() + "에 내장된 로그 익명화 기능을 사용할 권리.\n\n"
 
 				+ "이 텍스트는 HTML 콘텐츠를 지원합니다.";
 	}
@@ -5672,7 +5681,8 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String advertenciaHashLento() {
-		return "경고: 큰 파일을 많이 추가하면 검증에 수 분이 걸릴 수 있습니다. CrashDetector는 계속하기 전에 각 파일의 해시를 계산해야 합니다. 반드시 필요한 파일만 보호하는 것이 좋습니다.";
+		return "경고: 큰 파일을 많이 추가하면 검증에 수 분이 걸릴 수 있습니다. " + Statics.nombre_cd.obtener()
+				+ "는 계속하기 전에 각 파일의 해시를 계산해야 합니다. 반드시 필요한 파일만 보호하는 것이 좋습니다.";
 	}
 
 	@Override
@@ -5703,7 +5713,7 @@ public class Coreano implements Idioma {
 	@Override
 	public String mensajeDeSylentBell() {
 		return "<html><div style='width:150px; text-align:center;'>" + "Sylent Bell의 의견과 언급은 반드시 우리와 일치하지 않습니다; "
-				+ "여기에 넣는 것이 재미있을 것 같아서입니다. CrashDetector는 세속적입니다." + "</div></html>";
+				+ "여기에 넣는 것이 재미있을 것 같아서입니다. " + Statics.nombre_cd.obtener() + "는 세속적입니다." + "</div></html>";
 	}
 
 	@Override
@@ -6054,10 +6064,12 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-		return "" + "<b>디버그 도구</b><br><br>" + "여기서 CrashDetector와 당신의 게임을 디버그하기 위한 고급 기능들을 활성화할 수 있습니다.<br><br>"
+		return "" + "<b>디버그 도구</b><br><br>" + "여기서 " + Statics.nombre_cd.obtener()
+				+ "와 당신의 게임을 디버그하기 위한 고급 기능들을 활성화할 수 있습니다.<br><br>"
 				+ "분석 과정에서 상세 정보, 추적 기록, 진단 자료를 얻기 위해 개발 콘솔을 활성화하는 것을 권장합니다.<br><br>"
-				+ "온라인 모드에서 다인용 서버를 시험해야 할 경우, 프라이버시 설정으로부터 CrashDetector 프로세스에 접근 토큰(token de acceso) 전송을 허용해야 할 수도 있습니다. "
-				+ "이것은 일반적으로 다른 경우에 <b>권장되지 않습니다</b>.<br><br>" + "전체 안내: <a href='https://example.com'>링크!</a>";
+				+ "온라인 모드에서 다인용 서버를 시험해야 할 경우, 프라이버시 설정으로부터 " + Statics.nombre_cd.obtener()
+				+ " 프로세스에 접근 토큰(token de acceso) 전송을 허용해야 할 수도 있습니다. " + "이것은 일반적으로 다른 경우에 <b>권장되지 않습니다</b>.<br><br>"
+				+ "전체 안내: <a href='https://example.com'>링크!</a>";
 	}
 
 	@Override
@@ -7882,7 +7894,7 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "CrashDetector의 내부 폴더를 포함하면 구성, 로그 및 보조 데이터도 함께 전송되므로 필요하지 않으면 선택을 해제할 수 있습니다.";
+		return Statics.nombre_cd.obtener() + "의 내부 폴더를 포함하면 구성, 로그 및 보조 데이터도 함께 전송되므로 필요하지 않으면 선택을 해제할 수 있습니다.";
 	}
 
 	@Override
@@ -8681,7 +8693,7 @@ public class Coreano implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "새로운 JAR 파일들이 classpath에 포함되도록 CrashDetector를 다시 시작하십시오.";
+		return "새로운 JAR 파일들이 classpath에 포함되도록 " + Statics.nombre_cd.obtener() + "를 다시 시작하십시오.";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -9677,7 +9689,7 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector가 Minecraft가 고성능 GPU를 사용하지 않을 수 있음을 감지했습니다.\n\n" + "Windows에서는 "
+		return Statics.nombre_cd.obtener() + "가 Minecraft가 고성능 GPU를 사용하지 않을 수 있음을 감지했습니다.\n\n" + "Windows에서는 "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "에 레지스트리 키를 설정하여 javaw.exe가 전용 GPU를 사용하도록 강제할 수 있습니다.\n\n" + "GpuPreference=0 = Windows 자동 결정.\n"
 				+ "GpuPreference=1 = 전력 절약 / 내장 GPU.\n" + "GpuPreference=2 = 고성능 GPU.\n\n"
@@ -9686,7 +9698,7 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector가 NVIDIA Optimus 또는 PRIME과 관련된 잠재적 문제를 감지했습니다.\n\n"
+		return Statics.nombre_cd.obtener() + "가 NVIDIA Optimus 또는 PRIME과 관련된 잠재적 문제를 감지했습니다.\n\n"
 				+ "사용 중인 Linux 배포판에 따라 NVIDIA Optimus, "
 				+ "nvidia-prime, switcheroo-control 또는 기타 하이브리드 시스템을 구성해야 할 수 있습니다.\n\n"
 				+ "Fedora/RHEL 및 파생 버전에서는 일반적으로 RPMFusion 문서를 따르는 것이 좋습니다.\n\n" + "하단 버튼은 권장되는 공식 문서를 엽니다.";
@@ -9694,14 +9706,14 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector가 잠재적인 GPU 선택 문제를 감지했습니다.\n\n"
+		return Statics.nombre_cd.obtener() + "가 잠재적인 GPU 선택 문제를 감지했습니다.\n\n"
 				+ "하이브리드 GPU가 있는 일부 macOS 시스템에서는 고급 시스템 설정을 통해 전용 GPU 사용을 강제할 수 있습니다.\n\n"
 				+ "적용 버튼은 고성능 GPU를 우선순위화하는 명령을 실행하려고 시도합니다.";
 	}
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector가 잠재적인 GPU 관련 문제를 감지했지만, " + "이 운영 체제에 대한 특정 구현은 존재하지 않습니다.";
+		return Statics.nombre_cd.obtener() + "가 잠재적인 GPU 관련 문제를 감지했지만, " + "이 운영 체제에 대한 특정 구현은 존재하지 않습니다.";
 	}
 
 	@Override
@@ -10082,7 +10094,7 @@ public class Coreano implements Idioma {
 
 	// Korean (Munhwaŏ / Standard Korean) (한국어)
 	public String suprimirConsolaCD() {
-		return "CrashDetector 콘솔 숨기기";
+		return Statics.nombre_cd.obtener() + " 콘솔 숨기기";
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

@@ -36,8 +36,8 @@ public class Malayo extends Indonesia {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>Tidak diketahui di mana fail JAR CrashDetector berada</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>Tidak diketahui di mana fail JAR "
+				+ Statics.nombre_cd.obtener() + " berada</span>";
 	}
 
 	@Override
@@ -58,8 +58,8 @@ public class Malayo extends Indonesia {
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>Ini ialah GUI CrashDetector. Jika permainan ditutup tanpa masalah, abaikan ini.</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Ini ialah GUI " + Statics.nombre_cd.obtener()
+				+ ". Jika permainan ditutup tanpa masalah, abaikan ini.</span>";
 	}
 
 	@Override
@@ -213,7 +213,8 @@ public class Malayo extends Indonesia {
 		return "Anda mengalami ralat SSL. Ini lazim berlaku pada versi Java lama, "
 				+ "termasuk Java 8 dalam launcher Minecraft lalai serta versi dari sun.com dan java.com. "
 				+ "Ini menjejaskan banyak perkara seperti fail JAR pemasang MinecraftForge, ciri perkongsian laporan "
-				+ "CrashDetector apabila menggunakan titik akhir lalai, beberapa mod yang memerlukan internet, "
+				+ Statics.nombre_cd.obtener()
+				+ " apabila menggunakan titik akhir lalai, beberapa mod yang memerlukan internet, "
 				+ "dan beberapa tapak logging. Jika ini berlaku semasa cuba berkongsi laporan, "
 				+ "lampirkan sahaja tangkapan skrin dan pilih tapak logging yang serasi dengan Java 8 lama.";
 	}
@@ -235,7 +236,7 @@ public class Malayo extends Indonesia {
 
 	@Override
 	public String ajustesCrashDetector() {
-		return "Tetapan CrashDetector";
+		return "Tetapan " + Statics.nombre_cd.obtener();
 	}
 
 	@Override
@@ -335,7 +336,7 @@ public class Malayo extends Indonesia {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "Buka CrashDetector hanya apabila berlaku crash";
+		return "Buka " + Statics.nombre_cd.obtener() + " hanya apabila berlaku crash";
 	}
 
 	@Override
@@ -505,7 +506,9 @@ public class Malayo extends Indonesia {
 
 	@Override
 	public String noRegistroDeLauncher() {
-		return "GENERIC: Pilih jenis launcher yang anda gunakan. Log launcher (launcher_log.txt, stdout, dll.) mengandungi maklumat penting tentang ralat yang tidak muncul dalam latest.log. CrashDetector tidak dapat membaca log Launcher anda; mungkin tiada fail log dan anda perlu menampal log secara manual.<br>"
+		return "GENERIC: Pilih jenis launcher yang anda gunakan. Log launcher (launcher_log.txt, stdout, dll.) mengandungi maklumat penting tentang ralat yang tidak muncul dalam latest.log. "
+				+ Statics.nombre_cd.obtener()
+				+ " tidak dapat membaca log Launcher anda; mungkin tiada fail log dan anda perlu menampal log secara manual.<br>"
 				+ "Untuk maklumat lanjut, lihat <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">isu ini</a>. Log ini mengandungi output standard (STDOUT), yang diperlukan untuk mendiagnosis banyak jenis ralat.";
 	}
 

@@ -41,8 +41,8 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>មិនដឹងថាឯកសារ JAR របស់ CrashDetector នៅទីណាទេ</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>មិនដឹងថាឯកសារ JAR របស់ "
+				+ Statics.nombre_cd.obtener() + " នៅទីណាទេ</span>";
 	}
 
 	@Override
@@ -103,15 +103,15 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>របាយការណ៍ CrashDetector របស់អ្នកនៅទីនេះ <a href='" + archivo + "' style='color:#"
-				+ config.obtenerColorEnlace() + "'>មើលរបាយការណ៍</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>របាយការណ៍ " + Statics.nombre_cd.obtener()
+				+ " របស់អ្នកនៅទីនេះ <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace()
+				+ "'>មើលរបាយការណ៍</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>នេះគឺជា GUI របស់ CrashDetector។ បើហ្គេមបិទដោយគ្មានបញ្ហា សូមមិនអើពើវា។</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>នេះគឺជា GUI របស់ " + Statics.nombre_cd.obtener()
+				+ "។ បើហ្គេមបិទដោយគ្មានបញ្ហា សូមមិនអើពើវា។</span>";
 	}
 
 	@Override
@@ -486,15 +486,16 @@ public class Khmer implements Idioma {
 				+ "អ្នកកំពុងប្រើ site របាយការណ៍ " + Config.obtenerInstancia().obtenerSitoDeInformes()
 				+ " និង site កំណត់ហេតុ " + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "។ "
 				+ "អ្នកក៏អាចចែករំលែកកំណត់ហេតុនីមួយៗដោយគ្មានរបាយការណ៍បានផងដែរ ដោយចុចប៊ូតុងចែករំលែកនៅជាប់ឈ្មោះកំណត់ហេតុនីមួយៗ; "
-				+ "កំណត់ហេតុទាំងនោះនឹងត្រូវបានផ្ញើទៅកាន់ site កំណត់ហេតុដែលបានជ្រើស។ "
-				+ "CrashDetector មានការលាក់អត្តសញ្ញាណកំណត់ហេតុលំនាំដើម ដែលព្យាយាមលុបឈ្មោះអ្នកប្រើ UUID "
+				+ "កំណត់ហេតុទាំងនោះនឹងត្រូវបានផ្ញើទៅកាន់ site កំណត់ហេតុដែលបានជ្រើស។ " + Statics.nombre_cd.obtener()
+				+ " មានការលាក់អត្តសញ្ញាណកំណត់ហេតុលំនាំដើម ដែលព្យាយាមលុបឈ្មោះអ្នកប្រើ UUID "
 				+ "access tokens, session IDs, អាសយដ្ឋាន IP និងទិន្នន័យផ្សេងទៀត។ ទោះជាយ៉ាងណា វាមិនល្អឥតខ្ចោះទេ។ "
 				+ "លើសពីនេះទៀត អ្នកនិពន្ធ modpack អាចបិទវាបាន។ "
 				+ "វាអាចបើក ឬបិទបានតាមរយៈប្រអប់ធីកនៅផ្នែកខាងក្រោមនៃអេក្រង់នេះ។ "
 				+ "អ្នកគឺជាអ្នកគ្រប់គ្រងទិន្នន័យរបស់ខ្លួនឯង; អ្នកជាអ្នកសម្រេចថានឹងផ្ទុកទិន្នន័យរបស់អ្នកទៅទីណា។ "
 				+ "site កំណត់ហេតុជាកម្មសិទ្ធិរបស់ភាគីទីបី ដែលជាញឹកញាប់លាក់អត្តសញ្ញាណម្ចាស់ដោយសារហេតុផលឯកជនភាព។ "
 				+ "អ្នកទទួលខុសត្រូវទាំងស្រុងក្នុងការគ្រប់គ្រងទិន្នន័យរបស់អ្នក និងហានិភ័យដែលពាក់ព័ន្ធ។ "
-				+ "ប្រអប់សន្ទនា ចែករំលែក របស់ CrashDetector គ្រាន់តែជាចំណុចប្រទាក់មួយដែលអនុញ្ញាតឱ្យអ្នកគ្រប់គ្រងរឿងនោះប៉ុណ្ណោះ។ "
+				+ "ប្រអប់សន្ទនា ចែករំលែក របស់ " + Statics.nombre_cd.obtener()
+				+ " គ្រាន់តែជាចំណុចប្រទាក់មួយដែលអនុញ្ញាតឱ្យអ្នកគ្រប់គ្រងរឿងនោះប៉ុណ្ណោះ។ "
 				+ "វាសំខាន់ណាស់ដែលអ្នកត្រូវដឹងអំពី RGPD និង ARCO។ "
 				+ "ប្រសិនបើអ្នកស្ថិតនៅអឺរ៉ុប អ្នកអាចប្រើ <a href=\"https://securelogger.top\">securelogger.top</a> "
 				+ "ដែលបង្ហោះនៅប្រទេសអាល្លឺម៉ង់ដោយ Hetzner។ " + "សម្រាប់ព័ត៌មានផ្នែកច្បាប់បន្ថែម សូមមើលតំណខាងក្រោម៖ "
@@ -534,8 +535,8 @@ public class Khmer implements Idioma {
 		return "អ្នកមានកំហុស SSL។ វាជារឿងធម្មតាជាមួយកំណែ Java ចាស់ៗ "
 				+ "រួមទាំងកំណែ Java 8 នៅក្នុង Minecraft Launcher លំនាំដើម "
 				+ "និងកំណែដែលមាននៅ sun.com និង java.com។ វាប៉ះពាល់ដល់អ្វីជាច្រើន "
-				+ "ដូចជា​ឯកសារ JAR របស់ MinecraftForge installer, មុខងារចែករំលែករបាយការណ៍ "
-				+ "របស់ CrashDetector នៅពេលប្រើ endpoint លំនាំដើម, mods មួយចំនួនដែលត្រូវការអ៊ីនធឺណិត "
+				+ "ដូចជា​ឯកសារ JAR របស់ MinecraftForge installer, មុខងារចែករំលែករបាយការណ៍ " + "របស់ "
+				+ Statics.nombre_cd.obtener() + " នៅពេលប្រើ endpoint លំនាំដើម, mods មួយចំនួនដែលត្រូវការអ៊ីនធឺណិត "
 				+ "និង site កំណត់ហេតុមួយចំនួន។ ប្រសិនបើរឿងនេះកើតឡើងនៅពេលអ្នកព្យាយាមចែករំលែករបាយការណ៍ "
 				+ "គ្រាន់តែភ្ជាប់រូបថតអេក្រង់មួយ ហើយជ្រើសរើស site កំណត់ហេតុដែលអាចប្រើបាន " + "ជាមួយកំណែ Java 8 ចាស់ៗ។";
 	}
@@ -565,7 +566,9 @@ public class Khmer implements Idioma {
 				+ "ការព្រមាន! Crash Assistant គឺជាឧបករណ៍រកមេរោគក្លែងក្លាយ។ វាទប់ស្កាត់ដោយចេតនាមិនឲ្យហ្គេមចាប់ផ្តើម ដោយមិនគោរពសេរីភាពរបស់អ្នកក្នុងការបន្តលេងជាមួយ mods ដែលវាកំពុងចោទប្រកាន់។ "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>មើលកូដ MalwareMod.java</a>   "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>មើលកូដ JarInJarHelper.java</a>។ "
-				+ "បច្ចុប្បន្ននេះ មានតែ mod នេះប៉ុណ្ណោះដែលស្ថិតនៅក្នុងបញ្ជីរបស់វា ហើយអ្វីដែលពួកគេកំពុងផ្តោតពិតប្រាកដគឺ site កំណត់ហេតុ លំនាំដើម ដែលអ្នកប្រើអាចផ្លាស់ប្តូរបាន ហើយវាកើតឡើងតែប៉ុណ្ណោះ ប្រសិនបើអ្នកជ្រើសដោយច្បាស់លាស់ប្រើមុខងារចែករំលែកកំណត់ហេតុដែលមានស្រាប់។ CrashAssistant មិនបានធ្វើការត្រួតពិនិត្យណាមួយដើម្បីកំណត់ថា site កំណត់ហេតុ ណាកំពុងត្រូវបានប្រើ ឬពន្យល់ពីរបៀបផ្លាស់ប្តូរវាទេ (មានម៉ឺនុយទម្លាក់ចុះនៅផ្នែកខាងក្រោមនៃប្រអប់សន្ទនាចែករំលែក) ហើយមិនថាអ្នកបានកំណត់ site ណាទេ CrashAssistant នឹងទប់ស្កាត់ការចាប់ផ្តើមហ្គេម។ នៅក្នុងសាររបស់ពួកគេ ពួកគេនិយាយឲ្យអ្នកធ្វើការស្រាវជ្រាវដោយខ្លួនឯង ចូរធ្វើវា សូមសិក្សាកូដរបស់ CrashDetector និង Crash Assistant ហើយយល់ថាវាធ្វើអ្វីខ្លះ កុំពឹងផ្អែកលើការអះអាងពីអំណាច។</b>";
+				+ "បច្ចុប្បន្ននេះ មានតែ mod នេះប៉ុណ្ណោះដែលស្ថិតនៅក្នុងបញ្ជីរបស់វា ហើយអ្វីដែលពួកគេកំពុងផ្តោតពិតប្រាកដគឺ site កំណត់ហេតុ លំនាំដើម ដែលអ្នកប្រើអាចផ្លាស់ប្តូរបាន ហើយវាកើតឡើងតែប៉ុណ្ណោះ ប្រសិនបើអ្នកជ្រើសដោយច្បាស់លាស់ប្រើមុខងារចែករំលែកកំណត់ហេតុដែលមានស្រាប់។ CrashAssistant មិនបានធ្វើការត្រួតពិនិត្យណាមួយដើម្បីកំណត់ថា site កំណត់ហេតុ ណាកំពុងត្រូវបានប្រើ ឬពន្យល់ពីរបៀបផ្លាស់ប្តូរវាទេ (មានម៉ឺនុយទម្លាក់ចុះនៅផ្នែកខាងក្រោមនៃប្រអប់សន្ទនាចែករំលែក) ហើយមិនថាអ្នកបានកំណត់ site ណាទេ CrashAssistant នឹងទប់ស្កាត់ការចាប់ផ្តើមហ្គេម។ នៅក្នុងសាររបស់ពួកគេ ពួកគេនិយាយឲ្យអ្នកធ្វើការស្រាវជ្រាវដោយខ្លួនឯង ចូរធ្វើវា សូមសិក្សាកូដរបស់ "
+				+ Statics.nombre_cd.obtener()
+				+ " និង Crash Assistant ហើយយល់ថាវាធ្វើអ្វីខ្លះ កុំពឹងផ្អែកលើការអះអាងពីអំណាច។</b>";
 	}
 
 	@Override
@@ -849,7 +852,7 @@ public class Khmer implements Idioma {
 	@Override
 	public String ajustesCrashDetector() {
 		// TODO Auto-generated method stub
-		return "ការកំណត់ CrashDetector";
+		return "ការកំណត់ " + Statics.nombre_cd.obtener();
 	}
 
 	@Override
@@ -957,7 +960,7 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "បើក CrashDetector តែពេលបរាជ័យ";
+		return "បើក " + Statics.nombre_cd.obtener() + " តែពេលបរាជ័យ";
 	}
 
 	@Override
@@ -2175,8 +2178,8 @@ public class Khmer implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "អ្នកអាចកំពុងមានបញ្ហាដែលពាក់ព័ន្ធនឹង IPv6។ "
 				+ "មានដំណោះស្រាយពីរ៖ "
 				+ "1) បន្ថែម argument JVM <code>-Djava.net.preferIPv4Stack=true</code> ទៅក្នុង launcher របស់អ្នក ឬ "
-				+ "2) ប្រើប៊ូតុង 'QuickFix' នៅក្នុង CrashDetector ដើម្បីអនុវត្ត patch ដែលបើកការកំណត់នេះដោយស្វ័យប្រវត្តិ។"
-				+ "</b>";
+				+ "2) ប្រើប៊ូតុង 'QuickFix' នៅក្នុង " + Statics.nombre_cd.obtener()
+				+ " ដើម្បីអនុវត្ត patch ដែលបើកការកំណត់នេះដោយស្វ័យប្រវត្តិ។" + "</b>";
 	}
 
 	@Override
@@ -2237,7 +2240,9 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String noRegistroDeLauncher() {
-		return "ទូទៅ៖ សូមជ្រើសប្រភេទ launcher ដែលអ្នកកំពុងប្រើ។ កំណត់ហេតុ launcher (launcher_log.txt, stdout...) មានព័ត៌មានសំខាន់អំពីកំហុសដែលមិនបង្ហាញនៅក្នុង latest.log។ CrashDetector មិនអាចអានកំណត់ហេតុ launcher របស់អ្នកបានទេ អាចជាអ្នកមិនមានឯកសារកំណត់ហេតុ ហើយត្រូវបិទភ្ជាប់វាដោយដៃ។<br>"
+		return "ទូទៅ៖ សូមជ្រើសប្រភេទ launcher ដែលអ្នកកំពុងប្រើ។ កំណត់ហេតុ launcher (launcher_log.txt, stdout...) មានព័ត៌មានសំខាន់អំពីកំហុសដែលមិនបង្ហាញនៅក្នុង latest.log។ "
+				+ Statics.nombre_cd.obtener()
+				+ " មិនអាចអានកំណត់ហេតុ launcher របស់អ្នកបានទេ អាចជាអ្នកមិនមានឯកសារកំណត់ហេតុ ហើយត្រូវបិទភ្ជាប់វាដោយដៃ។<br>"
 				+ "សម្រាប់ព័ត៌មានបន្ថែម សូមមើល <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">បញ្ហានេះ</a>។ កំណត់ហេតុទាំងនេះមាន STDOUT ដែលចាំបាច់សម្រាប់វិនិច្ឆ័យកំហុសជាច្រើន។";
 	}
 
@@ -3181,8 +3186,8 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "តើចង់បើក ProxySysOutSysErr មែនទេ?\n\n"
-				+ "ជម្រើសនេះអនុញ្ញាតឲ្យ CrashDetector ចូលប្រើ System.out និង System.err នៅពេល launcher មិនផ្តល់ log។\n\n"
+		return "តើចង់បើក ProxySysOutSysErr មែនទេ?\n\n" + "ជម្រើសនេះអនុញ្ញាតឲ្យ " + Statics.nombre_cd.obtener()
+				+ " ចូលប្រើ System.out និង System.err នៅពេល launcher មិនផ្តល់ log។\n\n"
 				+ "គួរតែប្រើតែពេលអ្នកមិនអាចបញ្ចូល log ដោយដៃបាន។\n\n"
 				+ "ព្រមាន៖ វាអាចប៉ះពាល់ដល់ mods ឬ launchers មួយចំនួន។\n\n"
 				+ "ត្រូវចាប់ផ្តើមកម្មវិធីឡើងវិញដើម្បីអនុវត្តការផ្លាស់ប្តូរ។";
@@ -3195,8 +3200,8 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "ProxySysOutSysErr បានបើកដោយជោគជ័យ។\n\n"
-				+ "ត្រូវចាប់ផ្តើម CrashDetector ឡើងវិញដើម្បីអនុវត្តការផ្លាស់ប្តូរ។";
+		return "ProxySysOutSysErr បានបើកដោយជោគជ័យ។\n\n" + "ត្រូវចាប់ផ្តើម " + Statics.nombre_cd.obtener()
+				+ " ឡើងវិញដើម្បីអនុវត្តការផ្លាស់ប្តូរ។";
 	}
 
 	@Override
@@ -3776,7 +3781,7 @@ public class Khmer implements Idioma {
 				+ "កំហុសសេវាកម្ម ModLauncher: ផ្លូវមានតួអក្សរមិនត្រឹមត្រូវ។ "
 				+ "សេវាកម្ម ModLauncher មិនអាចដំណើរការផ្លូវដែលមានតួអក្សរ non-ASCII ឬតួអក្សរពិសេសបានទេ។ "
 				+ "តួអក្សរដែលមានបញ្ហារួមមាន: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요 និងជាពិសេសតួអក្សរ '\"' នៅចុងឈ្មោះ។ "
-				+ "សមាសធាតុសេវាកម្មធម្មតានៅក្នុង ModLauncher រួមមាន CrashDetector, "
+				+ "សមាសធាតុសេវាកម្មធម្មតានៅក្នុង ModLauncher រួមមាន " + Statics.nombre_cd.obtener() + ", "
 				+ Config.obtenerInstancia().obtenerNombreCD()
 				+ ", FeatureCreep, Vivicraft, Optifine, Sodium, clonos, Iris Shaders/Oculus, MixerLogger, CrashAssistant និង Sintrya Connector។ "
 				+ "អ្នកអាចលុបសេវាកម្មទាំងអស់បាន ប៉ុន្តែបញ្ហាផ្សេងទៀតអាចកើតឡើងដោយសារឈ្មោះផ្លូវ។ "
@@ -6135,7 +6140,7 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "launchers ទាំងនេះគឺជាអ្វីដែល CrashDetector ណែនាំថាល្អ។";
+		return "launchers ទាំងនេះគឺជាអ្វីដែល " + Statics.nombre_cd.obtener() + " ណែនាំថាល្អ។";
 	}
 
 	@Override
@@ -6168,7 +6173,8 @@ public class Khmer implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "នៅទីនេះអ្នកអាចកត់ត្រា mods ដែលមិនត្រូវបានណែនាំ ដើម្បីឲ្យ CrashDetector អាចរកឃើញពេលវាត្រូវបានដំឡើង។";
+		return "នៅទីនេះអ្នកអាចកត់ត្រា mods ដែលមិនត្រូវបានណែនាំ ដើម្បីឲ្យ " + Statics.nombre_cd.obtener()
+				+ " អាចរកឃើញពេលវាត្រូវបានដំឡើង។";
 	}
 
 	@Override
@@ -6180,12 +6186,13 @@ public class Khmer implements Idioma {
 	@Override
 	public String anularNormalDescripcion() {
 		// TODO Auto-generated method stub
-		return "CrashDetector គួរតែព្រមាន ទោះបីជាមិន crash ក៏ដោយ";
+		return Statics.nombre_cd.obtener() + " គួរតែព្រមាន ទោះបីជាមិន crash ក៏ដោយ";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "កត់ត្រា mods ដែល CrashDetector ណែនាំ។ ប្រសិនបើវាខ្វះ CrashDetector អាចជូនដំណឹងបាន។";
+		return "កត់ត្រា mods ដែល " + Statics.nombre_cd.obtener() + " ណែនាំ។ ប្រសិនបើវាខ្វះ "
+				+ Statics.nombre_cd.obtener() + " អាចជូនដំណឹងបាន។";
 	}
 
 	@Override
@@ -6209,7 +6216,8 @@ public class Khmer implements Idioma {
 				+ "ឈ្មោះអ្នកប្រើ ឬ UUID។\n" + "• សិទ្ធិមិនបញ្ជាក់ខ្លួនឯងថាមានកំហុស។\n"
 				+ "• សិទ្ធិបដិសេធឆ្លើយសំណួរដែលមិនចាំបាច់សម្រាប់ដោះស្រាយបញ្ហា។\n"
 				+ "• សិទ្ធិទទួលបានការណែនាំនៅក្នុង chat។\n"
-				+ "• សិទ្ធិប្រើការលុបអត្តសញ្ញាណកំណត់ហេតុ (logs) ដែលមានស្រាប់នៅក្នុង CrashDetector។\n\n"
+				+ "• សិទ្ធិប្រើការលុបអត្តសញ្ញាណកំណត់ហេតុ (logs) ដែលមានស្រាប់នៅក្នុង " + Statics.nombre_cd.obtener()
+				+ "។\n\n"
 
 				+ "អត្ថបទនេះទទួលយក HTML។";
 	}
@@ -6222,8 +6230,8 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String advertenciaHashLento() {
-		return "ព្រមាន៖ ការបន្ថែមឯកសារធំៗជាច្រើន អាចធ្វើឲ្យការផ្ទៀងផ្ទាត់ "
-				+ "ចំណាយពេលច្រើននាទី។ CrashDetector នឹងត្រូវគណនា hash របស់ឯកសារនីមួយៗ "
+		return "ព្រមាន៖ ការបន្ថែមឯកសារធំៗជាច្រើន អាចធ្វើឲ្យការផ្ទៀងផ្ទាត់ " + "ចំណាយពេលច្រើននាទី។ "
+				+ Statics.nombre_cd.obtener() + " នឹងត្រូវគណនា hash របស់ឯកសារនីមួយៗ "
 				+ "មុននឹងបន្ត។ សូមណែនាំឲ្យការពារតែឯកសារដែលចាំបាច់ប៉ុណ្ណោះ។";
 	}
 
@@ -6257,7 +6265,8 @@ public class Khmer implements Idioma {
 	public String mensajeDeSylentBell() {
 		return "<html><div style='width:150px; text-align:center;'>"
 				+ "មតិ និងការពិភាក្សារបស់ Sylent Bell មិនចាំបាច់ត្រូវគ្នាជាមួយរបស់យើងទេ; "
-				+ "យើងគ្រាន់តែគិតថាវាសប្បាយក្នុងការដាក់វាទីនេះ។ CrashDetector គឺជាសេគ្យុលា។" + "</div></html>";
+				+ "យើងគ្រាន់តែគិតថាវាសប្បាយក្នុងការដាក់វាទីនេះ។ " + Statics.nombre_cd.obtener() + " គឺជាសេគ្យុលា។"
+				+ "</div></html>";
 	}
 
 	@Override
@@ -6628,8 +6637,8 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-		return "" + "<b>ឧបករណ៍ពិនិត្យកំហុស</b><br><br>"
-				+ "នៅទីនេះ អ្នកអាចបើកមុខងារកម្រិតខ្ពស់សម្រាប់វិភាគ CrashDetector និងហ្គេមរបស់អ្នក។<br><br>"
+		return "" + "<b>ឧបករណ៍ពិនិត្យកំហុស</b><br><br>" + "នៅទីនេះ អ្នកអាចបើកមុខងារកម្រិតខ្ពស់សម្រាប់វិភាគ "
+				+ Statics.nombre_cd.obtener() + " និងហ្គេមរបស់អ្នក។<br><br>"
 				+ "យើងណែនាំឱ្យបើកកុងសូលអភិវឌ្ឍន៍ ដើម្បីទទួលបានព័ត៌មានលម្អិត និងការវិភាគ។<br><br>"
 				+ "ប្រសិនបើអ្នកត្រូវសាកល្បងម៉ាស៊ីនបម្រើ multiplayer អាចត្រូវអនុញ្ញាតការផ្ទេរ token ចូលប្រើ។ "
 				+ "វាមិនត្រូវបានណែនាំនៅក្នុងករណីទូទៅ។<br><br>"
@@ -8402,7 +8411,8 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "បើរួមបញ្ចូលថត CrashDetector ខាងក្នុង នឹងរួមទាំងការកំណត់, log និងទិន្នន័យជំនួយ។ អ្នកអាចដកវាចេញបើមិនចាំបាច់។";
+		return "បើរួមបញ្ចូលថត " + Statics.nombre_cd.obtener()
+				+ " ខាងក្នុង នឹងរួមទាំងការកំណត់, log និងទិន្នន័យជំនួយ។ អ្នកអាចដកវាចេញបើមិនចាំបាច់។";
 	}
 
 	@Override
@@ -9217,7 +9227,8 @@ public class Khmer implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "សូមចាប់ផ្តើម CrashDetector ឡើងវិញ ដើម្បីឱ្យឯកសារ JAR ថ្មីៗត្រូវបានបញ្ចូលទៅក្នុង classpath។";
+		return "សូមចាប់ផ្តើម " + Statics.nombre_cd.obtener()
+				+ " ឡើងវិញ ដើម្បីឱ្យឯកសារ JAR ថ្មីៗត្រូវបានបញ្ចូលទៅក្នុង classpath។";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -10241,7 +10252,7 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector បានរកឃើញថា Minecraft អាចមិនកំពុងប្រើ GPU ដែលមានល្បឿនលឿន។\n\n"
+		return Statics.nombre_cd.obtener() + " បានរកឃើញថា Minecraft អាចមិនកំពុងប្រើ GPU ដែលមានល្បឿនលឿន។\n\n"
 				+ "នៅលើ Windows គេអាចកំណត់កូនសោ Registry នៅក្នុង "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "ដើម្បីបង្ខំឱ្យ javaw.exe ប្រើ GPU ដាច់ដោយឡែក។\n\n"
@@ -10253,7 +10264,7 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector បានរកឃើញបញ្ហាដែលអាចកើតមានទាក់ទងនឹង NVIDIA Optimus ឬ PRIME។\n\n"
+		return Statics.nombre_cd.obtener() + " បានរកឃើញបញ្ហាដែលអាចកើតមានទាក់ទងនឹង NVIDIA Optimus ឬ PRIME។\n\n"
 				+ "អាស្រ័យលើការចែកចាយ Linux ដែលបានប្រើ វាអាចចាំបាច់ត្រូវកំណត់រចនាសម្ព័ន្ធ NVIDIA Optimus, "
 				+ "nvidia-prime, switcheroo-control ឬប្រព័ន្ធបញ្ចូលគ្នាផ្សេងទៀត។\n\n"
 				+ "នៅលើ Fedora/RHEL និងផលិតផលដែលបានមកពីវា ជាធម្មតាត្រូវបានណែនាំឱ្យអនុវត្តតាមឯកសាររបស់ RPMFusion។\n\n"
@@ -10262,7 +10273,7 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector បានរកឃើញបញ្ហាដែលអាចកើតមានក្នុងការជ្រើសរើស GPU។\n\n"
+		return Statics.nombre_cd.obtener() + " បានរកឃើញបញ្ហាដែលអាចកើតមានក្នុងការជ្រើសរើស GPU។\n\n"
 				+ "នៅលើប្រព័ន្ធ macOS មួយចំនួនដែលមាន GPU បញ្ចូលគ្នា គេអាចបង្ខំឱ្យប្រើ GPU ដាច់ដោយឡែក "
 				+ "តាមរយៈការកំណត់រចនាសម្ព័ន្ធប្រព័ន្ធកម្រិតខ្ពស់។\n\n"
 				+ "ប៊ូតុងអនុវត្តនឹងព្យាយាមដំណើរការពាក្យបញ្ជាដើម្បីអាទិភាព GPU ដែលមានល្បឿនលឿន។";
@@ -10270,7 +10281,7 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector បានរកឃើញបញ្ហាដែលអាចកើតមានទាក់ទងនឹង GPU, "
+		return Statics.nombre_cd.obtener() + " បានរកឃើញបញ្ហាដែលអាចកើតមានទាក់ទងនឹង GPU, "
 				+ "ប៉ុន្តែមិនមានការអនុវត្តជាក់លាក់សម្រាប់ប្រព័ន្ធប្រតិបត្តិការនេះទេ។";
 	}
 
@@ -10654,7 +10665,7 @@ public class Khmer implements Idioma {
 
 	// Khmer (ភាសាខ្មែរ)
 	public String suprimirConsolaCD() {
-		return "លាក់កុងសូល CrashDetector";
+		return "លាក់កុងសូល " + Statics.nombre_cd.obtener();
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

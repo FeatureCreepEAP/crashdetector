@@ -41,8 +41,8 @@ public class Suajili implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>Sijui faili ya JAR ya CrashDetector iko wapi</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>Sijui faili ya JAR ya "
+				+ Statics.nombre_cd.obtener() + " iko wapi</span>";
 	}
 
 	@Override
@@ -107,8 +107,8 @@ public class Suajili implements Idioma {
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>Hii ni GUI ya CrashDetector. Ikiwa hakuna matatizo, unaweza kuipuuza.</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Hii ni GUI ya " + Statics.nombre_cd.obtener()
+				+ ". Ikiwa hakuna matatizo, unaweza kuipuuza.</span>";
 	}
 
 	@Override
@@ -460,7 +460,8 @@ public class Suajili implements Idioma {
 				+ "Unatumia tovuti ya ripoti " + Config.obtenerInstancia().obtenerSitoDeInformes()
 				+ " na tovuti ya kumbukumbu " + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
 				+ "Unaweza pia kushiriki kumbukumbu binafsi bila ripoti kwa kutumia vitufe vya kushiriki. "
-				+ "CrashDetector ina mfumo wa kuondoa taarifa binafsi kama majina ya watumiaji, UUID, tokeni, IP, n.k., "
+				+ Statics.nombre_cd.obtener()
+				+ " ina mfumo wa kuondoa taarifa binafsi kama majina ya watumiaji, UUID, tokeni, IP, n.k., "
 				+ "lakini si kamilifu. " + "Unaweza kuwasha au kuzima hili kupitia kisanduku cha chini. "
 				+ "Wewe ndiye unadhibiti data zako na unaamua wapi zipakiwe. "
 				+ "Tovuti za kumbukumbu ni za wahusika wengine na zinaweza kuwa na hatari. "
@@ -531,7 +532,8 @@ public class Suajili implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "ONYO: Crash Assistant si detector halisi ya malware. Inazuia uzinduzi wa mchezo kimakusudi. "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Tazama msimbo</a>. "
-				+ "Inashauriwa kuchunguza msimbo wa CrashDetector na Crash Assistant binafsi badala ya kutegemea madai.</b>";
+				+ "Inashauriwa kuchunguza msimbo wa " + Statics.nombre_cd.obtener()
+				+ " na Crash Assistant binafsi badala ya kutegemea madai.</b>";
 	}
 
 	@Override
@@ -803,7 +805,7 @@ public class Suajili implements Idioma {
 
 	@Override
 	public String ajustesCrashDetector() {
-		return "Mipangilio ya CrashDetector";
+		return "Mipangilio ya " + Statics.nombre_cd.obtener();
 	}
 
 	@Override
@@ -903,7 +905,7 @@ public class Suajili implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "Fungua CrashDetector tu wakati kuna hitilafu";
+		return "Fungua " + Statics.nombre_cd.obtener() + " tu wakati kuna hitilafu";
 	}
 
 	@Override
@@ -1978,7 +1980,8 @@ public class Suajili implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Inawezekana una tatizo linalohusiana na IPv6. Kuna suluhisho mbili: "
 				+ "1) Ongeza hoja ya JVM <code>-Djava.net.preferIPv4Stack=true</code> kwenye launcher yako, au "
-				+ "2) Tumia kitufe cha 'QuickFix' kwenye CrashDetector kuwezesha mpangilio huu kiotomatiki." + "</b>";
+				+ "2) Tumia kitufe cha 'QuickFix' kwenye " + Statics.nombre_cd.obtener()
+				+ " kuwezesha mpangilio huu kiotomatiki." + "</b>";
 	}
 
 	@Override
@@ -2043,7 +2046,7 @@ public class Suajili implements Idioma {
 	@Override
 	public String noRegistroDeLauncher() {
 		return "Chagua aina ya launcher unayotumia. Logs za launcher zina taarifa muhimu ambazo hazipo kwenye latest.log.<br>"
-				+ "CrashDetector haiwezi kusoma logs moja kwa moja, unaweza kuziingiza kwa mkono.<br>"
+				+ Statics.nombre_cd.obtener() + " haiwezi kusoma logs moja kwa moja, unaweza kuziingiza kwa mkono.<br>"
 				+ "Angalia: https://github.com/HMCL-dev/HMCL/issues/2663";
 	}
 
@@ -3065,8 +3068,8 @@ public class Suajili implements Idioma {
 	 */
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "Je, unataka kuwasha ProxySysOutSysErr?\n\n"
-				+ "Chaguo hili linampa CrashDetector ufikiaji wa System.out na System.err wakati lanzador (launcher) haitoi rekodi (logs).\n\n"
+		return "Je, unataka kuwasha ProxySysOutSysErr?\n\n" + "Chaguo hili linampa " + Statics.nombre_cd.obtener()
+				+ " ufikiaji wa System.out na System.err wakati lanzador (launcher) haitoi rekodi (logs).\n\n"
 				+ "Inapaswa kuwashwa tu wakati huwezi kubandika rekodi (log) manually.\n\n"
 				+ "Onyo: Hii inaweza kuingilia kazi na baadhi ya mods au lanzadors.\n\n"
 				+ "Inahitajika kuanzisha upya mchezo/app ili mabadiliko yatumike.";
@@ -3089,8 +3092,8 @@ public class Suajili implements Idioma {
 	 */
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "ProxySysOutSysErr imewashwa kikamilifu.\n\n"
-				+ "Inahitajika kuanzisha upya CrashDetector ili mabadiliko yatumike.";
+		return "ProxySysOutSysErr imewashwa kikamilifu.\n\n" + "Inahitajika kuanzisha upya "
+				+ Statics.nombre_cd.obtener() + " ili mabadiliko yatumike.";
 	}
 
 	/**
@@ -3766,8 +3769,8 @@ public class Suajili implements Idioma {
 				+ "Hitilafu ya huduma za ModLauncher: Njina (path) lina herufi zisizo halali. "
 				+ "Huduma za ModLauncher haziwezi kuchakata njina zenye herufi zisizo ASCII au herufi maalum. "
 				+ "Herufi zenye shida ni pamoja na: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요, na hasa herufi '\"' ikiwa iko mwishoni mwa jina. "
-				+ "Vipengele vya huduma za kawaida katika ModLauncher ni pamoja na CrashDetector, "
-				+ Config.obtenerInstancia().obtenerNombreCD()
+				+ "Vipengele vya huduma za kawaida katika ModLauncher ni pamoja na " + Statics.nombre_cd.obtener()
+				+ ", " + Config.obtenerInstancia().obtenerNombreCD()
 				+ ", FeatureCreep, Vivicraft, Optifine, Sodium, nakala (clones), Iris Shaders/Oculus, MixerLogger, CrashAssistant na Sinytra Connector. "
 				+ "Unaweza kufuta huduma zote, lakini matatizo mengine yanaweza kutokea kutokana na jina la njia. "
 				+ "Suluhisho: Badilisha jina la instansi litumie herufi za ASCII pekee (a-z, A-Z, 0-9), bila nafasi wala herufi maalum.</b>";
@@ -6208,7 +6211,7 @@ public class Suajili implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "Hizi ni lanzadors ambazo CrashDetector inapendekeza kama nzuri.";
+		return "Hizi ni lanzadors ambazo " + Statics.nombre_cd.obtener() + " inapendekeza kama nzuri.";
 	}
 
 	@Override
@@ -6241,7 +6244,8 @@ public class Suajili implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "Hapa unaweza kusajili mods zisizopendekezwa ili CrashDetector izigundue ikiwa zimesakinishwa.";
+		return "Hapa unaweza kusajili mods zisizopendekezwa ili " + Statics.nombre_cd.obtener()
+				+ " izigundue ikiwa zimesakinishwa.";
 	}
 
 	@Override
@@ -6253,12 +6257,13 @@ public class Suajili implements Idioma {
 	@Override
 	public String anularNormalDescripcion() {
 		// TODO Auto-generated method stub
-		return "CrashDetector inapaswa kuonya hata ikiwa haigandi";
+		return Statics.nombre_cd.obtener() + " inapaswa kuonya hata ikiwa haigandi";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "Sajili mods ambazo CrashDetector inapendekeza. Ikiwa hazipo, CrashDetector inaweza kuonya.";
+		return "Sajili mods ambazo " + Statics.nombre_cd.obtener() + " inapendekeza. Ikiwa hazipo, "
+				+ Statics.nombre_cd.obtener() + " inaweza kuonya.";
 	}
 
 	@Override
@@ -6283,7 +6288,8 @@ public class Suajili implements Idioma {
 				+ "jina la mtumiaji au UUID.\n" + "• Haki ya kujitosheleza (kutokujilaumu).\n"
 				+ "• Haki ya kukataa kujibu maswali ambayo siyo muhimu kutatua tatizo.\n"
 				+ "• Haki ya kupokea maelekezo ndani ya mazungumzo.\n"
-				+ "• Haki ya kutumia ufinyuaji wa rekodi (logs) uliojumuishwa katika CrashDetector.\n\n"
+				+ "• Haki ya kutumia ufinyuaji wa rekodi (logs) uliojumuishwa katika " + Statics.nombre_cd.obtener()
+				+ ".\n\n"
 
 				+ "Maandishi haya yanakubali maudhui ya HTML.";
 	}
@@ -6296,8 +6302,8 @@ public class Suajili implements Idioma {
 
 	@Override
 	public String advertenciaHashLento() {
-		return "Onyo: kuongeza faili nyingi kubwa kunaweza kufanya uhakiki "
-				+ "uchukue dakika kadhaa. CrashDetector itahitaji kuhesabu hash ya kila faili "
+		return "Onyo: kuongeza faili nyingi kubwa kunaweza kufanya uhakiki " + "uchukue dakika kadhaa. "
+				+ Statics.nombre_cd.obtener() + " itahitaji kuhesabu hash ya kila faili "
 				+ "kabla ya kuendelea. Inapendekezwa kulinda faili zinazohitajika sana pekee.";
 	}
 
@@ -6332,8 +6338,8 @@ public class Suajili implements Idioma {
 		// TODO Auto-generated method stub
 		return "<html><div style='width:150px; text-align:center;'>"
 				+ "Maoni na maoni ya Sylent Bell hayalingani necessarily na yetu; "
-				+ "tunadhani tu ingekuwa vichekesho kumweka hapa. CrashDetector ni ya kidunia (secular)."
-				+ "</div></html>";
+				+ "tunadhani tu ingekuwa vichekesho kumweka hapa. " + Statics.nombre_cd.obtener()
+				+ " ni ya kidunia (secular)." + "</div></html>";
 	}
 
 	@Override
@@ -6721,9 +6727,11 @@ public class Suajili implements Idioma {
 	@Override
 	public String cdlauncherDescripcionCompleta() {
 		return "" + "<b>Zana za utatuzi (debugging)</b><br><br>"
-				+ "Hapa unaweza kuwasha vipengele vya hali ya juu kutatua matatizo ya CrashDetector na michezo yako.<br><br>"
+				+ "Hapa unaweza kuwasha vipengele vya hali ya juu kutatua matatizo ya " + Statics.nombre_cd.obtener()
+				+ " na michezo yako.<br><br>"
 				+ "Inapendekezwa kuwasha konsoli ya maendeleo kupata taarifa za kina, traza na uchunguzi wakati wa uchambuzi.<br><br>"
-				+ "Ikiwa unahitaji kujaribu seva ya wachezaji wengi katika hali ya mtandaoni (online), kunaweza kuhitajika kuruhusu uhamishaji wa tokeni ya ufikiaji kwenye mchakato wa CrashDetector kutoka kwenye mipangilio ya faragha. "
+				+ "Ikiwa unahitaji kujaribu seva ya wachezaji wengi katika hali ya mtandaoni (online), kunaweza kuhitajika kuruhusu uhamishaji wa tokeni ya ufikiaji kwenye mchakato wa "
+				+ Statics.nombre_cd.obtener() + " kutoka kwenye mipangilio ya faragha. "
 				+ "Hii kwa kawaida <b>haipendekezwi</b> katika kesi nyingine.<br><br>"
 				+ "Maagizo kamili: <a href='https://example.com'>Kiungo!</a>";// TODO
 	}
@@ -8666,7 +8674,8 @@ public class Suajili implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "Ikiwa utajumuisha folda ya ndani ya CrashDetector, mipangilio, logi na data ziada pia zitatumwa, kwa hivyo unaweza kuiondoa ikiwa si muhimu.";
+		return "Ikiwa utajumuisha folda ya ndani ya " + Statics.nombre_cd.obtener()
+				+ ", mipangilio, logi na data ziada pia zitatumwa, kwa hivyo unaweza kuiondoa ikiwa si muhimu.";
 	}
 
 	@Override
@@ -9485,7 +9494,7 @@ public class Suajili implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "Anzisha tena CrashDetector ili JARs mpya ziingie kwenye classpath.";
+		return "Anzisha tena " + Statics.nombre_cd.obtener() + " ili JARs mpya ziingie kwenye classpath.";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -10501,7 +10510,8 @@ public class Suajili implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector imegundua kwamba Minecraft huenda isitumii GPU yenye utendaji wa juu.\n\n"
+		return Statics.nombre_cd.obtener()
+				+ " imegundua kwamba Minecraft huenda isitumii GPU yenye utendaji wa juu.\n\n"
 				+ "Katika Windows unaweza kuweka funguo za rejista katika "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "kulazimisha javaw.exe kutumia GPU iliyojitolea.\n\n"
@@ -10514,7 +10524,8 @@ public class Suajili implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector imegundua tatizo linalowezekana kuhusiana na NVIDIA Optimus au PRIME.\n\n"
+		return Statics.nombre_cd.obtener()
+				+ " imegundua tatizo linalowezekana kuhusiana na NVIDIA Optimus au PRIME.\n\n"
 				+ "Kulingana na usambazaji wa Linux unatumia, inaweza kuhitajika kusanidi NVIDIA Optimus, "
 				+ "nvidia-prime, switcheroo-control au mifumo mingine hibridi.\n\n"
 				+ "Katika Fedora/RHEL na vitohozi, mara nyingi inapendekezwa kufuata nyaraka za RPMFusion.\n\n"
@@ -10523,7 +10534,7 @@ public class Suajili implements Idioma {
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector imegundua tatizo linalowezekana la uteuzi wa GPU.\n\n"
+		return Statics.nombre_cd.obtener() + " imegundua tatizo linalowezekana la uteuzi wa GPU.\n\n"
 				+ "Katika baadhi ya mifumo ya macOS yenye GPU hibridi inawezekana kulazimisha matumizi ya GPU iliyojitolea "
 				+ "kupitia mipangilio ya juu ya mfumo.\n\n"
 				+ "Kitufe cha kutumia kitajaribu kutekeleza amri ili kupatia kipaumbele GPU yenye utendaji wa juu.";
@@ -10531,7 +10542,7 @@ public class Suajili implements Idioma {
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector imegundua tatizo linalowezekana kuhusiana na GPU, "
+		return Statics.nombre_cd.obtener() + " imegundua tatizo linalowezekana kuhusiana na GPU, "
 				+ "lakini hakuna utekelezaji maalum kwa mfumo huu wa uendeshaji.";
 	}
 
@@ -10911,7 +10922,7 @@ public class Suajili implements Idioma {
 	}
 
 	public String suprimirConsolaCD() {
-		return "Ficha konsole ya CrashDetector";
+		return "Ficha konsole ya " + Statics.nombre_cd.obtener();
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

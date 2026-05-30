@@ -853,13 +853,11 @@ public class MonitorDePID {
 	}
 
 	public static void establecerLookAndFeel() {
-		ConfigString lf = ConfigString.de("lf", "javax.swing.plaf.metal.MetalLookAndFeel");
+		ConfigString lf = ConfigString.de("lf", "nativo");
 		String valor = lf.obtener();
 
-		String metal = "javax.swing.plaf.metal.MetalLookAndFeel";
-
 		if (valor == null || valor.trim().isEmpty()) {
-			valor = metal;
+			valor = UIManager.getSystemLookAndFeelClassName();
 		} else {
 			valor = valor.trim();
 		}
@@ -872,7 +870,7 @@ public class MonitorDePID {
 			UIManager.setLookAndFeel(valor);
 		} catch (Exception e) {
 			try {
-				UIManager.setLookAndFeel(metal);
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			} catch (Exception ignorado) {
 				// Metal debería existir siempre en Swing.
 			}

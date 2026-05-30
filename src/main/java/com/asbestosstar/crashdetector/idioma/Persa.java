@@ -41,7 +41,8 @@ public class Persa implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError() + "'>فایل JAR CrashDetector پیدا نشد</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>فایل JAR " + Statics.nombre_cd.obtener()
+				+ " پیدا نشد</span>";
 	}
 
 	@Override
@@ -103,14 +104,16 @@ public class Persa implements Idioma {
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo() + "'>گزارش CrashDetector شما در اینجا است <a href='"
-				+ archivo + "' style='color:#" + config.obtenerColorEnlace() + "'>مشاهده گزارش</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>گزارش " + Statics.nombre_cd.obtener()
+				+ " شما در اینجا است <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace()
+				+ "'>مشاهده گزارش</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>این رابط کاربری GUI CrashDetector است. اگر بازی به طور معمول بسته شد، لطفا این رابط را نادیده بگیرید.</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>این رابط کاربری GUI "
+				+ Statics.nombre_cd.obtener()
+				+ " است. اگر بازی به طور معمول بسته شد، لطفا این رابط را نادیده بگیرید.</span>";
 	}
 
 	@Override
@@ -450,11 +453,13 @@ public class Persa implements Idioma {
 				+ "شما از سایت گزارش " + Config.obtenerInstancia().obtenerSitoDeInformes() + " و سایت لاگ "
 				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + " استفاده می‌کنید. "
 				+ "همچنین می‌توانید با فشردن دکمه‌های اشتراک‌گذاری کنار نام لاگ‌های فردی، لاگ‌های جداگانه را بدون گزارش به اشتراک بگذارید؛ "
-				+ "لاگ‌ها به سایت لاگ انتخاب‌شده ارسال می‌شوند. CrashDetector دارای ناشناس‌سازی پیش‌فرض لاگ است که سعی می‌کند نام کاربری، UUID، "
+				+ "لاگ‌ها به سایت لاگ انتخاب‌شده ارسال می‌شوند. " + Statics.nombre_cd.obtener()
+				+ " دارای ناشناس‌سازی پیش‌فرض لاگ است که سعی می‌کند نام کاربری، UUID، "
 				+ "توکن‌های دسترسی، IDهای نشست، آدرس‌های IP و سایر داده‌ها را حذف کند. با این حال، کامل نیست. با این وجود، سازندهٔ modpack می‌تواند آن را غیرفعال کند. "
 				+ "این قابلیت را می‌توان با کادر علامت‌گذاری در پایین این صفحه فعال یا غیرفعال کرد. شما کنترل‌کنندهٔ داده‌های خود هستید؛ شما تصمیم می‌گیرید داده‌هایتان را کجا آپلود کنید. "
 				+ "سایت‌های لاگ متعلق به شخص ثالث هستند که مالکیت آن‌ها اغلب به دلایل حریم خصوصی پنهان است. شما مسئولیت کامل مدیریت داده‌های خود و ریسک‌های مرتبط را بر عهده دارید. "
-				+ "دیالوگ اشتراک‌گذاری CrashDetector تنها یک رابط است که به شما امکان مدیریت این موارد را می‌دهد. "
+				+ "دیالوگ اشتراک‌گذاری " + Statics.nombre_cd.obtener()
+				+ " تنها یک رابط است که به شما امکان مدیریت این موارد را می‌دهد. "
 				+ "آگاهی از GDPR و ARCO بسیار مهم است. "
 				+ "اگر در اروپا هستید، می‌توانید از <a href=\"https://securelogger.top\">securelogger.top</a> که توسط Hetzner در آلمان میزبانی می‌شود، استفاده کنید. "
 				+ "برای اطلاعات حقوقی بیشتر، لینک‌های زیر را مشاهده کنید: "
@@ -493,7 +498,8 @@ public class Persa implements Idioma {
 		return "خطای SSL دارید. این موضوع در نسخه‌های قدیمی Java رایج است، "
 				+ "از جمله نسخه‌های Java 8 در لانچر پیش‌فرض Minecraft و نسخه‌های موجود در sun.com و java.com. "
 				+ "این مشکل بر بسیاری از جنبه‌ها تأثیر می‌گذارد، از جمله فایل‌های JAR نصب‌کننده MinecraftForge، "
-				+ "عملکرد اشتراک‌گذاری گزارش‌های CrashDetector هنگام استفاده از نقطه پایانی پیش‌فرض، "
+				+ "عملکرد اشتراک‌گذاری گزارش‌های " + Statics.nombre_cd.obtener()
+				+ " هنگام استفاده از نقطه پایانی پیش‌فرض، "
 				+ "برخی افزونه‌هایی که به اینترنت نیاز دارند و برخی سایت‌های ثبت لاگ. "
 				+ "اگر این مشکل را هنگام تلاش برای اشتراک‌گذاری گزارش داشتید، "
 				+ "کافی است یک عکس از صفحه ضمیمه کنید و سایت ثبت لاگ سازگار با نسخه‌های قدیمی Java 8 را انتخاب کنید.";
@@ -524,7 +530,9 @@ public class Persa implements Idioma {
 				+ "هشدار! Crash Assistant یک تشخیص‌دهنده بدافزار جعلی است. این برنامه به‌طور عمدی بازی را از اجرای شروع مسدود می‌کند و آزادی شما برای ادامه بازی با افزونه‌های هدف‌گیری‌شده را نادیده می‌گیرد. "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>مشاهده کد MalwareMod.java</a>   "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>مشاهده کد JarInJarHelper.java</a>. "
-				+ "در حال حاضر فقط این افزونه در لیست آنها قرار دارد و در واقع فقط به سایت ثبت لاگ پیش‌فرض حمله می‌کنند که می‌تواند توسط کاربر تغییر کند و این فقط زمانی اتفاق می‌افتد که به‌صورت صریح از ویژگی مشارکت لاگ داخلی استفاده کنید. CrashAssistant هیچ بررسی‌ای برای حتی تعیین اینکه کدام سایت ثبت لاگ استفاده می‌شود انجام نمی‌دهد و نحوه تغییر آن را توضیح نمی‌دهد (یک منوی کشویی در پایین جعبه محاوره‌ای اشتراک وجود دارد) و صرف‌نظر از اینکه چه سایتی تنظیم کرده‌اید، CrashAssistant اجرای بازی را مسدود خواهد کرد. در پیام آنها اشاره شده که تحقیقات خود را انجام دهید، این کار را انجام دهید، به کد CrashDetector و Crash Assistant نگاه کنید و درک کنید که چه کاری انجام می‌دهند، به استدلال اقتباس به مقام اعتماد نکنید.</b>";
+				+ "در حال حاضر فقط این افزونه در لیست آنها قرار دارد و در واقع فقط به سایت ثبت لاگ پیش‌فرض حمله می‌کنند که می‌تواند توسط کاربر تغییر کند و این فقط زمانی اتفاق می‌افتد که به‌صورت صریح از ویژگی مشارکت لاگ داخلی استفاده کنید. CrashAssistant هیچ بررسی‌ای برای حتی تعیین اینکه کدام سایت ثبت لاگ استفاده می‌شود انجام نمی‌دهد و نحوه تغییر آن را توضیح نمی‌دهد (یک منوی کشویی در پایین جعبه محاوره‌ای اشتراک وجود دارد) و صرف‌نظر از اینکه چه سایتی تنظیم کرده‌اید، CrashAssistant اجرای بازی را مسدود خواهد کرد. در پیام آنها اشاره شده که تحقیقات خود را انجام دهید، این کار را انجام دهید، به کد "
+				+ Statics.nombre_cd.obtener()
+				+ " و Crash Assistant نگاه کنید و درک کنید که چه کاری انجام می‌دهند، به استدلال اقتباس به مقام اعتماد نکنید.</b>";
 	}
 
 	@Override
@@ -902,7 +910,7 @@ public class Persa implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "فقط در صورت خرابی CrashDetector را باز کنید";
+		return "فقط در صورت خرابی " + Statics.nombre_cd.obtener() + " را باز کنید";
 	}
 
 	@Override
@@ -1869,8 +1877,8 @@ public class Persa implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "احتمالاً شما با یک مشکل مربوط به IPv6 روبرو هستید. " + "دو راه‌حل وجود دارد: "
 				+ "1) آرگومان JVM <code>-Djava.net.preferIPv4Stack=true</code> را به لانچر خود اضافه کنید، یا "
-				+ "2) دکمه 'QuickFix' در نرم‌افزار CrashDetector را فشار دهید تا پچی اعمال شود که این تنظیم را به صورت خودکار فعال کند."
-				+ "</b>";
+				+ "2) دکمه 'QuickFix' در نرم‌افزار " + Statics.nombre_cd.obtener()
+				+ " را فشار دهید تا پچی اعمال شود که این تنظیم را به صورت خودکار فعال کند." + "</b>";
 	}
 
 	@Override
@@ -1931,7 +1939,9 @@ public class Persa implements Idioma {
 
 	@Override
 	public String noRegistroDeLauncher() {
-		return "عمومی: نوع لانچری که از آن استفاده می‌کنید را انتخاب کنید. سجل‌های لانچر (launcher_log.txt, stdout و غیره) شامل اطلاعات ضروری درباره خطاهایی هستند که در latest.log دیده نمی‌شوند. CrashDetector قادر به خواندن سجل‌های لانچر شما نیست — ممکن است لانچر شما فایل سجلی ایجاد نکند، بنابراین باید سجل‌ها را دستی کپی کنید.<br>"
+		return "عمومی: نوع لانچری که از آن استفاده می‌کنید را انتخاب کنید. سجل‌های لانچر (launcher_log.txt, stdout و غیره) شامل اطلاعات ضروری درباره خطاهایی هستند که در latest.log دیده نمی‌شوند. "
+				+ Statics.nombre_cd.obtener()
+				+ " قادر به خواندن سجل‌های لانچر شما نیست — ممکن است لانچر شما فایل سجلی ایجاد نکند، بنابراین باید سجل‌ها را دستی کپی کنید.<br>"
 				+ "برای کسب اطلاعات بیشتر، <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">این موضوع را ببینید</a>. این سجل‌ها شامل خروجی استاندارد (STDOUT) هستند که برای تشخیص بسیاری از انواع خطاها ضروری‌اند.";
 	}
 
@@ -2746,8 +2756,8 @@ public class Persa implements Idioma {
 
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "آیا ProxySysOutSysErr فعال شود؟\n\n"
-				+ "این گزینه به CrashDetector اجازه دسترسی به System.out و System.err را می‌دهد زمانی که راه‌انداز لاگی ارائه نمی‌دهد.\n\n"
+		return "آیا ProxySysOutSysErr فعال شود؟\n\n" + "این گزینه به " + Statics.nombre_cd.obtener()
+				+ " اجازه دسترسی به System.out و System.err را می‌دهد زمانی که راه‌انداز لاگی ارائه نمی‌دهد.\n\n"
 				+ "فقط در صورتی باید فعال شود که نتوانید به‌صورت دستی یک لاگ را جایگذاری کنید.\n\n"
 				+ "هشدار: این ممکن است با برخی مودها یا راه‌اندازها تداخل داشته باشد.\n\n"
 				+ "برای اعمال تغییرات، بازآغاز مجدد بازی/برنامه ضروری است.";
@@ -2760,8 +2770,8 @@ public class Persa implements Idioma {
 
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "ProxySysOutSysErr با موفقیت فعال شد.\n\n"
-				+ "برای اعمال تغییرات، CrashDetector باید مجدداً راه‌اندازی شود.";
+		return "ProxySysOutSysErr با موفقیت فعال شد.\n\n" + "برای اعمال تغییرات، " + Statics.nombre_cd.obtener()
+				+ " باید مجدداً راه‌اندازی شود.";
 	}
 
 	@Override
@@ -3353,7 +3363,7 @@ public class Persa implements Idioma {
 				+ "خطای سرویس‌های ModLauncher: مسیر شامل کاراکترهای نامعتبر است. "
 				+ "سرویس‌های ModLauncher نمی‌توانند مسیرهایی که شامل کاراکترهای غیر ASCII یا کاراکترهای خاص باشند را پردازش کنند. "
 				+ "کاراکترهای مشکل‌ساز شامل: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요 و به‌ویژه کاراکتر '\"' در صورتی که در انتهای نام باشد، می‌شود. "
-				+ "مولفه‌های رایج سرویس در ModLauncher شامل CrashDetector، "
+				+ "مولفه‌های رایج سرویس در ModLauncher شامل " + Statics.nombre_cd.obtener() + "، "
 				+ Config.obtenerInstancia().obtenerNombreCD()
 				+ "، FeatureCreep، Vivicraft، Optifine، Sodium، clonos، Iris Shaders/Oculus، MixerLogger، CrashAssistant و Sintrya Connector هستند. "
 				+ "می‌توانید تمام سرویس‌ها را حذف کنید، اما ممکن است به دلیل نام مسیر، مشکلات دیگری پیش بیاید. "
@@ -5767,7 +5777,8 @@ public class Persa implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "این راه‌اندازها همان‌هایی هستند که CrashDetector به عنوان گزینه‌های خوب پیشنهاد می‌کند.";
+		return "این راه‌اندازها همان‌هایی هستند که " + Statics.nombre_cd.obtener()
+				+ " به عنوان گزینه‌های خوب پیشنهاد می‌کند.";
 	}
 
 	@Override
@@ -5800,7 +5811,8 @@ public class Persa implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "در اینجا می‌توانید افزونه‌های نامناسب را ثبت کنید تا CrashDetector در صورت نصب بودن آن‌ها، آن‌ها را شناسایی کند.";
+		return "در اینجا می‌توانید افزونه‌های نامناسب را ثبت کنید تا " + Statics.nombre_cd.obtener()
+				+ " در صورت نصب بودن آن‌ها، آن‌ها را شناسایی کند.";
 	}
 
 	@Override
@@ -5810,12 +5822,13 @@ public class Persa implements Idioma {
 
 	@Override
 	public String anularNormalDescripcion() {
-		return "CrashDetector باید حتی اگر crash واقعی رخ ندهد، هشدار دهد.";
+		return Statics.nombre_cd.obtener() + " باید حتی اگر crash واقعی رخ ندهد، هشدار دهد.";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "افزونه‌هایی را که CrashDetector توصیه می‌کند ثبت کنید. اگر وجود نداشته باشند، CrashDetector ممکن است هشدار دهد.";
+		return "افزونه‌هایی را که " + Statics.nombre_cd.obtener() + " توصیه می‌کند ثبت کنید. اگر وجود نداشته باشند، "
+				+ Statics.nombre_cd.obtener() + " ممکن است هشدار دهد.";
 	}
 
 	@Override
@@ -5838,7 +5851,7 @@ public class Persa implements Idioma {
 				+ "• حق عدم ارائهٔ اطلاعات غیرضروری برای پشتیبانی، مانند راه‌انداز استفاده‌شده، "
 				+ "نام کاربری یا UUID.\n" + "• حق عدم خوداتهام.\n"
 				+ "• حق رد پاسخ به سؤالاتی که برای حل مشکل ضروری نیستند.\n" + "• حق دریافت راهنمایی درون چت.\n"
-				+ "• حق استفاده از قابلیت ناشناس‌سازی لاگ‌های داخلی CrashDetector.\n\n"
+				+ "• حق استفاده از قابلیت ناشناس‌سازی لاگ‌های داخلی " + Statics.nombre_cd.obtener() + ".\n\n"
 
 				+ "این متن از محتوای HTML پشتیبانی می‌کند.";
 	}
@@ -5850,7 +5863,9 @@ public class Persa implements Idioma {
 
 	@Override
 	public String advertenciaHashLento() {
-		return "هشدار: افزودن تعداد زیادی فایل بزرگ ممکن است باعث شود بررسی چند دقیقه طول بکشد. CrashDetector باید قبل از ادامه، هش هر فایل را محاسبه کند. توصیه می‌شود تنها فایل‌های ضروری را محافظت کنید.";
+		return "هشدار: افزودن تعداد زیادی فایل بزرگ ممکن است باعث شود بررسی چند دقیقه طول بکشد. "
+				+ Statics.nombre_cd.obtener()
+				+ " باید قبل از ادامه، هش هر فایل را محاسبه کند. توصیه می‌شود تنها فایل‌های ضروری را محافظت کنید.";
 	}
 
 	@Override
@@ -5882,7 +5897,8 @@ public class Persa implements Idioma {
 	public String mensajeDeSylentBell() {
 		return "<html><div style='width:150px; text-align:center;'>"
 				+ "نظرات و توضیحات Sylent Bell لزوماً با ما هم‌خوانی ندارد؛ "
-				+ "فقط فکر کردیم جالب باشد که او را اینجا بگذاریم. CrashDetector سکولار است." + "</div></html>";
+				+ "فقط فکر کردیم جالب باشد که او را اینجا بگذاریم. " + Statics.nombre_cd.obtener() + " سکولار است."
+				+ "</div></html>";
 	}
 
 	@Override
@@ -6253,9 +6269,11 @@ public class Persa implements Idioma {
 	@Override
 	public String cdlauncherDescripcionCompleta() {
 		return "" + "<b>ابزارهای اشکال‌زدایی</b><br><br>"
-				+ "در اینجا می‌توانید ویژگی‌های پیشرفته‌ای را برای اشکال‌زدایی CrashDetector و بازی‌های خود فعال کنید.<br><br>"
+				+ "در اینجا می‌توانید ویژگی‌های پیشرفته‌ای را برای اشکال‌زدایی " + Statics.nombre_cd.obtener()
+				+ " و بازی‌های خود فعال کنید.<br><br>"
 				+ "برای دریافت اطلاعات دقیق، ردیابی‌ها و تشخیص‌های لازم در حین تحلیل، فعال‌سازی کنسول توسعه توصیه می‌شود.<br><br>"
-				+ "اگر نیاز دارید سرور چندنفره را در حالت آنلاین آزمایش کنید، ممکن است لازم باشد انتقال توکن دسترسی (token de acceso) به فرآیند CrashDetector را از تنظیمات حریم خصوصی مجاز کنید. "
+				+ "اگر نیاز دارید سرور چندنفره را در حالت آنلاین آزمایش کنید، ممکن است لازم باشد انتقال توکن دسترسی (token de acceso) به فرآیند "
+				+ Statics.nombre_cd.obtener() + " را از تنظیمات حریم خصوصی مجاز کنید. "
 				+ "این کار معمولاً در موارد دیگر <b>توصیه نمی‌شود</b>.<br><br>"
 				+ "دستورالعمل کامل: <a href='https://example.com'>پیوند!</a>";
 	}
@@ -8177,7 +8195,8 @@ public class Persa implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "اگر پوشه داخلی CrashDetector را شامل کنید، پیکربندی‌ها، گزارش‌ها و داده‌های کمکی نیز منتقل می‌شوند، بنابراین اگر لازم نیست می‌توانید انتخاب آن را لغو کنید.";
+		return "اگر پوشه داخلی " + Statics.nombre_cd.obtener()
+				+ " را شامل کنید، پیکربندی‌ها، گزارش‌ها و داده‌های کمکی نیز منتقل می‌شوند، بنابراین اگر لازم نیست می‌توانید انتخاب آن را لغو کنید.";
 	}
 
 	@Override
@@ -8997,7 +9016,8 @@ public class Persa implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "برای اعمال JARهای جدید در classpath، برنامه CrashDetector را مجدداً راه‌اندازی کنید.";
+		return "برای اعمال JARهای جدید در classpath، برنامه " + Statics.nombre_cd.obtener()
+				+ " را مجدداً راه‌اندازی کنید.";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -10007,7 +10027,7 @@ public class Persa implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector تشخیص داد که ممکن است Minecraft از GPU با عملکرد بالا استفاده نکند.\n\n"
+		return Statics.nombre_cd.obtener() + " تشخیص داد که ممکن است Minecraft از GPU با عملکرد بالا استفاده نکند.\n\n"
 				+ "در ویندوز می‌توان کلیدهای رجیستری را در "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "تنظیم کرد تا javaw.exe مجبور به استفاده از GPU اختصاصی شود.\n\n"
@@ -10019,7 +10039,7 @@ public class Persa implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector یک مشکل احتمالی مربوط به NVIDIA Optimus یا PRIME را تشخیص داد.\n\n"
+		return Statics.nombre_cd.obtener() + " یک مشکل احتمالی مربوط به NVIDIA Optimus یا PRIME را تشخیص داد.\n\n"
 				+ "بسته به توزیع لینوکس مورد استفاده، ممکن است نیاز به پیکربندی NVIDIA Optimus، "
 				+ "nvidia-prime، switcheroo-control یا سایر سیستم‌های هیبریدی باشد.\n\n"
 				+ "در Fedora/RHEL و مشتقات آن، معمولاً پیروی از مستندات RPMFusion توصیه می‌شود.\n\n"
@@ -10028,7 +10048,7 @@ public class Persa implements Idioma {
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector یک مشکل احتمالی در انتخاب GPU را تشخیص داد.\n\n"
+		return Statics.nombre_cd.obtener() + " یک مشکل احتمالی در انتخاب GPU را تشخیص داد.\n\n"
 				+ "در برخی سیستم‌های macOS با GPU هیبریدی، می‌توان استفاده از GPU اختصاصی را "
 				+ "از طریق تنظیمات پیشرفته سیستم اجباری کرد.\n\n"
 				+ "دکمه اعمال سعی می‌کند فرمانی را اجرا کند تا اولویت با GPU با عملکرد بالا باشد.";
@@ -10036,7 +10056,7 @@ public class Persa implements Idioma {
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector یک مشکل احتمالی مربوط به GPU را تشخیص داد، "
+		return Statics.nombre_cd.obtener() + " یک مشکل احتمالی مربوط به GPU را تشخیص داد، "
 				+ "اما پیاده‌سازی خاصی برای این سیستم عامل وجود ندارد.";
 	}
 
@@ -10416,7 +10436,7 @@ public class Persa implements Idioma {
 	}
 
 	public String suprimirConsolaCD() {
-		return "سرکوب کنسول CrashDetector";
+		return "سرکوب کنسول " + Statics.nombre_cd.obtener();
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

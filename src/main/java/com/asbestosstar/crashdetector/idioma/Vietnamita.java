@@ -41,8 +41,8 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>Không tìm thấy tệp JAR của CrashDetector</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>Không tìm thấy tệp JAR của "
+				+ Statics.nombre_cd.obtener() + "</span>";
 	}
 
 	@Override
@@ -105,14 +105,15 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo() + "'>báo cáo CrashDetector của bạn ở đây <a href='"
-				+ archivo + "' style='color:#" + config.obtenerColorEnlace() + "'>xem báo cáo</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>báo cáo " + Statics.nombre_cd.obtener()
+				+ " của bạn ở đây <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace()
+				+ "'>xem báo cáo</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>Đây là giao diện CrashDetector. Nếu trò chơi đóng bình thường, hãy bỏ qua.</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>Đây là giao diện " + Statics.nombre_cd.obtener()
+				+ ". Nếu trò chơi đóng bình thường, hãy bỏ qua.</span>";
 	}
 
 	@Override
@@ -486,11 +487,13 @@ public class Vietnamita implements Idioma {
 				+ "Bạn đang dùng trang báo cáo " + Config.obtenerInstancia().obtenerSitoDeInformes()
 				+ " và trang nhật ký " + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
 				+ "Bạn cũng có thể chia sẻ từng nhật ký riêng lẻ mà không cần báo cáo bằng cách nhấn các nút chia sẻ cạnh tên từng nhật ký; "
-				+ "các nhật ký sẽ được gửi đến trang nhật ký đã chọn. CrashDetector có tính năng ẩn danh nhật ký mặc định, cố gắng xóa tên người dùng, UUID, "
+				+ "các nhật ký sẽ được gửi đến trang nhật ký đã chọn. " + Statics.nombre_cd.obtener()
+				+ " có tính năng ẩn danh nhật ký mặc định, cố gắng xóa tên người dùng, UUID, "
 				+ "mã truy cập, ID phiên, địa chỉ IP và dữ liệu khác. Tuy nhiên, nó không hoàn hảo. Dù vậy, tác giả modpack có thể tắt nó đi. "
 				+ "Có thể bật hoặc tắt nó bằng ô đánh dấu ở cuối màn hình này. Bạn là người kiểm soát dữ liệu của chính mình; bạn quyết định nơi tải dữ liệu của mình lên. "
 				+ "Các trang nhật ký thuộc sở hữu của bên thứ ba, và thông tin sở hữu thường bị ẩn vì lý do riêng tư. Bạn tự chịu hoàn toàn trách nhiệm quản lý dữ liệu của mình và các rủi ro liên quan. "
-				+ "Hộp thoại Chia sẻ của CrashDetector chỉ đơn giản là giao diện giúp bạn quản lý việc đó. "
+				+ "Hộp thoại Chia sẻ của " + Statics.nombre_cd.obtener()
+				+ " chỉ đơn giản là giao diện giúp bạn quản lý việc đó. "
 				+ "Điều quan trọng là bạn nên biết về GDPR và ARCO. "
 				+ "Nếu bạn ở châu Âu, bạn có thể dùng <a href=\"https://securelogger.top\">securelogger.top</a> được lưu trữ tại Đức bởi Hetzner. "
 				+ "Để biết thêm thông tin pháp lý, hãy xem các liên kết sau: "
@@ -530,8 +533,8 @@ public class Vietnamita implements Idioma {
 		return "Bạn gặp lỗi SSL. Điều này thường xảy ra với các phiên bản Java cũ, "
 				+ "bao gồm các bản Java 8 trong Minecraft Launcher mặc định "
 				+ "và các phiên bản trên sun.com và java.com. Điều này ảnh hưởng đến nhiều thứ, "
-				+ "như các tệp JAR của trình cài đặt MinecraftForge, tính năng chia sẻ báo cáo "
-				+ "của CrashDetector khi dùng điểm cuối mặc định, một số mod yêu cầu Internet "
+				+ "như các tệp JAR của trình cài đặt MinecraftForge, tính năng chia sẻ báo cáo " + "của "
+				+ Statics.nombre_cd.obtener() + " khi dùng điểm cuối mặc định, một số mod yêu cầu Internet "
 				+ "và một số trang ghi nhật ký. Nếu điều này xảy ra khi bạn đang cố chia sẻ báo cáo, "
 				+ "chỉ cần đính kèm ảnh chụp màn hình và chọn một trang ghi nhật ký tương thích "
 				+ "với các phiên bản Java 8 cũ hơn.";
@@ -562,7 +565,9 @@ public class Vietnamita implements Idioma {
 				+ "CẢNH BÁO! Crash Assistant là một trình phát hiện phần mềm độc hại giả. Nó cố ý chặn việc khởi chạy trò chơi, bỏ qua quyền của bạn trong việc tiếp tục chơi với các mod mà nó nhắm tới. "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Xem mã MalwareMod.java</a>   "
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Xem mã JarInJarHelper.java</a>. "
-				+ "Hiện tại chỉ có mod này nằm trong danh sách của nó và trên thực tế nó chỉ đang nhắm vào trang ghi nhật ký mặc định, vốn có thể được người dùng thay đổi, và điều đó chỉ xảy ra nếu bạn chủ động chọn dùng tính năng chia sẻ nhật ký tích hợp. CrashAssistant KHÔNG thực hiện bất kỳ kiểm tra nào để xác định trang ghi nhật ký nào đang được sử dụng và cũng không giải thích cách thay đổi nó (có một menu thả xuống ở cuối hộp thoại chia sẻ), và bất kể bạn đã cấu hình trang nào, CrashAssistant vẫn sẽ chặn trò chơi khởi chạy. Trong thông báo của họ họ nói rằng bạn nên tự nghiên cứu, HÃY LÀM ĐIỀU ĐÓ, hãy xem mã của CrashDetector và Crash Assistant và hiểu chúng làm gì, ĐỪNG chỉ dựa vào lời kêu gọi thẩm quyền.</b>";
+				+ "Hiện tại chỉ có mod này nằm trong danh sách của nó và trên thực tế nó chỉ đang nhắm vào trang ghi nhật ký mặc định, vốn có thể được người dùng thay đổi, và điều đó chỉ xảy ra nếu bạn chủ động chọn dùng tính năng chia sẻ nhật ký tích hợp. CrashAssistant KHÔNG thực hiện bất kỳ kiểm tra nào để xác định trang ghi nhật ký nào đang được sử dụng và cũng không giải thích cách thay đổi nó (có một menu thả xuống ở cuối hộp thoại chia sẻ), và bất kể bạn đã cấu hình trang nào, CrashAssistant vẫn sẽ chặn trò chơi khởi chạy. Trong thông báo của họ họ nói rằng bạn nên tự nghiên cứu, HÃY LÀM ĐIỀU ĐÓ, hãy xem mã của "
+				+ Statics.nombre_cd.obtener()
+				+ " và Crash Assistant và hiểu chúng làm gì, ĐỪNG chỉ dựa vào lời kêu gọi thẩm quyền.</b>";
 	}
 
 	@Override
@@ -849,7 +854,7 @@ public class Vietnamita implements Idioma {
 	@Override
 	public String ajustesCrashDetector() {
 		// TODO Auto-generated method stub
-		return "Cài đặt CrashDetector";
+		return "Cài đặt " + Statics.nombre_cd.obtener();
 	}
 
 	@Override
@@ -957,7 +962,7 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "Chỉ mở CrashDetector khi xảy ra lỗi";
+		return "Chỉ mở " + Statics.nombre_cd.obtener() + " khi xảy ra lỗi";
 	}
 
 	@Override
@@ -2194,7 +2199,8 @@ public class Vietnamita implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Có thể bạn đang gặp vấn đề liên quan đến IPv6. Có hai cách giải quyết: "
 				+ "1) Thêm tham số JVM <code>-Djava.net.preferIPv4Stack=true</code> vào launcher, hoặc "
-				+ "2) Sử dụng nút 'QuickFix' trong CrashDetector để áp dụng bản vá tự động." + "</b>";
+				+ "2) Sử dụng nút 'QuickFix' trong " + Statics.nombre_cd.obtener() + " để áp dụng bản vá tự động."
+				+ "</b>";
 	}
 
 	@Override
@@ -2257,7 +2263,9 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String noRegistroDeLauncher() {
-		return "CHUNG: Hãy chọn loại launcher bạn đang sử dụng. Nhật ký của launcher (launcher_log.txt, stdout, v.v.) chứa thông tin cực kỳ quan trọng về lỗi mà không xuất hiện trong latest.log. CrashDetector không thể đọc nhật ký launcher của bạn; có thể launcher không có tệp nhật ký và bạn sẽ cần dán nhật ký thủ công.<br>"
+		return "CHUNG: Hãy chọn loại launcher bạn đang sử dụng. Nhật ký của launcher (launcher_log.txt, stdout, v.v.) chứa thông tin cực kỳ quan trọng về lỗi mà không xuất hiện trong latest.log. "
+				+ Statics.nombre_cd.obtener()
+				+ " không thể đọc nhật ký launcher của bạn; có thể launcher không có tệp nhật ký và bạn sẽ cần dán nhật ký thủ công.<br>"
 				+ "Để biết thêm thông tin, hãy xem <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">vấn đề này</a>. Các nhật ký này chứa đầu ra chuẩn (STDOUT), cần thiết để chẩn đoán nhiều loại lỗi.";
 	}
 
@@ -3125,8 +3133,8 @@ public class Vietnamita implements Idioma {
 	 */
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "Bạn có muốn bật ProxySysOutSysErr?\n\n"
-				+ "Tùy chọn này cho phép CrashDetector truy cập System.out và System.err khi launcher không cung cấp nhật ký.\n\n"
+		return "Bạn có muốn bật ProxySysOutSysErr?\n\n" + "Tùy chọn này cho phép " + Statics.nombre_cd.obtener()
+				+ " truy cập System.out và System.err khi launcher không cung cấp nhật ký.\n\n"
 				+ "Chỉ bật khi bạn không thể dán nhật ký thủ công.\n\n"
 				+ "Cảnh báo: Có thể gây xung đột với một số mod hoặc launcher.\n\n"
 				+ "Cần khởi động lại ứng dụng để áp dụng.";
@@ -3139,7 +3147,8 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "ProxySysOutSysErr đã được bật.\n\n" + "Cần khởi động lại CrashDetector để áp dụng.";
+		return "ProxySysOutSysErr đã được bật.\n\n" + "Cần khởi động lại " + Statics.nombre_cd.obtener()
+				+ " để áp dụng.";
 	}
 
 	@Override
@@ -6075,7 +6084,7 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "Đây là các launcher mà CrashDetector đề xuất là tốt.";
+		return "Đây là các launcher mà " + Statics.nombre_cd.obtener() + " đề xuất là tốt.";
 	}
 
 	@Override
@@ -6108,7 +6117,8 @@ public class Vietnamita implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "Tại đây bạn có thể đăng ký các mod không được khuyến nghị để CrashDetector phát hiện nếu chúng được cài đặt.";
+		return "Tại đây bạn có thể đăng ký các mod không được khuyến nghị để " + Statics.nombre_cd.obtener()
+				+ " phát hiện nếu chúng được cài đặt.";
 	}
 
 	@Override
@@ -6118,12 +6128,13 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String anularNormalDescripcion() {
-		return "CrashDetector nên cảnh báo ngay cả khi không bị crash";
+		return Statics.nombre_cd.obtener() + " nên cảnh báo ngay cả khi không bị crash";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "Đăng ký các mod mà CrashDetector khuyến nghị. Nếu thiếu chúng, CrashDetector có thể cảnh báo.";
+		return "Đăng ký các mod mà " + Statics.nombre_cd.obtener() + " khuyến nghị. Nếu thiếu chúng, "
+				+ Statics.nombre_cd.obtener() + " có thể cảnh báo.";
 	}
 
 	@Override
@@ -6149,7 +6160,8 @@ public class Vietnamita implements Idioma {
 				+ "tên người dùng hoặc UUID.\n" + "• Quyền không tự buộc tội chính mình.\n"
 				+ "• Quyền từ chối trả lời các câu hỏi không cần thiết để giải quyết vấn đề.\n"
 				+ "• Quyền được nhận hướng dẫn ngay trong cuộc trò chuyện.\n"
-				+ "• Quyền sử dụng tính năng ẩn danh nhật ký (logs) được tích hợp trong CrashDetector.\n\n"
+				+ "• Quyền sử dụng tính năng ẩn danh nhật ký (logs) được tích hợp trong " + Statics.nombre_cd.obtener()
+				+ ".\n\n"
 
 				+ "Văn bản này chấp nhận nội dung HTML.";
 	}
@@ -6161,8 +6173,8 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String advertenciaHashLento() {
-		return "Cảnh báo: thêm nhiều tệp lớn có thể khiến quá trình kiểm tra "
-				+ "mất vài phút. CrashDetector sẽ phải tính hash của từng tệp "
+		return "Cảnh báo: thêm nhiều tệp lớn có thể khiến quá trình kiểm tra " + "mất vài phút. "
+				+ Statics.nombre_cd.obtener() + " sẽ phải tính hash của từng tệp "
 				+ "trước khi tiếp tục. Chỉ nên bảo vệ những tệp thật sự cần thiết.";
 	}
 
@@ -6196,7 +6208,8 @@ public class Vietnamita implements Idioma {
 	public String mensajeDeSylentBell() {
 		return "<html><div style='width:150px; text-align:center;'>"
 				+ "Ý kiến và bình luận của Sylent Bell không nhất thiết trùng với quan điểm của chúng tôi; "
-				+ "chúng tôi chỉ nghĩ rằng đặt cô ấy ở đây sẽ buồn cười. CrashDetector là thế tục." + "</div></html>";
+				+ "chúng tôi chỉ nghĩ rằng đặt cô ấy ở đây sẽ buồn cười. " + Statics.nombre_cd.obtener()
+				+ " là thế tục." + "</div></html>";
 	}
 
 	@Override
@@ -6575,10 +6588,11 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-		return "" + "<b>Công cụ debug</b><br><br>"
-				+ "Tại đây bạn có thể bật các chức năng nâng cao để debug CrashDetector và trò chơi.<br><br>"
+		return "" + "<b>Công cụ debug</b><br><br>" + "Tại đây bạn có thể bật các chức năng nâng cao để debug "
+				+ Statics.nombre_cd.obtener() + " và trò chơi.<br><br>"
 				+ "Khuyến nghị bật console phát triển để nhận thông tin chi tiết, trace và chẩn đoán trong quá trình phân tích.<br><br>"
-				+ "Nếu cần thử máy chủ multiplayer ở chế độ online, có thể cần cho phép chuyển token truy cập sang tiến trình CrashDetector từ cài đặt quyền riêng tư. "
+				+ "Nếu cần thử máy chủ multiplayer ở chế độ online, có thể cần cho phép chuyển token truy cập sang tiến trình "
+				+ Statics.nombre_cd.obtener() + " từ cài đặt quyền riêng tư. "
 				+ "Điều này thường <b>không được khuyến nghị</b> trong các trường hợp khác.<br><br>"
 				+ "Hướng dẫn đầy đủ: <a href='https://example.com'>Liên kết!</a>";
 	}
@@ -8429,7 +8443,8 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "Nếu bạn bao gồm thư mục nội bộ của CrashDetector, các cấu hình, nhật ký và dữ liệu phụ trợ cũng sẽ được gửi đi, vì vậy bạn có thể bỏ chọn nếu không cần.";
+		return "Nếu bạn bao gồm thư mục nội bộ của " + Statics.nombre_cd.obtener()
+				+ ", các cấu hình, nhật ký và dữ liệu phụ trợ cũng sẽ được gửi đi, vì vậy bạn có thể bỏ chọn nếu không cần.";
 	}
 
 	@Override
@@ -9253,7 +9268,7 @@ public class Vietnamita implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "Khởi động lại CrashDetector để các JAR mới được nạp vào classpath.";
+		return "Khởi động lại " + Statics.nombre_cd.obtener() + " để các JAR mới được nạp vào classpath.";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -10270,7 +10285,7 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector phát hiện rằng Minecraft có thể không sử dụng GPU hiệu năng cao.\n\n"
+		return Statics.nombre_cd.obtener() + " phát hiện rằng Minecraft có thể không sử dụng GPU hiệu năng cao.\n\n"
 				+ "Trong Windows, bạn có thể đặt các khóa registry trong "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "để buộc javaw.exe sử dụng GPU rời.\n\n" + "GpuPreference=0 = quyết định tự động của Windows.\n"
@@ -10282,7 +10297,8 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector phát hiện một vấn đề tiềm ẩn liên quan đến NVIDIA Optimus hoặc PRIME.\n\n"
+		return Statics.nombre_cd.obtener()
+				+ " phát hiện một vấn đề tiềm ẩn liên quan đến NVIDIA Optimus hoặc PRIME.\n\n"
 				+ "Tùy thuộc vào bản phân phối Linux được sử dụng, có thể cần cấu hình NVIDIA Optimus, "
 				+ "nvidia-prime, switcheroo-control hoặc các hệ thống lai khác.\n\n"
 				+ "Trong Fedora/RHEL và các biến thể, thường khuyến nghị làm theo tài liệu của RPMFusion.\n\n"
@@ -10291,7 +10307,7 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector phát hiện một vấn đề tiềm ẩn về lựa chọn GPU.\n\n"
+		return Statics.nombre_cd.obtener() + " phát hiện một vấn đề tiềm ẩn về lựa chọn GPU.\n\n"
 				+ "Trong một số hệ thống macOS có GPU lai, có thể buộc sử dụng GPU rời "
 				+ "thông qua các cài đặt hệ thống nâng cao.\n\n"
 				+ "Nút áp dụng sẽ cố gắng thực thi một lệnh để ưu tiên GPU hiệu năng cao.";
@@ -10299,7 +10315,7 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector phát hiện một vấn đề tiềm ẩn liên quan đến GPU, "
+		return Statics.nombre_cd.obtener() + " phát hiện một vấn đề tiềm ẩn liên quan đến GPU, "
 				+ "nhưng không có triển khai cụ thể cho hệ điều hành này.";
 	}
 
@@ -10679,7 +10695,7 @@ public class Vietnamita implements Idioma {
 	}
 
 	public String suprimirConsolaCD() {
-		return "Ẩn bảng điều khiển của CrashDetector";
+		return "Ẩn bảng điều khiển của " + Statics.nombre_cd.obtener();
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {

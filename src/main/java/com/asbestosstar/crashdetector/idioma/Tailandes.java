@@ -41,7 +41,8 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String no_se_donde_esta_jar() {
-		return "<span style='color:#" + config.obtenerColorError() + "'>ไม่พบไฟล์ JAR ของ CrashDetector</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>ไม่พบไฟล์ JAR ของ "
+				+ Statics.nombre_cd.obtener() + "</span>";
 	}
 
 	@Override
@@ -103,14 +104,15 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String local_headless(String archivo) {
-		return "<span style='color:#" + config.obtenerColorInfo() + "'>รายงาน CrashDetector ของคุณอยู่ที่นี่ <a href='"
-				+ archivo + "' style='color:#" + config.obtenerColorEnlace() + "'>ดูรายงาน</a></span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>รายงาน " + Statics.nombre_cd.obtener()
+				+ " ของคุณอยู่ที่นี่ <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace()
+				+ "'>ดูรายงาน</a></span>";
 	}
 
 	@Override
 	public String texto_de_gui() {
-		return "<span style='color:#" + config.obtenerColorInfo()
-				+ "'>นี่คือ GUI ของ CrashDetector หากเกมปิดได้ตามปกติ คุณสามารถเพิกเฉยได้</span>";
+		return "<span style='color:#" + config.obtenerColorInfo() + "'>นี่คือ GUI ของ " + Statics.nombre_cd.obtener()
+				+ " หากเกมปิดได้ตามปกติ คุณสามารถเพิกเฉยได้</span>";
 	}
 
 	@Override
@@ -470,15 +472,14 @@ public class Tailandes implements Idioma {
 				+ Config.obtenerInstancia().obtenerSitoDeInformes() + " และไซต์บันทึก "
 				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + " "
 				+ "คุณยังสามารถแชร์บันทึกแต่ละรายการได้โดยไม่ต้องมีรายงาน โดยกดปุ่มแชร์ข้างชื่อบันทึก "
-				+ "บันทึกจะถูกส่งไปยังไซต์ที่เลือก "
-				+ "CrashDetector มีระบบทำให้บันทึกไม่ระบุตัวตนโดยค่าเริ่มต้น ซึ่งพยายามลบชื่อผู้ใช้ UUID "
+				+ "บันทึกจะถูกส่งไปยังไซต์ที่เลือก " + Statics.nombre_cd.obtener()
+				+ " มีระบบทำให้บันทึกไม่ระบุตัวตนโดยค่าเริ่มต้น ซึ่งพยายามลบชื่อผู้ใช้ UUID "
 				+ "โทเค็นการเข้าถึง รหัสเซสชัน ที่อยู่ IP และข้อมูลอื่น ๆ อย่างไรก็ตามไม่สมบูรณ์ "
 				+ "และผู้สร้าง modpack อาจปิดการใช้งานได้ " + "สามารถเปิดหรือปิดได้ด้วยช่องทำเครื่องหมายด้านล่าง "
 				+ "คุณเป็นผู้ควบคุมข้อมูลของคุณเอง และเป็นผู้ตัดสินใจว่าจะอัปโหลดไปที่ใด "
 				+ "ไซต์บันทึกเป็นของบุคคลที่สาม ซึ่งเจ้าของมักถูกปกปิดเพื่อความเป็นส่วนตัว "
-				+ "คุณรับผิดชอบต่อข้อมูลและความเสี่ยงทั้งหมด "
-				+ "หน้าต่างแชร์ของ CrashDetector เป็นเพียงอินเทอร์เฟซสำหรับจัดการสิ่งนี้ "
-				+ "ควรทราบเกี่ยวกับกฎหมาย RGPD และ ARCO "
+				+ "คุณรับผิดชอบต่อข้อมูลและความเสี่ยงทั้งหมด " + "หน้าต่างแชร์ของ " + Statics.nombre_cd.obtener()
+				+ " เป็นเพียงอินเทอร์เฟซสำหรับจัดการสิ่งนี้ " + "ควรทราบเกี่ยวกับกฎหมาย RGPD และ ARCO "
 				+ "หากคุณอยู่ในยุโรป คุณสามารถใช้ <a href=\"https://securelogger.top\">securelogger.top</a> "
 				+ "ซึ่งโฮสต์ในเยอรมนีโดย Hetzner " + "สำหรับข้อมูลทางกฎหมายเพิ่มเติม ดูที่: "
 				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf\">LFPDPPP</a>, "
@@ -515,8 +516,8 @@ public class Tailandes implements Idioma {
 	public String errorSSL() {
 		return "คุณพบข้อผิดพลาด SSL ซึ่งมักเกิดกับ Java เวอร์ชันเก่า "
 				+ "รวมถึง Java 8 ใน Launcher Minecraft ค่าเริ่มต้น "
-				+ "ปัญหานี้ส่งผลต่อหลายส่วน เช่น ไฟล์ JAR ของ MinecraftForge "
-				+ "การแชร์รายงานของ CrashDetector เมื่อใช้ปลายทางเริ่มต้น "
+				+ "ปัญหานี้ส่งผลต่อหลายส่วน เช่น ไฟล์ JAR ของ MinecraftForge " + "การแชร์รายงานของ "
+				+ Statics.nombre_cd.obtener() + " เมื่อใช้ปลายทางเริ่มต้น "
 				+ "ม็อดบางตัวที่ต้องใช้อินเทอร์เน็ต และเว็บไซต์บันทึกบางแห่ง " + "หากเกิดปัญหานี้ขณะพยายามแชร์รายงาน "
 				+ "ให้แนบภาพหน้าจอและเลือกเว็บไซต์บันทึกที่รองรับ Java 8 เวอร์ชันเก่า";
 	}
@@ -549,8 +550,8 @@ public class Tailandes implements Idioma {
 				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>ดูโค้ด JarInJarHelper.java</a>. "
 				+ "ปัจจุบันมีเพียงม็อดนี้ในรายการ และมุ่งเป้าไปที่เว็บไซต์บันทึกเริ่มต้น "
 				+ "ซึ่งผู้ใช้สามารถเปลี่ยนได้ CrashAssistant ไม่ตรวจสอบว่าใช้เว็บไซต์ใด "
-				+ "และจะบล็อกเกมเสมอ ไม่ว่าคุณจะตั้งค่าอะไร "
-				+ "พวกเขาแนะนำให้คุณค้นคว้าเอง — ควรตรวจสอบโค้ดของ CrashDetector และ Crash Assistant ด้วยตัวเอง "
+				+ "และจะบล็อกเกมเสมอ ไม่ว่าคุณจะตั้งค่าอะไร " + "พวกเขาแนะนำให้คุณค้นคว้าเอง — ควรตรวจสอบโค้ดของ "
+				+ Statics.nombre_cd.obtener() + " และ Crash Assistant ด้วยตัวเอง "
 				+ "อย่าเชื่อเพียงเพราะแหล่งอ้างอิง</b>";
 	}
 
@@ -831,7 +832,7 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String ajustesCrashDetector() {
-		return "การตั้งค่า CrashDetector";
+		return "การตั้งค่า " + Statics.nombre_cd.obtener();
 	}
 
 	@Override
@@ -935,7 +936,7 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String transformacionDeMinecraftCodigo0() {
-		return "เปิด CrashDetector เฉพาะเมื่อเกิดข้อขัดข้อง";
+		return "เปิด " + Statics.nombre_cd.obtener() + " เฉพาะเมื่อเกิดข้อขัดข้อง";
 	}
 
 	@Override
@@ -2232,7 +2233,8 @@ public class Tailandes implements Idioma {
 	public String noRegistroDeLauncher() {
 		return "ทั่วไป: เลือกประเภท launcher ที่คุณใช้งาน "
 				+ "บันทึกของ launcher (launcher_log.txt, stdout ฯลฯ) มีข้อมูลสำคัญที่อาจไม่อยู่ใน latest.log "
-				+ "CrashDetector ไม่สามารถอ่านบันทึกของ launcher ได้โดยตรง คุณอาจต้องวางบันทึกด้วยตนเอง<br>"
+				+ Statics.nombre_cd.obtener()
+				+ " ไม่สามารถอ่านบันทึกของ launcher ได้โดยตรง คุณอาจต้องวางบันทึกด้วยตนเอง<br>"
 				+ "ดูข้อมูลเพิ่มเติมที่ <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663\">ลิงก์นี้</a>";
 	}
 
@@ -3151,8 +3153,8 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String habilitarProxySysOutSysErrMensaje() {
-		return "เปิดใช้งาน ProxySysOutSysErr?\n\n"
-				+ "ตัวเลือกนี้ทำให้ CrashDetector เข้าถึง System.out และ System.err ได้เมื่อ launcher ไม่มี log\n\n"
+		return "เปิดใช้งาน ProxySysOutSysErr?\n\n" + "ตัวเลือกนี้ทำให้ " + Statics.nombre_cd.obtener()
+				+ " เข้าถึง System.out และ System.err ได้เมื่อ launcher ไม่มี log\n\n"
 				+ "ควรใช้เมื่อไม่สามารถแนบ log ได้เท่านั้น\n\n" + "คำเตือน: อาจรบกวนม็อดหรือ launcher บางตัว\n\n"
 				+ "ต้องรีสตาร์ทแอปเพื่อให้มีผล";
 	}
@@ -3164,7 +3166,8 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String proxyHabilitadoMensaje() {
-		return "เปิดใช้งาน ProxySysOutSysErr แล้ว\n\n" + "ต้องรีสตาร์ท CrashDetector เพื่อให้มีผล";
+		return "เปิดใช้งาน ProxySysOutSysErr แล้ว\n\n" + "ต้องรีสตาร์ท " + Statics.nombre_cd.obtener()
+				+ " เพื่อให้มีผล";
 	}
 
 	@Override
@@ -6098,7 +6101,7 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String lanzadoresRecomendadosAviso() {
-		return "launcher เหล่านี้เป็นรายการที่ CrashDetector แนะนำ";
+		return "launcher เหล่านี้เป็นรายการที่ " + Statics.nombre_cd.obtener() + " แนะนำ";
 	}
 
 	@Override
@@ -6131,7 +6134,8 @@ public class Tailandes implements Idioma {
 	}
 
 	public String modsNoRecomendadosAviso() {
-		return "ที่นี่คุณสามารถลงทะเบียนม็อดที่ไม่แนะนำ เพื่อให้ CrashDetector ตรวจพบได้หากมีการติดตั้ง";
+		return "ที่นี่คุณสามารถลงทะเบียนม็อดที่ไม่แนะนำ เพื่อให้ " + Statics.nombre_cd.obtener()
+				+ " ตรวจพบได้หากมีการติดตั้ง";
 	}
 
 	@Override
@@ -6141,12 +6145,13 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String anularNormalDescripcion() {
-		return "CrashDetector ควรแจ้งเตือนแม้ว่าเกมจะยังไม่ล่ม";
+		return Statics.nombre_cd.obtener() + " ควรแจ้งเตือนแม้ว่าเกมจะยังไม่ล่ม";
 	}
 
 	@Override
 	public String modsRecomendadosAviso() {
-		return "ลงทะเบียนม็อดที่ CrashDetector แนะนำ หากขาดหาย CrashDetector สามารถแจ้งเตือนได้";
+		return "ลงทะเบียนม็อดที่ " + Statics.nombre_cd.obtener() + " แนะนำ หากขาดหาย " + Statics.nombre_cd.obtener()
+				+ " สามารถแจ้งเตือนได้";
 	}
 
 	@Override
@@ -6169,8 +6174,8 @@ public class Tailandes implements Idioma {
 				+ "ตัวอย่างของสิทธิที่สามารถระบุไว้ ได้แก่:\n"
 				+ "• สิทธิที่จะไม่ให้ข้อมูลที่ไม่จำเป็นต่อการช่วยเหลือ เช่น launcher ที่ใช้ " + "ชื่อผู้ใช้ หรือ UUID\n"
 				+ "• สิทธิที่จะไม่กล่าวโทษตนเอง\n" + "• สิทธิที่จะปฏิเสธการตอบคำถามที่ไม่จำเป็นต่อการแก้ปัญหา\n"
-				+ "• สิทธิที่จะได้รับคำแนะนำภายในแชต\n"
-				+ "• สิทธิที่จะใช้ระบบปกปิดข้อมูลในบันทึก (logs) ที่รวมอยู่ใน CrashDetector\n\n"
+				+ "• สิทธิที่จะได้รับคำแนะนำภายในแชต\n" + "• สิทธิที่จะใช้ระบบปกปิดข้อมูลในบันทึก (logs) ที่รวมอยู่ใน "
+				+ Statics.nombre_cd.obtener() + "\n\n"
 
 				+ "ข้อความนี้รองรับเนื้อหา HTML";
 	}
@@ -6182,9 +6187,8 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String advertenciaHashLento() {
-		return "คำเตือน: การเพิ่มไฟล์ขนาดใหญ่จำนวนมากอาจทำให้การตรวจสอบใช้เวลาหลายนาที "
-				+ "CrashDetector จะต้องคำนวณแฮชของแต่ละไฟล์ก่อนดำเนินการต่อ "
-				+ "แนะนำให้ป้องกันเฉพาะไฟล์ที่จำเป็นจริง ๆ เท่านั้น";
+		return "คำเตือน: การเพิ่มไฟล์ขนาดใหญ่จำนวนมากอาจทำให้การตรวจสอบใช้เวลาหลายนาที " + Statics.nombre_cd.obtener()
+				+ " จะต้องคำนวณแฮชของแต่ละไฟล์ก่อนดำเนินการต่อ " + "แนะนำให้ป้องกันเฉพาะไฟล์ที่จำเป็นจริง ๆ เท่านั้น";
 	}
 
 	@Override
@@ -6217,7 +6221,8 @@ public class Tailandes implements Idioma {
 	public String mensajeDeSylentBell() {
 		return "<html><div style='width:150px; text-align:center;'>"
 				+ "ความคิดเห็นของ Sylent Bell ไม่จำเป็นต้องตรงกับความคิดเห็นของเรา "
-				+ "เราแค่อยากใส่ไว้เพราะคิดว่ามันตลก CrashDetector เป็นกลางทางศาสนา" + "</div></html>";
+				+ "เราแค่อยากใส่ไว้เพราะคิดว่ามันตลก " + Statics.nombre_cd.obtener() + " เป็นกลางทางศาสนา"
+				+ "</div></html>";
 	}
 
 	@Override
@@ -6592,10 +6597,11 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-		return "" + "<b>เครื่องมือดีบัก</b><br><br>"
-				+ "ที่นี่คุณสามารถเปิดใช้งานฟีเจอร์ขั้นสูงเพื่อดีบัก CrashDetector และเกมของคุณ<br><br>"
+		return "" + "<b>เครื่องมือดีบัก</b><br><br>" + "ที่นี่คุณสามารถเปิดใช้งานฟีเจอร์ขั้นสูงเพื่อดีบัก "
+				+ Statics.nombre_cd.obtener() + " และเกมของคุณ<br><br>"
 				+ "แนะนำให้เปิดคอนโซลนักพัฒนาเพื่อรับข้อมูลโดยละเอียด, stack trace และการวิเคราะห์ระหว่างการตรวจสอบ<br><br>"
-				+ "หากต้องการทดสอบเซิร์ฟเวอร์หลายผู้เล่นในโหมดออนไลน์ อาจจำเป็นต้องอนุญาตให้ส่งต่อโทเค็นการเข้าถึงไปยัง CrashDetector จากการตั้งค่าความเป็นส่วนตัว "
+				+ "หากต้องการทดสอบเซิร์ฟเวอร์หลายผู้เล่นในโหมดออนไลน์ อาจจำเป็นต้องอนุญาตให้ส่งต่อโทเค็นการเข้าถึงไปยัง "
+				+ Statics.nombre_cd.obtener() + " จากการตั้งค่าความเป็นส่วนตัว "
 				+ "ซึ่งโดยทั่วไป <b>ไม่แนะนำ</b> ในกรณีอื่น<br><br>"
 				+ "คำแนะนำทั้งหมด: <a href='https://example.com'>ลิงก์!</a>";
 	}
@@ -8438,7 +8444,8 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-		return "หากคุณรวมโฟลเดอร์ภายในของ CrashDetector ไว้ด้วย การตั้งค่า, logs และข้อมูลเสริมก็จะถูกส่งไปด้วย ดังนั้นคุณสามารถยกเลิกการเลือกได้หากไม่จำเป็น";
+		return "หากคุณรวมโฟลเดอร์ภายในของ " + Statics.nombre_cd.obtener()
+				+ " ไว้ด้วย การตั้งค่า, logs และข้อมูลเสริมก็จะถูกส่งไปด้วย ดังนั้นคุณสามารถยกเลิกการเลือกได้หากไม่จำเป็น";
 	}
 
 	@Override
@@ -9248,7 +9255,7 @@ public class Tailandes implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "โปรดรีสตาร์ท CrashDetector เพื่อให้ JARs ใหม่เข้าสู่ classpath";
+		return "โปรดรีสตาร์ท " + Statics.nombre_cd.obtener() + " เพื่อให้ JARs ใหม่เข้าสู่ classpath";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -10253,7 +10260,7 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector ตรวจพบว่า Minecraft อาจไม่ได้ใช้ GPU ประสิทธิภาพสูง\n\n"
+		return Statics.nombre_cd.obtener() + " ตรวจพบว่า Minecraft อาจไม่ได้ใช้ GPU ประสิทธิภาพสูง\n\n"
 				+ "ใน Windows สามารถตั้งค่าคีย์รีจิสทรีใน "
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "เพื่อบังคับให้ javaw.exe ใช้ GPU แยก\n\n" + "GpuPreference=0 = การตัดสินใจอัตโนมัติของ Windows\n"
@@ -10264,7 +10271,7 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector ตรวจพบปัญหาที่อาจเกี่ยวข้องกับ NVIDIA Optimus หรือ PRIME\n\n"
+		return Statics.nombre_cd.obtener() + " ตรวจพบปัญหาที่อาจเกี่ยวข้องกับ NVIDIA Optimus หรือ PRIME\n\n"
 				+ "ขึ้นอยู่กับดิสโทร Linux ที่ใช้ อาจจำเป็นต้องกำหนดค่า NVIDIA Optimus, "
 				+ "nvidia-prime, switcheroo-control หรือระบบไฮบริดอื่นๆ\n\n"
 				+ "ใน Fedora/RHEL และสายพันธุ์ที่เกี่ยวข้อง มักแนะนำให้ปฏิบัติตามเอกสารของ RPMFusion\n\n"
@@ -10273,7 +10280,7 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector ตรวจพบปัญหาการเลือก GPU ที่อาจเกิดขึ้น\n\n"
+		return Statics.nombre_cd.obtener() + " ตรวจพบปัญหาการเลือก GPU ที่อาจเกิดขึ้น\n\n"
 				+ "ในระบบ macOS บางระบบที่มี GPU ไฮบริด สามารถบังคับให้ใช้ GPU แยก "
 				+ "ผ่านการตั้งค่าขั้นสูงของระบบ\n\n"
 				+ "ปุ่มใช้จะพยายามเรียกใช้คำสั่งเพื่อจัดลำดับความสำคัญให้กับ GPU ประสิทธิภาพสูง";
@@ -10281,7 +10288,8 @@ public class Tailandes implements Idioma {
 
 	@Override
 	public String gpuFixTextoOtroSistema() {
-		return "CrashDetector ตรวจพบปัญหาที่อาจเกี่ยวข้องกับ GPU, " + "แต่ไม่มีการใช้งานเฉพาะสำหรับระบบปฏิบัติการนี้";
+		return Statics.nombre_cd.obtener() + " ตรวจพบปัญหาที่อาจเกี่ยวข้องกับ GPU, "
+				+ "แต่ไม่มีการใช้งานเฉพาะสำหรับระบบปฏิบัติการนี้";
 	}
 
 	@Override
@@ -10660,7 +10668,7 @@ public class Tailandes implements Idioma {
 	}
 
 	public String suprimirConsolaCD() {
-		return "ซ่อนคอนโซลของ CrashDetector";
+		return "ซ่อนคอนโซลของ " + Statics.nombre_cd.obtener();
 	}
 
 	public String suprimirVerificacionDeStacktrazos() {
