@@ -12,7 +12,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public class NoSuchElementAnimacionMinecraft implements Verificaciones {
@@ -122,9 +122,9 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 		if (!activado())
 			return "";
 
-		Buscardor.cargar();
+		Buscador.cargar();
 		String terminoBusqueda = "assets/" + namespaceEncontrado + "/";
-		List<String> ubicaciones = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(terminoBusqueda));
+		List<String> ubicaciones = Buscador.obtenerUbicaciones(Buscador.buscarModsConTermino(terminoBusqueda));
 
 		StringBuilder html = new StringBuilder();
 		html.append("<span style='color: #").append(Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas())
@@ -148,9 +148,9 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 		if (!activado())
 			return null;
 
-		Buscardor.cargar();
+		Buscador.cargar();
 		String terminoBusqueda = "assets/" + namespaceEncontrado + "/";
-		List<String> ubicaciones = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(terminoBusqueda));
+		List<String> ubicaciones = Buscador.obtenerUbicaciones(Buscador.buscarModsConTermino(terminoBusqueda));
 
 		QuickFix.Builder builder = new QuickFix.Builder(nombre());
 

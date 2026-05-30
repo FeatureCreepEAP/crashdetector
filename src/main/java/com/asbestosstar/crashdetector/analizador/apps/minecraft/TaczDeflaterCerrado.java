@@ -9,7 +9,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -60,7 +60,7 @@ public class TaczDeflaterCerrado implements Verificaciones {
 
 			// Buscar el JAR que contiene la clase implicada
 			String classPath = "com/tacz/guns/util/GetJarResources.class";
-			for (ArchivoDeMod mod : Buscardor.buscarModsConTermino(classPath)) {
+			for (ArchivoDeMod mod : Buscador.buscarModsConTermino(classPath)) {
 				modsUbicacion.add(mod.ubicacion_para_publicar());
 			}
 

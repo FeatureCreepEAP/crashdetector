@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 
 /**
  * Adaptador central para extracción de constantes de texto.
@@ -40,7 +40,7 @@ public class ExtractorDeConstantesTexto {
 
 		try {
 			// Asegura que los mods estén cargados y que las clases estén precacheadas.
-			Buscardor.cargarYPrecargarClasesEnCache();
+			Buscador.cargarYPrecargarClasesEnCache();
 
 			if (claseInterna == null || claseInterna.trim().isEmpty()) {
 				return new ArrayList<String>();

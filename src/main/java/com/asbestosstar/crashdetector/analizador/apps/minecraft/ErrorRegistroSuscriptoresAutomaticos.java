@@ -9,7 +9,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -133,7 +133,7 @@ public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 		String classPath = nombreClase.replace('.', '/') + ".class";
 
 		// Busca mods que contienen esta clase.
-		List<ArchivoDeMod> modsPotenciales = Buscardor.buscarModsConTermino(classPath);
+		List<ArchivoDeMod> modsPotenciales = Buscador.buscarModsConTermino(classPath);
 
 		// Extrae las ubicaciones para publicar de cada mod encontrado.
 		for (ArchivoDeMod mod : modsPotenciales) {

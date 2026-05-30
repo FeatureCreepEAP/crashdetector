@@ -42,7 +42,7 @@ import com.asbestosstar.crashdetector.cargador.CargadorRisugami;
 import com.asbestosstar.crashdetector.cargador.CargadorSponge;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 
-public class Buscardor {
+public class Buscador {
 
 	public static Set<ArchivoDeMod> mods = java.util.Collections
 			.newSetFromMap(new java.util.concurrent.ConcurrentHashMap<>());

@@ -11,7 +11,7 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.general.RaptorLakeInestable;
 import com.asbestosstar.crashdetector.analizador.general.VerificacionGPU;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 
 public class AnalizadorDeFactoresAmbientales {
 
@@ -436,10 +436,10 @@ public class AnalizadorDeFactoresAmbientales {
 
 	private static int contarMods() {
 		try {
-			Buscardor.cargar();
+			Buscador.cargar();
 
 			int total = 0;
-			for (ArchivoDeMod mod : Buscardor.obtenerTodosLosModsYSubmodsRecursivos()) {
+			for (ArchivoDeMod mod : Buscador.obtenerTodosLosModsYSubmodsRecursivos()) {
 				if (mod != null) {
 					total++;
 				}

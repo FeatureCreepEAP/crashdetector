@@ -6,7 +6,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.cargador.Cargador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -37,12 +37,12 @@ public class ModIncompatibleConCargadorActivo implements Verificaciones {
 			return;
 		}
 
-		Buscardor.cargar();
+		Buscador.cargar();
 
 		modsIncompatibles.clear();
 
 		// Recorrer todos los mods detectados
-		for (ArchivoDeMod mod : Buscardor.mods) {
+		for (ArchivoDeMod mod : Buscador.mods) {
 			boolean compatible = false;
 
 			// Verificar contra cada cargador activo

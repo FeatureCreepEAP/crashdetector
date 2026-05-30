@@ -10,7 +10,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public class SpongeMixinClaseMalUbicada implements Verificaciones {
@@ -86,7 +86,7 @@ public class SpongeMixinClaseMalUbicada implements Verificaciones {
 
 	private void buscarModsRelacionados() {
 		try {
-			Buscardor.cargar();
+			Buscador.cargar();
 			modsRelacionados.clear();
 
 			agregarResultados(claseConflictiva);
@@ -106,7 +106,7 @@ public class SpongeMixinClaseMalUbicada implements Verificaciones {
 		}
 
 		try {
-			List<ArchivoDeMod> encontrados = Buscardor.buscarModsConTermino(termino.trim());
+			List<ArchivoDeMod> encontrados = Buscador.buscarModsConTermino(termino.trim());
 
 			if (encontrados != null) {
 				modsRelacionados.addAll(encontrados);
@@ -138,7 +138,7 @@ public class SpongeMixinClaseMalUbicada implements Verificaciones {
 			return "";
 		}
 
-		return mods.stream().map(mod -> "<b>" + Buscardor.rutaParaPublicar(mod.ubicacion_para_publicar()) + "</b>")
+		return mods.stream().map(mod -> "<b>" + Buscador.rutaParaPublicar(mod.ubicacion_para_publicar()) + "</b>")
 				.distinct().collect(Collectors.joining(", "));
 	}
 

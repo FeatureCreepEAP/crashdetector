@@ -21,7 +21,7 @@ public class StikkedAPI implements APIdeSitioDeRegistro {
 	/** Límite duro del endpoint Stikked en bytes (cuerpo x-www-form-urlencoded). */
 	private static final int MAX_SIZE_BYTES = 16 * 1024 * 1024; // 16MB
 	private static final int TIMEOUT_MS = 30000;
-	private static final String UA = "CrashDetector/1.x (+stikked)";
+	private static final String UA = Statics.nombre_cd.obtener() + "/1.x (+stikked)";
 
 	@Override
 	public String nombre() {

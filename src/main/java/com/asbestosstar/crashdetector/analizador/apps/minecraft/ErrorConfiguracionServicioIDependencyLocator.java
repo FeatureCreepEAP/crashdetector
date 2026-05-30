@@ -11,7 +11,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -100,7 +100,7 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 		// Buscar el mod que contiene esta clase.
 		String classPath = claseProblematica.replace('.', '/') + ".class";
 
-		List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(classPath);
+		List<ArchivoDeMod> mods = Buscador.buscarModsConTermino(classPath);
 
 		for (ArchivoDeMod mod : mods) {
 			modsUbicacion.add(mod.ubicacion_para_publicar());

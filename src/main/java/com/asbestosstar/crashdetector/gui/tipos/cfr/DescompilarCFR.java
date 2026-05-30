@@ -16,7 +16,7 @@ import org.benf.cfr.reader.api.OutputSinkFactory.SinkType;
 import org.benf.cfr.reader.bytecode.analysis.parse.utils.Pair;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 
 public class DescompilarCFR {
 
@@ -29,11 +29,11 @@ public class DescompilarCFR {
 		final String claseInterna = normalizarNombreClaseInterno(clase); // a/b/C
 		final String rutaClase = claseInterna + ".class";
 
-		final byte[] bytesObjetivo = Buscardor.obtenerBytesDeClase(claseInterna);
+		final byte[] bytesObjetivo = Buscador.obtenerBytesDeClase(claseInterna);
 		if (bytesObjetivo == null) {
 			CrashDetectorLogger.log("No obj");
 			// intentar con el original por si venía raro
-			byte[] b2 = Buscardor.obtenerBytesDeClase(clase);
+			byte[] b2 = Buscador.obtenerBytesDeClase(clase);
 			if (b2 == null) {
 				CrashDetectorLogger.log("no b2 CFR " + clase);
 				return null;
@@ -70,13 +70,13 @@ public class DescompilarCFR {
 
 					// clase objetivo
 					if (claseInterna.equals(interna)) {
-						byte[] b = Buscardor.obtenerBytesDeClase(claseInterna);
+						byte[] b = Buscador.obtenerBytesDeClase(claseInterna);
 						if (b != null)
 							return Pair.make(b, "in-mem");
 					}
 
 					// dependencias: pedimos al Buscardor también
-					byte[] dep = Buscardor.obtenerBytesDeClase(interna);
+					byte[] dep = Buscador.obtenerBytesDeClase(interna);
 					if (dep != null) {
 						return Pair.make(dep, "in-mem-dep");
 					}

@@ -13,7 +13,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public class AuditorTransformer implements Verificaciones {
@@ -141,7 +141,7 @@ public class AuditorTransformer implements Verificaciones {
 					return cacheado;
 				}
 
-				List<String> jars = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(jsonFile));
+				List<String> jars = Buscador.obtenerUbicaciones(Buscador.buscarModsConTermino(jsonFile));
 				cacheJarsPorMixin.put(jsonFile, jars);
 				return jars;
 			}
@@ -159,7 +159,7 @@ public class AuditorTransformer implements Verificaciones {
 
 				CrashDetectorLogger.log(modid);
 
-				List<String> jars = Buscardor.obtenerModsConNombre(modid);
+				List<String> jars = Buscador.obtenerModsConNombre(modid);
 				cacheJarsPorModid.put(modid, jars);
 				return jars;
 			}

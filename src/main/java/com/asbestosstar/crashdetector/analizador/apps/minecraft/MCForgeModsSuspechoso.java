@@ -12,7 +12,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -586,7 +586,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 			String modid = modidPorError.get(error);
 
 			if (modid != null && !modid.isEmpty()) {
-				List<String> ubicaciones = Buscardor.obtenerModsConNombre(modid);
+				List<String> ubicaciones = Buscador.obtenerModsConNombre(modid);
 
 				if (!ubicaciones.isEmpty()) {
 					StringBuilder sb = new StringBuilder();

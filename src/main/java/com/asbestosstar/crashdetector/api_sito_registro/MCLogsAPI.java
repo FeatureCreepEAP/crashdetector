@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 
@@ -25,7 +26,7 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 
 	// Paràmetros de red
 	private static final int TIMEOUT_MS = 30000;
-	private static final String UA = "CrashDetector/1.x (+mclogs)";
+	private static final String UA = Statics.nombre_cd.obtener() + "/1.x (+mclogs)";
 
 	@Override
 	public String nombre() {

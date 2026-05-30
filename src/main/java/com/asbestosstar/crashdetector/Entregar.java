@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.cargador.Cargador;
 import com.asbestosstar.crashdetector.detectorlanzer.DetectorLanzer;
 
@@ -36,7 +36,7 @@ public class Entregar {
 		app_detecta = App.obtenerApp();
 		String idApp = app_detecta != null ? app_detecta.id() : "";
 
-		Buscardor.cargadoresPredetermindado();
+		Buscador.cargadoresPredetermindado();
 
 		List<Cargador> activos = new ArrayList<Cargador>();
 		for (Cargador c : Cargador.cargadores) {
@@ -147,7 +147,7 @@ public class Entregar {
 		Statics.APP_ARGS = appArgs;
 		Statics.INICIO_DE_LA_APP = inicioApp;
 
-		Buscardor.cargadoresPredetermindado();
+		Buscador.cargadoresPredetermindado();
 
 		if (!idsCargadores.isEmpty()) {
 			for (String id : idsCargadores.split(",")) {

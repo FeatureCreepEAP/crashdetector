@@ -25,7 +25,7 @@ import javax.swing.UIManager;
 import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.buscarparajava.BuscarParaJava8Unix;
 import com.asbestosstar.crashdetector.buscarparajava.BuscarParaJava8Windows;
 import com.asbestosstar.crashdetector.canario.CanarioDeOrdenJudicial;
@@ -1442,9 +1442,9 @@ public class MonitorDePID {
 	 */
 	public static void recargar(boolean finalizar_contento, Instant luego) {
 		StringBuilder constructor = new StringBuilder();
-		Buscardor.mods.clear();
-		Buscardor.cargado = false;
-		Buscardor.cargadotodos = false;
+		Buscador.mods.clear();
+		Buscador.cargado = false;
+		Buscador.cargadotodos = false;
 		if (finalizar_contento) {
 			finalizarConsolasLentas(luego);
 		}

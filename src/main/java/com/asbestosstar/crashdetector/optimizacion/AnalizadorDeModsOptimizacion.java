@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 
 public class AnalizadorDeModsOptimizacion {
 
@@ -33,7 +33,7 @@ public class AnalizadorDeModsOptimizacion {
 	}
 
 	public static List<MejoraMod> obtenerMejorasPotenciales() {
-		Buscardor.cargar();
+		Buscador.cargar();
 
 		Set<String> modIds = obtenerModIdsInstalados();
 		List<MejoraMod> mejoras = new ArrayList<>();
@@ -118,7 +118,7 @@ public class AnalizadorDeModsOptimizacion {
 	private static Set<String> obtenerModIdsInstalados() {
 		Set<String> modIds = new HashSet<>();
 
-		for (ArchivoDeMod mod : Buscardor.obtenerTodosLosModsYSubmodsRecursivos()) {
+		for (ArchivoDeMod mod : Buscador.obtenerTodosLosModsYSubmodsRecursivos()) {
 			for (String nombre : mod.nombre()) {
 				if (nombre != null && !nombre.trim().isEmpty()) {
 					modIds.add(nombre.trim().toLowerCase());

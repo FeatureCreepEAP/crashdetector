@@ -8,7 +8,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public class IndependenteFlywheel implements Verificaciones {
@@ -24,7 +24,7 @@ public class IndependenteFlywheel implements Verificaciones {
 		if (consola.contenido_verificar.contains("flywheel is 1")) {
 			tiene_uno = true;
 
-			mods.addAll(Buscardor.obtenerModsConNombre("flywheel"));
+			mods.addAll(Buscador.obtenerModsConNombre("flywheel"));
 
 		}
 

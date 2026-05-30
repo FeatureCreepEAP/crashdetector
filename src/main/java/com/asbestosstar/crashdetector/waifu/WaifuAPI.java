@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.json.Json;
 
 /**
@@ -192,7 +193,7 @@ public class WaifuAPI {
 		conn.setRequestMethod("POST");
 		conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 		conn.setRequestProperty("Accept", "application/json");
-		conn.setRequestProperty("User-Agent", "CrashDetector/WaifuAPI");
+		conn.setRequestProperty("User-Agent", Statics.nombre_cd.obtener() + "/WaifuAPI");
 		conn.setDoOutput(true);
 
 		String cuerpo = "{" + "\"query\":\"" + escaparJson(consulta) + "\"," + "\"operationName\":\"JIJ\","

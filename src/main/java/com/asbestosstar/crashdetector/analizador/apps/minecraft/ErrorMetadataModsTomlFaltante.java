@@ -7,7 +7,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -86,7 +86,7 @@ public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 		}
 
 		// Busca mods que podrían estar causando el problema.
-		modsPotenciales = Buscardor.obtenerModsConNombre(modIdFaltante);
+		modsPotenciales = Buscador.obtenerModsConNombre(modIdFaltante);
 
 		mensaje = MonitorDePID.idioma.errorMetadataModsTomlFaltante(modIdFaltante, modsPotenciales)
 				+ Verificaciones.nl_html;

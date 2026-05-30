@@ -10,7 +10,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -77,7 +77,7 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 			String termino = !modId.isEmpty() ? modId : modNombre;
 			if (termino != null && !termino.isEmpty()) {
 				try {
-					for (ArchivoDeMod m : Buscardor.buscarModsConTermino(termino)) {
+					for (ArchivoDeMod m : Buscador.buscarModsConTermino(termino)) {
 						modsUbicacion.add(m.ubicacion_para_publicar());
 					}
 				} catch (Throwable t) {

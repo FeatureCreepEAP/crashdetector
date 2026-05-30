@@ -16,6 +16,7 @@ import java.util.zip.GZIPOutputStream;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 
@@ -30,7 +31,7 @@ import com.asbestosstar.crashdetector.mapas.BiMap;
  */
 public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 
-	private static final String UA = "CrashDetector/1.x (+crashdetector-php)";
+	private static final String UA = Statics.nombre_cd.obtener() + "/1.x (+crashdetector-php)";
 	private static final int TIMEOUT = 30000;
 
 	@Override

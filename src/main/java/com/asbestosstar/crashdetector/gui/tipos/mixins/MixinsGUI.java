@@ -42,7 +42,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.elementos.LectadorDeCodigo;
@@ -256,7 +256,7 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 			@Override
 			protected Void doInBackground() {
 				try {
-					Buscardor.cargarYPrecargarClasesEnCache();
+					Buscador.cargarYPrecargarClasesEnCache();
 				} catch (Throwable t) {
 					CrashDetectorLogger.logException(t);
 				}
@@ -293,7 +293,7 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 	public List<ArchivoDeMod> obtenerModsConMixins() {
 		List<ArchivoDeMod> modsConMixins = new ArrayList<>();
 
-		for (ArchivoDeMod mod : Buscardor.mods) {
+		for (ArchivoDeMod mod : Buscador.mods) {
 			recolectarModsConMixinsRecursivo(mod, modsConMixins);
 		}
 

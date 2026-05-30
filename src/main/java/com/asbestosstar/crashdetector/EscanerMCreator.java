@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 
 public class EscanerMCreator {
 
 	public static String obtainerMCreatorMods() {
 		StringBuilder resultado = new StringBuilder();
-		Buscardor.cargar(); // Carga todos los mods
+		Buscador.cargar(); // Carga todos los mods
 
 		List<ArchivoDeMod> todosLosMods = new ArrayList<>();
 		// Recopilar todos los mods incluyendo anidados
-		for (ArchivoDeMod mod : Buscardor.obtenerTodosLosModsYSubmodsRecursivos()) {
+		for (ArchivoDeMod mod : Buscador.obtenerTodosLosModsYSubmodsRecursivos()) {
 			coleccionarModsAnidados(mod, todosLosMods);
 		}
 
@@ -69,7 +69,7 @@ public class EscanerMCreator {
 		if (!altaPrioridad.isEmpty()) {
 			resultado.append("\n--- Alta Prioridad (net.mcreator) ---\n");
 			for (ArchivoDeMod mod : altaPrioridad) {
-				resultado.append(Buscardor.rutaParaPublicar(mod.ubicacion())).append("\n");
+				resultado.append(Buscador.rutaParaPublicar(mod.ubicacion())).append("\n");
 			}
 		}
 
@@ -77,14 +77,14 @@ public class EscanerMCreator {
 			resultado.append(
 					"\n--- Menos Alta Prioridad (Referencia a mcreator en fabric.mod.json/mods.toml/modules.xml/descriptor.mod/neoforge.mods.toml) ---\n");
 			for (ArchivoDeMod mod : menosAltaPrioridad) {
-				resultado.append(Buscardor.rutaParaPublicar(mod.ubicacion())).append("\n");
+				resultado.append(Buscador.rutaParaPublicar(mod.ubicacion())).append("\n");
 			}
 		}
 
 		if (!mediaPrioridad.isEmpty()) {
 			resultado.append("\n--- Media Prioridad (procedures/elements) ---\n");
 			for (ArchivoDeMod mod : mediaPrioridad) {
-				resultado.append(Buscardor.rutaParaPublicar(mod.ubicacion())).append("\n");
+				resultado.append(Buscador.rutaParaPublicar(mod.ubicacion())).append("\n");
 			}
 		}
 

@@ -17,7 +17,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -82,7 +82,7 @@ public class TienesModDesAnimado implements Verificaciones {
 
 		// 2. Desde escaneo recursivo
 		try {
-			List<ArchivoDeMod> desdeRecursivo = Buscardor.obtenerTodosLosModsYSubmodsRecursivos();
+			List<ArchivoDeMod> desdeRecursivo = Buscador.obtenerTodosLosModsYSubmodsRecursivos();
 			if (desdeRecursivo != null) {
 				for (ArchivoDeMod mod : desdeRecursivo) {
 					if (!mod.nombre().isEmpty()) {
@@ -138,7 +138,7 @@ public class TienesModDesAnimado implements Verificaciones {
 			// Coincidir por modid (si está presente)
 			if (modid != null && !modid.trim().isEmpty()) {
 				try {
-					List<String> rutasPorModid = Buscardor.obtenerModsConNombre(modid);
+					List<String> rutasPorModid = Buscador.obtenerModsConNombre(modid);
 					if (rutasPorModid != null) {
 						for (String rutaAbs : rutasPorModid) {
 							String rel = rutaAbs.replace(MonitorDePID.ultimo_mods.toString(), ".");

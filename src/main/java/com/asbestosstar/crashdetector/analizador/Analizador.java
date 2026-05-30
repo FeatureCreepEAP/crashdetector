@@ -64,7 +64,7 @@ import com.asbestosstar.crashdetector.analizador.general.SpongeMixinConfigsProbl
 import com.asbestosstar.crashdetector.analizador.general.TienesModDesAnimado;
 import com.asbestosstar.crashdetector.analizador.general.VerificacionGPU;
 import com.asbestosstar.crashdetector.analizador.general.VersionInvalidaSemver;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.config.ConfigStringArray;
 
 public class Analizador {
@@ -414,7 +414,7 @@ public class Analizador {
 	}
 
 	public void analizar(List<Consola> consolas) {
-		Buscardor.cargar();
+		Buscador.cargar();
 		CrashDetectorLogger.log("Iniciando análisis de " + consolas.size() + " registros");
 
 		// Hilos = 2 * núcleos lógicos

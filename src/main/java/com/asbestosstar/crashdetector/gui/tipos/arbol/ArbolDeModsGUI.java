@@ -64,7 +64,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
@@ -147,7 +147,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 	 */
 	public void construirIndice() {
 		indiceBusqueda.clear();
-		int totalMods = Buscardor.mods.size();
+		int totalMods = Buscador.mods.size();
 		if (totalMods == 0) {
 			com.asbestosstar.crashdetector.CrashDetectorLogger.log("✅ No hay mods para indexar.");
 			return;
@@ -163,7 +163,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		List<Future<Map<String, List<PathDescriptor>>>> futuros = new ArrayList<>(totalMods);
 		final AtomicInteger completados = new AtomicInteger(0);
 
-		for (ArchivoDeMod mod : Buscardor.mods) {
+		for (ArchivoDeMod mod : Buscador.mods) {
 			futuros.add(executor.submit(() -> {
 				try {
 					Map<String, List<PathDescriptor>> mapaLocal = new HashMap<>();
@@ -312,7 +312,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 			}
 
 			// Si no hay análisis bytecode disponible o la clase no existe realmente, saltar
-			if (!Buscardor.puedeAnalizarElContentidoDeClase() || claseInterna == null
+			if (!Buscador.puedeAnalizarElContentidoDeClase() || claseInterna == null
 					|| !mod.existeClase(claseInterna)) {
 				continue;
 			}
@@ -960,7 +960,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 			detalles.append(MonitorDePID.idioma.paquete()).append(" ").append(paquete).append("\n");
 
 			List<ArchivoDeMod> modsConPaquete = new ArrayList<>();
-			for (ArchivoDeMod mod : Buscardor.mods) {
+			for (ArchivoDeMod mod : Buscador.mods) {
 				for (String clase : mod.clases()) {
 					String paqueteClase = "";
 					int indiceUltimoPunto = clase.lastIndexOf('.');
@@ -1118,7 +1118,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 					detalles.append(MonitorDePID.idioma.modulo()).append(": ").append(mod.ubicacion_para_publicar())
 							.append("\n\n");
 
-					if (Buscardor.puedeAnalizarElContentidoDeClase() && claseExiste) {
+					if (Buscador.puedeAnalizarElContentidoDeClase() && claseExiste) {
 						List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseInterna);
 						detalles.append(MonitorDePID.idioma.metodos()).append(" (").append(metodos.size())
 								.append("):\n");
@@ -1361,7 +1361,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 			}
 
 			public List<PathDescriptor> buscarProfundoComoLista(String filtroLower, String tipoFiltro) {
-				if (!Buscardor.puedeAnalizarElContentidoDeClase() || !ArchivoDeMod.esAnalisisDeBytecodeDisponible()) {
+				if (!Buscador.puedeAnalizarElContentidoDeClase() || !ArchivoDeMod.esAnalisisDeBytecodeDisponible()) {
 					return new ArrayList<>();
 				}
 
@@ -1435,7 +1435,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 									if (incluirTodo || "REFERENCIA_METODO".equals(tipoFiltro)
 											|| "REFERENCIA".equals(tipoFiltro)) {
 										for (ArchivoDeMod.Referencia ref : m.obtenerReferenciasAMetodos()) {
-											String s = (Buscardor.convertirFormatoClasePuntos(ref.obtenerClase()) + "."
+											String s = (Buscador.convertirFormatoClasePuntos(ref.obtenerClase()) + "."
 													+ ref.obtenerNombre() + ref.obtenerDescriptor()).toLowerCase();
 											if (s.contains(filtroLower)) {
 												resultados.add(new PathDescriptor(modFinal.ubicacion_para_publicar(),
@@ -1449,7 +1449,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 									if (incluirTodo || "REFERENCIA_CAMPO".equals(tipoFiltro)
 											|| "REFERENCIA".equals(tipoFiltro)) {
 										for (ArchivoDeMod.Referencia ref : m.obtenerReferenciasACampos()) {
-											String s = (Buscardor.convertirFormatoClasePuntos(ref.obtenerClase()) + "."
+											String s = (Buscador.convertirFormatoClasePuntos(ref.obtenerClase()) + "."
 													+ ref.obtenerNombre() + " " + ref.obtenerDescriptor())
 													.toLowerCase();
 											if (s.contains(filtroLower)) {
@@ -1464,7 +1464,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 									if (incluirTodo || "REFERENCIA_CLASE".equals(tipoFiltro)) {
 										boolean hit = false;
 										for (ArchivoDeMod.Referencia ref : m.obtenerReferenciasAMetodos()) {
-											if (Buscardor.convertirFormatoClasePuntos(ref.obtenerClase()).toLowerCase()
+											if (Buscador.convertirFormatoClasePuntos(ref.obtenerClase()).toLowerCase()
 													.contains(filtroLower)) {
 												hit = true;
 												break;
@@ -1472,7 +1472,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 										}
 										if (!hit)
 											for (ArchivoDeMod.Referencia ref : m.obtenerReferenciasACampos()) {
-												if (Buscardor.convertirFormatoClasePuntos(ref.obtenerClase())
+												if (Buscador.convertirFormatoClasePuntos(ref.obtenerClase())
 														.toLowerCase().contains(filtroLower)) {
 													hit = true;
 													break;
@@ -1736,7 +1736,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 
 	public Map<String, ArchivoDeMod> obtenerMapaModsPorUbicacion() {
 		Map<String, ArchivoDeMod> mapa = new HashMap<>();
-		for (ArchivoDeMod m : Buscardor.mods) {
+		for (ArchivoDeMod m : Buscador.mods) {
 			rellenarMapaModsRecursivo(m, mapa);
 		}
 		return mapa;
@@ -1859,7 +1859,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 							}
 
 							// 🔹 Si no se puede analizar el contenido, dejar solo la clase
-							if (!Buscardor.puedeAnalizarElContentidoDeClase() || claseInterna == null
+							if (!Buscador.puedeAnalizarElContentidoDeClase() || claseInterna == null
 									|| !mod.existeClase(claseInterna)) {
 								nodoPaquete.add(nodoClase);
 								continue;
@@ -2037,7 +2037,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		new SwingWorker<Void, Void>() {
 			@Override
 			protected Void doInBackground() throws Exception {
-				Buscardor.cargarYPrecargarClasesEnCache();
+				Buscador.cargarYPrecargarClasesEnCache();
 				construirIndice();
 				return null;
 			}
@@ -2171,7 +2171,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 
 	public void construirArbolInicial() {
 		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(MonitorDePID.idioma.modsCargados());
-		for (ArchivoDeMod mod : Buscardor.mods) {
+		for (ArchivoDeMod mod : Buscador.mods) {
 			agregarModuloARaiz(raiz, mod);
 		}
 		modeloArbol = new ModeloArbolConExpandibleMods(raiz);
@@ -2238,7 +2238,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 					DefaultMutableTreeNode nodoClase = new DefaultMutableTreeNode(
 							new NodoConTexto(nombreClase, new Object[] { mod, clasePuntos }));
 
-					if (Buscardor.puedeAnalizarElContentidoDeClase() && mod.existeClase(claseInterna)) {
+					if (Buscador.puedeAnalizarElContentidoDeClase() && mod.existeClase(claseInterna)) {
 						List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseInterna);
 						if (!metodos.isEmpty()) {
 							DefaultMutableTreeNode nodoMetodos = new DefaultMutableTreeNode(new NodoConTexto(
@@ -2274,7 +2274,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 													"contenedor_referencias"));
 
 									for (ArchivoDeMod.Referencia refMetodo : metodo.obtenerReferenciasAMetodos()) {
-										String nombreClaseMostrar = Buscardor
+										String nombreClaseMostrar = Buscador
 												.convertirFormatoClasePuntos(refMetodo.obtenerClase());
 										DefaultMutableTreeNode nodoRefMetodo = new DefaultMutableTreeNode(
 												new NodoConTexto(
@@ -2286,7 +2286,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 									}
 
 									for (ArchivoDeMod.Referencia refCampo : metodo.obtenerReferenciasACampos()) {
-										String nombreClaseMostrar = Buscardor
+										String nombreClaseMostrar = Buscador
 												.convertirFormatoClasePuntos(refCampo.obtenerClase());
 										DefaultMutableTreeNode nodoRefCampo = new DefaultMutableTreeNode(
 												new NodoConTexto(
@@ -2325,7 +2325,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 
 	public List<ArchivoDeMod> obtenerTodosLosMods() {
 		List<ArchivoDeMod> out = new ArrayList<>();
-		for (ArchivoDeMod m : Buscardor.mods) {
+		for (ArchivoDeMod m : Buscador.mods) {
 			recolectarModsRec(out, m);
 		}
 		return out;
@@ -2367,7 +2367,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 			@Override
 			protected Void doInBackground() {
 				List<DefaultMutableTreeNode> mods = new ArrayList<>();
-				for (ArchivoDeMod mod : Buscardor.mods) {
+				for (ArchivoDeMod mod : Buscador.mods) {
 					mods.add(new DefaultMutableTreeNode(new NodoConTexto(mod.ubicacion_para_publicar(), mod)));
 				}
 				return null;
@@ -2381,7 +2381,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 						raizActual.removeAllChildren();
 						raizActual.setUserObject(MonitorDePID.idioma.modsCargados());
 
-						for (ArchivoDeMod mod : Buscardor.mods) {
+						for (ArchivoDeMod mod : Buscador.mods) {
 							DefaultMutableTreeNode nodoMod = new DefaultMutableTreeNode(
 									new NodoConTexto(mod.ubicacion_para_publicar(), mod));
 							modeloArbol.insertNodeInto(nodoMod, raizActual, raizActual.getChildCount());
@@ -2728,7 +2728,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 				// Es un mod - mostrar ubicaciones de mods relacionados
 				List<ArchivoDeMod> mods = new ArrayList<>();
 				mods.add((ArchivoDeMod) objetoReal);
-				List<String> ubicaciones = Buscardor.obtenerUbicaciones(mods);
+				List<String> ubicaciones = Buscador.obtenerUbicaciones(mods);
 				mostrarResultadosBusqueda(ubicaciones, MonitorDePID.idioma.referenciasMod());
 
 			} else if (objetoReal instanceof String) {
@@ -2736,7 +2736,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 				String paquete = (String) objetoReal;
 				if (!paquete.equals("contenedor_metodos") && !paquete.equals("contenedor_campos")
 						&& !paquete.equals("contenedor_referencias")) {
-					List<String> ubicaciones = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(paquete));
+					List<String> ubicaciones = Buscador.obtenerUbicaciones(Buscador.buscarModsConTermino(paquete));
 					mostrarResultadosBusqueda(ubicaciones, MonitorDePID.idioma.referencias() + " " + paquete);
 				}
 
@@ -2755,10 +2755,10 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 						// Es un método - buscar referencias HACIA este método
 						else if (datos.length >= 3 && datos[2] instanceof ArchivoDeMod.InfoMetodo) {
 							ArchivoDeMod.InfoMetodo metodo = (ArchivoDeMod.InfoMetodo) datos[2];
-							String claseInterna = Buscardor.convertirFormatoClase(clase);
+							String claseInterna = Buscador.convertirFormatoClase(clase);
 
 							// Buscar referencias HACIA este método en todos los mods
-							List<Buscardor.ReferenciaMod> referenciasHacia = Buscardor.buscarReferenciasHaciaMetodo(
+							List<Buscador.ReferenciaMod> referenciasHacia = Buscador.buscarReferenciasHaciaMetodo(
 									claseInterna, metodo.obtenerNombre(), metodo.obtenerDescriptor());
 
 							mostrarReferenciasHaciaMetodo(referenciasHacia, MonitorDePID.idioma.referenciasMetodo());
@@ -2766,7 +2766,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 						// Es un campo - buscar referencias HACIA este campo
 						else if (datos.length >= 3 && datos[2] instanceof ArchivoDeMod.InfoCampo) {
 							ArchivoDeMod.InfoCampo campo = (ArchivoDeMod.InfoCampo) datos[2];
-							String claseInterna = Buscardor.convertirFormatoClase(clase);
+							String claseInterna = Buscador.convertirFormatoClase(clase);
 
 							// Buscar referencias hacia este campo específico
 							buscarReferenciasACampo(claseInterna, campo.obtenerNombre(), campo.obtenerDescriptor());
@@ -2777,12 +2777,12 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 
 							if (referencia.esMetodo()) {
 								// Buscar referencias hacia este método referenciado
-								List<Buscardor.ReferenciaMod> referenciasHacia = Buscardor.buscarReferenciasHaciaMetodo(
+								List<Buscador.ReferenciaMod> referenciasHacia = Buscador.buscarReferenciasHaciaMetodo(
 										referencia.obtenerClase(), referencia.obtenerNombre(),
 										referencia.obtenerDescriptor());
 
 								String tituloReferencias = MonitorDePID.idioma.referencias() + " "
-										+ Buscardor.convertirFormatoClasePuntos(referencia.obtenerClase()) + "."
+										+ Buscador.convertirFormatoClasePuntos(referencia.obtenerClase()) + "."
 										+ referencia.obtenerNombre();
 
 								mostrarReferenciasHaciaMetodo(referenciasHacia, tituloReferencias);
@@ -2802,9 +2802,9 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 	}
 
 	public void buscarReferenciasACampo(String claseObjetivo, String nombreCampo, String descriptorCampo) {
-		if (!Buscardor.puedeAnalizarElContentidoDeClase()) {
+		if (!Buscador.puedeAnalizarElContentidoDeClase()) {
 			DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(MonitorDePID.idioma.referenciasCampo() + " "
-					+ Buscardor.convertirFormatoClasePuntos(claseObjetivo) + "." + nombreCampo);
+					+ Buscador.convertirFormatoClasePuntos(claseObjetivo) + "." + nombreCampo);
 			raiz.add(new DefaultMutableTreeNode("ASM no disponible"));
 			modeloArbol = new ModeloArbolConExpandibleMods(raiz);
 			arbolModulos.setModel(modeloArbol);
@@ -2812,10 +2812,10 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		}
 
 		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(MonitorDePID.idioma.referenciasCampo() + " "
-				+ Buscardor.convertirFormatoClasePuntos(claseObjetivo) + "." + nombreCampo);
+				+ Buscador.convertirFormatoClasePuntos(claseObjetivo) + "." + nombreCampo);
 
 		// Buscar en todos los mods
-		for (ArchivoDeMod mod : Buscardor.mods) {
+		for (ArchivoDeMod mod : Buscador.mods) {
 			// Buscar en todas las clases del mod
 			for (String nombreClase : mod.obtenerTodosLosNombresDeClases()) {
 				String claseOrigenInterna = normalizarNombreClaseInterno(nombreClase);
@@ -2871,18 +2871,18 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		arbolModulos.setModel(modeloArbol);
 	}
 
-	public void mostrarReferenciasHaciaMetodo(List<Buscardor.ReferenciaMod> referencias, String titulo) {
+	public void mostrarReferenciasHaciaMetodo(List<Buscador.ReferenciaMod> referencias, String titulo) {
 		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(titulo);
 		if (referencias.isEmpty()) {
 			raiz.add(new DefaultMutableTreeNode(MonitorDePID.idioma.noSeEncontraronReferencias()));
 		} else {
-			for (Buscardor.ReferenciaMod refMod : referencias) {
+			for (Buscador.ReferenciaMod refMod : referencias) {
 				String textoReferencia = "";
 
 				if (refMod.obtenerReferencia() != null) {
 					// Referencia antigua (para compatibilidad)
 					ArchivoDeMod.Referencia ref = refMod.obtenerReferencia();
-					String nombreClaseMostrar = Buscardor.convertirFormatoClasePuntos(ref.obtenerClase());
+					String nombreClaseMostrar = Buscador.convertirFormatoClasePuntos(ref.obtenerClase());
 					String tipo = ref.esMetodo() ? MonitorDePID.idioma.metodo() : MonitorDePID.idioma.campo();
 					textoReferencia = tipo + ": " + nombreClaseMostrar + "." + ref.obtenerNombre() + " ("
 							+ refMod.obtenerMod().ubicacion_para_publicar() + ")";
@@ -2896,7 +2896,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 	}
 
 	public void buscarReferenciasAClase(String nombreClase) {
-		if (!Buscardor.puedeAnalizarElContentidoDeClase()) {
+		if (!Buscador.puedeAnalizarElContentidoDeClase()) {
 			DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(
 					MonitorDePID.idioma.referenciasClase() + " " + nombreClase);
 			raiz.add(new DefaultMutableTreeNode("ASM no disponible"));
@@ -2908,12 +2908,12 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(
 				MonitorDePID.idioma.referenciasClase() + " " + nombreClase);
 
-		String claseInterna = Buscardor.convertirFormatoClase(nombreClase);
-		List<Buscardor.ReferenciaMod> referencias = new ArrayList<>();
+		String claseInterna = Buscador.convertirFormatoClase(nombreClase);
+		List<Buscador.ReferenciaMod> referencias = new ArrayList<>();
 
 		String claseObjetivoInterna = normalizarNombreClaseInterno(nombreClase);
 
-		for (ArchivoDeMod mod : Buscardor.mods) {
+		for (ArchivoDeMod mod : Buscador.mods) {
 			for (String nombreClaseActual : mod.obtenerTodosLosNombresDeClases()) {
 				String claseActualInterna = normalizarNombreClaseInterno(nombreClaseActual);
 				if (claseActualInterna.equals(claseObjetivoInterna))

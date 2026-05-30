@@ -12,7 +12,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -77,12 +77,12 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 
 					if (!namespaces.isEmpty()) {
 						modsUbicacion.clear();
-						Buscardor.cargar();
+						Buscador.cargar();
 						for (String ns : namespaces) {
-							List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino("data/" + ns + "/");
+							List<ArchivoDeMod> mods = Buscador.buscarModsConTermino("data/" + ns + "/");
 							if (mods.isEmpty())
-								mods = Buscardor.buscarModsConTermino(ns);
-							modsUbicacion.addAll(Buscardor.obtenerUbicaciones(mods));
+								mods = Buscador.buscarModsConTermino(ns);
+							modsUbicacion.addAll(Buscador.obtenerUbicaciones(mods));
 						}
 					}
 				}
@@ -103,9 +103,9 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 						int colonIdx = valorClave.indexOf(':');
 						if (colonIdx > 0 && !"minecraft".equals(valorClave.substring(0, colonIdx))) {
 							clavesFaltantes.add(valorClave);
-							Buscardor.cargar();
-							List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(valorClave.substring(0, colonIdx));
-							modsUbicacion.addAll(Buscardor.obtenerUbicaciones(mods));
+							Buscador.cargar();
+							List<ArchivoDeMod> mods = Buscador.buscarModsConTermino(valorClave.substring(0, colonIdx));
+							modsUbicacion.addAll(Buscador.obtenerUbicaciones(mods));
 						}
 					}
 				}

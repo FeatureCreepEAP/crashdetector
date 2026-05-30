@@ -8,7 +8,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public class VersionInvalidaSemver implements Verificaciones {
@@ -53,7 +53,7 @@ public class VersionInvalidaSemver implements Verificaciones {
 			// Buscar el mod que tenga esa version
 			if (!versionInvalida.isEmpty()) {
 
-				List<ArchivoDeMod> mods = Buscardor.obtenerTodosLosModsYSubmodsRecursivos();
+				List<ArchivoDeMod> mods = Buscador.obtenerTodosLosModsYSubmodsRecursivos();
 
 				for (ArchivoDeMod mod : mods) {
 					String v = mod.version();

@@ -16,7 +16,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
@@ -131,8 +131,8 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 			if (encontrado && !paquete.isEmpty()) {
 				paqueteProblematico = paquete;
 				CrashDetectorLogger.log("paqueteProblematico " + paqueteProblematico);
-				Buscardor.cargar();
-				List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(paquete);
+				Buscador.cargar();
+				List<ArchivoDeMod> mods = Buscador.buscarModsConTermino(paquete);
 
 				// Si no encuentra mods, igual mostrar el mensaje básico
 				String resultado = mods.isEmpty() ? "" : formatearResultadoBusqueda(mods);
@@ -184,7 +184,7 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 
 	public static String procesarModulo(String modulo) {
 		// TODO Auto-generated method stub
-		List<String> mods = Buscardor.obtenerModsConNombre(modulo);
+		List<String> mods = Buscador.obtenerModsConNombre(modulo);
 		if (!mods.isEmpty()) {
 			return "(" + String.join(",", mods) + ")";
 		}
@@ -198,7 +198,7 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 			return "()";
 
 		String contenido = mods.stream()
-				.map(mod -> "<b>" + Buscardor.rutaParaPublicar(mod.ubicacion_para_publicar()) + "</b>")
+				.map(mod -> "<b>" + Buscador.rutaParaPublicar(mod.ubicacion_para_publicar()) + "</b>")
 				.collect(Collectors.joining(", "));
 
 		return "(" + contenido + ")";
@@ -239,7 +239,7 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 			return builder.construir();
 		}
 
-		List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(paqueteProblematico);
+		List<ArchivoDeMod> mods = Buscador.buscarModsConTermino(paqueteProblematico);
 
 		if (mods.isEmpty()) {
 			builder.agregarEtiqueta(

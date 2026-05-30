@@ -28,6 +28,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import com.asbestosstar.crashdetector.Statics;
+
 /**
  * Descargador simple de dependencias Maven.
  *
@@ -660,7 +662,7 @@ public class DescargadorDependenciasMaven {
 		HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
 		con.setConnectTimeout(TIMEOUT_MS);
 		con.setReadTimeout(TIMEOUT_MS);
-		con.setRequestProperty("User-Agent", "CrashDetector-DescargadorDependenciasMaven/1.0");
+		con.setRequestProperty("User-Agent", Statics.nombre_cd.obtener() + "-DescargadorDependenciasMaven/1.0");
 		con.setInstanceFollowRedirects(true);
 
 		int code = con.getResponseCode();

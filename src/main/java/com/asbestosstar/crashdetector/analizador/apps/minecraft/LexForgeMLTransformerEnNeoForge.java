@@ -10,7 +10,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -93,7 +93,7 @@ public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
 			if (!claseReceptora.isEmpty()) {
 				// Buscar únicamente mods que contengan exactamente esa clase
 				String classPath = claseReceptora.replace('.', '/') + ".class";
-				List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(classPath);
+				List<ArchivoDeMod> mods = Buscador.buscarModsConTermino(classPath);
 				for (ArchivoDeMod m : mods) {
 					modsUbicacion.add(m.ubicacion_para_publicar());
 				}

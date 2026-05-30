@@ -50,7 +50,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
@@ -381,7 +381,7 @@ public abstract class MapaDeDependenciasGUI extends JFrame implements BotonDeBar
 			@Override
 			protected Void doInBackground() {
 				try {
-					Buscardor.cargarYPrecargarClasesEnCache();
+					Buscador.cargarYPrecargarClasesEnCache();
 					reconstruirMapaDependencias();
 				} catch (Throwable t) {
 					CrashDetectorLogger.logException(t);
@@ -1251,7 +1251,7 @@ public abstract class MapaDeDependenciasGUI extends JFrame implements BotonDeBar
 
 	public List<ArchivoDeMod> obtenerTodosLosModsYSubmodsRecursivos() {
 		List<ArchivoDeMod> resultado = new ArrayList<>();
-		for (ArchivoDeMod mod : Buscardor.mods) {
+		for (ArchivoDeMod mod : Buscador.mods) {
 			agregarModRecursivo(mod, resultado);
 		}
 		return resultado;

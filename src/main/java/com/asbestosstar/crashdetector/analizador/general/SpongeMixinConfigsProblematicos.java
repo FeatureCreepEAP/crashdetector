@@ -17,7 +17,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 
@@ -105,7 +105,7 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 			boolean isFatal = sm_config_es_fatal.getOrDefault(sm, false);
 
 			String jars_de_sm_string = "";
-			List<String> jars_de_sm = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(sm));
+			List<String> jars_de_sm = Buscador.obtenerUbicaciones(Buscador.buscarModsConTermino(sm));
 
 			if (!jars_de_sm.isEmpty()) {
 				List<String> boldJars = new ArrayList<>();
@@ -142,7 +142,7 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 
 		// Agregar botón para cada JAR encontrado
 		for (String sm : sm_config_con_linea.keySet()) {
-			List<String> jars = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(sm));
+			List<String> jars = Buscador.obtenerUbicaciones(Buscador.buscarModsConTermino(sm));
 
 			for (String jar : jars) {
 				String buttonText = MonitorDePID.idioma.eliminar() + ": " + jar;

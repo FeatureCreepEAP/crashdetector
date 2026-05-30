@@ -10,7 +10,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -120,7 +120,7 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 
 	private void buscarModsRelacionados() {
 		try {
-			Buscardor.cargar();
+			Buscador.cargar();
 
 			modsClaseHija.clear();
 			modsClasePadreFinal.clear();
@@ -143,13 +143,13 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 			String clasePunto = limpiarClase(clase);
 			String claseInterna = clasePunto.replace('.', '/');
 
-			List<ArchivoDeMod> resultadoInterno = Buscardor.buscarModsConTermino(claseInterna);
+			List<ArchivoDeMod> resultadoInterno = Buscador.buscarModsConTermino(claseInterna);
 			if (resultadoInterno != null) {
 				encontrados.addAll(resultadoInterno);
 			}
 
 			if (!claseInterna.equals(clasePunto)) {
-				List<ArchivoDeMod> resultadoPunto = Buscardor.buscarModsConTermino(clasePunto);
+				List<ArchivoDeMod> resultadoPunto = Buscador.buscarModsConTermino(clasePunto);
 				if (resultadoPunto != null) {
 					encontrados.addAll(resultadoPunto);
 				}
@@ -193,7 +193,7 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 			return "";
 		}
 
-		return mods.stream().map(mod -> "<b>" + Buscardor.rutaParaPublicar(mod.ubicacion_para_publicar()) + "</b>")
+		return mods.stream().map(mod -> "<b>" + Buscador.rutaParaPublicar(mod.ubicacion_para_publicar()) + "</b>")
 				.distinct().collect(Collectors.joining(", "));
 	}
 

@@ -14,7 +14,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public class FallosEjecucionTareas implements Verificaciones {
@@ -102,7 +102,7 @@ public class FallosEjecucionTareas implements Verificaciones {
 
 	private void procesarResultados() {
 		// Cargamos el buscador de mods una sola vez
-		Buscardor.cargar();
+		Buscador.cargar();
 		String colorError = Config.obtenerInstancia().obtenerColorError();
 
 		// Procesamos cada clase con problema
@@ -112,7 +112,7 @@ public class FallosEjecucionTareas implements Verificaciones {
 
 			// Buscamos mods relacionados con esta clase
 			// Reemplazamos puntos por barras para el formato de búsqueda
-			List<ArchivoDeMod> modsRelacionados = Buscardor.buscarModsConTermino(clase.replace(".", "/"));
+			List<ArchivoDeMod> modsRelacionados = Buscador.buscarModsConTermino(clase.replace(".", "/"));
 
 			// Construimos el mensaje de error con el formato "clase (mod1, mod2)"
 			StringBuilder mensaje = new StringBuilder();
@@ -178,7 +178,7 @@ public class FallosEjecucionTareas implements Verificaciones {
 				info.append(clase);
 
 				// Buscamos mods relacionados para esta clase
-				List<ArchivoDeMod> modsRelacionados = Buscardor.buscarModsConTermino(clase.replace(".", "/"));
+				List<ArchivoDeMod> modsRelacionados = Buscador.buscarModsConTermino(clase.replace(".", "/"));
 				if (!modsRelacionados.isEmpty()) {
 					info.append(" (");
 					for (int i = 0; i < modsRelacionados.size(); i++) {

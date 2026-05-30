@@ -30,6 +30,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.api_sitio_archivo.wormholeapp.CifradorDeFlujo;
 import com.asbestosstar.crashdetector.api_sitio_archivo.wormholeapp.CriptoWormhole;
 import com.asbestosstar.crashdetector.api_sitio_archivo.wormholeapp.HasheadorDePiezas;
@@ -53,7 +54,7 @@ public class WormholeApp implements SitioDeArchivoAPI {
 
 	private static final String URL_WORMHOLE = "https://wormhole.app";
 	private static final String API_BASE = "https://wormhole.app/api";
-	private static final String USER_AGENT = "CrashDetector-Wormhole/1.0";
+	private static final String USER_AGENT = Statics.nombre_cd.obtener() + "-Wormhole/1.0";
 
 	/** Longitud de claves y sales en bytes. */
 	private static final int LONGITUD_CLAVE = 16;
