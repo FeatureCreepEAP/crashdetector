@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
@@ -44,7 +45,7 @@ public class ElementoQuickFix extends JPanel {
 			JPanel panelRetener = new JPanel();
 			panelRetener.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0)); // Alineación estricta a la izquierda
 			panelRetener.setOpaque(false);
-			panelRetener.add(new JLabel("Retener:"));
+			panelRetener.add(new JLabel(MonitorDePID.idioma.retener_dos_puntos()));
 			panelRetener.add(checkBoxRetener);
 			panelComponentes.add(panelRetener);
 

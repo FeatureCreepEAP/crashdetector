@@ -10678,4 +10678,298 @@ public class Khmer implements Idioma {
 		return "បញ្ចូលគ្នា";
 	}
 
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String mod() {
+		return "Mod";
+	}
+
+	@Override
+	public String version() {
+		return "កំណែ";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "បានរកឃើញថ្នាក់";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "ការផ្គូផ្គង";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "លទ្ធផលស្វែងរក";
+	}
+
+	@Override
+	public String desconocido() {
+		return "មិនស្គាល់";
+	}
+
+	@Override
+	public String desconocida() {
+		return "មិនស្គាល់";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "URL CurseForge";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "URL Modrinth";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "Mods ដែលបានរកឃើញសម្រាប់ " + clase;
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "ការបញ្ចូលថតឯកសារមិនត្រឹមត្រូវ: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "ថតឯកសារគ្មាន Hash: " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "មិនអាចចូលដំណើរការថតឯកសារបានទេ: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "ឯកសារបាត់នៅក្នុងថត: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "Hash មិនត្រឹមត្រូវនៅ: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "ឯកសារមិនអនុញ្ញាតនៅក្នុងថត: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "ការបញ្ចូលឯកសារមិនត្រឹមត្រូវ: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "Hash បាត់សម្រាប់ឯកសារ: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "ឯកសារបាត់: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "កំហុសក្នុងការអានឯកសារ: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "Hash មិនត្រឹមត្រូវសម្រាប់ឯកសារ: " + ruta;
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String listo() {
+		return "រួចរាល់!";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "កំហុសក្នុងការផ្ទុកគំរូពីថាស: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "មិនបានរកឃើញគំរូទេ។ សូមកំណត់ឡើងវិញដោយប្រើប៊ូតុង 'កំណត់គំរូឡើងវិញ'។";
+	}
+
+	public String plantilla_guardada_en() {
+		return "គំរូត្រូវបានរក្សាទុកនៅ: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "គំរូត្រូវបានកំណត់ឡើងវិញដោយជោគជ័យ។";
+	}
+
+	public String error_al_guardar() {
+		return "កំហុសក្នុងការរក្សាទុក: ";
+	}
+
+	public String error_al_restablecer() {
+		return "កំហុសក្នុងការកំណត់ឡើងវិញ: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "កំហុសក្នុងការកំណត់រូបភាពឡើងវិញ: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "មិនបានរកឃើញរូបភាពនៅក្នុងធនធានទេ: ";
+	}
+
+	public String imagen_restablecida() {
+		return "រូបភាពត្រូវបានកំណត់ឡើងវិញ: ";
+	}
+
+	public String editor_html() {
+		return "កម្មវិធីកែសម្រួល HTML";
+	}
+
+	public String vista_previa() {
+		return "ការមើលជាមុន";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "ការកំណត់ពណ៌ និងរូបភាព";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "រូបភាព (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "តំណភ្ជាប់រូបភាព (របាយការណ៍ដែលបានចែករំលែក)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "តំណភ្ជាប់រូបភាព (របាយការណ៍ដែលបានចែករំលែក)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "URL ដែលប្រើនៅក្នុងរបាយការណ៍ដែលបានចែករំលែក";
+	}
+
+	public String error_creando_codice_json() {
+		return "កំហុសក្នុងការបង្កើត codice.json: ";
+	}
+
+	public String error_exportando() {
+		return "កំហុសក្នុងការនាំចេញ: ";
+	}
+
+	public String validacion() {
+		return "ការផ្ទៀងផ្ទាត់";
+	}
+
+	public String ver_codigo() {
+		return "មើលកូដ";
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	public String importar_instancia() {
+		return "នាំចូល instance";
+	}
+
+	public String compartir_instancia() {
+		return "ចែករំលែក instance";
+	}
+
+	public String error_al_cargar_mods() {
+		return "កំហុសក្នុងការផ្ទុក mods។";
+	}
+
+	public String instalar() {
+		return "ដំឡើង";
+	}
+
+	public String mods_instalados() {
+		return "Mods ដែលបានដំឡើង";
+	}
+
+	public String guardar_como_archivo() {
+		return "រក្សាទុកជាឯកសារ";
+	}
+
+	public String exportando_modpack() {
+		return "កំពុងនាំចេញ modpack...";
+	}
+
+	public String modpack_exportado() {
+		return "Modpack ត្រូវបាននាំចេញ:\n";
+	}
+
+	public String conectando() {
+		return "កំពុងភ្ជាប់...";
+	}
+
+	public String esperando_descarga() {
+		return "កំពុងរង់ចាំការទាញយក...";
+	}
+
+	public String finalizado() {
+		return "បានបញ្ចប់";
+	}
+
+	public String retener_dos_puntos() {
+		return "រក្សាទុក:";
+	}
+
+	public String descargar_deps() {
+		return "ទាញយក dependencies";
+	}
+
+	public String no_faltan_dependencias() {
+		return "មិនមាន dependencies ដែលបាត់ទេ។";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "ទាញយក NBT សម្រាប់ quests";
+	}
+
+	public String descargar_nbt() {
+		return "ទាញយក NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "កំហុសក្នុងការផ្ទុករបាយការណ៍: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "នាំចេញ modpack";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "កំហុសក្នុងការនាំចេញ modpack:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "Dependencies NBT ដែលចាំបាច់សម្រាប់បញ្ចូល quests នឹងត្រូវបានទាញយក។\n\n"
+				+ "បន្ទាប់មក អាចចាំបាច់ត្រូវធ្វើការចាប់ផ្តើមឡើងវិញ ដើម្បីឱ្យវាចូលទៅក្នុង classpath។";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "លទ្ធផល null។";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "Dependency NBT ត្រូវបានទាញយក។\n\n" + "ចាប់ផ្តើមឡើងវិញ " + nombrePrograma
+				+ " ប្រសិនបើការបញ្ចូល SNBT នៅតែនិយាយថាខ្វះម៉ាស៊ីន NBT។";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "មិនអាចទាញយក dependency NBT បានទេ។";
+	}
+
 }

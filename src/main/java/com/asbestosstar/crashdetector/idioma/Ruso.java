@@ -10491,4 +10491,294 @@ public class Ruso implements Idioma {
 		return "Объединить";
 	}
 
+	@Override
+	public String mod() {
+		return "Мод";
+	}
+
+	@Override
+	public String version() {
+		return "Версия";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "Класс найден";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "Совпадения";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "Результаты поиска";
+	}
+
+	@Override
+	public String desconocido() {
+		return "неизвестно";
+	}
+
+	@Override
+	public String desconocida() {
+		return "неизвестна";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "Ссылка на CurseForge";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "Ссылка на Modrinth";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "Найденные моды для " + clase;
+	}
+
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "Неверный путь к папке: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "В папке отсутствуют хеши: " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "Не удалось получить доступ к папке: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "Отсутствует файл в папке: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "Неверный хеш в: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "Несанкционированный файл в папке: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "Неверный путь к файлу: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "Отсутствует хеш для файла: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "Отсутствует файл: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "Ошибка чтения файла: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "Неверный хеш для файла: " + ruta;
+	}
+
+	@Override
+	public String listo() {
+		return "Готово!";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "Ошибка загрузки шаблона с диска: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "Шаблон не найден. Восстановите, используя кнопку 'Restablecer Plantilla'.";
+	}
+
+	public String plantilla_guardada_en() {
+		return "Шаблон сохранен в: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "Шаблон успешно восстановлен.";
+	}
+
+	public String error_al_guardar() {
+		return "Ошибка сохранения: ";
+	}
+
+	public String error_al_restablecer() {
+		return "Ошибка восстановления: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "Ошибка восстановления изображения: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "Изображение не найдено в ресурсах: ";
+	}
+
+	public String imagen_restablecida() {
+		return "Изображение восстановлено: ";
+	}
+
+	public String editor_html() {
+		return "Редактор HTML";
+	}
+
+	public String vista_previa() {
+		return "Предпросмотр";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "Настройка цветов и изображений";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "Изображения (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "Ссылки на изображения (общие отчеты)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "Ссылки на изображения (общий отчет)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "URL, используемый в общих отчетах";
+	}
+
+	public String error_creando_codice_json() {
+		return "Ошибка создания codice.json: ";
+	}
+
+	public String error_exportando() {
+		return "Ошибка экспорта: ";
+	}
+
+	public String validacion() {
+		return "Проверка";
+	}
+
+	public String ver_codigo() {
+		return "Просмотр кода";
+	}
+
+	public String importar_instancia() {
+		return "Импортировать инстанс";
+	}
+
+	public String compartir_instancia() {
+		return "Поделиться инстансом";
+	}
+
+	public String error_al_cargar_mods() {
+		return "Ошибка загрузки модов.";
+	}
+
+	public String instalar() {
+		return "Установить";
+	}
+
+	public String mods_instalados() {
+		return "Установленные моды";
+	}
+
+	public String guardar_como_archivo() {
+		return "Сохранить как файл";
+	}
+
+	public String exportando_modpack() {
+		return "Экспорт модпака...";
+	}
+
+	public String modpack_exportado() {
+		return "Модпак экспортирован:\n";
+	}
+
+	public String conectando() {
+		return "Подключение...";
+	}
+
+	public String esperando_descarga() {
+		return "Ожидание загрузки...";
+	}
+
+	public String finalizado() {
+		return "Завершено";
+	}
+
+	public String retener_dos_puntos() {
+		return "Сохранить:";
+	}
+
+	public String descargar_deps() {
+		return "Скачать зависимости";
+	}
+
+	public String no_faltan_dependencias() {
+		return "Зависимости не отсутствуют.";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "Скачать NBT ДЛЯ КВЕСТОВ";
+	}
+
+	public String descargar_nbt() {
+		return "Скачать NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "Ошибка загрузки отчета: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "Экспорт модпака";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "Ошибка экспорта модпака:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "Будут загружены необходимые зависимости NBT для слияния квестов.\n\n"
+				+ "После этого может потребоваться перезапуск, чтобы они попали в classpath.";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "Результат null.";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "Зависимость NBT загружена.\n\n" + "Перезапустите " + nombrePrograma
+				+ ", если слияние SNBT все еще сообщает об отсутствии движка NBT.";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "Не удалось загрузить зависимость NBT.";
+	}
+
 }

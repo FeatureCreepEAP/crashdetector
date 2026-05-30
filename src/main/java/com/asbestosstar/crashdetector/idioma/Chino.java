@@ -9891,4 +9891,296 @@ public class Chino implements Idioma {
 		return "合并";
 	}
 
+	// Chinese (Simplified) (中文)
+	@Override
+	public String mod() {
+		return "Mod";
+	}
+
+	@Override
+	public String version() {
+		return "版本";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "找到类";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "匹配项";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "搜索结果";
+	}
+
+	@Override
+	public String desconocido() {
+		return "未知";
+	}
+
+	@Override
+	public String desconocida() {
+		return "未知";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "CurseForge 链接";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "Modrinth 链接";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "为 " + clase + " 找到的 Mods";
+	}
+
+	// Chinese (Simplified) (中文)
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "无效的文件夹条目：" + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "文件夹缺少哈希值：" + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "无法访问文件夹：" + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "文件夹中缺少文件：" + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "哈希值不正确：" + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "文件夹中存在未授权的文件：" + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "无效的文件条目：" + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "文件缺少哈希值：" + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "文件缺失：" + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "读取文件时出错：" + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "文件哈希值不正确：" + ruta;
+	}
+
+	// Chinese (Simplified) (中文)
+	@Override
+	public String listo() {
+		return "完成！";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "从磁盘加载模板时出错：";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "未找到模板。请使用“重置模板”按钮进行重置。";
+	}
+
+	public String plantilla_guardada_en() {
+		return "模板已保存至：";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "模板已成功重置。";
+	}
+
+	public String error_al_guardar() {
+		return "保存时出错：";
+	}
+
+	public String error_al_restablecer() {
+		return "重置时出错：";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "重置图片时出错：";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "在资源中未找到图片：";
+	}
+
+	public String imagen_restablecida() {
+		return "图片已重置：";
+	}
+
+	public String editor_html() {
+		return "HTML 编辑器";
+	}
+
+	public String vista_previa() {
+		return "预览";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "颜色和图片设置";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "图片 (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "图片链接（共享报告）";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "图片链接（共享报告）";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "共享报告中使用的 URL";
+	}
+
+	public String error_creando_codice_json() {
+		return "创建 codice.json 时出错：";
+	}
+
+	public String error_exportando() {
+		return "导出时出错：";
+	}
+
+	public String validacion() {
+		return "验证";
+	}
+
+	public String ver_codigo() {
+		return "查看代码";
+	}
+
+	// Chinese (Simplified) (中文)
+	public String importar_instancia() {
+		return "导入实例";
+	}
+
+	public String compartir_instancia() {
+		return "分享实例";
+	}
+
+	public String error_al_cargar_mods() {
+		return "加载 Mod 时出错。";
+	}
+
+	public String instalar() {
+		return "安装";
+	}
+
+	public String mods_instalados() {
+		return "已安装的 Mod";
+	}
+
+	public String guardar_como_archivo() {
+		return "保存为文件";
+	}
+
+	public String exportando_modpack() {
+		return "正在导出 Modpack...";
+	}
+
+	public String modpack_exportado() {
+		return "Modpack 已导出：\n";
+	}
+
+	public String conectando() {
+		return "正在连接...";
+	}
+
+	public String esperando_descarga() {
+		return "等待下载...";
+	}
+
+	public String finalizado() {
+		return "已完成";
+	}
+
+	public String retener_dos_puntos() {
+		return "保留：";
+	}
+
+	public String descargar_deps() {
+		return "下载依赖";
+	}
+
+	public String no_faltan_dependencias() {
+		return "没有缺失的依赖。";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "下载任务用 NBT";
+	}
+
+	public String descargar_nbt() {
+		return "下载 NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "加载报告时出错：";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "导出 Modpack";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "导出 Modpack 时出错：\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "将下载合并任务所需的 NBT 依赖项。\n\n" + "之后可能需要重启以使其加入类路径 (classpath)。";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "结果为空。";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "NBT 依赖项已下载。\n\n" + "如果 SNBT 合并仍然提示缺少 NBT 引擎，请重启 " + nombrePrograma + "。";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "无法下载 NBT 依赖项。";
+	}
+
 }

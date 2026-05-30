@@ -126,7 +126,8 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 	public QuickFix solucion() {
 		return new QuickFix.Builder(nombre())
 				.agregarEtiqueta(MonitorDePID.idioma.paso1WaterMediaXenonIncompatible(
-						modNombre.isEmpty() ? "(desconocido)" : modNombre, modId.isEmpty() ? "(desconocido)" : modId))
+						modNombre.isEmpty() ? MonitorDePID.idioma.desconocido() : modNombre,
+						modId.isEmpty() ? MonitorDePID.idioma.desconocido() : modId))
 				.agregarEtiqueta(MonitorDePID.idioma.paso2WaterMediaXenonIncompatible(modsUbicacion))
 				.agregarEtiqueta(MonitorDePID.idioma.paso3WaterMediaXenonIncompatible()).construir();
 	}

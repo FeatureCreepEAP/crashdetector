@@ -94,7 +94,7 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 		botonSaltar = new JButton(MonitorDePID.idioma.importadorBotonSaltar());
 		botonRenombrar = new JButton(MonitorDePID.idioma.importadorBotonRenombrar());
 		botonFusionar = new JButton(MonitorDePID.idioma.importadorBotonFusionar());
-		botonDescargarDepsNbt = new JButton("Descargar NBT PARA QUESTS");
+		botonDescargarDepsNbt = new JButton(MonitorDePID.idioma.descargar_nbt_para_quests());
 		botonCancelar = new JButton(MonitorDePID.idioma.cancelar());
 
 		botonReemplazar.addActionListener(e -> cerrar(ConflictoImportacion.Decision.REEMPLAZAR));
@@ -252,10 +252,8 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 
 	public void accionDescargarDependenciasNbt() {
 		int confirmar = JOptionPane.showConfirmDialog(this,
-				"Se descargara la dependencia NBT/SNBT necesaria para fusionar quests:\n\n"
-						+ " - com.github.Querz:NBT:6.1\n\n" + "Despues puede ser necesario reiniciar "
-						+ Statics.nombre_cd.obtener() + " para que entre al classpath.",
-				"Descargar NBT", JOptionPane.YES_NO_OPTION);
+				MonitorDePID.idioma.importador_confirmar_descargar_nbt_para_quests(),
+				MonitorDePID.idioma.descargar_nbt(), JOptionPane.YES_NO_OPTION);
 
 		if (confirmar != JOptionPane.YES_OPTION) {
 			return;
@@ -284,7 +282,7 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 							.descargarDependencias(coordenadas);
 
 					exito = r != null && r.exito;
-					mensaje = r == null ? "Resultado nulo." : r.mensaje;
+					mensaje = r == null ? MonitorDePID.idioma.resultado_nulo() : r.mensaje;
 				} catch (Throwable t) {
 					CrashDetectorLogger.logException(t);
 					mensaje = t.getMessage();
@@ -303,10 +301,10 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 						String texto;
 
 						if (exitoFinal) {
-							texto = "Dependencia NBT descargada.\n\n" + "Reinicie " + Statics.nombre_cd.obtener()
-									+ " si la fusion de SNBT todavia dice que falta el motor NBT.";
+							texto = MonitorDePID.idioma
+									.dependencia_nbt_descargada_reiniciar(Statics.nombre_cd.obtener());
 						} else {
-							texto = "No se pudo descargar la dependencia NBT.";
+							texto = MonitorDePID.idioma.no_se_pudo_descargar_dependencia_nbt();
 
 							if (mensajeFinal != null && !mensajeFinal.trim().isEmpty()) {
 								texto += "\n\n" + mensajeFinal;

@@ -180,7 +180,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		botonCompartir = new JButton(MonitorDePID.idioma.compartirInstanciaBotonCompartir());
 		botonRefrescar = new JButton(MonitorDePID.idioma.compartirInstanciaBotonRefrescar());
 		etiquetaEstado = new JLabel(MonitorDePID.idioma.compartirInstanciaEstadoListo());
-		botonExportar = new JButton("Guardar como archivo");
+		botonExportar = new JButton(MonitorDePID.idioma.guardar_como_archivo());
 		botonExportar.addActionListener(e -> exportarSeleccionAUbicacion());
 
 		filaBotones.add(botonCompartir);
@@ -225,7 +225,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		String nombreSugerido = CopiaDeSeguridadDeArchivos.crearNombreArchivoBackup(carpetaBase, extension);
 
 		JFileChooser chooser = new JFileChooser();
-		chooser.setDialogTitle("Exportar modpack");
+		chooser.setDialogTitle(MonitorDePID.idioma.exportar_modpack());
 		chooser.setSelectedFile(new java.io.File(nombreSugerido));
 
 		int resultado = chooser.showSaveDialog(this);
@@ -236,7 +236,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 
 		Path destino = chooser.getSelectedFile().toPath();
 
-		setTextoCarga("Exportando modpack...");
+		setTextoCarga(MonitorDePID.idioma.exportando_modpack());
 		setCargando(true);
 
 		new SwingWorker<Void, Void>() {
@@ -251,16 +251,17 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 				try {
 					get();
 
-					JOptionPane.showMessageDialog(CompartirInstanciaGUI.this, "Modpack exportado:\n" + destino,
-							MonitorDePID.idioma.informacion(), JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(CompartirInstanciaGUI.this,
+							MonitorDePID.idioma.modpack_exportado() + destino, MonitorDePID.idioma.informacion(),
+							JOptionPane.INFORMATION_MESSAGE);
 
 					etiquetaEstado.setText(MonitorDePID.idioma.compartirInstanciaEstadoListo());
 				} catch (Throwable t) {
 					CrashDetectorLogger.logException(t);
 
 					JOptionPane.showMessageDialog(CompartirInstanciaGUI.this,
-							"Error exportando modpack:\n" + t.getMessage(), MonitorDePID.idioma.error(),
-							JOptionPane.ERROR_MESSAGE);
+							MonitorDePID.idioma.error_exportando_modpack() + t.getMessage(),
+							MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 
 					etiquetaEstado.setText(MonitorDePID.idioma.compartirInstanciaEstadoError());
 				} finally {
@@ -583,19 +584,19 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 					public void alCambiarEstado(SitioDeArchivoAPI.EstadoDeTransferencia estado) {
 						switch (estado) {
 						case CONECTANDO:
-							setTextoCarga("Conectando...");
+							setTextoCarga(MonitorDePID.idioma.conectando());
 							break;
 						case SUBIENDO:
 							setTextoCarga(MonitorDePID.idioma.compartirInstanciaEstadoSubiendo());
 							break;
 						case ESPERANDO_DESCARGA:
-							setTextoCarga("Esperando descarga...");
+							setTextoCarga(MonitorDePID.idioma.esperando_descarga());
 							break;
 						case FINALIZADA:
-							setTextoCarga("Finalizado");
+							setTextoCarga(MonitorDePID.idioma.finalizado());
 							break;
 						case ERROR:
-							setTextoCarga("Error");
+							setTextoCarga(MonitorDePID.idioma.error());
 							break;
 						default:
 							break;

@@ -10107,4 +10107,296 @@ public class Coreano implements Idioma {
 		return "병합";
 	}
 
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String mod() {
+		return "모드";
+	}
+
+	@Override
+	public String version() {
+		return "버전";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "클래스 발견";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "일치 항목";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "검색 결과";
+	}
+
+	@Override
+	public String desconocido() {
+		return "알 수 없음";
+	}
+
+	@Override
+	public String desconocida() {
+		return "알 수 없음";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "CurseForge URL";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "Modrinth URL";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return clase + "에 대해 발견된 모드";
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "잘못된 폴더 항목: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "해시 값이 없는 폴더: " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "폴더에 접근할 수 없습니다: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "폴더 내 파일 누락: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "잘못된 해시 값: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "폴더 내 무단 파일: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "잘못된 파일 항목: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "파일 해시 값 누락: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "파일 누락: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "파일 읽기 오류: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "파일 해시 값 불일치: " + ruta;
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String listo() {
+		return "완료!";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "디스크에서 템플릿을 로드하는 중 오류 발생: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "템플릿을 찾을 수 없습니다. '템플릿 재설정' 버튼을 사용하여 재설정하십시오.";
+	}
+
+	public String plantilla_guardada_en() {
+		return "템플릿이 저장된 위치: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "템플릿이 성공적으로 재설정되었습니다.";
+	}
+
+	public String error_al_guardar() {
+		return "저장 중 오류 발생: ";
+	}
+
+	public String error_al_restablecer() {
+		return "재설정 중 오류 발생: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "이미지 재설정 중 오류 발생: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "리소스에서 이미지를 찾을 수 없습니다: ";
+	}
+
+	public String imagen_restablecida() {
+		return "이미지 재설정됨: ";
+	}
+
+	public String editor_html() {
+		return "HTML 편집기";
+	}
+
+	public String vista_previa() {
+		return "미리보기";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "색상 및 이미지 설정";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "이미지 (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "이미지 링크 (공유 보고서)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "이미지 링크 (공유 보고서)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "공유 보고서에서 사용되는 URL";
+	}
+
+	public String error_creando_codice_json() {
+		return "codice.json 생성 중 오류 발생: ";
+	}
+
+	public String error_exportando() {
+		return "내보내기 중 오류 발생: ";
+	}
+
+	public String validacion() {
+		return "유효성 검사";
+	}
+
+	public String ver_codigo() {
+		return "코드 보기";
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	public String importar_instancia() {
+		return "인스턴스 가져오기";
+	}
+
+	public String compartir_instancia() {
+		return "인스턴스 공유";
+	}
+
+	public String error_al_cargar_mods() {
+		return "모드를 로드하는 중 오류 발생.";
+	}
+
+	public String instalar() {
+		return "설치";
+	}
+
+	public String mods_instalados() {
+		return "설치된 모드";
+	}
+
+	public String guardar_como_archivo() {
+		return "파일로 저장";
+	}
+
+	public String exportando_modpack() {
+		return "모드팩 내보내는 중...";
+	}
+
+	public String modpack_exportado() {
+		return "모드팩이 내보내졌습니다:\n";
+	}
+
+	public String conectando() {
+		return "연결 중...";
+	}
+
+	public String esperando_descarga() {
+		return "다운로드 대기 중...";
+	}
+
+	public String finalizado() {
+		return "완료됨";
+	}
+
+	public String retener_dos_puntos() {
+		return "유지:";
+	}
+
+	public String descargar_deps() {
+		return "종속성 다운로드";
+	}
+
+	public String no_faltan_dependencias() {
+		return "누락된 종속성이 없습니다.";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "퀘스트용 NBT 다운로드";
+	}
+
+	public String descargar_nbt() {
+		return "NBT 다운로드";
+	}
+
+	public String error_cargando_informe() {
+		return "보고서 로드 중 오류: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "모드팩 내보내기";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "모드팩 내보내기 중 오류:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "퀘스트 병합에 필요한 NBT 종속성이 다운로드됩니다.\n\n" + "그 후 클래스패스에 적용되려면 재시작이 필요할 수 있습니다.";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "결과가 null입니다.";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "NBT 종속성이 다운로드되었습니다.\n\n" + "SNBT 병합 시 여전히 NBT 엔진이 누락되었다고 표시되면 " + nombrePrograma + "을(를) 재시작하십시오.";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "NBT 종속성을 다운로드할 수 없습니다.";
+	}
+
 }

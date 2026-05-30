@@ -10448,4 +10448,294 @@ public class Persa implements Idioma {
 		return "ادغام";
 	}
 
+	@Override
+	public String mod() {
+		return "ماد";
+	}
+
+	@Override
+	public String version() {
+		return "نسخه";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "کلاس یافت شد";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "موارد منطبق";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "نتایج جستجو";
+	}
+
+	@Override
+	public String desconocido() {
+		return "ناشناخته";
+	}
+
+	@Override
+	public String desconocida() {
+		return "ناشناخته";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "لینک CurseForge";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "لینک Modrinth";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "مادهای یافت‌شده برای " + clase;
+	}
+
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "مسیر پوشه نامعتبر: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "پوشه بدون هش‌ها: " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "دسترسی به پوشه امکان‌پذیر نبود: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "فایل_missing در پوشه: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "هش نادرست در: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "فایل غیرمجاز در پوشه: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "مسیر فایل نامعتبر: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "هش_missing برای فایل: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "فایل_missing: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "خطا در خواندن فایل: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "هش نادرست برای فایل: " + ruta;
+	}
+
+	@Override
+	public String listo() {
+		return "انجام شد!";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "خطا در بارگذاری الگو از دیسک: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "الگو یافت نشد. با استفاده از دکمه 'Restablecer Plantilla' بازنشانی کنید.";
+	}
+
+	public String plantilla_guardada_en() {
+		return "الگو ذخیره شد در: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "الگو با موفقیت بازنشانی شد.";
+	}
+
+	public String error_al_guardar() {
+		return "خطا در ذخیره‌سازی: ";
+	}
+
+	public String error_al_restablecer() {
+		return "خطا در بازنشانی: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "خطا در بازنشانی تصویر: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "تصویر در منابع یافت نشد: ";
+	}
+
+	public String imagen_restablecida() {
+		return "تصویر بازنشانی شد: ";
+	}
+
+	public String editor_html() {
+		return "ویرایشگر HTML";
+	}
+
+	public String vista_previa() {
+		return "پیش‌نمایش";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "تنظیمات رنگ‌ها و تصاویر";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "تصاویر (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "لینک‌های تصویر (گزارش‌های اشتراک‌گذاری شده)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "لینک‌های تصویر (گزارش اشتراک‌گذاری شده)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "URL استفاده شده در گزارش‌های اشتراک‌گذاری شده";
+	}
+
+	public String error_creando_codice_json() {
+		return "خطا در ایجاد codice.json: ";
+	}
+
+	public String error_exportando() {
+		return "خطا در صادرات: ";
+	}
+
+	public String validacion() {
+		return "اعتبارسنجی";
+	}
+
+	public String ver_codigo() {
+		return "مشاهده کد";
+	}
+
+	public String importar_instancia() {
+		return "وارد کردن اینستنس";
+	}
+
+	public String compartir_instancia() {
+		return "اشتراک‌گذاری اینستنس";
+	}
+
+	public String error_al_cargar_mods() {
+		return "خطا در بارگذاری مادهای.";
+	}
+
+	public String instalar() {
+		return "نصب";
+	}
+
+	public String mods_instalados() {
+		return "مادهای نصب شده";
+	}
+
+	public String guardar_como_archivo() {
+		return "ذخیره به عنوان فایل";
+	}
+
+	public String exportando_modpack() {
+		return "در حال صادرات مادپک...";
+	}
+
+	public String modpack_exportado() {
+		return "مادپک صادر شد:\n";
+	}
+
+	public String conectando() {
+		return "در حال اتصال...";
+	}
+
+	public String esperando_descarga() {
+		return "در انتظار دانلود...";
+	}
+
+	public String finalizado() {
+		return "پایان یافت";
+	}
+
+	public String retener_dos_puntos() {
+		return "نگه داشتن:";
+	}
+
+	public String descargar_deps() {
+		return "دانلود وابستگی‌ها";
+	}
+
+	public String no_faltan_dependencias() {
+		return "وابستگی‌ها کامل هستند.";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "دانلود NBT برای کوئست‌ها";
+	}
+
+	public String descargar_nbt() {
+		return "دانلود NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "خطا در بارگذاری گزارش: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "صادرات مادپک";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "خطا در صادرات مادپک:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "وابستگی‌های NBT مورد نیاز برای ادغام کوئست‌ها دانلود خواهند شد.\n\n"
+				+ "پس از آن ممکن است نیاز به راه‌اندازی مجدد باشد تا به classpath اضافه شوند.";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "نتیجه null است.";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "وابستگی NBT دانلود شد.\n\n" + "اگر ادغام SNBT هنوز می‌گوید موتور NBT missing است، " + nombrePrograma
+				+ " را مجدداً راه‌اندازی کنید.";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "دانلود وابستگی NBT امکان‌پذیر نبود.";
+	}
+
 }

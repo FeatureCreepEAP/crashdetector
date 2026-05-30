@@ -10934,4 +10934,294 @@ public class Suajili implements Idioma {
 		return "Unganisha";
 	}
 
+	@Override
+	public String mod() {
+		return "Mod";
+	}
+
+	@Override
+	public String version() {
+		return "Toleo";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "Darasa limepatikana";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "Mlingano";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "Matokeo ya utafutaji";
+	}
+
+	@Override
+	public String desconocido() {
+		return "haijulikani";
+	}
+
+	@Override
+	public String desconocida() {
+		return "haijulikani";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "URL ya CurseForge";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "URL ya Modrinth";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "Mod zilizopatikana za " + clase;
+	}
+
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "Ingizo la folda lisilo sahihi: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "Folda isiyo na hashes: " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "Haikuweza kufikia folda: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "Faili haipo katika folda: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "Hash isiyo sahihi katika: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "Faili isiyoruhusiwa katika folda: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "Ingizo la faili lisilo sahihi: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "Hash haipo kwa faili: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "Faili haipo: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "Hitilafu kusoma faili: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "Hash isiyo sahihi kwa faili: " + ruta;
+	}
+
+	@Override
+	public String listo() {
+		return "Imekamilika!";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "Hitilafu katika kupakia kiolezo kutoka kwenye diski: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "Kiolezo hakikupatikana. Rejesha kwa kutumia kitufe cha 'Restablecer Plantilla'.";
+	}
+
+	public String plantilla_guardada_en() {
+		return "Kiolezo kimehifadhiwa katika: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "Kiolezo kimerudishwa kwa mafanikio.";
+	}
+
+	public String error_al_guardar() {
+		return "Hitilafu katika kuhifadhi: ";
+	}
+
+	public String error_al_restablecer() {
+		return "Hitilafu katika kurudisha: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "Hitilafu katika kurudisha picha: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "Picha haikupatikana katika rasilimali: ";
+	}
+
+	public String imagen_restablecida() {
+		return "Picha imerudishwa: ";
+	}
+
+	public String editor_html() {
+		return "Kihariri cha HTML";
+	}
+
+	public String vista_previa() {
+		return "Hakiki";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "Usanidi wa Rangi na Picha";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "Picha (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "Viungo vya picha (ripoti zilizoshirikiwa)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "Viungo vya picha (ripoti iliyoshirikiwa)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "URL inayotumika katika ripoti zilizoshirikiwa";
+	}
+
+	public String error_creando_codice_json() {
+		return "Hitilafu katika kuunda codice.json: ";
+	}
+
+	public String error_exportando() {
+		return "Hitilafu katika kusafirisha: ";
+	}
+
+	public String validacion() {
+		return "Uthibitishaji";
+	}
+
+	public String ver_codigo() {
+		return "Tazama Msimbo";
+	}
+
+	public String importar_instancia() {
+		return "Ingiza instansi";
+	}
+
+	public String compartir_instancia() {
+		return "Shiriki instansi";
+	}
+
+	public String error_al_cargar_mods() {
+		return "Hitilafu katika kupakia mod.";
+	}
+
+	public String instalar() {
+		return "Sakinisha";
+	}
+
+	public String mods_instalados() {
+		return "Mod Zilizosakinishwa";
+	}
+
+	public String guardar_como_archivo() {
+		return "Hifadhi kama faili";
+	}
+
+	public String exportando_modpack() {
+		return "Inasafirisha modpack...";
+	}
+
+	public String modpack_exportado() {
+		return "Modpack imesafirishwa:\n";
+	}
+
+	public String conectando() {
+		return "Inaunganisha...";
+	}
+
+	public String esperando_descarga() {
+		return "Inasubiri upakuzi...";
+	}
+
+	public String finalizado() {
+		return "Imekamilika";
+	}
+
+	public String retener_dos_puntos() {
+		return "Shikilia:";
+	}
+
+	public String descargar_deps() {
+		return "Pakua deps";
+	}
+
+	public String no_faltan_dependencias() {
+		return "Hakuna utegemezi unao-kosekana.";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "Pakua NBT KWA AJILI YA QUESTS";
+	}
+
+	public String descargar_nbt() {
+		return "Pakua NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "Hitilafu katika kupakia ripoti: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "Safirisha modpack";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "Hitilafu katika kusafirisha modpack:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "Utegemezi wa NBT unaohitajika kwa ajili ya kuunganisha quests utapakuliwa.\n\n"
+				+ "Baadaye inaweza kuhitajika kuanzisha upya ili ziingie kwenye classpath.";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "Matokeo ni null.";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "Utegemezi wa NBT umepakuliwa.\n\n" + "Anzisha upya " + nombrePrograma
+				+ " ikiwa muunganisho wa SNBT bado unasema injini ya NBT haipo.";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "Haikuweza kupakua utegemezi wa NBT.";
+	}
+
 }

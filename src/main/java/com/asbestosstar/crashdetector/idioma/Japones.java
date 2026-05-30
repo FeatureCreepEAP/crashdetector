@@ -10113,4 +10113,297 @@ public class Japones implements Idioma {
 		return "マージ";
 	}
 
+	// Japanese (日本語)
+	@Override
+	public String mod() {
+		return "Mod";
+	}
+
+	@Override
+	public String version() {
+		return "バージョン";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "クラスが見つかりました";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "一致";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "検索結果";
+	}
+
+	@Override
+	public String desconocido() {
+		return "不明";
+	}
+
+	@Override
+	public String desconocida() {
+		return "不明";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "CurseForge URL";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "Modrinth URL";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return clase + " に対して見つかった Mod";
+	}
+
+	// Japanese (日本語)
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "無効なフォルダエントリ: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "ハッシュ値のないフォルダ: " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "フォルダにアクセスできませんでした: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "フォルダ内のファイルが見つかりません: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "ハッシュ値が正しくありません: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "フォルダ内に許可されていないファイルがあります: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "無効なファイルエントリ: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "ファイルのハッシュ値がありません: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "ファイルが見つかりません: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "ファイルの読み込みエラー: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "ファイルのハッシュ値が正しくありません: " + ruta;
+	}
+
+	// Japanese (日本語)
+	@Override
+	public String listo() {
+		return "完了！";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "ディスクからテンプレートを読み込む際にエラーが発生しました: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "テンプレートが見つかりません。「テンプレートをリセット」ボタンを使用してリセットしてください。";
+	}
+
+	public String plantilla_guardada_en() {
+		return "テンプレートが保存された場所: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "テンプレートが正常にリセットされました。";
+	}
+
+	public String error_al_guardar() {
+		return "保存中にエラーが発生しました: ";
+	}
+
+	public String error_al_restablecer() {
+		return "リセット中にエラーが発生しました: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "画像のリセット中にエラーが発生しました: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "リソース内に画像が見つかりません: ";
+	}
+
+	public String imagen_restablecida() {
+		return "画像がリセットされました: ";
+	}
+
+	public String editor_html() {
+		return "HTML エディタ";
+	}
+
+	public String vista_previa() {
+		return "プレビュー";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "色と画像の設定";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "画像 (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "画像リンク（共有レポート）";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "画像リンク（共有レポート）";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "共有レポートで使用される URL";
+	}
+
+	public String error_creando_codice_json() {
+		return "codice.json の作成中にエラーが発生しました: ";
+	}
+
+	public String error_exportando() {
+		return "エクスポート中にエラーが発生しました: ";
+	}
+
+	public String validacion() {
+		return "検証";
+	}
+
+	public String ver_codigo() {
+		return "コードを表示";
+	}
+
+	// Japanese (日本語)
+	public String importar_instancia() {
+		return "インスタンスをインポート";
+	}
+
+	public String compartir_instancia() {
+		return "インスタンスを共有";
+	}
+
+	public String error_al_cargar_mods() {
+		return "Mod の読み込み中にエラーが発生しました。";
+	}
+
+	public String instalar() {
+		return "インストール";
+	}
+
+	public String mods_instalados() {
+		return "インストール済み Mod";
+	}
+
+	public String guardar_como_archivo() {
+		return "ファイルとして保存";
+	}
+
+	public String exportando_modpack() {
+		return "Modpack をエクスポート中...";
+	}
+
+	public String modpack_exportado() {
+		return "Modpack がエクスポートされました:\n";
+	}
+
+	public String conectando() {
+		return "接続中...";
+	}
+
+	public String esperando_descarga() {
+		return "ダウンロードを待機中...";
+	}
+
+	public String finalizado() {
+		return "完了";
+	}
+
+	public String retener_dos_puntos() {
+		return "保持:";
+	}
+
+	public String descargar_deps() {
+		return "依存関係をダウンロード";
+	}
+
+	public String no_faltan_dependencias() {
+		return "欠落している依存関係はありません。";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "クエスト用 NBT をダウンロード";
+	}
+
+	public String descargar_nbt() {
+		return "NBT をダウンロード";
+	}
+
+	public String error_cargando_informe() {
+		return "レポートの読み込み中にエラー: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "Modpack をエクスポート";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "Modpack のエクスポート中にエラー:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "クエストのマージに必要な NBT 依存関係がダウンロードされます。\n\n" + "その後、クラスパスに反映させるために再起動が必要になる場合があります。";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "結果が null です。";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "NBT 依存関係がダウンロードされました。\n\n" + "SNBT マージで依然として NBT エンジンが欠落していると表示される場合は、" + nombrePrograma
+				+ " を再起動してください。";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "NBT 依存関係をダウンロードできませんでした。";
+	}
+
 }

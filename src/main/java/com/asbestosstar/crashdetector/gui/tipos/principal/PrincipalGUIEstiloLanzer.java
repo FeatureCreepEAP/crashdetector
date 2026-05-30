@@ -964,7 +964,8 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			pantalla.setText(new String(Files.readAllBytes(Paths.get(MonitorDePID.local))));
 			pantalla.setCaretPosition(0);
 		} catch (IOException e) {
-			pantalla.setText("<html><body>Error cargando informe: " + e.getMessage() + "</body></html>");
+			pantalla.setText(
+					"<html><body>" + MonitorDePID.idioma.error_cargando_informe() + e.getMessage() + "</body></html>");
 		}
 
 		// Asegurar refresco visual

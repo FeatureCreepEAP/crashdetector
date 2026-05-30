@@ -269,7 +269,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		Dimension tamBotonChico = new Dimension(38, 24);
 
 		JButton botonImportar = new JButton("↑");
-		botonImportar.setToolTipText("Importar instancia");
+		botonImportar.setToolTipText(MonitorDePID.idioma.importar_instancia());
 		botonImportar.setPreferredSize(tamBotonChico);
 		botonImportar.setMinimumSize(tamBotonChico);
 		botonImportar.setMaximumSize(tamBotonChico);
@@ -282,7 +282,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		panel.add(botonImportar);
 
 		JButton botonExportar = new JButton("↓");
-		botonExportar.setToolTipText("Compartir instancia");
+		botonExportar.setToolTipText(MonitorDePID.idioma.compartir_instancia());
 		botonExportar.setPreferredSize(tamBotonChico);
 		botonExportar.setMinimumSize(tamBotonChico);
 		botonExportar.setMaximumSize(tamBotonChico);
@@ -326,19 +326,11 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 		panel.add(comboProveedores);
 
-		JLabel label = new JLabel(MonitorDePID.idioma.buscar());
-		label.setForeground(obtenerColorTexto());
-		panel.add(label);
-
-		searchBar = new JTextField(20);
-		aplicarEstiloBusqueda(searchBar);
+		searchBar = new JTextField(22);
+		searchBar.addActionListener(e -> buscarMods(searchBar.getText()));
 		panel.add(searchBar);
 
-		JButton botonBuscar = new JButton("🔍");
-		botonBuscar.setToolTipText(MonitorDePID.idioma.buscar());
-		botonBuscar.setPreferredSize(tamBotonChico);
-		botonBuscar.setMinimumSize(tamBotonChico);
-		botonBuscar.setMaximumSize(tamBotonChico);
+		JButton botonBuscar = new JButton(MonitorDePID.idioma.buscar());
 		aplicarEstiloBotonAccion(botonBuscar);
 		botonBuscar.addActionListener(e -> buscarMods(searchBar.getText()));
 		panel.add(botonBuscar);

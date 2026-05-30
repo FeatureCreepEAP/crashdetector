@@ -10707,4 +10707,294 @@ public class Vietnamita implements Idioma {
 		return "Hợp nhất";
 	}
 
+	@Override
+	public String mod() {
+		return "Mod";
+	}
+
+	@Override
+	public String version() {
+		return "Phiên bản";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "Đã tìm thấy lớp";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "Kết quả trùng khớp";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "Kết quả tìm kiếm";
+	}
+
+	@Override
+	public String desconocido() {
+		return "không xác định";
+	}
+
+	@Override
+	public String desconocida() {
+		return "không xác định";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "URL CurseForge";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "URL Modrinth";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "Các mod được tìm thấy cho " + clase;
+	}
+
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "Đường dẫn thư mục không hợp lệ: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "Thư mục thiếu hashes: " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "Không thể truy cập thư mục: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "Thiếu tệp trong thư mục: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "Hash không chính xác tại: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "Tệp không được phép trong thư mục: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "Đường dẫn tệp không hợp lệ: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "Thiếu hash cho tệp: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "Thiếu tệp: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "Lỗi khi đọc tệp: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "Hash không chính xác cho tệp: " + ruta;
+	}
+
+	@Override
+	public String listo() {
+		return "Xong!";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "Lỗi khi tải mẫu từ đĩa: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "Không tìm thấy mẫu. Hãy khôi phục bằng nút 'Restablecer Plantilla'.";
+	}
+
+	public String plantilla_guardada_en() {
+		return "Mẫu đã được lưu tại: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "Khôi phục mẫu thành công.";
+	}
+
+	public String error_al_guardar() {
+		return "Lỗi khi lưu: ";
+	}
+
+	public String error_al_restablecer() {
+		return "Lỗi khi khôi phục: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "Lỗi khi khôi phục hình ảnh: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "Không tìm thấy hình ảnh trong tài nguyên: ";
+	}
+
+	public String imagen_restablecida() {
+		return "Đã khôi phục hình ảnh: ";
+	}
+
+	public String editor_html() {
+		return "Trình chỉnh sửa HTML";
+	}
+
+	public String vista_previa() {
+		return "Xem trước";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "Cấu hình Màu sắc và Hình ảnh";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "Hình ảnh (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "Liên kết hình ảnh (báo cáo được chia sẻ)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "Liên kết hình ảnh (báo cáo được chia sẻ)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "URL được sử dụng trong báo cáo được chia sẻ";
+	}
+
+	public String error_creando_codice_json() {
+		return "Lỗi khi tạo codice.json: ";
+	}
+
+	public String error_exportando() {
+		return "Lỗi khi xuất: ";
+	}
+
+	public String validacion() {
+		return "Xác thực";
+	}
+
+	public String ver_codigo() {
+		return "Xem mã";
+	}
+
+	public String importar_instancia() {
+		return "Nhập instance";
+	}
+
+	public String compartir_instancia() {
+		return "Chia sẻ instance";
+	}
+
+	public String error_al_cargar_mods() {
+		return "Lỗi khi tải mod.";
+	}
+
+	public String instalar() {
+		return "Cài đặt";
+	}
+
+	public String mods_instalados() {
+		return "Mod đã cài đặt";
+	}
+
+	public String guardar_como_archivo() {
+		return "Lưu dưới dạng tệp";
+	}
+
+	public String exportando_modpack() {
+		return "Đang xuất modpack...";
+	}
+
+	public String modpack_exportado() {
+		return "Đã xuất modpack:\n";
+	}
+
+	public String conectando() {
+		return "Đang kết nối...";
+	}
+
+	public String esperando_descarga() {
+		return "Đang chờ tải xuống...";
+	}
+
+	public String finalizado() {
+		return "Hoàn thành";
+	}
+
+	public String retener_dos_puntos() {
+		return "Giữ lại:";
+	}
+
+	public String descargar_deps() {
+		return "Tải xuống deps";
+	}
+
+	public String no_faltan_dependencias() {
+		return "Không thiếu dependencies.";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "Tải xuống NBT CHO QUESTS";
+	}
+
+	public String descargar_nbt() {
+		return "Tải xuống NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "Lỗi khi tải báo cáo: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "Xuất modpack";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "Lỗi khi xuất modpack:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "Các dependencies NBT cần thiết để hợp nhất quests sẽ được tải xuống.\n\n"
+				+ "Sau đó có thể cần khởi động lại để chúng vào classpath.";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "Kết quả null.";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "Đã tải xuống dependency NBT.\n\n" + "Khởi động lại " + nombrePrograma
+				+ " nếu việc hợp nhất SNBT vẫn báo thiếu engine NBT.";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "Không thể tải xuống dependency NBT.";
+	}
+
 }

@@ -11057,4 +11057,298 @@ public class Indonesia implements Idioma {
 		return "Gabungkan";
 	}
 
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String mod() {
+		return "Mod";
+	}
+
+	@Override
+	public String version() {
+		return "Versi";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "Kelas ditemukan";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "Kecocokan";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "Hasil pencarian";
+	}
+
+	@Override
+	public String desconocido() {
+		return "tidak diketahui";
+	}
+
+	@Override
+	public String desconocida() {
+		return "tidak diketahui";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "URL CurseForge";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "URL Modrinth";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "Mod ditemukan untuk " + clase;
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "Entri folder tidak valid: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "Folder tanpa hash: " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "Tidak dapat mengakses folder: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "File hilang di folder: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "Hash tidak benar di: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "File tidak diizinkan di folder: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "Entri file tidak valid: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "Hash hilang untuk file: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "File hilang: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "Kesalahan saat membaca file: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "Hash tidak benar untuk file: " + ruta;
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String listo() {
+		return "Selesai!";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "Kesalahan saat memuat templat dari disk: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "Templat tidak ditemukan. Atur ulang menggunakan tombol 'Atur Ulang Templat'.";
+	}
+
+	public String plantilla_guardada_en() {
+		return "Templat disimpan di: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "Templat berhasil diatur ulang.";
+	}
+
+	public String error_al_guardar() {
+		return "Kesalahan saat menyimpan: ";
+	}
+
+	public String error_al_restablecer() {
+		return "Kesalahan saat mengatur ulang: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "Kesalahan saat mengatur ulang gambar: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "Gambar tidak ditemukan dalam sumber daya: ";
+	}
+
+	public String imagen_restablecida() {
+		return "Gambar diatur ulang: ";
+	}
+
+	public String editor_html() {
+		return "Editor HTML";
+	}
+
+	public String vista_previa() {
+		return "Pratinjau";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "Konfigurasi Warna dan Gambar";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "Gambar (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "Tautan gambar (laporan bersama)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "Tautan gambar (laporan bersama)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "URL yang digunakan dalam laporan bersama";
+	}
+
+	public String error_creando_codice_json() {
+		return "Kesalahan saat membuat codice.json: ";
+	}
+
+	public String error_exportando() {
+		return "Kesalahan saat mengekspor: ";
+	}
+
+	public String validacion() {
+		return "Validasi";
+	}
+
+	public String ver_codigo() {
+		return "Lihat Kode";
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	public String importar_instancia() {
+		return "Impor instansi";
+	}
+
+	public String compartir_instancia() {
+		return "Bagikan instansi";
+	}
+
+	public String error_al_cargar_mods() {
+		return "Kesalahan saat memuat mod.";
+	}
+
+	public String instalar() {
+		return "Instal";
+	}
+
+	public String mods_instalados() {
+		return "Mod Terinstal";
+	}
+
+	public String guardar_como_archivo() {
+		return "Simpan sebagai file";
+	}
+
+	public String exportando_modpack() {
+		return "Mengekspor modpack...";
+	}
+
+	public String modpack_exportado() {
+		return "Modpack diekspor:\n";
+	}
+
+	public String conectando() {
+		return "Menghubungkan...";
+	}
+
+	public String esperando_descarga() {
+		return "Menunggu unduhan...";
+	}
+
+	public String finalizado() {
+		return "Selesai";
+	}
+
+	public String retener_dos_puntos() {
+		return "Pertahankan:";
+	}
+
+	public String descargar_deps() {
+		return "Unduh dependensi";
+	}
+
+	public String no_faltan_dependencias() {
+		return "Tidak ada dependensi yang hilang.";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "Unduh NBT untuk quests";
+	}
+
+	public String descargar_nbt() {
+		return "Unduh NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "Kesalahan saat memuat laporan: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "Ekspor modpack";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "Kesalahan saat mengekspor modpack:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "Dependensi NBT yang diperlukan untuk menggabungkan quests akan diunduh.\n\n"
+				+ "Setelah itu, mungkin perlu restart agar masuk ke classpath.";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "Hasil null.";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "Dependensi NBT telah diunduh.\n\n" + "Restart " + nombrePrograma
+				+ " jika penggabungan SNBT masih menyatakan bahwa mesin NBT hilang.";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "Gagal mengunduh dependensi NBT.";
+	}
+
 }

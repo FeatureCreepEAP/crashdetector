@@ -10383,4 +10383,298 @@ public class Arabe implements Idioma {
 		return "دمج";
 	}
 
+	// Arabic (العربية)
+	@Override
+	public String mod() {
+		return "المود";
+	}
+
+	@Override
+	public String version() {
+		return "الإصدار";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "تم العثور على الفئة";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "التطابقات";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "نتائج البحث";
+	}
+
+	@Override
+	public String desconocido() {
+		return "غير معروف";
+	}
+
+	@Override
+	public String desconocida() {
+		return "غير معروفة";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "رابط CurseForge";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "رابط Modrinth";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "المودات الموجودة لـ " + clase;
+	}
+
+	// Arabic (العربية)
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "مدخل مجلد غير صالح: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "مجلد بدون تجزئات (hashes): " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "تعذر الوصول إلى المجلد: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "ملف مفقود في المجلد: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "تجزئة (hash) غير صحيحة في: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "ملف غير مصرح به في المجلد: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "مدخل ملف غير صالح: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "تجزئة (hash) مفقودة للملف: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "ملف مفقود: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "خطأ في قراءة الملف: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "تجزئة (hash) غير صحيحة للملف: " + ruta;
+	}
+
+	// Arabic (العربية)
+	@Override
+	public String listo() {
+		return "تم!";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "خطأ في تحميل القالب من القرص: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "لم يتم العثور على القالب. يرجى إعادة التعيين باستخدام زر 'إعادة تعيين القالب'.";
+	}
+
+	public String plantilla_guardada_en() {
+		return "تم حفظ القالب في: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "تمت إعادة تعيين القالب بنجاح.";
+	}
+
+	public String error_al_guardar() {
+		return "خطأ في الحفظ: ";
+	}
+
+	public String error_al_restablecer() {
+		return "خطأ في إعادة التعيين: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "خطأ في إعادة تعيين الصورة: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "لم يتم العثور على الصورة في المورد: ";
+	}
+
+	public String imagen_restablecida() {
+		return "تمت إعادة تعيين الصورة: ";
+	}
+
+	public String editor_html() {
+		return "محرر HTML";
+	}
+
+	public String vista_previa() {
+		return "معاينة";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "إعدادات الألوان والصور";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "الصور (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "روابط الصور (التقارير المشتركة)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "روابط الصور (التقرير المشترك)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "عنوان URL المستخدم في التقارير المشتركة";
+	}
+
+	public String error_creando_codice_json() {
+		return "خطأ في إنشاء codice.json: ";
+	}
+
+	public String error_exportando() {
+		return "خطأ في التصدير: ";
+	}
+
+	public String validacion() {
+		return "التحقق من الصحة";
+	}
+
+	public String ver_codigo() {
+		return "عرض الكود";
+	}
+
+	// Arabic (العربية)
+	public String importar_instancia() {
+		return "استيراد النسخة";
+	}
+
+	public String compartir_instancia() {
+		return "مشاركة النسخة";
+	}
+
+	public String error_al_cargar_mods() {
+		return "خطأ في تحميل المودات.";
+	}
+
+	public String instalar() {
+		return "تثبيت";
+	}
+
+	public String mods_instalados() {
+		return "المودات المثبتة";
+	}
+
+	public String guardar_como_archivo() {
+		return "حفظ كملف";
+	}
+
+	public String exportando_modpack() {
+		return "جاري تصدير حزمة المودات...";
+	}
+
+	public String modpack_exportado() {
+		return "تم تصدير حزمة المودات:\n";
+	}
+
+	public String conectando() {
+		return "جاري الاتصال...";
+	}
+
+	public String esperando_descarga() {
+		return "في انتظار التنزيل...";
+	}
+
+	public String finalizado() {
+		return "منتهي";
+	}
+
+	public String retener_dos_puntos() {
+		return "الاحتفاظ بـ:";
+	}
+
+	public String descargar_deps() {
+		return "تنزيل الاعتماديات";
+	}
+
+	public String no_faltan_dependencias() {
+		return "لا توجد اعتماديات مفقودة.";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "تنزيل NBT للمهام (Quests)";
+	}
+
+	public String descargar_nbt() {
+		return "تنزيل NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "خطأ في تحميل التقرير: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "تصدير حزمة المودات";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "خطأ في تصدير حزمة المودات:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "سيتم تنزيل اعتماديات NBT اللازمة لدمج المهام (quests).\n\n"
+				+ "قد يكون من الضروري إعادة التشغيل afterward لكي تدخل في مسار الكلاس (classpath).";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "نتيجة فارغة.";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "تم تنزيل اعتمادية NBT.\n\n" + "أعد تشغيل " + nombrePrograma
+				+ " إذا كان دمج SNBT لا يزال يشير إلى نقص محرك NBT.";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "تعذر تنزيل اعتمادية NBT.";
+	}
+
 }

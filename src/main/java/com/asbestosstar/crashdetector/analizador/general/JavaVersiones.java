@@ -190,38 +190,42 @@ public class JavaVersiones implements Verificaciones {
 	private String determinarVersionJava(String linea) {
 		int idx = linea.indexOf("class file version");
 		if (idx < 0)
-			return "desconocida";
+			return MonitorDePID.idioma.desconocida();
+
 		int start = idx + "class file version".length();
 		while (start < linea.length() && !Character.isDigit(linea.charAt(start)))
 			start++;
+
 		if (start >= linea.length())
-			return "desconocida";
+			return MonitorDePID.idioma.desconocida();
+
 		int end = start;
 		while (end < linea.length() && Character.isDigit(linea.charAt(end)))
 			end++;
+
 		String versionClase = linea.substring(start, end);
-		switch (Integer.parseInt(versionClase)) {
-		case 61:
-			return "17";
-		case 62:
-			return "18";
-		case 63:
-			return "19";
-		case 64:
-			return "20";
-		case 65:
-			return "21";
-		case 66:
-			return "22";
+		int versionNum = Integer.parseInt(versionClase);
+
+		// Control de versiones antiguas (Mapeo manual para el formato "1.x")
+		switch (versionNum) {
 		case 52:
 			return "1.8";
 		case 51:
 			return "1.7";
 		case 50:
 			return "1.6";
-		default:
-			return "desconocida (" + versionClase + ")";
 		}
+
+		// Fórmula para Java 9 (versión de clase 53) en adelante.
+		// Restando 44 obtenemos el número de Java correcto de forma dinámica.
+		// Ejemplos:
+		// Versión 65 - 44 = Java 21
+		// Versión 74 - 44 = Java 30
+		if (versionNum >= 53) {
+			return String.valueOf(versionNum - 44);
+		}
+
+		return MonitorDePID.idioma.desconocida() + " (" + versionClase + ")";
 	}
 
 	// =========================
@@ -254,7 +258,7 @@ public class JavaVersiones implements Verificaciones {
 		}
 
 		if (claseConProblema != null) {
-			html.append("<li><b>Clase:</b> ").append(claseConProblema);
+			html.append("<li><b>" + MonitorDePID.idioma.clase() + ":</b> ").append(claseConProblema);
 
 			String mods = formatearMods(modsRelacionados);
 

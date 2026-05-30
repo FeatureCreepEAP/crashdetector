@@ -10525,4 +10525,298 @@ public class Ingles implements Idioma {
 		return "Merge";
 	}
 
+	// English (UK)
+	@Override
+	public String mod() {
+		return "Mod";
+	}
+
+	@Override
+	public String version() {
+		return "Version";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "Class found";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "Matches";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "Search results";
+	}
+
+	@Override
+	public String desconocido() {
+		return "unknown";
+	}
+
+	@Override
+	public String desconocida() {
+		return "unknown";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "CurseForge URL";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "Modrinth URL";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "Mods found for " + clase;
+	}
+
+	// English (UK)
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "Invalid folder entry: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "Folder without hashes: " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "Could not access folder: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "Missing file in folder: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "Incorrect hash in: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "Unauthorised file in folder: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "Invalid file entry: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "Missing hash for file: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "Missing file: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "Error reading file: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "Incorrect hash for file: " + ruta;
+	}
+
+	// English (UK)
+	@Override
+	public String listo() {
+		return "Ready!";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "Error loading template from disk: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "Template not found. Reset using the 'Reset Template' button.";
+	}
+
+	public String plantilla_guardada_en() {
+		return "Template saved in: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "Template reset successfully.";
+	}
+
+	public String error_al_guardar() {
+		return "Error saving: ";
+	}
+
+	public String error_al_restablecer() {
+		return "Error resetting: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "Error resetting image: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "Image not found in resource: ";
+	}
+
+	public String imagen_restablecida() {
+		return "Image reset: ";
+	}
+
+	public String editor_html() {
+		return "HTML Editor";
+	}
+
+	public String vista_previa() {
+		return "Preview";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "Colour and Image Configuration";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "Images (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "Image links (shared reports)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "Image links (shared report)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "URL used in shared reports";
+	}
+
+	public String error_creando_codice_json() {
+		return "Error creating codice.json: ";
+	}
+
+	public String error_exportando() {
+		return "Error exporting: ";
+	}
+
+	public String validacion() {
+		return "Validation";
+	}
+
+	public String ver_codigo() {
+		return "View Code";
+	}
+
+	// English (UK)
+	public String importar_instancia() {
+		return "Import instance";
+	}
+
+	public String compartir_instancia() {
+		return "Share instance";
+	}
+
+	public String error_al_cargar_mods() {
+		return "Error loading mods.";
+	}
+
+	public String instalar() {
+		return "Install";
+	}
+
+	public String mods_instalados() {
+		return "Installed Mods";
+	}
+
+	public String guardar_como_archivo() {
+		return "Save as file";
+	}
+
+	public String exportando_modpack() {
+		return "Exporting modpack...";
+	}
+
+	public String modpack_exportado() {
+		return "Modpack exported:\n";
+	}
+
+	public String conectando() {
+		return "Connecting...";
+	}
+
+	public String esperando_descarga() {
+		return "Waiting for download...";
+	}
+
+	public String finalizado() {
+		return "Finished";
+	}
+
+	public String retener_dos_puntos() {
+		return "Keep:";
+	}
+
+	public String descargar_deps() {
+		return "Download deps";
+	}
+
+	public String no_faltan_dependencias() {
+		return "No missing dependencies.";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "Download NBT for quests";
+	}
+
+	public String descargar_nbt() {
+		return "Download NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "Error loading report: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "Export modpack";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "Error exporting modpack:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "The NBT dependencies needed to merge quests will be downloaded.\n\n"
+				+ "Afterwards, a restart may be necessary for them to enter the classpath.";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "Null result.";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "NBT dependency downloaded.\n\n" + "Restart " + nombrePrograma
+				+ " if the SNBT merge still says the NBT engine is missing.";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "Could not download NBT dependency.";
+	}
+
 }

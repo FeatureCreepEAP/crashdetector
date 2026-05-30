@@ -11045,4 +11045,298 @@ public class Frances implements Idioma {
 		return "Fusionner";
 	}
 
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String mod() {
+		return "Mod";
+	}
+
+	@Override
+	public String version() {
+		return "Version";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "Classe trouvée";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "Correspondances";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "Résultats de la recherche";
+	}
+
+	@Override
+	public String desconocido() {
+		return "inconnu";
+	}
+
+	@Override
+	public String desconocida() {
+		return "inconnue";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "URL CurseForge";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "URL Modrinth";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "Mods trouvés pour " + clase;
+	}
+
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "Entrée de dossier invalide : " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "Dossier sans hachages : " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "Impossible d'accéder au dossier : " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "Fichier manquant dans le dossier : " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "Hachage incorrect dans : " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "Fichier non autorisé dans le dossier : " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "Entrée de fichier invalide : " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "Hachage manquant pour le fichier : " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "Fichier manquant : " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "Erreur lors de la lecture du fichier : " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "Hachage incorrect pour le fichier : " + ruta;
+	}
+
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String listo() {
+		return "Prêt !";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "Erreur lors du chargement du modèle depuis le disque : ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "Modèle introuvable. Réinitialisez en utilisant le bouton 'Réinitialiser le modèle'.";
+	}
+
+	public String plantilla_guardada_en() {
+		return "Modèle enregistré dans : ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "Modèle réinitialisé avec succès.";
+	}
+
+	public String error_al_guardar() {
+		return "Erreur lors de l'enregistrement : ";
+	}
+
+	public String error_al_restablecer() {
+		return "Erreur lors de la réinitialisation : ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "Erreur lors de la réinitialisation de l'image : ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "Image introuvable dans la ressource : ";
+	}
+
+	public String imagen_restablecida() {
+		return "Image réinitialisée : ";
+	}
+
+	public String editor_html() {
+		return "Éditeur HTML";
+	}
+
+	public String vista_previa() {
+		return "Aperçu";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "Configuration des couleurs et des images";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "Images (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "Liens d'images (rapports partagés)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "Liens d'images (rapport partagé)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "URL utilisée dans les rapports partagés";
+	}
+
+	public String error_creando_codice_json() {
+		return "Erreur lors de la création de codice.json : ";
+	}
+
+	public String error_exportando() {
+		return "Erreur lors de l'exportation : ";
+	}
+
+	public String validacion() {
+		return "Validation";
+	}
+
+	public String ver_codigo() {
+		return "Voir le code";
+	}
+
+	// French (Burkina Faso variant) (Français)
+	public String importar_instancia() {
+		return "Importer l'instance";
+	}
+
+	public String compartir_instancia() {
+		return "Partager l'instance";
+	}
+
+	public String error_al_cargar_mods() {
+		return "Erreur lors du chargement des mods.";
+	}
+
+	public String instalar() {
+		return "Installer";
+	}
+
+	public String mods_instalados() {
+		return "Mods installés";
+	}
+
+	public String guardar_como_archivo() {
+		return "Enregistrer sous forme de fichier";
+	}
+
+	public String exportando_modpack() {
+		return "Exportation du modpack...";
+	}
+
+	public String modpack_exportado() {
+		return "Modpack exporté :\n";
+	}
+
+	public String conectando() {
+		return "Connexion...";
+	}
+
+	public String esperando_descarga() {
+		return "En attente du téléchargement...";
+	}
+
+	public String finalizado() {
+		return "Terminé";
+	}
+
+	public String retener_dos_puntos() {
+		return "Conserver :";
+	}
+
+	public String descargar_deps() {
+		return "Télécharger les dépendances";
+	}
+
+	public String no_faltan_dependencias() {
+		return "Aucune dépendance manquante.";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "Télécharger NBT pour les quêtes";
+	}
+
+	public String descargar_nbt() {
+		return "Télécharger NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "Erreur lors du chargement du rapport : ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "Exporter le modpack";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "Erreur lors de l'exportation du modpack :\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "Les dépendances NBT nécessaires pour fusionner les quêtes seront téléchargées.\n\n"
+				+ "Il peut être nécessaire de redémarrer ensuite pour qu'elles soient prises en compte dans le classpath.";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "Résultat nul.";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "Dépendance NBT téléchargée.\n\n" + "Redémarrez " + nombrePrograma
+				+ " si la fusion SNBT indique toujours que le moteur NBT est manquant.";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "Impossible de télécharger la dépendance NBT.";
+	}
+
 }

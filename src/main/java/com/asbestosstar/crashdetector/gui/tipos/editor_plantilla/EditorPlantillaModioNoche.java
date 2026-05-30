@@ -100,7 +100,7 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 
 		// Editor HTML con tema oscuro
 		JPanel panelEditor = new JPanel(new BorderLayout());
-		panelEditor.setBorder(BorderFactory.createTitledBorder("Editor HTML"));
+		panelEditor.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.editor_html()));
 		panelEditor.setBackground(coloresEditor.get("fondo").obtener());
 
 		editorHTML = new JTextPane();
@@ -115,7 +115,7 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 
 		// Vista previa con fondo oscuro
 		JPanel panelVistaPrevia = new JPanel(new BorderLayout());
-		panelVistaPrevia.setBorder(BorderFactory.createTitledBorder("Vista Previa"));
+		panelVistaPrevia.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.vista_previa()));
 		panelVistaPrevia.setBackground(coloresEditor.get("fondo").obtener());
 
 		vistaPrevia = new JEditorPane();
@@ -133,7 +133,8 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 
 		// Panel derecho: configuración de colores, imágenes y ENLACES DE IMÁGENES
 		panelConfiguracion = new JPanel(new BorderLayout());
-		panelConfiguracion.setBorder(BorderFactory.createTitledBorder("Configuración de Colores e Imágenes"));
+		panelConfiguracion
+				.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.configuracion_colores_imagenes()));
 		panelConfiguracion.setBackground(coloresEditor.get("fondo").obtener());
 
 		// Panel de colores con tema oscuro
@@ -148,7 +149,8 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 		// Panel de imágenes con ruta formateada
 		JPanel panelImagenes = new JPanel(new BorderLayout());
 		String rutaFormateada = Statics.carpeta.resolve("imagenes").toString().replace("\\", "/");
-		panelImagenes.setBorder(BorderFactory.createTitledBorder("Imágenes (" + rutaFormateada + ")"));
+		panelImagenes
+				.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.imagenes_con_ruta(rutaFormateada)));
 		panelImagenes.setBackground(coloresEditor.get("fondo").obtener());
 
 		JPanel panelContenidoImagenes = new JPanel(new GridLayout(0, 1, 5, 5));
@@ -162,7 +164,8 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 
 		// === NUEVO: Panel de ENLACES para imágenes del reporte compartido ===
 		JPanel panelEnlaces = new JPanel(new GridLayout(0, 1, 6, 6));
-		panelEnlaces.setBorder(BorderFactory.createTitledBorder("Enlaces de imágenes (reportes compartidos)"));
+		panelEnlaces.setBorder(
+				BorderFactory.createTitledBorder(MonitorDePID.idioma.enlaces_imagenes_reportes_compartidos()));
 		panelEnlaces.setBackground(coloresEditor.get("fondo").obtener());
 
 		// Campos ligados a ConfigString (persisten)
@@ -473,7 +476,7 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 		campo.setForeground(coloresEditor.get("texto").obtener());
 		campo.setBackground(coloresEditor.get("caja_texto").obtener());
 		campo.setCaretColor(coloresEditor.get("texto").obtener());
-		campo.setToolTipText("URL usada en reportes compartidos");
+		campo.setToolTipText(MonitorDePID.idioma.url_usada_en_reportes_compartidos());
 
 		// Persistir al vuelo cambios del usuario
 		campo.getDocument().addDocumentListener(new DocumentListener() {

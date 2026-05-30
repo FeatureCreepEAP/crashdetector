@@ -11203,4 +11203,294 @@ public class Espanol implements Idioma {
 		return "Fusionar";
 	}
 
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "Entrada de carpeta inválida: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "Carpeta sin hashes: " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "No se pudo acceder a la carpeta: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "Archivo faltante en carpeta: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "Hash incorrecto en: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "Archivo no autorizado en carpeta: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "Entrada de archivo inválida: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "Hash faltante para archivo: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "Archivo faltante: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "Error al leer archivo: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "Hash incorrecto para archivo: " + ruta;
+	}
+
+	@Override
+	public String mod() {
+		return "Mod";
+	}
+
+	@Override
+	public String version() {
+		return "Version";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "Class found";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "Matches";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "Search results";
+	}
+
+	@Override
+	public String desconocido() {
+		return "unknown";
+	}
+
+	@Override
+	public String desconocida() {
+		return "unknown";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "CurseForge URL";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "Modrinth URL";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "Mods encontrados para " + clase;
+	}
+
+	@Override
+	public String listo() {
+		return "¡Listo!";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "Error al cargar la plantilla desde disco: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "No se encontró la plantilla. Restablezca usando el botón 'Restablecer Plantilla'.";
+	}
+
+	public String plantilla_guardada_en() {
+		return "Plantilla guardada en: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "Plantilla restablecida correctamente.";
+	}
+
+	public String error_al_guardar() {
+		return "Error al guardar: ";
+	}
+
+	public String error_al_restablecer() {
+		return "Error al restablecer: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "Error al restablecer la imagen: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "No se encontró la imagen en el recurso: ";
+	}
+
+	public String imagen_restablecida() {
+		return "Imagen restablecida: ";
+	}
+
+	public String editor_html() {
+		return "Editor HTML";
+	}
+
+	public String vista_previa() {
+		return "Vista Previa";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "Configuración de Colores e Imágenes";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "Imágenes (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "Enlaces de imágenes (reportes compartidos)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "Enlaces de imágenes (reporte compartido)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "URL usada en reportes compartidos";
+	}
+
+	public String error_creando_codice_json() {
+		return "Error creando codice.json: ";
+	}
+
+	public String error_exportando() {
+		return "Error exportando: ";
+	}
+
+	public String validacion() {
+		return "Validación";
+	}
+
+	public String ver_codigo() {
+		return "Ver Código";
+	}
+
+	public String importar_instancia() {
+		return "Importar instancia";
+	}
+
+	public String compartir_instancia() {
+		return "Compartir instancia";
+	}
+
+	public String error_al_cargar_mods() {
+		return "Error al cargar mods.";
+	}
+
+	public String instalar() {
+		return "Instalar";
+	}
+
+	public String mods_instalados() {
+		return "Mods Instalados";
+	}
+
+	public String guardar_como_archivo() {
+		return "Guardar como archivo";
+	}
+
+	public String exportando_modpack() {
+		return "Exportando modpack...";
+	}
+
+	public String modpack_exportado() {
+		return "Modpack exportado:\n";
+	}
+
+	public String conectando() {
+		return "Conectando...";
+	}
+
+	public String esperando_descarga() {
+		return "Esperando descarga...";
+	}
+
+	public String finalizado() {
+		return "Finalizado";
+	}
+
+	public String retener_dos_puntos() {
+		return "Retener:";
+	}
+
+	public String descargar_deps() {
+		return "Descargar deps";
+	}
+
+	public String no_faltan_dependencias() {
+		return "No faltan dependencias.";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "Descargar NBT PARA QUESTS";
+	}
+
+	public String descargar_nbt() {
+		return "Descargar NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "Error cargando informe: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "Exportar modpack";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "Error exportando modpack:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "Se descargaran las dependencias NBT necesarias para fusionar quests.\n\n"
+				+ "Despues puede ser necesario reiniciar para que entren al classpath.";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "Resultado nulo.";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "Dependencia NBT descargada.\n\n" + "Reinicie " + nombrePrograma
+				+ " si la fusion de SNBT todavia dice que falta el motor NBT.";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "No se pudo descargar la dependencia NBT.";
+	}
+
 }

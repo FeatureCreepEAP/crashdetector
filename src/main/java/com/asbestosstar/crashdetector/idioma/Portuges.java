@@ -10496,4 +10496,294 @@ public class Portuges implements Idioma {
 		return "Mesclar";
 	}
 
+	@Override
+	public String mod() {
+		return "Mod";
+	}
+
+	@Override
+	public String version() {
+		return "Versão";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "Classe encontrada";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "Correspondências";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "Resultados da busca";
+	}
+
+	@Override
+	public String desconocido() {
+		return "desconhecido";
+	}
+
+	@Override
+	public String desconocida() {
+		return "desconhecida";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "URL do CurseForge";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "URL do Modrinth";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "Mods encontrados para " + clase;
+	}
+
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "Entrada de pasta inválida: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "Pasta sem hashes: " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "Não foi possível acessar a pasta: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "Arquivo faltando na pasta: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "Hash incorreto em: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "Arquivo não autorizado na pasta: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "Entrada de arquivo inválida: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "Hash faltando para o arquivo: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "Arquivo faltando: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "Erro ao ler o arquivo: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "Hash incorreto para o arquivo: " + ruta;
+	}
+
+	@Override
+	public String listo() {
+		return "Pronto!";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "Erro ao carregar o modelo do disco: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "Modelo não encontrado. Restaura usando o botão 'Restablecer Plantilla'.";
+	}
+
+	public String plantilla_guardada_en() {
+		return "Modelo salvo em: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "Modelo restaurado com sucesso.";
+	}
+
+	public String error_al_guardar() {
+		return "Erro ao salvar: ";
+	}
+
+	public String error_al_restablecer() {
+		return "Erro ao restaurar: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "Erro ao restaurar a imagem: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "Imagem não encontrada no recurso: ";
+	}
+
+	public String imagen_restablecida() {
+		return "Imagem restaurada: ";
+	}
+
+	public String editor_html() {
+		return "Editor HTML";
+	}
+
+	public String vista_previa() {
+		return "Visualização";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "Configuração de Cores e Imagens";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "Imagens (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "Links de imagens (relatórios compartilhados)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "Links de imagens (relatório compartilhado)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "URL usada em relatórios compartilhados";
+	}
+
+	public String error_creando_codice_json() {
+		return "Erro ao criar codice.json: ";
+	}
+
+	public String error_exportando() {
+		return "Erro ao exportar: ";
+	}
+
+	public String validacion() {
+		return "Validação";
+	}
+
+	public String ver_codigo() {
+		return "Ver Código";
+	}
+
+	public String importar_instancia() {
+		return "Importar instância";
+	}
+
+	public String compartir_instancia() {
+		return "Compartilhar instância";
+	}
+
+	public String error_al_cargar_mods() {
+		return "Erro ao carregar mods.";
+	}
+
+	public String instalar() {
+		return "Instalar";
+	}
+
+	public String mods_instalados() {
+		return "Mods Instalados";
+	}
+
+	public String guardar_como_archivo() {
+		return "Salvar como arquivo";
+	}
+
+	public String exportando_modpack() {
+		return "Exportando modpack...";
+	}
+
+	public String modpack_exportado() {
+		return "Modpack exportado:\n";
+	}
+
+	public String conectando() {
+		return "Conectando...";
+	}
+
+	public String esperando_descarga() {
+		return "Aguardando download...";
+	}
+
+	public String finalizado() {
+		return "Finalizado";
+	}
+
+	public String retener_dos_puntos() {
+		return "Manter:";
+	}
+
+	public String descargar_deps() {
+		return "Baixar deps";
+	}
+
+	public String no_faltan_dependencias() {
+		return "Não faltam dependências.";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "Baixar NBT PARA QUESTS";
+	}
+
+	public String descargar_nbt() {
+		return "Baixar NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "Erro ao carregar relatório: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "Exportar modpack";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "Erro ao exportar modpack:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "As dependências NBT necessárias para mesclar quests serão baixadas.\n\n"
+				+ "Depois disso, pode ser necessário reiniciar para que entrem no classpath.";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "Resultado nulo.";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "Dependência NBT baixada.\n\n" + "Reinicie o " + nombrePrograma
+				+ " se a fusão de SNBT ainda disser que falta o motor NBT.";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "Não foi possível baixar a dependência NBT.";
+	}
+
 }

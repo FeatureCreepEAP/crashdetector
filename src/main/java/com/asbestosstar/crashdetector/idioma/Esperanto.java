@@ -10475,4 +10475,298 @@ public class Esperanto implements Idioma {
 		return "Kunfandi";
 	}
 
+	// Esperanto (Esperanto)
+	@Override
+	public String mod() {
+		return "Modo";
+	}
+
+	@Override
+	public String version() {
+		return "Versio";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "Klaso trovita";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "Kongruoj";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "Rezultoj de serĉo";
+	}
+
+	@Override
+	public String desconocido() {
+		return "nekonata";
+	}
+
+	@Override
+	public String desconocida() {
+		return "nekonata";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "URL de CurseForge";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "URL de Modrinth";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "Modoj trovitaj por " + clase;
+	}
+
+	// Esperanto (Esperanto)
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "Nevalida dosieruja enigo: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "Dosierujo sen haŝoj: " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "Ne eblis aliri la dosierujon: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "Mankanta dosiero en dosierujo: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "Malĝusta haŝo en: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "Neaŭtorizita dosiero en dosierujo: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "Nevalida dosiera enigo: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "Mankanta haŝo por dosiero: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "Mankanta dosiero: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "Eraro dum legado de dosiero: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "Malĝusta haŝo por dosiero: " + ruta;
+	}
+
+	// Esperanto (Esperanto)
+	@Override
+	public String listo() {
+		return "Preta!";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "Eraro dum ŝargo de ŝablono el disko: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "Ŝablono ne trovita. Restarigu uzante la butonon 'Restarigi Ŝablonon'.";
+	}
+
+	public String plantilla_guardada_en() {
+		return "Ŝablono konservita en: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "Ŝablono sukcese restarigita.";
+	}
+
+	public String error_al_guardar() {
+		return "Eraro dum konservado: ";
+	}
+
+	public String error_al_restablecer() {
+		return "Eraro dum restarigo: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "Eraro dum restarigo de bildo: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "Bildo ne trovita en rimedo: ";
+	}
+
+	public String imagen_restablecida() {
+		return "Bildo restarigita: ";
+	}
+
+	public String editor_html() {
+		return "HTML-redaktilo";
+	}
+
+	public String vista_previa() {
+		return "Antaŭrigardo";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "Agordo de Koloroj kaj Bildoj";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "Bildoj (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "Ligiloj de bildoj (kunhavitaj raportoj)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "Ligiloj de bildoj (kunhavita raporto)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "URL uzata en kunhavitaj raportoj";
+	}
+
+	public String error_creando_codice_json() {
+		return "Eraro dum kreo de codice.json: ";
+	}
+
+	public String error_exportando() {
+		return "Eraro dum eksportado: ";
+	}
+
+	public String validacion() {
+		return "Validigo";
+	}
+
+	public String ver_codigo() {
+		return "Vidi Kodon";
+	}
+
+	// Esperanto (Esperanto)
+	public String importar_instancia() {
+		return "Importi instancon";
+	}
+
+	public String compartir_instancia() {
+		return "Kunhavigi instancon";
+	}
+
+	public String error_al_cargar_mods() {
+		return "Eraro dum ŝargo de modoj.";
+	}
+
+	public String instalar() {
+		return "Instali";
+	}
+
+	public String mods_instalados() {
+		return "Instalitaj modoj";
+	}
+
+	public String guardar_como_archivo() {
+		return "Konservi kiel dosiero";
+	}
+
+	public String exportando_modpack() {
+		return "Eksportante modpakon...";
+	}
+
+	public String modpack_exportado() {
+		return "Modpako eksportita:\n";
+	}
+
+	public String conectando() {
+		return "Konektante...";
+	}
+
+	public String esperando_descarga() {
+		return "Atendante elŝuton...";
+	}
+
+	public String finalizado() {
+		return "Finita";
+	}
+
+	public String retener_dos_puntos() {
+		return "Reteni:";
+	}
+
+	public String descargar_deps() {
+		return "Elŝuti dependecojn";
+	}
+
+	public String no_faltan_dependencias() {
+		return "Neniuj mankantaj dependecoj.";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "Elŝuti NBT por questoj";
+	}
+
+	public String descargar_nbt() {
+		return "Elŝuti NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "Eraro dum ŝargo de raporto: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "Eksporti modpakon";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "Eraro dum eksporto de modpako:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "La necesaj NBT-dependecoj por kunfandi questojn estos elŝutitaj.\n\n"
+				+ "Poste eble necesas restartigi por ke ili eniru la classpath.";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "Nula rezulto.";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "NBT-dependeco elŝutita.\n\n" + "Restartigu " + nombrePrograma
+				+ " se la kunfando de SNBT ankoraŭ diras, ke mankas la NBT-motoro.";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "Ne eblis elŝuti la NBT-dependecon.";
+	}
+
 }

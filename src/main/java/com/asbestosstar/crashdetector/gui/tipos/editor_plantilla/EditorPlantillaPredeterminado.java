@@ -90,7 +90,7 @@ public class EditorPlantillaPredeterminado extends EditorPlantilla {
 
 		// Editor HTML
 		JPanel panelEditor = new JPanel(new BorderLayout());
-		panelEditor.setBorder(BorderFactory.createTitledBorder("Editor HTML"));
+		panelEditor.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.editor_html()));
 		panelEditor.setBackground(coloresEditor.get("fondo").obtener());
 
 		editorHTML = new JTextPane();
@@ -105,7 +105,7 @@ public class EditorPlantillaPredeterminado extends EditorPlantilla {
 
 		// Vista previa
 		JPanel panelVistaPrevia = new JPanel(new BorderLayout());
-		panelVistaPrevia.setBorder(BorderFactory.createTitledBorder("Vista Previa"));
+		panelVistaPrevia.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.vista_previa()));
 		panelVistaPrevia.setBackground(coloresEditor.get("fondo").obtener());
 
 		vistaPrevia = new JEditorPane();
@@ -122,7 +122,8 @@ public class EditorPlantillaPredeterminado extends EditorPlantilla {
 
 		// Panel derecho: configuración de colores, enlaces e imágenes
 		panelConfiguracion = new JPanel(new BorderLayout());
-		panelConfiguracion.setBorder(BorderFactory.createTitledBorder("Configuración de Colores e Imágenes"));
+		panelConfiguracion
+				.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.configuracion_colores_imagenes()));
 		panelConfiguracion.setBackground(coloresEditor.get("fondo").obtener());
 
 		splitPanePrincipal.setContinuousLayout(true);
@@ -139,14 +140,16 @@ public class EditorPlantillaPredeterminado extends EditorPlantilla {
 
 		// Panel de enlaces para imágenes del reporte compartido (NUEVO)
 		JPanel panelEnlaces = new JPanel(new GridLayout(0, 1, 5, 5));
-		panelEnlaces.setBorder(BorderFactory.createTitledBorder("Enlaces de imágenes (reporte compartido)"));
+		panelEnlaces.setBorder(
+				BorderFactory.createTitledBorder(MonitorDePID.idioma.enlaces_imagenes_reportes_compartidos()));
 		panelEnlaces.setBackground(coloresEditor.get("fondo").obtener());
 		inicializarConfiguracionEnlaces(panelEnlaces);
 
 		// Panel de imágenes con ruta
 		JPanel panelImagenes = new JPanel(new BorderLayout());
 		String rutaFormateada = Statics.carpeta.resolve("imagenes").toString().replace("\\", "/");
-		panelImagenes.setBorder(BorderFactory.createTitledBorder("Imágenes (" + rutaFormateada + ")"));
+		panelImagenes
+				.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.imagenes_con_ruta(rutaFormateada)));
 		panelImagenes.setBackground(coloresEditor.get("fondo").obtener());
 
 		JPanel panelContenidoImagenes = new JPanel(new GridLayout(0, 1, 5, 5));

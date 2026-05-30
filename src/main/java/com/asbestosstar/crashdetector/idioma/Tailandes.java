@@ -10680,4 +10680,294 @@ public class Tailandes implements Idioma {
 		return "รวม";
 	}
 
+	@Override
+	public String mod() {
+		return "มอด";
+	}
+
+	@Override
+	public String version() {
+		return "เวอร์ชัน";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "พบคลาส";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "ผลการจับคู่";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "ผลการค้นหา";
+	}
+
+	@Override
+	public String desconocido() {
+		return "ไม่ทราบ";
+	}
+
+	@Override
+	public String desconocida() {
+		return "ไม่ทราบ";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "ลิงก์ CurseForge";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "ลิงก์ Modrinth";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "พบมอดสำหรับ " + clase;
+	}
+
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "เส้นทางโฟลเดอร์ไม่ถูกต้อง: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "โฟลเดอร์ไม่มี hashes: " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "ไม่สามารถเข้าถึงโฟลเดอร์ได้: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "ไฟล์หายไปในโฟลเดอร์: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "Hash ไม่ถูกต้องใน: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "ไฟล์ที่ไม่ได้รับอนุญาตในโฟลเดอร์: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "เส้นทางไฟล์ไม่ถูกต้อง: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "ขาด Hash สำหรับไฟล์: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "ไฟล์หายไป: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "เกิดข้อผิดพลาดในการอ่านไฟล์: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "Hash ไม่ถูกต้องสำหรับไฟล์: " + ruta;
+	}
+
+	@Override
+	public String listo() {
+		return "เสร็จสิ้น!";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "เกิดข้อผิดพลาดในการโหลดเทมเพลตจากดิสก์: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "ไม่พบเทมเพลต กรุณากู้คืนโดยใช้ปุ่ม 'Restablecer Plantilla'";
+	}
+
+	public String plantilla_guardada_en() {
+		return "บันทึกเทมเพลตแล้วที่: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "กู้คืนเทมเพลตสำเร็จ";
+	}
+
+	public String error_al_guardar() {
+		return "เกิดข้อผิดพลาดในการบันทึก: ";
+	}
+
+	public String error_al_restablecer() {
+		return "เกิดข้อผิดพลาดในการกู้คืน: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "เกิดข้อผิดพลาดในการกู้คืนรูปภาพ: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "ไม่พบรูปภาพในทรัพยากร: ";
+	}
+
+	public String imagen_restablecida() {
+		return "กู้คืนรูปภาพแล้ว: ";
+	}
+
+	public String editor_html() {
+		return "ตัวแก้ไข HTML";
+	}
+
+	public String vista_previa() {
+		return "ตัวอย่าง";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "การตั้งค่าสีและรูปภาพ";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "รูปภาพ (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "ลิงก์รูปภาพ (รายงานที่แชร์)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "ลิงก์รูปภาพ (รายงานที่แชร์)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "URL ที่ใช้ในรายงานที่แชร์";
+	}
+
+	public String error_creando_codice_json() {
+		return "เกิดข้อผิดพลาดในการสร้าง codice.json: ";
+	}
+
+	public String error_exportando() {
+		return "เกิดข้อผิดพลาดในการส่งออก: ";
+	}
+
+	public String validacion() {
+		return "การตรวจสอบ";
+	}
+
+	public String ver_codigo() {
+		return "ดูโค้ด";
+	}
+
+	public String importar_instancia() {
+		return "นำเข้าอินสแตนซ์";
+	}
+
+	public String compartir_instancia() {
+		return "แชร์อินสแตนซ์";
+	}
+
+	public String error_al_cargar_mods() {
+		return "เกิดข้อผิดพลาดในการโหลดมอด";
+	}
+
+	public String instalar() {
+		return "ติดตั้ง";
+	}
+
+	public String mods_instalados() {
+		return "มอดที่ติดตั้งแล้ว";
+	}
+
+	public String guardar_como_archivo() {
+		return "บันทึกเป็นไฟล์";
+	}
+
+	public String exportando_modpack() {
+		return "กำลังส่งออกมอดแพ็ก...";
+	}
+
+	public String modpack_exportado() {
+		return "ส่งออกมอดแพ็กแล้ว:\n";
+	}
+
+	public String conectando() {
+		return "กำลังเชื่อมต่อ...";
+	}
+
+	public String esperando_descarga() {
+		return "กำลังรอการดาวน์โหลด...";
+	}
+
+	public String finalizado() {
+		return "เสร็จสิ้น";
+	}
+
+	public String retener_dos_puntos() {
+		return "เก็บไว้:";
+	}
+
+	public String descargar_deps() {
+		return "ดาวน์โหลด deps";
+	}
+
+	public String no_faltan_dependencias() {
+		return "ไม่ขาด dependencies";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "ดาวน์โหลด NBT สำหรับ QUESTS";
+	}
+
+	public String descargar_nbt() {
+		return "ดาวน์โหลด NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "เกิดข้อผิดพลาดในการโหลดรายงาน: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "ส่งออกมอดแพ็ก";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "เกิดข้อผิดพลาดในการส่งออกมอดแพ็ก:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "จะดาวน์โหลด dependencies NBT ที่จำเป็นสำหรับการรวม quests\n\n"
+				+ "หลังจากนั้นอาจจำเป็นต้องรีสตาร์ทเพื่อให้เข้าสู่ classpath";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "ผลลัพธ์เป็น null";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "ดาวน์โหลด dependency NBT แล้ว\n\n" + "รีสตาร์ท " + nombrePrograma
+				+ " หากการรวม SNBT ยังบอกว่าขาดเอ็นจิ้น NBT";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "ไม่สามารถดาวน์โหลด dependency NBT ได้";
+	}
+
 }

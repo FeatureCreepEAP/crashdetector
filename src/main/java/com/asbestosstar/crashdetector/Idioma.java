@@ -4100,4 +4100,124 @@ public interface Idioma {
 
 	public String importadorBotonFusionar();
 
+	public String entradaCarpetaInvalida(String ruta);
+
+	public String carpetaSinHashes(String ruta);
+
+	public String noSePudoAccederCarpeta(String ruta);
+
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta);
+
+	public String hashIncorrectoEn(String ruta, String subRuta);
+
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta);
+
+	public String entradaArchivoInvalida(String ruta);
+
+	public String hashFaltanteParaArchivo(String ruta);
+
+	public String archivoFaltante(String ruta);
+
+	public String errorAlLeerArchivo(String ruta);
+
+	public String hashIncorrectoParaArchivo(String ruta);
+
+	public String coincidencias();
+
+	public String mod();
+
+	public String version();
+
+	public String claseEncontrada();
+
+	public String desconocido();
+
+	public String desconocida();
+
+	public String curseForgeUrl();
+
+	public String modrinthUrl();
+
+	public String resultadosDeBusqueda();
+
+	public String modsEncontradosPara(String clase);
+
+	public String listo();
+
+	public String error_al_cargar_plantilla_desde_disco();
+
+	public String no_se_encontro_plantilla_restablecer();
+
+	public String plantilla_guardada_en();
+
+	public String plantilla_restablecida_correctamente();
+
+	public String error_al_guardar();
+
+	public String error_al_restablecer();
+
+	public String error_al_restablecer_imagen();
+
+	public String no_se_encontro_imagen_en_recurso();
+
+	public String imagen_restablecida();
+
+	public String editor_html();
+
+	public String vista_previa();
+
+	public String configuracion_colores_imagenes();
+
+	public String imagenes_con_ruta(String ruta);
+
+	public String enlaces_imagenes_reportes_compartidos();
+
+	public String enlaces_imagenes_reporte_compartido();
+
+	public String url_usada_en_reportes_compartidos();
+
+	public String error_creando_codice_json();
+
+	public String error_exportando();
+
+	public String validacion();
+
+	public String ver_codigo();
+
+	public String retener_dos_puntos();
+
+	public String importar_instancia();
+
+	public String compartir_instancia();
+
+	public String guardar_como_archivo();
+
+	public String exportar_modpack();
+
+	public String exportando_modpack();
+
+	public String modpack_exportado();
+
+	public String error_exportando_modpack();
+
+	public String conectando();
+
+	public String esperando_descarga();
+
+	public String finalizado();
+
+	public String error_cargando_informe();
+
+	public String descargar_nbt_para_quests();
+
+	public String importador_confirmar_descargar_nbt_para_quests();
+
+	public String descargar_nbt();
+
+	public String resultado_nulo();
+
+	public String dependencia_nbt_descargada_reiniciar(String obtener);
+
+	public String no_se_pudo_descargar_dependencia_nbt();
+
 }

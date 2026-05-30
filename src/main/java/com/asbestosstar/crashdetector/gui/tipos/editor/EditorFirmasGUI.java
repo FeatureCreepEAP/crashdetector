@@ -545,8 +545,8 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 				Files.write(rutaCodice, base.getBytes(StandardCharsets.UTF_8));
 			}
 		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(this, "Error creando codice.json: " + ex.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.error_creando_codice_json() + ex.getMessage(),
+					MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -677,26 +677,26 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 
 	public boolean validarFormulario() {
 		if (vacio(fId) || vacio(fParaBuscar)) {
-			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.faltanCampos(), "Validación",
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.faltanCampos(), MonitorDePID.idioma.validacion(),
 					JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 
 		if (cbFiltro.getSelectedItem() == null || "".equals(cbFiltro.getSelectedItem())) {
-			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.filtroNoExiste(), "Validación",
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.filtroNoExiste(), MonitorDePID.idioma.validacion(),
 					JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 
 		if (cbCriticalidad.getSelectedItem() == null) {
-			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.critInvalida(), "Validación",
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.critInvalida(), MonitorDePID.idioma.validacion(),
 					JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 
 		String idFiltro = (String) cbFiltro.getSelectedItem();
 		if (FiltrodeCodice.filtros.get(idFiltro) == null) {
-			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.filtroNoExiste(), "Validación",
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.filtroNoExiste(), MonitorDePID.idioma.validacion(),
 					JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
@@ -713,7 +713,7 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 
 			if (nombreVacio || resultadoVacio) {
 				JOptionPane.showMessageDialog(this, MonitorDePID.idioma.faltanIdiomas() + " " + e.getKey(),
-						"Validación", JOptionPane.WARNING_MESSAGE);
+						MonitorDePID.idioma.validacion(), JOptionPane.WARNING_MESSAGE);
 				return false;
 			}
 
@@ -721,7 +721,7 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 		}
 
 		if (!hayAlMenosUnIdiomaCompleto) {
-			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.faltanIdiomas(), "Validación",
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.faltanIdiomas(), MonitorDePID.idioma.validacion(),
 					JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
@@ -802,8 +802,8 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 		try {
 			for (int i = 0; i < modeloLista.size(); i++) {
 				if (!validarVerificacion(modeloLista.get(i))) {
-					JOptionPane.showMessageDialog(this, MonitorDePID.idioma.verificacionInvalida(), "Validación",
-							JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(this, MonitorDePID.idioma.verificacionInvalida(),
+							MonitorDePID.idioma.validacion(), JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 			}
@@ -860,8 +860,8 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 				Files.write(ch.getSelectedFile().toPath(), vistaJson.getText().getBytes(StandardCharsets.UTF_8));
 			}
 		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(this, "Error exportando: " + ex.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.error_exportando() + ex.getMessage(),
+					MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

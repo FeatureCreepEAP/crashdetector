@@ -94,8 +94,9 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 				resaltarSintaxis();
 				actualizarVistaPrevia();
 			} catch (IOException e) {
-				JOptionPane.showMessageDialog(this, "Error al cargar la plantilla desde disco: " + e.getMessage(),
-						"Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this,
+						MonitorDePID.idioma.error_al_cargar_plantilla_desde_disco() + e.getMessage(), "Error",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
 			try {
@@ -115,9 +116,8 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 					actualizarVistaPrevia();
 				}
 			} catch (IOException e) {
-				JOptionPane.showMessageDialog(this,
-						"No se encontró la plantilla. Restablezca usando el botón 'Restablecer Plantilla'.", "Error",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, MonitorDePID.idioma.no_se_encontro_plantilla_restablecer(),
+						MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -370,8 +370,9 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 		String rutaRecurso = "/imagenes/" + nombreImagen;
 		try (InputStream is = getClass().getClassLoader().getResourceAsStream(rutaRecurso)) {
 			if (is == null) {
-				JOptionPane.showMessageDialog(this, "No se encontró la imagen en el recurso: " + rutaRecurso, "Error",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this,
+						MonitorDePID.idioma.no_se_encontro_imagen_en_recurso() + rutaRecurso,
+						MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 
@@ -386,13 +387,13 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 				}
 			}
 
-			JOptionPane.showMessageDialog(this, "Imagen restablecida: " + nombreImagen, "Éxito",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.imagen_restablecida() + nombreImagen,
+					MonitorDePID.idioma.exito(), JOptionPane.INFORMATION_MESSAGE);
 
 			actualizarVistaPreviaImagen(nombreImagen, previewLabel);
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(this, "Error al restablecer la imagen: " + e.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.error_al_restablecer_imagen() + e.getMessage(),
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -477,11 +478,12 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 				writer.write(editorHTML.getText());
 			}
 
-			JOptionPane.showMessageDialog(this, "Plantilla guardada en: " + archivoPlantilla.getAbsolutePath(), "Éxito",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this,
+					MonitorDePID.idioma.plantilla_guardada_en() + archivoPlantilla.getAbsolutePath(),
+					MonitorDePID.idioma.exito(), JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(this, "Error al guardar: " + e.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.error_al_guardar() + e.getMessage(),
+					MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -514,12 +516,12 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 					resaltarSintaxis();
 					actualizarVistaPrevia();
 
-					JOptionPane.showMessageDialog(this, "Plantilla restablecida correctamente.", "Éxito",
-							JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(this, MonitorDePID.idioma.plantilla_restablecida_correctamente(),
+							MonitorDePID.idioma.exito(), JOptionPane.INFORMATION_MESSAGE);
 				}
 			} catch (IOException e) {
-				JOptionPane.showMessageDialog(this, "Error al restablecer: " + e.getMessage(), "Error",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, MonitorDePID.idioma.error_al_restablecer() + e.getMessage(),
+						MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

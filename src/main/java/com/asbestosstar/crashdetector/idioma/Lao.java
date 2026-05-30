@@ -10907,4 +10907,294 @@ public class Lao implements Idioma {
 		return "ລວມ";
 	}
 
+	@Override
+	public String mod() {
+		return "Mod";
+	}
+
+	@Override
+	public String version() {
+		return "ເວີຊັນ";
+	}
+
+	@Override
+	public String claseEncontrada() {
+		return "ພົບຄລາສ";
+	}
+
+	@Override
+	public String coincidencias() {
+		return "ຜົນທີ່ກົງກັນ";
+	}
+
+	@Override
+	public String resultadosDeBusqueda() {
+		return "ຜົນການຊອກຫາ";
+	}
+
+	@Override
+	public String desconocido() {
+		return "ບໍ່ຮູ້ຈັກ";
+	}
+
+	@Override
+	public String desconocida() {
+		return "ບໍ່ຮູ້ຈັກ";
+	}
+
+	@Override
+	public String curseForgeUrl() {
+		return "URL CurseForge";
+	}
+
+	@Override
+	public String modrinthUrl() {
+		return "URL Modrinth";
+	}
+
+	@Override
+	public String modsEncontradosPara(String clase) {
+		return "ພົບ Mods ສຳລັບ " + clase;
+	}
+
+	@Override
+	public String entradaCarpetaInvalida(String ruta) {
+		return "ເສັ້ນທາງໂຟລເດີບໍ່ຖືກຕ້ອງ: " + ruta;
+	}
+
+	@Override
+	public String carpetaSinHashes(String ruta) {
+		return "ໂຟລເດີບໍ່ມີ hashes: " + ruta;
+	}
+
+	@Override
+	public String noSePudoAccederCarpeta(String ruta) {
+		return "ບໍ່ສາມາດເຂົ້າເຖິງໂຟລເດີໄດ້: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltanteEnCarpeta(String ruta, String subRuta) {
+		return "ຂາດໄຟລ໌ໃນໂຟລເດີ: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String hashIncorrectoEn(String ruta, String subRuta) {
+		return "Hash ບໍ່ຖືກຕ້ອງໃນ: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String archivoNoAutorizadoEnCarpeta(String ruta, String subRuta) {
+		return "ໄຟລ໌ທີ່ບໍ່ໄດ້ຮັບອະນຸຍາດໃນໂຟລເດີ: " + ruta + "/" + subRuta;
+	}
+
+	@Override
+	public String entradaArchivoInvalida(String ruta) {
+		return "ເສັ້ນທາງໄຟລ໌ບໍ່ຖືກຕ້ອງ: " + ruta;
+	}
+
+	@Override
+	public String hashFaltanteParaArchivo(String ruta) {
+		return "ຂາດ Hash ສຳລັບໄຟລ໌: " + ruta;
+	}
+
+	@Override
+	public String archivoFaltante(String ruta) {
+		return "ຂາດໄຟລ໌: " + ruta;
+	}
+
+	@Override
+	public String errorAlLeerArchivo(String ruta) {
+		return "ຜິດພາດໃນການອ່ານໄຟລ໌: " + ruta;
+	}
+
+	@Override
+	public String hashIncorrectoParaArchivo(String ruta) {
+		return "Hash ບໍ່ຖືກຕ້ອງສຳລັບໄຟລ໌: " + ruta;
+	}
+
+	@Override
+	public String listo() {
+		return "ສຳເລັດ!";
+	}
+
+	public String error_al_cargar_plantilla_desde_disco() {
+		return "ຜິດພາດໃນການໂຫຼດແມ່ແບບຈາກດິສ: ";
+	}
+
+	public String no_se_encontro_plantilla_restablecer() {
+		return "ບໍ່ພົບແມ່ແບບ. ກະລຸນາກົດປຸ່ມ 'Restablecer Plantilla' ເພື່ອຕັ້ງຄ່າໃໝ່.";
+	}
+
+	public String plantilla_guardada_en() {
+		return "ບັນທຶກແມ່ແບບແລ້ວທີ່: ";
+	}
+
+	public String plantilla_restablecida_correctamente() {
+		return "ຕັ້ງຄ່າແມ່ແບບໃໝ່ສຳເລັດ.";
+	}
+
+	public String error_al_guardar() {
+		return "ຜິດພາດໃນການບັນທຶກ: ";
+	}
+
+	public String error_al_restablecer() {
+		return "ຜິດພາດໃນການຕັ້ງຄ່າໃໝ່: ";
+	}
+
+	public String error_al_restablecer_imagen() {
+		return "ຜິດພາດໃນການຕັ້ງຄ່າຮູບພາບໃໝ່: ";
+	}
+
+	public String no_se_encontro_imagen_en_recurso() {
+		return "ບໍ່ພົບຮູບພາບໃນຊັບພະຍາກອນ: ";
+	}
+
+	public String imagen_restablecida() {
+		return "ຕັ້ງຄ່າຮູບພາບໃໝ່ແລ້ວ: ";
+	}
+
+	public String editor_html() {
+		return "ແກ້ໄຂ HTML";
+	}
+
+	public String vista_previa() {
+		return "ຕົວຢ່າງ";
+	}
+
+	public String configuracion_colores_imagenes() {
+		return "ການຕັ້ງຄ່າສີ ແລະ ຮູບພາບ";
+	}
+
+	public String imagenes_con_ruta(String ruta) {
+		return "ຮູບພາບ (" + ruta + ")";
+	}
+
+	public String enlaces_imagenes_reportes_compartidos() {
+		return "ລິ້ງຮູບພາບ (ລາຍງານທີ່ແບ່ງປັນ)";
+	}
+
+	public String enlaces_imagenes_reporte_compartido() {
+		return "ລິ້ງຮູບພາບ (ລາຍງານທີ່ແບ່ງປັນ)";
+	}
+
+	public String url_usada_en_reportes_compartidos() {
+		return "URL ທີ່ໃຊ້ໃນລາຍງານທີ່ແບ່ງປັນ";
+	}
+
+	public String error_creando_codice_json() {
+		return "ຜິດພາດໃນການສ້າງ codice.json: ";
+	}
+
+	public String error_exportando() {
+		return "ຜິດພາດໃນການສົ່ງອອກ: ";
+	}
+
+	public String validacion() {
+		return "ການກວດສອບ";
+	}
+
+	public String ver_codigo() {
+		return "ເບິ່ງໂຄ້ດ";
+	}
+
+	public String importar_instancia() {
+		return "ນຳເຂົ້າ instance";
+	}
+
+	public String compartir_instancia() {
+		return "ແບ່ງປັນ instance";
+	}
+
+	public String error_al_cargar_mods() {
+		return "ຜິດພາດໃນການໂຫຼດ mods.";
+	}
+
+	public String instalar() {
+		return "ຕິດຕັ້ງ";
+	}
+
+	public String mods_instalados() {
+		return "Mods ທີ່ຕິດຕັ້ງແລ້ວ";
+	}
+
+	public String guardar_como_archivo() {
+		return "ບັນທຶກເປັນໄຟລ໌";
+	}
+
+	public String exportando_modpack() {
+		return "ກຳລັງສົ່ງອອກ modpack...";
+	}
+
+	public String modpack_exportado() {
+		return "ສົ່ງອອກ modpack ແລ້ວ:\n";
+	}
+
+	public String conectando() {
+		return "ກຳລັງເຊື່ອມຕໍ່...";
+	}
+
+	public String esperando_descarga() {
+		return "ກຳລັງລໍຖ້າການດາວໂຫຼດ...";
+	}
+
+	public String finalizado() {
+		return "ສຳເລັດ";
+	}
+
+	public String retener_dos_puntos() {
+		return "ຮັກສາໄວ້:";
+	}
+
+	public String descargar_deps() {
+		return "ດາວໂຫຼດ deps";
+	}
+
+	public String no_faltan_dependencias() {
+		return "ບໍ່ຂາດ dependencies.";
+	}
+
+	public String descargar_nbt_para_quests() {
+		return "ດາວໂຫຼດ NBT ສຳລັບ QUESTS";
+	}
+
+	public String descargar_nbt() {
+		return "ດາວໂຫຼດ NBT";
+	}
+
+	public String error_cargando_informe() {
+		return "ຜິດພາດໃນການໂຫຼດລາຍງານ: ";
+	}
+
+	@Override
+	public String exportar_modpack() {
+		return "ສົ່ງອອກ modpack";
+	}
+
+	@Override
+	public String error_exportando_modpack() {
+		return "ຜິດພາດໃນການສົ່ງອອກ modpack:\n";
+	}
+
+	@Override
+	public String importador_confirmar_descargar_nbt_para_quests() {
+		return "ຈະດາວໂຫຼດ dependencies NBT ທີ່ຈຳເປັນສຳລັບການລວມ quests.\n\n"
+				+ "ຫຼັງຈາກນັ້ນອາດຈຳເປັນຕ້ອງ restart ເພື່ອໃຫ້ມັນເຂົ້າ classpath.";
+	}
+
+	@Override
+	public String resultado_nulo() {
+		return "ຜົນລັບເປັນ null.";
+	}
+
+	@Override
+	public String dependencia_nbt_descargada_reiniciar(String nombrePrograma) {
+		return "ດາວໂຫຼດ dependency NBT ແລ້ວ.\n\n" + "Restart " + nombrePrograma
+				+ " ຖ້າການລວມ SNBT ຍັງບອກວ່າຂາດ engine NBT.";
+	}
+
+	@Override
+	public String no_se_pudo_descargar_dependencia_nbt() {
+		return "ບໍ່ສາມາດດາວໂຫຼດ dependency NBT ໄດ້.";
+	}
+
 }

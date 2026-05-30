@@ -113,7 +113,8 @@ public class QuickFix {
 				// Ejecutar la acción del botón
 				accion.ejecutar(estadoRetener.get());
 				// Mostrar siempre un diálogo que diga "listo"
-				JOptionPane.showMessageDialog(null, "¡Listo!", "Información", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, MonitorDePID.idioma.listo(), MonitorDePID.idioma.informacion(),
+						JOptionPane.INFORMATION_MESSAGE);
 			});
 			return boton;
 		}
