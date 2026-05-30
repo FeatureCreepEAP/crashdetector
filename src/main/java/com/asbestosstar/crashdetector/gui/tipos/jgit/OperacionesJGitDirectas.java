@@ -19,6 +19,7 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 
 /**
  * Operaciones reales de JGit. Esta clase puede fallar al cargar si JGit no está
@@ -72,7 +73,7 @@ public class OperacionesJGitDirectas {
 				// Agregar eliminaciones.
 				git.add().addFilepattern(".").setUpdate(true).call();
 
-				git.commit().setMessage(mensaje).setAuthor("CrashDetector", "crashdetector@local").call();
+				git.commit().setMessage(mensaje).setAuthor(Statics.nombre_cd.obtener(), "crashdetector@local").call();
 
 				CrashDetectorLogger.log("JGit: commit automático creado.");
 				return true;

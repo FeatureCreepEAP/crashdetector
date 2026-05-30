@@ -5900,8 +5900,8 @@ public class Ingles implements Idioma {
 				+ "• The right not to provide unnecessary information for support, such as the launcher used, "
 				+ "username, or UUID.\n" + "• The right against self-incrimination.\n"
 				+ "• The right to refuse to answer questions not necessary for resolving the issue.\n"
-				+ "• The right to receive guidance within the chat.\n"
-				+ "• The right to use CrashDetector’s built-in log anonymisation feature.\n\n"
+				+ "• The right to receive guidance within the chat.\n" + "• The right to use "
+				+ Statics.nombre_cd.obtener() + "’s built-in log anonymisation feature.\n\n"
 
 				+ "This text accepts HTML content.";
 	}

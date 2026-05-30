@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.dto.modpack.tlmods.ActualizadorTLauncherAdditional;
 
@@ -37,7 +38,7 @@ public class JGitAutoCommit {
 
 			String fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 			boolean hizoCommit = JGitReflexivo.commitAutomatico(carpeta,
-					"Commit automático de CrashDetector - " + fecha);
+					"Commit automático de " + Statics.nombre_cd.obtener() + " - " + fecha);
 
 			if (hizoCommit && AUTO_PUSH.obtener() && JGitReflexivo.tieneRemote(carpeta)) {
 				JGitReflexivo.push(carpeta);

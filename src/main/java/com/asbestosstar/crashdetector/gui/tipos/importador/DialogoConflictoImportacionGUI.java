@@ -24,6 +24,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.deps.DescargadorDependenciasMaven;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ConflictoImportacion;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 public abstract class DialogoConflictoImportacionGUI extends JDialog implements CrashDetectorGUI {
@@ -252,8 +253,8 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 	public void accionDescargarDependenciasNbt() {
 		int confirmar = JOptionPane.showConfirmDialog(this,
 				"Se descargara la dependencia NBT/SNBT necesaria para fusionar quests:\n\n"
-						+ " - com.github.Querz:NBT:6.1\n\n"
-						+ "Despues puede ser necesario reiniciar CrashDetector para que entre al classpath.",
+						+ " - com.github.Querz:NBT:6.1\n\n" + "Despues puede ser necesario reiniciar "
+						+ Statics.nombre_cd.obtener() + " para que entre al classpath.",
 				"Descargar NBT", JOptionPane.YES_NO_OPTION);
 
 		if (confirmar != JOptionPane.YES_OPTION) {
@@ -302,8 +303,8 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 						String texto;
 
 						if (exitoFinal) {
-							texto = "Dependencia NBT descargada.\n\n"
-									+ "Reinicie CrashDetector si la fusion de SNBT todavia dice que falta el motor NBT.";
+							texto = "Dependencia NBT descargada.\n\n" + "Reinicie " + Statics.nombre_cd.obtener()
+									+ " si la fusion de SNBT todavia dice que falta el motor NBT.";
 						} else {
 							texto = "No se pudo descargar la dependencia NBT.";
 

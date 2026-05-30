@@ -427,7 +427,7 @@ public class JGitHubIzzy extends JGitHubBase {
 		}
 
 		String descripcion = JOptionPane.showInputDialog(this, MonitorDePID.idioma.jgitEscribaDescripcionRepositorio(),
-				"Repositorio creado desde CrashDetector");
+				"Repositorio creado desde " + Statics.nombre_cd.obtener());
 
 		if (descripcion == null) {
 			descripcion = repo;

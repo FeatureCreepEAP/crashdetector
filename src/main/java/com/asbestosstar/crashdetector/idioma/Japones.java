@@ -5688,7 +5688,8 @@ public class Japones implements Idioma {
 
 	@Override
 	public String advertenciaHashLento() {
-		return "警告: 大きなファイルを多数追加すると、検証に数分かかることがあります。CrashDetector は続行前に各ファイルのハッシュを計算する必要があります。厳密に必要なファイルのみを保護することをお勧めします。";
+		return "警告: 大きなファイルを多数追加すると、検証に数分かかることがあります。" + Statics.nombre_cd.obtener()
+				+ " は続行前に各ファイルのハッシュを計算する必要があります。厳密に必要なファイルのみを保護することをお勧めします。";
 	}
 
 	@Override
@@ -5719,7 +5720,7 @@ public class Japones implements Idioma {
 	@Override
 	public String mensajeDeSylentBell() {
 		return "<html><div style='width:150px; text-align:center;'>" + "Sylent Bell の意見やコメントは必ずしも私たちの見解と一致するわけではありません；"
-				+ "ただ、ここに置いたら面白いと思ったのです。CrashDetector は世俗的です。" + "</div></html>";
+				+ "ただ、ここに置いたら面白いと思ったのです。" + Statics.nombre_cd.obtener() + " は世俗的です。" + "</div></html>";
 	}
 
 	@Override
@@ -6071,10 +6072,11 @@ public class Japones implements Idioma {
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-		return "" + "<b>デバッグツール</b><br><br>" + "ここでは、CrashDetector やゲームのデバッグに役立つ高度な機能を有効化できます。<br><br>"
-				+ "分析中に詳細な情報、トレース、診断データを得るため、開発用コンソールの有効化を推奨します。<br><br>"
-				+ "オンラインモードでマルチプレイヤーサーバーをテストする必要がある場合、プライバシー設定から CrashDetector プロセスへアクセストークン（token de acceso）の転送を許可する必要があるかもしれません。"
-				+ "ただし、これは通常、他のケースでは<b>推奨されません</b>。<br><br>" + "詳細な手順: <a href='https://example.com'>リンク！</a>";
+		return "" + "<b>デバッグツール</b><br><br>" + "ここでは、" + Statics.nombre_cd.obtener()
+				+ " やゲームのデバッグに役立つ高度な機能を有効化できます。<br><br>" + "分析中に詳細な情報、トレース、診断データを得るため、開発用コンソールの有効化を推奨します。<br><br>"
+				+ "オンラインモードでマルチプレイヤーサーバーをテストする必要がある場合、プライバシー設定から " + Statics.nombre_cd.obtener()
+				+ " プロセスへアクセストークン（token de acceso）の転送を許可する必要があるかもしれません。" + "ただし、これは通常、他のケースでは<b>推奨されません</b>。<br><br>"
+				+ "詳細な手順: <a href='https://example.com'>リンク！</a>";
 	}
 
 	@Override
@@ -8699,7 +8701,7 @@ public class Japones implements Idioma {
 	}
 
 	public String jgitReiniciarParaCargarClasspath() {
-		return "新しい JAR ファイルをクラスパスに反映させるため、CrashDetector を再起動してください。";
+		return "新しい JAR ファイルをクラスパスに反映させるため、" + Statics.nombre_cd.obtener() + " を再起動してください。";
 	}
 
 	public String jgitArtefactosFaltantes() {
@@ -9693,7 +9695,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String gpuFixTextoWindows() {
-		return "CrashDetector は、Minecraft が高性能 GPU を使用していない可能性があることを検出しました。\n\n" + "Windows では、"
+		return Statics.nombre_cd.obtener() + " は、Minecraft が高性能 GPU を使用していない可能性があることを検出しました。\n\n" + "Windows では、"
 				+ "HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\DirectX\\\\UserGpuPreferences "
 				+ "にレジストリキーを設定して、javaw.exe に専用 GPU を使用させることができます。\n\n" + "GpuPreference=0 = Windows の自動決定。\n"
 				+ "GpuPreference=1 = 省電力 / 統合 GPU。\n" + "GpuPreference=2 = 高性能 GPU。\n\n"
@@ -9702,7 +9704,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String gpuFixTextoLinux() {
-		return "CrashDetector は、NVIDIA Optimus または PRIME に関連する潜在的な問題を検出しました。\n\n"
+		return Statics.nombre_cd.obtener() + " は、NVIDIA Optimus または PRIME に関連する潜在的な問題を検出しました。\n\n"
 				+ "使用している Linux ディストリビューションによっては、NVIDIA Optimus、"
 				+ "nvidia-prime、switcheroo-control、または他のハイブリッドシステムを構成する必要がある場合があります。\n\n"
 				+ "Fedora/RHEL およびその派生版では、通常 RPMFusion のドキュメントに従うことが推奨されます。\n\n" + "下のボタンは、推奨される公式ドキュメントを開きます。";
@@ -9710,7 +9712,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String gpuFixTextoMac() {
-		return "CrashDetector は、潜在的な GPU 選択問題を検出しました。\n\n"
+		return Statics.nombre_cd.obtener() + " は、潜在的な GPU 選択問題を検出しました。\n\n"
 				+ "ハイブリッド GPU を搭載した一部の macOS システムでは、高度なシステム設定を通じて専用 GPU の使用を強制することができます。\n\n"
 				+ "適用ボタンは、高性能 GPU を優先するためのコマンドを実行しようとします。";
 	}

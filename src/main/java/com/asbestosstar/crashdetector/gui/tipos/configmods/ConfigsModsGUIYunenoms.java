@@ -274,7 +274,8 @@ public class ConfigsModsGUIYunenoms extends ConfigsModsGUI {
 							mensaje += "\n\nError:\n" + textoError;
 						}
 
-						mensaje += "\n\nReinicie CrashDetector si las clases todavia no aparecen en el classpath.";
+						mensaje += "\n\nReinicie " + Statics.nombre_cd.obtener()
+								+ " si las clases todavia no aparecen en el classpath.";
 
 						JOptionPane.showMessageDialog(ConfigsModsGUIYunenoms.this, mensaje);
 					}

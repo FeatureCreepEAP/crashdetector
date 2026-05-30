@@ -30,11 +30,8 @@ public class Statics {
 
 	public static boolean app_en_cdlauncher = false; // Si la app es en modo relanzer
 
-	
-	
 	public static ConfigString nombre_cd = ConfigString.de("nombre_cd", "CrashDetector");
 
-	
 	/**
 	 * PARA JPMS
 	 */

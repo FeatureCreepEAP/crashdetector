@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 
 public class StikkedAPI implements APIdeSitioDeRegistro {
@@ -166,7 +167,7 @@ public class StikkedAPI implements APIdeSitioDeRegistro {
 		// Importante: URLEncoder sobre cada valor, no sobre el string completo.
 		String textEnc = URLEncoder.encode(texto, StandardCharsets.UTF_8.toString());
 		String titleEnc = URLEncoder.encode(titulo, StandardCharsets.UTF_8.toString());
-		String nameEnc = URLEncoder.encode("CrashDetector", StandardCharsets.UTF_8.toString());
+		String nameEnc = URLEncoder.encode(Statics.nombre_cd.obtener(), StandardCharsets.UTF_8.toString());
 		String privEnc = URLEncoder.encode("1", StandardCharsets.UTF_8.toString());
 		String langEnc = URLEncoder.encode("java", StandardCharsets.UTF_8.toString());
 

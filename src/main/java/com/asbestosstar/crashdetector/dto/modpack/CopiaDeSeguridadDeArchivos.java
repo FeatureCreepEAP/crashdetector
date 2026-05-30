@@ -26,6 +26,7 @@ import com.asbestosstar.crashdetector.config.ConfigDouble;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.gui.tipos.jgit.JGitAutoCommit;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
+import com.asbestosstar.crashdetector.Statics;
 
 public class CopiaDeSeguridadDeArchivos {
 
@@ -45,7 +46,7 @@ public class CopiaDeSeguridadDeArchivos {
 	private static final ExecutorService EJECUTOR_BACKUP = Executors.newSingleThreadExecutor(new ThreadFactory() {
 		@Override
 		public Thread newThread(Runnable r) {
-			Thread t = new Thread(r, "CrashDetector-AutoBackup-Modpack");
+			Thread t = new Thread(r, Statics.nombre_cd.obtener() + "-AutoBackup-Modpack");
 			t.setDaemon(true);
 			return t;
 		}

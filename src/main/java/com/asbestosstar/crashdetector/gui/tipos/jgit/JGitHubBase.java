@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.deps.DescargadorDependenciasMaven;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
@@ -69,7 +70,7 @@ public abstract class JGitHubBase extends JFrame implements CrashDetectorGUI, Bo
 	}
 
 	public boolean hacerCommitManual() {
-		return JGitReflexivo.commitAutomatico(carpetaActual(), "Commit manual de CrashDetector");
+		return JGitReflexivo.commitAutomatico(carpetaActual(), "Commit manual de " + Statics.nombre_cd.obtener());
 	}
 
 	public boolean hacerPushManual() {

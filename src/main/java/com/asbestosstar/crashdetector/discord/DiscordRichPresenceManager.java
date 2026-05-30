@@ -3,6 +3,7 @@ package com.asbestosstar.crashdetector.discord;
 import java.time.OffsetDateTime;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.Statics;
 import com.google.gson.JsonObject;
 import com.jagrosh.discordipc.IPCClient;
 import com.jagrosh.discordipc.IPCListener;
@@ -29,7 +30,7 @@ public class DiscordRichPresenceManager {
 			public void onReady(IPCClient client) {
 
 				RichPresence.Builder builder = new RichPresence.Builder();
-				builder.setState("CrashDetector")
+				builder.setState(Statics.nombre_cd.obtener())
 						.setDetails("https://www.curseforge.com/minecraft/mc-mods/crashdetector")
 						.setActivityType(ActivityType.Playing);
 

@@ -17,7 +17,7 @@ public class mod_CrashDetector extends BaseMod {
 
 	@Override
 	public String getVersion() {
-		return "CrashDetector";
+		return com.asbestosstar.crashdetector.Statics.nombre_cd.obtener();
 	}
 
 	@Override
