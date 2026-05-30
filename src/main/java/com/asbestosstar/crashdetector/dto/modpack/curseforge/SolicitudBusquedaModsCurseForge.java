@@ -1,16 +1,14 @@
 package com.asbestosstar.crashdetector.dto.modpack.curseforge;
 
-import com.asbestosstar.crashdetector.config.json.Json;
-import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
+
+import com.asbestosstar.crashdetector.config.json.Json;
+import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
 
 public class SolicitudBusquedaModsCurseForge {
 

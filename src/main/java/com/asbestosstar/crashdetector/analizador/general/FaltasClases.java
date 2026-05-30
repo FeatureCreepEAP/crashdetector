@@ -17,6 +17,7 @@ import javax.swing.JTextArea;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
@@ -969,8 +970,8 @@ public class FaltasClases implements Verificaciones {
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return com.asbestosstar.crashdetector.Statics.GIT
-				+ "src/main/java/com/asbestosstar/crashdetector/analizador/general/" + this.getClass().getSimpleName()
+		return Statics.GIT
+				+ "src/main/java/analizador/general/" + this.getClass().getSimpleName()
 				+ ".java";
 	}
 

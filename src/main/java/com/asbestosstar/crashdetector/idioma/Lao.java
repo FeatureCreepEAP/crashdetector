@@ -5333,7 +5333,7 @@ public class Lao implements Idioma {
 				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
 				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
 				.append("ບັນທຶກໄວ້ໃນໂຟລເດີຕໍ່ໄປນີ້:<br>").append("<b>")
-				.append(new java.io.File(com.asbestosstar.crashdetector.Statics.carpeta_mundial_como_archivo, "cfr/")
+				.append(new java.io.File(Statics.carpeta_mundial_como_archivo, "cfr/")
 						.getAbsolutePath())
 				.append("</b><br><br>")
 				.append("⚠️ <b>ສຳຄັນ:</b> ຫຼັງຈາກຕິດຕັ້ງ CFR, ທ່ານຕ້ອງ restart mod ເພື່ອໃຫ້ມັນຮັບຮູ້ຢ່າງຖືກຕ້ອງ.")

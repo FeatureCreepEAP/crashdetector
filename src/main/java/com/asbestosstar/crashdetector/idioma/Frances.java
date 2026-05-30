@@ -5379,7 +5379,7 @@ public class Frances implements Idioma {
 				.append("<a href=\\\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\\\">")
 				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
 				.append("Enregistrez-le dans le dossier suivant :<br>").append("<b>")
-				.append(new java.io.File(com.asbestosstar.crashdetector.Statics.carpeta_mundial_como_archivo, "cfr/")
+				.append(new java.io.File(Statics.carpeta_mundial_como_archivo, "cfr/")
 						.getAbsolutePath())
 				.append("</b><br><br>")
 				.append("⚠️ <b>Important :</b> après avoir installé CFR, vous devez redémarrer le mod pour qu'il le reconnaisse correctement.")

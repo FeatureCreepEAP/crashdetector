@@ -1,6 +1,5 @@
 package com.asbestosstar.crashdetector.cargador;
 
-import java.io.File;
 import java.util.Locale;
 
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;

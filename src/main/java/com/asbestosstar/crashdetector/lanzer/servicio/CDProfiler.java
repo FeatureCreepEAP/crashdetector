@@ -7,7 +7,12 @@ import java.security.ProtectionDomain;
 import java.util.Arrays;
 import java.util.List;
 
-import org.objectweb.asm.*;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.AdviceAdapter;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
@@ -35,7 +40,7 @@ public class CDProfiler implements ServicioCDLauncher {
 	 * puede extender dinámicamente si se requiere.
 	 */
 	private static final List<String> DENYLIST_PREFIXES = Arrays.asList("java/", "javax/", "sun/", "com/sun/", "jdk/",
-			"org/objectweb/asm/", "com/asbestosstar/crashdetector/", "com/google/", "org/apache/logging/", "org/lwjgl/",
+			"org/objectweb/asm/", "", "com/google/", "org/apache/logging/", "org/lwjgl/",
 			"org/antlr/", "org/apache/log4j/", "org/apache/commons/logging/", "org/slf4j/", "ch/qos/logback/",
 			"cpw/mods/", "joptsimple/", "net/neoforged/", "net/minecraftforge/", "net/fabricmc/loader/",
 			"org/spongepowered/asm/"

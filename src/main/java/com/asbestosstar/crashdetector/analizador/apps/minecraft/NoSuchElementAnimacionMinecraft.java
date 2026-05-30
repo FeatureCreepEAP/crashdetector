@@ -9,9 +9,10 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.EliminadorDeMod;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -206,8 +207,8 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return com.asbestosstar.crashdetector.Statics.GIT
-				+ "src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
+		return Statics.GIT
+				+ "src/main/java/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
 

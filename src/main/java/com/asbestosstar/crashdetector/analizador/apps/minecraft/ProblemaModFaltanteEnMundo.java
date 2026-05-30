@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
@@ -262,8 +263,8 @@ public class ProblemaModFaltanteEnMundo implements Verificaciones {
 
 	@Override
 	public String enlaceACodigo() {
-		return com.asbestosstar.crashdetector.Statics.GIT
-				+ "src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
+		return Statics.GIT
+				+ "src/main/java/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
 

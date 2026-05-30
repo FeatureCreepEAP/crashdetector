@@ -1,22 +1,18 @@
 package com.asbestosstar.crashdetector;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.zip.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 
 import javax.swing.JOptionPane;
-
-import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
-import com.asbestosstar.crashdetector.parches.ConfigDeParches;
 
 public class EliminadorDeMod {
 

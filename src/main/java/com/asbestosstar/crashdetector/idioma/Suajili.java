@@ -5275,7 +5275,7 @@ public class Suajili implements Idioma {
 				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
 				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
 				.append("Lihifadhi katika folda ifuatayo:<br>").append("<b>")
-				.append(new java.io.File(com.asbestosstar.crashdetector.Statics.carpeta_mundial_como_archivo, "cfr/")
+				.append(new java.io.File(Statics.carpeta_mundial_como_archivo, "cfr/")
 						.getAbsolutePath())
 				.append("</b><br><br>")
 				.append("⚠️ <b>Muhimu:</b> baada ya kusakinisha CFR, unapaswa kuanzisha upya mod ili itambue vizuri.")

@@ -90,7 +90,7 @@ public class CDSampler implements ServicioCDLauncher {
 		// Filtrado básico
 		if (nombreClase.startsWith("java/") || nombreClase.startsWith("javax/") || nombreClase.startsWith("sun/")
 				|| nombreClase.startsWith("jdk/") || nombreClase.startsWith("org/objectweb/asm/")
-				|| nombreClase.startsWith("com/asbestosstar/crashdetector/gui/")) {
+				|| nombreClase.startsWith("gui/")) {
 			return;
 		}
 
@@ -226,7 +226,7 @@ public class CDSampler implements ServicioCDLauncher {
 
 		// Lista centralizada de prefijos de clases a ignorar
 		private static final List<String> DENYLIST_PREFIXES = Arrays.asList("java/", "javax/", "sun/", "com/sun/",
-				"jdk/", "org/objectweb/asm/", "com/asbestosstar/crashdetector/", "com/google/", "org/apache/logging/",
+				"jdk/", "org/objectweb/asm/", "", "com/google/", "org/apache/logging/",
 				"org/lwjgl/", "org/antlr/", "org/apache/log4j/", "org/apache/commons/logging/", "org/slf4j/",
 				"ch/qos/logback/", "cpw/mods/", "joptsimple/", "net/neoforged/", "net/minecraftforge/",
 				"net/fabricmc/loader/", "org/spongepowered/asm/"

@@ -4692,7 +4692,7 @@ public class Japones implements Idioma {
 				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
 				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
 				.append("以下のフォルダに保存してください:<br>").append("<b>")
-				.append(new java.io.File(com.asbestosstar.crashdetector.Statics.carpeta_mundial_como_archivo, "cfr/")
+				.append(new java.io.File(Statics.carpeta_mundial_como_archivo, "cfr/")
 						.getAbsolutePath())
 				.append("</b><br><br>").append("⚠️ <b>重要:</b> CFR をインストール後、mod を再起動しないと正しく認識されません。").append("</html>");
 		return mensaje.toString();

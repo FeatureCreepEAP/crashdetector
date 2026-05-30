@@ -12,8 +12,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.Icon;
-
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.idioma.Arabe;
 import com.asbestosstar.crashdetector.idioma.Chino;
