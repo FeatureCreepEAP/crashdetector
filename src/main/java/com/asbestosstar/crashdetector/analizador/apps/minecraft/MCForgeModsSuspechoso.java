@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Consola;
-import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
@@ -623,7 +622,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
-		return new QuickFix.Builder(nombre()).agregarEtiqueta("No hay solución disponible").construir();
+		return QuickFix.NINGUN;
 	}
 
 	@Override

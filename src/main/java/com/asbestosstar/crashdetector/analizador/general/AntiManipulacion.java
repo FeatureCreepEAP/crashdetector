@@ -44,29 +44,20 @@ public class AntiManipulacion implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola) {
-		if (completa) {
-			return;
-		}
-		this.completa = true;
-
-		if (!ARCHIVO_ANTIMANIPULACION.toFile().exists()) {
+		if (consola == null) {
 			return;
 		}
 
-		String contenido;
-		try {
-			contenido = new String(Files.readAllBytes(ARCHIVO_ANTIMANIPULACION),
-					java.nio.charset.StandardCharsets.UTF_8);
-		} catch (IOException e) {
-			return;
-		}
+		List<String> errores = new ArrayList<>();
 
-		if (contenido == null || contenido.trim().isEmpty()) {
+		Path archivoHashes = Paths.get("anti_manipulacion.json");
+		if (!Files.exists(archivoHashes)) {
 			return;
 		}
 
 		Nodo raiz;
 		try {
+			String contenido = new String(Files.readAllBytes(archivoHashes), java.nio.charset.StandardCharsets.UTF_8);
 			raiz = Json.leer(contenido);
 		} catch (Exception e) {
 			return;
@@ -76,21 +67,16 @@ public class AntiManipulacion implements Verificaciones {
 			return;
 		}
 
-		List<String> errores = new ArrayList<>();
-		int tam = raiz.tamano();
-
-		// Determinar el número de hilos a usar.
-		int numHilos = Runtime.getRuntime().availableProcessors();
-		ForkJoinPool pool = new ForkJoinPool(numHilos);
+		ForkJoinPool pool = new ForkJoinPool(Math.max(1, Runtime.getRuntime().availableProcessors()));
 
 		try {
-			for (int i = 0; i < tam; i++) {
+			for (int i = 0; i < raiz.tamano(); i++) {
 				Nodo item = raiz.en(i);
+
 				if (item == null || !item.esObjeto()) {
 					continue;
 				}
 
-				// Validar existencia real de la clave "ruta".
 				if (!item.claves().contains("ruta")) {
 					continue;
 				}
@@ -132,13 +118,13 @@ public class AntiManipulacion implements Verificaciones {
 
 					// Validar existencia real de la clave "hashes".
 					if (!item.claves().contains("hashes")) {
-						errores.add("Entrada de carpeta inválida: " + rutaRelativa);
+						errores.add(MonitorDePID.idioma.entradaCarpetaInvalida(rutaRelativa));
 						continue;
 					}
 
 					Nodo nodoHashes = item.obtener("hashes");
 					if (nodoHashes == null || !nodoHashes.esObjeto()) {
-						errores.add("Entrada de carpeta inválida: " + rutaRelativa);
+						errores.add(MonitorDePID.idioma.entradaCarpetaInvalida(rutaRelativa));
 						continue;
 					}
 
@@ -168,7 +154,7 @@ public class AntiManipulacion implements Verificaciones {
 					}
 
 					if (hashesEsperados.isEmpty()) {
-						errores.add("Carpeta sin hashes: " + rutaRelativa);
+						errores.add(MonitorDePID.idioma.carpetaSinHashes(rutaRelativa));
 						continue;
 					}
 
@@ -179,7 +165,7 @@ public class AntiManipulacion implements Verificaciones {
 					try {
 						Files.walk(rutaAbsoluta).filter(Files::isRegularFile).forEach(archivosParaHash::add);
 					} catch (IOException e) {
-						errores.add("No se pudo acceder a la carpeta: " + rutaRelativa);
+						errores.add(MonitorDePID.idioma.noSePudoAccederCarpeta(rutaRelativa));
 						continue;
 					}
 
@@ -193,16 +179,16 @@ public class AntiManipulacion implements Verificaciones {
 						String hashReal = hashesReales.get(subRuta);
 
 						if (hashReal == null) {
-							errores.add("Archivo faltante en carpeta: " + rutaRelativa + "/" + subRuta);
+							errores.add(MonitorDePID.idioma.archivoFaltanteEnCarpeta(rutaRelativa, subRuta));
 						} else if (!hashReal.equals(hashEsperado)) {
-							errores.add("Hash incorrecto en: " + rutaRelativa + "/" + subRuta);
+							errores.add(MonitorDePID.idioma.hashIncorrectoEn(rutaRelativa, subRuta));
 						}
 					}
 
 					// 2. Verificar archivos nuevos no esperados.
 					for (String subRuta : hashesReales.keySet()) {
 						if (!hashesEsperados.containsKey(subRuta)) {
-							errores.add("Archivo no autorizado en carpeta: " + rutaRelativa + "/" + subRuta);
+							errores.add(MonitorDePID.idioma.archivoNoAutorizadoEnCarpeta(rutaRelativa, subRuta));
 						}
 					}
 
@@ -211,24 +197,24 @@ public class AntiManipulacion implements Verificaciones {
 
 					// Validar existencia real de la clave "hash".
 					if (!item.claves().contains("hash")) {
-						errores.add("Entrada de archivo inválida: " + rutaRelativa);
+						errores.add(MonitorDePID.idioma.entradaArchivoInvalida(rutaRelativa));
 						continue;
 					}
 
 					Nodo nodoHash = item.obtener("hash");
 					if (nodoHash == null || nodoHash.esObjeto() || nodoHash.esArreglo()) {
-						errores.add("Entrada de archivo inválida: " + rutaRelativa);
+						errores.add(MonitorDePID.idioma.entradaArchivoInvalida(rutaRelativa));
 						continue;
 					}
 
 					String hashEsperado = nodoHash.comoCadena();
 					if (hashEsperado == null || hashEsperado.trim().isEmpty()) {
-						errores.add("Hash faltante para archivo: " + rutaRelativa);
+						errores.add(MonitorDePID.idioma.hashFaltanteParaArchivo(rutaRelativa));
 						continue;
 					}
 
 					if (!Files.exists(rutaAbsoluta)) {
-						errores.add("Archivo faltante: " + rutaRelativa);
+						errores.add(MonitorDePID.idioma.archivoFaltante(rutaRelativa));
 						continue;
 					}
 
@@ -236,12 +222,12 @@ public class AntiManipulacion implements Verificaciones {
 					try {
 						hashReal = calcularHash(rutaAbsoluta);
 					} catch (IOException e) {
-						errores.add("Error al leer archivo: " + rutaRelativa);
+						errores.add(MonitorDePID.idioma.errorAlLeerArchivo(rutaRelativa));
 						continue;
 					}
 
 					if (!hashReal.equals(hashEsperado)) {
-						errores.add("Hash incorrecto para archivo: " + rutaRelativa);
+						errores.add(MonitorDePID.idioma.hashIncorrectoParaArchivo(rutaRelativa));
 					}
 				}
 			}
