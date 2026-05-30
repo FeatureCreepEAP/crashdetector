@@ -131,15 +131,12 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 				.agregarBoton(MonitorDePID.idioma.buscar(), (retener) -> {
 
 					List<RespuestaWaifu.Mod> modsEncontrados = new ArrayList<>();
-
 					String clase = (String) claseCombo.getSelectedItem();
 
 					if (clase != null) {
 
-						// La nueva API busca en todos los cargadores/versiones disponibles.
 						modsEncontrados.addAll(WaifuAPI.obtanerModDesdeClase(clase));
 
-						// Crear popup con resultados
 						JTextArea textoResultados = new JTextArea(15, 40);
 						textoResultados.setEditable(false);
 
@@ -148,35 +145,38 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 						} else {
 
 							StringBuilder sb = new StringBuilder();
-							sb.append("Mods encontrados para ").append(clase).append(":\n");
+							sb.append(MonitorDePID.idioma.modsEncontradosPara(clase)).append(":\n");
 
 							for (RespuestaWaifu.Mod mod : modsEncontrados) {
 
-								sb.append("\nMod: ").append(mod.name);
+								sb.append("\n").append(MonitorDePID.idioma.mod()).append(": ").append(mod.name);
 
 								try {
 									if (mod.cargador != null || mod.version_del_juego != null) {
-										sb.append("\nVersión: ")
-												.append(mod.cargador != null ? mod.cargador : "desconocido").append(" ")
+										sb.append("\n").append(MonitorDePID.idioma.version()).append(": ")
+												.append(mod.cargador != null ? mod.cargador
+														: MonitorDePID.idioma.desconocido())
+												.append(" ")
 												.append(mod.version_del_juego != null ? mod.version_del_juego
-														: "desconocida");
+														: MonitorDePID.idioma.desconocida());
 									}
 
 									if (mod.claseEncontrada != null && !mod.claseEncontrada.isEmpty()) {
-										sb.append("\nClase encontrada: ").append(mod.claseEncontrada);
+										sb.append("\n").append(MonitorDePID.idioma.claseEncontrada()).append(": ")
+												.append(mod.claseEncontrada);
 									}
 								} catch (Throwable ignorado) {
-									// Compatibilidad si RespuestaWaifu.Mod no tiene esos campos.
+									// Compatibilidad si RespuestaWaifu.Mod no tiene esos campos
 								}
 
 								if (mod.curseforgeProjectId != null) {
-									sb.append("\nCurseForge URL: https://cflookup.com/")
-											.append(mod.curseforgeProjectId);
+									sb.append("\n").append(MonitorDePID.idioma.curseForgeUrl())
+											.append(": https://cflookup.com/").append(mod.curseforgeProjectId);
 								}
 
 								if (mod.modrinthProjectId != null) {
-									sb.append("\nModrinth URL: https://modrinth.com/mod/")
-											.append(mod.modrinthProjectId);
+									sb.append("\n").append(MonitorDePID.idioma.modrinthUrl())
+											.append(": https://modrinth.com/mod/").append(mod.modrinthProjectId);
 								}
 
 								sb.append("\n-------------------");
@@ -185,9 +185,12 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 							textoResultados.setText(sb.toString());
 						}
 
-						JOptionPane.showMessageDialog(null, new JScrollPane(textoResultados), "Resultados de búsqueda",
-								JOptionPane.INFORMATION_MESSAGE);
+						textoResultados.setCaretPosition(0);
+
+						JOptionPane.showMessageDialog(null, new JScrollPane(textoResultados),
+								MonitorDePID.idioma.resultadosDeBusqueda(), JOptionPane.INFORMATION_MESSAGE);
 					}
+
 				}, true).construir();
 	}
 

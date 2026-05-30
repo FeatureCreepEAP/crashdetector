@@ -904,34 +904,38 @@ public class FaltasClases implements Verificaciones {
 						} else {
 
 							StringBuilder sb = new StringBuilder();
-							sb.append("Mods encontrados para ").append(clase).append(":\n");
+							sb.append(MonitorDePID.idioma.modsEncontradosPara(clase)).append(":\n");
 
 							for (RespuestaWaifu.Mod mod : modsEncontrados) {
 
-								sb.append("\nMod: ").append(mod.name);
+								sb.append("\n").append(MonitorDePID.idioma.mod()).append(": ").append(mod.name);
 
 								if (mod.cargador != null || mod.version_del_juego != null) {
-									sb.append("\nVersión: ").append(mod.cargador != null ? mod.cargador : "desconocido")
+									sb.append("\n").append(MonitorDePID.idioma.version()).append(": ")
+											.append(mod.cargador != null ? mod.cargador
+													: MonitorDePID.idioma.desconocido())
 											.append(" ").append(mod.version_del_juego != null ? mod.version_del_juego
-													: "desconocida");
+													: MonitorDePID.idioma.desconocida());
 								}
 
 								if (mod.claseEncontrada != null && !mod.claseEncontrada.isEmpty()) {
-									sb.append("\nClase encontrada: ").append(mod.claseEncontrada);
+									sb.append("\n").append(MonitorDePID.idioma.claseEncontrada()).append(": ")
+											.append(mod.claseEncontrada);
 								}
 
 								if (mod.cantidadClasesEncontradas != null) {
-									sb.append("\nCoincidencias: ").append(mod.cantidadClasesEncontradas);
+									sb.append("\n").append(MonitorDePID.idioma.coincidencias()).append(": ")
+											.append(mod.cantidadClasesEncontradas);
 								}
 
 								if (mod.curseforgeProjectId != null) {
-									sb.append("\nCurseForge URL: https://cflookup.com/")
-											.append(mod.curseforgeProjectId);
+									sb.append("\n").append(MonitorDePID.idioma.curseForgeUrl())
+											.append(": https://cflookup.com/").append(mod.curseforgeProjectId);
 								}
 
 								if (mod.modrinthProjectId != null) {
-									sb.append("\nModrinth URL: https://modrinth.com/mod/")
-											.append(mod.modrinthProjectId);
+									sb.append("\n").append(MonitorDePID.idioma.modrinthUrl())
+											.append(": https://modrinth.com/mod/").append(mod.modrinthProjectId);
 								}
 
 								sb.append("\n-------------------");
@@ -942,8 +946,8 @@ public class FaltasClases implements Verificaciones {
 
 						textoResultados.setCaretPosition(0);
 
-						JOptionPane.showMessageDialog(null, new JScrollPane(textoResultados), "Resultados de búsqueda",
-								JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, new JScrollPane(textoResultados),
+								MonitorDePID.idioma.resultadosDeBusqueda(), JOptionPane.INFORMATION_MESSAGE);
 					}
 				}, true).construir();
 	}
