@@ -37,6 +37,7 @@ import org.w3c.dom.Element;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.dmr.Dmr;
 import com.asbestosstar.crashdetector.config.hocon.Hocon;
 import com.asbestosstar.crashdetector.config.ini.Ini;
@@ -672,7 +673,7 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 		}
 	}
 
-	public static final File CARPETA_DEPS_CONFIGS = new File(System.getProperty("user.home"), "crash_detector/deps");
+	public static final File CARPETA_DEPS_CONFIGS = new File(Statics.carpeta_mundial_como_archivo, "deps");
 
 	public static class DependenciaConfigMods {
 

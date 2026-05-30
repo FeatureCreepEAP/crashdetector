@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
@@ -115,7 +116,7 @@ public abstract class CfrBase extends JFrame implements CrashDetectorGUI {
 		});
 
 		btnAbrirCarpeta.addActionListener(e -> {
-			Path carpeta = java.nio.file.Paths.get(System.getProperty("user.home"), "crash_detector", "deps");
+			Path carpeta = Statics.carpeta_mundial.resolve("deps");
 			try {
 				if (!Files.exists(carpeta)) {
 					Files.createDirectories(carpeta);

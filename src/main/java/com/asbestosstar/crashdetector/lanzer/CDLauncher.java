@@ -473,7 +473,7 @@ public class CDLauncher {
 		String sep = System.getProperty("path.separator");
 		String home = System.getProperty("user.home");
 
-		File carpetaCrashDetector = new File(home, "crash_detector");
+		File carpetaCrashDetector = Statics.carpeta_mundial_como_archivo;
 
 		String rutaCarpetaCrashDetector = null;
 		try {

@@ -5169,7 +5169,8 @@ public class Tailandes implements Idioma {
 				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
 				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
 				.append("บันทึกไฟล์ไว้ในโฟลเดอร์ต่อไปนี้:<br>").append("<b>")
-				.append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+				.append(new java.io.File(com.asbestosstar.crashdetector.Statics.carpeta_mundial_como_archivo, "cfr/")
+						.getAbsolutePath())
 				.append("</b><br><br>")
 				.append("⚠️ <b>สำคัญ:</b> หลังจากติดตั้ง CFR แล้ว ต้องรีสตาร์ทม็อดเพื่อให้ระบบตรวจพบอย่างถูกต้อง")
 				.append("</html>");

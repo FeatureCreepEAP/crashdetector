@@ -303,8 +303,9 @@ public class JavaVersiones implements Verificaciones {
 
 	@Override
 	public String enlaceACodigo() {
-		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"
-				+ this.getClass().getSimpleName() + ".java";
+		return com.asbestosstar.crashdetector.Statics.GIT
+				+ "src/main/java/com/asbestosstar/crashdetector/analizador/general/" + this.getClass().getSimpleName()
+				+ ".java";
 	}
 
 	@Override

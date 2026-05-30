@@ -13,12 +13,12 @@ import com.asbestosstar.crashdetector.Statics;
  */
 public class BuscarParaCFR {
 
-	public static final File CARPETA_DEPS = new File(System.getProperty("user.home"), "crash_detector/deps");
+	public static final File CARPETA_DEPS = new File(Statics.carpeta_mundial_como_archivo, "deps");
 
 	public static final File CARPETA_DEPS_INSTANCIA = Statics.carpeta.resolve("deps").toFile();
 
 	// Compatibilidad legacy: ubicación vieja.
-	public static final File CARPETA_CFR_LEGACY = new File(System.getProperty("user.home"), "crash_detector/cfr");
+	public static final File CARPETA_CFR_LEGACY = new File(Statics.carpeta_mundial_como_archivo, "cfr");
 
 	private static final List<String> UBICACIONES_COMUNES = Arrays.asList("/usr/share/java/CFR/cfr.jar",
 			"/usr/local/share/java/CFR/cfr.jar", "/opt/cfr/cfr.jar", "/usr/share/java/cfr.jar",

@@ -39,7 +39,7 @@ public interface Idioma {
 	Config config = Config.obtenerInstancia();
 
 	@Deprecated
-	public static File archivo = new File(System.getProperty("user.home"), "crash_detector/idioma");
+	public static File archivo = new File(Statics.carpeta_mundial_como_archivo, "idioma");
 
 	public static ConfigString idioma_respaldo = ConfigString.de("idioma_respaldo", "es");
 

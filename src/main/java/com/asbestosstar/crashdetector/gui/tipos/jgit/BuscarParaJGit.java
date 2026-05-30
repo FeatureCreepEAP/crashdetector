@@ -16,12 +16,12 @@ import com.asbestosstar.crashdetector.Statics;
  */
 public class BuscarParaJGit {
 
-	public static final File CARPETA_JGIT = new File(System.getProperty("user.home"), "crash_detector/deps");
+	public static final File CARPETA_JGIT = new File(Statics.carpeta_mundial_como_archivo, "deps");
 
 	public static final File CARPETA_JGIT_INSTANCIA = Statics.carpeta.resolve("deps").toFile();
 
 	// Compatibilidad legacy: ubicación vieja.
-	public static final File CARPETA_JGIT_LEGACY = new File(System.getProperty("user.home"), "crash_detector/jgit");
+	public static final File CARPETA_JGIT_LEGACY = new File(Statics.carpeta_mundial_como_archivo, "jgit");
 
 	public static final String VERSION_JGIT = "5.13.3.202401111512-r";
 

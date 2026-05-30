@@ -3,8 +3,8 @@ package com.asbestosstar.crashdetector.api_sito_registro;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 
@@ -15,8 +15,7 @@ import com.asbestosstar.crashdetector.config.json.Json.Nodo;
  */
 public class HistoriaCDPaste {
 
-	public static final Path ARCHIVO = Paths.get(System.getProperty("user.home"), "crash_detector",
-			"historia_cdpaste.txt");
+	public static final Path ARCHIVO = Statics.carpeta_mundial.resolve("historia_cdpaste.txt");
 
 	/**
 	 * Agrega una entrada nueva al historial.

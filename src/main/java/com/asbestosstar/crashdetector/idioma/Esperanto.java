@@ -4849,7 +4849,8 @@ public class Esperanto implements Idioma {
 				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
 				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
 				.append("Konservu ĝin en la sekva dosierujo:<br>").append("<b>")
-				.append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+				.append(new java.io.File(com.asbestosstar.crashdetector.Statics.carpeta_mundial_como_archivo, "cfr/")
+						.getAbsolutePath())
 				.append("</b><br><br>")
 				.append("⚠️ <b>Grava:</b> post instali CFR, vi devas restartigi la modon por ke ĝi ĝuste rekonu ĝin.")
 				.append("</html>");

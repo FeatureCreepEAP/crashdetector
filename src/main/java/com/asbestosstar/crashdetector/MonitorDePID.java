@@ -500,7 +500,7 @@ public class MonitorDePID {
 			// Si falla la búsqueda de JGit, se ignora.
 		}
 
-		File universal_deps = new File(System.getProperty("user.home"), "crash_detector/deps");
+		File universal_deps = new File(Statics.carpeta_mundial_como_archivo, "deps");
 		File instancia_deps = Statics.carpeta.resolve("deps").toFile();
 
 		universal_deps.mkdirs();

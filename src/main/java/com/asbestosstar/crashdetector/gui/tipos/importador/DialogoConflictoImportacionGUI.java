@@ -210,7 +210,7 @@ public abstract class DialogoConflictoImportacionGUI extends JDialog implements 
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(fecha));
 	}
 
-	public static final File CARPETA_DEPS_IMPORTADOR = new File(System.getProperty("user.home"), "crash_detector/deps");
+	public static final File CARPETA_DEPS_IMPORTADOR = new File(Statics.carpeta_mundial_como_archivo, "deps");
 
 	public boolean dependenciaNbtDisponible() {
 		if (nombreMotorNbtDisponible()) {

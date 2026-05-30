@@ -51,7 +51,7 @@ import com.asbestosstar.crashdetector.Statics;
  */
 public class DescargadorDependenciasMaven {
 
-	private static final File UNIVERSAL_DEPS = new File(System.getProperty("user.home"), "crash_detector/deps");
+	private static final File UNIVERSAL_DEPS = new File(Statics.carpeta_mundial_como_archivo, "deps");
 
 	/*
 	 * Guardado plano: no se usa estructura Maven local.

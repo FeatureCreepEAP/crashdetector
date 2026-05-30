@@ -21,8 +21,8 @@ public class ConfigMundial {
 	private static final String CLAVE_RUTA_EJECUTABLE_JAVA_8 = "ruta_ejecutable_java_8";
 	private static final String VALOR_POR_DEFECTO_RUTA_EJECUTABLE_JAVA_8 = "";
 
-	private static final File ARCHIVO_CONFIG_MUNIDIAL = new File(System.getProperty("user.home"),
-			"crash_detector/config_munidial.properties");
+	private static final File ARCHIVO_CONFIG_MUNIDIAL = new File(Statics.carpeta_mundial_como_archivo,
+			"config_munidial.properties");
 
 	private static ConfigMundial instancia;
 

@@ -5217,7 +5217,8 @@ public class Khmer implements Idioma {
 				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
 				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
 				.append("រក្សាទុកវានៅក្នុងថតខាងក្រោម៖<br>").append("<b>")
-				.append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+				.append(new java.io.File(com.asbestosstar.crashdetector.Statics.carpeta_mundial_como_archivo, "cfr/")
+						.getAbsolutePath())
 				.append("</b><br><br>")
 				.append("⚠️ <b>សំខាន់៖</b> បន្ទាប់ពីដំឡើង CFR អ្នកត្រូវចាប់ផ្តើម mod ឡើងវិញ ដើម្បីឲ្យវាត្រូវបានស្គាល់។")
 				.append("</html>");

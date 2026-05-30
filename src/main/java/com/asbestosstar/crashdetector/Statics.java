@@ -26,11 +26,15 @@ public class Statics {
 
 	public static File carpeta_como_archivo = new File("crash_detector/");
 	public static Path carpeta = carpeta_como_archivo.toPath();
+	public static File carpeta_mundial_como_archivo = new File(System.getProperty("user.home"), "crash_detector/");
+	public static Path carpeta_mundial = carpeta_mundial_como_archivo.toPath();
 	public static String lanzer_del_app = LanzerOtra.ID;
 
 	public static boolean app_en_cdlauncher = false; // Si la app es en modo relanzer
 
 	public static ConfigString nombre_cd = ConfigString.de("nombre_cd", "CrashDetector");
+	public static String GIT = "https://pagure.io/CrashDetectorMC/blob/main/f/";
+	public static String GIT_RAW = "https://pagure.io/CrashDetectorMC/raw/main/f/";
 
 	/**
 	 * PARA JPMS

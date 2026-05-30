@@ -13,7 +13,7 @@ public class MarkdownHTML {
 	public static List<String> enlaces_de_imagenes = new ArrayList<String>();
 
 	static {
-		enlaces_de_imagenes.add("https://pagure.io/CrashDetectorMC/raw/main/f/src/main/resources/");
+		enlaces_de_imagenes.add(com.asbestosstar.crashdetector.Statics.GIT_RAW + "src/main/resources/");
 	}
 
 	/**
