@@ -114,7 +114,12 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 				|| (contenido.contains("Failure message: Mod ")
 						&& (contenido.contains(" requires ") || contenido.contains(" only supports ")))
 				|| (contenido.contains("Remove Iris/Oculus & GeckoLib Compat") && contenido.contains("geckoanimfix"))
-				|| (contenido.contains("Currently,") && contenido.contains("not installed"));
+				|| (contenido.contains("Currently,") && contenido.contains("not installed"))
+
+				|| (contenido.contains("requires any ") && contenido.contains(" version of ")
+						&& contenido.contains("wrong version is present"))
+
+		;
 
 		if (posible) {
 			posiblePorConsola = true;
@@ -294,8 +299,110 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 			}
 
+		} // Formato moderno de dependencia con versión incorrecta.
+			// Ejemplo:
+			// - §Emod Geckolib (geckolib3)§r 3.0.42 requires any 1.16.x version of
+			// §6mod Minecraft (minecraft)§r, but only the wrong version is present: 1.20.1!
+		if (lineaActual.contains("requires any ") && lineaActual.contains(" version of ")
+				&& lineaActual.contains("wrong version is present")) {
+
+			procesarFormatoVersionEquivocada(consola, lineaActual, numero_de_linea);
+			return;
 		}
 
+	}
+
+	private void procesarFormatoVersionEquivocada(Consola consola, String lineaActual, int numero_de_linea) {
+		try {
+			String limpia = limpiarFormato(lineaActual);
+
+			// Extraer el mod que tiene el problema.
+			String modId = extraerPrimerTextoEntreParentesis(limpia, 0);
+			if (modId.isEmpty()) {
+				modId = "desconocido";
+			}
+
+			// Extraer la versión requerida.
+			String claveInicioVersion = "requires any ";
+			String claveFinVersion = " version of ";
+
+			int inicioVersion = limpia.indexOf(claveInicioVersion);
+			int finVersion = limpia.indexOf(claveFinVersion, inicioVersion);
+
+			String versionRequerida = "desconocida";
+
+			if (inicioVersion != -1 && finVersion != -1) {
+				versionRequerida = limpia.substring(inicioVersion + claveInicioVersion.length(), finVersion).trim();
+			}
+
+			// Extraer la dependencia. Normalmente está entre paréntesis después de "version
+			// of".
+			String dependencia = "desconocida";
+
+			int inicioDependencia = finVersion == -1 ? -1 : finVersion + claveFinVersion.length();
+
+			if (inicioDependencia != -1 && inicioDependencia < limpia.length()) {
+				String depEntreParentesis = extraerPrimerTextoEntreParentesis(limpia, inicioDependencia);
+
+				if (!depEntreParentesis.isEmpty()) {
+					dependencia = depEntreParentesis;
+				} else {
+					int finDependencia = limpia.indexOf(",", inicioDependencia);
+					if (finDependencia == -1) {
+						finDependencia = limpia.length();
+					}
+
+					dependencia = limpia.substring(inicioDependencia, finDependencia).trim();
+				}
+			}
+
+			// Extraer la versión presente.
+			String versionActual = "desconocida";
+
+			String claveVersionActual = "present:";
+			int inicioActual = limpia.indexOf(claveVersionActual);
+
+			if (inicioActual != -1) {
+				inicioActual += claveVersionActual.length();
+
+				int finActual = limpia.indexOf("!", inicioActual);
+				if (finActual == -1) {
+					finActual = limpia.length();
+				}
+
+				versionActual = limpia.substring(inicioActual, finActual).trim();
+			}
+
+			String mensaje = MonitorDePID.idioma.errorVersionDependencia(modId, dependencia, versionRequerida,
+					versionActual);
+
+			if (errores.add(mensaje)) {
+				String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+				enlacesPorError.put(mensaje, enlace);
+				activado = true;
+			}
+
+		} catch (Exception e) {
+			consola.agregarErrorALectador(numero_de_linea, this);
+		}
+	}
+
+	private String extraerPrimerTextoEntreParentesis(String texto, int desde) {
+		if (texto == null || desde < 0 || desde >= texto.length()) {
+			return "";
+		}
+
+		int inicio = texto.indexOf("(", desde);
+		if (inicio == -1) {
+			return "";
+		}
+
+		int fin = texto.indexOf(")", inicio + 1);
+		if (fin == -1) {
+			return "";
+		}
+
+		return texto.substring(inicio + 1, fin).trim();
 	}
 
 	/**
