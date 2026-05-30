@@ -1,11 +1,14 @@
 package com.asbestosstar.crashdetector;
 
+import java.io.File;
 import java.lang.instrument.Instrumentation;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.JarFile;
 
 import com.asbestosstar.crashdetector.lanzer.servicio.CDProfiler;
 import com.asbestosstar.crashdetector.lanzer.servicio.CDSampler;

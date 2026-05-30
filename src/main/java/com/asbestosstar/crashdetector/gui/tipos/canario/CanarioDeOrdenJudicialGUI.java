@@ -11,6 +11,7 @@ import com.asbestosstar.crashdetector.canario.CanarioDeOrdenJudicial;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoBase;
 
 /**
  * GUI base para búsqueda de canarios de orden judicial.

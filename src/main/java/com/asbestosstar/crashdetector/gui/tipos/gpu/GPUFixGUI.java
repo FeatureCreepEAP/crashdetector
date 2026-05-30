@@ -4,6 +4,7 @@ package com.asbestosstar.crashdetector.gui.tipos.gpu;
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.FlowLayout;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -17,6 +18,7 @@ import javax.swing.JTextArea;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 

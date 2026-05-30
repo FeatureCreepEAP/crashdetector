@@ -1,10 +1,13 @@
 package com.asbestosstar.crashdetector.buscar;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
+
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 
 public class ProcesadorManifiesto {
 

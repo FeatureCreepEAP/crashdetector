@@ -3,11 +3,11 @@ package com.asbestosstar.crashdetector.gui.tipos.antimanipulacion;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;

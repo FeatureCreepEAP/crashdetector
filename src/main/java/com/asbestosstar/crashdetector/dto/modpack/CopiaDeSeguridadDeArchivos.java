@@ -21,11 +21,12 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
-import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigDouble;
 import com.asbestosstar.crashdetector.config.ConfigString;
+import com.asbestosstar.crashdetector.gui.tipos.jgit.JGitAutoCommit;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
+import com.asbestosstar.crashdetector.Statics;
 
 public class CopiaDeSeguridadDeArchivos {
 

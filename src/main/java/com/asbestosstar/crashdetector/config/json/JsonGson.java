@@ -3,13 +3,7 @@ package com.asbestosstar.crashdetector.config.json;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 
 /**
  * Motor basado en Gson. Nodos con contexto para operar como DMR.

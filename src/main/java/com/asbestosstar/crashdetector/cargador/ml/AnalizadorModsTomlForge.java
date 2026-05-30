@@ -1,5 +1,6 @@
 package com.asbestosstar.crashdetector.cargador.ml;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 

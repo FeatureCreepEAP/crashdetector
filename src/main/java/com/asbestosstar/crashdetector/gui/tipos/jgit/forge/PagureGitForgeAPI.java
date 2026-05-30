@@ -10,6 +10,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
+
 /**
  * Implementación de la API de forge para Pagure.
  *

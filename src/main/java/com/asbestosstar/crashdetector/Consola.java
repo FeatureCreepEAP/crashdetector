@@ -30,6 +30,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.PastesDevAPI;
 import com.asbestosstar.crashdetector.api_sito_registro.SecureLoggerAPI;
 import com.asbestosstar.crashdetector.api_sito_registro.StikkedAPI;
 import com.asbestosstar.crashdetector.divisor.DivisorDeArchivos;
+import com.asbestosstar.crashdetector.divisor.HolaMundoConsolaDivisidor;
 import com.asbestosstar.crashdetector.divisor.TLauncherConsolaDivisor;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI.ErrorDeLectador;
 import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncherVShojo;

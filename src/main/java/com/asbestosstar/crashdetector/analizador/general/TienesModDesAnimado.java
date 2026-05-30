@@ -269,8 +269,8 @@ public class TienesModDesAnimado implements Verificaciones {
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return Statics.GIT
-				+ "src/main/java/analizador/general/" + this.getClass().getSimpleName()
+		return com.asbestosstar.crashdetector.Statics.GIT
+				+ "src/main/java/com/asbestosstar/crashdetector/analizador/general/" + this.getClass().getSimpleName()
 				+ ".java";
 	}
 

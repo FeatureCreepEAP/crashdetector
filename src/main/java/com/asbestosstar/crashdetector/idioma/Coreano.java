@@ -4684,7 +4684,7 @@ public class Coreano implements Idioma {
 				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
 				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
 				.append("다음을 폴더에 저장하세요:<br>").append("<b>")
-				.append(new java.io.File(Statics.carpeta_mundial_como_archivo, "cfr/")
+				.append(new java.io.File(com.asbestosstar.crashdetector.Statics.carpeta_mundial_como_archivo, "cfr/")
 						.getAbsolutePath())
 				.append("</b><br><br>").append("⚠️ <b>중요:</b> CFR 설치 후 mod를 재시작해야 정상적으로 인식됩니다.").append("</html>");
 		return mensaje.toString();

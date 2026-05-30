@@ -1,11 +1,11 @@
 package com.asbestosstar.crashdetector.dto.modpack.tlmods;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
-import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RespuestaPaginadaModsTlmods extends PaginaMods {
 

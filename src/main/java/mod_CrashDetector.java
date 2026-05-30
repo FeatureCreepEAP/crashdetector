@@ -1,4 +1,3 @@
-import com.asbestosstar.crashdetector.Statics;
 public class mod_CrashDetector extends BaseMod {
 
 	static {
@@ -18,7 +17,7 @@ public class mod_CrashDetector extends BaseMod {
 
 	@Override
 	public String getVersion() {
-		return Statics.nombre_cd.obtener();
+		return com.asbestosstar.crashdetector.Statics.nombre_cd.obtener();
 	}
 
 	@Override

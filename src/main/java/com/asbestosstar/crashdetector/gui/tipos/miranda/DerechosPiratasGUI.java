@@ -20,6 +20,7 @@ import java.util.Map.Entry;
 import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;

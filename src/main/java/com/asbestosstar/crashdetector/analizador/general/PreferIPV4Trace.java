@@ -4,12 +4,11 @@ import javax.swing.JOptionPane;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.parches.ConfigDeParches;
 import com.asbestosstar.crashdetector.parches.minecraft.PreferIPv4StackParch;
 
@@ -151,8 +150,8 @@ public class PreferIPV4Trace implements Verificaciones {
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return Statics.GIT
-				+ "src/main/java/analizador/general/" + this.getClass().getSimpleName()
+		return com.asbestosstar.crashdetector.Statics.GIT
+				+ "src/main/java/com/asbestosstar/crashdetector/analizador/general/" + this.getClass().getSimpleName()
 				+ ".java";
 	}
 

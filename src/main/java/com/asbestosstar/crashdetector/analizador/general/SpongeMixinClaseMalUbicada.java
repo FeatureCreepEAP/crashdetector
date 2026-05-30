@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
@@ -200,8 +199,8 @@ public class SpongeMixinClaseMalUbicada implements Verificaciones {
 
 	@Override
 	public String enlaceACodigo() {
-		return Statics.GIT
-				+ "src/main/java/analizador/general/" + this.getClass().getSimpleName()
+		return com.asbestosstar.crashdetector.Statics.GIT
+				+ "src/main/java/com/asbestosstar/crashdetector/analizador/general/" + this.getClass().getSimpleName()
 				+ ".java";
 	}
 }

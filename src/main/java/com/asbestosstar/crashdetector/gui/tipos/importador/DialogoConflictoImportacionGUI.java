@@ -21,10 +21,10 @@ import javax.swing.SwingConstants;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.deps.DescargadorDependenciasMaven;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ConflictoImportacion;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 public abstract class DialogoConflictoImportacionGUI extends JDialog implements CrashDetectorGUI {

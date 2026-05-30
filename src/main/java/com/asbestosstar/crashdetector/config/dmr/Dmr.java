@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.config.dmr;
 
+import java.nio.charset.StandardCharsets;
+
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.config.json.Json;
 

@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.parches.minecraft;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -72,7 +73,7 @@ public class ParcheSoyPirata implements ParcheClassNode {
 					// Inyectar llamada estática justo antes
 					InsnList inyeccion = new InsnList();
 					inyeccion.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
-							"parches/minecraft/ParcheSoyPirate",
+							"com/asbestosstar/crashdetector/parches/minecraft/ParcheSoyPirate",
 							"escribirArchivoSoyPirata", "()V", false));
 
 					method.instructions.insertBefore(actual, inyeccion);

@@ -4618,7 +4618,7 @@ public class Chino implements Idioma {
 				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
 				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
 				.append("将其保存到以下文件夹：<br>").append("<b>")
-				.append(new java.io.File(Statics.carpeta_mundial_como_archivo, "cfr/")
+				.append(new java.io.File(com.asbestosstar.crashdetector.Statics.carpeta_mundial_como_archivo, "cfr/")
 						.getAbsolutePath())
 				.append("</b><br><br>").append("⚠️ <b>重要：</b>安装 CFR 后，必须重启 mod 才能正确识别。").append("</html>");
 		return mensaje.toString();

@@ -15,6 +15,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.dto.modpack.ProveedorMods;
+import com.asbestosstar.crashdetector.dto.modpack.tlmods.ProveedorModsTlmods;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 /**

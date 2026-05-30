@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.dto.modpack.importar.ResultadoImportacion;
 
 public class ImportadorParalelo {
 

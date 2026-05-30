@@ -2,6 +2,7 @@ package com.asbestosstar.crashdetector.limpiador;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;

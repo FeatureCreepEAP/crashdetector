@@ -22,6 +22,7 @@ import javax.swing.Scrollable;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI.ErrorDeLectador;
 
 /**

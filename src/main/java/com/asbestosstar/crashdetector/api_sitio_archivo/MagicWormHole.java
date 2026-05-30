@@ -12,6 +12,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
+import com.asbestosstar.crashdetector.api_sitio_archivo.SitioDeArchivoAPI.PoliticaDeRetencion;
+import com.asbestosstar.crashdetector.api_sitio_archivo.SitioDeArchivoAPI.SesionDeTransferencia;
+
 /**
  * Implementación inicial para wormhole.app.
  *

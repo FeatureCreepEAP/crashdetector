@@ -1,10 +1,11 @@
 package com.asbestosstar.crashdetector.idioma.cumplimiento;
 
+import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.antimanipulacion.AntiManipulacionGUIPanko;
+import com.asbestosstar.crashdetector.gui.tipos.aplic.ActaDeProteccionDelIdiomaCulturalDePyongyangGUIKimJongUn;
+
 import java.util.Arrays;
 import java.util.List;
-
-import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
-import com.asbestosstar.crashdetector.gui.tipos.aplic.ActaDeProteccionDelIdiomaCulturalDePyongyangGUIKimJongUn;
 
 /**
  * Implementación del cumplimiento del Acta de Protección del Idioma Cultural de

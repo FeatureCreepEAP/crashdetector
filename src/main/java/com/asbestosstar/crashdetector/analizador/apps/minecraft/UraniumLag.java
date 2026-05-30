@@ -2,7 +2,6 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
@@ -88,8 +87,8 @@ public class UraniumLag implements Verificaciones {
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return Statics.GIT
-				+ "src/main/java/analizador/apps/minecraft/"
+		return com.asbestosstar.crashdetector.Statics.GIT
+				+ "src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
 

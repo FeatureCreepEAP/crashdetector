@@ -4370,7 +4370,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 				.append("Завантаження:<br>")
 				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">CFR</a><br><br>")
 				.append("Поклади у:<br><b>")
-				.append(new java.io.File(Statics.carpeta_mundial_como_archivo, "cfr/")
+				.append(new java.io.File(com.asbestosstar.crashdetector.Statics.carpeta_mundial_como_archivo, "cfr/")
 						.getAbsolutePath())
 				.append("</b><br><br>").append("Перезапусти мод після встановлення.").append("</html>");
 		return mensaje.toString();
