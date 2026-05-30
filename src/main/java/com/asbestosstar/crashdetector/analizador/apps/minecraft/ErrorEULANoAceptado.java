@@ -112,14 +112,6 @@ public class ErrorEULANoAceptado implements Verificaciones {
 	}
 
 	@Override
-	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
-		return com.asbestosstar.crashdetector.Statics.GIT
-				+ "src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
-				+ this.getClass().getSimpleName() + ".java";
-	}
-
-	@Override
 	public boolean recomendadoParaCorperata() {
 		return true;// Si la paquete para servidores no tiene el archivo de eula.txt
 	}

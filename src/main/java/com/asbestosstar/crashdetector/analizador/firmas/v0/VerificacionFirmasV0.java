@@ -252,10 +252,4 @@ public class VerificacionFirmasV0 implements Verificaciones {
 		return (nombre == null || nombre.trim().isEmpty()) ? id : nombre;
 	}
 
-	@Override
-	public String enlaceACodigo() {
-		return com.asbestosstar.crashdetector.Statics.GIT
-				+ "src/main/java/com/asbestosstar/crashdetector/analizador/firmas/v0/" + this.getClass().getSimpleName()
-				+ ".java";
-	}
 }

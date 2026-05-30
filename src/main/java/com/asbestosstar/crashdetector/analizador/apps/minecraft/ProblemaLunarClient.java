@@ -95,10 +95,4 @@ public class ProblemaLunarClient implements Verificaciones {
 		return Documento.builder().doc("en", "minecraft/Launchers.md").build();
 	}
 
-	@Override
-	public String enlaceACodigo() {
-		return com.asbestosstar.crashdetector.Statics.GIT
-				+ "src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
-				+ this.getClass().getSimpleName() + ".java";
-	}
 }

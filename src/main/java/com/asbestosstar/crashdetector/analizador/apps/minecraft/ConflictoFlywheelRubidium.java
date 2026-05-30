@@ -150,12 +150,4 @@ public class ConflictoFlywheelRubidium implements Verificaciones {
 		return Documento.NINGUN;
 	}
 
-	@Override
-	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
-		return com.asbestosstar.crashdetector.Statics.GIT
-				+ "src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
-				+ this.getClass().getSimpleName() + ".java";
-	}
-
 }

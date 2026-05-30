@@ -248,10 +248,4 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 		return Documento.NINGUN;
 	}
 
-	@Override
-	public String enlaceACodigo() {
-		return com.asbestosstar.crashdetector.Statics.GIT
-				+ "src/main/java/com/asbestosstar/crashdetector/analizador/general/" + this.getClass().getSimpleName()
-				+ ".java";
-	}
 }

@@ -2,6 +2,7 @@ package com.asbestosstar.crashdetector.analizador;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -89,11 +90,24 @@ public interface Verificaciones {
 	public Documento docs();
 
 	/**
-	 * Enlace a el codigo de esta archivo
+	 * Método default que genera automáticamente el enlace al código fuente de la
+	 * verificación que implementa esta interfaz.
 	 * 
-	 * @return
+	 * @return String con la URL completa al código fuente en el repositorio
 	 */
-	public String enlaceACodigo();
+	public default String enlaceACodigo() {
+		// Raíz del repositorio para enlaces
+		String base = Statics.GIT;
+
+		// Obtener el nombre completo de la clase que implementa esta interfaz
+		String nombreClase = this.getClass().getName();
+
+		// Reemplazar los puntos por barras para formar la ruta de archivo
+		String rutaClase = nombreClase.replace('.', '/') + ".java";
+
+		// Concatenar todo para formar la URL final
+		return base + "src/main/java/" + rutaClase;
+	}
 
 	/**
 	 * Si esta verificacion para usarios Corperatas, VTuber Fan Proyectos, y
