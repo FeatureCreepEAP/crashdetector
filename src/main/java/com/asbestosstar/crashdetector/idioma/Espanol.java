@@ -11573,4 +11573,26 @@ public class Espanol implements Idioma {
 		return estado + " | métodos: " + metodos + " | top: " + top;
 	}
 
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "Selector de aplicación en GUI principal";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "Botón CDLauncher en GUI principal";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "Botón CDMods en GUI principal";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "Botón IA en GUI principal";
+	}
+
+	@Override
+	public String modsInstalados() {
+		// TODO Auto-generated method stub
+		return "Mods Instalados";
+	}
+
 }

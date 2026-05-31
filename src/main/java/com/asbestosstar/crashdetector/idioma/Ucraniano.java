@@ -10190,4 +10190,25 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return estado + " | методи: " + metodos + " | топ: " + top;
 	}
 
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "Вибір програми в головному інтерфейсі";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "Кнопка CDLauncher в головному інтерфейсі";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "Кнопка CDMods в головному інтерфейсі";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "Кнопка ШІ в головному інтерфейсі";
+	}
+
+	@Override
+	public String modsInstalados() {
+		return "Встановлені моди";
+	}
+
 }

@@ -10818,4 +10818,25 @@ public class Persa implements Idioma {
 		return estado + " | متدها: " + metodos + " | برترین‌ها: " + top;
 	}
 
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "انتخاب‌گر برنامه در رابط کاربری اصلی";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "دکمه CDLauncher در رابط کاربری اصلی";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "دکمه CDMods در رابط کاربری اصلی";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "دکمه IA در رابط کاربری اصلی";
+	}
+
+	@Override
+	public String modsInstalados() {
+		return "مادهای نصب شده";
+	}
+
 }

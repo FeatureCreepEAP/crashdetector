@@ -11421,4 +11421,27 @@ public class Frances implements Idioma {
 		return estado + " | méthodes : " + metodos + " | haut : " + top;
 	}
 
+	// French (Burkina Faso variant) (Français)
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "Sélecteur d'application dans l'interface principale";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "Bouton CDLauncher dans l'interface principale";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "Bouton CDMods dans l'interface principale";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "Bouton IA dans l'interface principale";
+	}
+
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String modsInstalados() {
+		return "Mods installés";
+	}
+
 }

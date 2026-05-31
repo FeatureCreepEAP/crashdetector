@@ -115,6 +115,38 @@ public abstract class CorpoBase extends JDialog implements CrashDetectorGUI, Bot
 		return ConfigBoolean.de("suprimir_verificacion_de_stacktrazos", false).obtener();
 	}
 
+	public static void escribirMostrarSelectorAplicacionPrincipal(boolean valor) {
+		ConfigBoolean.de("principal.mostrar_selector_aplicacion", true).escribir(valor);
+	}
+
+	public static boolean obtenerMostrarSelectorAplicacionPrincipal() {
+		return ConfigBoolean.de("principal.mostrar_selector_aplicacion", true).obtener();
+	}
+
+	public static void escribirMostrarBotonCDLauncherPrincipal(boolean valor) {
+		ConfigBoolean.de("principal.mostrar_boton_cdlauncher", true).escribir(valor);
+	}
+
+	public static boolean obtenerMostrarBotonCDLauncherPrincipal() {
+		return ConfigBoolean.de("principal.mostrar_boton_cdlauncher", true).obtener();
+	}
+
+	public static void escribirMostrarBotonCDModsPrincipal(boolean valor) {
+		ConfigBoolean.de("principal.mostrar_boton_cdmods", true).escribir(valor);
+	}
+
+	public static boolean obtenerMostrarBotonCDModsPrincipal() {
+		return ConfigBoolean.de("principal.mostrar_boton_cdmods", true).obtener();
+	}
+
+	public static void escribirMostrarBotonIAPrincipal(boolean valor) {
+		ConfigBoolean.de("principal.mostrar_boton_ia", true).escribir(valor);
+	}
+
+	public static boolean obtenerMostrarBotonIAPrincipal() {
+		return ConfigBoolean.de("principal.mostrar_boton_ia", true).obtener();
+	}
+
 	@Override
 	public TipoGUI tipo() {
 		return TipoGUI.CORPO;

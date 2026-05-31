@@ -211,9 +211,7 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 	}
 
 	private JLabel crearEtiquetaDisclaimerSylentBell() {
-		JLabel lbl = new JLabel("<html><div style='width:520px;'>"
-				+ "Las opiniones y comentarios de Sylent Bell no necesariamente coinciden con los nuestros; "
-				+ "solo pensamos que sería gracioso ponerla aquí." + "</div></html>");
+		JLabel lbl = new JLabel();
 		lbl.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lbl.setForeground(colorTexto.obtener());
 		lbl.setOpaque(false);

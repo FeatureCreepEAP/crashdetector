@@ -79,6 +79,10 @@ public class CorpoSAO extends CorpoBase {
 	private JPanel panelDerechos; // Panel to hold the Maranda rights button
 	private JCheckBox checkSuprimirConsolaCD;
 	private JCheckBox checkSuprimirVDST;
+	private JCheckBox checkMostrarSelectorAplicacionPrincipal;
+	private JCheckBox checkMostrarBotonCDLauncherPrincipal;
+	private JCheckBox checkMostrarBotonCDModsPrincipal;
+	private JCheckBox checkMostrarBotonIAPrincipal;
 
 	@Override
 	public void init() {
@@ -86,8 +90,8 @@ public class CorpoSAO extends CorpoBase {
 		setTitle(MonitorDePID.idioma.configuracionCorporativa());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(true);
-		setMinimumSize(new Dimension(800, 650));
-		setPreferredSize(new Dimension(850, 650));
+		setMinimumSize(new Dimension(800, 700));
+		setPreferredSize(new Dimension(850, 700));
 
 		setAlwaysOnTop(false);
 		setModal(false);
@@ -265,6 +269,58 @@ public class CorpoSAO extends CorpoBase {
 		botonVerificaciones = new JButton(TipoGUI.DESHABLICAR_VERIFICACIONES.etiquetaDelBoton());
 		panelBotones.add(botonVerificaciones, gbc);
 
+		gbc.gridx = 0;
+		gbc.gridy = 6;
+		gbc.weightx = 0.3;
+		JLabel labelMostrarSelectorAplicacion = new JLabel(MonitorDePID.idioma.mostrarSelectorAplicacionPrincipal());
+		labelMostrarSelectorAplicacion.setForeground(colorTexto.obtener());
+		panelConfiguracion.add(labelMostrarSelectorAplicacion, gbc);
+
+		gbc.gridx = 1;
+		gbc.gridy = 6;
+		gbc.weightx = 0.7;
+		checkMostrarSelectorAplicacionPrincipal = new JCheckBox();
+		panelConfiguracion.add(checkMostrarSelectorAplicacionPrincipal, gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy = 7;
+		gbc.weightx = 0.3;
+		JLabel labelMostrarCDLauncher = new JLabel(MonitorDePID.idioma.mostrarBotonCDLauncherPrincipal());
+		labelMostrarCDLauncher.setForeground(colorTexto.obtener());
+		panelConfiguracion.add(labelMostrarCDLauncher, gbc);
+
+		gbc.gridx = 1;
+		gbc.gridy = 7;
+		gbc.weightx = 0.7;
+		checkMostrarBotonCDLauncherPrincipal = new JCheckBox();
+		panelConfiguracion.add(checkMostrarBotonCDLauncherPrincipal, gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy = 8;
+		gbc.weightx = 0.3;
+		JLabel labelMostrarCDMods = new JLabel(MonitorDePID.idioma.mostrarBotonCDModsPrincipal());
+		labelMostrarCDMods.setForeground(colorTexto.obtener());
+		panelConfiguracion.add(labelMostrarCDMods, gbc);
+
+		gbc.gridx = 1;
+		gbc.gridy = 8;
+		gbc.weightx = 0.7;
+		checkMostrarBotonCDModsPrincipal = new JCheckBox();
+		panelConfiguracion.add(checkMostrarBotonCDModsPrincipal, gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy = 9;
+		gbc.weightx = 0.3;
+		JLabel labelMostrarIA = new JLabel(MonitorDePID.idioma.mostrarBotonIAPrincipal());
+		labelMostrarIA.setForeground(colorTexto.obtener());
+		panelConfiguracion.add(labelMostrarIA, gbc);
+
+		gbc.gridx = 1;
+		gbc.gridy = 9;
+		gbc.weightx = 0.7;
+		checkMostrarBotonIAPrincipal = new JCheckBox();
+		panelConfiguracion.add(checkMostrarBotonIAPrincipal, gbc);
+
 		panelDerecho.add(panelBotones, BorderLayout.CENTER);
 
 		raizPanel.add(panelIzquierdo, BorderLayout.WEST);
@@ -318,6 +374,21 @@ public class CorpoSAO extends CorpoBase {
 		panelConfiguracion.setBackground(colorFondoVentana.obtener());
 		panelBotones.setBackground(colorFondoVentana.obtener());
 		panelDerechos.setBackground(colorFondoVentana.obtener());
+
+		checkMostrarSelectorAplicacionPrincipal.setForeground(colorTexto.obtener());
+		checkMostrarBotonCDLauncherPrincipal.setForeground(colorTexto.obtener());
+		checkMostrarBotonCDModsPrincipal.setForeground(colorTexto.obtener());
+		checkMostrarBotonIAPrincipal.setForeground(colorTexto.obtener());
+
+		checkMostrarSelectorAplicacionPrincipal.setBackground(colorFondoVentana.obtener());
+		checkMostrarBotonCDLauncherPrincipal.setBackground(colorFondoVentana.obtener());
+		checkMostrarBotonCDModsPrincipal.setBackground(colorFondoVentana.obtener());
+		checkMostrarBotonIAPrincipal.setBackground(colorFondoVentana.obtener());
+
+		checkMostrarSelectorAplicacionPrincipal.setOpaque(false);
+		checkMostrarBotonCDLauncherPrincipal.setOpaque(false);
+		checkMostrarBotonCDModsPrincipal.setOpaque(false);
+		checkMostrarBotonIAPrincipal.setOpaque(false);
 
 		// Estilizar botones
 		estilizarBoton(botonLanzadoresRecomendados);
@@ -385,6 +456,11 @@ public class CorpoSAO extends CorpoBase {
 		checkCondenarPirata.setSelected(obtenerCondenarPirata());
 		checkSuprimirConsolaCD.setSelected(obtenerSuprimirConsolaCD());
 		checkSuprimirVDST.setSelected(obtenerSuprimirVerificacionDeStacktrazos());
+
+		checkMostrarSelectorAplicacionPrincipal.setSelected(obtenerMostrarSelectorAplicacionPrincipal());
+		checkMostrarBotonCDLauncherPrincipal.setSelected(obtenerMostrarBotonCDLauncherPrincipal());
+		checkMostrarBotonCDModsPrincipal.setSelected(obtenerMostrarBotonCDModsPrincipal());
+		checkMostrarBotonIAPrincipal.setSelected(obtenerMostrarBotonIAPrincipal());
 
 		// Actualizar visibilidad del botón de derechos Maranda
 		botonDerechosMaranda.setVisible(obtenerCondenarPirata());
@@ -458,6 +534,27 @@ public class CorpoSAO extends CorpoBase {
 		botonDerechosMaranda.addActionListener(e -> {
 			abrirMiranda();
 		});
+
+		// Guardar configuración del selector de aplicación principal
+		checkMostrarSelectorAplicacionPrincipal.addActionListener(e -> {
+			escribirMostrarSelectorAplicacionPrincipal(checkMostrarSelectorAplicacionPrincipal.isSelected());
+		});
+
+		// Guardar configuración del botón CDLauncher principal
+		checkMostrarBotonCDLauncherPrincipal.addActionListener(e -> {
+			escribirMostrarBotonCDLauncherPrincipal(checkMostrarBotonCDLauncherPrincipal.isSelected());
+		});
+
+		// Guardar configuración del botón CDMods principal
+		checkMostrarBotonCDModsPrincipal.addActionListener(e -> {
+			escribirMostrarBotonCDModsPrincipal(checkMostrarBotonCDModsPrincipal.isSelected());
+		});
+
+		// Guardar configuración del botón IA principal
+		checkMostrarBotonIAPrincipal.addActionListener(e -> {
+			escribirMostrarBotonIAPrincipal(checkMostrarBotonIAPrincipal.isSelected());
+		});
+
 	}
 
 	// Métodos auxiliares para estilización

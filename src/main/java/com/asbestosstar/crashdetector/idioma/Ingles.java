@@ -10901,4 +10901,27 @@ public class Ingles implements Idioma {
 		return estado + " | methods: " + metodos + " | top: " + top;
 	}
 
+	// English (UK)
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "Application selector in main GUI";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "CDLauncher button in main GUI";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "CDMods button in main GUI";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "AI button in main GUI";
+	}
+
+	// English (UK)
+	@Override
+	public String modsInstalados() {
+		return "Installed Mods";
+	}
+
 }

@@ -11277,4 +11277,25 @@ public class Lao implements Idioma {
 		return estado + " | ເມທອດ: " + metodos + " | top: " + top;
 	}
 
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "ຕົວເລືອກແອັບໃນ GUI ຫຼັກ";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "ປຸ່ມ CDLauncher ໃນ GUI ຫຼັກ";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "ປຸ່ມ CDMods ໃນ GUI ຫຼັກ";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "ປຸ່ມ IA ໃນ GUI ຫຼັກ";
+	}
+
+	@Override
+	public String modsInstalados() {
+		return "Mods ທີ່ຕິດຕັ້ງແລ້ວ";
+	}
+
 }

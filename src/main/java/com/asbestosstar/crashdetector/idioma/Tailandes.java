@@ -11050,4 +11050,25 @@ public class Tailandes implements Idioma {
 		return estado + " | เมธอด: " + metodos + " | อันดับต้น: " + top;
 	}
 
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "ตัวเลือกแอปพลิเคชันใน GUI หลัก";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "ปุ่ม CDLauncher ใน GUI หลัก";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "ปุ่ม CDMods ใน GUI หลัก";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "ปุ่ม AI ใน GUI หลัก";
+	}
+
+	@Override
+	public String modsInstalados() {
+		return "มอดที่ติดตั้งแล้ว";
+	}
+
 }

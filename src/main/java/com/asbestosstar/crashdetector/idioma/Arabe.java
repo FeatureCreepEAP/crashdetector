@@ -10759,4 +10759,26 @@ public class Arabe implements Idioma {
 		return estado + " | طرق: " + metodos + " | أعلى: " + top;
 	}
 
+	// Arabic (العربية)
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "محدد التطبيق في الواجهة الرئيسية";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "زر CDLauncher في الواجهة الرئيسية";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "زر CDMods في الواجهة الرئيسية";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "زر الذكاء الاصطناعي في الواجهة الرئيسية";
+	}
+
+	@Override
+	public String modsInstalados() {
+		return "المودات المثبتة";
+	}
+
 }

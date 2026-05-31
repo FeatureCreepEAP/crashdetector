@@ -10488,4 +10488,27 @@ public class Japones implements Idioma {
 		return estado + " | メソッド数: " + metodos + " | 上位: " + top;
 	}
 
+	// Japanese (日本語)
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "メインGUIのアプリケーションセレクター";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "メインGUIのCDLauncherボタン";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "メインGUIのCDModsボタン";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "メインGUIのAIボタン";
+	}
+
+	// Japanese (日本語)
+	@Override
+	public String modsInstalados() {
+		return "インストール済み Mod";
+	}
+
 }

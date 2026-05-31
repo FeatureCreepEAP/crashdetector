@@ -11304,4 +11304,25 @@ public class Suajili implements Idioma {
 		return estado + " | njia: " + metodos + " | juu: " + top;
 	}
 
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "Kiteua programu katika GUI kuu";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "Kitufe cha CDLauncher katika GUI kuu";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "Kitufe cha CDMods katika GUI kuu";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "Kitufe cha AI katika GUI kuu";
+	}
+
+	@Override
+	public String modsInstalados() {
+		return "Mod Zilizosakinishwa";
+	}
+
 }

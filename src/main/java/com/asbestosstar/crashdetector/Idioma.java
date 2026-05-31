@@ -4220,36 +4220,46 @@ public interface Idioma {
 
 	public String no_se_pudo_descargar_dependencia_nbt();
 
-	String profilerTituloRendimiento();
+	public String profilerTituloRendimiento();
 
-	String profilerEstadoActivo();
+	public String profilerEstadoActivo();
 
-	String profilerAyudaMinaly();
+	public String profilerAyudaMinaly();
 
-	String profilerConfigColorPanel();
+	public String profilerConfigColorPanel();
 
-	String profilerConfigColorBarra();
+	public String profilerConfigColorBarra();
 
-	String profilerConfigUsarModeloOriginal();
+	public String profilerConfigUsarModeloOriginal();
 
-	String profilerColumnaClase();
+	public String profilerColumnaClase();
 
-	String profilerColumnaMetodo();
+	public String profilerColumnaMetodo();
 
-	String profilerColumnaLlamadas();
+	public String profilerColumnaLlamadas();
 
-	String profilerColumnaTiempoTotal();
+	public String profilerColumnaTiempoTotal();
 
-	String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible);
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible);
 
-	String samplerTituloRendimiento();
+	public String samplerTituloRendimiento();
 
-	String samplerAyudaEineLotta();
+	public String samplerAyudaEineLotta();
 
-	String samplerColumnaMuestras();
+	public String samplerColumnaMuestras();
 
-	String samplerColumnaPromedio();
+	public String samplerColumnaPromedio();
 
-	String samplerEstadoResumen(String estado, int metodos, int top);
+	public String samplerEstadoResumen(String estado, int metodos, int top);
+
+	public String mostrarSelectorAplicacionPrincipal();
+
+	public String mostrarBotonCDLauncherPrincipal();
+
+	public String mostrarBotonCDModsPrincipal();
+
+	public String mostrarBotonIAPrincipal();
+
+	public String modsInstalados();
 
 }

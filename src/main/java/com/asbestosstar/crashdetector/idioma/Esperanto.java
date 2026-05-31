@@ -10851,4 +10851,27 @@ public class Esperanto implements Idioma {
 		return estado + " | metodoj: " + metodos + " | supro: " + top;
 	}
 
+	// Esperanto (Esperanto)
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "Elektilo de aplikaĵo en ĉefa GUI";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "Butono CDLauncher en ĉefa GUI";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "Butono CDMods en ĉefa GUI";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "Butono IA en ĉefa GUI";
+	}
+
+	// Esperanto (Esperanto)
+	@Override
+	public String modsInstalados() {
+		return "Instalitaj modoj";
+	}
+
 }

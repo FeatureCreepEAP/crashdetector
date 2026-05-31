@@ -11077,4 +11077,25 @@ public class Vietnamita implements Idioma {
 		return estado + " | phương thức: " + metodos + " | đầu: " + top;
 	}
 
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "Bộ chọn ứng dụng trong giao diện chính";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "Nút CDLauncher trong giao diện chính";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "Nút CDMods trong giao diện chính";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "Nút AI trong giao diện chính";
+	}
+
+	@Override
+	public String modsInstalados() {
+		return "Mod đã cài đặt";
+	}
+
 }

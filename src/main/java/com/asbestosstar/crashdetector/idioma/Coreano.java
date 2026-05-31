@@ -10481,4 +10481,27 @@ public class Coreano implements Idioma {
 		return estado + " | 메서드: " + metodos + " | 상위: " + top;
 	}
 
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "주 GUI의 애플리케이션 선택기";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "주 GUI의 CDLauncher 버튼";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "주 GUI의 CDMods 버튼";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "주 GUI의 AI 버튼";
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String modsInstalados() {
+		return "설치된 모드";
+	}
+
 }

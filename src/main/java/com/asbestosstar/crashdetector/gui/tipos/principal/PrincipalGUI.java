@@ -39,6 +39,7 @@ import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUISaliorMo
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.configmods.ConfigsModsGUIYunenoms;
+import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoBase;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
 import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUINimu;
 import com.asbestosstar.crashdetector.gui.tipos.docs.LectadorDeDocumentosStudyJuche;
@@ -170,11 +171,15 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 			CrashDetectorLogger.log("No se puede registrar el botón " + boton.id()
 					+ " porque requiere el buscador, que está deshabilitado.");
 			return;
+		}
 
+		if (!CorpoBase.obtenerMostrarBotonIAPrincipal() && boton == TipoGUI.IA) {
+			CrashDetectorLogger.log("No se puede registrar el botón " + boton.id()
+					+ " porque IA está deshabilitada en la configuración corporativa.");
+			return;
 		}
 
 		botons_de_barra_lateral_derecha.put(boton, predeterminado, gui_predeterminado);
-
 	}
 
 	/**

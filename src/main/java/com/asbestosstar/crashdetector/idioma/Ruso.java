@@ -10861,4 +10861,25 @@ public class Ruso implements Idioma {
 		return estado + " | методы: " + metodos + " | топ: " + top;
 	}
 
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "Выбор приложения в главном интерфейсе";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "Кнопка CDLauncher в главном интерфейсе";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "Кнопка CDMods в главном интерфейсе";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "Кнопка ИИ в главном интерфейсе";
+	}
+
+	@Override
+	public String modsInstalados() {
+		return "Установленные моды";
+	}
+
 }

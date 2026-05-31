@@ -10265,4 +10265,27 @@ public class Chino implements Idioma {
 		return estado + " | 方法数: " + metodos + " | 顶部: " + top;
 	}
 
+	// Chinese (Simplified) (中文)
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "主界面中的应用选择器";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "主界面中的 CDLauncher 按钮";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "主界面中的 CDMods 按钮";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "主界面中的 AI 按钮";
+	}
+
+	// Chinese (Simplified) (中文)
+	@Override
+	public String modsInstalados() {
+		return "已安装的 Mod";
+	}
+
 }

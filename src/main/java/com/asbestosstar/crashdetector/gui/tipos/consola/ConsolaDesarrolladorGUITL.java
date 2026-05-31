@@ -9,6 +9,7 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
@@ -30,6 +31,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.text.DefaultCaret;
 
 import com.asbestosstar.crashdetector.ConfigMundial;
 import com.asbestosstar.crashdetector.Consola;
@@ -64,6 +66,7 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 	private JButton stop;
 
 	private boolean autoScroll = true;
+	private boolean ajustandoScrollAutomaticamente = false;
 	private boolean consentimientoTemporal = false;
 
 	private ConfigColor fondo = ConfigColor.de("consola.dev.fondo", java.awt.Color.BLACK);
@@ -96,38 +99,81 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 			@Override
 			public void windowClosed(java.awt.event.WindowEvent e) {
 
-				// apagar consola munidial al cerrar
+				// Apagar consola mundial al cerrar
 				ConfigMundial.obtenerInstancia().guardarConsolaDesarrollo(false);
 
-				// limpiar referencia runtime si existe
-				// if (MonitorDePID.consola_des == ConsolaDesarrolladorGUITL.this) {
+				// Limpiar referencia runtime
 				MonitorDePID.consola_des = null;
-				// }
 			}
 		});
 
-		// Área principal (más grande como TL)
+		// Área principal
 		area = new JTextArea();
 		area.setEditable(false);
 		area.setBackground(fondo.obtener());
 		area.setForeground(texto.obtener());
 		area.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
-		scroll = new JScrollPane(area);
+		// Evita que JTextArea fuerce el scroll hacia abajo cuando se agrega texto.
+		DefaultCaret caret = (DefaultCaret) area.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+
+		// JScrollPane con detección de rueda sin romper el scroll normal.
+		scroll = new JScrollPane(area) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void processMouseWheelEvent(MouseWheelEvent e) {
+
+				if (!ajustandoScrollAutomaticamente) {
+
+					// Si el usuario rueda hacia arriba, apagar seguimiento automático
+					// inmediatamente.
+					if (e.getWheelRotation() < 0) {
+						autoScroll = false;
+					}
+				}
+
+				// Muy importante: dejar que Swing haga el scroll normal.
+				super.processMouseWheelEvent(e);
+
+				if (!ajustandoScrollAutomaticamente && e.getWheelRotation() > 0) {
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							if (!ajustandoScrollAutomaticamente && estaAlFondo()) {
+								autoScroll = true;
+							}
+						}
+					});
+				}
+			}
+		};
+
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		add(scroll, BorderLayout.CENTER);
 
-		// Detectar si el usuario se aleja del fondo
-		scroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+		// Detectar cuando el usuario arrastra la barra de scroll.
+		final JScrollBar barraVertical = scroll.getVerticalScrollBar();
+
+		barraVertical.addAdjustmentListener(new AdjustmentListener() {
 			@Override
 			public void adjustmentValueChanged(AdjustmentEvent e) {
-				JScrollBar sb = scroll.getVerticalScrollBar();
-				int max = sb.getMaximum();
-				int extent = sb.getModel().getExtent();
-				int value = sb.getValue();
 
-				// margen pequeño
-				autoScroll = value + extent + 4 >= max;
+				if (ajustandoScrollAutomaticamente) {
+					return;
+				}
+
+				// Si el usuario arrastra la barra, apagar o reactivar según la posición real.
+				if (barraVertical.getValueIsAdjusting()) {
+					autoScroll = estaAlFondo();
+					return;
+				}
+
+				// Si el usuario llegó al fondo por cualquier medio, reactivar seguimiento.
+				if (estaAlFondo()) {
+					autoScroll = true;
+				}
 			}
 		});
 
@@ -136,10 +182,6 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 		barra.setLayout(new BoxLayout(barra, BoxLayout.X_AXIS));
 		barra.setBackground(barraInferior.obtener());
 		barra.setPreferredSize(new Dimension(10, 46));
-
-		bajar = new JButton("⬇");
-		logs = new JButton("§");
-		stop = new JButton("■");
 
 		bajar = crearBotonIcono(ICONO_BAJAR, "⬇");
 		logs = crearBotonIcono(ICONO_LOGS, "§");
@@ -160,18 +202,14 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 		add(barra, BorderLayout.SOUTH);
 
 		// Scroll manual al fondo
-		bajar.addActionListener(e -> {
-			autoScroll = true;
-			area.setCaretPosition(area.getDocument().getLength());
-		});
+		bajar.addActionListener(e -> bajarAlFondoYReactivarAutoScroll());
 
 		// Compartir logs
 		logs.addActionListener(e -> compartirLogs());
 
-		// Matar PID (Java 8 compatible)
+		// Matar PID Java 8 compatible
 		stop.addActionListener(e -> {
 
-			// 1) Prefer CDLauncher process if present
 			Process p = CDLauncher.proceso_cdlauncher;
 			if (p != null) {
 				try {
@@ -185,7 +223,6 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 				}
 			}
 
-			// 2) Fallback: matar por PID (si existe)
 			long pid = MonitorDePID.pid;
 			if (pid <= 0) {
 				CrashDetectorLogger.enviarALaConsola("[ConsolaDev] No hay proceso activo para detener");
@@ -194,11 +231,13 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 
 			try {
 				String os = System.getProperty("os.name").toLowerCase();
+
 				if (os.contains("win")) {
 					Runtime.getRuntime().exec("taskkill /PID " + pid + " /F");
 				} else {
 					Runtime.getRuntime().exec("kill -9 " + pid);
 				}
+
 				CrashDetectorLogger.enviarALaConsola("[ConsolaDev] Proceso PID " + pid + " terminado");
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -225,9 +264,108 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 					menu.show(area, e.getX(), e.getY());
 				}
 			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (SwingUtilities.isRightMouseButton(e)) {
+					menu.show(area, e.getX(), e.getY());
+				}
+			}
 		});
 
 		setVisible(true);
+
+		// Al abrir la consola, empezar siguiendo el fondo.
+		bajarAlFondoYReactivarAutoScroll();
+	}
+
+	private boolean estaAlFondo() {
+		if (scroll == null) {
+			return true;
+		}
+
+		JScrollBar sb = scroll.getVerticalScrollBar();
+
+		int value = sb.getValue();
+		int extent = sb.getModel().getExtent();
+		int max = sb.getMaximum();
+
+		return value + extent + 4 >= max;
+	}
+
+	private void bajarAlFondoYReactivarAutoScroll() {
+		autoScroll = true;
+		bajarAlFondoSinCambiarModo();
+	}
+
+	private void bajarAlFondoSinCambiarModo() {
+		ajustandoScrollAutomaticamente = true;
+
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					if (area != null) {
+						area.setCaretPosition(area.getDocument().getLength());
+					}
+
+					if (scroll != null) {
+						JScrollBar sb = scroll.getVerticalScrollBar();
+						sb.setValue(sb.getMaximum());
+					}
+				} finally {
+					ajustandoScrollAutomaticamente = false;
+				}
+			}
+		});
+	}
+
+	@Override
+	public void agregarLinea(String linea) {
+		if (area == null) {
+			return;
+		}
+
+		Runnable tarea = new Runnable() {
+			@Override
+			public void run() {
+
+				// Solo seguir al fondo si antes de agregar texto ya estábamos siguiendo.
+				boolean debeBajar = autoScroll && estaAlFondo();
+
+				area.append(linea + "\n");
+
+				if (debeBajar) {
+					ajustandoScrollAutomaticamente = true;
+
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							try {
+								if (area != null) {
+									area.setCaretPosition(area.getDocument().getLength());
+								}
+
+								if (scroll != null) {
+									JScrollBar sb = scroll.getVerticalScrollBar();
+									sb.setValue(sb.getMaximum());
+								}
+
+								autoScroll = true;
+							} finally {
+								ajustandoScrollAutomaticamente = false;
+							}
+						}
+					});
+				}
+			}
+		};
+
+		if (SwingUtilities.isEventDispatchThread()) {
+			tarea.run();
+		} else {
+			SwingUtilities.invokeLater(tarea);
+		}
 	}
 
 	private JButton crearBotonIcono(String rutaRelativa, String textoAccesible) {
@@ -309,16 +447,6 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 		JMenuItem it = new JMenuItem(nombre);
 		it.addActionListener(e -> accion.run());
 		return it;
-	}
-
-	@Override
-	public void agregarLinea(String linea) {
-		if (area != null) {
-			area.append(linea + "\n");
-			if (autoScroll) {
-				area.setCaretPosition(area.getDocument().getLength());
-			}
-		}
 	}
 
 	private void compartirLogs() {

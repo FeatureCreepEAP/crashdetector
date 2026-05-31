@@ -728,7 +728,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 		sidebarPanel.removeAll();
 
-		JLabel titulo = new JLabel("Mods Instalados");
+		JLabel titulo = new JLabel(MonitorDePID.idioma.modsInstalados());
 		titulo.setForeground(obtenerColorTexto());
 		titulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
 		titulo.setAlignmentX(Component.LEFT_ALIGNMENT);

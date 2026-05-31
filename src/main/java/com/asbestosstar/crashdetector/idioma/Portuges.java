@@ -10866,4 +10866,25 @@ public class Portuges implements Idioma {
 		return estado + " | métodos: " + metodos + " | top: " + top;
 	}
 
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "Seletor de aplicativo na GUI principal";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "Botão CDLauncher na GUI principal";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "Botão CDMods na GUI principal";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "Botão IA na GUI principal";
+	}
+
+	@Override
+	public String modsInstalados() {
+		return "Mods Instalados";
+	}
+
 }

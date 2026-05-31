@@ -11054,4 +11054,27 @@ public class Khmer implements Idioma {
 		return estado + " | វិធីសាស្ត្រ: " + metodos + " | កំពូល: " + top;
 	}
 
+	// Khmer (ភាសាខ្មែរ)
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "ឧបករណ៍ជ្រើសរើសកម្មវិធីនៅក្នុង GUI ចម្បង";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "ប៊ូតុង CDLauncher នៅក្នុង GUI ចម្បង";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "ប៊ូតុង CDMods នៅក្នុង GUI ចម្បង";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "ប៊ូតុង AI នៅក្នុង GUI ចម្បង";
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String modsInstalados() {
+		return "Mods ដែលបានដំឡើង";
+	}
+
 }

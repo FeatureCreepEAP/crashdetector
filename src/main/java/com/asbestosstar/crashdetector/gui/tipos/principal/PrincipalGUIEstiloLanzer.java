@@ -53,6 +53,7 @@ import com.asbestosstar.crashdetector.gui.elementos.ComboIdiomasConIcono;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
+import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoBase;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 
 public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
@@ -391,6 +392,18 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			}
 		});
 
+		boolean selectorAplicacionHabilitado = CorpoBase.obtenerMostrarSelectorAplicacionPrincipal();
+
+		comboAplicacion.setEnabled(false);
+
+		if (selectorAplicacionHabilitado) {
+			chkDetectarAuto.setEnabled(true);
+			comboAplicacion.setEnabled(!chkDetectarAuto.isSelected());
+		} else {
+			chkDetectarAuto.setEnabled(false);
+			comboAplicacion.setEnabled(false);
+		}
+
 		columnaDerecha.add(comboAplicacion);
 		columnaDerecha.add(chkDetectarAuto);
 
@@ -445,12 +458,19 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		botonCDLauncher.addActionListener(e -> botonCDLauncher(botonCDLauncher));
 
 		// --- Botones de acción (derecha)
-		panelBotonesDerechaRef = new JPanel(new GridLayout(1, 5, 10, 10));
+		int cantidadBotonesDerecha = CorpoBase.obtenerMostrarBotonCDModsPrincipal() ? 6 : 5;
+
+		panelBotonesDerechaRef = new JPanel(new GridLayout(1, cantidadBotonesDerecha, 10, 10));
 		JPanel panelBotonesDerecha = panelBotonesDerechaRef;
 		panelBotonesDerecha.setBackground(colorFondo.obtener());
 
-		JButton boton_CDMods = añadirBotonImagen(panelBotonesDerecha,
-				Statics.carpeta.resolve("imagenes/boton_cdmods.png").toString(), "CD Mods");
+		JButton boton_CDMods = null;
+
+		if (CorpoBase.obtenerMostrarBotonCDModsPrincipal()) {
+			boton_CDMods = añadirBotonImagen(panelBotonesDerecha,
+					Statics.carpeta.resolve("imagenes/boton_cdmods.png").toString(), "CD Mods");
+		}
+
 		JButton btnAgregar = añadirBotonImagen(panelBotonesDerecha,
 				Statics.carpeta.resolve("imagenes/boton_agregar.png").toString(), MonitorDePID.idioma.anadirRegistro());
 		JButton btnCompartir = añadirBotonImagen(panelBotonesDerecha,
@@ -480,18 +500,23 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			botonVolver.setEnabled(true);
 		});
 
-		boton_CDMods.addActionListener(e -> {
-			contenidoPrincipal.removeAll();
-			panelCDMods.establecerPrincipalGUI(this);
-			panelCDMods.init();
-			contenidoPrincipal.add(panelCDMods, BorderLayout.CENTER);
-			contenidoPrincipal.revalidate();
-			contenidoPrincipal.repaint();
-			botonVolver.setEnabled(true);
-		});
+		if (boton_CDMods != null) {
+			boton_CDMods.addActionListener(e -> {
+				contenidoPrincipal.removeAll();
+				panelCDMods.establecerPrincipalGUI(this);
+				panelCDMods.init();
+				contenidoPrincipal.add(panelCDMods, BorderLayout.CENTER);
+				contenidoPrincipal.revalidate();
+				contenidoPrincipal.repaint();
+				botonVolver.setEnabled(true);
+			});
+		}
 
 		panelInferior.add(seccionConfiguracion, BorderLayout.WEST);
+
+		botonCDLauncher.setEnabled(CorpoBase.obtenerMostrarBotonCDLauncherPrincipal());
 		panelInferior.add(botonCDLauncher, BorderLayout.CENTER);
+
 		panelInferior.add(panelBotonesDerecha, BorderLayout.EAST);
 
 		// --- Barra lateral derecha con scroll

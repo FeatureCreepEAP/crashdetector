@@ -11433,4 +11433,27 @@ public class Indonesia implements Idioma {
 		return estado + " | metode: " + metodos + " | teratas: " + top;
 	}
 
+	// Indonesian (Bahasa Indonesia)
+	public String mostrarSelectorAplicacionPrincipal() {
+		return "Pemilih aplikasi di GUI utama";
+	}
+
+	public String mostrarBotonCDLauncherPrincipal() {
+		return "Tombol CDLauncher di GUI utama";
+	}
+
+	public String mostrarBotonCDModsPrincipal() {
+		return "Tombol CDMods di GUI utama";
+	}
+
+	public String mostrarBotonIAPrincipal() {
+		return "Tombol AI di GUI utama";
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String modsInstalados() {
+		return "Mod Terinstal";
+	}
+
 }

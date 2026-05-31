@@ -8,6 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -40,7 +42,7 @@ public class GeneradorDeInformacion {
 						.append(co.archivo.toString().trim()).append("</font></a><br>");
 			}
 
-			cons.append(generarTextoArcoiris("Feliz mes del orgullo"));
+			cons.append(generarMensajeOrgulloSiEsMesDelOrgullo(instant));
 
 			cons.append("</center>");
 
@@ -62,6 +64,21 @@ public class GeneradorDeInformacion {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private static String generarMensajeOrgulloSiEsMesDelOrgullo(Instant instant) {
+		if (instant == null) {
+			return "";
+		}
+
+		int mes = java.time.ZonedDateTime.ofInstant(instant, java.time.ZoneId.systemDefault()).getMonthValue();
+
+		// Junio es el mes del orgullo.
+		if (mes != 6) {
+			return "";
+		}
+
+		return generarTextoArcoiris("Feliz mes del orgullo");
 	}
 
 	public static String imagenesLocales() {
@@ -170,7 +187,7 @@ public class GeneradorDeInformacion {
 				}
 			}
 
-			cons.append(generarTextoArcoiris("Feliz mes del orgullo"));
+			cons.append(generarMensajeOrgulloSiEsMesDelOrgullo(instant));
 			cons.append("</center>");
 
 			String plantilla = MonitorDePID.leer_archivo(Statics.carpeta.resolve("pantilla.htm"));
