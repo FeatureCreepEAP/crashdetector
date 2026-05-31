@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseAdapter;
@@ -17,6 +18,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
@@ -33,6 +35,7 @@ import com.asbestosstar.crashdetector.ConfigMundial;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
 import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
@@ -66,6 +69,12 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 	private ConfigColor fondo = ConfigColor.de("consola.dev.fondo", java.awt.Color.BLACK);
 	private ConfigColor texto = ConfigColor.de("consola.dev.texto", java.awt.Color.WHITE);
 	private ConfigColor barraInferior = ConfigColor.de("consola.dev.barra", java.awt.Color.decode("#404040"));
+
+	private static final int TAMANO_ICONO_BOTON = 32;
+
+	private static final String ICONO_BAJAR = "imagenes/consola_bajar.png";
+	private static final String ICONO_LOGS = "imagenes/consola_logs.png";
+	private static final String ICONO_STOP = "imagenes/consola_stop.png";
 
 	@Override
 	public String id() {
@@ -132,14 +141,12 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 		logs = new JButton("§");
 		stop = new JButton("■");
 
+		bajar = crearBotonIcono(ICONO_BAJAR, "⬇");
+		logs = crearBotonIcono(ICONO_LOGS, "§");
+		stop = crearBotonIcono(ICONO_STOP, "■");
+
 		for (JButton b : new JButton[] { bajar, logs, stop }) {
-			b.setFocusPainted(false);
-			b.setBackground(barraInferior.obtener());
-			b.setForeground(texto.obtener());
-			b.setBorder(BorderFactory.createEmptyBorder(8, 16, 8, 16));
-			b.setOpaque(true);
-			b.setContentAreaFilled(true);
-			b.setBorderPainted(false);
+			estilizarBotonInferior(b);
 		}
 
 		barra.add(Box.createHorizontalGlue());
@@ -221,6 +228,81 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 		});
 
 		setVisible(true);
+	}
+
+	private JButton crearBotonIcono(String rutaRelativa, String textoAccesible) {
+		JButton boton = new JButton();
+
+		ImageIcon icono = cargarIcono32(rutaRelativa);
+
+		if (icono.getIconWidth() > 0) {
+			boton.setIcon(icono);
+			boton.setText("");
+		} else {
+			boton.setText(textoAccesible);
+		}
+
+		boton.setToolTipText(textoAccesible);
+		boton.getAccessibleContext().setAccessibleName(textoAccesible);
+		boton.setPreferredSize(new Dimension(46, 46));
+		boton.setMinimumSize(new Dimension(46, 46));
+		boton.setMaximumSize(new Dimension(46, 46));
+
+		return boton;
+	}
+
+	private ImageIcon cargarIcono32(String rutaRelativa) {
+		ImageIcon icono = cargarIconoConFallback(Statics.carpeta.resolve(rutaRelativa).toString(),
+				"/mnt/data/" + nombreArchivo(rutaRelativa));
+
+		if (icono.getIconWidth() <= 0) {
+			return icono;
+		}
+
+		Image imagen = icono.getImage().getScaledInstance(TAMANO_ICONO_BOTON, TAMANO_ICONO_BOTON, Image.SCALE_SMOOTH);
+		return new ImageIcon(imagen);
+	}
+
+	private ImageIcon cargarIconoConFallback(String... rutas) {
+		for (String ruta : rutas) {
+			if (ruta == null || ruta.trim().isEmpty()) {
+				continue;
+			}
+
+			ImageIcon icono = new ImageIcon(ruta);
+
+			if (icono.getIconWidth() > 0) {
+				return icono;
+			}
+		}
+
+		return new ImageIcon();
+	}
+
+	private String nombreArchivo(String ruta) {
+		int slash = ruta.lastIndexOf('/');
+		int backslash = ruta.lastIndexOf('\\');
+		int indice = Math.max(slash, backslash);
+
+		if (indice >= 0 && indice + 1 < ruta.length()) {
+			return ruta.substring(indice + 1);
+		}
+
+		return ruta;
+	}
+
+	private void estilizarBotonInferior(JButton boton) {
+		if (boton == null) {
+			return;
+		}
+
+		boton.setFocusPainted(false);
+		boton.setBackground(barraInferior.obtener());
+		boton.setForeground(texto.obtener());
+		boton.setBorder(BorderFactory.createEmptyBorder(7, 7, 7, 7));
+		boton.setOpaque(true);
+		boton.setContentAreaFilled(true);
+		boton.setBorderPainted(false);
 	}
 
 	private JMenuItem crearItem(String nombre, Runnable accion) {
@@ -350,10 +432,7 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 		}
 
 		for (JButton b : new JButton[] { bajar, logs, stop }) {
-			if (b != null) {
-				b.setBackground(barraInferior.obtener());
-				b.setForeground(texto.obtener());
-			}
+			estilizarBotonInferior(b);
 		}
 
 		revalidate();

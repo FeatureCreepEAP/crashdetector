@@ -11224,4 +11224,84 @@ public class Suajili implements Idioma {
 		return "Haikuweza kupakua utegemezi wa NBT.";
 	}
 
+	@Override
+	public String profilerTituloRendimiento() {
+		return "Profaila ya utendaji";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "Inafanya kazi";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "Mbinu zinazochelewa zaidi zinaonekana juu. Upau unaonyesha uzito wa jamaa wa muda uliojumlishwa.";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "Rangi ya paneli";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "Rangi ya upau";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "Tumia mfano wa asili";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "Darasa";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "Njia";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "Wito";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "Jumla ya muda";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | njia: " + metodos + " | juu: " + top + " | jumla inayoonekana: " + totalVisible;
+	}
+
+	@Override
+	public String samplerTituloRendimiento() {
+		return "Kichukua sampuli cha utendaji";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "Njia zenye muda mwingi zimejumlishwa zinaonekana juu. Upau unaonyesha uzito wa jamaa kwa kuona.";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "Sampuli";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "Wastani";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | njia: " + metodos + " | juu: " + top;
+	}
+
 }

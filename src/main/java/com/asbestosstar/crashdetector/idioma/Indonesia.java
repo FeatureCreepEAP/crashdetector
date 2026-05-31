@@ -11351,4 +11351,86 @@ public class Indonesia implements Idioma {
 		return "Gagal mengunduh dependensi NBT.";
 	}
 
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String profilerTituloRendimiento() {
+		return "Profiler Kinerja";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "Aktif";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "Metode paling lambat muncul di atas. Bilah menunjukkan bobot relatif dari waktu yang terakumulasi.";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "Warna panel";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "Warna bilah";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "Gunakan model asli";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "Kelas";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "Metode";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "Panggilan";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "Waktu total";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | metode: " + metodos + " | teratas: " + top + " | total terlihat: " + totalVisible;
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String samplerTituloRendimiento() {
+		return "Sampler Kinerja";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "Metode dengan waktu terakumulasi paling banyak muncul di atas. Bilah menunjukkan secara visual bobot relatif.";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "Sampel";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "Rata-rata";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | metode: " + metodos + " | teratas: " + top;
+	}
+
 }

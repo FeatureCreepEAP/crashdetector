@@ -11339,4 +11339,86 @@ public class Frances implements Idioma {
 		return "Impossible de télécharger la dépendance NBT.";
 	}
 
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String profilerTituloRendimiento() {
+		return "Profileur de performance";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "Actif";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "Les méthodes les plus lentes apparaissent en haut. La barre affiche le poids relatif du temps accumulé.";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "Couleur du panneau";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "Couleur de la barre";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "Utiliser le modèle original";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "Classe";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "Méthode";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "Appels";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "Temps total";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | méthodes : " + metodos + " | haut : " + top + " | total visible : " + totalVisible;
+	}
+
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String samplerTituloRendimiento() {
+		return "Échantillonneur de performance";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "Les méthodes avec le plus de temps accumulé apparaissent en haut. La barre affiche visuellement le poids relatif.";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "Échantillons";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "Moyenne";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | méthodes : " + metodos + " | haut : " + top;
+	}
+
 }

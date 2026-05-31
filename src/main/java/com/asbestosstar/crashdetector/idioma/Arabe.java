@@ -10677,4 +10677,86 @@ public class Arabe implements Idioma {
 		return "تعذر تنزيل اعتمادية NBT.";
 	}
 
+	// Arabic (العربية)
+	@Override
+	public String profilerTituloRendimiento() {
+		return "أداة تحليل الأداء";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "نشط";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "تظهر الطرق الأبطأ في الأعلى. يعرض الشريط الوزن النسبي للوقت المتراكم.";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "لون اللوحة";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "لون الشريط";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "استخدام النموذج الأصلي";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "الفئة";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "الطريقة";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "الاستدعاءات";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "إجمالي الوقت";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | طرق: " + metodos + " | أعلى: " + top + " | إجمالي المرئي: " + totalVisible;
+	}
+
+	// Arabic (العربية)
+	@Override
+	public String samplerTituloRendimiento() {
+		return "أداة أخذ عينات الأداء";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "تظهر الطرق ذات أكبر وقت متراكم في الأعلى. يعرض الشريط بصرياً الوزن النسبي.";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "العينات";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "المتوسط";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | طرق: " + metodos + " | أعلى: " + top;
+	}
+
 }

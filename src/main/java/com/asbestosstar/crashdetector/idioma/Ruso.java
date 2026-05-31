@@ -10781,4 +10781,84 @@ public class Ruso implements Idioma {
 		return "Не удалось загрузить зависимость NBT.";
 	}
 
+	@Override
+	public String profilerTituloRendimiento() {
+		return "Профайлер производительности";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "Активен";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "Самые медленные методы отображаются сверху. Полоса показывает относительный вес накопленного времени.";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "Цвет панели";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "Цвет полосы";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "Использовать оригинальную модель";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "Класс";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "Метод";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "Вызовы";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "Общее время";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | методы: " + metodos + " | топ: " + top + " | всего видно: " + totalVisible;
+	}
+
+	@Override
+	public String samplerTituloRendimiento() {
+		return "Сэмплер производительности";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "Методы с наибольшим накопленным временем отображаются сверху. Полоса визуально показывает относительный вес.";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "Выборки";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "Среднее";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | методы: " + metodos + " | топ: " + top;
+	}
+
 }

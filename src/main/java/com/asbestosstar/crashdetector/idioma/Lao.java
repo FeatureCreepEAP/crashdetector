@@ -11197,4 +11197,84 @@ public class Lao implements Idioma {
 		return "ບໍ່ສາມາດດາວໂຫຼດ dependency NBT ໄດ້.";
 	}
 
+	@Override
+	public String profilerTituloRendimiento() {
+		return "Profiler ປະສິດທິພາບ";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "ກຳລັງເຮັດວຽກ";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "ເມທອດທີ່ຊ້າທີ່ສຸດຈະປາກົດຢູ່ດ້ານເທິງ. ແຖບສະແດງນ້ຳໜັກສຳພັດຂອງເວລາທີ່ສະສົມ.";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "ສີແຜງ";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "ສີແຖບ";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "ໃຊ້ໂມເດລດັ້ງເດີມ";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "ຄລາສ";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "ເມທອດ";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "ການເອີ້ນໃຊ້";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "ເວລາລວມ";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | ເມທອດ: " + metodos + " | top: " + top + " | ລວມທີ່ເຫັນ: " + totalVisible;
+	}
+
+	@Override
+	public String samplerTituloRendimiento() {
+		return "Sampler ປະສິດທິພາບ";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "ເມທອດທີ່ມີເວລາສະສົມຫຼາຍທີ່ສຸດຈະປາກົດຢູ່ດ້ານເທິງ. ແຖບສະແດງນ້ຳໜັກສຳພັດແບບເຫັນໄດ້.";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "ຕົວຢ່າງ";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "ຄ່າສະເລ່ຍ";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | ເມທອດ: " + metodos + " | top: " + top;
+	}
+
 }

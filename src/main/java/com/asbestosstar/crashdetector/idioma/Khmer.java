@@ -10972,4 +10972,86 @@ public class Khmer implements Idioma {
 		return "មិនអាចទាញយក dependency NBT បានទេ។";
 	}
 
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String profilerTituloRendimiento() {
+		return "កម្មវិធីវិភាគការអនុវត្ត";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "កំពុងដំណើរការ";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "វិធីសាស្ត្រយឺតបំផុតលេចឡើងនៅខាងលើ។ របារបង្ហាញពីទម្ងន់ធៀបនៃពេលវេលាដែលបានប្រមូលផ្តុំ។";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "ពណ៌ផ្ទាំង";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "ពណ៌របារ";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "ប្រើគំរូដើម";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "ថ្នាក់";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "វិធីសាស្ត្រ";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "ការហៅ";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "ពេលវេលាសរុប";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | វិធីសាស្ត្រ: " + metodos + " | កំពូល: " + top + " | សរុបដែលមើលឃើញ: " + totalVisible;
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String samplerTituloRendimiento() {
+		return "កម្មវិធីយកគំរូការអនុវត្ត";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "វិធីសាស្ត្រដែលមានពេលវេលាប្រមូលផ្តុំច្រើនជាងគេលេចឡើងនៅខាងលើ។ របារបង្ហាញពីទម្ងន់ធៀបដោយមើលឃើញ។";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "គំរូ";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "មធ្យម";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | វិធីសាស្ត្រ: " + metodos + " | កំពូល: " + top;
+	}
+
 }

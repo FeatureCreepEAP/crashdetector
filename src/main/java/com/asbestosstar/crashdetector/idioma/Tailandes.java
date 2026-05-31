@@ -10970,4 +10970,84 @@ public class Tailandes implements Idioma {
 		return "ไม่สามารถดาวน์โหลด dependency NBT ได้";
 	}
 
+	@Override
+	public String profilerTituloRendimiento() {
+		return "ตัววิเคราะห์ประสิทธิภาพ";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "ใช้งานอยู่";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "เมธอดที่ช้าที่สุดจะปรากฏด้านบน แถบแสดงน้ำหนักสัมพัทธ์ของเวลารวม";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "สีแผง";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "สีแถบ";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "ใช้โมเดลเดิม";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "คลาส";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "เมธอด";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "การเรียกใช้";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "เวลารวม";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | เมธอด: " + metodos + " | อันดับต้น: " + top + " | รวมที่เห็น: " + totalVisible;
+	}
+
+	@Override
+	public String samplerTituloRendimiento() {
+		return "ตัวสุ่มตัวอย่างประสิทธิภาพ";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "เมธอดที่มีเวลารวมมากที่สุดจะปรากฏด้านบน แถบแสดงน้ำหนักสัมพัทธ์ให้เห็นภาพ";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "ตัวอย่าง";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "ค่าเฉลี่ย";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | เมธอด: " + metodos + " | อันดับต้น: " + top;
+	}
+
 }

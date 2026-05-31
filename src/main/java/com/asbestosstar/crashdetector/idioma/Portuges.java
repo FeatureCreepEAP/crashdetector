@@ -10786,4 +10786,84 @@ public class Portuges implements Idioma {
 		return "Não foi possível baixar a dependência NBT.";
 	}
 
+	@Override
+	public String profilerTituloRendimiento() {
+		return "Profiler de desempenho";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "Ativo";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "Os métodos mais lentos aparecem no topo. A barra mostra o peso relativo do tempo acumulado.";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "Cor do painel";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "Cor da barra";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "Usar modelo original";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "Classe";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "Método";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "Chamadas";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "Tempo total";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | métodos: " + metodos + " | top: " + top + " | total visível: " + totalVisible;
+	}
+
+	@Override
+	public String samplerTituloRendimiento() {
+		return "Sampler de desempenho";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "Os métodos com mais tempo acumulado aparecem no topo. A barra mostra visualmente o peso relativo.";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "Amostras";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "Média";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | métodos: " + metodos + " | top: " + top;
+	}
+
 }

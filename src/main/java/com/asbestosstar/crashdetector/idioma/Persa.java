@@ -10738,4 +10738,84 @@ public class Persa implements Idioma {
 		return "دانلود وابستگی NBT امکان‌پذیر نبود.";
 	}
 
+	@Override
+	public String profilerTituloRendimiento() {
+		return "پروفایلر عملکرد";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "فعال";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "کندترین متدها در بالا ظاهر می‌شوند. نوار وزن نسبی زمان تجمعی را نشان می‌دهد.";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "رنگ پنل";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "رنگ نوار";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "استفاده از مدل اصلی";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "کلاس";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "متد";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "فراخوانی‌ها";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "زمان کل";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | متدها: " + metodos + " | برترین‌ها: " + top + " | کل قابل مشاهده: " + totalVisible;
+	}
+
+	@Override
+	public String samplerTituloRendimiento() {
+		return "نمونه‌بردار عملکرد";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "متدهایی با بیشترین زمان تجمعی در بالا ظاهر می‌شوند. نوار به صورت بصری وزن نسبی را نشان می‌دهد.";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "نمونه‌ها";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "میانگین";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | متدها: " + metodos + " | برترین‌ها: " + top;
+	}
+
 }

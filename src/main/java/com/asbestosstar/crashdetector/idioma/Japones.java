@@ -10406,4 +10406,86 @@ public class Japones implements Idioma {
 		return "NBT 依存関係をダウンロードできませんでした。";
 	}
 
+	// Japanese (日本語)
+	@Override
+	public String profilerTituloRendimiento() {
+		return "パフォーマンスプロファイラー";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "アクティブ";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "最も遅いメソッドが上部に表示されます。バーは累積時間の相対的な重みを示します。";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "パネルの色";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "バーの色";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "元のモデルを使用";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "クラス";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "メソッド";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "呼び出し回数";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "合計時間";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | メソッド数: " + metodos + " | 上位: " + top + " | 表示総数: " + totalVisible;
+	}
+
+	// Japanese (日本語)
+	@Override
+	public String samplerTituloRendimiento() {
+		return "パフォーマンスサンプラー";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "累積時間が最も多いメソッドが上部に表示されます。バーは相対的な重みを視覚的に示します。";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "サンプル数";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "平均";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | メソッド数: " + metodos + " | 上位: " + top;
+	}
+
 }

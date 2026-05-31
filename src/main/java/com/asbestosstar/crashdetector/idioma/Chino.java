@@ -10183,4 +10183,86 @@ public class Chino implements Idioma {
 		return "无法下载 NBT 依赖项。";
 	}
 
+	// Chinese (Simplified) (中文)
+	@Override
+	public String profilerTituloRendimiento() {
+		return "性能分析器";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "活动";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "最慢的方法显示在顶部。条形图显示累积时间的相对权重。";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "面板颜色";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "条形颜色";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "使用原始模型";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "类";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "方法";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "调用次数";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "总时间";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | 方法数: " + metodos + " | 顶部: " + top + " | 可见总数: " + totalVisible;
+	}
+
+	// Chinese (Simplified) (中文)
+	@Override
+	public String samplerTituloRendimiento() {
+		return "性能采样器";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "累积时间最多的方法显示在顶部。条形图直观地显示相对权重。";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "样本数";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "平均值";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | 方法数: " + metodos + " | 顶部: " + top;
+	}
+
 }

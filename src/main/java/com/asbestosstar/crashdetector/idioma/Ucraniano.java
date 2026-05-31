@@ -10110,4 +10110,84 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Не вдалося завантажити залежність NBT.";
 	}
 
+	@Override
+	public String profilerTituloRendimiento() {
+		return "Профайлер продуктивності";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "Активний";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "Найповільніші методи відображаються зверху. Смуга показує відносну вагу накопиченого часу.";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "Колір панелі";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "Колір смуги";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "Використовувати оригінальну модель";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "Клас";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "Метод";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "Виклики";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "Загальний час";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | методи: " + metodos + " | топ: " + top + " | всього видно: " + totalVisible;
+	}
+
+	@Override
+	public String samplerTituloRendimiento() {
+		return "Семплер продуктивності";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "Методи з найбільшим накопиченим часом відображаються зверху. Смуга візуально показує відносну вагу.";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "Вибірки";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "Середнє";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | методи: " + metodos + " | топ: " + top;
+	}
+
 }

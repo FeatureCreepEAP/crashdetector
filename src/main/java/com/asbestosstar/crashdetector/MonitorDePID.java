@@ -307,6 +307,9 @@ public class MonitorDePID {
 				Statics.carpeta.resolve("imagenes/salior_moon_skin.png").toFile());
 
 		copiarACarpetaDesdeJar("/imagenes/minaly_xo.png", Statics.carpeta.resolve("imagenes/minaly_xo.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/minaly_xo_original.png",
+				Statics.carpeta.resolve("imagenes/minaly_xo_original.png").toFile());
+
 		copiarACarpetaDesdeJar("/imagenes/einelotta.png", Statics.carpeta.resolve("imagenes/einelotta.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/einelotta_original.png",
 				Statics.carpeta.resolve("imagenes/einelotta_original.png").toFile());
@@ -321,6 +324,8 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/tlguard.png", Statics.carpeta.resolve("imagenes/tlguard.png").toFile());
 
 		copiarACarpetaDesdeJar("/imagenes/sketchyvt.png", Statics.carpeta.resolve("imagenes/sketchyvt.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/sketchyvt_original.png",
+				Statics.carpeta.resolve("imagenes/sketchyvt_original.png").toFile());
 
 		copiarACarpetaDesdeJar("/imagenes/check.png", Statics.carpeta.resolve("imagenes/check.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/square.png", Statics.carpeta.resolve("imagenes/square.png").toFile());
@@ -340,6 +345,15 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/yunenoms.png", Statics.carpeta.resolve("imagenes/yunenoms.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/wilhelmia_frost.png",
 				Statics.carpeta.resolve("imagenes/wilhelmia_frost.png").toFile());
+
+		copiarACarpetaDesdeJar("/imagenes/consola_bajar.png",
+				Statics.carpeta.resolve("imagenes/consola_bajar.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/consola_stop.png",
+				Statics.carpeta.resolve("imagenes/consola_stop.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/consola_logs.png",
+				Statics.carpeta.resolve("imagenes/consola_logs.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/importar.png", Statics.carpeta.resolve("imagenes/importar.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/exportar.png", Statics.carpeta.resolve("imagenes/exportar.png").toFile());
 
 //docs		
 

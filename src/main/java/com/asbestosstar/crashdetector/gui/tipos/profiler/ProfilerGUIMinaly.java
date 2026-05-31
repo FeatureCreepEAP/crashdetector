@@ -26,6 +26,7 @@ import javax.swing.table.TableColumn;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
+import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.elementos.RenderizadorBarraRendimiento;
@@ -51,6 +52,8 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 	public ConfigColor colorBoton = ConfigColor.de("gui.profiler.minaly.color.boton", new Color(255, 180, 205));
 
 	public ConfigColor colorBarra = ConfigColor.de("gui.profiler.minaly.color.barra", new Color(255, 120, 160));
+
+	public ConfigBoolean usarModeloOriginal = ConfigBoolean.de("gui.profiler.minaly.usar.modelo.original", false);
 
 	private JButton botonIniciar;
 	private JButton botonDetener;
@@ -98,11 +101,11 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setOpaque(false);
 
-		JLabel titulo = new JLabel("Profiler de rendimiento");
+		JLabel titulo = new JLabel(MonitorDePID.idioma.profilerTituloRendimiento());
 		titulo.setForeground(colorTexto.obtener());
 		titulo.setFont(titulo.getFont().deriveFont(18f));
 
-		etiquetaEstado = new JLabel("Detenido");
+		etiquetaEstado = new JLabel(MonitorDePID.idioma.profilerEstadoDetenido());
 		etiquetaEstado.setForeground(colorTexto.obtener());
 
 		panel.add(titulo, BorderLayout.WEST);
@@ -155,13 +158,21 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 
 		JLabel imagen = new JLabel();
 
-		ImageIcon icon = new ImageIcon(Statics.carpeta.resolve("imagenes/minaly_xo.png").toString());
+		ImageIcon icon;
+
+		if (usarModeloOriginal.obtener()) {
+			icon = cargarImagenConFallback(Statics.carpeta.resolve("imagenes/minaly_xo_original.png").toString(),
+					"/mnt/data/minaly_xo_original.png");
+		} else {
+			icon = cargarImagenConFallback(Statics.carpeta.resolve("imagenes/minaly_xo.png").toString(),
+					"/mnt/data/minaly_xo.png");
+		}
+
 		Image esc = icon.getImage().getScaledInstance(155, 255, Image.SCALE_SMOOTH);
 		imagen.setIcon(new ImageIcon(esc));
 
-		JLabel ayuda = new JLabel("<html><div style='width:150px;'>"
-				+ "Los métodos más lentos aparecen arriba. La barra muestra el peso relativo del tiempo acumulado."
-				+ "</div></html>");
+		JLabel ayuda = new JLabel(
+				"<html><div style='width:150px;'>" + MonitorDePID.idioma.profilerAyudaMinaly() + "</div></html>");
 		ayuda.setForeground(colorTexto.obtener());
 
 		panel.add(imagen);
@@ -169,6 +180,23 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 		panel.add(ayuda);
 
 		return panel;
+	}
+
+	private ImageIcon cargarImagenConFallback(String... rutas) {
+		for (String ruta : rutas) {
+
+			if (ruta == null || ruta.trim().isEmpty()) {
+				continue;
+			}
+
+			ImageIcon icon = new ImageIcon(ruta);
+
+			if (icon.getIconWidth() > 0) {
+				return icon;
+			}
+		}
+
+		return new ImageIcon();
 	}
 
 	private JPanel crearBotones() {
@@ -202,14 +230,14 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 
 	@Override
 	public void onProfilerIniciado() {
-		etiquetaEstado.setText("Activo");
+		etiquetaEstado.setText(MonitorDePID.idioma.profilerEstadoActivo());
 		botonIniciar.setEnabled(false);
 		botonDetener.setEnabled(true);
 	}
 
 	@Override
 	public void onProfilerDetenido() {
-		etiquetaEstado.setText("Detenido");
+		etiquetaEstado.setText(MonitorDePID.idioma.profilerEstadoDetenido());
 		botonIniciar.setEnabled(true);
 		botonDetener.setEnabled(false);
 	}
@@ -268,8 +296,11 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 			totalGeneral += d.tiempoTotal;
 		}
 
-		etiquetaEstado.setText((profilerActivo ? "Activo" : "Detenido") + " | métodos: " + datos.size() + " | top: "
-				+ lista.size() + " | total visible: " + formatearNs(totalGeneral));
+		String estado = profilerActivo ? MonitorDePID.idioma.profilerEstadoActivo()
+				: MonitorDePID.idioma.profilerEstadoDetenido();
+
+		etiquetaEstado.setText(MonitorDePID.idioma.profilerEstadoResumen(estado, datos.size(), lista.size(),
+				formatearNs(totalGeneral)));
 	}
 
 	public String formatearNs(long ns) {
@@ -292,16 +323,18 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 		List<ElementoConfig> lista = new ArrayList<>();
 
 		colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
-		colorPanel.establecerNombreParaMostrar(() -> "Color panel");
+		colorPanel.establecerNombreParaMostrar(() -> MonitorDePID.idioma.profilerConfigColorPanel());
 		colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
 		colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
-		colorBarra.establecerNombreParaMostrar(() -> "Color barra");
+		colorBarra.establecerNombreParaMostrar(() -> MonitorDePID.idioma.profilerConfigColorBarra());
+		usarModeloOriginal.establecerNombreParaMostrar(() -> MonitorDePID.idioma.profilerConfigUsarModeloOriginal());
 
 		lista.add(colorFondo);
 		lista.add(colorPanel);
 		lista.add(colorTexto);
 		lista.add(colorBoton);
 		lista.add(colorBarra);
+		lista.add(usarModeloOriginal);
 
 		return lista;
 	}
@@ -345,7 +378,9 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 
 		private static final long serialVersionUID = 1L;
 
-		private final String[] columnas = { "Clase", "Método", "Llamadas", "Tiempo total" };
+		private final String[] columnas = { MonitorDePID.idioma.profilerColumnaClase(),
+				MonitorDePID.idioma.profilerColumnaMetodo(), MonitorDePID.idioma.profilerColumnaLlamadas(),
+				MonitorDePID.idioma.profilerColumnaTiempoTotal() };
 
 		private List<DatosMetodoVista> filas = new ArrayList<>();
 

@@ -4220,4 +4220,36 @@ public interface Idioma {
 
 	public String no_se_pudo_descargar_dependencia_nbt();
 
+	String profilerTituloRendimiento();
+
+	String profilerEstadoActivo();
+
+	String profilerAyudaMinaly();
+
+	String profilerConfigColorPanel();
+
+	String profilerConfigColorBarra();
+
+	String profilerConfigUsarModeloOriginal();
+
+	String profilerColumnaClase();
+
+	String profilerColumnaMetodo();
+
+	String profilerColumnaLlamadas();
+
+	String profilerColumnaTiempoTotal();
+
+	String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible);
+
+	String samplerTituloRendimiento();
+
+	String samplerAyudaEineLotta();
+
+	String samplerColumnaMuestras();
+
+	String samplerColumnaPromedio();
+
+	String samplerEstadoResumen(String estado, int metodos, int top);
+
 }

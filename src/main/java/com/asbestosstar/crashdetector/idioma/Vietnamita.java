@@ -10997,4 +10997,84 @@ public class Vietnamita implements Idioma {
 		return "Không thể tải xuống dependency NBT.";
 	}
 
+	@Override
+	public String profilerTituloRendimiento() {
+		return "Profiler hiệu suất";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "Đang hoạt động";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "Các phương thức chậm nhất xuất hiện ở trên cùng. Thanh hiển thị trọng số tương đối của thời gian tích lũy.";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "Màu bảng điều khiển";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "Màu thanh";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "Sử dụng mô hình gốc";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "Lớp";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "Phương thức";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "Lời gọi";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "Tổng thời gian";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | phương thức: " + metodos + " | đầu: " + top + " | tổng hiển thị: " + totalVisible;
+	}
+
+	@Override
+	public String samplerTituloRendimiento() {
+		return "Sampler hiệu suất";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "Các phương thức có thời gian tích lũy nhiều nhất xuất hiện ở trên cùng. Thanh hiển thị trực quan trọng số tương đối.";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "Mẫu";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "Trung bình";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | phương thức: " + metodos + " | đầu: " + top;
+	}
+
 }

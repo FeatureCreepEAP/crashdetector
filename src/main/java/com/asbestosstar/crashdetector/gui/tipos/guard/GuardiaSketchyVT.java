@@ -11,6 +11,7 @@ import javax.swing.JTextArea;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
+import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
@@ -35,6 +36,7 @@ public class GuardiaSketchyVT extends GuardiaGUI {
 	private ConfigColor colorSeleccionTexto = ConfigColor.de("tema.guard.sketchyvt.color.seleccion.texto",
 			new Color(255, 255, 255));
 	private ConfigColor colorCarga = ConfigColor.de("tema.guard.sketchyvt.color.carga", new Color(255, 255, 255));
+	private ConfigBoolean usarModeloOriginal = ConfigBoolean.de("tema.guard.sketchyvt.usar.modelo.original", false);
 
 	@Override
 	public String id() {
@@ -104,8 +106,16 @@ public class GuardiaSketchyVT extends GuardiaGUI {
 		}
 
 		if (imagenSketchyVT != null) {
-			ImageIcon sketchy = cargarImagenConFallback(Statics.carpeta.resolve("imagenes/sketchyvt.png").toString(),
-					"/mnt/data/sketchyvt.png");
+			ImageIcon sketchy;
+
+			if (usarModeloOriginal.obtener()) {
+				sketchy = cargarImagenConFallback(Statics.carpeta.resolve("imagenes/sketchyvt_original.png").toString(),
+						"/mnt/data/sketchyvt_original.png");
+			} else {
+				sketchy = cargarImagenConFallback(Statics.carpeta.resolve("imagenes/sketchyvt.png").toString(),
+						"/mnt/data/sketchyvt.png");
+			}
+
 			imagenSketchyVT.setIcon(sketchy);
 			imagenSketchyVT.setText(sketchy.getIconWidth() > 0 ? "" : "SketchyVT");
 			imagenSketchyVT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -220,6 +230,7 @@ public class GuardiaSketchyVT extends GuardiaGUI {
 		colorSeleccion.establecerNombreParaMostrar(() -> MonitorDePID.idioma.guardColorSeleccion());
 		colorSeleccionTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.guardColorSeleccionTexto());
 		colorCarga.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoOverlayCarga());
+		usarModeloOriginal.establecerNombreParaMostrar(() -> MonitorDePID.idioma.profilerConfigUsarModeloOriginal());
 
 		elementos.add(colorFondoPrincipal);
 		elementos.add(colorPanel);
@@ -229,6 +240,7 @@ public class GuardiaSketchyVT extends GuardiaGUI {
 		elementos.add(colorSeleccion);
 		elementos.add(colorSeleccionTexto);
 		elementos.add(colorCarga);
+		elementos.add(usarModeloOriginal);
 
 		return elementos;
 	}

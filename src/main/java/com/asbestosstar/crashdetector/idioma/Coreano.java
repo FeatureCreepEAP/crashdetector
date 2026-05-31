@@ -10399,4 +10399,86 @@ public class Coreano implements Idioma {
 		return "NBT 종속성을 다운로드할 수 없습니다.";
 	}
 
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String profilerTituloRendimiento() {
+		return "성능 프로파일러";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "활성";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "가장 느린 메서드가 상단에 표시됩니다. 막대는 누적 시간의 상대적 가중치를 보여줍니다.";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "패널 색상";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "막대 색상";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "원본 모델 사용";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "클래스";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "메서드";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "호출 횟수";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "총 시간";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | 메서드: " + metodos + " | 상위: " + top + " | 표시된 총계: " + totalVisible;
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String samplerTituloRendimiento() {
+		return "성능 샘플러";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "누적 시간이 가장 많은 메서드가 상단에 표시됩니다. 막대는 상대적 가중치를 시각적으로 보여줍니다.";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "샘플 수";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "평균";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | 메서드: " + metodos + " | 상위: " + top;
+	}
+
 }

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -33,6 +35,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
 import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
@@ -71,6 +74,11 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 	public static final ConfigString proveedorConfig = ConfigString.de("cdmods.proveedor", "tlmods");
 
 	public JComboBox<ProveedorRegistrado> comboProveedores;
+
+	private static final int TAMANO_ICONO_ACCION = 32;
+
+	private static final String ICONO_IMPORTAR = "imagenes/importar.png";
+	private static final String ICONO_EXPORTAR = "imagenes/exportar.png";
 
 	static {
 		registrarProveedorMods("tlmods", "TLMods", ProveedorModsTlmods::new);
@@ -268,8 +276,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 		Dimension tamBotonChico = new Dimension(38, 24);
 
-		JButton botonImportar = new JButton("↑");
-		botonImportar.setToolTipText(MonitorDePID.idioma.importar_instancia());
+		JButton botonImportar = crearBotonIconoAccion(ICONO_IMPORTAR, "↑", MonitorDePID.idioma.importar_instancia());
 		botonImportar.setPreferredSize(tamBotonChico);
 		botonImportar.setMinimumSize(tamBotonChico);
 		botonImportar.setMaximumSize(tamBotonChico);
@@ -281,8 +288,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		});
 		panel.add(botonImportar);
 
-		JButton botonExportar = new JButton("↓");
-		botonExportar.setToolTipText(MonitorDePID.idioma.compartir_instancia());
+		JButton botonExportar = crearBotonIconoAccion(ICONO_EXPORTAR, "↓", MonitorDePID.idioma.compartir_instancia());
 		botonExportar.setPreferredSize(tamBotonChico);
 		botonExportar.setMinimumSize(tamBotonChico);
 		botonExportar.setMaximumSize(tamBotonChico);
@@ -1046,6 +1052,65 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 			g2.dispose();
 		}
+	}
+
+	private JButton crearBotonIconoAccion(String rutaRelativa, String textoFallback, String textoAccesible) {
+		JButton boton = new JButton();
+
+		ImageIcon icono = cargarIcono32(rutaRelativa);
+
+		if (icono.getIconWidth() > 0) {
+			boton.setIcon(icono);
+			boton.setText("");
+		} else {
+			boton.setText(textoFallback);
+		}
+
+		boton.setToolTipText(textoAccesible);
+		boton.getAccessibleContext().setAccessibleName(textoAccesible);
+		boton.setFocusPainted(false);
+
+		return boton;
+	}
+
+	public ImageIcon cargarIcono32(String rutaRelativa) {
+		ImageIcon icono = cargarIconoConFallback(Statics.carpeta.resolve(rutaRelativa).toString(),
+				"/mnt/data/" + nombreArchivo(rutaRelativa));
+
+		if (icono.getIconWidth() <= 0) {
+			return icono;
+		}
+
+		Image imagen = icono.getImage().getScaledInstance(TAMANO_ICONO_ACCION, TAMANO_ICONO_ACCION, Image.SCALE_SMOOTH);
+		return new ImageIcon(imagen);
+	}
+
+	public ImageIcon cargarIconoConFallback(String... rutas) {
+		for (String ruta : rutas) {
+			if (ruta == null || ruta.trim().isEmpty()) {
+				continue;
+			}
+
+			ImageIcon icono = new ImageIcon(ruta);
+
+			if (icono.getIconWidth() > 0) {
+				return icono;
+			}
+		}
+
+		return new ImageIcon();
+	}
+
+	public String nombreArchivo(String ruta) {
+		int slash = ruta.lastIndexOf('/');
+		int backslash = ruta.lastIndexOf('\\');
+		int indice = Math.max(slash, backslash);
+
+		if (indice >= 0 && indice + 1 < ruta.length()) {
+			return ruta.substring(indice + 1);
+		}
+
+		return ruta;
 	}
 
 }

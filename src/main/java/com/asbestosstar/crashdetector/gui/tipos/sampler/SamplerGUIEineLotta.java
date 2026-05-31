@@ -94,11 +94,11 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setOpaque(false);
 
-		JLabel titulo = new JLabel("Sampler de rendimiento");
+		JLabel titulo = new JLabel(MonitorDePID.idioma.samplerTituloRendimiento());
 		titulo.setForeground(colorTexto.obtener());
 		titulo.setFont(titulo.getFont().deriveFont(18f));
 
-		etiquetaEstado = new JLabel("Detenido");
+		etiquetaEstado = new JLabel(MonitorDePID.idioma.profilerEstadoDetenido());
 		etiquetaEstado.setForeground(colorTexto.obtener());
 
 		panel.add(titulo, BorderLayout.WEST);
@@ -162,9 +162,8 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 		Image esc = icon.getImage().getScaledInstance(155, 255, Image.SCALE_SMOOTH);
 		imagen.setIcon(new ImageIcon(esc));
 
-		JLabel ayuda = new JLabel("<html><div style='width:150px;'>"
-				+ "Los métodos con más tiempo acumulado aparecen arriba. La barra muestra visualmente el peso relativo."
-				+ "</div></html>");
+		JLabel ayuda = new JLabel(
+				"<html><div style='width:150px;'>" + MonitorDePID.idioma.samplerAyudaEineLotta() + "</div></html>");
 		ayuda.setForeground(colorTexto.obtener());
 
 		panel.add(imagen);
@@ -222,14 +221,14 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 
 	@Override
 	public void onSamplerIniciado() {
-		etiquetaEstado.setText("Activo");
+		etiquetaEstado.setText(MonitorDePID.idioma.profilerEstadoActivo());
 		botonIniciar.setEnabled(false);
 		botonDetener.setEnabled(true);
 	}
 
 	@Override
 	public void onSamplerDetenido() {
-		etiquetaEstado.setText("Detenido");
+		etiquetaEstado.setText(MonitorDePID.idioma.profilerEstadoDetenido());
 		botonIniciar.setEnabled(true);
 		botonDetener.setEnabled(false);
 	}
@@ -275,8 +274,10 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 
 		modelo.setDatos(filas);
 
-		etiquetaEstado.setText(
-				(samplerActivo ? "Activo" : "Detenido") + " | métodos: " + datos.size() + " | top: " + filas.size());
+		String estado = samplerActivo ? MonitorDePID.idioma.profilerEstadoActivo()
+				: MonitorDePID.idioma.profilerEstadoDetenido();
+
+		etiquetaEstado.setText(MonitorDePID.idioma.samplerEstadoResumen(estado, datos.size(), filas.size()));
 	}
 
 	private String formatearNs(long ns) {
@@ -299,11 +300,11 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 		List<ElementoConfig> lista = new ArrayList<>();
 
 		colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
-		colorPanel.establecerNombreParaMostrar(() -> "Color panel");
+		colorPanel.establecerNombreParaMostrar(() -> MonitorDePID.idioma.profilerConfigColorPanel());
 		colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
 		colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
-		colorBarra.establecerNombreParaMostrar(() -> "Color barra");
-		usarModeloOriginal.establecerNombreParaMostrar(() -> "Usar modelo original");
+		colorBarra.establecerNombreParaMostrar(() -> MonitorDePID.idioma.profilerConfigColorBarra());
+		usarModeloOriginal.establecerNombreParaMostrar(() -> MonitorDePID.idioma.profilerConfigUsarModeloOriginal());
 
 		lista.add(colorFondo);
 		lista.add(colorPanel);
@@ -348,7 +349,9 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 
 		private static final long serialVersionUID = 1L;
 
-		private final String[] columnas = { "Método", "Muestras", "Promedio", "Tiempo total" };
+		private final String[] columnas = { MonitorDePID.idioma.profilerColumnaMetodo(),
+				MonitorDePID.idioma.samplerColumnaMuestras(), MonitorDePID.idioma.samplerColumnaPromedio(),
+				MonitorDePID.idioma.profilerColumnaTiempoTotal() };
 
 		private List<DatosVista> filas = new ArrayList<>();
 

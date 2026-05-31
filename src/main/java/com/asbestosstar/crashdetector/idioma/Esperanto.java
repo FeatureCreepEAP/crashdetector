@@ -10769,4 +10769,86 @@ public class Esperanto implements Idioma {
 		return "Ne eblis elŝuti la NBT-dependecon.";
 	}
 
+	// Esperanto (Esperanto)
+	@Override
+	public String profilerTituloRendimiento() {
+		return "Analizilo de rendimento";
+	}
+
+	@Override
+	public String profilerEstadoActivo() {
+		return "Aktiva";
+	}
+
+	@Override
+	public String profilerAyudaMinaly() {
+		return "La plej malrapidaj metodoj aperas supre. La stango montras la relativan pezon de la akumulita tempo.";
+	}
+
+	@Override
+	public String profilerConfigColorPanel() {
+		return "Koloro de panelo";
+	}
+
+	@Override
+	public String profilerConfigColorBarra() {
+		return "Koloro de stango";
+	}
+
+	@Override
+	public String profilerConfigUsarModeloOriginal() {
+		return "Uzi originalan modelon";
+	}
+
+	@Override
+	public String profilerColumnaClase() {
+		return "Klaso";
+	}
+
+	@Override
+	public String profilerColumnaMetodo() {
+		return "Metodo";
+	}
+
+	@Override
+	public String profilerColumnaLlamadas() {
+		return "Alvokoj";
+	}
+
+	@Override
+	public String profilerColumnaTiempoTotal() {
+		return "Tuta tempo";
+	}
+
+	@Override
+	public String profilerEstadoResumen(String estado, int metodos, int top, String totalVisible) {
+		return estado + " | metodoj: " + metodos + " | supro: " + top + " | tuta videbla: " + totalVisible;
+	}
+
+	// Esperanto (Esperanto)
+	@Override
+	public String samplerTituloRendimiento() {
+		return "Specimenilo de rendimento";
+	}
+
+	@Override
+	public String samplerAyudaEineLotta() {
+		return "La metodoj kun la plej multa akumulita tempo aperas supre. La stango videble montras la relativan pezon.";
+	}
+
+	@Override
+	public String samplerColumnaMuestras() {
+		return "Specimenoj";
+	}
+
+	@Override
+	public String samplerColumnaPromedio() {
+		return "Averago";
+	}
+
+	@Override
+	public String samplerEstadoResumen(String estado, int metodos, int top) {
+		return estado + " | metodoj: " + metodos + " | supro: " + top;
+	}
+
 }
