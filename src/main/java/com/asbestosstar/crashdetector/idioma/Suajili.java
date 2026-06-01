@@ -11325,4 +11325,64 @@ public class Suajili implements Idioma {
 		return "Mod Zilizosakinishwa";
 	}
 
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "Kihamaisha";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "Kihamaisha cha uchambuzi wa zamani";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "Wasaidizi huyu husaidia kuhamisha mipangilio kutoka kwa vichambuzi vya ajali vya zamani na vilivyomilikiwa kwenda kwenye mifumo ya kisasa, wazi na inayoweza kudumishwa. Kuhamisha sheria hizi hupunguza utegemezi wa zana zilizofungwa na hurahisisha ukaguzi, ushirikiano na usaidizi wa jamii. Nembo zilizoonyeshwa hapa sio nembo halisi; ni parodi tulizoziona kuwa za kuchekesha.";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "Wasaidizi wa Crash Assistant";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "Inaingiza problematic_mods.json kutoka Crash Assistant na kuichanganya na umbizo la CrashDetector kupitia wasaidizi.";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "Tekeleza wasaidizi";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "Wasaidizi amekamilika.";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "Hakuna kitu kilichopatikana cha kuhamisha.";
+	}
+
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "Tumia GUI kuu ya msingi";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "Zima ukaguzi";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "Kiungo cha usaidizi hakikuhamishwa kwa sababu hutumii GUI ya msingi. Ili kubadilisha URL ya usaidizi, tumia kihariri cha WYSIWYG katika mipangilio ya CrashDetector.";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "Onyo: kutokana na tofauti kati ya aina za usanidi, orodha ya kukataa ya ukaguzi haiwezi kuhamishwa kiotomatiki. Hati za JEXL pia hazita hamishwa.";
+	}
+
 }

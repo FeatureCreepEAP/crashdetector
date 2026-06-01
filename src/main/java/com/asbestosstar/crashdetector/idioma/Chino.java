@@ -10288,4 +10288,66 @@ public class Chino implements Idioma {
 		return "已安装的 Mod";
 	}
 
+	// Chinese (Simplified) (中文)
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "迁移工具";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "旧版分析器迁移工具";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "此向导帮助将配置从旧版且专有的崩溃分析器迁移到现代、开放且可维护的系统。迁移这些规则可以减少对闭源工具的依赖，并促进审计、协作和社区支持。此处显示的标志并非真实标志；而是我们认为有趣的恶搞标志。";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "Crash Assistant 向导";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "通过向导导入 Crash Assistant 的 problematic_mods.json 并将其与 CrashDetector 格式合并。";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "运行向导";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "向导已完成。";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "未找到可迁移的内容。";
+	}
+
+	// Chinese (Simplified) (中文)
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "使用原始主界面";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "禁用复选框";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "支持链接未迁移，因为您未使用原始界面。要更改支持 URL，请使用 CrashDetector 设置中的 WYSIWYG 编辑器。";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "注意：由于配置类型的差异，验证 denylist 无法自动迁移。JEXL 脚本也不会被迁移。";
+	}
+
 }

@@ -10874,4 +10874,66 @@ public class Esperanto implements Idioma {
 		return "Instalitaj modoj";
 	}
 
+	// Esperanto (Esperanto)
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "Migrilo";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "Migrilo de analiziloj legacy";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "Ĉi tiu helpilo helpas movi agordojn de legacy kaj proprietaj kraŝ-analiziloj al modernaj, malfermitaj kaj bonteneblaj sistemoj. Migrado de ĉi tiuj reguloj reduktas la dependecon de fermitaj iloj kaj faciligas revizion, kunlaboron kaj komunuman subtenon. La emblemoj montritaj ĉi tie ne estas la realaj emblemoj; ili estas parodioj, kiujn ni trovis amuzaj.";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "Helpilo de Crash Assistant";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "Importas problematic_mods.json de Crash Assistant kaj kombinas ĝin kun la formato de CrashDetector per helpilo.";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "Lanĉi helpilon";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "Helpilo kompletigita.";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "Nenio trovita por migri.";
+	}
+
+	// Esperanto (Esperanto)
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "Uzi primitivan ĉefan GUI";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "Malaktivigi markojn";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "La subtena ligilo ne estis migrita ĉar vi ne uzas la primitivan GUI. Por ŝanĝi la subtenan URL, uzu la WYSIWYG-redaktilon en la agordoj de CrashDetector.";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "Averto: pro diferencoj inter la tipoj de agordoj, la denylist de kontroloj ne povas esti aŭtomate migrita. Ankaŭ JEXL-skriptoj ne estos migritaj.";
+	}
+
 }

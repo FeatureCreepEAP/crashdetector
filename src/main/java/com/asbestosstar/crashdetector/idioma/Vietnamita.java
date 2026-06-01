@@ -11098,4 +11098,64 @@ public class Vietnamita implements Idioma {
 		return "Mod đã cài đặt";
 	}
 
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "Công cụ di chuyển";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "Công cụ di chuyển bộ phân tích cũ";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "Trình hướng dẫn này giúp di chuyển cấu hình từ các bộ phân tích crash cũ và độc quyền sang các hệ thống hiện đại, mã nguồn mở và dễ bảo trì. Việc di chuyển các quy tắc này giảm sự phụ thuộc vào các công cụ đóng và tạo điều kiện thuận lợi cho việc kiểm toán, cộng tác và hỗ trợ cộng đồng. Các logo hiển thị ở đây không phải là logo thật; chúng là những bản nhái mà chúng tôi thấy vui.";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "Trình hướng dẫn Crash Assistant";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "Nhập problematic_mods.json từ Crash Assistant và kết hợp nó với định dạng của CrashDetector thông qua trình hướng dẫn.";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "Chạy trình hướng dẫn";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "Trình hướng dẫn đã hoàn thành.";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "Không tìm thấy gì để di chuyển.";
+	}
+
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "Sử dụng giao diện chính nguyên thủy";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "Vô hiệu hóa các kiểm tra";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "Liên kết hỗ trợ không được di chuyển vì bạn không sử dụng giao diện nguyên thủy. Để thay đổi URL hỗ trợ, hãy sử dụng trình soạn thảo WYSIWYG trong cài đặt của CrashDetector.";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "Cảnh báo: do sự khác biệt giữa các loại cấu hình, danh sách từ chối (denylist) của các kiểm tra không thể được di chuyển tự động. Các kịch bản JEXL cũng sẽ không được di chuyển.";
+	}
+
 }

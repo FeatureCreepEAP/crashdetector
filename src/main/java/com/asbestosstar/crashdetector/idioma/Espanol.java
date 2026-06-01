@@ -11595,4 +11595,64 @@ public class Espanol implements Idioma {
 		return "Mods Instalados";
 	}
 
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "Migrador";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "Migrador de analizadores legacy";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "Este wizard ayuda a mover configuraciones desde analizadores de crashes legacy y propietarios hacia sistemas modernos, abiertos y mantenibles. Migrar estas reglas reduce la dependencia de herramientas cerradas y facilita auditoría, colaboración y soporte comunitario. Los logos mostrados aquí no son los logos reales; son parodias que nos parecieron graciosas.";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "Wizard de Crash Assistant";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "Importa problematic_mods.json de Crash Assistant y lo combina con el formato de CrashDetector mediante un wizard.";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "Ejecutar wizard";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "Wizard completado.";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "No se encontró nada para migrar.";
+	}
+
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "Usar GUI principal primitiva";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "Deshabilitar checks";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "No se migró el enlace de soporte porque no estás usando la GUI primitiva. Para cambiar la URL de soporte, usa el editor WYSIWYG en la configuración de CrashDetector.";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "Aviso: por diferencias entre los tipos de configuración, el denylist de verificaciones no se puede migrar automáticamente. Los scripts JEXL tampoco serán migrados.";
+	}
+
 }

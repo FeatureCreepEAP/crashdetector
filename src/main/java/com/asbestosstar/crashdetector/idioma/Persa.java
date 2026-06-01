@@ -10839,4 +10839,64 @@ public class Persa implements Idioma {
 		return "مادهای نصب شده";
 	}
 
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "مهاجرت‌دهنده";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "مهاجرت‌دهنده تحلیلگرهای قدیمی";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "این ویزارد به انتقال پیکربندی‌ها از تحلیلگرهای کرش قدیمی و اختصاصی به سیستم‌های مدرن، متن‌باز و قابل نگهداری کمک می‌کند. مهاجرت این قوانین وابستگی به ابزارهای بسته را کاهش داده و حسابرسی، همکاری و پشتیبانی جامعه را تسهیل می‌کند. لوگوهای نمایش داده شده در اینجا لوگوهای واقعی نیستند؛ آن‌ها پارودی‌هایی هستند که بامزه یافتیم.";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "ویزارد Crash Assistant";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "فایل problematic_mods.json را از Crash Assistant وارد کرده و از طریق یک ویزارد با فرمت CrashDetector ترکیب می‌کند.";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "اجرای ویزارد";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "ویزارد تکمیل شد.";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "چیزی برای مهاجرت یافت نشد.";
+	}
+
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "استفاده از رابط کاربری اصلی اولیه";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "غیرفعال کردن بررسی‌ها";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "لینک پشتیبانی مهاجرت داده نشد زیرا شما از رابط کاربری اولیه استفاده نمی‌کنید. برای تغییر URL پشتیبانی، از ویرایشگر WYSIWYG در تنظیمات CrashDetector استفاده کنید.";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "هشدار: به دلیل تفاوت‌های بین انواع پیکربندی، لیست سیاه بررسی‌ها نمی‌تواند به صورت خودکار مهاجرت داده شود. اسکریپت‌های JEXL نیز مهاجرت داده نخواهند شد.";
+	}
+
 }

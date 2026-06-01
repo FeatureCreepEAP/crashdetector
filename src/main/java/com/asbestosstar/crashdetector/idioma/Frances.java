@@ -11444,4 +11444,66 @@ public class Frances implements Idioma {
 		return "Mods installés";
 	}
 
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "Outil de migration";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "Outil de migration des analyseurs legacy";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "Cet assistant aide à déplacer les configurations depuis des analyseurs de crash legacy et propriétaires vers des systèmes modernes, ouverts et maintenables. La migration de ces règles réduit la dépendance aux outils fermés et facilite l'audit, la collaboration et le support communautaire. Les logos affichés ici ne sont pas les vrais logos ; ce sont des parodies que nous avons trouvées amusantes.";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "Assistant Crash Assistant";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "Importe problematic_mods.json de Crash Assistant et le combine avec le format de CrashDetector via un assistant.";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "Lancer l'assistant";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "Assistant terminé.";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "Rien à migrer n'a été trouvé.";
+	}
+
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "Utiliser l'interface principale primitive";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "Désactiver les cases à cocher";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "Le lien de support n'a pas été migré car vous n'utilisez pas l'interface primitive. Pour changer l'URL de support, utilisez l'éditeur WYSIWYG dans les paramètres de CrashDetector.";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "Avertissement : en raison des différences entre les types de configuration, la liste d'exclusion des vérifications ne peut pas être migrée automatiquement. Les scripts JEXL ne seront pas non plus migrés.";
+	}
+
 }

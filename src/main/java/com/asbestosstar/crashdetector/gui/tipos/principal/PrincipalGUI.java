@@ -50,6 +50,7 @@ import com.asbestosstar.crashdetector.gui.tipos.ia.IAGUILuotianyi;
 import com.asbestosstar.crashdetector.gui.tipos.jgit.JGitHubIzzy;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
+import com.asbestosstar.crashdetector.gui.tipos.migrador.MigradorLegacySamekoSaba;
 import com.asbestosstar.crashdetector.gui.tipos.mixins.MixinsGUIChiarru;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.CDModsEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
@@ -141,7 +142,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 				AdministradorDeRendimientoNightcore.ID, () -> new AdministradorDeRendimientoNightcore());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.CONFIG_MODS, ConfigsModsGUIYunenoms.ID,
 				() -> new ConfigsModsGUIYunenoms());
-
+		registrarBotonDeBarraLateralDerecha(TipoGUI.MIGRADOR_LEGACY, MigradorLegacySamekoSaba.ID,
+				() -> new MigradorLegacySamekoSaba());
 	}
 
 	public PrincipalGUI() {

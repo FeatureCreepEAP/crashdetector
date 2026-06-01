@@ -10781,4 +10781,66 @@ public class Arabe implements Idioma {
 		return "المودات المثبتة";
 	}
 
+	// Arabic (العربية)
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "أداة الترحيل";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "أداة ترحيل المحللات القديمة (Legacy)";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "يساعد هذا المعالج في نقل الإعدادات من محللات الأعطال القديمة والمغلقة المصدر إلى أنظمة حديثة ومفتوحة وقابلة للصيانة. يقلل ترحيل هذه القواعد من الاعتماد على الأدوات المغلقة المصدر، ويسهل التدقيق والتعاون والدعم المجتمعي. الشعارات المعروضة هنا ليست شعارات حقيقية؛ بل هي محاكاة ساخرة وجدناها مضحكة.";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "معالج Crash Assistant";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "يستورد ملف problematic_mods.json من Crash Assistant ويدمجه مع تنسيق CrashDetector باستخدام معالج.";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "تشغيل المعالج";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "اكتمل المعالج.";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "لم يتم العثور على أي شيء للترحيل.";
+	}
+
+	// Arabic (العربية)
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "استخدام الواجهة الرئيسية البدائية";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "تعطيل علامات الاختيار";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "لم يتم ترحيل رابط الدعم لأنك لا تستخدم الواجهة البدائية. لتغيير عنوان URL للدعم، استخدم محرر WYSIWYG في إعدادات CrashDetector.";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "تنبيه: بسبب الاختلافات بين أنواع التكوين، لا يمكن ترحيل قائمة حظر عمليات التحقق تلقائياً. لن يتم أيضاً ترحيل نصوص JEXL.";
+	}
+
 }

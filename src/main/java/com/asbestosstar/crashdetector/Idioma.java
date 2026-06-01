@@ -4262,4 +4262,28 @@ public interface Idioma {
 
 	public String modsInstalados();
 
+	public String migradorLegacyBotonSidebar();
+
+	public String migradorLegacyTitulo();
+
+	public String migradorLegacyDescripcion();
+
+	public String migradorLegacyCrashAssistant();
+
+	public String migradorCrashAssistantDescripcion();
+
+	public String migradorEjecutar();
+
+	public String migradorCompletado();
+
+	public String migradorNadaParaMigrar();
+
+	public String migradorCAUsarPrimitiva();
+
+	public String migradorCADeshabilitarChecks();
+
+	public String migradorCAAvisoUrlSoporteWysiwyg();
+
+	public String migradorCAAvisoNoMigrado();
+
 }

@@ -11298,4 +11298,64 @@ public class Lao implements Idioma {
 		return "Mods ທີ່ຕິດຕັ້ງແລ້ວ";
 	}
 
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "ຕົວຍ້າຍຂໍ້ມູນ";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "ຕົວຍ້າຍຂໍ້ມູນຈາກລະບົບເກົ່າ";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "Wizard ນີ້ຊ່ວຍຍ້າຍການຕັ້ງຄ່າຈາກລະບົບວິເຄາະ crash ແບບເກົ່າ ແລະ ເປັນເຈົ້າຂອງ ໄປສູ່ລະບົບທັນສະໄໝ, ເປີດກວ້າງ ແລະ ບຳລຸງຮັກສາໄດ້ງ່າຍ. ການຍ້າຍຂໍ້ມູນຊ່ວຍຫຼຸດການພິ່ງພາອາໄສເຄື່ອງມືປິດ ແລະ ອຳນວຍຄວາມສະດວກໃນການກວດສອບ, ຮ່ວມມື ແລະ ການສະໜັບສະໜູນຈາກຊຸມຊົນ. ໂລໂກ້ທີ່ສະແດງຢູ່ນີ້ບໍ່ແມ່ນໂລໂກ້ຈິງ; ມັນເປັນການລ້ອນແບບທີ່ເຮົາຄິດວ່າຕະຫຼົກ.";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "Wizard ຂອງ Crash Assistant";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "ນຳເຂົ້າ problematic_mods.json ຈາກ Crash Assistant ແລະ ລວມເຂົ້າກັບຮູບແບບຂອງ CrashDetector ຜ່ານ Wizard.";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "ເລີ່ມ Wizard";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "Wizard ສຳເລັດແລ້ວ.";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "ບໍ່ພົບຂໍ້ມູນທີ່ຈະຍ້າຍ.";
+	}
+
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "ໃຊ້ GUI ຫຼັກແບບດັ້ງເດີມ";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "ປິດການກວດສອບ";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "ບໍ່ໄດ້ຍ້າຍລິ້ງຊ່ວຍເຫຼືອເພາະທ່ານບໍ່ໄດ້ໃຊ້ GUI ແບບດັ້ງເດີມ. ເພື່ອປ່ຽນ URL ຊ່ວຍເຫຼືອ, ໃຫ້ໃຊ້ຕົວແກ້ໄຂ WYSIWYG ໃນການຕັ້ງຄ່າຂອງ CrashDetector.";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "ຄຳເຕືອນ: ເນື່ອງຈາກຄວາມແຕກຕ່າງຂອງປະເພດການຕັ້ງຄ່າ, ລາຍການຫ້າມ (denylist) ຂອງການກວດສອບບໍ່ສາມາດຍ້າຍໄດ້ໂດຍອັດຕະໂນມັດ. ສຄຣິບ JEXL ກໍຈະບໍ່ຖືກຍ້າຍເຊັ່ນກັນ.";
+	}
+
 }

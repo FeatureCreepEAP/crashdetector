@@ -10504,4 +10504,66 @@ public class Coreano implements Idioma {
 		return "설치된 모드";
 	}
 
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "마이그레이션 도구";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "레거시 분석기 마이그레이션 도구";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "이 마법사는 레거시 및 독점 충돌 분석기에서 현대적이고 개방적이며 유지 보수 가능한 시스템으로 구성을 이동하는 데 도움이 됩니다. 이러한 규칙을 마이그레이션하면 폐쇄형 도구에 대한 의존도를 줄이고 감사, 협업 및 커뮤니티 지원을 용이하게 합니다. 여기에 표시된 로고는 실제 로고가 아닙니다; 저희가 재미있다고 생각한 패러디입니다.";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "Crash Assistant 마법사";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "Crash Assistant의 problematic_mods.json을 가져와 마법사를 통해 CrashDetector 형식과 결합합니다.";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "마법사 실행";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "마법사가 완료되었습니다.";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "마이그레이션할 항목을 찾을 수 없습니다.";
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "기본 주 GUI 사용";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "체크박스 비활성화";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "기본 GUI를 사용하지 않아 지원 링크가 마이그레이션되지 않았습니다. 지원 URL을 변경하려면 CrashDetector 설정에서 WYSIWYG 편집기를 사용하십시오.";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "주의: 구성 유형의 차이로 인해 검증 denylist는 자동으로 마이그레이션할 수 없습니다. JEXL 스크립트도 마이그레이션되지 않습니다.";
+	}
+
 }

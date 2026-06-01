@@ -10511,4 +10511,66 @@ public class Japones implements Idioma {
 		return "インストール済み Mod";
 	}
 
+	// Japanese (日本語)
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "移行ツール";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "レガシーアナライザー移行ツール";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "このウィザードは、レガシーおよび独自仕様のクラッシュアナライザーから、現代的でオープンかつ保守可能なシステムへ設定を移動するのに役立ちます。これらのルールを移行することで、クローズドソースツールへの依存を減らし、監査、コラボレーション、コミュニティサポートを容易にします。ここに表示されているロゴは実際のロゴではありません。私たちが面白いと思ったパロディです。";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "Crash Assistant ウィザード";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "Crash Assistant の problematic_mods.json をインポートし、ウィザードを使用して CrashDetector 形式と結合します。";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "ウィザードを実行";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "ウィザードが完了しました。";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "移行する項目が見つかりませんでした。";
+	}
+
+	// Japanese (日本語)
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "プリミティブなメインGUIを使用";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "チェックを無効化";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "プリミティブなGUIを使用していないため、サポートリンクは移行されませんでした。サポートURLを変更するには、CrashDetectorの設定でWYSIWYGエディタを使用してください。";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "警告: 構成タイプの違いにより、検証のdenylistは自動的に移行できません。JEXLスクリプトも移行されません。";
+	}
+
 }

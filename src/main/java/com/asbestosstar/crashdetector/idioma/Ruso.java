@@ -10882,4 +10882,64 @@ public class Ruso implements Idioma {
 		return "Установленные моды";
 	}
 
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "Мигратор";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "Мигратор устаревших анализаторов";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "Этот мастер помогает перенести конфигурации из устаревших и проприетарных анализаторов крашей в современные, открытые и поддерживаемые системы. Перенос этих правил снижает зависимость от закрытых инструментов и облегчает аудит, сотрудничество и поддержку сообщества. Логотипы, показанные здесь, не являются настоящими; это пародии, которые нам показались забавными.";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "Мастер Crash Assistant";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "Импортирует problematic_mods.json из Crash Assistant и объединяет его с форматом CrashDetector через мастер.";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "Запустить мастер";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "Мастер завершен.";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "Ничего для миграции не найдено.";
+	}
+
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "Использовать основной примитивный интерфейс";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "Отключить проверки";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "Ссылка поддержки не была перенесена, так как вы не используете примитивный интерфейс. Чтобы изменить URL поддержки, используйте редактор WYSIWYG в настройках CrashDetector.";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "Предупреждение: из-за различий в типах конфигурации черный список проверок не может быть перенесен автоматически. Скрипты JEXL также не будут перенесены.";
+	}
+
 }

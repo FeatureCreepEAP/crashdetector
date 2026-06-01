@@ -45,6 +45,7 @@ import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI;
 import com.asbestosstar.crashdetector.gui.tipos.mclogs.MCLogsHistorialGUI;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUI;
+import com.asbestosstar.crashdetector.gui.tipos.migrador.MigradorLegacyGUI;
 import com.asbestosstar.crashdetector.gui.tipos.miranda.DerechosPiratasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.mixins.MixinsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
@@ -1223,6 +1224,28 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+	public static TipoGUI<MigradorLegacyGUI> MIGRADOR_LEGACY = new TipoGUI<MigradorLegacyGUI>() {
+		@Override
+		public String id() {
+			return "migrador_legacy";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.migradorLegacyBotonSidebar();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<MigradorLegacyGUI> gui) {
+			MigradorLegacyGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<MigradorLegacyGUI>> obtenerGUIs() {
+			return MigradorLegacyGUI.GUIS;
+		}
+	};
+
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
@@ -1273,6 +1296,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(MCLOGS_HISTORIAL);
 		TIPOS_DE_GUI.add(CDPASTE_HISTORIAL);
 		TIPOS_DE_GUI.add(CONFIG_MODS);
+		TIPOS_DE_GUI.add(MIGRADOR_LEGACY);
 
 	}
 }

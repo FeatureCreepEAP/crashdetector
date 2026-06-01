@@ -11456,4 +11456,66 @@ public class Indonesia implements Idioma {
 		return "Mod Terinstal";
 	}
 
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "Alat Migrasi";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "Alat Migrasi Analisis Legacy";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "Wizard ini membantu memindahkan konfigurasi dari analisis crash legacy dan berpemilik ke sistem yang modern, terbuka, dan dapat dipelihara. Memigrasikan aturan-aturan ini mengurangi ketergantungan pada alat tertutup dan memudahkan audit, kolaborasi, dan dukungan komunitas. Logo yang ditampilkan di sini bukan logo asli; melainkan parodi yang kami anggap lucu.";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "Wizard Crash Assistant";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "Mengimpor problematic_mods.json dari Crash Assistant dan menggabungkannya dengan format CrashDetector melalui wizard.";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "Jalankan wizard";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "Wizard selesai.";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "Tidak ditemukan apa pun untuk dimigrasikan.";
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "Gunakan GUI utama primitif";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "Nonaktifkan centang";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "Tautan dukungan tidak dimigrasikan karena Anda tidak menggunakan GUI primitif. Untuk mengubah URL dukungan, gunakan editor WYSIWYG di pengaturan CrashDetector.";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "Peringatan: karena perbedaan jenis konfigurasi, daftar penolakan verifikasi tidak dapat dimigrasikan secara otomatis. Skrip JEXL juga tidak akan dimigrasikan.";
+	}
+
 }

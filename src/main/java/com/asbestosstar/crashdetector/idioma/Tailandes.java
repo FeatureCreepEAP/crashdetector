@@ -11071,4 +11071,64 @@ public class Tailandes implements Idioma {
 		return "มอดที่ติดตั้งแล้ว";
 	}
 
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "ตัวย้ายข้อมูล";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "ตัวย้ายข้อมูลจากระบบวิเคราะห์แบบเก่า";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "วิซาร์ดนี้ช่วยย้ายการตั้งค่าจากเครื่องมือวิเคราะห์ crash แบบเก่าและเป็นเจ้าของ ไปสู่ระบบที่ทันสมัย เปิดกว้าง และบำรุงรักษาได้ง่าย การย้ายกฎเหล่านี้ช่วยลดการพึ่งพาเครื่องมือปิดและอำนวยความสะดวกในการตรวจสอบ ความร่วมมือ และการสนับสนุนจากชุมชน โลโก้ที่แสดงที่นี่ไม่ใช่โลโก้จริง แต่เป็นภาพล้อเลียนที่เราคิดว่าตลก";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "วิซาร์ดของ Crash Assistant";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "นำเข้า problematic_mods.json จาก Crash Assistant และรวมกับรูปแบบของ CrashDetector ผ่านวิซาร์ด";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "เริ่มวิซาร์ด";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "วิซาร์ดเสร็จสิ้นแล้ว";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "ไม่พบข้อมูลที่จะย้าย";
+	}
+
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "ใช้ GUI หลักแบบดั้งเดิม";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "ปิดใช้งานการตรวจสอบ";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "ไม่ได้ย้ายลิงก์ช่วยเหลือเนื่องจากคุณไม่ได้ใช้ GUI แบบดั้งเดิม ในการเปลี่ยน URL ช่วยเหลือ ให้ใช้ตัวแก้ไข WYSIWYG ในการตั้งค่าของ CrashDetector";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "คำเตือน: เนื่องจากความแตกต่างระหว่างประเภทการตั้งค่า รายการปฏิเสธ (denylist) ของการตรวจสอบไม่สามารถย้ายได้โดยอัตโนมัติ สคริปต์ JEXL ก็จะไม่ถูกย้ายเช่นกัน";
+	}
+
 }

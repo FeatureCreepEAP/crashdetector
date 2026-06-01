@@ -10211,4 +10211,64 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Встановлені моди";
 	}
 
+	@Override
+	public String migradorLegacyBotonSidebar() {
+		return "Мігратор";
+	}
+
+	@Override
+	public String migradorLegacyTitulo() {
+		return "Мігратор застарілих аналізаторів";
+	}
+
+	@Override
+	public String migradorLegacyDescripcion() {
+		return "Цей майстер допомагає перенести конфігурації із застарілих та пропрієтарних аналізаторів крашів у сучасні, відкриті та підтримувані системи. Перенесення цих правил знижує залежність від закритих інструментів і полегшує аудит, співпрацю та підтримку спільноти. Логотипи, показані тут, не є справжніми; це пародії, які нам здалися кумедними.";
+	}
+
+	@Override
+	public String migradorLegacyCrashAssistant() {
+		return "Майстер Crash Assistant";
+	}
+
+	@Override
+	public String migradorCrashAssistantDescripcion() {
+		return "Імпортує problematic_mods.json з Crash Assistant і об'єднує його з форматом CrashDetector через майстер.";
+	}
+
+	@Override
+	public String migradorEjecutar() {
+		return "Запустити майстер";
+	}
+
+	@Override
+	public String migradorCompletado() {
+		return "Майстер завершено.";
+	}
+
+	@Override
+	public String migradorNadaParaMigrar() {
+		return "Нічого для міграції не знайдено.";
+	}
+
+	@Override
+	public String migradorCAUsarPrimitiva() {
+		return "Використовувати основний примітивний інтерфейс";
+	}
+
+	@Override
+	public String migradorCADeshabilitarChecks() {
+		return "Вимкнути перевірки";
+	}
+
+	@Override
+	public String migradorCAAvisoUrlSoporteWysiwyg() {
+		return "Посилання підтримки не було перенесено, оскільки ви не використовуєте примітивний інтерфейс. Щоб змінити URL підтримки, використовуйте редактор WYSIWYG у налаштуваннях CrashDetector.";
+	}
+
+	@Override
+	public String migradorCAAvisoNoMigrado() {
+		return "Попередження: через відмінності між типами конфігурації чорний список перевірок не може бути перенесений автоматично. Скрипти JEXL також не будуть перенесені.";
+	}
+
 }
