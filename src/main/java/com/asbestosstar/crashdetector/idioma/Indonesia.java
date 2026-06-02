@@ -11518,4 +11518,189 @@ public class Indonesia implements Idioma {
 		return "Peringatan: karena perbedaan jenis konfigurasi, daftar penolakan verifikasi tidak dapat dimigrasikan secara otomatis. Skrip JEXL juga tidak akan dimigrasikan.";
 	}
 
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "Aplikasi tertutup secara tidak terduga.";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "Antarmuka grafis ini tidak direkomendasikan untuk pengguna tingkat lanjut (DIY); jika Anda adalah pengguna tingkat lanjut, silakan pergi ke File -> Pengaturan -> Pengaturan "
+				+ Statics.nombre_cd.obtener()
+				+ " dan ubah Antarmuka Utama dari \"pusat dukungan\" menjadi \"gaya peluncur\". Jika Anda adalah penulis modpack, Anda dapat mengubah teks ini di sana.";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "Berikan detail tentang apa yang terjadi sebelum kegagalan.";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "Baca teks di atas dengan cermat. Tangkapan layar dari jendela ini tidak mengandung informasi yang cukup.";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "File log yang tersedia";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "Unggah semua dan salin pesan dengan tautan";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "Minta bantuan di pusat dukungan";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "Tampilkan di explorer";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "Unggah dan salin tautan";
+	}
+
+	@Override
+	public String salir() {
+		return "Keluar";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "Warna teks peringatan";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "Warna tombol utama";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "Warna teks tombol utama";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "Lebar jendela";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "Tinggi jendela";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "Teks atas kustom";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "Teks peringatan kustom";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "Teks kustom di bawah judul";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "URL dukungan";
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "Undang-undang perlindungan data pribadi";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "Tinggi baris log";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "Lebar nama file";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "Lebar tombol buka";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "Lebar tombol tampilkan di explorer";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "Lebar tombol unggah";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "Ukuran font tombol utama";
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String formatoBloqueLogs() {
+		return "Format blok log";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "Format header pesan";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "Format struktur pesan";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "Format baris log";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "Pemisah antar log";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "Format perbedaan daftar mod";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "Sembunyikan teks peringatan";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "Tampilkan logo persegi";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "Jalur logo persegi";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "Ukuran logo persegi";
+	}
+
 }

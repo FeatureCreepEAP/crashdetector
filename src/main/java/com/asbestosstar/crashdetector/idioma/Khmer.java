@@ -11139,4 +11139,189 @@ public class Khmer implements Idioma {
 		return "ការព្រមាន: ដោយសារតែភាពខុសគ្នានៃប្រភេទការកំណត់ បញ្ជីបដិសេធន៍នៃការត្រួតពិនិត្យមិនអាចត្រូវបានផ្លាស់ប្តូរដោយស្វ័យប្រវត្តិទេ។ ស្គ្រីប JEXL ក៏នឹងមិនត្រូវបានផ្លាស់ប្តូរដែរ។";
 	}
 
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "កម្មវិធីបានបិទដោយមិនបានរំពឹងទុក។";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "ចំណុចប្រទាក់ក្រាហ្វិកនេះមិនត្រូវបានណែនាំសម្រាប់អ្នកប្រើប្រាស់កម្រិតខ្ពស់ (DIY) ទេ; ប្រសិនបើអ្នកជាអ្នកប្រើប្រាស់កម្រិតខ្ពស់ សូមទៅកាន់ ឯកសារ -> ការកំណត់ -> ការកំណត់ "
+				+ Statics.nombre_cd.obtener()
+				+ " និងផ្លាស់ប្តូរចំណុចប្រទាក់ចម្បងពី \"មជ្ឈមណ្ឌលគាំទ្រ\" ទៅ \"រចនាបថ launcher\"។ ប្រសិនបើអ្នកជាអ្នកនិពន្ធ modpack អ្នកអាចផ្លាស់ប្តូរអត្ថបទនេះនៅទីនោះ។";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "ផ្តល់ព័ត៌មានលម្អិតអំពីអ្វីដែលបានកើតឡើងមុនពេលមានការដួល។";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "សូមអានអត្ថបទខាងលើដោយប្រុងប្រយ័ត្ន។ ការថតអេក្រង់នៃបង្អួចនេះមិនមានព័ត៌មានគ្រប់គ្រាន់ទេ។";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "ឯកសារកំណត់ហេតុដែលមាន";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "ផ្ទុកឡើងទាំងអស់ និងចម្លងសារជាមួយតំណភ្ជាប់";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "សុំជំនួយនៅមជ្ឈមណ្ឌលគាំទ្រ";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "បង្ហាញនៅក្នុង Explorer";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "ផ្ទុកឡើង និងចម្លងតំណភ្ជាប់";
+	}
+
+	@Override
+	public String salir() {
+		return "ចាកចេញ";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "ពណ៌អត្ថបទព្រមាន";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "ពណ៌ប៊ូតុងចម្បង";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "ពណ៌អត្ថបទប៊ូតុងចម្បង";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "ទទឹងបង្អួច";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "កម្ពស់បង្អួច";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "អត្ថបទផ្ទាល់ខ្លួនខាងលើ";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "អត្ថបទព្រមានផ្ទាល់ខ្លួន";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "អត្ថបទផ្ទាល់ខ្លួនក្រោមចំណងជើង";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "URL គាំទ្រ";
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "ច្បាប់ការពារទិន្នន័យផ្ទាល់ខ្លួន";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "កម្ពស់ជួរដេកកំណត់ហេតុ";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "ទទឹងឈ្មោះឯកសារ";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "ទទឹងប៊ូតុងបើក";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "ទទឹងប៊ូតុងបង្ហាញក្នុង Explorer";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "ទទឹងប៊ូតុងផ្ទុកឡើង";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "ទំហំអក្សរប៊ូតុងចម្បង";
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String formatoBloqueLogs() {
+		return "ទម្រង់ប្លុកកំណត់ហេតុ";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "ទម្រង់ចំណងសារ";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "ទម្រង់រចនាសម្ព័ន្ធសារ";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "ទម្រង់ជួរដេកកំណត់ហេតុ";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "ឧបករណ៍បំបែករវាងកំណត់ហេតុ";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "ទម្រង់ភាពខុសគ្នានៃបញ្ជី Mod";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "លាក់អត្ថបទព្រមាន";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "បង្ហាញនិមិត្តសញ្ញាការ៉េ";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "ផ្លូវនិមិត្តសញ្ញាការ៉េ";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "ទំហំនិមិត្តសញ្ញាការ៉េ";
+	}
+
 }

@@ -89,6 +89,7 @@ import com.asbestosstar.crashdetector.gui.tipos.modsmalas.GUIModsMalasRimaEvenst
 import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncherVShojo;
 import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroLanzadorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
+import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUICentroSoporte;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUIEstiloLanzer;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUIPrimitiva;
 import com.asbestosstar.crashdetector.gui.tipos.profiler.ProfilerGUIMinaly;
@@ -687,6 +688,7 @@ public class MonitorDePID {
 				CDPasteHistorialGUIWilhelmiaFrost::new);
 		TipoGUI.CONFIG_MODS.registrarGUI(ConfigsModsGUIYunenoms.ID, ConfigsModsGUIYunenoms::new);
 		TipoGUI.MIGRADOR_LEGACY.registrarGUI(MigradorLegacySamekoSaba.ID, MigradorLegacySamekoSaba::new);
+		TipoGUI.PRINCIPAL.registrarGUI(PrincipalGUICentroSoporte.ID, PrincipalGUICentroSoporte::new);
 
 	}
 

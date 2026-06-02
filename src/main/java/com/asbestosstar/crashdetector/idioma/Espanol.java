@@ -11655,4 +11655,186 @@ public class Espanol implements Idioma {
 		return "Aviso: por diferencias entre los tipos de configuración, el denylist de verificaciones no se puede migrar automáticamente. Los scripts JEXL tampoco serán migrados.";
 	}
 
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "App se cerró inesperadamente.";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "Esta interfaz gráfica no se recomienda para usuarios avanzados (DIY); si usted es un usuario avanzado, por favor diríjase a Archivo -> Configuración -> Configuración de "
+				+ Statics.nombre_cd.obtener()
+				+ " y cambie la Interfaz Principal de \"centro suporte\" a \"estilo_lanzer\". Si eres el autor de un modpack, puedes cambiar este texto allí.";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "Proporciona detalles sobre qué ocurrió antes del fallo.";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "Lee el texto anterior cuidadosamente. Una captura de esta ventana no contiene suficiente información.";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "Archivos de registro disponibles";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "Subir todo y copiar mensaje con enlaces";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "Pedir ayuda en el centro de soporte";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "Mostrar en explorador";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "Subir y copiar enlace";
+	}
+
+	@Override
+	public String salir() {
+		return "Salir";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "Color de texto del aviso";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "Color del botón principal";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "Color de texto del botón principal";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "Ancho de ventana";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "Alto de ventana";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "Texto superior personalizado";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "Texto de aviso personalizado";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "Texto bajo el título personalizado";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "URL de soporte";
+	}
+
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "Ley de protección de datos personales";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "Alto de fila de registro";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "Ancho del nombre de archivo";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "Ancho del botón abrir";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "Ancho del botón mostrar en explorador";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "Ancho del botón subir";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "Tamaño de fuente del botón principal";
+	}
+
+	@Override
+	public String formatoBloqueLogs() {
+		return "Formato del bloque de logs";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "Formato del encabezado del mensaje";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "Formato de estructura del mensaje";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "Formato de línea de registro";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "Separador entre registros";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "Formato de diferencias de mods";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "Ocultar texto de aviso";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "Mostrar logo cuadrado";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "Ruta del logo cuadrado";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "Tamaño del logo cuadrado";
+	}
+
 }

@@ -11385,4 +11385,186 @@ public class Suajili implements Idioma {
 		return "Onyo: kutokana na tofauti kati ya aina za usanidi, orodha ya kukataa ya ukaguzi haiwezi kuhamishwa kiotomatiki. Hati za JEXL pia hazita hamishwa.";
 	}
 
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "Programu ilifungwa ghafla.";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "Kiolesura hiki cha grafiki hakipendekezwi kwa watumiaji wa juu (DIY); ikiwa wewe ni mtumiaji wa juu, tafadhali nenda kwa Faili -> Mipangilio -> Mipangilio ya "
+				+ Statics.nombre_cd.obtener()
+				+ " na ubadilisha Kiolesura Kuu kutoka \"kituo cha usaidizi\" kwenda \"mtindo wa lanzisha\". Ikiwa wewe ni mwandishi wa modpack, unaweza kubadilisha maandishi haya hapo.";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "Toa maelezo kuhusu kilichotokea kabla ya kushindwa.";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "Soma maandishi ya juu kwa makini. Picha ya skrini ya dirisha hii haina taarifa za kutosha.";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "Faili za logi zinazopatikana";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "Pakia yote na nakili ujumbe wenye viungo";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "Omba usaidizi katika kituo cha usaidizi";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "Onyesha katika kivinjari";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "Pakia na nakili kiungo";
+	}
+
+	@Override
+	public String salir() {
+		return "Toka";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "Rangi ya maandishi ya onyo";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "Rangi ya kitufe kikuu";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "Rangi ya maandishi ya kitufe kikuu";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "Upana wa dirisha";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "Urefu wa dirisha";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "Maandishi ya juu yaliyobinafsishwa";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "Maandishi ya onyo yaliyobinafsishwa";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "Maandishi chini ya kichwa yaliyobinafsishwa";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "URL ya usaidizi";
+	}
+
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "Sheria ya ulinzi wa data binafsi";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "Urefu wa safu ya logi";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "Upana wa jina la faili";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "Upana wa kitufe cha kufungua";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "Upana wa kitufe cha kuonyesha katika kivinjari";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "Upana wa kitufe cha kupakia";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "Ukubwa wa fonti ya kitufe kikuu";
+	}
+
+	@Override
+	public String formatoBloqueLogs() {
+		return "Umbizo la kizuizi cha logi";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "Umbizo la kichwa cha ujumbe";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "Umbizo la muundo wa ujumbe";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "Umbizo la mstari wa logi";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "Kitenganishi kati ya rekodi";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "Umbizo la tofauti za mod";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "Ficha maandishi ya onyo";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "Onyesha nembo ya mraba";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "Njia ya nembo ya mraba";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "Ukubwa wa nembo ya mraba";
+	}
+
 }

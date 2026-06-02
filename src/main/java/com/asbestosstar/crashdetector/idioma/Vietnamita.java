@@ -11158,4 +11158,186 @@ public class Vietnamita implements Idioma {
 		return "Cảnh báo: do sự khác biệt giữa các loại cấu hình, danh sách từ chối (denylist) của các kiểm tra không thể được di chuyển tự động. Các kịch bản JEXL cũng sẽ không được di chuyển.";
 	}
 
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "Ứng dụng đã đóng bất ngờ.";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "Giao diện đồ họa này không được khuyến nghị cho người dùng nâng cao (DIY); nếu bạn là người dùng nâng cao, vui lòng vào Tệp -> Cài đặt -> Cài đặt của "
+				+ Statics.nombre_cd.obtener()
+				+ " và thay đổi Giao diện Chính từ \"trung tâm hỗ trợ\" thành \"kiểu trình khởi chạy\". Nếu bạn là tác giả của một modpack, bạn có thể thay đổi văn bản này ở đó.";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "Cung cấp chi tiết về những gì đã xảy ra trước khi sự cố.";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "Đọc kỹ văn bản trên. Ảnh chụp màn hình của cửa sổ này không chứa đủ thông tin.";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "Các tệp nhật ký có sẵn";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "Tải lên tất cả và sao chép tin nhắn với các liên kết";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "Yêu cầu trợ giúp từ trung tâm hỗ trợ";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "Hiển thị trong trình khám phá";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "Tải lên và sao chép liên kết";
+	}
+
+	@Override
+	public String salir() {
+		return "Thoát";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "Màu văn bản cảnh báo";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "Màu nút chính";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "Màu văn bản nút chính";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "Chiều rộng cửa sổ";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "Chiều cao cửa sổ";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "Văn bản trên cùng tùy chỉnh";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "Văn bản cảnh báo tùy chỉnh";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "Văn bản dưới tiêu đề tùy chỉnh";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "URL hỗ trợ";
+	}
+
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "Luật bảo vệ dữ liệu cá nhân";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "Chiều cao hàng nhật ký";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "Chiều rộng tên tệp";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "Chiều rộng nút mở";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "Chiều rộng nút hiển thị trong trình khám phá";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "Chiều rộng nút tải lên";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "Kích thước phông chữ của nút chính";
+	}
+
+	@Override
+	public String formatoBloqueLogs() {
+		return "Định dạng khối nhật ký";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "Định dạng tiêu đề thông báo";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "Định dạng cấu trúc thông báo";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "Định dạng dòng nhật ký";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "Dấu phân cách giữa các bản ghi";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "Định dạng sự khác biệt của mod";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "Ẩn văn bản cảnh báo";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "Hiển thị logo hình vuông";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "Đường dẫn logo hình vuông";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "Kích thước logo hình vuông";
+	}
+
 }

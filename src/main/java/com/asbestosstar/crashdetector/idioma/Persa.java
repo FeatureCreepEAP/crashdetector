@@ -10899,4 +10899,186 @@ public class Persa implements Idioma {
 		return "هشدار: به دلیل تفاوت‌های بین انواع پیکربندی، لیست سیاه بررسی‌ها نمی‌تواند به صورت خودکار مهاجرت داده شود. اسکریپت‌های JEXL نیز مهاجرت داده نخواهند شد.";
 	}
 
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "برنامه به طور غیرمنتظره بسته شد.";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "این رابط گرافیکی برای کاربران پیشرفته (DIY) توصیه نمی‌شود؛ اگر شما یک کاربر پیشرفته هستید، لطفاً به File -> Settings -> تنظیمات "
+				+ Statics.nombre_cd.obtener()
+				+ " بروید و رابط اصلی را از \"مرکز پشتیبانی\" به \"سبک لانچر\" تغییر دهید. اگر نویسنده یک مادپک هستید، می‌توانید این متن را آنجا تغییر دهید.";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "جزئیاتی درباره آنچه قبل از خرابی رخ داده است ارائه دهید.";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "متن بالا را با دقت بخوانید. یک اسکرین‌شات از این پنجره اطلاعات کافی را chứa ندارد.";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "فایل‌های لاگ موجود";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "آپلود همه و کپی پیام با لینک‌ها";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "درخواست کمک از مرکز پشتیبانی";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "نمایش در اکسپلورر";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "آپلود و کپی لینک";
+	}
+
+	@Override
+	public String salir() {
+		return "خروج";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "رنگ متن هشدار";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "رنگ دکمه اصلی";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "رنگ متن دکمه اصلی";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "عرض پنجره";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "ارتفاع پنجره";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "متن سفارشی بالای صفحه";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "متن هشدار سفارشی";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "متن سفارشی زیر عنوان";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "URL پشتیبانی";
+	}
+
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "قانون حفاظت از داده‌های شخصی";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "ارتفاع سطر لاگ";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "عرض نام فایل";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "عرض دکمه باز کردن";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "عرض دکمه نمایش در اکسپلورر";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "عرض دکمه آپلود";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "اندازه فونت دکمه اصلی";
+	}
+
+	@Override
+	public String formatoBloqueLogs() {
+		return "فرمت بلوک لاگ‌ها";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "فرمت سربرگ پیام";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "فرمت ساختار پیام";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "فرمت خط لاگ";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "جداکننده بین رکوردها";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "فرمت تفاوت‌های لیست مادها";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "پنهان کردن متن هشدار";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "نمایش لوگوی مربعی";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "مسیر لوگوی مربعی";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "اندازه لوگوی مربعی";
+	}
+
 }

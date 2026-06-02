@@ -10942,4 +10942,186 @@ public class Ruso implements Idioma {
 		return "Предупреждение: из-за различий в типах конфигурации черный список проверок не может быть перенесен автоматически. Скрипты JEXL также не будут перенесены.";
 	}
 
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "Приложение неожиданно закрылось.";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "Этот графический интерфейс не рекомендуется для опытных пользователей (DIY); если вы опытный пользователь, пожалуйста, перейдите в Файл -> Настройки -> Настройки "
+				+ Statics.nombre_cd.obtener()
+				+ " и измените Главный Интерфейс с \"центр поддержки\" на \"стиль лаунчера\". Если вы автор модпака, вы можете изменить этот текст там.";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "Предоставьте подробности о том, что произошло перед сбоем.";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "Внимательно прочитайте текст выше. Скриншот этого окна не содержит достаточной информации.";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "Доступные файлы логов";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "Загрузить всё и скопировать сообщение со ссылками";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "Попросить помощи в центре поддержки";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "Показать в проводнике";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "Загрузить и скопировать ссылку";
+	}
+
+	@Override
+	public String salir() {
+		return "Выход";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "Цвет текста предупреждения";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "Цвет основной кнопки";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "Цвет текста основной кнопки";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "Ширина окна";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "Высота окна";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "Пользовательский верхний текст";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "Пользовательский текст предупреждения";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "Пользовательский текст под заголовком";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "URL поддержки";
+	}
+
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "Закон о защите персональных данных";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "Высота строки лога";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "Ширина имени файла";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "Ширина кнопки открытия";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "Ширина кнопки показа в проводнике";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "Ширина кнопки загрузки";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "Размер шрифта основной кнопки";
+	}
+
+	@Override
+	public String formatoBloqueLogs() {
+		return "Формат блока логов";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "Формат заголовка сообщения";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "Формат структуры сообщения";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "Формат строки лога";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "Разделитель между записями";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "Формат различий модов";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "Скрыть текст предупреждения";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "Показать квадратный логотип";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "Путь к квадратному логотипу";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "Размер квадратного логотипа";
+	}
+
 }

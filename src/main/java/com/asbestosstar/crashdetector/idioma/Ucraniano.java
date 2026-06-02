@@ -10271,4 +10271,186 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Попередження: через відмінності між типами конфігурації чорний список перевірок не може бути перенесений автоматично. Скрипти JEXL також не будуть перенесені.";
 	}
 
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "Програма несподівано закрилася.";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "Цей графічний інтерфейс не рекомендується для досвідчених користувачів (DIY); якщо ви досвідчений користувач, будь ласка, перейдіть до Файл -> Налаштування -> Налаштування "
+				+ Statics.nombre_cd.obtener()
+				+ " і змініть Головний Інтерфейс з \"центру підтримки\" на \"стиль лаунчера\". Якщо ви автор модпаку, ви можете змінити цей текст там.";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "Надайте деталі про те, що сталося перед збоєм.";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "Уважно прочитайте текст вище. Знімок екрана цього вікна не містить достатньої інформації.";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "Доступні файли логів";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "Завантажити все та скопіювати повідомлення з посиланнями";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "Попросити допомоги в центрі підтримки";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "Показати в провіднику";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "Завантажити та скопіювати посилання";
+	}
+
+	@Override
+	public String salir() {
+		return "Вихід";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "Колір тексту попередження";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "Колір основної кнопки";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "Колір тексту основної кнопки";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "Ширина вікна";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "Висота вікна";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "Користувацький верхній текст";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "Користувацький текст попередження";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "Користувацький текст під заголовком";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "URL підтримки";
+	}
+
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "Закон про захист персональних даних";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "Висота рядка логу";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "Ширина імені файлу";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "Ширина кнопки відкриття";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "Ширина кнопки показу в провіднику";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "Ширина кнопки завантаження";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "Розмір шрифту основної кнопки";
+	}
+
+	@Override
+	public String formatoBloqueLogs() {
+		return "Формат блоку логів";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "Формат заголовка повідомлення";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "Формат структури повідомлення";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "Формат рядка логу";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "Роздільник між записами";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "Формат відмінностей модів";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "Приховати текст попередження";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "Показати квадратний логотип";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "Шлях до квадратного логотипу";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "Розмір квадратного логотипу";
+	}
+
 }

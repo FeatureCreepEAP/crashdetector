@@ -10936,4 +10936,189 @@ public class Esperanto implements Idioma {
 		return "Averto: pro diferencoj inter la tipoj de agordoj, la denylist de kontroloj ne povas esti aŭtomate migrita. Ankaŭ JEXL-skriptoj ne estos migritaj.";
 	}
 
+	// Esperanto (Esperanto)
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "La aplikaĵo neanticipe fermiĝis.";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "Ĉi tiu grafika interfaco ne estas rekomendata por spertaj uzantoj (DIY); se vi estas sperta uzanto, bonvolu iri al Dosiero -> Agordoj -> Agordoj de "
+				+ Statics.nombre_cd.obtener()
+				+ " kaj ŝanĝi la Ĉefan Interfacon de \"subtena centro\" al \"lanĉila stilo\". Se vi estas aŭtoro de modpako, vi povas ŝanĝi ĉi tiun tekston tie.";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "Provizu detalojn pri kio okazis antaŭ la paneo.";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "Legu la supran tekston zorge. Kaptbildigo de ĉi tiu fenestro ne enhavas sufiĉe da informoj.";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "Disponeblaj protokoldosieroj";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "Alŝuti ĉion kaj kopii mesaĝon kun ligiloj";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "Peti helpon en la subtena centro";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "Montri en dosieradministrilo";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "Alŝuti kaj kopii ligilon";
+	}
+
+	@Override
+	public String salir() {
+		return "Eliri";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "Koloro de averteksta";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "Koloro de ĉefa butono";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "Koloro de teksto de ĉefa butono";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "Larĝo de fenestro";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "Alto de fenestro";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "Personigita supra teksto";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "Personigita averteksto";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "Personigita teksto sub la titolo";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "URL de subteno";
+	}
+
+	// Esperanto (Esperanto)
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "Leĝo pri protekto de personaj datumoj";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "Alto de linio de protokolo";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "Larĝo de dosiernomo";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "Larĝo de butono malfermi";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "Larĝo de butono montri en dosieradministrilo";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "Larĝo de butono alŝuti";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "Grando de tiparo de ĉefa butono";
+	}
+
+	// Esperanto (Esperanto)
+	@Override
+	public String formatoBloqueLogs() {
+		return "Formato de bloko de protokoloj";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "Formato de kapo de mesaĝo";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "Formato de strukturo de mesaĝo";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "Formato de linio de protokolo";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "Apartigilo inter protokoloj";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "Formato de diferencoj de modlisto";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "Kaŝi avertekston";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "Montri kvadratan emblemon";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "Vojo de kvadrata emblemo";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "Grando de kvadrata emblemo";
+	}
+
 }

@@ -11358,4 +11358,186 @@ public class Lao implements Idioma {
 		return "ຄຳເຕືອນ: ເນື່ອງຈາກຄວາມແຕກຕ່າງຂອງປະເພດການຕັ້ງຄ່າ, ລາຍການຫ້າມ (denylist) ຂອງການກວດສອບບໍ່ສາມາດຍ້າຍໄດ້ໂດຍອັດຕະໂນມັດ. ສຄຣິບ JEXL ກໍຈະບໍ່ຖືກຍ້າຍເຊັ່ນກັນ.";
 	}
 
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "ແອັບຖືກປິດໂດຍບໍ່ຄາດຄິດ.";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "GUI ນີ້ບໍ່ແນະນຳສຳລັບຜູ້ໃຊ້ຂັ້ນສູງ (DIY); ຖ້າທ່ານເປັນຜູ້ໃຊ້ຂັ້ນສູງ, ກະລຸນາໄປທີ່ File -> Settings -> "
+				+ Statics.nombre_cd.obtener()
+				+ " Settings ແລະ ປ່ຽນ Main Interface ຈາກ \"support center\" ເປັນ \"launcher style\". ຖ້າທ່ານເປັນຜູ້ສ້າງ modpack, ທ່ານສາມາດປ່ຽນຂໍ້ຄວາມນີ້ໄດ້.";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "ໃຫ້ລາຍລະອຽດກ່ຽວກັບສິ່ງທີ່ເກີດຂຶ້ນກ່ອນການລົ້ມເຫຼວ.";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "ອ່ານຂໍ້ຄວາມຂ້າງເທິງຢ່າງລະອຽດ. ການຖ່າຍໜ້າຈໍຂອງໜ້າຕ່າງນີ້ບໍ່ມີຂໍ້ມູນພຽງພໍ.";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "ໄຟລ໌ log ທີ່ມີຢູ່";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "ອັບໂຫຼດທັງໝົດ ແລະ ຄັດລອກຂໍ້ຄວາມພ້ອມລິ້ງ";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "ຂໍຄວາມຊ່ວຍເຫຼືອຈາກສູນຊ່ວຍເຫຼືອ";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "ສະແດງໃນ File Explorer";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "ອັບໂຫຼດ ແລະ ຄັດລອກລິ້ງ";
+	}
+
+	@Override
+	public String salir() {
+		return "ອອກ";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "ສີຂໍ້ຄວາມຄຳເຕືອນ";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "ສີປຸ່ມຫຼັກ";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "ສີຂໍ້ຄວາມປຸ່ມຫຼັກ";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "ຄວາມກວ້າງໜ້າຕ່າງ";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "ຄວາມສູງໜ້າຕ່າງ";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "ຂໍ້ຄວາມດ້ານເທິງທີ່ປັບແຕ່ງ";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "ຂໍ້ຄວາມຄຳເຕືອນທີ່ປັບແຕ່ງ";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "ຂໍ້ຄວາມລຸ່ມຫົວຂໍ້ທີ່ປັບແຕ່ງ";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "URL ຊ່ວຍເຫຼືອ";
+	}
+
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "ກົດໝາຍຄຸ້ມຄອງຂໍ້ມູນສ່ວນຕົວ";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "ຄວາມສູງຂອງແຖວ log";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "ຄວາມກວ້າງຂອງຊື່ໄຟລ໌";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "ຄວາມກວ້າງຂອງປຸ່ມເປີດ";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "ຄວາມກວ້າງຂອງປຸ່ມສະແດງໃນ File Explorer";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "ຄວາມກວ້າງຂອງປຸ່ມອັບໂຫຼດ";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "ຂະໜາດຕົວອັກສອນຂອງປຸ່ມຫຼັກ";
+	}
+
+	@Override
+	public String formatoBloqueLogs() {
+		return "ຮູບແບບກ້ອນ log";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "ຮູບແບບຫົວຂໍ້ຂໍ້ຄວາມ";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "ຮູບແບບໂຄງສ້າງຂໍ້ຄວາມ";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "ຮູບແບບແຖວ log";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "ຕົວຄັ່ນລະຫວ່າງບັນທຶກ";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "ຮູບແບບຄວາມແຕກຕ່າງຂອງ mods";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "ເຊື່ອງຂໍ້ຄວາມຄຳເຕືອນ";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "ສະແດງໂລໂກ້ຮູບຈັตุລັດ";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "ເສັ້ນທາງໂລໂກ້ຮູບຈັตุລັດ";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "ຂະໜາດໂລໂກ້ຮູບຈັตุລັດ";
+	}
+
 }

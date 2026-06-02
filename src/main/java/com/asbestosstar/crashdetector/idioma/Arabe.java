@@ -10843,4 +10843,189 @@ public class Arabe implements Idioma {
 		return "تنبيه: بسبب الاختلافات بين أنواع التكوين، لا يمكن ترحيل قائمة حظر عمليات التحقق تلقائياً. لن يتم أيضاً ترحيل نصوص JEXL.";
 	}
 
+	// Arabic (العربية)
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "تم إغلاق التطبيق بشكل غير متوقع.";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "لا يُنصح باستخدام واجهة المستخدم الرسومية هذه للمستخدمين المتقدمين (DIY)؛ إذا كنت مستخدمًا متقدمًا، يرجى الانتقال إلى ملف -> إعدادات -> إعدادات "
+				+ Statics.nombre_cd.obtener()
+				+ " وتغيير الواجهة الرئيسية من \"مركز الدعم\" إلى \"أسلوب المشغل\". إذا كنت مؤلف حزمة mods، يمكنك تغيير هذا النص هناك.";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "قدم تفاصيل حول ما حدث قبل العطل.";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "اقرأ النص أعلاه بعناية. لقطة شاشة لهذه النافذة لا تحتوي على معلومات كافية.";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "ملفات السجل المتاحة";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "رفع الكل ونسخ الرسالة مع الروابط";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "طلب المساعدة في مركز الدعم";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "إظهار في المستكشف";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "رفع ونسخ الرابط";
+	}
+
+	@Override
+	public String salir() {
+		return "خروج";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "لون نص التنبيه";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "لون الزر الرئيسي";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "لون نص الزر الرئيسي";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "عرض النافذة";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "ارتفاع النافذة";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "نص علوي مخصص";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "نص تنبيه مخصص";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "نص مخصص أسفل العنوان";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "رابط الدعم";
+	}
+
+	// Arabic (العربية)
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "قانون حماية البيانات الشخصية";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "ارتفاع صف السجل";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "عرض اسم الملف";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "عرض زر الفتح";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "عرض زر الإظهار في المستكشف";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "عرض زر الرفع";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "حجم خط الزر الرئيسي";
+	}
+
+	// Arabic (العربية)
+	@Override
+	public String formatoBloqueLogs() {
+		return "تنسيق كتلة السجلات";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "تنسيق رأس الرسالة";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "تنسيق هيكل الرسالة";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "تنسيق سطر السجل";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "الفاصل بين السجلات";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "تنسيق فروق قائمة المودات";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "إخفاء نص التنبيه";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "عرض الشعار المربع";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "مسار الشعار المربع";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "حجم الشعار المربع";
+	}
+
 }

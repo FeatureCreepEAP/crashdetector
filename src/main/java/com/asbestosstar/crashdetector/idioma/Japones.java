@@ -10573,4 +10573,188 @@ public class Japones implements Idioma {
 		return "警告: 構成タイプの違いにより、検証のdenylistは自動的に移行できません。JEXLスクリプトも移行されません。";
 	}
 
+	// Japanese (日本語)
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "アプリケーションが予期せず終了しました。";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "このグラフィカルインターフェースは上級ユーザー（DIY）には推奨されません。上級ユーザーの場合は、ファイル -> 設定 -> " + Statics.nombre_cd.obtener()
+				+ " 設定に移動し、メインインターフェースを「サポートセンター」から「ランチャースタイル」に変更してください。modpack の作者である場合、そこでこのテキストを変更できます。";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "クラッシュ前に何が起こったかの詳細を提供してください。";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "上記のテキストを注意深くお読みください。このウィンドウのスクリーンショットには十分な情報が含まれていません。";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "利用可能なログファイル";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "すべてをアップロードし、リンク付きメッセージをコピー";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "サポートセンターで助けを求める";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "エクスプローラーで表示";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "アップロードしてリンクをコピー";
+	}
+
+	@Override
+	public String salir() {
+		return "終了";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "警告テキストの色";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "メインボタンの色";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "メインボタンのテキスト色";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "ウィンドウ幅";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "ウィンドウ高さ";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "カスタム上部テキスト";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "カスタム警告テキスト";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "タイトル下のカスタムテキスト";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "サポート URL";
+	}
+
+	// Japanese (日本語)
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "個人情報保護法";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "ログ行の高さ";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "ファイル名の幅";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "開くボタンの幅";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "エクスプローラーで表示ボタンの幅";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "アップロードボタンの幅";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "メインボタンのフォントサイズ";
+	}
+
+	// Japanese (日本語)
+	@Override
+	public String formatoBloqueLogs() {
+		return "ログブロックの形式";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "メッセージヘッダーの形式";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "メッセージ構造の形式";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "ログ行の形式";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "ログ間の区切り文字";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "Mod リストの差分形式";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "警告テキストを非表示";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "正方形のロゴを表示";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "正方形のロゴのパス";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "正方形のロゴのサイズ";
+	}
+
 }

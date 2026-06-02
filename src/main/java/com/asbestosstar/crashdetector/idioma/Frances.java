@@ -11506,4 +11506,189 @@ public class Frances implements Idioma {
 		return "Avertissement : en raison des différences entre les types de configuration, la liste d'exclusion des vérifications ne peut pas être migrée automatiquement. Les scripts JEXL ne seront pas non plus migrés.";
 	}
 
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "L'application s'est fermée de manière inattendue.";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "Cette interface graphique n'est pas recommandée pour les utilisateurs avancés (DIY) ; si vous êtes un utilisateur avancé, veuillez aller dans Fichier -> Paramètres -> Paramètres de "
+				+ Statics.nombre_cd.obtener()
+				+ " et changer l'Interface Principale de \"centre de support\" à \"style lanceur\". Si vous êtes l'auteur d'un modpack, vous pouvez modifier ce texte là-bas.";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "Fournissez des détails sur ce qui s'est passé avant le plantage.";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "Lisez attentivement le texte ci-dessus. Une capture d'écran de cette fenêtre ne contient pas suffisamment d'informations.";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "Fichiers journaux disponibles";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "Tout télécharger et copier le message avec les liens";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "Demander de l'aide au centre de support";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "Afficher dans l'explorateur";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "Télécharger et copier le lien";
+	}
+
+	@Override
+	public String salir() {
+		return "Quitter";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "Couleur du texte d'avertissement";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "Couleur du bouton principal";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "Couleur du texte du bouton principal";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "Largeur de la fenêtre";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "Hauteur de la fenêtre";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "Texte supérieur personnalisé";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "Texte d'avertissement personnalisé";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "Texte personnalisé sous le titre";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "URL de support";
+	}
+
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "Loi sur la protection des données personnelles";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "Hauteur de ligne de journal";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "Largeur du nom de fichier";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "Largeur du bouton ouvrir";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "Largeur du bouton afficher dans l'explorateur";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "Largeur du bouton télécharger";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "Taille de police du bouton principal";
+	}
+
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String formatoBloqueLogs() {
+		return "Format du bloc de journaux";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "Format de l'en-tête du message";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "Format de la structure du message";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "Format de la ligne de journal";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "Séparateur entre les journaux";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "Format des différences de la liste de mods";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "Masquer le texte d'avertissement";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "Afficher le logo carré";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "Chemin du logo carré";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "Taille du logo carré";
+	}
+
 }

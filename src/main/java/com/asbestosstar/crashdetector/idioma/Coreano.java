@@ -10566,4 +10566,188 @@ public class Coreano implements Idioma {
 		return "주의: 구성 유형의 차이로 인해 검증 denylist는 자동으로 마이그레이션할 수 없습니다. JEXL 스크립트도 마이그레이션되지 않습니다.";
 	}
 
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "애플리케이션이 예기치 않게 종료되었습니다.";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "이 그래픽 인터페이스는 고급 사용자(DIY)에게 권장되지 않습니다. 고급 사용자인 경우 파일 -> 설정 -> " + Statics.nombre_cd.obtener()
+				+ " 설정으로 이동하여 주 인터페이스를 \"지원 센터\"에서 \"런처 스타일\"로 변경하십시오. 모드팩 작성자라면 그곳에서 이 텍스트를 변경할 수 있습니다.";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "장애 발생 전에 어떤 일이 있었는지 자세히 설명하십시오.";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "위의 텍스트를 주의 깊게 읽으십시오. 이 창을 캡처한 이미지에는 충분한 정보가 포함되어 있지 않습니다.";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "사용 가능한 로그 파일";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "모두 업로드하고 링크가 포함된 메시지 복사";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "지원 센터에 도움 요청";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "탐색기에서 표시";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "업로드 및 링크 복사";
+	}
+
+	@Override
+	public String salir() {
+		return "종료";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "경고 텍스트 색상";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "주 버튼 색상";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "주 버튼 텍스트 색상";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "창 너비";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "창 높이";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "사용자 정의 상단 텍스트";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "사용자 정의 경고 텍스트";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "제목 아래 사용자 정의 텍스트";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "지원 URL";
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "개인정보 보호법";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "로그 행 높이";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "파일 이름 너비";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "열기 버튼 너비";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "탐색기에서 표시 버튼 너비";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "업로드 버튼 너비";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "주 버튼 글꼴 크기";
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String formatoBloqueLogs() {
+		return "로그 블록 형식";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "메시지 헤더 형식";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "메시지 구조 형식";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "로그 줄 형식";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "로그 구분 기호";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "모드 목록 차이 형식";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "경고 텍스트 숨기기";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "사각형 로고 표시";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "사각형 로고 경로";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "사각형 로고 크기";
+	}
+
 }

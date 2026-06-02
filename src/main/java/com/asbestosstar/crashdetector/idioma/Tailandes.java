@@ -11131,4 +11131,186 @@ public class Tailandes implements Idioma {
 		return "คำเตือน: เนื่องจากความแตกต่างระหว่างประเภทการตั้งค่า รายการปฏิเสธ (denylist) ของการตรวจสอบไม่สามารถย้ายได้โดยอัตโนมัติ สคริปต์ JEXL ก็จะไม่ถูกย้ายเช่นกัน";
 	}
 
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "แอปพลิเคชันปิดโดยไม่คาดคิด";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "ส่วนติดต่อกราฟิกนี้ไม่แนะนำสำหรับผู้ใช้ขั้นสูง (DIY); หากคุณเป็นผู้ใช้ขั้นสูง โปรดไปที่ ไฟล์ -> การตั้งค่า -> การตั้งค่าของ "
+				+ Statics.nombre_cd.obtener()
+				+ " และเปลี่ยน ส่วนติดต่อหลัก จาก \"ศูนย์ช่วยเหลือ\" เป็น \"สไตล์แลนเชอร์\" หากคุณเป็นผู้สร้างมอดแพ็ก คุณสามารถเปลี่ยนข้อความนี้ได้";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "ระบุรายละเอียดเกี่ยวกับสิ่งที่เกิดขึ้นก่อนเกิดข้อผิดพลาด";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "อ่านข้อความด้านบนอย่างละเอียด ภาพหน้าจอของหน้าต่างนี้ไม่มีข้อมูลเพียงพอ";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "ไฟล์บันทึกที่มีอยู่";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "อัปโหลดทั้งหมดและคัดลอกข้อความพร้อมลิงก์";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "ขอความช่วยเหลือจากศูนย์ช่วยเหลือ";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "แสดงในตัวสำรวจไฟล์";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "อัปโหลดและคัดลอกลิงก์";
+	}
+
+	@Override
+	public String salir() {
+		return "ออก";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "สีข้อความคำเตือน";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "สีปุ่มหลัก";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "สีข้อความปุ่มหลัก";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "ความกว้างของหน้าต่าง";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "ความสูงของหน้าต่าง";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "ข้อความด้านบนที่ปรับแต่ง";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "ข้อความคำเตือนที่ปรับแต่ง";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "ข้อความใต้ชื่อเรื่องที่ปรับแต่ง";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "URL ช่วยเหลือ";
+	}
+
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "กฎหมายคุ้มครองข้อมูลส่วนบุคคล";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "ความสูงของแถวบันทึก";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "ความกว้างของชื่อไฟล์";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "ความกว้างของปุ่มเปิด";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "ความกว้างของปุ่มแสดงในตัวสำรวจ";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "ความกว้างของปุ่มอัปโหลด";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "ขนาดฟอนต์ของปุ่มหลัก";
+	}
+
+	@Override
+	public String formatoBloqueLogs() {
+		return "รูปแบบบล็อกบันทึก";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "รูปแบบส่วนหัวของข้อความ";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "รูปแบบโครงสร้างข้อความ";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "รูปแบบบรรทัดบันทึก";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "ตัวคั่นระหว่างระเบียน";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "รูปแบบความแตกต่างของมอด";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "ซ่อนข้อความคำเตือน";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "แสดงโลโก้สี่เหลี่ยม";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "เส้นทางโลโก้สี่เหลี่ยม";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "ขนาดโลโก้สี่เหลี่ยม";
+	}
+
 }

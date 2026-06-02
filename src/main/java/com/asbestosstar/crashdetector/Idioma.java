@@ -4286,4 +4286,76 @@ public interface Idioma {
 
 	public String migradorCAAvisoNoMigrado();
 
+	public String centroSoporteTituloCrash();
+
+	public String centroSoporteTextoSuperior();
+
+	public String centroSoporteTextoBajoTitulo();
+
+	public String centroSoporteTextoAviso();
+
+	public String centroSoporteArchivosDisponibles();
+
+	public String centroSoporteSubirTodoYCopiar();
+
+	public String centroSoportePedirAyuda();
+
+	public String mostrarEnExplorador();
+
+	public String subirYCopiarEnlace();
+
+	public String salir();
+
+	public String colorTextoAviso();
+
+	public String colorBotonPrincipal();
+
+	public String colorTextoBotonPrincipal();
+
+	public String anchoVentana();
+
+	public String altoVentana();
+
+	public String textoSuperiorPersonalizado();
+
+	public String textoAvisoPersonalizado();
+
+	public String textoBajoTituloPersonalizado();
+
+	public String urlSoporte();
+
+	public String leyProteccionDatosPersonales();
+
+	public String altoFilaLog();
+
+	public String anchoNombreArchivo();
+
+	public String anchoBotonAbrir();
+
+	public String anchoBotonExplorador();
+
+	public String anchoBotonSubir();
+
+	public String tamanoFuenteBotonPrincipal();
+
+	public String formatoBloqueLogs();
+
+	public String formatoHeaderMensaje();
+
+	public String formatoEstructuraMensaje();
+
+	public String formatoSeparadorLogs();
+
+	public String formatoLineaLog();
+
+	public String formatoModlistDiff();
+
+	public String ocultarTextoAviso();
+
+	public String mostrarLogoCuadrado();
+
+	public String rutaLogoCuadrado();
+
+	public String tamanoLogoCuadrado();
+
 }

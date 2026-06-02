@@ -10986,4 +10986,189 @@ public class Ingles implements Idioma {
 		return "Warning: due to differences in configuration types, the verification denylist cannot be migrated automatically. JEXL scripts will also not be migrated.";
 	}
 
+	// English (UK)
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "Application closed unexpectedly.";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "This graphical interface is not recommended for advanced users (DIY); if you are an advanced user, please go to File -> Settings -> "
+				+ Statics.nombre_cd.obtener()
+				+ " Settings and change the Main Interface from \"support centre\" to \"launcher style\". If you are a modpack author, you can change this text there.";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "Provide details about what happened before the crash.";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "Read the text above carefully. A screenshot of this window does not contain enough information.";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "Available log files";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "Upload all and copy message with links";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "Ask for help at the support centre";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "Show in explorer";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "Upload and copy link";
+	}
+
+	@Override
+	public String salir() {
+		return "Exit";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "Warning text colour";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "Main button colour";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "Main button text colour";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "Window width";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "Window height";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "Custom top text";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "Custom warning text";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "Custom text below title";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "Support URL";
+	}
+
+	// English (UK)
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "Personal Data Protection Law";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "Log row height";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "File name width";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "Open button width";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "Show in explorer button width";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "Upload button width";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "Main button font size";
+	}
+
+	// English (UK)
+	@Override
+	public String formatoBloqueLogs() {
+		return "Log block format";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "Message header format";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "Message structure format";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "Log line format";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "Separator between logs";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "Mod list difference format";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "Hide warning text";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "Show square logo";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "Square logo path";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "Square logo size";
+	}
+
 }

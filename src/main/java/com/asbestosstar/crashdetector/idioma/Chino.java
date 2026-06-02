@@ -10350,4 +10350,188 @@ public class Chino implements Idioma {
 		return "注意：由于配置类型的差异，验证 denylist 无法自动迁移。JEXL 脚本也不会被迁移。";
 	}
 
+	// Chinese (Simplified) (中文)
+	@Override
+	public String centroSoporteTituloCrash() {
+		return "应用程序意外关闭。";
+	}
+
+	@Override
+	public String centroSoporteTextoSuperior() {
+		return "不建议高级用户（DIY）使用此图形界面；如果您是高级用户，请前往 文件 -> 设置 -> " + Statics.nombre_cd.obtener()
+				+ " 设置，并将主界面从“支持中心”更改为“启动器风格”。如果您是 modpack 的作者，您可以在此处更改此文本。";
+	}
+
+	@Override
+	public String centroSoporteTextoBajoTitulo() {
+		return "提供故障发生前的详细信息。";
+	}
+
+	@Override
+	public String centroSoporteTextoAviso() {
+		return "请仔细阅读上面的文字。此窗口的截图包含的信息不足。";
+	}
+
+	@Override
+	public String centroSoporteArchivosDisponibles() {
+		return "可用的日志文件";
+	}
+
+	@Override
+	public String centroSoporteSubirTodoYCopiar() {
+		return "上传全部并复制包含链接的消息";
+	}
+
+	@Override
+	public String centroSoportePedirAyuda() {
+		return "在支持中心寻求帮助";
+	}
+
+	@Override
+	public String mostrarEnExplorador() {
+		return "在资源管理器中显示";
+	}
+
+	@Override
+	public String subirYCopiarEnlace() {
+		return "上传并复制链接";
+	}
+
+	@Override
+	public String salir() {
+		return "退出";
+	}
+
+	@Override
+	public String colorTextoAviso() {
+		return "警告文本颜色";
+	}
+
+	@Override
+	public String colorBotonPrincipal() {
+		return "主按钮颜色";
+	}
+
+	@Override
+	public String colorTextoBotonPrincipal() {
+		return "主按钮文本颜色";
+	}
+
+	@Override
+	public String anchoVentana() {
+		return "窗口宽度";
+	}
+
+	@Override
+	public String altoVentana() {
+		return "窗口高度";
+	}
+
+	@Override
+	public String textoSuperiorPersonalizado() {
+		return "自定义顶部文本";
+	}
+
+	@Override
+	public String textoAvisoPersonalizado() {
+		return "自定义警告文本";
+	}
+
+	@Override
+	public String textoBajoTituloPersonalizado() {
+		return "标题下方的自定义文本";
+	}
+
+	@Override
+	public String urlSoporte() {
+		return "支持 URL";
+	}
+
+	// Chinese (Simplified) (中文)
+	@Override
+	public String leyProteccionDatosPersonales() {
+		return "个人数据保护法";
+	}
+
+	@Override
+	public String altoFilaLog() {
+		return "日志行高";
+	}
+
+	@Override
+	public String anchoNombreArchivo() {
+		return "文件名宽度";
+	}
+
+	@Override
+	public String anchoBotonAbrir() {
+		return "打开按钮宽度";
+	}
+
+	@Override
+	public String anchoBotonExplorador() {
+		return "在资源管理器中显示按钮宽度";
+	}
+
+	@Override
+	public String anchoBotonSubir() {
+		return "上传按钮宽度";
+	}
+
+	@Override
+	public String tamanoFuenteBotonPrincipal() {
+		return "主按钮字体大小";
+	}
+
+	// Chinese (Simplified) (中文)
+	@Override
+	public String formatoBloqueLogs() {
+		return "日志块格式";
+	}
+
+	@Override
+	public String formatoHeaderMensaje() {
+		return "消息标题格式";
+	}
+
+	@Override
+	public String formatoEstructuraMensaje() {
+		return "消息结构格式";
+	}
+
+	@Override
+	public String formatoLineaLog() {
+		return "日志行格式";
+	}
+
+	@Override
+	public String formatoSeparadorLogs() {
+		return "日志分隔符";
+	}
+
+	@Override
+	public String formatoModlistDiff() {
+		return "Mod 列表差异格式";
+	}
+
+	@Override
+	public String ocultarTextoAviso() {
+		return "隐藏警告文本";
+	}
+
+	@Override
+	public String mostrarLogoCuadrado() {
+		return "显示方形 Logo";
+	}
+
+	@Override
+	public String rutaLogoCuadrado() {
+		return "方形 Logo 路径";
+	}
+
+	@Override
+	public String tamanoLogoCuadrado() {
+		return "方形 Logo 大小";
+	}
+
 }

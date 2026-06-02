@@ -107,7 +107,7 @@ public class PrincipalGUIPrimitiva extends PrincipalGUI {
 		}
 	}
 
-	private void crearPopupVerificacion(String contenido) {
+	public void crearPopupVerificacion(String contenido) {
 		final JDialog dialogo = new JDialog();
 		dialogo.setTitle("");
 		dialogo.setModal(false);
