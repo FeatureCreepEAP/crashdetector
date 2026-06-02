@@ -10561,9 +10561,12 @@ public class Coreano implements Idioma {
 		return "기본 GUI를 사용하지 않아 지원 링크가 마이그레이션되지 않았습니다. 지원 URL을 변경하려면 CrashDetector 설정에서 WYSIWYG 편집기를 사용하십시오.";
 	}
 
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
 	@Override
 	public String migradorCAAvisoNoMigrado() {
-		return "주의: 구성 유형의 차이로 인해 검증 denylist는 자동으로 마이그레이션할 수 없습니다. JEXL 스크립트도 마이그레이션되지 않습니다.";
+		return "경고: 구성 유형 간의 차이로 인해 검증 거부 목록은 자동으로 마이그레이션될 수 없습니다. 거기에서 Mods 목록의 Intel 및 Dif 경고를 비활성화할 수도 있습니다; CrashDetector와 마찬가지로 이러한 항목은 일반 검사로 간주됩니다. 기본 모드(primitive mode)를 활성화하지 않으면 CrashDetector 설정에서 WYSIWYG HTML 편집기를 사용하여 링크를 삽입해야 합니다. 기본 모드를 사용하면 도움말 링크가 Crash Assistant에서 자동으로 복사됩니다. 그래픽 사용자 인터페이스(GUI)에서 색상과 설정을 변경하려면 CrashDetectors 설정으로 이동하여 CDSkinCape/GUI Editor 영역에 접근하고 GUI 유형 및 특정 구현을 선택해야 합니다. 이미지는 다음 위치에서 편집할 수 있습니다: "
+				+ Statics.carpeta.resolve("imagenes").toString()
+				+ ". JEXL 스크립트도 마이그레이션되지 않습니다. 문자열 일치 또는 정규식을 통한 기본 분석만 필요하면 기업 설정의 ' reason 추가' 기능을 사용할 수 있습니다; 더 고급 기능이 필요하면 Java 확장 프로그램을 만들어야 합니다: https://github.com/FeatureCreepEAP/crashdetector-tutorial-extention-english";
 	}
 
 }

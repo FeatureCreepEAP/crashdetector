@@ -11382,7 +11382,9 @@ public class Suajili implements Idioma {
 
 	@Override
 	public String migradorCAAvisoNoMigrado() {
-		return "Onyo: kutokana na tofauti kati ya aina za usanidi, orodha ya kukataa ya ukaguzi haiwezi kuhamishwa kiotomatiki. Hati za JEXL pia hazita hamishwa.";
+		return "Onyo: kutokana na tofauti kati ya aina za usanidi, orodha ya kukataa ya ukaguzi haiwezi kuhamishwa kiotomatiki. Kutoka hapo, pia unaweza kuzima onyo la Intel na Mod List Diff; kama vile katika CrashDetector, hizi zinachukuliwa kama ukaguzi wa kawaida. Ikiwa huwezesha hali ya msingi, utahitaji kutumia kihariri cha HTML WYSIWYG katika mipangilio ya CrashDetector ili kuingiza viungo. Ikiwa unatumia hali ya msingi, kiungo cha usaidizi kitakiliwa kiotomatiki kutoka Crash Assistant. Ili kubadilisha rangi na mipangilio katika kiolesura cha picha (GUI), unapaswa kwenda kwenye mipangilio ya CrashDetector, kufikia eneo la CDSkinCape/GUI Editor na kuchagua aina ya GUI, pamoja na utekelezaji maalum wake. Picha zinaweza kuhaririwa kutoka eneo lifuatalo: "
+				+ Statics.carpeta.resolve("imagenes").toString()
+				+ ". Hati za JEXL pia hazita hamishwa. Ikiwa unahitaji tu kufanya uchambuzi wa msingi kupitia ulinganifu wa nyaraka au maneno ya kawaida, unaweza kutumia kazi ya 'Agregar Razones' katika usanidi wa shirika; ikiwa unahitaji vipengele vya hali ya juu zaidi, unapaswa kuunda ugani katika Java: https://github.com/FeatureCreepEAP/crashdetector-tutorial-extention-english";
 	}
 
 }

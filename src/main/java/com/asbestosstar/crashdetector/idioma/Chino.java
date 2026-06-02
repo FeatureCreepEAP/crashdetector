@@ -10345,9 +10345,12 @@ public class Chino implements Idioma {
 		return "支持链接未迁移，因为您未使用原始界面。要更改支持 URL，请使用 CrashDetector 设置中的 WYSIWYG 编辑器。";
 	}
 
+	// Chinese (Simplified) (中文)
 	@Override
 	public String migradorCAAvisoNoMigrado() {
-		return "注意：由于配置类型的差异，验证 denylist 无法自动迁移。JEXL 脚本也不会被迁移。";
+		return "警告：由于配置类型的差异，验证拒绝列表无法自动迁移。在那里，您还可以禁用 Mods 列表中的 Intel 和 Dif 警告；与 CrashDetector 一样，这些被视为常规检查。如果不启用原始模式（primitive mode），则必须在 CrashDetector 设置中使用所见即所得（WYSIWYG）HTML 编辑器来插入链接。如果使用原始模式，帮助链接将从 Crash Assistant 自动复制。要更改图形用户界面（GUI）中的颜色和设置，请前往 CrashDetectors 设置，进入 CDSkinCape/GUI Editor 区域并选择 GUI 类型及其具体实现。图片可以从以下位置编辑："
+				+ Statics.carpeta.resolve("imagenes").toString()
+				+ "。JEXL 脚本也不会被迁移。如果您只需要通过字符串匹配或正则表达式进行基本分析，可以使用企业设置中的“添加原因”功能；如果需要更高级的功能，应该创建一个 Java 扩展：https://github.com/FeatureCreepEAP/crashdetector-tutorial-extention-english";
 	}
 
 }

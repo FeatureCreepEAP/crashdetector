@@ -10931,9 +10931,12 @@ public class Esperanto implements Idioma {
 		return "La subtena ligilo ne estis migrita ĉar vi ne uzas la primitivan GUI. Por ŝanĝi la subtenan URL, uzu la WYSIWYG-redaktilon en la agordoj de CrashDetector.";
 	}
 
+	// Esperanto (Esperanto)
 	@Override
 	public String migradorCAAvisoNoMigrado() {
-		return "Averto: pro diferencoj inter la tipoj de agordoj, la denylist de kontroloj ne povas esti aŭtomate migrita. Ankaŭ JEXL-skriptoj ne estos migritaj.";
+		return "Averto: pro diferencoj inter la tipoj de agordoj, la malakceptolisto de kontroloj ne povas esti aŭtomate migrata. De tie, vi ankaŭ povas malaktivigi la avertojn de Intel kaj Dif en la Listo de Modoj; same kiel en CrashDetector, ĉi tiuj estas konsiderataj normalaj kontroloj. Se vi ne aktivigas la primitivan reĝimon, vi devos uzi la vidatan HTML-redaktilon (WYSIWYG) en la agordoj de CrashDetector por enmeti la ligilojn. Se vi uzas la primitivan reĝimon, la helpligilo estos aŭtomate kopiita de Crash Assistant. Por ŝanĝi la kolorojn kaj agordojn en la grafika uzantinterfaco (GUI), vi devas iri al la agordoj de CrashDetectors, aliri la areon CDSkinCape/GUI Editor kaj elekti la tipon de GUI, same kiel la specifan implementon. La bildoj povas esti redaktitaj de la sekva loko: "
+				+ Statics.carpeta.resolve("imagenes").toString()
+				+ ". La skriptoj JEXL ankaŭ ne estos migrataj. Se vi nur bezonas plenumi bazajn analizojn per koincido de ĉenoj aŭ regulaj esprimoj, vi povas uzi la funkcion Aldoni Kialojn en la entreprenaj agordoj; se vi postulas pli altnivelajn funkciojn, vi devus krei etendaĵon en Java: https://github.com/FeatureCreepEAP/crashdetector-tutorial-extention-english";
 	}
 
 }

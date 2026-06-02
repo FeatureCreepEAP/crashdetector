@@ -10944,7 +10944,9 @@ public class Portuges implements Idioma {
 
 	@Override
 	public String migradorCAAvisoNoMigrado() {
-		return "Aviso: devido a diferenças entre os tipos de configuração, a lista de negação (denylist) de verificações não pode ser migrada automaticamente. Os scripts JEXL também não serão migrados.";
+		return "Aviso: devido a diferenças entre os tipos de configuração, a lista de negação (denylist) de verificações não pode ser migrada automaticamente. A partir daí, você também pode desativar os avisos da Intel e do Mod List Diff; assim como no CrashDetector, estes são considerados verificações normais. Se você não habilitar o modo primitivo, deverá usar o editor HTML WYSIWYG nas configurações do CrashDetector para inserir os links. Se utilizar o modo primitivo, o link de ajuda será copiado automaticamente do Crash Assistant. Para alterar as cores e configurações na interface gráfica (GUI), você deve acessar as configurações do CrashDetector, entrar na área do CDSkinCape/GUI Editor e selecionar o tipo de GUI, bem como a implementação específica dela. As imagens podem ser editadas a partir do seguinte local: "
+				+ Statics.carpeta.resolve("imagenes").toString()
+				+ ". Os scripts JEXL também não serão migrados. Se você precisar apenas realizar análises básicas por meio de correspondência de strings ou expressões regulares, pode usar a função 'Agregar Razones' na configuração corporativa; se precisar de funcionalidades mais avançadas, deverá criar uma extensão em Java: https://github.com/FeatureCreepEAP/crashdetector-tutorial-extention-english";
 	}
 
 }

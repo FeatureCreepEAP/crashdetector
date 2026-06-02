@@ -11513,9 +11513,12 @@ public class Indonesia implements Idioma {
 		return "Tautan dukungan tidak dimigrasikan karena Anda tidak menggunakan GUI primitif. Untuk mengubah URL dukungan, gunakan editor WYSIWYG di pengaturan CrashDetector.";
 	}
 
+	// Indonesian (Bahasa Indonesia)
 	@Override
 	public String migradorCAAvisoNoMigrado() {
-		return "Peringatan: karena perbedaan jenis konfigurasi, daftar penolakan verifikasi tidak dapat dimigrasikan secara otomatis. Skrip JEXL juga tidak akan dimigrasikan.";
+		return "Peringatan: karena perbedaan antara jenis konfigurasi, daftar tolak verifikasi tidak dapat dimigrasikan secara otomatis. Dari sana, Anda juga dapat menonaktifkan peringatan Intel dan Dif di Daftar Mod; seperti di CrashDetector, ini dianggap sebagai pemeriksaan normal. Jika Anda tidak mengaktifkan mode primitif, Anda harus menggunakan editor HTML WYSIWYG di pengaturan CrashDetector untuk menyisipkan tautan. Jika Anda menggunakan mode primitif, tautan bantuan akan disalin secara otomatis dari Crash Assistant. Untuk mengubah warna dan pengaturan dalam antarmuka pengguna grafis (GUI), Anda harus menuju ke pengaturan CrashDetectors, mengakses area CDSkinCape/GUI Editor dan memilih jenis GUI, serta implementasi spesifiknya. Gambar dapat diedit dari lokasi berikut: "
+				+ Statics.carpeta.resolve("imagenes").toString()
+				+ ". Skrip JEXL juga tidak akan dimigrasikan. Jika Anda hanya perlu melakukan analisis dasar melalui pencocokan string atau ekspresi reguler, Anda dapat menggunakan fungsi Tambahkan Alasan dalam pengaturan perusahaan; jika Anda memerlukan fungsionalitas yang lebih canggih, Anda harus membuat ekstensi dalam Java: https://github.com/FeatureCreepEAP/crashdetector-tutorial-extention-english";
 	}
 
 }

@@ -11155,7 +11155,9 @@ public class Vietnamita implements Idioma {
 
 	@Override
 	public String migradorCAAvisoNoMigrado() {
-		return "Cảnh báo: do sự khác biệt giữa các loại cấu hình, danh sách từ chối (denylist) của các kiểm tra không thể được di chuyển tự động. Các kịch bản JEXL cũng sẽ không được di chuyển.";
+		return "Cảnh báo: do sự khác biệt giữa các loại cấu hình, danh sách từ chối (denylist) của các kiểm tra không thể được di chuyển tự động. Từ đó, bạn cũng có thể tắt các cảnh báo của Intel và Mod List Diff; cũng như trong CrashDetector, những mục này được coi là các kiểm tra bình thường. Nếu bạn không bật chế độ nguyên thủy, bạn sẽ cần sử dụng trình soạn thảo HTML WYSIWYG trong cài đặt của CrashDetector để chèn các liên kết. Nếu bạn sử dụng chế độ nguyên thủy, liên kết trợ giúp sẽ được sao chép tự động từ Crash Assistant. Để thay đổi màu sắc và cài đặt trong giao diện đồ họa (GUI), bạn cần truy cập cài đặt của CrashDetector, vào khu vực CDSkinCape/GUI Editor và chọn loại GUI, cũng như việc triển khai cụ thể của nó. Các hình ảnh có thể được chỉnh sửa từ vị trí sau: "
+				+ Statics.carpeta.resolve("imagenes").toString()
+				+ ". Các kịch bản JEXL cũng sẽ không được di chuyển. Nếu bạn chỉ cần thực hiện phân tích cơ bản thông qua khớp chuỗi hoặc biểu thức chính quy, bạn có thể sử dụng chức năng 'Agregar Razones' trong cấu hình doanh nghiệp; nếu bạn cần các tính năng nâng cao hơn, bạn nên tạo một tiện ích mở rộng trong Java: https://github.com/FeatureCreepEAP/crashdetector-tutorial-extention-english";
 	}
 
 }
