@@ -11501,9 +11501,12 @@ public class Frances implements Idioma {
 		return "Le lien de support n'a pas été migré car vous n'utilisez pas l'interface primitive. Pour changer l'URL de support, utilisez l'éditeur WYSIWYG dans les paramètres de CrashDetector.";
 	}
 
+	// French (Burkina Faso variant) (Français)
 	@Override
 	public String migradorCAAvisoNoMigrado() {
-		return "Avertissement : en raison des différences entre les types de configuration, la liste d'exclusion des vérifications ne peut pas être migrée automatiquement. Les scripts JEXL ne seront pas non plus migrés.";
+		return "Avertissement : en raison des différences entre les types de configuration, la liste d'exclusion des vérifications ne peut pas être migrée automatiquement. De là, vous pouvez également désactiver les avertissements Intel et Dif dans la Liste des Mods ; comme dans CrashDetector, ceux-ci sont considérés comme des vérifications normales. Si vous n'activez pas le mode primitif, vous devrez utiliser l'éditeur HTML WYSIWYG dans les paramètres de CrashDetector pour insérer les liens. Si vous utilisez le mode primitif, le lien d'aide sera copié automatiquement depuis Crash Assistant. Pour modifier les couleurs et les paramètres dans l'interface graphique (GUI), vous devez vous rendre dans les paramètres de CrashDetectors, accéder à la zone CDSkinCape/GUI Editor et sélectionner le type de GUI, ainsi que l'implémentation spécifique. Les images peuvent être éditées depuis l'emplacement suivant : "
+				+ Statics.carpeta.resolve("imagenes").toString()
+				+ ". Les scripts JEXL ne seront pas non plus migrés. Si vous avez seulement besoin d'effectuer des analyses de base via la correspondance de chaînes ou d'expressions régulières, vous pouvez utiliser la fonction Ajouter des Raisons dans les paramètres d'entreprise ; si vous avez besoin de fonctionnalités plus avancées, vous devriez créer une extension en Java : https://github.com/FeatureCreepEAP/crashdetector-tutorial-extention-english";
 	}
 
 	// French (Burkina Faso variant) (Français)

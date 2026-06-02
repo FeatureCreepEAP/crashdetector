@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
@@ -11652,7 +11653,9 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String migradorCAAvisoNoMigrado() {
-		return "Aviso: por diferencias entre los tipos de configuración, el denylist de verificaciones no se puede migrar automáticamente. Los scripts JEXL tampoco serán migrados.";
+		return "Aviso: por diferencias entre los tipos de configuración, el denylist de verificaciones no se puede migrar automáticamente Desde allí, también puedes desactivar las advertencias de Intel y Dif de Lista de Mods; al igual que en CrashDetector, estas se consideran verificaciones normales.Si no habilita el modo primitivo, deberá utilizar el editor HTML WYSIWYG en la configuración de CrashDetector para insertar los enlaces. Si utiliza el modo primitivo, el enlace de ayuda se copiará automáticamente desde Crash Assistant.Para cambiar los colores y la configuración en la interfaz gráfica (GUI), debes dirigirte a la configuración de CrashDetectors, acceder al área de CDSkinCape/GUI Editor y seleccionar el tipo de GUI, así como la implementación específica de la misma. Las imágenes se pueden editar desde la siguiente ubicación:"
+				+ Statics.carpeta.resolve("imagenes").toString()
+				+ ". Los scripts JEXL tampoco serán migrados.Si solo necesita realizar análisis básicos mediante la coincidencia de cadenas o expresiones regulares, puede utilizar la función Agregar Razones en la configuración corporativa; si requiere funcionalidades más avanzadas, debería crear una extensión en Java: https://github.com/FeatureCreepEAP/crashdetector-tutorial-extention-english";
 	}
 
 	@Override

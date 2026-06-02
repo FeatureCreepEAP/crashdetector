@@ -10568,9 +10568,12 @@ public class Japones implements Idioma {
 		return "プリミティブなGUIを使用していないため、サポートリンクは移行されませんでした。サポートURLを変更するには、CrashDetectorの設定でWYSIWYGエディタを使用してください。";
 	}
 
+	// Japanese (日本語)
 	@Override
 	public String migradorCAAvisoNoMigrado() {
-		return "警告: 構成タイプの違いにより、検証のdenylistは自動的に移行できません。JEXLスクリプトも移行されません。";
+		return "警告: 構成タイプの違いにより、検証の拒否リストは自動的に移行できません。そこから、ModsリストのIntelおよびDifの警告を無効にすることもできます。CrashDetectorと同様に、これらは通常のチェックとみなされます。プリミティブモードを有効にしない場合、CrashDetectorの設定でWYSIWYG HTMLエディタを使用してリンクを挿入する必要があります。プリミティブモードを使用する場合、ヘルプリンクはCrash Assistantから自動的にコピーされます。グラフィカルユーザーインターフェース（GUI）の色と設定を変更するには、CrashDetectorsの設定に移動し、CDSkinCape/GUI EditorエリアにアクセスしてGUIタイプとその具体的な実装を選択してください。画像は次の場所から編集できます: "
+				+ Statics.carpeta.resolve("imagenes").toString()
+				+ "。JEXLスクリプトも移行されません。文字列マッチングや正規表現による基本的な分析のみが必要な場合は、企業設定の「理由の追加」機能を使用できます。より高度な機能が必要な場合は、Javaで拡張機能を作成する必要があります: https://github.com/FeatureCreepEAP/crashdetector-tutorial-extention-english";
 	}
 
 	// Japanese (日本語)

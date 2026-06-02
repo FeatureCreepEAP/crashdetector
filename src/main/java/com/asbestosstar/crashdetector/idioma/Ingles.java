@@ -10981,9 +10981,12 @@ public class Ingles implements Idioma {
 		return "The support link was not migrated because you are not using the primitive GUI. To change the support URL, use the WYSIWYG editor in CrashDetector settings.";
 	}
 
+	// English (UK)
 	@Override
 	public String migradorCAAvisoNoMigrado() {
-		return "Warning: due to differences in configuration types, the verification denylist cannot be migrated automatically. JEXL scripts will also not be migrated.";
+		return "Warning: due to differences between configuration types, the verification denylist cannot be migrated automatically. From there, you can also disable Intel and Dif warnings in the Mods List; as in CrashDetector, these are considered normal checks. If you do not enable primitive mode, you will need to use the WYSIWYG HTML editor in the CrashDetector settings to insert the links. If you use primitive mode, the help link will be copied automatically from Crash Assistant. To change colours and settings in the graphical user interface (GUI), you must go to the CrashDetectors settings, access the CDSkinCape/GUI Editor area and select the GUI type, as well as its specific implementation. Images can be edited from the following location: "
+				+ Statics.carpeta.resolve("imagenes").toString()
+				+ ". JEXL scripts will not be migrated either. If you only need to perform basic analysis via string matching or regular expressions, you can use the Add Reasons function in the corporate settings; if you require more advanced functionality, you should create an extension in Java: https://github.com/FeatureCreepEAP/crashdetector-tutorial-extention-english";
 	}
 
 	// English (UK)
