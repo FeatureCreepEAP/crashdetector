@@ -1,11 +1,13 @@
 package com.asbestosstar.crashdetector.gui.tipos.scriptide.lsp;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.lsp4j.CompletionItem;
@@ -21,6 +23,7 @@ import org.eclipse.lsp4j.TextDocumentIdentifier;
 import org.eclipse.lsp4j.TextDocumentItem;
 import org.eclipse.lsp4j.TextDocumentPositionParams;
 import org.eclipse.lsp4j.VersionedTextDocumentIdentifier;
+import org.eclipse.lsp4j.WorkspaceFolder;
 import org.eclipse.lsp4j.jsonrpc.Launcher;
 import org.eclipse.lsp4j.jsonrpc.messages.Either;
 import org.eclipse.lsp4j.services.LanguageServer;
@@ -42,7 +45,7 @@ public class ScriptIntellisenseLsp4j implements ScriptIntellisense {
 	public ScriptLspClient cliente;
 	public LanguageServer servidor;
 	public Process proceso;
-	public CompletableFuture<Void> escucha;
+	public Future<Void> escucha;
 	public boolean iniciado;
 	public int versionDocumento = 1;
 
@@ -78,6 +81,13 @@ public class ScriptIntellisenseLsp4j implements ScriptIntellisense {
 		if (trabajo != null && trabajo.isDirectory()) {
 			pb.directory(trabajo);
 		}
+
+		// For KubeJS, generate a tsconfig.json that includes the probe-generated .d.ts
+		// files
+		if (tipo == TipoProyectoScript.KUBEJS && carpetaProyecto != null) {
+			generarTsconfigKubeJS(carpetaProyecto);
+		}
+
 		pb.redirectErrorStream(true);
 		proceso = pb.start();
 
@@ -91,6 +101,10 @@ public class ScriptIntellisenseLsp4j implements ScriptIntellisense {
 		if (carpetaProyecto != null) {
 			URI uri = carpetaProyecto.toURI();
 			params.setRootUri(uri.toString());
+			WorkspaceFolder wf = new WorkspaceFolder();
+			wf.setUri(uri.toString());
+			wf.setName(carpetaProyecto.getName());
+			params.setWorkspaceFolders(java.util.Collections.singletonList(wf));
 		}
 
 		CompletableFuture<InitializeResult> futuro = servidor.initialize(params);
@@ -154,7 +168,8 @@ public class ScriptIntellisenseLsp4j implements ScriptIntellisense {
 		if (!disponible() || archivo == null) {
 			return;
 		}
-		servidor.getTextDocumentService().didClose(new DidCloseTextDocumentParams(new TextDocumentIdentifier(uri(archivo))));
+		servidor.getTextDocumentService()
+				.didClose(new DidCloseTextDocumentParams(new TextDocumentIdentifier(uri(archivo))));
 	}
 
 	@Override
@@ -203,6 +218,23 @@ public class ScriptIntellisenseLsp4j implements ScriptIntellisense {
 			return new ArrayList<ProblemaScript>();
 		}
 		return cliente.todosDiagnosticos();
+	}
+
+	public static void generarTsconfigKubeJS(File carpetaProyecto) {
+		File tsconfig = new File(carpetaProyecto, "tsconfig.json");
+		if (tsconfig.exists()) {
+			return; // respect existing tsconfig
+		}
+		String contenido = "{\n" + "  \"compilerOptions\": {\n" + "    \"target\": \"ES6\",\n"
+				+ "    \"module\": \"commonjs\",\n" + "    \"allowJs\": true,\n" + "    \"checkJs\": false,\n"
+				+ "    \"noEmit\": true,\n" + "    \"typeRoots\": []\n" + "  },\n" + "  \"include\": [\n"
+				+ "    \"**/*.js\",\n" + "    \"probe/generated/**/*.d.ts\"\n" + "  ],\n" + "  \"exclude\": [\n"
+				+ "    \"node_modules\"\n" + "  ]\n" + "}\n";
+		try (FileWriter fw = new FileWriter(tsconfig)) {
+			fw.write(contenido);
+		} catch (Throwable t) {
+			CrashDetectorLogger.log("No se pudo generar tsconfig.json: " + t.getMessage());
+		}
 	}
 
 	public String uri(File archivo) {

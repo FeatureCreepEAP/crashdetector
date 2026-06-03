@@ -11314,54 +11314,176 @@ public class Tailandes implements Idioma {
 	public String tamanoLogoCuadrado() {
 		return "ขนาดโลโก้สี่เหลี่ยม";
 	}
-    @Override
-    public String migradorCAModoPrincipalAviso() {
-        return "เลือกวิธีที่จะย้าย GUI หลัก 'centro_soporte' คล้ายกับ GUI เริ่มต้นของ Crash Assistant มากที่สุด แต่ไม่แนะนำ โดยเฉพาะสำหรับผู้เล่น DIY เพราะมีป๊อปอัปมากมายและการออกแบบที่ไม่ดี มีไว้เพื่อช่วยย้ายจากระบบเก่าของ Crash Assistant เท่านั้น 'primitiva' เป็น GUI ที่เรียบง่ายมาก ใช้เฉพาะสำหรับการแชร์ แนะนำเฉพาะสำหรับมอดแพ็ก ไม่ใช่ผู้ใช้ DIY หากคุณปิดการตรวจสอบที่ไม่จำเป็นทั้งหมด และก็มีปัญหาป๊อปอัปเช่นกัน 'original' จะรักษา GUI หลักปัจจุบันของคุณไว้ และมักจะเป็นตัวเลือกที่แนะนำสำหรับผู้ใช้ส่วนใหญ่";
-    }
 
-    @Override
-    public String migradorCASitioLoggingAviso() {
-        return "เลือกว่าคุณต้องการย้ายไซต์บันทึกจาก Crash Assistant หรือรักษาไซต์ปัจจุบันของ CrashDetector ไว้ Crash Assistant มักใช้ gnomebot.dev ซึ่งไม่แนะนำให้ใช้เมื่อเทียบกับ SecureLogger, PastesDev หรือ CDPaste สำหรับผู้ใช้ส่วนใหญ่ แนะนำให้รักษาไซต์ปัจจุบันไว้";
-    }
-	
-    
-    
-    @Override public String ideScriptTitulo() { return "IDE สำหรับสคริปต์"; }
-    @Override public String ideScriptBotonSidebar() { return "สคริปต์"; }
-    @Override public String ideScriptProyecto() { return "โปรเจกต์:"; }
-    @Override public String ideScriptNuevo() { return "ใหม่"; }
-    @Override public String ideScriptAbrirCarpeta() { return "เปิดโฟลเดอร์"; }
-    @Override public String ideScriptAbrirArchivo() { return "เปิดไฟล์"; }
-    @Override public String ideScriptGuardarComo() { return "บันทึกเป็น"; }
-    @Override public String ideScriptDescargarDeps() { return "ดาวน์โหลด deps"; }
-    @Override public String ideScriptCompletar() { return "IntelliSense"; }
-    @Override public String ideScriptExplorador() { return "ตัวสำรวจโปรเจกต์"; }
-    @Override public String ideScriptSinArchivo() { return "ไม่มีไฟล์"; }
-    @Override public String ideScriptEstado(String proyecto, String archivo) { return proyecto + " | " + archivo; }
-    @Override public String ideScriptProyectoDeshabilitadoAviso() { return "ประเภทโปรเจกต์นี้มีอยู่ใน GUI แล้ว แต่ถูกปิดใช้งานจนกว่าจะเพิ่มเซิร์ฟเวอร์ภาษาหรือตัววิเคราะห์ของมัน"; }
-    @Override public String ideScriptDeshabilitadoCorto() { return "(ปิดใช้งาน)"; }
-    @Override public String ideScriptNoFaltanDependencias() { return "ไม่ขาด dependencies"; }
-    @Override public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) { return "จะดาวน์โหลด dependencies จำนวน " + cantidad + " รายการสำหรับ IDE สคริปต์:\n\n" + lista + "\nหลังจากนั้นอาจจำเป็นต้องรีสตาร์ทเพื่อให้เข้าสู่ classpath"; }
-    @Override public String ideScriptDepsDescargadas(String mensaje) { return "ผลการดาวน์โหลด:\n\n" + mensaje + "\n\nรีสตาร์ทโปรแกรมหากคลาสยังไม่ปรากฏใน classpath"; }
-    @Override public String ideScriptErrorAbrirArchivo() { return "เกิดข้อผิดพลาดในการเปิดไฟล์"; }
-    @Override public String ideScriptErrorGuardarArchivo() { return "เกิดข้อผิดพลาดในการบันทึกไฟล์"; }
-    @Override public String ideScriptColorEditor() { return "สีของตัวแก้ไข"; }
-    @Override public String ideScriptColorKeyword() { return "สีของคำสำคัญ"; }
-    @Override public String ideScriptColorComentario() { return "สีของความคิดเห็น"; }
-    @Override public String ideScriptColorCadena() { return "สีของสตริง"; }
-    @Override public String ideScriptProyectoFeatureCreep() { return "FeatureCreep Datafied Content (DMR/JSON)"; }
-    @Override public String ideScriptProyectoDatapackResourcepack() { return "Minecraft Datapacks / ResourcePacks (JSON)"; }
-    @Override public String ideScriptProyectoKubeJS() { return "KubeJS (JS)"; }
-    @Override public String ideScriptProyectoZenScript() { return "ZenScript (CraftTweaker)"; }
-    @Override public String ideScriptProyectoMineFlayer() { return "MineFlayer (Python)"; }
-    @Override public String ideScriptProyectoGroovyScript() { return "GroovyScript"; }
-    @Override public String ideScriptProyectoComputerCraftLua() { return "ComputerCraft Lua"; }
-    @Override public String ideScriptProyectoWorldEditCraftScript() { return "WorldEdit CraftScript"; }
-    @Override public String ideScriptProyectoJexel3() { return "Jexel3"; }
-	
-	
-	
-	
-	
+	@Override
+	public String migradorCAModoPrincipalAviso() {
+		return "เลือกวิธีที่จะย้าย GUI หลัก 'centro_soporte' คล้ายกับ GUI เริ่มต้นของ Crash Assistant มากที่สุด แต่ไม่แนะนำ โดยเฉพาะสำหรับผู้เล่น DIY เพราะมีป๊อปอัปมากมายและการออกแบบที่ไม่ดี มีไว้เพื่อช่วยย้ายจากระบบเก่าของ Crash Assistant เท่านั้น 'primitiva' เป็น GUI ที่เรียบง่ายมาก ใช้เฉพาะสำหรับการแชร์ แนะนำเฉพาะสำหรับมอดแพ็ก ไม่ใช่ผู้ใช้ DIY หากคุณปิดการตรวจสอบที่ไม่จำเป็นทั้งหมด และก็มีปัญหาป๊อปอัปเช่นกัน 'original' จะรักษา GUI หลักปัจจุบันของคุณไว้ และมักจะเป็นตัวเลือกที่แนะนำสำหรับผู้ใช้ส่วนใหญ่";
+	}
+
+	@Override
+	public String migradorCASitioLoggingAviso() {
+		return "เลือกว่าคุณต้องการย้ายไซต์บันทึกจาก Crash Assistant หรือรักษาไซต์ปัจจุบันของ CrashDetector ไว้ Crash Assistant มักใช้ gnomebot.dev ซึ่งไม่แนะนำให้ใช้เมื่อเทียบกับ SecureLogger, PastesDev หรือ CDPaste สำหรับผู้ใช้ส่วนใหญ่ แนะนำให้รักษาไซต์ปัจจุบันไว้";
+	}
+
+	@Override
+	public String ideScriptTitulo() {
+		return "IDE สำหรับสคริปต์";
+	}
+
+	@Override
+	public String ideScriptBotonSidebar() {
+		return "สคริปต์";
+	}
+
+	@Override
+	public String ideScriptProyecto() {
+		return "โปรเจกต์:";
+	}
+
+	@Override
+	public String ideScriptNuevo() {
+		return "ใหม่";
+	}
+
+	@Override
+	public String ideScriptAbrirCarpeta() {
+		return "เปิดโฟลเดอร์";
+	}
+
+	@Override
+	public String ideScriptAbrirArchivo() {
+		return "เปิดไฟล์";
+	}
+
+	@Override
+	public String ideScriptGuardarComo() {
+		return "บันทึกเป็น";
+	}
+
+	@Override
+	public String ideScriptDescargarDeps() {
+		return "ดาวน์โหลด deps";
+	}
+
+	@Override
+	public String ideScriptCompletar() {
+		return "IntelliSense";
+	}
+
+	@Override
+	public String ideScriptExplorador() {
+		return "ตัวสำรวจโปรเจกต์";
+	}
+
+	@Override
+	public String ideScriptSinArchivo() {
+		return "ไม่มีไฟล์";
+	}
+
+	@Override
+	public String ideScriptEstado(String proyecto, String archivo) {
+		return proyecto + " | " + archivo;
+	}
+
+	@Override
+	public String ideScriptProyectoDeshabilitadoAviso() {
+		return "ประเภทโปรเจกต์นี้มีอยู่ใน GUI แล้ว แต่ถูกปิดใช้งานจนกว่าจะเพิ่มเซิร์ฟเวอร์ภาษาหรือตัววิเคราะห์ของมัน";
+	}
+
+	@Override
+	public String ideScriptDeshabilitadoCorto() {
+		return "(ปิดใช้งาน)";
+	}
+
+	@Override
+	public String ideScriptNoFaltanDependencias() {
+		return "ไม่ขาด dependencies";
+	}
+
+	@Override
+	public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) {
+		return "จะดาวน์โหลด dependencies จำนวน " + cantidad + " รายการสำหรับ IDE สคริปต์:\n\n" + lista
+				+ "\nหลังจากนั้นอาจจำเป็นต้องรีสตาร์ทเพื่อให้เข้าสู่ classpath";
+	}
+
+	@Override
+	public String ideScriptDepsDescargadas(String mensaje) {
+		return "ผลการดาวน์โหลด:\n\n" + mensaje + "\n\nรีสตาร์ทโปรแกรมหากคลาสยังไม่ปรากฏใน classpath";
+	}
+
+	@Override
+	public String ideScriptErrorAbrirArchivo() {
+		return "เกิดข้อผิดพลาดในการเปิดไฟล์";
+	}
+
+	@Override
+	public String ideScriptErrorGuardarArchivo() {
+		return "เกิดข้อผิดพลาดในการบันทึกไฟล์";
+	}
+
+	@Override
+	public String ideScriptColorEditor() {
+		return "สีของตัวแก้ไข";
+	}
+
+	@Override
+	public String ideScriptColorKeyword() {
+		return "สีของคำสำคัญ";
+	}
+
+	@Override
+	public String ideScriptColorComentario() {
+		return "สีของความคิดเห็น";
+	}
+
+	@Override
+	public String ideScriptColorCadena() {
+		return "สีของสตริง";
+	}
+
+	@Override
+	public String ideScriptProyectoFeatureCreep() {
+		return "FeatureCreep Datafied Content (DMR/JSON)";
+	}
+
+	@Override
+	public String ideScriptProyectoDatapackResourcepack() {
+		return "Minecraft Datapacks / ResourcePacks (JSON)";
+	}
+
+	@Override
+	public String ideScriptProyectoKubeJS() {
+		return "KubeJS (JS)";
+	}
+
+	@Override
+	public String ideScriptProyectoZenScript() {
+		return "ZenScript (CraftTweaker)";
+	}
+
+	@Override
+	public String ideScriptProyectoMineFlayer() {
+		return "MineFlayer (Python)";
+	}
+
+	@Override
+	public String ideScriptProyectoGroovyScript() {
+		return "GroovyScript";
+	}
+
+	@Override
+	public String ideScriptProyectoComputerCraftLua() {
+		return "ComputerCraft Lua";
+	}
+
+	@Override
+	public String ideScriptProyectoWorldEditCraftScript() {
+		return "WorldEdit CraftScript";
+	}
+
+	@Override
+	public String ideScriptProyectoJexel3() {
+		return "Jexel3";
+	}
 
 }

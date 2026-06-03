@@ -52,12 +52,15 @@ public class ScriptIDEGUINiwaJPlus extends ScriptIDEGUI {
 
 	public ConfigColor colorFondo = ConfigColor.de("tema.scriptide.niwa_jpp6.fondo", new Color(212, 208, 200));
 	public ConfigColor colorPanel = ConfigColor.de("tema.scriptide.niwa_jpp6.panel", new Color(236, 233, 216));
-	public ConfigColor colorPanelOscuro = ConfigColor.de("tema.scriptide.niwa_jpp6.panel_oscuro", new Color(188, 184, 176));
+	public ConfigColor colorPanelOscuro = ConfigColor.de("tema.scriptide.niwa_jpp6.panel_oscuro",
+			new Color(188, 184, 176));
 	public ConfigColor colorTexto = ConfigColor.de("tema.scriptide.niwa_jpp6.texto", new Color(24, 28, 36));
 	public ConfigColor colorEditor = ConfigColor.de("tema.scriptide.niwa_jpp6.editor", new Color(255, 252, 242));
 	public ConfigColor colorBorde = ConfigColor.de("tema.scriptide.niwa_jpp6.borde", new Color(110, 105, 96));
-	public ConfigColor colorAcentoNiwa = ConfigColor.de("tema.scriptide.niwa_jpp6.acento_niwa", new Color(230, 159, 126));
-	public ConfigColor colorAcentoVerde = ConfigColor.de("tema.scriptide.niwa_jpp6.acento_verde", new Color(166, 221, 198));
+	public ConfigColor colorAcentoNiwa = ConfigColor.de("tema.scriptide.niwa_jpp6.acento_niwa",
+			new Color(230, 159, 126));
+	public ConfigColor colorAcentoVerde = ConfigColor.de("tema.scriptide.niwa_jpp6.acento_verde",
+			new Color(166, 221, 198));
 	public ConfigColor colorKeyword = ConfigColor.de("tema.scriptide.niwa_jpp6.keyword", new Color(0, 0, 160));
 	public ConfigColor colorComentario = ConfigColor.de("tema.scriptide.niwa_jpp6.comentario", new Color(0, 128, 0));
 	public ConfigColor colorCadena = ConfigColor.de("tema.scriptide.niwa_jpp6.cadena", new Color(160, 64, 0));

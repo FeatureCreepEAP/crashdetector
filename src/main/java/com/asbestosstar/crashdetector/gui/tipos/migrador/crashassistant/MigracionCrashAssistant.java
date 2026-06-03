@@ -34,7 +34,8 @@ public class MigracionCrashAssistant {
 
 	public boolean migrarProblematicMods() {
 		try {
-			Path origen = Files.exists(archivoProblematicMods) ? archivoProblematicMods : archivoProblematicModsRespaldo;
+			Path origen = Files.exists(archivoProblematicMods) ? archivoProblematicMods
+					: archivoProblematicModsRespaldo;
 
 			if (!Files.exists(origen)) {
 				return false;
@@ -111,16 +112,14 @@ public class MigracionCrashAssistant {
 			if (MODO_PRIMITIVA.equals(modoPrincipal)) {
 				ConfigString.de("guitipo_principal", "estilo_lanzer").escribir("primitiva");
 
-				if (helpLink != null && !helpLink.trim().isEmpty()
-						&& !"CHANGE_ME".equalsIgnoreCase(helpLink.trim())) {
+				if (helpLink != null && !helpLink.trim().isEmpty() && !"CHANGE_ME".equalsIgnoreCase(helpLink.trim())) {
 					ConfigString.de("dialogo.compartir.primitiva.centro_soporte.url", "https://example.com/")
 							.escribir(helpLink.trim());
 				}
 			} else if (MODO_CENTRO_SOPORTE.equals(modoPrincipal)) {
 				ConfigString.de("guitipo_principal", "estilo_lanzer").escribir("centro_soporte");
 
-				if (helpLink != null && !helpLink.trim().isEmpty()
-						&& !"CHANGE_ME".equalsIgnoreCase(helpLink.trim())) {
+				if (helpLink != null && !helpLink.trim().isEmpty() && !"CHANGE_ME".equalsIgnoreCase(helpLink.trim())) {
 					ConfigString.de("dialogo.compartir.centro_soporte.url_soporte", "https://example.com/")
 							.escribir(helpLink.trim());
 				}
@@ -177,20 +176,23 @@ public class MigracionCrashAssistant {
 		String warningAfterUpload = leerCadenaToml(generatedMessage, "warning_after_upload_all_button_press", "");
 
 		if (modpackName != null && !modpackName.trim().isEmpty()) {
-			ConfigString.de("dialogo.compartir.centro_soporte.texto_bajo_titulo." + lang,
-					com.asbestosstar.crashdetector.MonitorDePID.idioma.centroSoporteTextoBajoTitulo())
+			ConfigString
+					.de("dialogo.compartir.centro_soporte.texto_bajo_titulo." + lang,
+							com.asbestosstar.crashdetector.MonitorDePID.idioma.centroSoporteTextoBajoTitulo())
 					.escribir(modpackName.trim());
 		}
 
 		if (textUnderCrashed != null && !textUnderCrashed.trim().isEmpty()) {
-			ConfigString.de("dialogo.compartir.centro_soporte.texto_superior." + lang,
-					com.asbestosstar.crashdetector.MonitorDePID.idioma.centroSoporteTextoSuperior())
+			ConfigString
+					.de("dialogo.compartir.centro_soporte.texto_superior." + lang,
+							com.asbestosstar.crashdetector.MonitorDePID.idioma.centroSoporteTextoSuperior())
 					.escribir(textUnderCrashed.trim());
 		}
 
 		if (warningAfterUpload != null && !warningAfterUpload.trim().isEmpty()) {
-			ConfigString.de("dialogo.compartir.centro_soporte.texto_aviso." + lang,
-					com.asbestosstar.crashdetector.MonitorDePID.idioma.centroSoporteTextoAviso())
+			ConfigString
+					.de("dialogo.compartir.centro_soporte.texto_aviso." + lang,
+							com.asbestosstar.crashdetector.MonitorDePID.idioma.centroSoporteTextoAviso())
 					.escribir(warningAfterUpload.trim());
 		}
 
@@ -239,8 +241,7 @@ public class MigracionCrashAssistant {
 			migrarOverrideSiExiste(json, "gui.upload_all",
 					"dialogo.compartir.centro_soporte.boton_upload_all." + langCD);
 
-			migrarOverrideSiExiste(json, "gui.request_help",
-					"dialogo.compartir.centro_soporte.boton_ayuda." + langCD);
+			migrarOverrideSiExiste(json, "gui.request_help", "dialogo.compartir.centro_soporte.boton_ayuda." + langCD);
 
 			migrarOverrideSiExiste(json, "generated_message.text_under_crashed",
 					"dialogo.compartir.centro_soporte.texto_superior." + langCD);

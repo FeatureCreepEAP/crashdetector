@@ -11705,63 +11705,178 @@ public class Indonesia implements Idioma {
 	public String tamanoLogoCuadrado() {
 		return "Ukuran logo persegi";
 	}
-	
+
 	// Indonesian (Bahasa Indonesia)
 	@Override
 	public String migradorCAModoPrincipalAviso() {
-	    return "Pilih cara memigrasikan GUI utama. \"centro_soporte\" adalah yang paling mirip dengan GUI default Crash Assistant, tetapi tidak direkomendasikan, terutama untuk pemain DIY, karena memiliki \"popup hell\" dan desain yang buruk; ini hanya ada untuk membantu memigrasikan lingkungan legacy Crash Assistant. \"primitiva\" adalah GUI yang sangat sederhana yang hanya digunakan untuk berbagi; hanya disarankan untuk modpack, bukan pengguna DIY, dan bahkan jika Anda menonaktifkan semua pemeriksaan yang tidak perlu, ini juga menderita \"popup hell\". \"original\" mempertahankan GUI utama Anda saat ini dan umumnya merupakan opsi yang direkomendasikan untuk sebagian besar pengguna.";
+		return "Pilih cara memigrasikan GUI utama. \"centro_soporte\" adalah yang paling mirip dengan GUI default Crash Assistant, tetapi tidak direkomendasikan, terutama untuk pemain DIY, karena memiliki \"popup hell\" dan desain yang buruk; ini hanya ada untuk membantu memigrasikan lingkungan legacy Crash Assistant. \"primitiva\" adalah GUI yang sangat sederhana yang hanya digunakan untuk berbagi; hanya disarankan untuk modpack, bukan pengguna DIY, dan bahkan jika Anda menonaktifkan semua pemeriksaan yang tidak perlu, ini juga menderita \"popup hell\". \"original\" mempertahankan GUI utama Anda saat ini dan umumnya merupakan opsi yang direkomendasikan untuk sebagian besar pengguna.";
 	}
 
 	@Override
 	public String migradorCASitioLoggingAviso() {
-	    return "Pilih apakah Anda ingin memigrasikan situs logging dari Crash Assistant atau mempertahankan situs saat ini dari CrashDetector. Crash Assistant sering menggunakan gnomebot.dev, yang tidak direkomendasikan dibandingkan dengan SecureLogger, PastesDev, atau CDPaste. Untuk sebagian besar pengguna, disarankan untuk mempertahankan situs saat ini.";
+		return "Pilih apakah Anda ingin memigrasikan situs logging dari Crash Assistant atau mempertahankan situs saat ini dari CrashDetector. Crash Assistant sering menggunakan gnomebot.dev, yang tidak direkomendasikan dibandingkan dengan SecureLogger, PastesDev, atau CDPaste. Untuk sebagian besar pengguna, disarankan untuk mempertahankan situs saat ini.";
 	}
-	
+
 	// Indonesian (Bahasa Indonesia)
-	@Override public String ideScriptTitulo() { return "IDE Skrip"; }
-	@Override public String ideScriptBotonSidebar() { return "Skrip"; }
-	@Override public String ideScriptProyecto() { return "Proyek:"; }
-	@Override public String ideScriptNuevo() { return "Baru"; }
-	@Override public String ideScriptAbrirCarpeta() { return "Buka folder"; }
-	@Override public String ideScriptAbrirArchivo() { return "Buka file"; }
-	@Override public String ideScriptGuardarComo() { return "Simpan sebagai"; }
-	@Override public String ideScriptDescargarDeps() { return "Unduh dependensi"; }
-	@Override public String ideScriptCompletar() { return "IntelliSense"; }
-	@Override public String ideScriptExplorador() { return "Penjelajah proyek"; }
-	@Override public String ideScriptSinArchivo() { return "tanpa file"; }
-	@Override public String ideScriptEstado(String proyecto, String archivo) { return proyecto + " | " + archivo; }
-	@Override public String ideScriptProyectoDeshabilitadoAviso() { return "Jenis proyek ini sudah ada di GUI, tetapi dinonaktifkan sampai server bahasa atau analisnya ditambahkan."; }
-	@Override public String ideScriptDeshabilitadoCorto() { return "(dinonaktifkan)"; }
-	@Override public String ideScriptNoFaltanDependencias() { return "Tidak ada dependensi yang hilang."; }
-	@Override public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) { return cantidad + " dependensi akan diunduh untuk IDE skrip:\n\n" + lista + "\nSetelah itu, mungkin perlu restart agar masuk ke classpath."; }
-	@Override public String ideScriptDepsDescargadas(String mensaje) { return "Hasil unduhan:\n\n" + mensaje + "\n\nRestart program jika kelas masih belum muncul di classpath."; }
-	@Override public String ideScriptErrorAbrirArchivo() { return "Kesalahan membuka file"; }
-	@Override public String ideScriptErrorGuardarArchivo() { return "Kesalahan menyimpan file"; }
-	@Override public String ideScriptColorEditor() { return "Warna editor"; }
-	@Override public String ideScriptColorKeyword() { return "Warna kata kunci"; }
-	@Override public String ideScriptColorComentario() { return "Warna komentar"; }
-	@Override public String ideScriptColorCadena() { return "Warna string"; }
-	@Override public String ideScriptProyectoFeatureCreep() { return "FeatureCreep Datafied Content (DMR/JSON)"; }
-	@Override public String ideScriptProyectoDatapackResourcepack() { return "Minecraft Datapacks / ResourcePacks (JSON)"; }
-	@Override public String ideScriptProyectoKubeJS() { return "KubeJS (JS)"; }
-	@Override public String ideScriptProyectoZenScript() { return "ZenScript (CraftTweaker)"; }
-	@Override public String ideScriptProyectoMineFlayer() { return "MineFlayer (Python)"; }
-	@Override public String ideScriptProyectoGroovyScript() { return "GroovyScript"; }
-	@Override public String ideScriptProyectoComputerCraftLua() { return "ComputerCraft Lua"; }
-	@Override public String ideScriptProyectoWorldEditCraftScript() { return "WorldEdit CraftScript"; }
-	@Override public String ideScriptProyectoJexel3() { return "Jexel3"; }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public String ideScriptTitulo() {
+		return "IDE Skrip";
+	}
+
+	@Override
+	public String ideScriptBotonSidebar() {
+		return "Skrip";
+	}
+
+	@Override
+	public String ideScriptProyecto() {
+		return "Proyek:";
+	}
+
+	@Override
+	public String ideScriptNuevo() {
+		return "Baru";
+	}
+
+	@Override
+	public String ideScriptAbrirCarpeta() {
+		return "Buka folder";
+	}
+
+	@Override
+	public String ideScriptAbrirArchivo() {
+		return "Buka file";
+	}
+
+	@Override
+	public String ideScriptGuardarComo() {
+		return "Simpan sebagai";
+	}
+
+	@Override
+	public String ideScriptDescargarDeps() {
+		return "Unduh dependensi";
+	}
+
+	@Override
+	public String ideScriptCompletar() {
+		return "IntelliSense";
+	}
+
+	@Override
+	public String ideScriptExplorador() {
+		return "Penjelajah proyek";
+	}
+
+	@Override
+	public String ideScriptSinArchivo() {
+		return "tanpa file";
+	}
+
+	@Override
+	public String ideScriptEstado(String proyecto, String archivo) {
+		return proyecto + " | " + archivo;
+	}
+
+	@Override
+	public String ideScriptProyectoDeshabilitadoAviso() {
+		return "Jenis proyek ini sudah ada di GUI, tetapi dinonaktifkan sampai server bahasa atau analisnya ditambahkan.";
+	}
+
+	@Override
+	public String ideScriptDeshabilitadoCorto() {
+		return "(dinonaktifkan)";
+	}
+
+	@Override
+	public String ideScriptNoFaltanDependencias() {
+		return "Tidak ada dependensi yang hilang.";
+	}
+
+	@Override
+	public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) {
+		return cantidad + " dependensi akan diunduh untuk IDE skrip:\n\n" + lista
+				+ "\nSetelah itu, mungkin perlu restart agar masuk ke classpath.";
+	}
+
+	@Override
+	public String ideScriptDepsDescargadas(String mensaje) {
+		return "Hasil unduhan:\n\n" + mensaje + "\n\nRestart program jika kelas masih belum muncul di classpath.";
+	}
+
+	@Override
+	public String ideScriptErrorAbrirArchivo() {
+		return "Kesalahan membuka file";
+	}
+
+	@Override
+	public String ideScriptErrorGuardarArchivo() {
+		return "Kesalahan menyimpan file";
+	}
+
+	@Override
+	public String ideScriptColorEditor() {
+		return "Warna editor";
+	}
+
+	@Override
+	public String ideScriptColorKeyword() {
+		return "Warna kata kunci";
+	}
+
+	@Override
+	public String ideScriptColorComentario() {
+		return "Warna komentar";
+	}
+
+	@Override
+	public String ideScriptColorCadena() {
+		return "Warna string";
+	}
+
+	@Override
+	public String ideScriptProyectoFeatureCreep() {
+		return "FeatureCreep Datafied Content (DMR/JSON)";
+	}
+
+	@Override
+	public String ideScriptProyectoDatapackResourcepack() {
+		return "Minecraft Datapacks / ResourcePacks (JSON)";
+	}
+
+	@Override
+	public String ideScriptProyectoKubeJS() {
+		return "KubeJS (JS)";
+	}
+
+	@Override
+	public String ideScriptProyectoZenScript() {
+		return "ZenScript (CraftTweaker)";
+	}
+
+	@Override
+	public String ideScriptProyectoMineFlayer() {
+		return "MineFlayer (Python)";
+	}
+
+	@Override
+	public String ideScriptProyectoGroovyScript() {
+		return "GroovyScript";
+	}
+
+	@Override
+	public String ideScriptProyectoComputerCraftLua() {
+		return "ComputerCraft Lua";
+	}
+
+	@Override
+	public String ideScriptProyectoWorldEditCraftScript() {
+		return "WorldEdit CraftScript";
+	}
+
+	@Override
+	public String ideScriptProyectoJexel3() {
+		return "Jexel3";
+	}
 
 }

@@ -10536,54 +10536,177 @@ public class Chino implements Idioma {
 	public String tamanoLogoCuadrado() {
 		return "方形 Logo 大小";
 	}
+
 	// Arabic (العربية)
 	@Override
 	public String migradorCAModoPrincipalAviso() {
-	    return "اختر كيفية ترحيل الواجهة الرئيسية. \"centro_soporte\" هو الأقرب إلى الواجهة الافتراضية لـ Crash Assistant، لكنه غير مستحسن، خاصة للاعبين الذين يقومون بالتعديل الذاتي (DIY)، لأنه يعاني من كثرة النوافذ المنبثقة وتصميم ضعيف؛ فهو موجود فقط لمساعدة بيئات Crash Assistant القديمة على الترحيل. \"primitiva\" هي واجهة بسيطة جداً تستخدم فقط للمشاركة؛ يُنصح بها فقط لحزم المودات (modpacks) وليس للمستخدمين الذين يعدلون بأنفسهم، وإذا قمت بتعطيل جميع عمليات التحقق غير الضرورية، فهي أيضاً تعاني من كثرة النوافذ المنبثقة. \"original\" يحافظ على واجهتك الرئيسية الحالية وهو عادة الخيار الموصى به لمعظم المستخدمين.";
+		return "اختر كيفية ترحيل الواجهة الرئيسية. \"centro_soporte\" هو الأقرب إلى الواجهة الافتراضية لـ Crash Assistant، لكنه غير مستحسن، خاصة للاعبين الذين يقومون بالتعديل الذاتي (DIY)، لأنه يعاني من كثرة النوافذ المنبثقة وتصميم ضعيف؛ فهو موجود فقط لمساعدة بيئات Crash Assistant القديمة على الترحيل. \"primitiva\" هي واجهة بسيطة جداً تستخدم فقط للمشاركة؛ يُنصح بها فقط لحزم المودات (modpacks) وليس للمستخدمين الذين يعدلون بأنفسهم، وإذا قمت بتعطيل جميع عمليات التحقق غير الضرورية، فهي أيضاً تعاني من كثرة النوافذ المنبثقة. \"original\" يحافظ على واجهتك الرئيسية الحالية وهو عادة الخيار الموصى به لمعظم المستخدمين.";
 	}
 
 	@Override
 	public String migradorCASitioLoggingAviso() {
-	    return "اختر ما إذا كنت تريد ترحيل موقع التسجيل (logging) من Crash Assistant أو الاحتفاظ بالموقع الحالي في CrashDetector. يستخدم Crash Assistant غالباً gnomebot.dev، وهو غير مستحسن مقارنة بـ SecureLogger أو PastesDev أو CDPaste. بالنسبة لمعظم المستخدمين، يُنصح بالاحتفاظ بالموقع الحالي.";
+		return "اختر ما إذا كنت تريد ترحيل موقع التسجيل (logging) من Crash Assistant أو الاحتفاظ بالموقع الحالي في CrashDetector. يستخدم Crash Assistant غالباً gnomebot.dev، وهو غير مستحسن مقارنة بـ SecureLogger أو PastesDev أو CDPaste. بالنسبة لمعظم المستخدمين، يُنصح بالاحتفاظ بالموقع الحالي.";
 	}
+
 	// Chinese (Simplified) (中文)
-	@Override public String ideScriptTitulo() { return "脚本 IDE"; }
-	@Override public String ideScriptBotonSidebar() { return "脚本"; }
-	@Override public String ideScriptProyecto() { return "项目："; }
-	@Override public String ideScriptNuevo() { return "新建"; }
-	@Override public String ideScriptAbrirCarpeta() { return "打开文件夹"; }
-	@Override public String ideScriptAbrirArchivo() { return "打开文件"; }
-	@Override public String ideScriptGuardarComo() { return "另存为"; }
-	@Override public String ideScriptDescargarDeps() { return "下载依赖"; }
-	@Override public String ideScriptCompletar() { return "智能感知 (IntelliSense)"; }
-	@Override public String ideScriptExplorador() { return "项目资源管理器"; }
-	@Override public String ideScriptSinArchivo() { return "无文件"; }
-	@Override public String ideScriptEstado(String proyecto, String archivo) { return proyecto + " | " + archivo; }
-	@Override public String ideScriptProyectoDeshabilitadoAviso() { return "此类项目已存在于 GUI 中，但在添加其语言服务器或分析器之前已被禁用。"; }
-	@Override public String ideScriptDeshabilitadoCorto() { return "(已禁用)"; }
-	@Override public String ideScriptNoFaltanDependencias() { return "没有缺失的依赖项。"; }
-	@Override public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) { return "将为脚本 IDE 下载 " + cantidad + " 个依赖项：\n\n" + lista + "\n之后可能需要重启以使其加入类路径 (classpath)。"; }
-	@Override public String ideScriptDepsDescargadas(String mensaje) { return "下载结果：\n\n" + mensaje + "\n\n如果类仍未出现在类路径中，请重启程序。"; }
-	@Override public String ideScriptErrorAbrirArchivo() { return "打开文件时出错"; }
-	@Override public String ideScriptErrorGuardarArchivo() { return "保存文件时出错"; }
-	@Override public String ideScriptColorEditor() { return "编辑器颜色"; }
-	@Override public String ideScriptColorKeyword() { return "关键字颜色"; }
-	@Override public String ideScriptColorComentario() { return "注释颜色"; }
-	@Override public String ideScriptColorCadena() { return "字符串颜色"; }
-	@Override public String ideScriptProyectoFeatureCreep() { return "FeatureCreep Datafied Content (DMR/JSON)"; }
-	@Override public String ideScriptProyectoDatapackResourcepack() { return "Minecraft 数据包 / 资源包 (JSON)"; }
-	@Override public String ideScriptProyectoKubeJS() { return "KubeJS (JS)"; }
-	@Override public String ideScriptProyectoZenScript() { return "ZenScript (CraftTweaker)"; }
-	@Override public String ideScriptProyectoMineFlayer() { return "MineFlayer (Python)"; }
-	@Override public String ideScriptProyectoGroovyScript() { return "GroovyScript"; }
-	@Override public String ideScriptProyectoComputerCraftLua() { return "ComputerCraft Lua"; }
-	@Override public String ideScriptProyectoWorldEditCraftScript() { return "WorldEdit CraftScript"; }
-	@Override public String ideScriptProyectoJexel3() { return "Jexel3"; }
-	
-	
-	
-	
-	
-	
+	@Override
+	public String ideScriptTitulo() {
+		return "脚本 IDE";
+	}
+
+	@Override
+	public String ideScriptBotonSidebar() {
+		return "脚本";
+	}
+
+	@Override
+	public String ideScriptProyecto() {
+		return "项目：";
+	}
+
+	@Override
+	public String ideScriptNuevo() {
+		return "新建";
+	}
+
+	@Override
+	public String ideScriptAbrirCarpeta() {
+		return "打开文件夹";
+	}
+
+	@Override
+	public String ideScriptAbrirArchivo() {
+		return "打开文件";
+	}
+
+	@Override
+	public String ideScriptGuardarComo() {
+		return "另存为";
+	}
+
+	@Override
+	public String ideScriptDescargarDeps() {
+		return "下载依赖";
+	}
+
+	@Override
+	public String ideScriptCompletar() {
+		return "智能感知 (IntelliSense)";
+	}
+
+	@Override
+	public String ideScriptExplorador() {
+		return "项目资源管理器";
+	}
+
+	@Override
+	public String ideScriptSinArchivo() {
+		return "无文件";
+	}
+
+	@Override
+	public String ideScriptEstado(String proyecto, String archivo) {
+		return proyecto + " | " + archivo;
+	}
+
+	@Override
+	public String ideScriptProyectoDeshabilitadoAviso() {
+		return "此类项目已存在于 GUI 中，但在添加其语言服务器或分析器之前已被禁用。";
+	}
+
+	@Override
+	public String ideScriptDeshabilitadoCorto() {
+		return "(已禁用)";
+	}
+
+	@Override
+	public String ideScriptNoFaltanDependencias() {
+		return "没有缺失的依赖项。";
+	}
+
+	@Override
+	public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) {
+		return "将为脚本 IDE 下载 " + cantidad + " 个依赖项：\n\n" + lista + "\n之后可能需要重启以使其加入类路径 (classpath)。";
+	}
+
+	@Override
+	public String ideScriptDepsDescargadas(String mensaje) {
+		return "下载结果：\n\n" + mensaje + "\n\n如果类仍未出现在类路径中，请重启程序。";
+	}
+
+	@Override
+	public String ideScriptErrorAbrirArchivo() {
+		return "打开文件时出错";
+	}
+
+	@Override
+	public String ideScriptErrorGuardarArchivo() {
+		return "保存文件时出错";
+	}
+
+	@Override
+	public String ideScriptColorEditor() {
+		return "编辑器颜色";
+	}
+
+	@Override
+	public String ideScriptColorKeyword() {
+		return "关键字颜色";
+	}
+
+	@Override
+	public String ideScriptColorComentario() {
+		return "注释颜色";
+	}
+
+	@Override
+	public String ideScriptColorCadena() {
+		return "字符串颜色";
+	}
+
+	@Override
+	public String ideScriptProyectoFeatureCreep() {
+		return "FeatureCreep Datafied Content (DMR/JSON)";
+	}
+
+	@Override
+	public String ideScriptProyectoDatapackResourcepack() {
+		return "Minecraft 数据包 / 资源包 (JSON)";
+	}
+
+	@Override
+	public String ideScriptProyectoKubeJS() {
+		return "KubeJS (JS)";
+	}
+
+	@Override
+	public String ideScriptProyectoZenScript() {
+		return "ZenScript (CraftTweaker)";
+	}
+
+	@Override
+	public String ideScriptProyectoMineFlayer() {
+		return "MineFlayer (Python)";
+	}
+
+	@Override
+	public String ideScriptProyectoGroovyScript() {
+		return "GroovyScript";
+	}
+
+	@Override
+	public String ideScriptProyectoComputerCraftLua() {
+		return "ComputerCraft Lua";
+	}
+
+	@Override
+	public String ideScriptProyectoWorldEditCraftScript() {
+		return "WorldEdit CraftScript";
+	}
+
+	@Override
+	public String ideScriptProyectoJexel3() {
+		return "Jexel3";
+	}
 
 }

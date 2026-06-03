@@ -360,12 +360,8 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/saba.png", Statics.carpeta.resolve("imagenes/saba.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/logo_crashassistant.png",
 				Statics.carpeta.resolve("imagenes/logo_crashassistant.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/niwa.png",
-				Statics.carpeta.resolve("imagenes/niwa.png").toFile());
-		
-		
-		
-		
+		copiarACarpetaDesdeJar("/imagenes/niwa.png", Statics.carpeta.resolve("imagenes/niwa.png").toFile());
+
 //docs		
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Launchers.md",
@@ -696,7 +692,6 @@ public class MonitorDePID {
 		TipoGUI.MIGRADOR_LEGACY.registrarGUI(MigradorLegacySamekoSaba.ID, MigradorLegacySamekoSaba::new);
 		TipoGUI.PRINCIPAL.registrarGUI(PrincipalGUICentroSoporte.ID, PrincipalGUICentroSoporte::new);
 		TipoGUI.SCRIPT_IDE.registrarGUI(ScriptIDEGUINiwaJPlus.ID, ScriptIDEGUINiwaJPlus::new);
-
 
 	}
 

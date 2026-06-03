@@ -18,8 +18,8 @@ public class ScriptIntellisenseFactory {
 			Class.forName("org.eclipse.lsp4j.services.LanguageServer");
 			Class.forName("org.eclipse.lsp4j.jsonrpc.Launcher");
 
-			Class<?> clase = Class.forName(
-					"com.asbestosstar.crashdetector.gui.tipos.scriptide.lsp.ScriptIntellisenseLsp4j");
+			Class<?> clase = Class
+					.forName("com.asbestosstar.crashdetector.gui.tipos.scriptide.lsp.ScriptIntellisenseLsp4j");
 			ScriptIntellisense proveedor = (ScriptIntellisense) clase.getDeclaredConstructor().newInstance();
 			proveedor.iniciar(tipo, carpetaProyecto);
 

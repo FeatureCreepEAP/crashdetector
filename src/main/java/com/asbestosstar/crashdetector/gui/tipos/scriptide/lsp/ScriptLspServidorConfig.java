@@ -10,7 +10,8 @@ import com.asbestosstar.crashdetector.gui.tipos.scriptide.TipoProyectoScript;
 /**
  * Configuracion de servidores LSP externos.
  *
- * LSP4J es cliente/protocolo; el servidor real debe existir como proceso aparte.
+ * LSP4J es cliente/protocolo; el servidor real debe existir como proceso
+ * aparte.
  */
 public class ScriptLspServidorConfig {
 
@@ -32,8 +33,7 @@ public class ScriptLspServidorConfig {
 		}
 
 		if (tipo == TipoProyectoScript.ZENSCRIPT) {
-			return new ScriptLspServidorConfig(tipo,
-					ConfigString.de("scriptide.lsp.zenscript.comando", ""),
+			return new ScriptLspServidorConfig(tipo, ConfigString.de("scriptide.lsp.zenscript.comando", ""),
 					ConfigString.de("scriptide.lsp.zenscript.carpeta", ""));
 		}
 

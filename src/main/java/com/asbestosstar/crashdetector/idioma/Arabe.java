@@ -11030,64 +11030,178 @@ public class Arabe implements Idioma {
 	public String tamanoLogoCuadrado() {
 		return "حجم الشعار المربع";
 	}
-	
+
 	// Arabic (العربية)
 	@Override
 	public String migradorCAModoPrincipalAviso() {
-	    return "اختر كيفية ترحيل الواجهة الرئيسية. \"centro_soporte\" هو الأقرب إلى الواجهة الافتراضية لـ Crash Assistant، لكنه غير مستحسن، خاصة للاعبين الذين يقومون بالتعديل الذاتي (DIY)، لأنه يعاني من كثرة النوافذ المنبثقة وتصميم ضعيف؛ فهو موجود فقط لمساعدة بيئات Crash Assistant القديمة على الترحيل. \"primitiva\" هي واجهة بسيطة جداً تستخدم فقط للمشاركة؛ يُنصح بها فقط لحزم المودات (modpacks) وليس للمستخدمين الذين يعدلون بأنفسهم، وإذا قمت بتعطيل جميع عمليات التحقق غير الضرورية، فهي أيضاً تعاني من كثرة النوافذ المنبثقة. \"original\" يحافظ على واجهتك الرئيسية الحالية وهو عادة الخيار الموصى به لمعظم المستخدمين.";
+		return "اختر كيفية ترحيل الواجهة الرئيسية. \"centro_soporte\" هو الأقرب إلى الواجهة الافتراضية لـ Crash Assistant، لكنه غير مستحسن، خاصة للاعبين الذين يقومون بالتعديل الذاتي (DIY)، لأنه يعاني من كثرة النوافذ المنبثقة وتصميم ضعيف؛ فهو موجود فقط لمساعدة بيئات Crash Assistant القديمة على الترحيل. \"primitiva\" هي واجهة بسيطة جداً تستخدم فقط للمشاركة؛ يُنصح بها فقط لحزم المودات (modpacks) وليس للمستخدمين الذين يعدلون بأنفسهم، وإذا قمت بتعطيل جميع عمليات التحقق غير الضرورية، فهي أيضاً تعاني من كثرة النوافذ المنبثقة. \"original\" يحافظ على واجهتك الرئيسية الحالية وهو عادة الخيار الموصى به لمعظم المستخدمين.";
 	}
 
 	@Override
 	public String migradorCASitioLoggingAviso() {
-	    return "اختر ما إذا كنت تريد ترحيل موقع التسجيل (logging) من Crash Assistant أو الاحتفاظ بالموقع الحالي في CrashDetector. يستخدم Crash Assistant غالباً gnomebot.dev، وهو غير مستحسن مقارنة بـ SecureLogger أو PastesDev أو CDPaste. بالنسبة لمعظم المستخدمين، يُنصح بالاحتفاظ بالموقع الحالي.";
+		return "اختر ما إذا كنت تريد ترحيل موقع التسجيل (logging) من Crash Assistant أو الاحتفاظ بالموقع الحالي في CrashDetector. يستخدم Crash Assistant غالباً gnomebot.dev، وهو غير مستحسن مقارنة بـ SecureLogger أو PastesDev أو CDPaste. بالنسبة لمعظم المستخدمين، يُنصح بالاحتفاظ بالموقع الحالي.";
 	}
-	
+
 	// Arabic (العربية)
-	@Override public String ideScriptTitulo() { return "بيئة تطوير نصوص برمجية (IDE)"; }
-	@Override public String ideScriptBotonSidebar() { return "النصوص البرمجية"; }
-	@Override public String ideScriptProyecto() { return "المشروع:"; }
-	@Override public String ideScriptNuevo() { return "جديد"; }
-	@Override public String ideScriptAbrirCarpeta() { return "فتح مجلد"; }
-	@Override public String ideScriptAbrirArchivo() { return "فتح ملف"; }
-	@Override public String ideScriptGuardarComo() { return "حفظ باسم"; }
-	@Override public String ideScriptDescargarDeps() { return "تنزيل الاعتماديات"; }
-	@Override public String ideScriptCompletar() { return "الإكمال التلقائي (IntelliSense)"; }
-	@Override public String ideScriptExplorador() { return "مستكشف المشروع"; }
-	@Override public String ideScriptSinArchivo() { return "بدون ملف"; }
-	@Override public String ideScriptEstado(String proyecto, String archivo) { return proyecto + " | " + archivo; }
-	@Override public String ideScriptProyectoDeshabilitadoAviso() { return "هذا النوع من المشاريع موجود بالفعل في الواجهة، لكنه معطل حتى يتم إضافة خادم اللغة أو المحلل الخاص به."; }
-	@Override public String ideScriptDeshabilitadoCorto() { return "(معطل)"; }
-	@Override public String ideScriptNoFaltanDependencias() { return "لا توجد اعتماديات مفقودة."; }
-	@Override public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) { return "سيتم تنزيل " + cantidad + " اعتمادية لبيئة تطوير النصوص:\n\n" + lista + "\nقد يكون من الضروري إعادة التشغيل afterward لكي تدخل في مسار الكلاس (classpath)."; }
-	@Override public String ideScriptDepsDescargadas(String mensaje) { return "نتيجة التنزيل:\n\n" + mensaje + "\n\nأعد تشغيل البرنامج إذا لم تظهر الفئات بعد في مسار الكلاس."; }
-	@Override public String ideScriptErrorAbrirArchivo() { return "خطأ في فتح الملف"; }
-	@Override public String ideScriptErrorGuardarArchivo() { return "خطأ في حفظ الملف"; }
-	@Override public String ideScriptColorEditor() { return "لون المحرر"; }
-	@Override public String ideScriptColorKeyword() { return "لون الكلمات الرئيسية"; }
-	@Override public String ideScriptColorComentario() { return "لون التعليقات"; }
-	@Override public String ideScriptColorCadena() { return "لون السلاسل النصية"; }
-	@Override public String ideScriptProyectoFeatureCreep() { return "FeatureCreep Datafied Content (DMR/JSON)"; }
-	@Override public String ideScriptProyectoDatapackResourcepack() { return "حزم بيانات / حزم موارد Minecraft (JSON)"; }
-	@Override public String ideScriptProyectoKubeJS() { return "KubeJS (JS)"; }
-	@Override public String ideScriptProyectoZenScript() { return "ZenScript (CraftTweaker)"; }
-	@Override public String ideScriptProyectoMineFlayer() { return "MineFlayer (Python)"; }
-	@Override public String ideScriptProyectoGroovyScript() { return "GroovyScript"; }
-	@Override public String ideScriptProyectoComputerCraftLua() { return "ComputerCraft Lua"; }
-	@Override public String ideScriptProyectoWorldEditCraftScript() { return "WorldEdit CraftScript"; }
-	@Override public String ideScriptProyectoJexel3() { return "Jexel3"; }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public String ideScriptTitulo() {
+		return "بيئة تطوير نصوص برمجية (IDE)";
+	}
+
+	@Override
+	public String ideScriptBotonSidebar() {
+		return "النصوص البرمجية";
+	}
+
+	@Override
+	public String ideScriptProyecto() {
+		return "المشروع:";
+	}
+
+	@Override
+	public String ideScriptNuevo() {
+		return "جديد";
+	}
+
+	@Override
+	public String ideScriptAbrirCarpeta() {
+		return "فتح مجلد";
+	}
+
+	@Override
+	public String ideScriptAbrirArchivo() {
+		return "فتح ملف";
+	}
+
+	@Override
+	public String ideScriptGuardarComo() {
+		return "حفظ باسم";
+	}
+
+	@Override
+	public String ideScriptDescargarDeps() {
+		return "تنزيل الاعتماديات";
+	}
+
+	@Override
+	public String ideScriptCompletar() {
+		return "الإكمال التلقائي (IntelliSense)";
+	}
+
+	@Override
+	public String ideScriptExplorador() {
+		return "مستكشف المشروع";
+	}
+
+	@Override
+	public String ideScriptSinArchivo() {
+		return "بدون ملف";
+	}
+
+	@Override
+	public String ideScriptEstado(String proyecto, String archivo) {
+		return proyecto + " | " + archivo;
+	}
+
+	@Override
+	public String ideScriptProyectoDeshabilitadoAviso() {
+		return "هذا النوع من المشاريع موجود بالفعل في الواجهة، لكنه معطل حتى يتم إضافة خادم اللغة أو المحلل الخاص به.";
+	}
+
+	@Override
+	public String ideScriptDeshabilitadoCorto() {
+		return "(معطل)";
+	}
+
+	@Override
+	public String ideScriptNoFaltanDependencias() {
+		return "لا توجد اعتماديات مفقودة.";
+	}
+
+	@Override
+	public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) {
+		return "سيتم تنزيل " + cantidad + " اعتمادية لبيئة تطوير النصوص:\n\n" + lista
+				+ "\nقد يكون من الضروري إعادة التشغيل afterward لكي تدخل في مسار الكلاس (classpath).";
+	}
+
+	@Override
+	public String ideScriptDepsDescargadas(String mensaje) {
+		return "نتيجة التنزيل:\n\n" + mensaje + "\n\nأعد تشغيل البرنامج إذا لم تظهر الفئات بعد في مسار الكلاس.";
+	}
+
+	@Override
+	public String ideScriptErrorAbrirArchivo() {
+		return "خطأ في فتح الملف";
+	}
+
+	@Override
+	public String ideScriptErrorGuardarArchivo() {
+		return "خطأ في حفظ الملف";
+	}
+
+	@Override
+	public String ideScriptColorEditor() {
+		return "لون المحرر";
+	}
+
+	@Override
+	public String ideScriptColorKeyword() {
+		return "لون الكلمات الرئيسية";
+	}
+
+	@Override
+	public String ideScriptColorComentario() {
+		return "لون التعليقات";
+	}
+
+	@Override
+	public String ideScriptColorCadena() {
+		return "لون السلاسل النصية";
+	}
+
+	@Override
+	public String ideScriptProyectoFeatureCreep() {
+		return "FeatureCreep Datafied Content (DMR/JSON)";
+	}
+
+	@Override
+	public String ideScriptProyectoDatapackResourcepack() {
+		return "حزم بيانات / حزم موارد Minecraft (JSON)";
+	}
+
+	@Override
+	public String ideScriptProyectoKubeJS() {
+		return "KubeJS (JS)";
+	}
+
+	@Override
+	public String ideScriptProyectoZenScript() {
+		return "ZenScript (CraftTweaker)";
+	}
+
+	@Override
+	public String ideScriptProyectoMineFlayer() {
+		return "MineFlayer (Python)";
+	}
+
+	@Override
+	public String ideScriptProyectoGroovyScript() {
+		return "GroovyScript";
+	}
+
+	@Override
+	public String ideScriptProyectoComputerCraftLua() {
+		return "ComputerCraft Lua";
+	}
+
+	@Override
+	public String ideScriptProyectoWorldEditCraftScript() {
+		return "WorldEdit CraftScript";
+	}
+
+	@Override
+	public String ideScriptProyectoJexel3() {
+		return "Jexel3";
+	}
 
 }

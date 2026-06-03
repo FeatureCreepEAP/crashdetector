@@ -10759,69 +10759,177 @@ public class Japones implements Idioma {
 	public String tamanoLogoCuadrado() {
 		return "正方形のロゴのサイズ";
 	}
+
 	// Japanese (日本語)
 	@Override
 	public String migradorCAModoPrincipalAviso() {
-	    return "メインGUIの移行方法を選択してください。「centro_soporte」はCrash AssistantのデフォルトGUIに最も近いですが、ポップアップ地獄や貧弱なデザインがあるため、特にDIYプレイヤーには推奨されません。これはCrash Assistantのレガシ環境を移行するためだけに存在します。「primitiva」は共有目的のみで使用される非常にシンプルなGUIです。不要なチェックをすべて無効にしてもポップアップ地獄の問題があるため、DIYユーザーではなくmodpackにのみ推奨されます。「original」は現在のメインGUIを維持し、ほとんどのユーザーに推奨されるオプションです。";
+		return "メインGUIの移行方法を選択してください。「centro_soporte」はCrash AssistantのデフォルトGUIに最も近いですが、ポップアップ地獄や貧弱なデザインがあるため、特にDIYプレイヤーには推奨されません。これはCrash Assistantのレガシ環境を移行するためだけに存在します。「primitiva」は共有目的のみで使用される非常にシンプルなGUIです。不要なチェックをすべて無効にしてもポップアップ地獄の問題があるため、DIYユーザーではなくmodpackにのみ推奨されます。「original」は現在のメインGUIを維持し、ほとんどのユーザーに推奨されるオプションです。";
 	}
 
 	@Override
 	public String migradorCASitioLoggingAviso() {
-	    return "Crash Assistantからロギングサイトを移行するか、CrashDetectorの現在のサイトを維持するかを選択してください。Crash Assistantは頻繁にgnomebot.devを使用しますが、SecureLogger、PastesDev、またはCDPasteと比較して推奨されません。ほとんどのユーザーには、現在のサイトを維持することをお勧めします。";
+		return "Crash Assistantからロギングサイトを移行するか、CrashDetectorの現在のサイトを維持するかを選択してください。Crash Assistantは頻繁にgnomebot.devを使用しますが、SecureLogger、PastesDev、またはCDPasteと比較して推奨されません。ほとんどのユーザーには、現在のサイトを維持することをお勧めします。";
 	}
+
 	// Japanese (日本語)
-	@Override public String ideScriptTitulo() { return "スクリプト IDE"; }
-	@Override public String ideScriptBotonSidebar() { return "スクリプト"; }
-	@Override public String ideScriptProyecto() { return "プロジェクト："; }
-	@Override public String ideScriptNuevo() { return "新規"; }
-	@Override public String ideScriptAbrirCarpeta() { return "フォルダを開く"; }
-	@Override public String ideScriptAbrirArchivo() { return "ファイルを開く"; }
-	@Override public String ideScriptGuardarComo() { return "名前を付けて保存"; }
-	@Override public String ideScriptDescargarDeps() { return "依存関係をダウンロード"; }
-	@Override public String ideScriptCompletar() { return "インテリセンス (IntelliSense)"; }
-	@Override public String ideScriptExplorador() { return "プロジェクトエクスプローラー"; }
-	@Override public String ideScriptSinArchivo() { return "ファイルなし"; }
-	@Override public String ideScriptEstado(String proyecto, String archivo) { return proyecto + " | " + archivo; }
-	@Override public String ideScriptProyectoDeshabilitadoAviso() { return "このタイプのプロジェクトはGUIに既に存在しますが、言語サーバーまたはアナライザーが追加されるまで無効になっています。"; }
-	@Override public String ideScriptDeshabilitadoCorto() { return "(無効)"; }
-	@Override public String ideScriptNoFaltanDependencias() { return "欠落している依存関係はありません。"; }
-	@Override public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) { return "スクリプトIDE用に " + cantidad + " 個の依存関係がダウンロードされます:\n\n" + lista + "\nその後、クラスパスに反映させるために再起動が必要になる場合があります。"; }
-	@Override public String ideScriptDepsDescargadas(String mensaje) { return "ダウンロード結果:\n\n" + mensaje + "\n\nクラスがまだクラスパスに表示されない場合は、プログラムを再起動してください。"; }
-	@Override public String ideScriptErrorAbrirArchivo() { return "ファイルを開く際にエラー"; }
-	@Override public String ideScriptErrorGuardarArchivo() { return "ファイルを保存する際にエラー"; }
-	@Override public String ideScriptColorEditor() { return "エディタの色"; }
-	@Override public String ideScriptColorKeyword() { return "キーワードの色"; }
-	@Override public String ideScriptColorComentario() { return "コメントの色"; }
-	@Override public String ideScriptColorCadena() { return "文字列の色"; }
-	@Override public String ideScriptProyectoFeatureCreep() { return "FeatureCreep Datafied Content (DMR/JSON)"; }
-	@Override public String ideScriptProyectoDatapackResourcepack() { return "Minecraft データパック / リソースパック (JSON)"; }
-	@Override public String ideScriptProyectoKubeJS() { return "KubeJS (JS)"; }
-	@Override public String ideScriptProyectoZenScript() { return "ZenScript (CraftTweaker)"; }
-	@Override public String ideScriptProyectoMineFlayer() { return "MineFlayer (Python)"; }
-	@Override public String ideScriptProyectoGroovyScript() { return "GroovyScript"; }
-	@Override public String ideScriptProyectoComputerCraftLua() { return "ComputerCraft Lua"; }
-	@Override public String ideScriptProyectoWorldEditCraftScript() { return "WorldEdit CraftScript"; }
-	@Override public String ideScriptProyectoJexel3() { return "Jexel3"; }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public String ideScriptTitulo() {
+		return "スクリプト IDE";
+	}
+
+	@Override
+	public String ideScriptBotonSidebar() {
+		return "スクリプト";
+	}
+
+	@Override
+	public String ideScriptProyecto() {
+		return "プロジェクト：";
+	}
+
+	@Override
+	public String ideScriptNuevo() {
+		return "新規";
+	}
+
+	@Override
+	public String ideScriptAbrirCarpeta() {
+		return "フォルダを開く";
+	}
+
+	@Override
+	public String ideScriptAbrirArchivo() {
+		return "ファイルを開く";
+	}
+
+	@Override
+	public String ideScriptGuardarComo() {
+		return "名前を付けて保存";
+	}
+
+	@Override
+	public String ideScriptDescargarDeps() {
+		return "依存関係をダウンロード";
+	}
+
+	@Override
+	public String ideScriptCompletar() {
+		return "インテリセンス (IntelliSense)";
+	}
+
+	@Override
+	public String ideScriptExplorador() {
+		return "プロジェクトエクスプローラー";
+	}
+
+	@Override
+	public String ideScriptSinArchivo() {
+		return "ファイルなし";
+	}
+
+	@Override
+	public String ideScriptEstado(String proyecto, String archivo) {
+		return proyecto + " | " + archivo;
+	}
+
+	@Override
+	public String ideScriptProyectoDeshabilitadoAviso() {
+		return "このタイプのプロジェクトはGUIに既に存在しますが、言語サーバーまたはアナライザーが追加されるまで無効になっています。";
+	}
+
+	@Override
+	public String ideScriptDeshabilitadoCorto() {
+		return "(無効)";
+	}
+
+	@Override
+	public String ideScriptNoFaltanDependencias() {
+		return "欠落している依存関係はありません。";
+	}
+
+	@Override
+	public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) {
+		return "スクリプトIDE用に " + cantidad + " 個の依存関係がダウンロードされます:\n\n" + lista + "\nその後、クラスパスに反映させるために再起動が必要になる場合があります。";
+	}
+
+	@Override
+	public String ideScriptDepsDescargadas(String mensaje) {
+		return "ダウンロード結果:\n\n" + mensaje + "\n\nクラスがまだクラスパスに表示されない場合は、プログラムを再起動してください。";
+	}
+
+	@Override
+	public String ideScriptErrorAbrirArchivo() {
+		return "ファイルを開く際にエラー";
+	}
+
+	@Override
+	public String ideScriptErrorGuardarArchivo() {
+		return "ファイルを保存する際にエラー";
+	}
+
+	@Override
+	public String ideScriptColorEditor() {
+		return "エディタの色";
+	}
+
+	@Override
+	public String ideScriptColorKeyword() {
+		return "キーワードの色";
+	}
+
+	@Override
+	public String ideScriptColorComentario() {
+		return "コメントの色";
+	}
+
+	@Override
+	public String ideScriptColorCadena() {
+		return "文字列の色";
+	}
+
+	@Override
+	public String ideScriptProyectoFeatureCreep() {
+		return "FeatureCreep Datafied Content (DMR/JSON)";
+	}
+
+	@Override
+	public String ideScriptProyectoDatapackResourcepack() {
+		return "Minecraft データパック / リソースパック (JSON)";
+	}
+
+	@Override
+	public String ideScriptProyectoKubeJS() {
+		return "KubeJS (JS)";
+	}
+
+	@Override
+	public String ideScriptProyectoZenScript() {
+		return "ZenScript (CraftTweaker)";
+	}
+
+	@Override
+	public String ideScriptProyectoMineFlayer() {
+		return "MineFlayer (Python)";
+	}
+
+	@Override
+	public String ideScriptProyectoGroovyScript() {
+		return "GroovyScript";
+	}
+
+	@Override
+	public String ideScriptProyectoComputerCraftLua() {
+		return "ComputerCraft Lua";
+	}
+
+	@Override
+	public String ideScriptProyectoWorldEditCraftScript() {
+		return "WorldEdit CraftScript";
+	}
+
+	@Override
+	public String ideScriptProyectoJexel3() {
+		return "Jexel3";
+	}
+
 }

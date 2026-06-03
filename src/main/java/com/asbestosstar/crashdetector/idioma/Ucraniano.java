@@ -10454,58 +10454,177 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String tamanoLogoCuadrado() {
 		return "Розмір квадратного логотипу";
 	}
-	
-    @Override
-    public String migradorCAModoPrincipalAviso() {
-        return "Виберіть, як мігрувати головний інтерфейс. 'centro_soporte' найбільш схожий на інтерфейс за замовчуванням Crash Assistant, але не рекомендується, особливо для користувачів DIY, оскільки має багато спливаючих вікон і поганий дизайн; він існує лише для допомоги в міграції застарілих середовищ Crash Assistant. 'primitiva' — це дуже простий інтерфейс, який використовується лише для обміну; рекомендується тільки для модпаків, а не для користувачів DIY, якщо ви вимкнете всі непотрібні перевірки, і він також страждає від великої кількості спливаючих вікон. 'original' зберігає ваш поточний головний інтерфейс і зазвичай є рекомендованим варіантом для більшості користувачів.";
-    }
 
-    @Override
-    public String migradorCASitioLoggingAviso() {
-        return "Виберіть, чи хочете ви мігрувати сайт логування з Crash Assistant або зберегти поточний з CrashDetector. Crash Assistant часто використовує gnomebot.dev, який не рекомендується порівняно з SecureLogger, PastesDev або CDPaste. Для більшості користувачів рекомендується зберегти поточний сайт.";
-    }
-	
-	
-    @Override public String ideScriptTitulo() { return "IDE для скриптів"; }
-    @Override public String ideScriptBotonSidebar() { return "Скрипти"; }
-    @Override public String ideScriptProyecto() { return "Проект:"; }
-    @Override public String ideScriptNuevo() { return "Новий"; }
-    @Override public String ideScriptAbrirCarpeta() { return "Відкрити папку"; }
-    @Override public String ideScriptAbrirArchivo() { return "Відкрити файл"; }
-    @Override public String ideScriptGuardarComo() { return "Зберегти як"; }
-    @Override public String ideScriptDescargarDeps() { return "Завантажити залежності"; }
-    @Override public String ideScriptCompletar() { return "IntelliSense"; }
-    @Override public String ideScriptExplorador() { return "Оглядач проекту"; }
-    @Override public String ideScriptSinArchivo() { return "немає файлу"; }
-    @Override public String ideScriptEstado(String proyecto, String archivo) { return proyecto + " | " + archivo; }
-    @Override public String ideScriptProyectoDeshabilitadoAviso() { return "Цей тип проекту вже існує в інтерфейсі, але вимкнений до додавання його мовного сервера або аналізатора."; }
-    @Override public String ideScriptDeshabilitadoCorto() { return "(вимкнено)"; }
-    @Override public String ideScriptNoFaltanDependencias() { return "Залежності не відсутні."; }
-    @Override public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) { return "Буде завантажено " + cantidad + " залежностей для IDE скриптів:\n\n" + lista + "\nПісля цього може знадобитися перезапуск, щоб вони потрапили до classpath."; }
-    @Override public String ideScriptDepsDescargadas(String mensaje) { return "Результат завантаження:\n\n" + mensaje + "\n\nПерезапустіть програму, якщо класи все ще не відображаються в classpath."; }
-    @Override public String ideScriptErrorAbrirArchivo() { return "Помилка відкриття файлу"; }
-    @Override public String ideScriptErrorGuardarArchivo() { return "Помилка збереження файлу"; }
-    @Override public String ideScriptColorEditor() { return "Колір редактора"; }
-    @Override public String ideScriptColorKeyword() { return "Колір ключових слів"; }
-    @Override public String ideScriptColorComentario() { return "Колір коментарів"; }
-    @Override public String ideScriptColorCadena() { return "Колір рядків"; }
-    @Override public String ideScriptProyectoFeatureCreep() { return "FeatureCreep Datafied Content (DMR/JSON)"; }
-    @Override public String ideScriptProyectoDatapackResourcepack() { return "Minecraft Datapacks / ResourcePacks (JSON)"; }
-    @Override public String ideScriptProyectoKubeJS() { return "KubeJS (JS)"; }
-    @Override public String ideScriptProyectoZenScript() { return "ZenScript (CraftTweaker)"; }
-    @Override public String ideScriptProyectoMineFlayer() { return "MineFlayer (Python)"; }
-    @Override public String ideScriptProyectoGroovyScript() { return "GroovyScript"; }
-    @Override public String ideScriptProyectoComputerCraftLua() { return "ComputerCraft Lua"; }
-    @Override public String ideScriptProyectoWorldEditCraftScript() { return "WorldEdit CraftScript"; }
-    @Override public String ideScriptProyectoJexel3() { return "Jexel3"; }
-    
-    
-    
-    
-    
-	
-	
-	
-	
+	@Override
+	public String migradorCAModoPrincipalAviso() {
+		return "Виберіть, як мігрувати головний інтерфейс. 'centro_soporte' найбільш схожий на інтерфейс за замовчуванням Crash Assistant, але не рекомендується, особливо для користувачів DIY, оскільки має багато спливаючих вікон і поганий дизайн; він існує лише для допомоги в міграції застарілих середовищ Crash Assistant. 'primitiva' — це дуже простий інтерфейс, який використовується лише для обміну; рекомендується тільки для модпаків, а не для користувачів DIY, якщо ви вимкнете всі непотрібні перевірки, і він також страждає від великої кількості спливаючих вікон. 'original' зберігає ваш поточний головний інтерфейс і зазвичай є рекомендованим варіантом для більшості користувачів.";
+	}
+
+	@Override
+	public String migradorCASitioLoggingAviso() {
+		return "Виберіть, чи хочете ви мігрувати сайт логування з Crash Assistant або зберегти поточний з CrashDetector. Crash Assistant часто використовує gnomebot.dev, який не рекомендується порівняно з SecureLogger, PastesDev або CDPaste. Для більшості користувачів рекомендується зберегти поточний сайт.";
+	}
+
+	@Override
+	public String ideScriptTitulo() {
+		return "IDE для скриптів";
+	}
+
+	@Override
+	public String ideScriptBotonSidebar() {
+		return "Скрипти";
+	}
+
+	@Override
+	public String ideScriptProyecto() {
+		return "Проект:";
+	}
+
+	@Override
+	public String ideScriptNuevo() {
+		return "Новий";
+	}
+
+	@Override
+	public String ideScriptAbrirCarpeta() {
+		return "Відкрити папку";
+	}
+
+	@Override
+	public String ideScriptAbrirArchivo() {
+		return "Відкрити файл";
+	}
+
+	@Override
+	public String ideScriptGuardarComo() {
+		return "Зберегти як";
+	}
+
+	@Override
+	public String ideScriptDescargarDeps() {
+		return "Завантажити залежності";
+	}
+
+	@Override
+	public String ideScriptCompletar() {
+		return "IntelliSense";
+	}
+
+	@Override
+	public String ideScriptExplorador() {
+		return "Оглядач проекту";
+	}
+
+	@Override
+	public String ideScriptSinArchivo() {
+		return "немає файлу";
+	}
+
+	@Override
+	public String ideScriptEstado(String proyecto, String archivo) {
+		return proyecto + " | " + archivo;
+	}
+
+	@Override
+	public String ideScriptProyectoDeshabilitadoAviso() {
+		return "Цей тип проекту вже існує в інтерфейсі, але вимкнений до додавання його мовного сервера або аналізатора.";
+	}
+
+	@Override
+	public String ideScriptDeshabilitadoCorto() {
+		return "(вимкнено)";
+	}
+
+	@Override
+	public String ideScriptNoFaltanDependencias() {
+		return "Залежності не відсутні.";
+	}
+
+	@Override
+	public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) {
+		return "Буде завантажено " + cantidad + " залежностей для IDE скриптів:\n\n" + lista
+				+ "\nПісля цього може знадобитися перезапуск, щоб вони потрапили до classpath.";
+	}
+
+	@Override
+	public String ideScriptDepsDescargadas(String mensaje) {
+		return "Результат завантаження:\n\n" + mensaje
+				+ "\n\nПерезапустіть програму, якщо класи все ще не відображаються в classpath.";
+	}
+
+	@Override
+	public String ideScriptErrorAbrirArchivo() {
+		return "Помилка відкриття файлу";
+	}
+
+	@Override
+	public String ideScriptErrorGuardarArchivo() {
+		return "Помилка збереження файлу";
+	}
+
+	@Override
+	public String ideScriptColorEditor() {
+		return "Колір редактора";
+	}
+
+	@Override
+	public String ideScriptColorKeyword() {
+		return "Колір ключових слів";
+	}
+
+	@Override
+	public String ideScriptColorComentario() {
+		return "Колір коментарів";
+	}
+
+	@Override
+	public String ideScriptColorCadena() {
+		return "Колір рядків";
+	}
+
+	@Override
+	public String ideScriptProyectoFeatureCreep() {
+		return "FeatureCreep Datafied Content (DMR/JSON)";
+	}
+
+	@Override
+	public String ideScriptProyectoDatapackResourcepack() {
+		return "Minecraft Datapacks / ResourcePacks (JSON)";
+	}
+
+	@Override
+	public String ideScriptProyectoKubeJS() {
+		return "KubeJS (JS)";
+	}
+
+	@Override
+	public String ideScriptProyectoZenScript() {
+		return "ZenScript (CraftTweaker)";
+	}
+
+	@Override
+	public String ideScriptProyectoMineFlayer() {
+		return "MineFlayer (Python)";
+	}
+
+	@Override
+	public String ideScriptProyectoGroovyScript() {
+		return "GroovyScript";
+	}
+
+	@Override
+	public String ideScriptProyectoComputerCraftLua() {
+		return "ComputerCraft Lua";
+	}
+
+	@Override
+	public String ideScriptProyectoWorldEditCraftScript() {
+		return "WorldEdit CraftScript";
+	}
+
+	@Override
+	public String ideScriptProyectoJexel3() {
+		return "Jexel3";
+	}
 
 }

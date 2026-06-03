@@ -8,14 +8,10 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 public enum TipoProyectoScript {
 
 	FEATURECREEP_DMR_JSON("featurecreep_dmr_json", false, "dmr", "json"),
-	DATAPACK_RESOURCEPACK("datapack_resourcepack", false, "json", "mcmeta"),
-	KUBEJS("kubejs", true, "js", "json"),
-	ZENSCRIPT("zenscript", true, "zs", "zenscript"),
-	MINEFLAYER("mineflayer", false, "py"),
-	GROOVYSCRIPT("groovyscript", false, "groovy"),
-	COMPUTERCRAFT_LUA("computercraft_lua", false, "lua"),
-	WORLDEDIT_CRAFTSCRIPT("worldedit_craftscript", false, "js"),
-	JEXEL3("jexel3", false, "jexel", "txt");
+	DATAPACK_RESOURCEPACK("datapack_resourcepack", false, "json", "mcmeta"), KUBEJS("kubejs", true, "js", "json"),
+	ZENSCRIPT("zenscript", true, "zs", "zenscript"), MINEFLAYER("mineflayer", false, "py"),
+	GROOVYSCRIPT("groovyscript", false, "groovy"), COMPUTERCRAFT_LUA("computercraft_lua", false, "lua"),
+	WORLDEDIT_CRAFTSCRIPT("worldedit_craftscript", false, "js"), JEXEL3("jexel3", false, "jexel", "txt");
 
 	public final String id;
 	public final boolean habilitadoAhora;

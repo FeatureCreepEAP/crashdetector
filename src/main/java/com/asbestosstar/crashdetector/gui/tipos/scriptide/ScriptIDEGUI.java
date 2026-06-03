@@ -75,9 +75,32 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 
 	public ScriptIntellisense intellisense;
 	public Timer temporizadorCambioIntellisense;
+	/**
+	 * Temporizador que dispara el completado automatico mientras el usuario
+	 * escribe.
+	 */
+	public Timer temporizadorCompletadoAuto;
 	public boolean intellisenseInicializado;
 	public int versionDocumento = 1;
 	public String ultimoTextoEnviadoAIntellisense = "";
+
+	/**
+	 * Gramatica TextMate actualmente cargada (puede ser null si no esta
+	 * disponible).
+	 */
+	public GramaticaTextMate gramaticaActual;
+
+	/** Configuracion de lenguaje TextMate actualmente cargada. */
+	public ConfigLenguajeTextMate configLenguajeActual;
+
+	/**
+	 * Cache de gramaticas ya cargadas por tipo de proyecto para no releer el disco
+	 * innecesariamente.
+	 */
+	public static final Map<TipoProyectoScript, GramaticaTextMate> CACHE_GRAMATICAS = new HashMap<>();
+
+	/** Cache de configuraciones de lenguaje ya cargadas. */
+	public static final Map<TipoProyectoScript, ConfigLenguajeTextMate> CACHE_CONFIGS_LENGUAJE = new HashMap<>();
 
 	public static class DependenciaScriptIDE {
 		public final String groupId;
@@ -113,8 +136,8 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 	}
 
 	/*
-	 * LSP4J es el cliente/protocolo LSP. No contiene servidores de lenguaje.
-	 * Los servidores reales se configuran aparte por tipo de proyecto.
+	 * LSP4J es el cliente/protocolo LSP. No contiene servidores de lenguaje. Los
+	 * servidores reales se configuran aparte por tipo de proyecto.
 	 */
 	public static final List<DependenciaScriptIDE> DEPENDENCIAS_IDE_REQUERIDAS = Arrays.asList(
 			new DependenciaScriptIDE("org.eclipse.lsp4j", "org.eclipse.lsp4j", "1.0.0"),
@@ -223,6 +246,11 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 		temporizadorCambioIntellisense = new Timer(350, e -> enviarCambioAIntellisense());
 		temporizadorCambioIntellisense.setRepeats(false);
 
+		// Completado automatico: se dispara 600ms despues de que el usuario deja de
+		// escribir
+		temporizadorCompletadoAuto = new Timer(600, e -> mostrarCompletadoAuto());
+		temporizadorCompletadoAuto.setRepeats(false);
+
 		inicializarIntellisenseSiExiste();
 	}
 
@@ -232,17 +260,17 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 				return;
 			}
 
-			intellisense = ScriptIntellisenseFactory.crear(this);
+			intellisense = ScriptIntellisenseFactory.crear(proyectoActual, carpetaProyecto);
 
 			if (intellisense == null) {
-				intellisense = new ScriptIntellisenseLocal(this);
+				intellisense = new ScriptIntellisenseLocal();
 			}
 
 			intellisenseInicializado = true;
 			actualizarEstado();
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
-			intellisense = new ScriptIntellisenseLocal(this);
+			intellisense = new ScriptIntellisenseLocal();
 			intellisenseInicializado = false;
 			actualizarEstado();
 		}
@@ -252,9 +280,9 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 		cerrarIntellisense();
 
 		try {
-			intellisense = ScriptIntellisenseFactory.crear(this);
+			intellisense = ScriptIntellisenseFactory.crear(proyectoActual, carpetaProyecto);
 			if (intellisense == null) {
-				intellisense = new ScriptIntellisenseLocal(this);
+				intellisense = new ScriptIntellisenseLocal();
 			}
 			intellisenseInicializado = true;
 		} catch (Throwable t) {
@@ -288,7 +316,36 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 		versionDocumento++;
 		programarResaltado();
 		programarCambioIntellisense();
+		programarCompletadoAuto();
 		actualizarEstado();
+	}
+
+	public void programarCompletadoAuto() {
+		if (temporizadorCompletadoAuto == null) {
+			return;
+		}
+		// Solo programar si hay al menos un caracter de prefijo para no abrir
+		// el menu en cada tecla de puntuacion o espacio
+		String prefijo = palabraActual();
+		if (prefijo == null || prefijo.isEmpty()) {
+			// Si el menu esta visible y el prefijo quedo vacio, cerrarlo
+			cerrarCompletado();
+			return;
+		}
+		temporizadorCompletadoAuto.restart();
+	}
+
+	/**
+	 * Disparado automaticamente por el temporizador. Solo muestra el menu si el
+	 * prefijo tiene al menos un caracter de letra o digito, evitando abrir el popup
+	 * al escribir espacios u operadores.
+	 */
+	public void mostrarCompletadoAuto() {
+		String prefijo = palabraActual();
+		if (prefijo == null || prefijo.isEmpty()) {
+			return;
+		}
+		mostrarCompletado();
 	}
 
 	public void programarCambioIntellisense() {
@@ -315,7 +372,7 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 			}
 
 			ultimoTextoEnviadoAIntellisense = texto;
-			intellisense.cambiarDocumento(archivoActual, texto, versionDocumento);
+			intellisense.cambiarDocumento(archivoActual, texto);
 			actualizarEstado();
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
@@ -331,7 +388,7 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 			String texto = editor.getText();
 			ultimoTextoEnviadoAIntellisense = texto;
 			versionDocumento++;
-			intellisense.abrirDocumento(archivoActual, texto, versionDocumento, proyectoActual, carpetaProyecto);
+			intellisense.abrirDocumento(archivoActual, texto);
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
 		}
@@ -343,7 +400,7 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 		}
 
 		try {
-			intellisense.guardarDocumento(archivoActual, editor.getText(), versionDocumento);
+			// guardarDocumento not defined in ScriptIntellisense interface; no-op
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
 		}
@@ -499,12 +556,14 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 	}
 
 	public String textoInicialParaProyecto() {
-		if (proyectoActual == TipoProyectoScript.KUBEJS) {
-			return MonitorDePID.idioma.ideScriptPlantillaKubeJS();
+		if (proyectoActual == TipoProyectoScript.KUBEJS) {// necesita npm install -g typescript
+															// typescript-language-server
+
+			return "// KubeJS script\n";
 		}
 
 		if (proyectoActual == TipoProyectoScript.ZENSCRIPT) {
-			return MonitorDePID.idioma.ideScriptPlantillaZenScript();
+			return "// ZenScript\n";
 		}
 
 		return "";
@@ -562,8 +621,8 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 
 				try {
 					if (intellisense != null) {
-						completados = intellisense.completar(archivoActual, texto, posicion, prefijo, proyectoActual,
-								carpetaProyecto);
+						completados = intellisense.completar(archivoActual, texto, posicion).stream()
+								.map(s -> s.etiqueta).collect(java.util.stream.Collectors.toList());
 					}
 				} catch (Throwable t) {
 					CrashDetectorLogger.logException(t);
@@ -603,6 +662,8 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 		modeloCompletado.clear();
 
 		if (valores == null || valores.isEmpty()) {
+			// Si ya no hay sugerencias, cerrar el popup
+			cerrarCompletado();
 			return;
 		}
 
@@ -863,8 +924,7 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 	}
 
 	public List<String> palabrasClave() {
-		if (proyectoActual == TipoProyectoScript.KUBEJS
-				|| proyectoActual == TipoProyectoScript.WORLDEDIT_CRAFTSCRIPT) {
+		if (proyectoActual == TipoProyectoScript.KUBEJS || proyectoActual == TipoProyectoScript.WORLDEDIT_CRAFTSCRIPT) {
 			return Arrays.asList("const", "let", "var", "function", "return", "if", "else", "for", "while", "true",
 					"false", "null", "undefined", "new", "class", "import", "from", "try", "catch", "throw");
 		}
@@ -1005,16 +1065,16 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 
 		try {
 			if (intellisense != null) {
-				motor = intellisense.nombreMotor();
+				motor = intellisense.nombre();
 			}
 		} catch (Throwable ignored) {
 		}
 
 		if (motor == null || motor.trim().isEmpty()) {
-			motor = MonitorDePID.idioma.ideScriptIntellisenseLocal();
+			motor = "Local";
 		}
 
-		etiquetaEstado.setText(MonitorDePID.idioma.ideScriptEstadoConMotor(proyecto, archivo + mod, motor));
+		etiquetaEstado.setText(MonitorDePID.idioma.ideScriptEstado(proyecto, archivo + mod) + " [" + motor + "]");
 	}
 
 	public String uriDeArchivo(File archivo) {
@@ -1054,9 +1114,8 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 			return "javascript";
 		}
 
-		if (proyectoActual == TipoProyectoScript.MINECRAFT_DATAPACKS
-				|| proyectoActual == TipoProyectoScript.MINECRAFT_RESOURCEPACKS
-				|| proyectoActual == TipoProyectoScript.FEATURECREEP_DATAFIED_CONTENT) {
+		if (proyectoActual == TipoProyectoScript.DATAPACK_RESOURCEPACK
+				|| proyectoActual == TipoProyectoScript.FEATURECREEP_DMR_JSON) {
 			return "json";
 		}
 

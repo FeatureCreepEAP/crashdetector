@@ -147,9 +147,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 				() -> new MigradorLegacySamekoSaba());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.SCRIPT_IDE, ScriptIDEGUINiwaJPlus.ID,
 				() -> new ScriptIDEGUINiwaJPlus());
-		
-		
-		
+
 	}
 
 	public PrincipalGUI() {

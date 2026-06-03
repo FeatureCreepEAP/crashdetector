@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.asbestosstar.crashdetector.gui.tipos.scriptide.ScriptIDEGUI;
 import com.asbestosstar.crashdetector.gui.tipos.scriptide.TipoProyectoScript;
 
 /**
@@ -14,6 +15,16 @@ import com.asbestosstar.crashdetector.gui.tipos.scriptide.TipoProyectoScript;
 public class ScriptIntellisenseLocal implements ScriptIntellisense {
 
 	public TipoProyectoScript tipoActual;
+	public ScriptIDEGUI scriptIDEGUI;
+
+	public ScriptIntellisenseLocal(ScriptIDEGUI scriptIDEGUI) {
+		// TODO Auto-generated constructor stub
+		this.scriptIDEGUI = scriptIDEGUI;
+	}
+
+	public ScriptIntellisenseLocal() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public boolean disponible() {

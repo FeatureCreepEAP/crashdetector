@@ -1246,9 +1246,6 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return MigradorLegacyGUI.GUIS;
 		}
 	};
-	
-	
-	
 
 	public static TipoGUI<ScriptIDEGUI> SCRIPT_IDE = new TipoGUI<ScriptIDEGUI>() {
 		@Override
@@ -1272,11 +1269,6 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 
 	};
-	
-	
-	
-	
-	
 
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
@@ -1330,7 +1322,6 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(CONFIG_MODS);
 		TIPOS_DE_GUI.add(MIGRADOR_LEGACY);
 		TIPOS_DE_GUI.add(SCRIPT_IDE);
-		
-		
+
 	}
 }

@@ -27,12 +27,8 @@ public class AsistenteCrashAssistant extends AsistenteMigracionLegacy {
 
 	public MigracionCrashAssistant migracion = new MigracionCrashAssistant();
 
-
 	public JCheckBox checkUsarPrimitiva;
 
-	
-	
-	
 	public JLabel etiqueta;
 	public JLabel avisoNoMigrado;
 	public JLabel avisoModoPrincipal;
@@ -42,8 +38,6 @@ public class AsistenteCrashAssistant extends AsistenteMigracionLegacy {
 
 	public JButton botonMigrar;
 	public JButton botonDeshabilitarChecks;
-	
-	
 
 	@Override
 	public String id() {
@@ -73,19 +67,14 @@ public class AsistenteCrashAssistant extends AsistenteMigracionLegacy {
 
 		avisoModoPrincipal = new JLabel("<html>" + MonitorDePID.idioma.migradorCAModoPrincipalAviso() + "</html>");
 
-		comboModoPrincipal = new JComboBox<String>(new String[] {
-				MigracionCrashAssistant.MODO_ORIGINAL,
-				MigracionCrashAssistant.MODO_CENTRO_SOPORTE,
-				MigracionCrashAssistant.MODO_PRIMITIVA
-		});
+		comboModoPrincipal = new JComboBox<String>(new String[] { MigracionCrashAssistant.MODO_ORIGINAL,
+				MigracionCrashAssistant.MODO_CENTRO_SOPORTE, MigracionCrashAssistant.MODO_PRIMITIVA });
 		comboModoPrincipal.setSelectedItem(MigracionCrashAssistant.MODO_ORIGINAL);
 
 		avisoSitioLogging = new JLabel("<html>" + MonitorDePID.idioma.migradorCASitioLoggingAviso() + "</html>");
 
-		comboSitioLogging = new JComboBox<String>(new String[] {
-				MigracionCrashAssistant.LOGGING_MANTENER,
-				MigracionCrashAssistant.LOGGING_MIGRAR_CA
-		});
+		comboSitioLogging = new JComboBox<String>(
+				new String[] { MigracionCrashAssistant.LOGGING_MANTENER, MigracionCrashAssistant.LOGGING_MIGRAR_CA });
 		comboSitioLogging.setSelectedItem(MigracionCrashAssistant.LOGGING_MANTENER);
 
 		avisoNoMigrado = new JLabel("<html>" + MonitorDePID.idioma.migradorCAAvisoNoMigrado() + "</html>");
@@ -96,16 +85,12 @@ public class AsistenteCrashAssistant extends AsistenteMigracionLegacy {
 		botonMigrar.addActionListener(e -> {
 			boolean ok = ejecutarMigracion();
 			JOptionPane.showMessageDialog(this,
-					ok ? MonitorDePID.idioma.migradorCompletado()
-							: MonitorDePID.idioma.migradorNadaParaMigrar());
+					ok ? MonitorDePID.idioma.migradorCompletado() : MonitorDePID.idioma.migradorNadaParaMigrar());
 		});
 
 		botonDeshabilitarChecks.addActionListener(e -> {
-			TipoGUI.DESHABLICAR_VERIFICACIONES
-					.obtenerGUIPredeterminado(
-							DeshabilitarVerificacionesAmaneKanata.ID,
-							() -> new DeshabilitarVerificacionesAmaneKanata())
-					.init();
+			TipoGUI.DESHABLICAR_VERIFICACIONES.obtenerGUIPredeterminado(DeshabilitarVerificacionesAmaneKanata.ID,
+					() -> new DeshabilitarVerificacionesAmaneKanata()).init();
 		});
 
 		JPanel panelCentro = new JPanel(new GridLayout(0, 1, 6, 6));
@@ -149,11 +134,9 @@ public class AsistenteCrashAssistant extends AsistenteMigracionLegacy {
 	@Override
 	public void recargarApariencia() {
 	}
-	
+
 	public JComboBox<String> comboModoPrincipal;
 	public JCheckBox checkMigrarSitioLogging;
-
-
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {

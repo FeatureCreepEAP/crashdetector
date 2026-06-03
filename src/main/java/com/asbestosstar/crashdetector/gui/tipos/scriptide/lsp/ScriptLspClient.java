@@ -40,8 +40,17 @@ public class ScriptLspClient implements LanguageClient {
 					continue;
 				}
 				int severidad = d.getSeverity() == null ? 0 : d.getSeverity().getValue();
+				Object msg = d.getMessage();
+				String mensajeTexto;
+				if (msg instanceof org.eclipse.lsp4j.jsonrpc.messages.Either) {
+					org.eclipse.lsp4j.jsonrpc.messages.Either<?, ?> either = (org.eclipse.lsp4j.jsonrpc.messages.Either<?, ?>) msg;
+					mensajeTexto = either.isLeft() ? String.valueOf(either.getLeft())
+							: String.valueOf(either.getRight());
+				} else {
+					mensajeTexto = msg == null ? "" : msg.toString();
+				}
 				lista.add(new ProblemaScript(diagnostics.getUri(), d.getRange().getStart().getLine() + 1,
-						d.getRange().getStart().getCharacter() + 1, d.getMessage(), severidad));
+						d.getRange().getStart().getCharacter() + 1, mensajeTexto, severidad));
 			}
 		}
 		diagnosticosPorUri.put(diagnostics.getUri(), lista);

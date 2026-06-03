@@ -11568,64 +11568,177 @@ public class Suajili implements Idioma {
 	public String tamanoLogoCuadrado() {
 		return "Ukubwa wa nembo ya mraba";
 	}
-	
-    @Override
-    public String migradorCAModoPrincipalAviso() {
-        return "Chagua jinsi ya kuhamisha GUI kuu. 'centro_soporte' inafanana zaidi na GUI chaguomsingi ya Crash Assistant, lakini haipendekezwi, hasa kwa wachezaji wa DIY, kwa sababu ina madirisha mengi ya pop-up na muundo duni; ipo tu kusaidia kuhamisha mazingira ya zamani ya Crash Assistant. 'primitiva' ni GUI rahisi sana inayotumika tu kwa ajili ya kushiriki; inapendekezwa tu kwa modpacks, siyo kwa watumiaji wa DIY, ikiwa utazima ukaguzi wote usiohitajika, na pia ina shida ya madirisha mengi ya pop-up. 'original' huhifadhi GUI yako kuu ya sasa na kwa kawaida ndiyo chaguo linalopendekezwa kwa watumiaji wengi.";
-    }
 
-    @Override
-    public String migradorCASitioLoggingAviso() {
-        return "Chagua kama unataka kuhamisha tovuti ya logi kutoka Crash Assistant au kuhifadhi ile ya sasa ya CrashDetector. Crash Assistant mara nyingi hutumia gnomebot.dev, ambayo haipendekezwi ikilinganishwa na SecureLogger, PastesDev au CDPaste. Kwa watumiaji wengi, inapendekezwa kuhifadhi tovuti ya sasa.";
-    }
-	
-    @Override public String ideScriptTitulo() { return "IDE ya Uandishi wa Hati"; }
-    @Override public String ideScriptBotonSidebar() { return "Uandishi wa Hati"; }
-    @Override public String ideScriptProyecto() { return "Mradi:"; }
-    @Override public String ideScriptNuevo() { return "Mpya"; }
-    @Override public String ideScriptAbrirCarpeta() { return "Fungua folda"; }
-    @Override public String ideScriptAbrirArchivo() { return "Fungua faili"; }
-    @Override public String ideScriptGuardarComo() { return "Hifadhi kama"; }
-    @Override public String ideScriptDescargarDeps() { return "Pakua deps"; }
-    @Override public String ideScriptCompletar() { return "IntelliSense"; }
-    @Override public String ideScriptExplorador() { return "Kivinjari cha mradi"; }
-    @Override public String ideScriptSinArchivo() { return "hakuna faili"; }
-    @Override public String ideScriptEstado(String proyecto, String archivo) { return proyecto + " | " + archivo; }
-    @Override public String ideScriptProyectoDeshabilitadoAviso() { return "Aina hii ya mradi ipo katika GUI, lakini imezimwa hadi seva yake ya lugha au kichambuzi kiwekwe."; }
-    @Override public String ideScriptDeshabilitadoCorto() { return "(imezimwa)"; }
-    @Override public String ideScriptNoFaltanDependencias() { return "Hakuna utegemezi unao-kosekana."; }
-    @Override
-    public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) {
-    return "Se descargarán " + cantidad + " dependencias para el IDE de scripts:\n\n" + lista + "\nDespués puede ser necesario reiniciar para que entren al classpath.";
-    }    @Override public String ideScriptDepsDescargadas(String mensaje) { return "Matokeo ya upakuzi:\n\n" + mensaje + "\n\nAnzisha upya programu ikiwa darasa bado hazijaonekana kwenye classpath."; }
-    @Override public String ideScriptErrorAbrirArchivo() { return "Hitilafu katika kufungua faili"; }
-    @Override public String ideScriptErrorGuardarArchivo() { return "Hitilafu katika kuhifadhi faili"; }
-    @Override public String ideScriptColorEditor() { return "Rangi ya kihariri"; }
-    @Override public String ideScriptColorKeyword() { return "Rangi ya maneno muhimu"; }
-    @Override public String ideScriptColorComentario() { return "Rangi ya maoni"; }
-    @Override public String ideScriptColorCadena() { return "Rangi ya tungo"; }
-    @Override public String ideScriptProyectoFeatureCreep() { return "FeatureCreep Datafied Content (DMR/JSON)"; }
-    @Override public String ideScriptProyectoDatapackResourcepack() { return "Minecraft Datapacks / ResourcePacks (JSON)"; }
-    @Override public String ideScriptProyectoKubeJS() { return "KubeJS (JS)"; }
-    @Override public String ideScriptProyectoZenScript() { return "ZenScript (CraftTweaker)"; }
-    @Override public String ideScriptProyectoMineFlayer() { return "MineFlayer (Python)"; }
-    @Override public String ideScriptProyectoGroovyScript() { return "GroovyScript"; }
-    @Override public String ideScriptProyectoComputerCraftLua() { return "ComputerCraft Lua"; }
-    @Override public String ideScriptProyectoWorldEditCraftScript() { return "WorldEdit CraftScript"; }
-    @Override public String ideScriptProyectoJexel3() { return "Jexel3"; }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	
-	
-	
-	
-	
+	@Override
+	public String migradorCAModoPrincipalAviso() {
+		return "Chagua jinsi ya kuhamisha GUI kuu. 'centro_soporte' inafanana zaidi na GUI chaguomsingi ya Crash Assistant, lakini haipendekezwi, hasa kwa wachezaji wa DIY, kwa sababu ina madirisha mengi ya pop-up na muundo duni; ipo tu kusaidia kuhamisha mazingira ya zamani ya Crash Assistant. 'primitiva' ni GUI rahisi sana inayotumika tu kwa ajili ya kushiriki; inapendekezwa tu kwa modpacks, siyo kwa watumiaji wa DIY, ikiwa utazima ukaguzi wote usiohitajika, na pia ina shida ya madirisha mengi ya pop-up. 'original' huhifadhi GUI yako kuu ya sasa na kwa kawaida ndiyo chaguo linalopendekezwa kwa watumiaji wengi.";
+	}
+
+	@Override
+	public String migradorCASitioLoggingAviso() {
+		return "Chagua kama unataka kuhamisha tovuti ya logi kutoka Crash Assistant au kuhifadhi ile ya sasa ya CrashDetector. Crash Assistant mara nyingi hutumia gnomebot.dev, ambayo haipendekezwi ikilinganishwa na SecureLogger, PastesDev au CDPaste. Kwa watumiaji wengi, inapendekezwa kuhifadhi tovuti ya sasa.";
+	}
+
+	@Override
+	public String ideScriptTitulo() {
+		return "IDE ya Uandishi wa Hati";
+	}
+
+	@Override
+	public String ideScriptBotonSidebar() {
+		return "Uandishi wa Hati";
+	}
+
+	@Override
+	public String ideScriptProyecto() {
+		return "Mradi:";
+	}
+
+	@Override
+	public String ideScriptNuevo() {
+		return "Mpya";
+	}
+
+	@Override
+	public String ideScriptAbrirCarpeta() {
+		return "Fungua folda";
+	}
+
+	@Override
+	public String ideScriptAbrirArchivo() {
+		return "Fungua faili";
+	}
+
+	@Override
+	public String ideScriptGuardarComo() {
+		return "Hifadhi kama";
+	}
+
+	@Override
+	public String ideScriptDescargarDeps() {
+		return "Pakua deps";
+	}
+
+	@Override
+	public String ideScriptCompletar() {
+		return "IntelliSense";
+	}
+
+	@Override
+	public String ideScriptExplorador() {
+		return "Kivinjari cha mradi";
+	}
+
+	@Override
+	public String ideScriptSinArchivo() {
+		return "hakuna faili";
+	}
+
+	@Override
+	public String ideScriptEstado(String proyecto, String archivo) {
+		return proyecto + " | " + archivo;
+	}
+
+	@Override
+	public String ideScriptProyectoDeshabilitadoAviso() {
+		return "Aina hii ya mradi ipo katika GUI, lakini imezimwa hadi seva yake ya lugha au kichambuzi kiwekwe.";
+	}
+
+	@Override
+	public String ideScriptDeshabilitadoCorto() {
+		return "(imezimwa)";
+	}
+
+	@Override
+	public String ideScriptNoFaltanDependencias() {
+		return "Hakuna utegemezi unao-kosekana.";
+	}
+
+	@Override
+	public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) {
+		return "Se descargarán " + cantidad + " dependencias para el IDE de scripts:\n\n" + lista
+				+ "\nDespués puede ser necesario reiniciar para que entren al classpath.";
+	}
+
+	@Override
+	public String ideScriptDepsDescargadas(String mensaje) {
+		return "Matokeo ya upakuzi:\n\n" + mensaje
+				+ "\n\nAnzisha upya programu ikiwa darasa bado hazijaonekana kwenye classpath.";
+	}
+
+	@Override
+	public String ideScriptErrorAbrirArchivo() {
+		return "Hitilafu katika kufungua faili";
+	}
+
+	@Override
+	public String ideScriptErrorGuardarArchivo() {
+		return "Hitilafu katika kuhifadhi faili";
+	}
+
+	@Override
+	public String ideScriptColorEditor() {
+		return "Rangi ya kihariri";
+	}
+
+	@Override
+	public String ideScriptColorKeyword() {
+		return "Rangi ya maneno muhimu";
+	}
+
+	@Override
+	public String ideScriptColorComentario() {
+		return "Rangi ya maoni";
+	}
+
+	@Override
+	public String ideScriptColorCadena() {
+		return "Rangi ya tungo";
+	}
+
+	@Override
+	public String ideScriptProyectoFeatureCreep() {
+		return "FeatureCreep Datafied Content (DMR/JSON)";
+	}
+
+	@Override
+	public String ideScriptProyectoDatapackResourcepack() {
+		return "Minecraft Datapacks / ResourcePacks (JSON)";
+	}
+
+	@Override
+	public String ideScriptProyectoKubeJS() {
+		return "KubeJS (JS)";
+	}
+
+	@Override
+	public String ideScriptProyectoZenScript() {
+		return "ZenScript (CraftTweaker)";
+	}
+
+	@Override
+	public String ideScriptProyectoMineFlayer() {
+		return "MineFlayer (Python)";
+	}
+
+	@Override
+	public String ideScriptProyectoGroovyScript() {
+		return "GroovyScript";
+	}
+
+	@Override
+	public String ideScriptProyectoComputerCraftLua() {
+		return "ComputerCraft Lua";
+	}
+
+	@Override
+	public String ideScriptProyectoWorldEditCraftScript() {
+		return "WorldEdit CraftScript";
+	}
+
+	@Override
+	public String ideScriptProyectoJexel3() {
+		return "Jexel3";
+	}
 
 }
