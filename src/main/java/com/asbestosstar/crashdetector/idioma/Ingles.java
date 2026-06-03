@@ -11173,5 +11173,78 @@ public class Ingles implements Idioma {
 	public String tamanoLogoCuadrado() {
 		return "Square logo size";
 	}
+	// English (UK)
+	@Override
+	public String migradorCAModoPrincipalAviso() {
+	    return "Choose how to migrate the main GUI. \"centro_soporte\" is the closest to Crash Assistant's default GUI, but is not recommended, especially for DIY players, because it has popup hell and a poor design; it exists only to help migrate Crash Assistant legacy environments. \"primitiva\" is a very simple GUI used only for sharing; it is only suggested for modpacks, not DIY users, and even if you disable all unnecessary checks, it also suffers from popup hell. \"original\" keeps your current main GUI and is generally the recommended option for most users.";
+	}
 
+	@Override
+	public String migradorCASitioLoggingAviso() {
+	    return "Choose whether you want to migrate the logging site from Crash Assistant or keep the current one from CrashDetector. Crash Assistant frequently uses gnomebot.dev, which is not recommended compared to SecureLogger, PastesDev, or CDPaste. For most users, it is recommended to keep the current site.";
+	}
+	// English (UK)
+	@Override public String ideScriptTitulo() { return "Scripting IDE"; }
+	@Override public String ideScriptBotonSidebar() { return "Scripting"; }
+	@Override public String ideScriptProyecto() { return "Project:"; }
+	@Override public String ideScriptNuevo() { return "New"; }
+	@Override public String ideScriptAbrirCarpeta() { return "Open folder"; }
+	@Override public String ideScriptAbrirArchivo() { return "Open file"; }
+	@Override public String ideScriptGuardarComo() { return "Save as"; }
+	@Override public String ideScriptDescargarDeps() { return "Download deps"; }
+	@Override public String ideScriptCompletar() { return "IntelliSense"; }
+	@Override public String ideScriptExplorador() { return "Project explorer"; }
+	@Override public String ideScriptSinArchivo() { return "no file"; }
+	@Override public String ideScriptEstado(String proyecto, String archivo) { return proyecto + " | " + archivo; }
+	@Override public String ideScriptProyectoDeshabilitadoAviso() { return "This type of project already exists in the GUI, but is disabled until its language server or analyser is added."; }
+	@Override public String ideScriptDeshabilitadoCorto() { return "(disabled)"; }
+	@Override public String ideScriptNoFaltanDependencias() { return "No missing dependencies."; }
+	@Override public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) { return cantidad + " dependencies will be downloaded for the scripting IDE:\n\n" + lista + "\nAfterwards, a restart may be necessary for them to enter the classpath."; }
+	@Override public String ideScriptDepsDescargadas(String mensaje) { return "Download result:\n\n" + mensaje + "\n\nRestart the program if the classes still do not appear in the classpath."; }
+	@Override public String ideScriptErrorAbrirArchivo() { return "Error opening file"; }
+	@Override public String ideScriptErrorGuardarArchivo() { return "Error saving file"; }
+	@Override public String ideScriptColorEditor() { return "Editor colour"; }
+	@Override public String ideScriptColorKeyword() { return "Keyword colour"; }
+	@Override public String ideScriptColorComentario() { return "Comment colour"; }
+	@Override public String ideScriptColorCadena() { return "String colour"; }
+	@Override public String ideScriptProyectoFeatureCreep() { return "FeatureCreep Datafied Content (DMR/JSON)"; }
+	@Override public String ideScriptProyectoDatapackResourcepack() { return "Minecraft Datapacks / ResourcePacks (JSON)"; }
+	@Override public String ideScriptProyectoKubeJS() { return "KubeJS (JS)"; }
+	@Override public String ideScriptProyectoZenScript() { return "ZenScript (CraftTweaker)"; }
+	@Override public String ideScriptProyectoMineFlayer() { return "MineFlayer (Python)"; }
+	@Override public String ideScriptProyectoGroovyScript() { return "GroovyScript"; }
+	@Override public String ideScriptProyectoComputerCraftLua() { return "ComputerCraft Lua"; }
+	@Override public String ideScriptProyectoWorldEditCraftScript() { return "WorldEdit CraftScript"; }
+	@Override public String ideScriptProyectoJexel3() { return "Jexel3"; }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

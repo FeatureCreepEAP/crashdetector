@@ -11341,5 +11341,54 @@ public class Vietnamita implements Idioma {
 	public String tamanoLogoCuadrado() {
 		return "Kích thước logo hình vuông";
 	}
+    @Override
+    public String migradorCAModoPrincipalAviso() {
+        return "Chọn cách di chuyển giao diện chính. 'centro_soporte' giống nhất với giao diện mặc định của Crash Assistant, nhưng không được khuyến nghị, đặc biệt là cho người dùng DIY, vì nó có quá nhiều cửa sổ bật lên và thiết kế kém; nó chỉ tồn tại để giúp di chuyển từ môi trường cũ của Crash Assistant. 'primitiva' là một giao diện rất đơn giản chỉ dùng để chia sẻ; chỉ được gợi ý cho các modpack, không phải người dùng DIY, nếu bạn tắt tất cả các kiểm tra không cần thiết, và nó cũng gặp vấn đề với nhiều cửa sổ bật lên. 'original' giữ nguyên giao diện chính hiện tại của bạn và thường là tùy chọn được khuyến nghị cho hầu hết người dùng.";
+    }
+
+    @Override
+    public String migradorCASitioLoggingAviso() {
+        return "Chọn xem bạn có muốn di chuyển trang web ghi log từ Crash Assistant hay giữ lại trang hiện tại của CrashDetector. Crash Assistant thường sử dụng gnomebot.dev, trang này không được khuyến nghị so với SecureLogger, PastesDev hoặc CDPaste. Đối với hầu hết người dùng, khuyến nghị giữ lại trang web hiện tại.";
+    }
+	
+	
+    @Override public String ideScriptTitulo() { return "IDE Scripting"; }
+    @Override public String ideScriptBotonSidebar() { return "Scripting"; }
+    @Override public String ideScriptProyecto() { return "Dự án:"; }
+    @Override public String ideScriptNuevo() { return "Mới"; }
+    @Override public String ideScriptAbrirCarpeta() { return "Mở thư mục"; }
+    @Override public String ideScriptAbrirArchivo() { return "Mở tệp"; }
+    @Override public String ideScriptGuardarComo() { return "Lưu dưới dạng"; }
+    @Override public String ideScriptDescargarDeps() { return "Tải xuống deps"; }
+    @Override public String ideScriptCompletar() { return "IntelliSense"; }
+    @Override public String ideScriptExplorador() { return "Trình khám phá dự án"; }
+    @Override public String ideScriptSinArchivo() { return "không có tệp"; }
+    @Override public String ideScriptEstado(String proyecto, String archivo) { return proyecto + " | " + archivo; }
+    @Override public String ideScriptProyectoDeshabilitadoAviso() { return "Loại dự án này đã tồn tại trong giao diện, nhưng bị vô hiệu hóa cho đến khi máy chủ ngôn ngữ hoặc bộ phân tích của nó được thêm vào."; }
+    @Override public String ideScriptDeshabilitadoCorto() { return "(đã vô hiệu hóa)"; }
+    @Override public String ideScriptNoFaltanDependencias() { return "Không thiếu dependencies."; }
+    @Override
+    public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) {
+    return "Se descargaran " + cantidad + " dependencias para el IDE de scripts:\n\n" + lista + "\nDespues puede ser necesario reiniciar para que entren al classpath.";
+    }    @Override public String ideScriptDepsDescargadas(String mensaje) { return "Kết quả tải xuống:\n\n" + mensaje + "\n\nKhởi động lại chương trình nếu các lớp vẫn chưa xuất hiện trong classpath."; }
+    @Override public String ideScriptErrorAbrirArchivo() { return "Lỗi khi mở tệp"; }
+    @Override public String ideScriptErrorGuardarArchivo() { return "Lỗi khi lưu tệp"; }
+    @Override public String ideScriptColorEditor() { return "Màu trình soạn thảo"; }
+    @Override public String ideScriptColorKeyword() { return "Màu từ khóa"; }
+    @Override public String ideScriptColorComentario() { return "Màu chú thích"; }
+    @Override public String ideScriptColorCadena() { return "Màu chuỗi"; }
+    @Override public String ideScriptProyectoFeatureCreep() { return "FeatureCreep Datafied Content (DMR/JSON)"; }
+    @Override public String ideScriptProyectoDatapackResourcepack() { return "Minecraft Datapacks / ResourcePacks (JSON)"; }
+    @Override public String ideScriptProyectoKubeJS() { return "KubeJS (JS)"; }
+    @Override public String ideScriptProyectoZenScript() { return "ZenScript (CraftTweaker)"; }
+    @Override public String ideScriptProyectoMineFlayer() { return "MineFlayer (Python)"; }
+    @Override public String ideScriptProyectoGroovyScript() { return "GroovyScript"; }
+    @Override public String ideScriptProyectoComputerCraftLua() { return "ComputerCraft Lua"; }
+    @Override public String ideScriptProyectoWorldEditCraftScript() { return "WorldEdit CraftScript"; }
+    @Override public String ideScriptProyectoJexel3() { return "Jexel3"; }
+	
+	
+	
+	
 
 }

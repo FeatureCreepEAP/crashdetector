@@ -58,6 +58,7 @@ import com.asbestosstar.crashdetector.gui.tipos.quickfix.QuickFixGUI;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.TodosQuickFixesGUI;
 import com.asbestosstar.crashdetector.gui.tipos.rendimiento.AdministradorDeRendimientoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.sampler.SamplerGUI;
+import com.asbestosstar.crashdetector.gui.tipos.scriptide.ScriptIDEGUI;
 
 public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
@@ -1245,6 +1246,37 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return MigradorLegacyGUI.GUIS;
 		}
 	};
+	
+	
+	
+
+	public static TipoGUI<ScriptIDEGUI> SCRIPT_IDE = new TipoGUI<ScriptIDEGUI>() {
+		@Override
+		public String id() {
+			return "script_ide";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.ideScriptBotonSidebar();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<ScriptIDEGUI> gui) {
+			ScriptIDEGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<ScriptIDEGUI>> obtenerGUIs() {
+			return ScriptIDEGUI.GUIS;
+		}
+
+	};
+	
+	
+	
+	
+	
 
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
@@ -1297,6 +1329,8 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(CDPASTE_HISTORIAL);
 		TIPOS_DE_GUI.add(CONFIG_MODS);
 		TIPOS_DE_GUI.add(MIGRADOR_LEGACY);
-
+		TIPOS_DE_GUI.add(SCRIPT_IDE);
+		
+		
 	}
 }

@@ -647,6 +647,41 @@
 </dependency>
 
 
+    <dependency>
+        <groupId>org.eclipse.lsp4j</groupId>
+        <artifactId>org.eclipse.lsp4j</artifactId>
+        <version>1.0.0</version>
+            <scope>provided</scope> <!-- only loaded if classes exist -->
+
+    </dependency>
+    <dependency>
+        <groupId>org.eclipse.lsp4j</groupId>
+        <artifactId>org.eclipse.lsp4j.jsonrpc</artifactId>
+        <version>1.0.0</version>
+            <scope>provided</scope> <!-- only loaded if classes exist -->
+
+    </dependency>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

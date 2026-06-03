@@ -10752,5 +10752,66 @@ public class Coreano implements Idioma {
 	public String tamanoLogoCuadrado() {
 		return "사각형 로고 크기";
 	}
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String migradorCAModoPrincipalAviso() {
+	    return "주 GUI를 마이그레이션하는 방법을 선택하십시오. \"centro_soporte\"는 Crash Assistant의 기본 GUI와 가장 유사하지만, 특히 DIY 사용자에게는 권장되지 않습니다. 이는 팝업 지옥과 poor한 디자인을 가지고 있기 때문이며, Crash Assistant의 레거시 환경을 마이그레이션하는 데에만 존재합니다. \"primitiva\"는 공유 목적으로만 사용되는 매우 간단한 GUI입니다. 불필요한 모든 검사를 비활성화하더라도 팝업 지옥 문제가 있으므로, DIY 사용자보다는 모드팩에만 권장됩니다. \"original\"은 현재 주 GUI를 유지하며 대부분의 사용자에게 권장되는 옵션입니다.";
+	}
+
+	@Override
+	public String migradorCASitioLoggingAviso() {
+	    return "Crash Assistant에서 로깅 사이트를 마이그레이션할지 또는 CrashDetector의 현재 사이트를 유지할지 선택하십시오. Crash Assistant는 종종 gnomebot.dev를 사용하는데, 이는 SecureLogger, PastesDev 또는 CDPaste에 비해 권장되지 않습니다. 대부분의 사용자의 경우 현재 사이트를 유지하는 것이 좋습니다.";
+	}
+	
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override public String ideScriptTitulo() { return "스크립팅 IDE"; }
+	@Override public String ideScriptBotonSidebar() { return "스크립팅"; }
+	@Override public String ideScriptProyecto() { return "프로젝트:"; }
+	@Override public String ideScriptNuevo() { return "새로 만들기"; }
+	@Override public String ideScriptAbrirCarpeta() { return "폴더 열기"; }
+	@Override public String ideScriptAbrirArchivo() { return "파일 열기"; }
+	@Override public String ideScriptGuardarComo() { return "다른 이름으로 저장"; }
+	@Override public String ideScriptDescargarDeps() { return "종속성 다운로드"; }
+	@Override public String ideScriptCompletar() { return "자동 완성 (IntelliSense)"; }
+	@Override public String ideScriptExplorador() { return "프로젝트 탐색기"; }
+	@Override public String ideScriptSinArchivo() { return "파일 없음"; }
+	@Override public String ideScriptEstado(String proyecto, String archivo) { return proyecto + " | " + archivo; }
+	@Override public String ideScriptProyectoDeshabilitadoAviso() { return "이 유형의 프로젝트는 GUI에 이미 존재하지만 언어 서버 또는 분석기가 추가될 때까지 비활성화되어 있습니다."; }
+	@Override public String ideScriptDeshabilitadoCorto() { return "(비활성화됨)"; }
+	@Override public String ideScriptNoFaltanDependencias() { return "누락된 종속성이 없습니다."; }
+	@Override public String ideScriptConfirmarDescargaDeps(int cantidad, String lista) { return "스크립트 IDE를 위해 " + cantidad + "개의 종속성이 다운로드됩니다:\n\n" + lista + "\n그 후 클래스패스에 적용되려면 재시작이 필요할 수 있습니다."; }
+	@Override public String ideScriptDepsDescargadas(String mensaje) { return "다운로드 결과:\n\n" + mensaje + "\n\n클래스가 여전히 클래스패스에 나타나지 않으면 프로그램을 재시작하십시오."; }
+	@Override public String ideScriptErrorAbrirArchivo() { return "파일 열기 오류"; }
+	@Override public String ideScriptErrorGuardarArchivo() { return "파일 저장 오류"; }
+	@Override public String ideScriptColorEditor() { return "편집기 색상"; }
+	@Override public String ideScriptColorKeyword() { return "키워드 색상"; }
+	@Override public String ideScriptColorComentario() { return "주석 색상"; }
+	@Override public String ideScriptColorCadena() { return "문자열 색상"; }
+	@Override public String ideScriptProyectoFeatureCreep() { return "FeatureCreep Datafied Content (DMR/JSON)"; }
+	@Override public String ideScriptProyectoDatapackResourcepack() { return "Minecraft 데이터팩 / 리소스팩 (JSON)"; }
+	@Override public String ideScriptProyectoKubeJS() { return "KubeJS (JS)"; }
+	@Override public String ideScriptProyectoZenScript() { return "ZenScript (CraftTweaker)"; }
+	@Override public String ideScriptProyectoMineFlayer() { return "MineFlayer (Python)"; }
+	@Override public String ideScriptProyectoGroovyScript() { return "GroovyScript"; }
+	@Override public String ideScriptProyectoComputerCraftLua() { return "ComputerCraft Lua"; }
+	@Override public String ideScriptProyectoWorldEditCraftScript() { return "WorldEdit CraftScript"; }
+	@Override public String ideScriptProyectoJexel3() { return "Jexel3"; }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

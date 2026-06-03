@@ -4358,4 +4358,29 @@ public interface Idioma {
 
 	public String tamanoLogoCuadrado();
 
+	public String migradorCAModoPrincipalAviso();
+
+	public String migradorCASitioLoggingAviso();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    public String ideScriptTitulo();    public String ideScriptBotonSidebar();    public String ideScriptProyecto();    public String ideScriptNuevo();    public String ideScriptAbrirCarpeta();    public String ideScriptAbrirArchivo();    public String ideScriptGuardarComo();    public String ideScriptDescargarDeps();    public String ideScriptCompletar();    public String ideScriptExplorador();    public String ideScriptSinArchivo();    public String ideScriptEstado(String proyecto, String archivo);    public String ideScriptProyectoDeshabilitadoAviso();    public String ideScriptDeshabilitadoCorto();    public String ideScriptNoFaltanDependencias();    public String ideScriptConfirmarDescargaDeps(int cantidad, String lista);    public String ideScriptDepsDescargadas(String mensaje);    public String ideScriptErrorAbrirArchivo();    public String ideScriptErrorGuardarArchivo();    public String ideScriptColorEditor();    public String ideScriptColorKeyword();    public String ideScriptColorComentario();    public String ideScriptColorCadena();    public String ideScriptProyectoFeatureCreep();    public String ideScriptProyectoDatapackResourcepack();    public String ideScriptProyectoKubeJS();    public String ideScriptProyectoZenScript();    public String ideScriptProyectoMineFlayer();    public String ideScriptProyectoGroovyScript();    public String ideScriptProyectoComputerCraftLua();    public String ideScriptProyectoWorldEditCraftScript();    public String ideScriptProyectoJexel3();
+	
+	
+	
+
 }
