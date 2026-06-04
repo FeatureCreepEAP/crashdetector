@@ -11501,4 +11501,174 @@ public class Khmer implements Idioma {
 		return "Jexel3";
 	}
 
+	// Khmer (ភាសាខ្មែរ)
+	public String mcpBotonSidebar() {
+		return "MCP";
+	}
+
+	public String iaAbrirMcp() {
+		return "បើក MCP";
+	}
+
+	public String mcpTituloVentana() {
+		return "CrashDetector MCP";
+	}
+
+	public String mcpTituloPrincipal() {
+		return "ម៉ាស៊ីនបម្រើ MCP សម្រាប់ AI ក្នុងតំបន់";
+	}
+
+	public String mcpPuerto() {
+		return "ច្រក MCP:";
+	}
+
+	public String mcpDescargarDependencias() {
+		return "ទាញយក dependencies MCP/CFR";
+	}
+
+	public String mcpIniciarServidor() {
+		return "ចាប់ផ្តើមម៉ាស៊ីនបម្រើ MCP";
+	}
+
+	public String mcpEstadoDependenciasNoCargadas() {
+		return "Dependencies MCP/CFR មិនបានផ្ទុក។ ទាញយកវា និងចាប់ផ្តើមឡើងវិញប្រសិនបើប៊ូតុងនៅតែបិទដំណើរការ។";
+	}
+
+	public String mcpEstadoDependenciasCargadas() {
+		return "Dependencies MCP/CFR ត្រូវបានរកឃើញ។ ម៉ាស៊ីនបម្រើ MCP អាចចាប់ផ្តើមបាន។";
+	}
+
+	public String mcpDependenciasDescargadasReiniciar() {
+		return "Dependencies បានទាញយក។ ប្រសិនបើវានៅតែមិនលេចឡើងថាបានផ្ទុក សូមចាប់ផ្តើមឡើងវិញ CrashDetector។";
+	}
+
+	public String mcpErrorDescargandoDependencias(String error) {
+		return "មិនអាចទាញយក dependencies MCP/CFR បានទេ: " + error;
+	}
+
+	public String mcpServidorIniciado(int puerto) {
+		return "ម៉ាស៊ីនបម្រើ MCP បានចាប់ផ្តើមនៅ 127.0.0.1:" + puerto + "/mcp";
+	}
+
+	public String mcpErrorIniciandoServidor(String error) {
+		return "មិនអាចចាប់ផ្តើមម៉ាស៊ីនបម្រើ MCP បានទេ: " + error;
+	}
+
+	public String mcpImagenNoDisponible() {
+		return "រូបភាព MCP មិនមាន";
+	}
+
+	public String colorAcento() {
+		return "ពណ៌សំឡេង";
+	}
+
+	public String mcpDescripcionHtml() {
+		return "<b>ផ្ទាំងនេះចាប់ផ្តើមម៉ាស៊ីនបម្រើ MCP ក្នុងតំបន់សម្រាប់ជំនួយការដូចជា Claude Desktop, Qwen Desktop Linux, Red Hat command-line-assistant ឬ Goose។</b>"
+				+ "<br><br>"
+				+ "ដំបូង ទាញយក dependencies MCP/CFR។ បន្ទាប់មកចាប់ផ្តើមឡើងវិញប្រសិនបើថ្នាក់មិនលេចឡើងនៅក្នុង classpath។"
+				+ "<br><br>" + "<b>Claude Desktop / Qwen Desktop Linux, ឧទាហរណ៍:</b>" + "<pre>{\n"
+				+ "  \"mcpServers\": {\n" + "    \"crashdetector\": {\n"
+				+ "      \"url\": \"http://127.0.0.1:8765/mcp\"\n" + "    }\n" + "  }\n" + "}</pre>"
+				+ "<b>Goose / command-line-assistant:</b>" + "<pre>http://127.0.0.1:8765/mcp</pre>"
+				+ "បច្ចុប្បន្ន ម៉ាស៊ីនបម្រើ MCP នេះគឺជាមូលដ្ឋាន។ ពេលក្រោយ អាចបន្ថែមឧបករណ៍ពិតប្រាកដសម្រាប់អានកំណត់ហេតុ ពិគ្រោះយោបល់ CFR ពិនិត្យ mods ស្វែងរកថ្នាក់ និងពន្យល់ការដួល។";
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String mensajeErrorJvmDllCurseForgeG1(boolean conOverwolf) {
+		String textoOverwolf = "";
+
+		if (conOverwolf) {
+			textoOverwolf = "<p>កំណត់ហេតុក៏បង្ហាញពីសញ្ញានៃ <b>Overwolf</b> ឬ DLL ដែលទាក់ទង ដូចជា "
+					+ "<b>OWClient.dll</b> ឬ <b>OWUtils.dll</b>។ នេះមិនបញ្ជាក់ដោយខ្លួនឯងថា Overwolf គឺជាមូលហេតុទេ "
+					+ "ប៉ុន្តែវាបង្ហាញថាដំណើរការ Minecraft កំពុងដំណើរការនៅក្នុងបរិយាកាសដែលបានកែប្រែច្រើនជាង "
+					+ "ការចាប់ផ្តើម vanilla ធម្មតា។</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java បានបិទដោយសារតែកំហុស native នៅក្នុង jvm.dll ក្នុងអំឡុងពេលប្រមូលសំរាម G1 នៅក្នុង CurseForge។</b>"
+				+ "<p>កំណត់ហេតុមាន <b>EXCEPTION_ACCESS_VIOLATION</b> នៅក្នុង <b>jvm.dll</b> "
+				+ "ហើយខ្សែសកម្មគឺ <b>GCTaskThread</b>។ នេះមានន័យថា Java បានបរាជ័យនៅពេលដែលឧបករណ៍ប្រមូលសំរាម "
+				+ "<b>G1</b> កំពុងធ្វើការ។</p>" + "<p>ក៏មានសញ្ញាផងដែរថាហ្គេមត្រូវបានចាប់ផ្តើមពីបរិយាកាសដែលគ្រប់គ្រងដោយ "
+				+ "<b>CurseForge</b> ឧទាហរណ៍ផ្លូវរបស់ CurseForge, <b>DCFInstanceId</b> ឬម៉ាករបស់ launcher CurseForge។</p>"
+				+ textoOverwolf + "<p>មិនអាចបញ្ជាក់បានតែពីកំណត់ហេតុថា CurseForge ឬ Overwolf គឺជាមូលហេតុពិតប្រាកដទេ។ "
+				+ "ទោះជាយ៉ាងណាក៏ដោយ លំនាំនេះត្រូវបានគេមើលឃើញជាញឹកញាប់នៅក្នុងការចាប់ផ្តើមរបស់ CurseForge និងអាចទាក់ទង "
+				+ "នឹងការរួមបញ្ចូលគ្នានៃ <b>G1 GC</b>, អង្គចងចាំ native, បណ្ណាល័យ Minecraft, កម្មវិធីបញ្ជាក្រាហ្វិក, "
+				+ "ថតឯកសារ native ដែលគ្រប់គ្រងដោយ CurseForge, overlays ឬសមាសភាគខាងក្រៅរបស់ launcher។</p>"
+				+ "<p><b>ដំណោះស្រាយទូទៅ៖</b></p>" + "<ul>"
+				+ "<li>ផ្លាស់ប្តូរឧបករណ៍ប្រមូលសំរាមដោយបន្ថែមអាគុយម៉ង់ JVM នេះ៖ <b>-XX:+UseShenandoahGC</b></li>"
+				+ "<li>នៅក្នុង CurseForge នេះជាធម្មតាត្រូវបានបន្ថែមនៅក្នុងអាគុយម៉ង់ Java បន្ថែមនៃប្រូហ្វាល់ ឬ launcher។</li>"
+				+ "<li>លុប cache natives/bin នៃប្រូហ្វាល់ CurseForge ដើម្បីបង្ខំឱ្យបណ្ណាល័យ native ត្រូវបានដកស្រង់ម្តងទៀត។</li>"
+				+ "<li>ធ្វើបច្ចុប្បន្នភាព Java និងកម្មវិធីបញ្ជាក្រាហ្វិក។</li>"
+				+ "<li>ប្រសិនបើអ្នកប្រើ overlays, កម្មវិធីថត, កម្មវិធីការពារមេរោគដែលរឹងមាំ ឬឧបករណ៍ផ្សេងទៀតដែលចាក់បញ្ចូលទៅក្នុងហ្គេម សូមសាកល្បងបិទវាជាបណ្តោះអាសន្ន។</li>"
+				+ "</ul>" + "<p>មេរៀនណែនាំជាភាសាអង់គ្លេសសម្រាប់ផ្លាស់ប្តូរអាគុយម៉ង់នៅក្នុង CurseForge៖ "
+				+ "<a href='https://youtu.be/UKFWBOZxB2o'>https://youtu.be/UKFWBOZxB2o</a></p>"
+				+ "<p><b>ចំណាំសម្រាប់ Minecraft 1.16.5 ឬមុន៖</b> កំណែទាំងនោះជាធម្មតាប្រើ Java 8។ "
+				+ "ប្រសិនបើអ្នកកំពុងប្រើ JDK 8 និងចង់ប្រើ Shenandoah អ្នកប្រហែលជាត្រូវប្រើ "
+				+ "<b>Red Hat Build of OpenJDK 8</b> និងចង្អុល CurseForge ទៅកាន់ការដំឡើង Java នោះ។</p>"
+				+ "<p>ការណែនាំរបស់ Red Hat សម្រាប់ដំឡើង OpenJDK 8 នៅលើ Windows៖ "
+				+ "<a href='https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index'>"
+				+ "https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index</a></p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllCurseForgeG1() {
+		return "កំហុស jvm.dll របស់ CurseForge ជាមួយ G1 GC";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllC2Sodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java បានបិទដោយសារតែកំហុស native នៅក្នុង jvm.dll ខណៈពេលកំពុងបង្កើតកូដរបស់ Sodium ឬ mod ស្រដៀង។</b>"
+				+ "<p>កំណត់ហេតុមាន <b>EXCEPTION_ACCESS_VIOLATION</b> នៅក្នុង <b>jvm.dll</b> "
+				+ "ហើយខ្សែសកម្មគឺ <b>C2 CompilerThread</b>។ នេះមានន័យថាកំហុសបានកើតឡើងនៅក្នុង "
+				+ "កម្មវិធីបង្កើត JIT របស់ Java មិនមែនជាការលើកលែងធម្មតារបស់ Minecraft ទេ។</p>"
+				+ "<p>ក្នុងករណីនេះ កិច្ចការបង្កើតបានលើកឡើងពីកូដដែលទាក់ទងនឹង <b>Sodium</b>, "
+				+ "<b>Embeddium</b>, <b>Rubidium</b> ឬថ្នាក់ស្រដៀងដូចជា "
+				+ "<b>ClonedChunkSectionCache::acquire</b>។</p>" + "<p><b>ដំណោះស្រាយដែលបានណែនាំ៖</b></p>" + "<ul>"
+				+ "<li>ធ្វើបច្ចុប្បន្នភាព <b>Sodium</b>, <b>Embeddium</b>, <b>Rubidium</b>, <b>Oculus</b> ឬ mod rendering ណាមួយដែលទាក់ទង។</li>"
+				+ "<li>ធ្វើបច្ចុប្បន្នភាព Java 17។ ប្រសិនបើអ្នកកំពុងប្រើកំណែទំនើបរួចហើយ សូមសាកល្បងការចែកចាយផ្សេងទៀតដូចជា Temurin, Zulu ឬ Microsoft OpenJDK។</li>"
+				+ "<li>ធ្វើបច្ចុប្បន្នភាពកម្មវិធីបញ្ជាកាតក្រាហ្វិក។</li>"
+				+ "<li>សាកល្បងជាបណ្តោះអាសន្នដោយគ្មាន Sodium, Embeddium, Rubidium ឬ Oculus ដើម្បីបញ្ជាក់ថាកំហុសបានបាត់។</li>"
+				+ "<li>ជាការសាកល្បងកម្រិតខ្ពស់ សូមប្រើ <b>-XX:TieredStopAtLevel=1</b> ដើម្បីកាត់បន្ថយការប្រើប្រាស់កម្មវិធីបង្កើត C2។ "
+				+ "នេះអាចបន្ថយការអនុវត្ត ប៉ុន្តែជួយបញ្ជាក់ថាកំហុសមកពីកម្មវិធីបង្កើត JIT។</li>" + "</ul>"
+				+ "<p>បញ្ហានេះមិនដូចគ្នានឹងការដួលធម្មតារបស់ mod ទេ។ វាក៏ខុសគ្នាពីកំហុសដែល "
+				+ "<b>GCTaskThread</b> លេចឡើងជាខ្សែសកម្មផងដែរ។ នៅទីនេះ លំនាំចង្អុលទៅកាន់កម្មវិធីបង្កើត C2 របស់ Java "
+				+ "ដែលកំពុងបង្កើតកូដ rendering ដែលបានធ្វើឱ្យប្រសើរ។</p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllC2Sodium() {
+		return "កំហុស native របស់ Java ជាមួយ Sodium / Embeddium";
+	}
+
+	@Override
+	public String mensajeErrorArchivoUsadoPorOtroProceso(String archivo) {
+		String textoArchivo = "";
+
+		if (archivo != null && archivo.length() > 0) {
+			textoArchivo = "<p><b>ឯកសារជាប់ចាក់សោ:</b> " + archivo + "</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ឯកសារកំពុងត្រូវបានប្រើប្រាស់ដោយដំណើរការផ្សេងទៀត។</b>"
+				+ "<p>កំណត់ហេតុ (Log) មានកំហុស <b>java.nio.file.FileSystemException</b> ដែលបង្ហាញថា Windows មិនអាច "
+				+ "ចូលប្រើឯកសារបាន ដោយសារតែកម្មវិធីផ្សេងទៀតកំពុងប្រើប្រាស់វា។</p>" + textoArchivo
+				+ "<p>រឿងនេះជាធម្មតាកើតឡើងនៅពេលដែល Minecraft, CurseForge, កម្មវិធីកែសម្រួលអត្ថបទ, កម្មវិធីការពារវីរុស, OneDrive, "
+				+ "កម្មវិធីសមកាលកម្ម (Sync) ឬសូម្បីតែ Instance ផ្សេងទៀតនៃហ្គេមបានបើកឯកសារនេះ។</p>"
+				+ "<p><b>ដំណោះស្រាយដែលណែនាំ:</b></p>" + "<ul>" + "<li>បិទ Minecraft ឱ្យបានទាំងស្រុង។</li>"
+				+ "<li>បិទ CurseForge ហើយបើកវាឡើងវិញ។</li>"
+				+ "<li>ពិនិត្យមើល Task Manager ហើយបញ្ឈប់ដំណើរការដែលស្ទួននៃ <b>javaw.exe</b>, <b>java.exe</b>, Minecraft ឬ CurseForge។</li>"
+				+ "<li>បិទកម្មវិធីកែសម្រួលអត្ថបទដែលអាចកំពុងបើកឯកសារកំណត់រចនាសម្ព័ន្ធ។</li>"
+				+ "<li>ប្រសិនបើឯកសារស្ថិតនៅក្នុង OneDrive, Dropbox ឬកម្មវិធីស្រដៀងគ្នា សូមផ្អាកការសមកាលកម្មជាបណ្តោះអាសន្ន។</li>"
+				+ "<li>ប្រសិនបើបញ្ហានៅតែបន្ត សូមចាប់ផ្តើមកុំព្យូទ័រឡើងវិញ (Restart) ដើម្បីដោះសោឯកសារ។</li>" + "</ul>"
+				+ "<p>បន្ទាប់ពីដោះសោឯកសាររួចរាល់ សូមចាប់ផ្តើម Modpack ឡើងវិញ។ ប្រសិនបើឯកសារជាប់ចាក់សោគឺជាឯកសារកំណត់រចនាសម្ព័ន្ធ "
+				+ "ការបង្កើតឯកសារបម្រុង (Backup) និងបង្កើតឯកសារនោះឡើងវិញក៏អាចជួយបានដែរ។</p>";
+	}
+
+	@Override
+	public String nombreErrorArchivoUsadoPorOtroProceso() {
+		return "ឯកសារត្រូវបានប្រើប្រាស់ដោយដំណើរការផ្សេង";
+	}
+
 }

@@ -11879,4 +11879,179 @@ public class Indonesia implements Idioma {
 		return "Jexel3";
 	}
 
+	// Indonesian (Bahasa Indonesia)
+	public String mcpBotonSidebar() {
+		return "MCP";
+	}
+
+	public String iaAbrirMcp() {
+		return "Buka MCP";
+	}
+
+	public String mcpTituloVentana() {
+		return "CrashDetector MCP";
+	}
+
+	public String mcpTituloPrincipal() {
+		return "Server MCP untuk AI lokal";
+	}
+
+	public String mcpPuerto() {
+		return "Port MCP:";
+	}
+
+	public String mcpDescargarDependencias() {
+		return "Unduh dependensi MCP/CFR";
+	}
+
+	public String mcpIniciarServidor() {
+		return "Mulai server MCP";
+	}
+
+	public String mcpEstadoDependenciasNoCargadas() {
+		return "Dependensi MCP/CFR tidak dimuat. Unduh dan restart jika tombol tetap dinonaktifkan.";
+	}
+
+	public String mcpEstadoDependenciasCargadas() {
+		return "Dependensi MCP/CFR terdeteksi. Server MCP dapat dimulai.";
+	}
+
+	public String mcpDependenciasDescargadasReiniciar() {
+		return "Dependensi telah diunduh. Jika masih belum muncul dimuat, restart CrashDetector.";
+	}
+
+	public String mcpErrorDescargandoDependencias(String error) {
+		return "Tidak dapat mengunduh dependensi MCP/CFR: " + error;
+	}
+
+	public String mcpServidorIniciado(int puerto) {
+		return "Server MCP dimulai di 127.0.0.1:" + puerto + "/mcp";
+	}
+
+	public String mcpErrorIniciandoServidor(String error) {
+		return "Tidak dapat memulai server MCP: " + error;
+	}
+
+	public String mcpImagenNoDisponible() {
+		return "Gambar MCP tidak tersedia";
+	}
+
+	public String colorAcento() {
+		return "Warna aksen";
+	}
+
+	public String mcpDescripcionHtml() {
+		return "<b>Panel ini memulai server MCP lokal untuk asisten seperti Claude Desktop, Qwen Desktop Linux, Red Hat command-line-assistant, atau Goose.</b>"
+				+ "<br><br>"
+				+ "Pertama, unduh dependensi MCP/CFR. Kemudian restart jika kelas tidak muncul di classpath."
+				+ "<br><br>" + "<b>Claude Desktop / Qwen Desktop Linux, contoh:</b>" + "<pre>{\n"
+				+ "  \"mcpServers\": {\n" + "    \"crashdetector\": {\n"
+				+ "      \"url\": \"http://127.0.0.1:8765/mcp\"\n" + "    }\n" + "  }\n" + "}</pre>"
+				+ "<b>Goose / command-line-assistant:</b>" + "<pre>http://127.0.0.1:8765/mcp</pre>"
+				+ "Saat ini server MCP ini bersifat dasar. Nantinya dapat ditambahkan alat nyata untuk membaca log, konsultasi CFR, memeriksa mod, mencari kelas, dan menjelaskan crash.";
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String mensajeErrorJvmDllCurseForgeG1(boolean conOverwolf) {
+		String textoOverwolf = "";
+
+		if (conOverwolf) {
+			textoOverwolf = "<p>Log juga menunjukkan indikasi <b>Overwolf</b> atau DLL terkait, seperti "
+					+ "<b>OWClient.dll</b> atau <b>OWUtils.dll</b>. Ini tidak membuktikan sendiri bahwa Overwolf adalah penyebabnya, "
+					+ "tetapi menunjukkan bahwa proses Minecraft berjalan di lingkungan yang lebih dimodifikasi "
+					+ "daripada peluncuran vanilla normal.</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java ditutup karena kesalahan native di jvm.dll selama pengumpul sampah G1 di CurseForge.</b>"
+				+ "<p>Log berisi <b>EXCEPTION_ACCESS_VIOLATION</b> di dalam <b>jvm.dll</b>, "
+				+ "dan thread aktif adalah <b>GCTaskThread</b>. Ini berarti Java gagal saat pengumpul sampah "
+				+ "<b>G1</b> sedang bekerja.</p>"
+				+ "<p>Juga ada indikasi bahwa game diluncurkan dari lingkungan yang dikelola oleh "
+				+ "<b>CurseForge</b>, misalnya jalur CurseForge, <b>DCFInstanceId</b>, atau tanda launcher CurseForge.</p>"
+				+ textoOverwolf
+				+ "<p>Tidak dapat dibuktikan hanya dari log bahwa CurseForge atau Overwolf adalah penyebab pastinya. "
+				+ "Namun, pola ini sering terlihat dalam peluncuran CurseForge dan mungkin terkait "
+				+ "dengan kombinasi <b>G1 GC</b>, memori native, pustaka Minecraft, driver grafis, "
+				+ "folder native yang dikelola CurseForge, overlay, atau komponen eksternal launcher.</p>"
+				+ "<p><b>Solusi umum:</b></p>" + "<ul>"
+				+ "<li>Ubah pengumpul sampah dengan menambahkan argumen JVM ini: <b>-XX:+UseShenandoahGC</b></li>"
+				+ "<li>Di CurseForge, ini biasanya ditambahkan di argumen Java tambahan dari profil atau launcher.</li>"
+				+ "<li>Hapus cache natives/bin dari profil CurseForge untuk memaksa pustaka native diekstrak ulang.</li>"
+				+ "<li>Perbarui Java dan driver grafis.</li>"
+				+ "<li>Jika Anda menggunakan overlay, perekam, antivirus agresif, atau alat lain yang menyuntikkan diri ke game, coba tutup sementara.</li>"
+				+ "</ul>"
+				+ "<p>Tutorial yang direkomendasikan dalam bahasa Inggris untuk mengubah argumen di CurseForge: "
+				+ "<a href='https://youtu.be/UKFWBOZxB2o'>https://youtu.be/UKFWBOZxB2o</a></p>"
+				+ "<p><b>Catatan untuk Minecraft 1.16.5 atau lebih lama:</b> versi tersebut biasanya menggunakan Java 8. "
+				+ "Jika Anda menggunakan JDK 8 dan ingin menggunakan Shenandoah, Anda mungkin perlu menggunakan "
+				+ "<b>Red Hat Build of OpenJDK 8</b> dan mengarahkan CurseForge ke instalasi Java tersebut.</p>"
+				+ "<p>Panduan Red Hat untuk menginstal OpenJDK 8 di Windows: "
+				+ "<a href='https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index'>"
+				+ "https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index</a></p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllCurseForgeG1() {
+		return "Kesalahan jvm.dll CurseForge dengan G1 GC";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllC2Sodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java ditutup karena kesalahan native di jvm.dll saat mengompilasi kode Sodium atau mod serupa.</b>"
+				+ "<p>Log berisi <b>EXCEPTION_ACCESS_VIOLATION</b> di dalam <b>jvm.dll</b>, "
+				+ "dan thread aktif adalah <b>C2 CompilerThread</b>. Ini berarti kegagalan terjadi di dalam "
+				+ "kompilator JIT Java, bukan sebagai pengecualian normal Minecraft.</p>"
+				+ "<p>Dalam kasus ini, tugas kompilasi menyebutkan kode yang terkait dengan <b>Sodium</b>, "
+				+ "<b>Embeddium</b>, <b>Rubidium</b>, atau kelas serupa seperti "
+				+ "<b>ClonedChunkSectionCache::acquire</b>.</p>" + "<p><b>Solusi yang direkomendasikan:</b></p>"
+				+ "<ul>"
+				+ "<li>Perbarui <b>Sodium</b>, <b>Embeddium</b>, <b>Rubidium</b>, <b>Oculus</b>, atau mod rendering terkait lainnya.</li>"
+				+ "<li>Perbarui Java 17. Jika Anda sudah menggunakan versi modern, coba distribusi lain seperti Temurin, Zulu, atau Microsoft OpenJDK.</li>"
+				+ "<li>Perbarui driver kartu grafis.</li>"
+				+ "<li>Coba sementara tanpa Sodium, Embeddium, Rubidium, atau Oculus untuk mengonfirmasi apakah kegagalan hilang.</li>"
+				+ "<li>Sebagai tes lanjutan, gunakan <b>-XX:TieredStopAtLevel=1</b> untuk mengurangi penggunaan kompilator C2. "
+				+ "Ini mungkin menurunkan kinerja, tetapi membantu mengonfirmasi apakah kegagalan berasal dari kompilator JIT.</li>"
+				+ "</ul>"
+				+ "<p>Masalah ini tidak sama dengan crash mod normal. Ini juga berbeda dari kegagalan di mana "
+				+ "<b>GCTaskThread</b> muncul sebagai thread aktif. Di sini polanya lebih mengarah ke kompilator C2 Java "
+				+ "yang mengompilasi kode rendering yang dioptimalkan.</p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllC2Sodium() {
+		return "Kesalahan native Java dengan Sodium / Embeddium";
+	}
+
+	@Override
+	public String mensajeErrorArchivoUsadoPorOtroProceso(String archivo) {
+		String textoArchivo = "";
+
+		if (archivo != null && archivo.length() > 0) {
+			textoArchivo = "<p><b>Berkas dikunci:</b> " + archivo + "</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Berkas sedang digunakan oleh proses lain.</b>"
+				+ "<p>Log mengandung kesalahan <b>java.nio.file.FileSystemException</b> yang menunjukkan bahwa Windows tidak dapat "
+				+ "mengakses berkas karena program lain sedang menggunakannya.</p>" + textoArchivo
+				+ "<p>Hal ini biasanya terjadi ketika Minecraft, CurseForge, editor teks, antivirus, OneDrive, "
+				+ "program sinkronisasi, atau bahkan instance game lain membuka berkas tersebut.</p>"
+				+ "<p><b>Solusi yang direkomendasikan:</b></p>" + "<ul>" + "<li>Tutup Minecraft sepenuhnya.</li>"
+				+ "<li>Tutup CurseForge dan buka kembali.</li>"
+				+ "<li>Periksa Task Manager dan akhiri proses ganda dari <b>javaw.exe</b>, <b>java.exe</b>, Minecraft, atau CurseForge.</li>"
+				+ "<li>Tutup editor teks yang mungkin memiliki berkas konfigurasi terbuka.</li>"
+				+ "<li>Jika berkas berada di dalam OneDrive, Dropbox, atau program serupa, jeda sinkronisasi untuk sementara.</li>"
+				+ "<li>Jika masalah berlanjut, restart komputer untuk melepaskan kunci berkas.</li>" + "</ul>"
+				+ "<p>Setelah berkas dilepaskan, mulai ulang modpack. Jika berkas yang dikunci adalah konfigurasi, "
+				+ "membuat cadangan dan menghasilkan ulang berkas tersebut juga dapat membantu.</p>";
+	}
+
+	@Override
+	public String nombreErrorArchivoUsadoPorOtroProceso() {
+		return "Berkas digunakan oleh proses lain";
+	}
+
 }

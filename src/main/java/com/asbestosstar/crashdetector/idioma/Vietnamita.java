@@ -11514,4 +11514,174 @@ public class Vietnamita implements Idioma {
 		return "Jexel3";
 	}
 
+	public String mcpBotonSidebar() {
+		return "MCP";
+	}
+
+	public String iaAbrirMcp() {
+		return "Mở MCP";
+	}
+
+	public String mcpTituloVentana() {
+		return "CrashDetector MCP";
+	}
+
+	public String mcpTituloPrincipal() {
+		return "Máy chủ MCP cho AI cục bộ";
+	}
+
+	public String mcpPuerto() {
+		return "Cổng MCP:";
+	}
+
+	public String mcpDescargarDependencias() {
+		return "Tải xuống dependencies MCP/CFR";
+	}
+
+	public String mcpIniciarServidor() {
+		return "Khởi động máy chủ MCP";
+	}
+
+	public String mcpEstadoDependenciasNoCargadas() {
+		return "Dependencies MCP/CFR chưa được tải. Hãy tải chúng và khởi động lại nếu nút vẫn bị vô hiệu hóa.";
+	}
+
+	public String mcpEstadoDependenciasCargadas() {
+		return "Đã phát hiện dependencies MCP/CFR. Máy chủ MCP có thể được khởi động.";
+	}
+
+	public String mcpDependenciasDescargadasReiniciar() {
+		return "Đã tải xuống dependencies. Nếu chúng vẫn chưa xuất hiện là đã tải, hãy khởi động lại CrashDetector.";
+	}
+
+	public String mcpErrorDescargandoDependencias(String error) {
+		return "Không thể tải xuống dependencies MCP/CFR: " + error;
+	}
+
+	public String mcpServidorIniciado(int puerto) {
+		return "Máy chủ MCP đã khởi động tại 127.0.0.1:" + puerto + "/mcp";
+	}
+
+	public String mcpErrorIniciandoServidor(String error) {
+		return "Không thể khởi động máy chủ MCP: " + error;
+	}
+
+	public String mcpImagenNoDisponible() {
+		return "Hình ảnh MCP không khả dụng";
+	}
+
+	public String colorAcento() {
+		return "Màu nhấn";
+	}
+
+	public String mcpDescripcionHtml() {
+		return "<b>Bảng này khởi động một máy chủ MCP cục bộ cho các trợ lý như Claude Desktop, Qwen Desktop Linux, Red Hat command-line-assistant hoặc Goose.</b>"
+				+ "<br><br>"
+				+ "Trước tiên, hãy tải xuống dependencies MCP/CFR. Sau đó, khởi động lại nếu các lớp không xuất hiện trong classpath."
+				+ "<br><br>" + "<b>Claude Desktop / Qwen Desktop Linux, ví dụ:</b>" + "<pre>{\n"
+				+ "  \"mcpServers\": {\n" + "    \"crashdetector\": {\n"
+				+ "      \"url\": \"http://127.0.0.1:8765/mcp\"\n" + "    }\n" + "  }\n" + "}</pre>"
+				+ "<b>Goose / command-line-assistant:</b>" + "<pre>http://127.0.0.1:8765/mcp</pre>"
+				+ "Hiện tại, máy chủ MCP này còn cơ bản. Sau này, có thể thêm các công cụ thực tế để đọc nhật ký, truy vấn CFR, kiểm tra mod, tìm kiếm lớp và giải thích crash.";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllCurseForgeG1(boolean conOverwolf) {
+		String textoOverwolf = "";
+
+		if (conOverwolf) {
+			textoOverwolf = "<p>Log cũng cho thấy dấu hiệu của <b>Overwolf</b> hoặc các DLL liên quan, như "
+					+ "<b>OWClient.dll</b> hoặc <b>OWUtils.dll</b>. Điều này tự nó không chứng minh rằng Overwolf là nguyên nhân, "
+					+ "nhưng chỉ ra rằng quá trình Minecraft đang chạy trong một môi trường bị sửa đổi nhiều hơn "
+					+ "so với một lần khởi chạy vanilla bình thường.</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java đã đóng do lỗi native trong jvm.dll trong khi bộ thu gom G1 hoạt động trên CurseForge.</b>"
+				+ "<p>Log chứa <b>EXCEPTION_ACCESS_VIOLATION</b> bên trong <b>jvm.dll</b>, "
+				+ "và luồng đang hoạt động là <b>GCTaskThread</b>. Điều này có nghĩa là Java đã thất bại trong khi bộ thu gom rác "
+				+ "<b>G1</b> đang làm việc.</p>"
+				+ "<p>Cũng có dấu hiệu cho thấy trò chơi được khởi chạy từ một môi trường được quản lý bởi "
+				+ "<b>CurseForge</b>, ví dụ: đường dẫn của CurseForge, <b>DCFInstanceId</b> hoặc dấu hiệu launcher của CurseForge.</p>"
+				+ textoOverwolf
+				+ "<p>Không thể chứng minh chỉ từ log rằng CurseForge hoặc Overwolf là nguyên nhân chính xác. "
+				+ "Tuy nhiên, mô hình này thường thấy trong các lần khởi chạy của CurseForge và có thể liên quan "
+				+ "đến sự kết hợp của <b>G1 GC</b>, bộ nhớ native, thư viện Minecraft, driver đồ họa, "
+				+ "thư mục native được quản lý bởi CurseForge, overlay hoặc các thành phần bên ngoài của launcher.</p>"
+				+ "<p><b>Giải pháp phổ biến:</b></p>" + "<ul>"
+				+ "<li>Thay đổi bộ thu gom rác bằng cách thêm đối số JVM này: <b>-XX:+UseShenandoahGC</b></li>"
+				+ "<li>Trong CurseForge, điều này thường được thêm vào các đối số Java bổ sung của hồ sơ hoặc launcher.</li>"
+				+ "<li>Xóa bộ nhớ cache natives/bin của hồ sơ CurseForge để buộc các thư viện native được giải nén lại.</li>"
+				+ "<li>Cập nhật Java và driver đồ họa.</li>"
+				+ "<li>Nếu bạn sử dụng overlay, chương trình ghi, phần mềm diệt virus mạnh hoặc các công cụ khác tiêm vào trò chơi, hãy thử đóng chúng tạm thời.</li>"
+				+ "</ul>" + "<p>Hướng dẫn tiếng Anh được khuyến nghị để thay đổi đối số trong CurseForge: "
+				+ "<a href='https://youtu.be/UKFWBOZxB2o'>https://youtu.be/UKFWBOZxB2o</a></p>"
+				+ "<p><b>Lưu ý cho Minecraft 1.16.5 trở về trước:</b> các phiên bản đó thường sử dụng Java 8. "
+				+ "Nếu bạn đang dùng JDK 8 và muốn sử dụng Shenandoah, bạn có thể cần sử dụng "
+				+ "<b>Red Hat Build of OpenJDK 8</b> và trỏ CurseForge đến cài đặt Java đó.</p>"
+				+ "<p>Hướng dẫn của Red Hat để cài đặt OpenJDK 8 trên Windows: "
+				+ "<a href='https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index'>"
+				+ "https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index</a></p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllCurseForgeG1() {
+		return "Lỗi jvm.dll của CurseForge với G1 GC";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllC2Sodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java đã đóng do lỗi native trong jvm.dll trong khi biên dịch mã của Sodium hoặc mod tương tự.</b>"
+				+ "<p>Log chứa <b>EXCEPTION_ACCESS_VIOLATION</b> bên trong <b>jvm.dll</b>, "
+				+ "và luồng đang hoạt động là <b>C2 CompilerThread</b>. Điều này có nghĩa là lỗi xảy ra bên trong "
+				+ "trình biên dịch JIT của Java, không phải là một ngoại lệ bình thường của Minecraft.</p>"
+				+ "<p>Trong trường hợp này, tác vụ biên dịch đề cập đến mã liên quan đến <b>Sodium</b>, "
+				+ "<b>Embeddium</b>, <b>Rubidium</b> hoặc một lớp tương tự như "
+				+ "<b>ClonedChunkSectionCache::acquire</b>.</p>" + "<p><b>Giải pháp được khuyến nghị:</b></p>" + "<ul>"
+				+ "<li>Cập nhật <b>Sodium</b>, <b>Embeddium</b>, <b>Rubidium</b>, <b>Oculus</b> hoặc bất kỳ mod kết xuất liên quan nào.</li>"
+				+ "<li>Cập nhật Java 17. Nếu bạn đã sử dụng phiên bản hiện đại, hãy thử bản phân phối khác như Temurin, Zulu hoặc Microsoft OpenJDK.</li>"
+				+ "<li>Cập nhật driver card đồ họa.</li>"
+				+ "<li>Thử tạm thời không có Sodium, Embeddium, Rubidium hoặc Oculus để xác nhận xem lỗi có biến mất không.</li>"
+				+ "<li>Như một bài kiểm tra nâng cao, sử dụng <b>-XX:TieredStopAtLevel=1</b> để giảm việc sử dụng trình biên dịch C2. "
+				+ "Điều này có thể làm giảm hiệu suất, nhưng giúp xác nhận xem lỗi có đến từ trình biên dịch JIT không.</li>"
+				+ "</ul>" + "<p>Vấn đề này không giống như một crash bình thường của mod. Nó cũng khác với các lỗi mà "
+				+ "<b>GCTaskThread</b> xuất hiện là luồng đang hoạt động. Ở đây mô hình chỉ ra nhiều hơn đến trình biên dịch C2 của Java "
+				+ "đang biên dịch mã kết xuất được tối ưu hóa.</p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllC2Sodium() {
+		return "Lỗi native của Java với Sodium / Embeddium";
+	}
+
+	@Override
+	public String mensajeErrorArchivoUsadoPorOtroProceso(String archivo) {
+		String textoArchivo = "";
+
+		if (archivo != null && archivo.length() > 0) {
+			textoArchivo = "<p><b>Tệp bị khóa:</b> " + archivo + "</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Một tệp đang được sử dụng bởi một tiến trình khác.</b>"
+				+ "<p>Nhật ký lỗi chứa lỗi <b>java.nio.file.FileSystemException</b> cho thấy Windows không thể "
+				+ "truy cập vào một tệp vì một chương trình khác đang sử dụng nó.</p>" + textoArchivo
+				+ "<p>Điều này thường xảy ra khi Minecraft, CurseForge, trình soạn thảo văn bản, phần mềm diệt virus, OneDrive, "
+				+ "chương trình đồng bộ hóa hoặc thậm chí một phiên bản khác của trò chơi đang mở tệp đó.</p>"
+				+ "<p><b>Giải pháp khuyến nghị:</b></p>" + "<ul>" + "<li>Đóng hoàn toàn Minecraft.</li>"
+				+ "<li>Đóng CurseForge và mở lại.</li>"
+				+ "<li>Kiểm tra Task Manager và kết thúc các tiến trình trùng lặp của <b>javaw.exe</b>, <b>java.exe</b>, Minecraft hoặc CurseForge.</li>"
+				+ "<li>Đóng các trình soạn thảo văn bản có thể đang mở tệp cấu hình.</li>"
+				+ "<li>Nếu tệp nằm trong OneDrive, Dropbox hoặc chương trình tương tự, hãy tạm dừng đồng bộ hóa.</li>"
+				+ "<li>Nếu vấn đề vẫn tiếp diễn, hãy khởi động lại máy tính để giải phóng khóa tệp.</li>" + "</ul>"
+				+ "<p>Sau khi giải phóng tệp, hãy khởi động lại modpack. Nếu tệp bị khóa là tệp cấu hình, "
+				+ "việc sao lưu và tạo lại tệp đó cũng có thể hữu ích.</p>";
+	}
+
+	@Override
+	public String nombreErrorArchivoUsadoPorOtroProceso() {
+		return "Tệp đang được sử dụng bởi tiến trình khác";
+	}
+
 }

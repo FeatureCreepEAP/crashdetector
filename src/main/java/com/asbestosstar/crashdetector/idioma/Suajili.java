@@ -11741,4 +11741,174 @@ public class Suajili implements Idioma {
 		return "Jexel3";
 	}
 
+	public String mcpBotonSidebar() {
+		return "MCP";
+	}
+
+	public String iaAbrirMcp() {
+		return "Fungua MCP";
+	}
+
+	public String mcpTituloVentana() {
+		return "CrashDetector MCP";
+	}
+
+	public String mcpTituloPrincipal() {
+		return "Seva ya MCP kwa AI ya ndani";
+	}
+
+	public String mcpPuerto() {
+		return "Bandari ya MCP:";
+	}
+
+	public String mcpDescargarDependencias() {
+		return "Pakua utegemezi wa MCP/CFR";
+	}
+
+	public String mcpIniciarServidor() {
+		return "Anzisha seva ya MCP";
+	}
+
+	public String mcpEstadoDependenciasNoCargadas() {
+		return "Utegemezi wa MCP/CFR haujapakuliwa. Upakue na uanzishe upya ikiwa kitufe bado kimezimwa.";
+	}
+
+	public String mcpEstadoDependenciasCargadas() {
+		return "Utegemezi wa MCP/CFR umegunduliwa. Seva ya MCP inaweza kuanzishwa.";
+	}
+
+	public String mcpDependenciasDescargadasReiniciar() {
+		return "Utegemezi umepakuliwa. Ikiwa bado haujaonekana umepakuliwa, anzisha upya CrashDetector.";
+	}
+
+	public String mcpErrorDescargandoDependencias(String error) {
+		return "Haikuweza kupakua utegemezi wa MCP/CFR: " + error;
+	}
+
+	public String mcpServidorIniciado(int puerto) {
+		return "Seva ya MCP imeanzishwa kwenye 127.0.0.1:" + puerto + "/mcp";
+	}
+
+	public String mcpErrorIniciandoServidor(String error) {
+		return "Haikuweza kuanzisha seva ya MCP: " + error;
+	}
+
+	public String mcpImagenNoDisponible() {
+		return "Picha ya MCP haipatikani";
+	}
+
+	public String colorAcento() {
+		return "Rangi ya alama";
+	}
+
+	public String mcpDescripcionHtml() {
+		return "<b>Paneli hii inaanzisha seva ya MCP ya ndani kwa wasaidizi kama Claude Desktop, Qwen Desktop Linux, Red Hat command-line-assistant au Goose.</b>"
+				+ "<br><br>"
+				+ "Kwanza pakua utegemezi wa MCP/CFR. Kisha anzisha upya ikiwa darasa hazijaonekana kwenye classpath."
+				+ "<br><br>" + "<b>Claude Desktop / Qwen Desktop Linux, mfano:</b>" + "<pre>{\n"
+				+ "  \"mcpServers\": {\n" + "    \"crashdetector\": {\n"
+				+ "      \"url\": \"http://127.0.0.1:8765/mcp\"\n" + "    }\n" + "  }\n" + "}</pre>"
+				+ "<b>Goose / command-line-assistant:</b>" + "<pre>http://127.0.0.1:8765/mcp</pre>"
+				+ "Kwa sasa seva hii ya MCP ni ya msingi. Baadaye zana halisi zinaweza kuongezwa kusoma logi, kuuliza CFR, kukagua mod, kutafuta darasa na kuelezea ajali.";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllCurseForgeG1(boolean conOverwolf) {
+		String textoOverwolf = "";
+
+		if (conOverwolf) {
+			textoOverwolf = "<p>Logi pia inaonyesha dalili za <b>Overwolf</b> au DLL zinazohusiana, kama "
+					+ "<b>OWClient.dll</b> au <b>OWUtils.dll</b>. Hii haithibitishi peke yake kwamba Overwolf ndio sababu, "
+					+ "lakini inaashiria kwamba mchakato wa Minecraft ulikuwa ukiendeshwa katika mazingira yaliyobadilishwa zaidi "
+					+ "kuliko uzinduzi wa kawaida wa vanilla.</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java ilifungwa kwa sababu ya hitilafu ya asili katika jvm.dll wakati mkusanyaji G1 alipofanya kazi katika CurseForge.</b>"
+				+ "<p>Logi ina <b>EXCEPTION_ACCESS_VIOLATION</b> ndani ya <b>jvm.dll</b>, "
+				+ "na thread inayofanya kazi ni <b>GCTaskThread</b>. Hii inamaanisha kwamba Java ilishindwa wakati mkusanyaji taka "
+				+ "<b>G1</b> ulikuwa ukifanya kazi.</p>"
+				+ "<p>Pia kuna dalili kwamba mchezo ulianzishwa kutoka kwenye mazingira yaliyosimamiwa na "
+				+ "<b>CurseForge</b>, kwa mfano njia za CurseForge, <b>DCFInstanceId</b> au alama ya lanzisha ya CurseForge.</p>"
+				+ textoOverwolf
+				+ "<p>Haiwezi kuthibitishwa kutoka kwenye logi pekee kwamba CurseForge au Overwolf ndio sababu halisi. "
+				+ "Hata hivyo, muundo huu unaonekana mara nyingi katika uzinduzi wa CurseForge na unaweza kuhusiana "
+				+ "na mchanganyiko wa <b>G1 GC</b>, kumbukumbu ya asili, maktaba za Minecraft, dereva za grafiki, "
+				+ "folda za asili zinazosimamiwa na CurseForge, overlay au vipengele vya nje vya lanzisha.</p>"
+				+ "<p><b>Suluhisho la kawaida:</b></p>" + "<ul>"
+				+ "<li>Badilisha mkusanyaji taka kwa kuongeza hoja hii ya JVM: <b>-XX:+UseShenandoahGC</b></li>"
+				+ "<li>Katika CurseForge, hii kawaida huongezwa katika hoja za ziada za Java za wasifu au lanzisha.</li>"
+				+ "<li>Futa kashe ya natives/bin ya wasifu wa CurseForge kulazimisha maktaba za asili zichomboleze tena.</li>"
+				+ "<li>Sasisha Java na dereva za grafiki.</li>"
+				+ "<li>Ikiwa unatumia overlay, programu za kurekodi, antivirus kali au zana zingine zinazoingia kwenye michezo, jaribu kuzifunga kwa muda.</li>"
+				+ "</ul>" + "<p>Mafunzo yanayopendekezwa kwa Kiingereza ya kubadilisha hoja katika CurseForge: "
+				+ "<a href='https://youtu.be/UKFWBOZxB2o'>https://youtu.be/UKFWBOZxB2o</a></p>"
+				+ "<p><b>Kumbuka kwa Minecraft 1.16.5 au zamani:</b> matoleo hayo kawaida hutumia Java 8. "
+				+ "Ikiwa uko kwenye JDK 8 na unataka kutumia Shenandoah, huenda ukahitaji kutumia "
+				+ "<b>Red Hat Build of OpenJDK 8</b> na kuelekeza CurseForge kwenye usanidi huo wa Java.</p>"
+				+ "<p>Mwongozo wa Red Hat wa kusakinisha OpenJDK 8 kwenye Windows: "
+				+ "<a href='https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index'>"
+				+ "https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index</a></p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllCurseForgeG1() {
+		return "Hitilafu ya jvm.dll ya CurseForge na G1 GC";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllC2Sodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java ilifungwa kwa sababu ya hitilafu ya asili katika jvm.dll wakati ikikompili kodi ya Sodium au mod inayofanana.</b>"
+				+ "<p>Logi ina <b>EXCEPTION_ACCESS_VIOLATION</b> ndani ya <b>jvm.dll</b>, "
+				+ "na thread inayofanya kazi ni <b>C2 CompilerThread</b>. Hii inamaanisha kwamba hitilafu ilitokea ndani ya "
+				+ "kompaila ya JIT ya Java, si kama isipokuwa ya kawaida ya Minecraft.</p>"
+				+ "<p>Katika kesi hii, kazi ya kukompili inataja kodi inayohusiana na <b>Sodium</b>, "
+				+ "<b>Embeddium</b>, <b>Rubidium</b> au darasa linalofanana kama "
+				+ "<b>ClonedChunkSectionCache::acquire</b>.</p>" + "<p><b>Suluhisho linalopendekezwa:</b></p>" + "<ul>"
+				+ "<li>Sasisha <b>Sodium</b>, <b>Embeddium</b>, <b>Rubidium</b>, <b>Oculus</b> au mod yoyote ya uchoraji inayohusiana.</li>"
+				+ "<li>Sasisha Java 17. Ikiwa tayari unatumia toleo la kisasa, jaribu usambazaji mwingine kama Temurin, Zulu au Microsoft OpenJDK.</li>"
+				+ "<li>Sasisha dereva za kadi ya grafiki.</li>"
+				+ "<li>Jaribu kwa muda bila Sodium, Embeddium, Rubidium au Oculus ili kuthibitisha ikiwa hitilafu litapotea.</li>"
+				+ "<li>Kama jaribio la juu, tumia <b>-XX:TieredStopAtLevel=1</b> kupunguza matumizi ya kompaila C2. "
+				+ "Hii inaweza kupunguza utendaji, lakini husaidia kuthibitisha ikiwa hitilafu linatoka kwenye kompaila ya JIT.</li>"
+				+ "</ul>" + "<p>Tatizo hili si sawa na crash ya kawaida ya mod. Pia ni tofauti na hitilafu ambapo "
+				+ "<b>GCTaskThread</b> inaonekana kama thread inayofanya kazi. Hapa muundo unaelekeza zaidi kwenye kompaila C2 ya Java "
+				+ "inayokompili kodi ya uchoraji iliyoboreshwa.</p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllC2Sodium() {
+		return "Hitilafu ya asili ya Java na Sodium / Embeddium";
+	}
+
+	@Override
+	public String mensajeErrorArchivoUsadoPorOtroProceso(String archivo) {
+		String textoArchivo = "";
+
+		if (archivo != null && archivo.length() > 0) {
+			textoArchivo = "<p><b>Faili imefungwa:</b> " + archivo + "</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Faili inatumika na mchakato mwingine.</b>"
+				+ "<p>Logi ina hitilafu ya <b>java.nio.file.FileSystemException</b> ikionyesha kuwa Windows haiwezi "
+				+ "kufikia faili kwa sababu programu nyingine inaitumia.</p>" + textoArchivo
+				+ "<p>Hii mara nyingi hutokea wakati Minecraft, CurseForge, kihariri cha maandishi, antivirus, OneDrive, "
+				+ "programu ya usawazishaji au hata toleo lingine la mchezo limefungua faili hiyo.</p>"
+				+ "<p><b>Suluhisho lililopendekezwa:</b></p>" + "<ul>" + "<li>Funga Minecraft kabisa.</li>"
+				+ "<li>Funga CurseForge na uifungue tena.</li>"
+				+ "<li>Angalia Meneja wa Kazi (Task Manager) na ukomeshe michakato iliyorudiwa ya <b>javaw.exe</b>, <b>java.exe</b>, Minecraft au CurseForge.</li>"
+				+ "<li>Funga vihariri vya maandishi ambavyo vinaweza kuwa na faili ya usanidi wazi.</li>"
+				+ "<li>Ikiwa faili iko ndani ya OneDrive, Dropbox au programu inayofanana, simamisha usawazishaji kwa muda.</li>"
+				+ "<li>Ikiwa tatizo litaendelea, anzisha upya kompyuta ili kuachilia kufungwa kwa faili.</li>" + "</ul>"
+				+ "<p>Baada ya kuachilia faili, anzisha tena modpack. Ikiwa faili iliyofungwa ni usanidi, "
+				+ "kutengeneza nakala rudufu na kuzalisha upya faili hiyo kunaweza pia kusaidia.</p>";
+	}
+
+	@Override
+	public String nombreErrorArchivoUsadoPorOtroProceso() {
+		return "Faili inatumika na mchakato mwingine";
+	}
+
 }

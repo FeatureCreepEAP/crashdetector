@@ -44,6 +44,7 @@ import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI;
 import com.asbestosstar.crashdetector.gui.tipos.mclogs.MCLogsHistorialGUI;
+import com.asbestosstar.crashdetector.gui.tipos.mcp.McpGUI;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.migrador.MigradorLegacyGUI;
 import com.asbestosstar.crashdetector.gui.tipos.miranda.DerechosPiratasGUI;
@@ -1270,6 +1271,28 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
 	};
 
+	public static TipoGUI<McpGUI> MCP = new TipoGUI<McpGUI>() {
+		@Override
+		public String id() {
+			return "mcp";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.mcpBotonSidebar();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<McpGUI> gui) {
+			McpGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<McpGUI>> obtenerGUIs() {
+			return McpGUI.GUIS;
+		}
+	};
+
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
@@ -1322,6 +1345,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(CONFIG_MODS);
 		TIPOS_DE_GUI.add(MIGRADOR_LEGACY);
 		TIPOS_DE_GUI.add(SCRIPT_IDE);
+		TIPOS_DE_GUI.add(MCP);
 
 	}
 }

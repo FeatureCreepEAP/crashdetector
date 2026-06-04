@@ -73,7 +73,7 @@ public class ScriptIDEGUINiwaJPlus extends ScriptIDEGUI {
 	@Override
 	public void init() {
 		setTitle(MonitorDePID.idioma.ideScriptTitulo());
-		setSize(1160, 760);
+		setSize(1200, 760);
 		setModal(false);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());

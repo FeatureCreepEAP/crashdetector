@@ -11713,4 +11713,173 @@ public class Lao implements Idioma {
 		return "Jexel3";
 	}
 
+	public String mcpBotonSidebar() {
+		return "MCP";
+	}
+
+	public String iaAbrirMcp() {
+		return "ເປີດ MCP";
+	}
+
+	public String mcpTituloVentana() {
+		return "CrashDetector MCP";
+	}
+
+	public String mcpTituloPrincipal() {
+		return "ເຊີບເວີ MCP ສຳລັບ AI ທ້ອງຖິ່ນ";
+	}
+
+	public String mcpPuerto() {
+		return "ພອດ MCP:";
+	}
+
+	public String mcpDescargarDependencias() {
+		return "ດາວໂຫຼດ dependencies MCP/CFR";
+	}
+
+	public String mcpIniciarServidor() {
+		return "ເລີ່ມເຊີບເວີ MCP";
+	}
+
+	public String mcpEstadoDependenciasNoCargadas() {
+		return "Dependencies MCP/CFR ບໍ່ໄດ້ໂຫຼດ. ກະລຸນາດາວໂຫຼດ ແລະ restart ຖ້າປຸ່ມຍັງປິດຢູ່.";
+	}
+
+	public String mcpEstadoDependenciasCargadas() {
+		return "ກວດພົບ dependencies MCP/CFR. ສາມາດເລີ່ມເຊີບເວີ MCP ໄດ້.";
+	}
+
+	public String mcpDependenciasDescargadasReiniciar() {
+		return "ດາວໂຫຼດ dependencies ແລ້ວ. ຖ້າຍັງບໍ່ທັນໂຫຼດ, ກະລຸນາ restart CrashDetector.";
+	}
+
+	public String mcpErrorDescargandoDependencias(String error) {
+		return "ບໍ່ສາມາດດາວໂຫຼດ dependencies MCP/CFR ໄດ້: " + error;
+	}
+
+	public String mcpServidorIniciado(int puerto) {
+		return "ເຊີບເວີ MCP ເລີ່ມແລ້ວທີ່ 127.0.0.1:" + puerto + "/mcp";
+	}
+
+	public String mcpErrorIniciandoServidor(String error) {
+		return "ບໍ່ສາມາດເລີ່ມເຊີບເວີ MCP ໄດ້: " + error;
+	}
+
+	public String mcpImagenNoDisponible() {
+		return "ບໍ່ມີຮູບພາບ MCP";
+	}
+
+	public String colorAcento() {
+		return "ສີ accent";
+	}
+
+	public String mcpDescripcionHtml() {
+		return "<b>ແຜງນີ້ເລີ່ມເຊີບເວີ MCP ທ້ອງຖິ່ນສຳລັບຕົວຊ່ວຍເຊັ່ນ Claude Desktop, Qwen Desktop Linux, Red Hat command-line-assistant ຫຼື Goose.</b>"
+				+ "<br><br>"
+				+ "ກ່ອນອື່ນໝົດ ໃຫ້ດາວໂຫຼດ dependencies MCP/CFR. ຫຼັງຈາກນັ້ນ restart ຖ້າຄລາສບໍ່ປາກົດໃນ classpath."
+				+ "<br><br>" + "<b>Claude Desktop / Qwen Desktop Linux, ຕົວຢ່າງ:</b>" + "<pre>{\n"
+				+ "  \"mcpServers\": {\n" + "    \"crashdetector\": {\n"
+				+ "      \"url\": \"http://127.0.0.1:8765/mcp\"\n" + "    }\n" + "  }\n" + "}</pre>"
+				+ "<b>Goose / command-line-assistant:</b>" + "<pre>http://127.0.0.1:8765/mcp</pre>"
+				+ "ປັດຈຸບັນເຊີບເວີ MCP ນີ້ແມ່ນພື້ນຖານ. ຕໍ່ໄປສາມາດເພີ່ມເຄື່ອງມືຈິງເພື່ອອ່ານ logs, ຖາມ CFR, ກວດສອບ mods, ຊອກຫາຄລາສ ແລະ ອະທິບາຍ crashes.";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllCurseForgeG1(boolean conOverwolf) {
+		String textoOverwolf = "";
+
+		if (conOverwolf) {
+			textoOverwolf = "<p>Log ຍັງສະແດງຫຼັກຖານຂອງ <b>Overwolf</b> ຫຼື DLLs ທີ່ກ່ຽວຂ້ອງ, ເຊັ່ນ "
+					+ "<b>OWClient.dll</b> ຫຼື <b>OWUtils.dll</b>. ສິ່ງນີ້ບໍ່ໄດ້ພິສູດວ່າ Overwolf ເປັນສາເຫດ, "
+					+ "ແຕ່ບົ່ງບອກວ່າຂະບວນການ Minecraft ກຳລັງເຮັດວຽກໃນສະພາບແວດລ້ອມທີ່ຖືກດັດແປງຫຼາຍກວ່າ "
+					+ "ການເລີ່ມຕົ້ນ vanilla ປົກກະຕິ.</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java ຖືກປິດຍ້ອນຂໍ້ຜິດພາດ native ໃນ jvm.dll ໃນຂະນະທີ່ G1 collector ເຮັດວຽກໃນ CurseForge.</b>"
+				+ "<p>Log ມີ <b>EXCEPTION_ACCESS_VIOLATION</b> ພາຍໃນ <b>jvm.dll</b>, "
+				+ "ແລະ thread ທີ່active ແມ່ນ <b>GCTaskThread</b>. ນີ້ໝາຍຄວາມວ່າ Java ລົ້ມເຫຼວໃນຂະນະທີ່ "
+				+ "garbage collector <b>G1</b> ກຳລັງເຮັດວຽກ.</p>"
+				+ "<p>ຍັງມີຫຼັກຖານວ່າເກມຖືກເລີ່ມຈາກສະພາບແວດລ້ອມທີ່ຈັດການໂດຍ "
+				+ "<b>CurseForge</b>, ຕົວຢ່າງເຊັ່ນ ເສັ້ນທາງຂອງ CurseForge, <b>DCFInstanceId</b> ຫຼື ຕົວບອກ launcher ຂອງ CurseForge.</p>"
+				+ textoOverwolf + "<p>ບໍ່ສາມາດພິສູດໄດ້ຈາກ log ວ່າ CurseForge ຫຼື Overwolf ເປັນສາເຫດແທ້. "
+				+ "ແຕ່ຮູບແບບນີ້ພົບເລື້ອຍໃນການເລີ່ມຕົ້ນຂອງ CurseForge ແລະ ອາດກ່ຽວຂ້ອງ "
+				+ "ກັບການປະສົມປະສານຂອງ <b>G1 GC</b>, ຫນ່ວຍຄວາມຈຳ native, libraries ຂອງ Minecraft, drivers ກາດຈໍ, "
+				+ "ໂຟລເດີ natives ທີ່ຈັດການໂດຍ CurseForge, overlays ຫຼື ອົງປະກອບພາຍນອກຂອງ launcher.</p>"
+				+ "<p><b>ວິທີແກ້ໄຂທົ່ວໄປ:</b></p>" + "<ul>"
+				+ "<li>ປ່ຽນ garbage collector ໂດຍເພີ່ມ argument JVM ນີ້: <b>-XX:+UseShenandoahGC</b></li>"
+				+ "<li>ໃນ CurseForge, ສິ່ງນີ້ມັກຈະເພີ່ມໃນ additional Java arguments ຂອງ profile ຫຼື launcher.</li>"
+				+ "<li>ລຶບ cache ຂອງ natives/bin ຂອງ profile CurseForge ເພື່ອບັງຄັບໃຫ້ libraries native ຖືກແຍກອອກມາໃໝ່.</li>"
+				+ "<li>ອັບເດດ Java ແລະ drivers ກາດຈໍ.</li>"
+				+ "<li>ຖ້າໃຊ້ overlays, ໂປຣແກຣມບັນທຶກ, antivirus ທີ່ເຂັ້ມງວດ ຫຼື ເຄື່ອງມືອື່ນໆທີ່ inject ເຂົ້າໃນເກມ, ລອງປິດມັນຊົ່ວຄາວ.</li>"
+				+ "</ul>" + "<p>ບົດຮຽນແນະນຳໃນພາສາອັງກິດສຳລັບການປ່ຽນ arguments ໃນ CurseForge: "
+				+ "<a href='https://youtu.be/UKFWBOZxB2o'>https://youtu.be/UKFWBOZxB2o</a></p>"
+				+ "<p><b>ໝາຍເຫດສຳລັບ Minecraft 1.16.5 ຫຼື ເກົ່າກວ່າ:</b> ເວີຊັນເຫຼົ່ານັ້ນມັກໃຊ້ Java 8. "
+				+ "ຖ້າທ່ານຢູ່ໃນ JDK 8 ແລະ ຕ້ອງການໃຊ້ Shenandoah, ທ່ານອາດຕ້ອງໃຊ້ "
+				+ "<b>Red Hat Build of OpenJDK 8</b> ແລະ ຊີ້ CurseForge ໄປທີ່ການຕິດຕັ້ງ Java ນັ້ນ.</p>"
+				+ "<p>ຄູ່ມືຂອງ Red Hat ສຳລັບການຕິດຕັ້ງ OpenJDK 8 ໃນ Windows: "
+				+ "<a href='https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index'>"
+				+ "https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index</a></p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllCurseForgeG1() {
+		return "ຂໍ້ຜິດພາດ jvm.dll ຂອງ CurseForge ກັບ G1 GC";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllC2Sodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java ຖືກປິດຍ້ອນຂໍ້ຜິດພາດ native ໃນ jvm.dll ໃນຂະນະທີ່ compile ໂຄ້ດຂອງ Sodium ຫຼື mod ທີ່ຄ້າຍຄືກັນ.</b>"
+				+ "<p>Log ມີ <b>EXCEPTION_ACCESS_VIOLATION</b> ພາຍໃນ <b>jvm.dll</b>, "
+				+ "ແລະ thread ທີ່ active ແມ່ນ <b>C2 CompilerThread</b>. ນີ້ໝາຍຄວາມວ່າຂໍ້ຜິດພາດເກີດຂຶ້ນພາຍໃນ "
+				+ "JIT compiler ຂອງ Java, ບໍ່ແມ່ນຂໍ້ຜິດພາດປົກກະຕິຂອງ Minecraft.</p>"
+				+ "<p>ໃນກໍລະນີນີ້, ວຽກ compile ໄດ້ກ່າວເຖິງໂຄ້ດທີ່ກ່ຽວຂ້ອງກັບ <b>Sodium</b>, "
+				+ "<b>Embeddium</b>, <b>Rubidium</b> ຫຼື ຄລາສທີ່ຄ້າຍຄືກັນເຊັ່ນ "
+				+ "<b>ClonedChunkSectionCache::acquire</b>.</p>" + "<p><b>ວິທີແກ້ໄຂທີ່ແນະນຳ:</b></p>" + "<ul>"
+				+ "<li>ອັບເດດ <b>Sodium</b>, <b>Embeddium</b>, <b>Rubidium</b>, <b>Oculus</b> ຫຼື mod ການ render ທີ່ກ່ຽວຂ້ອງ.</li>"
+				+ "<li>ອັບເດດ Java 17. ຖ້າທ່ານໃຊ້ເວີຊັນທັນສະໄໝຢູ່ແລ້ວ, ລອງ distribution ອື່ນເຊັ່ນ Temurin, Zulu ຫຼື Microsoft OpenJDK.</li>"
+				+ "<li>ອັບເດດ drivers ກາດຈໍ.</li>"
+				+ "<li>ລອງໃຊ້ໂດຍບໍ່ມີ Sodium, Embeddium, Rubidium ຫຼື Oculus ຊົ່ວຄາວເພື່ອຢືນຢັນວ່າຂໍ້ຜິດພາດຫາຍໄປ.</li>"
+				+ "<li>ເປັນການທົດສອບຂັ້ນສູງ, ໃຊ້ <b>-XX:TieredStopAtLevel=1</b> ເພື່ອຫຼຸດການໃຊ້ C2 compiler. "
+				+ "ສິ່ງນີ້ອາດຫຼຸດປະສິດທິພາບ, ແຕ່ຊ່ວຍຢືນຢັນວ່າຂໍ້ຜິດພາດມາຈາກ JIT compiler.</li>" + "</ul>"
+				+ "<p>ບັນຫານີ້ບໍ່ແມ່ນ crash ປົກກະຕິຂອງ mod. ມັນກໍຕ່າງຈາກຂໍ້ຜິດພາດທີ່ "
+				+ "<b>GCTaskThread</b> ປາກົດເປັນ thread active. ຮູບແບບນີ້ຊີ້ໄປທີ່ C2 compiler ຂອງ Java "
+				+ "ກຳລັງ compile ໂຄ້ດການ render ທີ່ຖືກເພີ່ມປະສິດທິພາບ.</p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllC2Sodium() {
+		return "ຂໍ້ຜິດພາດ native ຂອງ Java ກັບ Sodium / Embeddium";
+	}
+
+	@Override
+	public String mensajeErrorArchivoUsadoPorOtroProceso(String archivo) {
+		String textoArchivo = "";
+
+		if (archivo != null && archivo.length() > 0) {
+			textoArchivo = "<p><b>ໄຟລ໌ຖືກລັອກ:</b> " + archivo + "</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ມີໄຟລ໌ໜຶ່ງກຳລັງຖືກໃຊ້ໂດຍຂະບວນການອື່ນ.</b>"
+				+ "<p>Log ມີຂໍ້ຜິດພາດ <b>java.nio.file.FileSystemException</b> ບົ່ງບອກວ່າ Windows ບໍ່ສາມາດ "
+				+ "ເຂົ້າເຖິງໄຟລ໌ໄດ້ເພາະວ່າໂປຣແກຣມອື່ນກຳລັງໃຊ້ມັນຢູ່.</p>" + textoArchivo
+				+ "<p>ສິ່ງນີ້ມັກເກີດຂຶ້ນເມື່ອ Minecraft, CurseForge, ໂປຣແກຣມແກ້ໄຂຂໍ້ຄວາມ, ໂປຣແກຣມຕ້ານໄວຣັສ, OneDrive, "
+				+ "ໂປຣແກຣມຊິງຄ໌ (sync) ຫຼືເຖິງແຕ່ instance ອື່ນຂອງເກມກຳລັງເປີດໄຟລ໌ນັ້ນຢູ່.</p>"
+				+ "<p><b>ວິທີແກ້ໄຂທີ່ແນະນຳ:</b></p>" + "<ul>" + "<li>ປິດ Minecraft ໃຫ້ສົມບູນ.</li>"
+				+ "<li>ປິດ CurseForge ແລ້ວເປີດໃໝ່.</li>"
+				+ "<li>ກວດສອບ Task Manager ແລະ ຢຸດຂະບວນການທີ່ຊ້ຳກັນຂອງ <b>javaw.exe</b>, <b>java.exe</b>, Minecraft ຫຼື CurseForge.</li>"
+				+ "<li>ປິດໂປຣແກຣມແກ້ໄຂຂໍ້ຄວາມທີ່ອາດຈະເປີດໄຟລ໌ການຕັ້ງຄ່າຢູ່.</li>"
+				+ "<li>ຖ້າໄຟລ໌ຢູ່ໃນ OneDrive, Dropbox ຫຼືໂປຣແກຣມທີ່ຄ້າຍຄືກັນ, ໃຫ້ຢຸດການຊິງຄ໌ຊົ່ວຄາວ.</li>"
+				+ "<li>ຖ້າບັນຫາຍັງດຳເນີນຕໍ່, ໃຫ້ຣີສະຕາດຄອມພິວເຕີເພື່ອປ່ອຍການລັອກໄຟລ໌.</li>" + "</ul>"
+				+ "<p>ຫຼັງຈາກປ່ອຍໄຟລ໌ແລ້ວ, ໃຫ້ເລີ່ມ modpack ໃໝ່. ຖ້າໄຟລ໌ທີ່ຖືກລັອກແມ່ນໄຟລ໌ການຕັ້ງຄ່າ, "
+				+ "ການສຳຮອງຂໍ້ມູນ ແລະ ສ້າງໄຟລ໌ນັ້ນໃໝ່ອາດຈະຊ່ວຍໄດ້.</p>";
+	}
+
+	@Override
+	public String nombreErrorArchivoUsadoPorOtroProceso() {
+		return "ໄຟລ໌ຖືກໃຊ້ໂດຍຂະບວນການອື່ນ";
+	}
+
 }

@@ -11486,4 +11486,172 @@ public class Tailandes implements Idioma {
 		return "Jexel3";
 	}
 
+	public String mcpBotonSidebar() {
+		return "MCP";
+	}
+
+	public String iaAbrirMcp() {
+		return "เปิด MCP";
+	}
+
+	public String mcpTituloVentana() {
+		return "CrashDetector MCP";
+	}
+
+	public String mcpTituloPrincipal() {
+		return "เซิร์ฟเวอร์ MCP สำหรับ AI ท้องถิ่น";
+	}
+
+	public String mcpPuerto() {
+		return "พอร์ต MCP:";
+	}
+
+	public String mcpDescargarDependencias() {
+		return "ดาวน์โหลด dependencies MCP/CFR";
+	}
+
+	public String mcpIniciarServidor() {
+		return "เริ่มเซิร์ฟเวอร์ MCP";
+	}
+
+	public String mcpEstadoDependenciasNoCargadas() {
+		return "ยังไม่ได้โหลด dependencies MCP/CFR กรุณาดาวน์โหลดและรีสตาร์ทหากปุ่มยังคงปิดใช้งานอยู่";
+	}
+
+	public String mcpEstadoDependenciasCargadas() {
+		return "ตรวจพบ dependencies MCP/CFR แล้ว สามารถเริ่มเซิร์ฟเวอร์ MCP ได้";
+	}
+
+	public String mcpDependenciasDescargadasReiniciar() {
+		return "ดาวน์โหลด dependencies แล้ว หากยังไม่ปรากฏว่าโหลดแล้ว ให้รีสตาร์ท CrashDetector";
+	}
+
+	public String mcpErrorDescargandoDependencias(String error) {
+		return "ไม่สามารถดาวน์โหลด dependencies MCP/CFR ได้: " + error;
+	}
+
+	public String mcpServidorIniciado(int puerto) {
+		return "เริ่มเซิร์ฟเวอร์ MCP ที่ 127.0.0.1:" + puerto + "/mcp";
+	}
+
+	public String mcpErrorIniciandoServidor(String error) {
+		return "ไม่สามารถเริ่มเซิร์ฟเวอร์ MCP ได้: " + error;
+	}
+
+	public String mcpImagenNoDisponible() {
+		return "ไม่มีรูปภาพ MCP";
+	}
+
+	public String colorAcento() {
+		return "สีเน้น";
+	}
+
+	public String mcpDescripcionHtml() {
+		return "<b>แผงนี้เริ่มเซิร์ฟเวอร์ MCP ท้องถิ่นสำหรับตัวช่วยเช่น Claude Desktop, Qwen Desktop Linux, Red Hat command-line-assistant หรือ Goose</b>"
+				+ "<br><br>" + "ก่อนอื่นให้ดาวน์โหลด dependencies MCP/CFR จากนั้นรีสตาร์ทหากคลาสไม่ปรากฏใน classpath"
+				+ "<br><br>" + "<b>Claude Desktop / Qwen Desktop Linux ตัวอย่าง:</b>" + "<pre>{\n"
+				+ "  \"mcpServers\": {\n" + "    \"crashdetector\": {\n"
+				+ "      \"url\": \"http://127.0.0.1:8765/mcp\"\n" + "    }\n" + "  }\n" + "}</pre>"
+				+ "<b>Goose / command-line-assistant:</b>" + "<pre>http://127.0.0.1:8765/mcp</pre>"
+				+ "ขณะนี้เซิร์ฟเวอร์ MCP นี้เป็นแบบพื้นฐาน ต่อมาสามารถเพิ่มเครื่องมือจริงเพื่ออ่านบันทึก ถาม CFR ตรวจสอบมอด ค้นหาคลาส และอธิบายการ crash";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllCurseForgeG1(boolean conOverwolf) {
+		String textoOverwolf = "";
+
+		if (conOverwolf) {
+			textoOverwolf = "<p>บันทึกยังแสดงร่องรอยของ <b>Overwolf</b> หรือ DLL ที่เกี่ยวข้อง เช่น "
+					+ "<b>OWClient.dll</b> หรือ <b>OWUtils.dll</b> สิ่งนี้ไม่ได้พิสูจน์ว่า Overwolf เป็นสาเหตุ "
+					+ "แต่บ่งชี้ว่ากระบวนการ Minecraft กำลังทำงานในสภาพแวดล้อมที่ดัดแปลงมากกว่า "
+					+ "การเริ่มเกม vanilla ปกติ</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java ปิดเนื่องจากข้อผิดพลาด native ใน jvm.dll ระหว่างที่ตัวเก็บขยะ G1 ทำงานใน CurseForge</b>"
+				+ "<p>บันทึกมี <b>EXCEPTION_ACCESS_VIOLATION</b> ภายใน <b>jvm.dll</b>, "
+				+ "และเธรดที่ใช้งานอยู่คือ <b>GCTaskThread</b> นี่หมายความว่า Java ล้มเหลวขณะที่ตัวเก็บขยะ "
+				+ "<b>G1</b> กำลังทำงาน</p>" + "<p>ยังมีร่องรอยว่าเกมถูกเริ่มจากสภาพแวดล้อมที่จัดการโดย "
+				+ "<b>CurseForge</b> เช่น เส้นทางของ CurseForge, <b>DCFInstanceId</b> หรือเครื่องหมาย launcher ของ CurseForge</p>"
+				+ textoOverwolf
+				+ "<p>ไม่สามารถพิสูจน์ได้จากบันทึกเพียงอย่างเดียวว่า CurseForge หรือ Overwolf เป็นสาเหตุที่แท้จริง "
+				+ "อย่างไรก็ตาม รูปแบบ nàyพบได้บ่อยในการเริ่มเกมของ CurseForge และอาจเกี่ยวข้องกับ "
+				+ "การผสมผสานของ <b>G1 GC</b>, หน่วยความจำ native, ไลบรารีของ Minecraft, ไดรเวอร์กราฟิก, "
+				+ "โฟลเดอร์ native ที่จัดการโดย CurseForge, overlays หรือองค์ประกอบภายนอกของ launcher</p>"
+				+ "<p><b>วิธีแก้ทั่วไป:</b></p>" + "<ul>"
+				+ "<li>เปลี่ยนตัวเก็บขยะโดยเพิ่มอาร์กิวเมนต์ JVM นี้: <b>-XX:+UseShenandoahGC</b></li>"
+				+ "<li>ใน CurseForge โดยปกติจะเพิ่มในอาร์กิวเมนต์ Java เพิ่มเติมของโปรไฟล์หรือ launcher</li>"
+				+ "<li>ล้างแคช natives/bin ของโปรไฟล์ CurseForge เพื่อบังคับให้แยกไลบรารี native ออกมาใหม่</li>"
+				+ "<li>อัปเดต Java และไดรเวอร์กราฟิก</li>"
+				+ "<li>หากคุณใช้ overlays, โปรแกรมบันทึก, แอนติไวรัสที่เข้มงวด หรือเครื่องมืออื่นๆ ที่ฉีดเข้าสู่เกม ลองปิดชั่วคราว</li>"
+				+ "</ul>" + "<p>บทแนะนำภาษาอังกฤษสำหรับการเปลี่ยนอาร์กิวเมนต์ใน CurseForge: "
+				+ "<a href='https://youtu.be/UKFWBOZxB2o'>https://youtu.be/UKFWBOZxB2o</a></p>"
+				+ "<p><b>หมายเหตุสำหรับ Minecraft 1.16.5 หรือเก่ากว่า:</b> เวอร์ชันเหล่านั้นมักใช้ Java 8 "
+				+ "หากคุณใช้ JDK 8 และต้องการใช้ Shenandoah คุณอาจต้องใช้ "
+				+ "<b>Red Hat Build of OpenJDK 8</b> และชี้ CurseForge ไปที่การติดตั้ง Java นั้น</p>"
+				+ "<p>คู่มือของ Red Hat สำหรับการติดตั้ง OpenJDK 8 บน Windows: "
+				+ "<a href='https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index'>"
+				+ "https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index</a></p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllCurseForgeG1() {
+		return "ข้อผิดพลาด jvm.dll ของ CurseForge กับ G1 GC";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllC2Sodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java ปิดเนื่องจากข้อผิดพลาด native ใน jvm.dll ขณะที่กำลังคอมไพล์โค้ดของ Sodium หรือ mod ที่คล้ายกัน</b>"
+				+ "<p>บันทึกมี <b>EXCEPTION_ACCESS_VIOLATION</b> ภายใน <b>jvm.dll</b>, "
+				+ "และเธรดที่ใช้งานอยู่คือ <b>C2 CompilerThread</b> นี่หมายความว่าข้อผิดพลาดเกิดขึ้นภายใน "
+				+ "JIT compiler ของ Java ไม่ใช่เป็นข้อยกเว้นปกติของ Minecraft</p>"
+				+ "<p>ในกรณีนี้ งานคอมไพล์กล่าวถึงโค้ดที่เกี่ยวข้องกับ <b>Sodium</b>, "
+				+ "<b>Embeddium</b>, <b>Rubidium</b> หรือคลาสที่คล้ายกันเช่น "
+				+ "<b>ClonedChunkSectionCache::acquire</b></p>" + "<p><b>วิธีแก้ที่แนะนำ:</b></p>" + "<ul>"
+				+ "<li>อัปเดต <b>Sodium</b>, <b>Embeddium</b>, <b>Rubidium</b>, <b>Oculus</b> หรือ mod การเรนเดอร์ที่เกี่ยวข้อง</li>"
+				+ "<li>อัปเดต Java 17 หากคุณใช้เวอร์ชันทันสมัยอยู่แล้ว ลอง distribution อื่นเช่น Temurin, Zulu หรือ Microsoft OpenJDK</li>"
+				+ "<li>อัปเดตไดรเวอร์การ์ดจอ</li>"
+				+ "<li>ลองใช้ชั่วคราวโดยไม่มี Sodium, Embeddium, Rubidium หรือ Oculus เพื่อยืนยันว่าข้อผิดพลาดหายไป</li>"
+				+ "<li>เป็นการทดสอบขั้นสูง ใช้ <b>-XX:TieredStopAtLevel=1</b> เพื่อลดการใช้ C2 compiler "
+				+ "สิ่งนี้อาจลดประสิทธิภาพ แต่ช่วยยืนยันว่าข้อผิดพลาดมาจาก JIT compiler</li>" + "</ul>"
+				+ "<p>ปัญหานี้ไม่เหมือนกับการ crash ปกติของ mod นอกจากนี้ยังแตกต่างจากข้อผิดพลาดที่ "
+				+ "<b>GCTaskThread</b> ปรากฏเป็นเธรดที่ใช้งานอยู่ ที่นี่รูปแบบชี้ไปที่ C2 compiler ของ Java "
+				+ "ที่กำลังคอมไพล์โค้ดการเรนเดอร์ที่เพิ่มประสิทธิภาพ</p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllC2Sodium() {
+		return "ข้อผิดพลาด native ของ Java กับ Sodium / Embeddium";
+	}
+
+	@Override
+	public String mensajeErrorArchivoUsadoPorOtroProceso(String archivo) {
+		String textoArchivo = "";
+
+		if (archivo != null && archivo.length() > 0) {
+			textoArchivo = "<p><b>ไฟล์ถูกล็อก:</b> " + archivo + "</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "มีไฟล์กำลังถูกใช้โดยกระบวนการอื่น</b>"
+				+ "<p>บันทึกข้อผิดพลาด (log) มีข้อผิดพลาด <b>java.nio.file.FileSystemException</b> ซึ่งระบุว่า Windows ไม่สามารถ "
+				+ "เข้าถึงไฟล์ได้เนื่องจากโปรแกรมอื่นกำลังใช้งานอยู่</p>" + textoArchivo
+				+ "<p>สิ่งนี้มักเกิดขึ้นเมื่อ Minecraft, CurseForge, โปรแกรมแก้ไขข้อความ, โปรแกรมป้องกันไวรัส, OneDrive, "
+				+ "โปรแกรมซิงโครไนซ์ หรือแม้แต่เกมอินสแตนซ์อื่นเปิดไฟล์นั้นอยู่</p>"
+				+ "<p><b>วิธีแก้ปัญหาที่แนะนำ:</b></p>" + "<ul>" + "<li>ปิด Minecraft ให้สมบูรณ์</li>"
+				+ "<li>ปิด CurseForge แล้วเปิดใหม่อีกครั้ง</li>"
+				+ "<li>ตรวจสอบตัวจัดการงาน (Task Manager) และยุติกระบวนการที่ซ้ำกันของ <b>javaw.exe</b>, <b>java.exe</b>, Minecraft หรือ CurseForge</li>"
+				+ "<li>ปิดโปรแกรมแก้ไขข้อความที่อาจกำลังเปิดไฟล์การตั้งค่าอยู่</li>"
+				+ "<li>หากไฟล์อยู่ใน OneDrive, Dropbox หรือโปรแกรมที่คล้ายกัน ให้หยุดการซิงโครไนซ์ชั่วคราว</li>"
+				+ "<li>หากปัญหายังคงอยู่ ให้รีสตาร์ทคอมพิวเตอร์เพื่อปลดล็อกไฟล์</li>" + "</ul>"
+				+ "<p>หลังจากปลดล็อกไฟล์แล้ว ให้เริ่ม modpack ใหม่ หากไฟล์ที่ถูกล็อกเป็นไฟล์การตั้งค่า "
+				+ "การสำรองข้อมูลและสร้างไฟล์นั้นใหม่ก็อาจช่วยได้</p>";
+	}
+
+	@Override
+	public String nombreErrorArchivoUsadoPorOtroProceso() {
+		return "ไฟล์ถูกใช้โดยกระบวนการอื่น";
+	}
+
 }

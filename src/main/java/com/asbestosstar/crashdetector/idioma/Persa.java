@@ -11255,4 +11255,173 @@ public class Persa implements Idioma {
 		return "Jexel3";
 	}
 
+	public String mcpBotonSidebar() {
+		return "MCP";
+	}
+
+	public String iaAbrirMcp() {
+		return "باز کردن MCP";
+	}
+
+	public String mcpTituloVentana() {
+		return "CrashDetector MCP";
+	}
+
+	public String mcpTituloPrincipal() {
+		return "سرور MCP برای هوش مصنوعی محلی";
+	}
+
+	public String mcpPuerto() {
+		return "پورت MCP:";
+	}
+
+	public String mcpDescargarDependencias() {
+		return "دانلود وابستگی‌های MCP/CFR";
+	}
+
+	public String mcpIniciarServidor() {
+		return "شروع سرور MCP";
+	}
+
+	public String mcpEstadoDependenciasNoCargadas() {
+		return "وابستگی‌های MCP/CFR بارگذاری نشده‌اند. آن‌ها را دانلود کنید و اگر دکمه همچنان غیرفعال است، برنامه را مجدداً راه‌اندازی کنید.";
+	}
+
+	public String mcpEstadoDependenciasCargadas() {
+		return "وابستگی‌های MCP/CFR شناسایی شدند. سرور MCP می‌تواند شروع شود.";
+	}
+
+	public String mcpDependenciasDescargadasReiniciar() {
+		return "وابستگی‌ها دانلود شدند. اگر هنوز بارگذاری نشده‌اند، CrashDetector را مجدداً راه‌اندازی کنید.";
+	}
+
+	public String mcpErrorDescargandoDependencias(String error) {
+		return "دانلود وابستگی‌های MCP/CFR امکان‌پذیر نبود: " + error;
+	}
+
+	public String mcpServidorIniciado(int puerto) {
+		return "سرور MCP در 127.0.0.1:" + puerto + "/mcp شروع شد";
+	}
+
+	public String mcpErrorIniciandoServidor(String error) {
+		return "شروع سرور MCP امکان‌پذیر نبود: " + error;
+	}
+
+	public String mcpImagenNoDisponible() {
+		return "تصویر MCP در دسترس نیست";
+	}
+
+	public String colorAcento() {
+		return "رنگ تأکیدی";
+	}
+
+	public String mcpDescripcionHtml() {
+		return "<b>این پنل یک سرور MCP محلی را برای دستیارهایی مانند Claude Desktop، Qwen Desktop Linux، Red Hat command-line-assistant یا Goose شروع می‌کند.</b>"
+				+ "<br><br>"
+				+ "ابتدا وابستگی‌های MCP/CFR را دانلود کنید. سپس اگر کلاس‌ها در classpath ظاهر نشدند، برنامه را مجدداً راه‌اندازی کنید."
+				+ "<br><br>" + "<b>Claude Desktop / Qwen Desktop Linux، مثال:</b>" + "<pre>{\n"
+				+ "  \"mcpServers\": {\n" + "    \"crashdetector\": {\n"
+				+ "      \"url\": \"http://127.0.0.1:8765/mcp\"\n" + "    }\n" + "  }\n" + "}</pre>"
+				+ "<b>Goose / command-line-assistant:</b>" + "<pre>http://127.0.0.1:8765/mcp</pre>"
+				+ "در حال حاضر این سرور MCP پایه است. بعداً می‌توان ابزارهای واقعی برای خواندن لاگ‌ها، پرس‌وجو از CFR، بررسی مادها، جستجوی کلاس‌ها و توضیح کرش‌ها اضافه کرد.";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllCurseForgeG1(boolean conOverwolf) {
+		String textoOverwolf = "";
+
+		if (conOverwolf) {
+			textoOverwolf = "<p>لاگ همچنین نشانه‌هایی از <b>Overwolf</b> یا DLLهای مرتبط، مانند "
+					+ "<b>OWClient.dll</b> یا <b>OWUtils.dll</b> را نشان می‌دهد. این به تنهایی ثابت نمی‌کند که Overwolf علت است، "
+					+ "اما نشان می‌دهد که فرآیند ماینکرفت در محیطی تغییر یافته‌تر از یک اجرای عادی وانیل در حال اجرا بوده است.</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "جاوا به دلیل خطای بومی در jvm.dll در حین کار جمع‌کننده Zباله G1 در CurseForge بسته شد.</b>"
+				+ "<p>لاگ حاوی <b>EXCEPTION_ACCESS_VIOLATION</b> در داخل <b>jvm.dll</b> است، "
+				+ "و نخ فعال یک <b>GCTaskThread</b> است. این بدان معناست که جاوا در حالی که جمع‌کننده زباله "
+				+ "<b>G1</b> در حال کار بود، از کار افتاد.</p>"
+				+ "<p>همچنین نشانه‌هایی وجود دارد که بازی از محیطی مدیریت شده توسط "
+				+ "<b>CurseForge</b> شروع شده است، برای مثال مسیرهای CurseForge، <b>DCFInstanceId</b> یا نشانگر لانچر CurseForge.</p>"
+				+ textoOverwolf + "<p>نمی‌توان فقط از روی لاگ ثابت کرد که CurseForge یا Overwolf علت دقیق هستند. "
+				+ "با این حال، این الگو اغلب در اجرای CurseForge دیده می‌شود و ممکن است مربوط "
+				+ "به ترکیب <b>G1 GC</b>، حافظه بومی، کتابخانه‌های ماینکرفت، درایورهای گرافیکی، "
+				+ "پوشه‌های بومی مدیریت شده توسط CurseForge، overlayها یا اجزای خارجی لانچر باشد.</p>"
+				+ "<p><b>راه حل رایج:</b></p>" + "<ul>"
+				+ "<li>جمع‌کننده زباله را با افزودن این آرگومان JVM تغییر دهید: <b>-XX:+UseShenandoahGC</b></li>"
+				+ "<li>در CurseForge، این معمولاً در آرگومان‌های اضافی جاوا پروفایل یا لانچر اضافه می‌شود.</li>"
+				+ "<li>کش natives/bin پروفایل CurseForge را پاک کنید تا کتابخانه‌های بومی دوباره استخراج شوند.</li>"
+				+ "<li>جاوا و درایورهای گرافیکی را به‌روز کنید.</li>"
+				+ "<li>اگر از overlayها، ضبط‌کننده‌ها، آنتی‌ویروس سخت‌گیر یا ابزارهای دیگری که در بازی تزریق می‌شوند استفاده می‌کنید، موقتاً آن‌ها را ببندید.</li>"
+				+ "</ul>" + "<p>آموزش توصیه شده انگلیسی برای تغییر آرگومان‌ها در CurseForge: "
+				+ "<a href='https://youtu.be/UKFWBOZxB2o'>https://youtu.be/UKFWBOZxB2o</a></p>"
+				+ "<p><b>یادداشت برای ماینکرفت 1.16.5 یا قدیمی‌تر:</b> این نسخه‌ها معمولاً از جاوا 8 استفاده می‌کنند. "
+				+ "اگر از JDK 8 استفاده می‌کنید و می‌خواهید از Shenandoah استفاده کنید، ممکن است نیاز داشته باشید از "
+				+ "<b>Red Hat Build of OpenJDK 8</b> استفاده کرده و CurseForge را به آن نصب جاوا اشاره دهید.</p>"
+				+ "<p>راهنمای Red Hat برای نصب OpenJDK 8 در ویندوز: "
+				+ "<a href='https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index'>"
+				+ "https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index</a></p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllCurseForgeG1() {
+		return "خطای jvm.dll CurseForge با G1 GC";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllC2Sodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "جاوا به دلیل خطای بومی در jvm.dll در حین کامپایل کد Sodium یا mod مشابه بسته شد.</b>"
+				+ "<p>لاگ حاوی <b>EXCEPTION_ACCESS_VIOLATION</b> در داخل <b>jvm.dll</b> است، "
+				+ "و نخ فعال یک <b>C2 CompilerThread</b> است. این بدان معناست که خطا در داخل "
+				+ "کامپایلر JIT جاوا رخ داده است، نه به عنوان یک استثنا عادی ماینکرفت.</p>"
+				+ "<p>در این مورد، وظیفه کامپایل به کدی مرتبط با <b>Sodium</b>، "
+				+ "<b>Embeddium</b>، <b>Rubidium</b> یا کلاسی مشابه مانند "
+				+ "<b>ClonedChunkSectionCache::acquire</b> اشاره می‌کند.</p>" + "<p><b>راه حل توصیه شده:</b></p>"
+				+ "<ul>"
+				+ "<li><b>Sodium</b>، <b>Embeddium</b>، <b>Rubidium</b>، <b>Oculus</b> یا هر mod رندرینگ مرتبط را به‌روز کنید.</li>"
+				+ "<li>جاوا 17 را به‌روز کنید. اگر از نسخه مدرن استفاده می‌کنید، توزیع دیگری مانند Temurin، Zulu یا Microsoft OpenJDK را امتحان کنید.</li>"
+				+ "<li>درایورهای کارت گرافیک را به‌روز کنید.</li>"
+				+ "<li>موقتاً بدون Sodium، Embeddium، Rubidium یا Oculus امتحان کنید تا تأیید شود خطا برطرف می‌شود.</li>"
+				+ "<li>به عنوان آزمایش پیشرفته، از <b>-XX:TieredStopAtLevel=1</b> استفاده کنید تا استفاده از کامپایلر C2 کاهش یابد. "
+				+ "این ممکن است عملکرد را کاهش دهد، اما کمک می‌کند تأیید شود خطا از کامپایلر JIT ناشی می‌شود.</li>"
+				+ "</ul>" + "<p>این مشکل همان کرش عادی یک mod نیست. همچنین متفاوت از خطاهایی است که "
+				+ "<b>GCTaskThread</b> به عنوان نخ فعال ظاهر می‌شود. در اینجا الگو بیشتر به کامپایلر C2 جاوا "
+				+ "در حال کامپایل کد رندرینگ بهینه‌شده اشاره دارد.</p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllC2Sodium() {
+		return "خطای بومی جاوا با Sodium / Embeddium";
+	}
+
+	@Override
+	public String mensajeErrorArchivoUsadoPorOtroProceso(String archivo) {
+		String textoArchivo = "";
+
+		if (archivo != null && archivo.length() > 0) {
+			textoArchivo = "<p><b>فایل قفل شده است:</b> " + archivo + "</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "یک فایل توسط فرآیند دیگری در حال استفاده است.</b>"
+				+ "<p>لاگ حاوی خطای <b>java.nio.file.FileSystemException</b> است که نشان می‌دهد ویندوز نمی‌تواند "
+				+ "به فایلی دسترسی پیدا کند زیرا برنامه دیگری از آن استفاده می‌کند.</p>" + textoArchivo
+				+ "<p>این معمولاً زمانی اتفاق می‌افتد که ماینکرفت، CurseForge، یک ویرایشگر متن، آنتی‌ویروس، OneDrive، "
+				+ "یک برنامه همگام‌سازی یا حتی یک نمونه دیگر از بازی، فایل را باز داشته باشد.</p>"
+				+ "<p><b>راه حل پیشنهادی:</b></p>" + "<ul>" + "<li>ماینکرفت را کاملاً ببندید.</li>"
+				+ "<li>CurseForge را بسته و مجدداً باز کنید.</li>"
+				+ "<li>مدیریت وظایف (Task Manager) را بررسی کرده و فرآیندهای تکراری <b>javaw.exe</b>، <b>java.exe</b>، ماینکرفت یا CurseForge را پایان دهید.</li>"
+				+ "<li>ویرایشگرهای متنی که ممکن است فایل پیکربندی را باز داشته باشند، ببندید.</li>"
+				+ "<li>اگر فایل در OneDrive، Dropbox یا برنامه مشابهی قرار دارد، همگام‌سازی را موقتاً متوقف کنید.</li>"
+				+ "<li>اگر مشکل ادامه داشت، کامپیوتر را ریستارت کنید تا قفل فایل آزاد شود.</li>" + "</ul>"
+				+ "<p>پس از آزادسازی فایل، مودپک را مجدداً راه‌اندازی کنید. اگر فایل قفل شده یک فایل پیکربندی است، "
+				+ "تهیه نسخه پشتیبان و بازتولید آن فایل نیز می‌تواند کمک‌کننده باشد.</p>";
+	}
+
+	@Override
+	public String nombreErrorArchivoUsadoPorOtroProceso() {
+		return "فایل در حال استفاده توسط فرآیند دیگر";
+	}
+
 }

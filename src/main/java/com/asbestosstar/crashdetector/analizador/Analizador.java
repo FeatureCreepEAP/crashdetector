@@ -27,6 +27,7 @@ import com.asbestosstar.crashdetector.analizador.general.ContenidoDeTrazos;
 import com.asbestosstar.crashdetector.analizador.general.DifDeMods;
 import com.asbestosstar.crashdetector.analizador.general.Drivers;
 import com.asbestosstar.crashdetector.analizador.general.ErrorArchivoBloqueadoPorOtroProceso;
+import com.asbestosstar.crashdetector.analizador.general.ErrorArchivoUsadoPorOtroProceso;
 import com.asbestosstar.crashdetector.analizador.general.ErrorCampoInexistente;
 import com.asbestosstar.crashdetector.analizador.general.ErrorCaracteresInvalidosEnNombre;
 import com.asbestosstar.crashdetector.analizador.general.ErrorClaseFinalExtendida;
@@ -341,6 +342,9 @@ public class Analizador {
 		verificaciones.add(new ErrorVerificacionBytecode());
 		verificaciones.add(new ErrorMetodoFinalSobrescrito());
 		verificaciones.add(new CrashProvocadoPorComando());
+		verificaciones.add(new ErrorJvmDllC2Sodium());
+		verificaciones.add(new ErrorJvmDllCurseForgeG1());
+		verificaciones.add(new ErrorArchivoUsadoPorOtroProceso());
 
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());

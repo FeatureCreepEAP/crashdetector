@@ -79,6 +79,7 @@ import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloT
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasMinimalista;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos;
 import com.asbestosstar.crashdetector.gui.tipos.mclogs.MCLogsHistorialGUIDoodleBob;
+import com.asbestosstar.crashdetector.gui.tipos.mcp.McpGUIMotherV3;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
 import com.asbestosstar.crashdetector.gui.tipos.migrador.MigradorLegacySamekoSaba;
 import com.asbestosstar.crashdetector.gui.tipos.miranda.DerechosPiratasGUIOnePiece;
@@ -361,6 +362,7 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/logo_crashassistant.png",
 				Statics.carpeta.resolve("imagenes/logo_crashassistant.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/niwa.png", Statics.carpeta.resolve("imagenes/niwa.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/motherv3.png", Statics.carpeta.resolve("imagenes/motherv3.png").toFile());
 
 //docs		
 
@@ -692,6 +694,7 @@ public class MonitorDePID {
 		TipoGUI.MIGRADOR_LEGACY.registrarGUI(MigradorLegacySamekoSaba.ID, MigradorLegacySamekoSaba::new);
 		TipoGUI.PRINCIPAL.registrarGUI(PrincipalGUICentroSoporte.ID, PrincipalGUICentroSoporte::new);
 		TipoGUI.SCRIPT_IDE.registrarGUI(ScriptIDEGUINiwaJPlus.ID, ScriptIDEGUINiwaJPlus::new);
+		TipoGUI.MCP.registrarGUI(McpGUIMotherV3.ID, McpGUIMotherV3::new);
 
 	}
 

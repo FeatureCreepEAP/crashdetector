@@ -28,6 +28,8 @@ import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.mcp.McpGUI;
+import com.asbestosstar.crashdetector.gui.tipos.mcp.McpGUIMotherV3;
 
 /**
  * GUI base para integrar una IA externa orientada al análisis de crashes.
@@ -65,6 +67,7 @@ public abstract class IAGUI extends JFrame implements CrashDetectorGUI, BotonDeB
 	public JButton btnCopiar;
 	public JButton btnAbrir;
 	public JLabel lblAviso;
+	public JButton btnAbrirMcp;
 
 	@Override
 	public TipoGUI tipo() {
@@ -119,6 +122,9 @@ public abstract class IAGUI extends JFrame implements CrashDetectorGUI, BotonDeB
 		btnCopiar = new JButton(MonitorDePID.idioma.iaCopiarEnlace());
 		btnAbrir = new JButton(MonitorDePID.idioma.iaAbrirEnlace());
 
+		btnAbrirMcp = new JButton(MonitorDePID.idioma.iaAbrirMcp());
+		btnAbrirMcp.addActionListener(e -> abrirMcp());
+
 		btnCopiar.addActionListener(e -> copiarEnlace());
 		btnAbrir.addActionListener(e -> abrirEnlace());
 
@@ -126,6 +132,7 @@ public abstract class IAGUI extends JFrame implements CrashDetectorGUI, BotonDeB
 
 		panelBotones.add(btnCopiar);
 		panelBotones.add(btnAbrir);
+		panelBotones.add(btnAbrirMcp);
 
 		panelSuperior.add(lblTitulo, BorderLayout.NORTH);
 		panelSuperior.add(new JScrollPane(txtDescripcion), BorderLayout.CENTER);
@@ -143,6 +150,15 @@ public abstract class IAGUI extends JFrame implements CrashDetectorGUI, BotonDeB
 		panelRaiz.add(panelCentro, BorderLayout.SOUTH);
 
 		add(panelRaiz, BorderLayout.CENTER);
+	}
+
+	public void abrirMcp() {
+		try {
+			McpGUI gui = TipoGUI.MCP.obtenerGUIPredeterminado(McpGUIMotherV3.ID, McpGUIMotherV3::new);
+			gui.init();
+		} catch (Exception ex) {
+			CrashDetectorLogger.logException(ex);
+		}
 	}
 
 	/**

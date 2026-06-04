@@ -189,30 +189,22 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				cerrarCompletado();
+				editor.requestFocusInWindow();
 			}
 		});
 
-		editor.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "aceptar_o_enter");
-		editor.getActionMap().put("aceptar_o_enter", new javax.swing.AbstractAction() {
+		editor.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "ide_enter_intellisense");
+		editor.getActionMap().put("ide_enter_intellisense", new javax.swing.AbstractAction() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				if (menuCompletado != null && menuCompletado.isVisible()) {
-					insertarCompletadoSeleccionado();
-					return;
-				}
-
-				try {
-					editor.getDocument().insertString(editor.getCaretPosition(), "\n", null);
-				} catch (Exception ex) {
-					CrashDetectorLogger.logException(ex);
-				}
+				accionEnterIntellisense();
 			}
 		});
 
-		editor.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "completado_abajo_o_mover");
-		editor.getActionMap().put("completado_abajo_o_mover", new javax.swing.AbstractAction() {
+		editor.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "ide_completado_abajo");
+		editor.getActionMap().put("ide_completado_abajo", new javax.swing.AbstractAction() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -222,13 +214,12 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 					return;
 				}
 
-				editor.dispatchEvent(new java.awt.event.KeyEvent(editor, KeyEvent.KEY_PRESSED,
-						System.currentTimeMillis(), 0, KeyEvent.VK_DOWN, KeyEvent.CHAR_UNDEFINED));
+				moverCaretVertical(1);
 			}
 		});
 
-		editor.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "completado_arriba_o_mover");
-		editor.getActionMap().put("completado_arriba_o_mover", new javax.swing.AbstractAction() {
+		editor.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "ide_completado_arriba");
+		editor.getActionMap().put("ide_completado_arriba", new javax.swing.AbstractAction() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -238,20 +229,95 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 					return;
 				}
 
-				editor.dispatchEvent(new java.awt.event.KeyEvent(editor, KeyEvent.KEY_PRESSED,
-						System.currentTimeMillis(), 0, KeyEvent.VK_UP, KeyEvent.CHAR_UNDEFINED));
+				moverCaretVertical(-1);
 			}
 		});
 
 		temporizadorCambioIntellisense = new Timer(350, e -> enviarCambioAIntellisense());
 		temporizadorCambioIntellisense.setRepeats(false);
 
-		// Completado automatico: se dispara 600ms despues de que el usuario deja de
-		// escribir
+		// Completado automatico: se dispara despues de que el usuario deja de escribir.
 		temporizadorCompletadoAuto = new Timer(600, e -> mostrarCompletadoAuto());
 		temporizadorCompletadoAuto.setRepeats(false);
 
+		inicializarTeclasListaCompletado();
 		inicializarIntellisenseSiExiste();
+	}
+
+	public void accionEnterIntellisense() {
+		if (menuCompletado != null && menuCompletado.isVisible()) {
+			insertarCompletadoSeleccionado();
+			editor.requestFocusInWindow();
+			return;
+		}
+
+		try {
+			editor.getDocument().insertString(editor.getCaretPosition(), "\n", null);
+		} catch (Exception ex) {
+			CrashDetectorLogger.logException(ex);
+		}
+	}
+
+	public void moverCaretVertical(int direccion) {
+		try {
+			int pos = editor.getCaretPosition();
+			int nuevo;
+
+			if (direccion > 0) {
+				nuevo = javax.swing.text.Utilities.getPositionBelow(editor, pos, 0);
+			} else {
+				nuevo = javax.swing.text.Utilities.getPositionAbove(editor, pos, 0);
+			}
+
+			if (nuevo >= 0) {
+				editor.getCaret().setDot(nuevo);
+			}
+		} catch (Throwable ignored) {
+		}
+	}
+
+	public void inicializarTeclasListaCompletado() {
+		listaCompletado.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "ide_lista_enter_intellisense");
+		listaCompletado.getActionMap().put("ide_lista_enter_intellisense", new javax.swing.AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				accionEnterIntellisense();
+			}
+		});
+
+		listaCompletado.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				"ide_lista_escape_intellisense");
+		listaCompletado.getActionMap().put("ide_lista_escape_intellisense", new javax.swing.AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				cerrarCompletado();
+				editor.requestFocusInWindow();
+			}
+		});
+
+		listaCompletado.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "ide_lista_abajo_intellisense");
+		listaCompletado.getActionMap().put("ide_lista_abajo_intellisense", new javax.swing.AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				moverSeleccionCompletado(1);
+			}
+		});
+
+		listaCompletado.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "ide_lista_arriba_intellisense");
+		listaCompletado.getActionMap().put("ide_lista_arriba_intellisense", new javax.swing.AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				moverSeleccionCompletado(-1);
+			}
+		});
 	}
 
 	public void inicializarIntellisenseSiExiste() {
@@ -662,7 +728,6 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 		modeloCompletado.clear();
 
 		if (valores == null || valores.isEmpty()) {
-			// Si ya no hay sugerencias, cerrar el popup
 			cerrarCompletado();
 			return;
 		}
@@ -685,6 +750,7 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 		}
 
 		if (modeloCompletado.isEmpty()) {
+			cerrarCompletado();
 			return;
 		}
 
@@ -711,9 +777,12 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 			Rectangle r = editor.modelToView(editor.getCaretPosition());
 			Point p = r == null ? new Point(12, 12) : new Point(r.x, r.y + r.height);
 			menuCompletado.show(editor, p.x, p.y);
-			listaCompletado.requestFocusInWindow();
+
+			// Importante: el foco se queda en el editor, asi Enter acepta el completado.
+			editor.requestFocusInWindow();
 		} catch (Exception ex) {
 			menuCompletado.show(editor, 12, 12);
+			editor.requestFocusInWindow();
 		}
 	}
 

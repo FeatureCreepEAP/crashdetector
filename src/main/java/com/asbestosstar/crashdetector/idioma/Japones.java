@@ -10932,4 +10932,164 @@ public class Japones implements Idioma {
 		return "Jexel3";
 	}
 
+	// Japanese (日本語)
+	public String mcpBotonSidebar() {
+		return "MCP";
+	}
+
+	public String iaAbrirMcp() {
+		return "MCP を開く";
+	}
+
+	public String mcpTituloVentana() {
+		return "CrashDetector MCP";
+	}
+
+	public String mcpTituloPrincipal() {
+		return "ローカル AI 用 MCP サーバー";
+	}
+
+	public String mcpPuerto() {
+		return "MCP ポート：";
+	}
+
+	public String mcpDescargarDependencias() {
+		return "MCP/CFR 依存関係をダウンロード";
+	}
+
+	public String mcpIniciarServidor() {
+		return "MCP サーバーを開始";
+	}
+
+	public String mcpEstadoDependenciasNoCargadas() {
+		return "MCP/CFR 依存関係がロードされていません。ボタンが無効のままの場合は、ダウンロードして再起動してください。";
+	}
+
+	public String mcpEstadoDependenciasCargadas() {
+		return "MCP/CFR 依存関係が検出されました。MCP サーバーを開始できます。";
+	}
+
+	public String mcpDependenciasDescargadasReiniciar() {
+		return "依存関係がダウンロードされました。まだロードされていない場合は、CrashDetector を再起動してください。";
+	}
+
+	public String mcpErrorDescargandoDependencias(String error) {
+		return "MCP/CFR 依存関係をダウンロードできませんでした: " + error;
+	}
+
+	public String mcpServidorIniciado(int puerto) {
+		return "MCP サーバーが 127.0.0.1:" + puerto + "/mcp で開始されました";
+	}
+
+	public String mcpErrorIniciandoServidor(String error) {
+		return "MCP サーバーを開始できませんでした: " + error;
+	}
+
+	public String mcpImagenNoDisponible() {
+		return "MCP 画像は利用できません";
+	}
+
+	public String colorAcento() {
+		return "アクセントカラー";
+	}
+
+	public String mcpDescripcionHtml() {
+		return "<b>このパネルは、Claude Desktop、Qwen Desktop Linux、Red Hat command-line-assistant、または Goose などのアシスタント用のローカル MCP サーバーを開始します。</b>"
+				+ "<br><br>" + "まず、MCP/CFR 依存関係をダウンロードしてください。その後、クラスがクラスパスに表示されない場合は再起動してください。" + "<br><br>"
+				+ "<b>Claude Desktop / Qwen Desktop Linux、例：</b>" + "<pre>{\n" + "  \"mcpServers\": {\n"
+				+ "    \"crashdetector\": {\n" + "      \"url\": \"http://127.0.0.1:8765/mcp\"\n" + "    }\n" + "  }\n"
+				+ "}</pre>" + "<b>Goose / command-line-assistant：</b>" + "<pre>http://127.0.0.1:8765/mcp</pre>"
+				+ "現在、この MCP サーバーは基本的なものです。後で、ログの読み取り、CFR の参照、mod の確認、クラスの検索、クラッシュの説明を行うための実際のツールを追加できます。";
+	}
+
+	// Japanese (日本語)
+	@Override
+	public String mensajeErrorJvmDllCurseForgeG1(boolean conOverwolf) {
+		String textoOverwolf = "";
+
+		if (conOverwolf) {
+			textoOverwolf = "<p>ログにはまた、<b>Overwolf</b> または関連するDLL（例："
+					+ "<b>OWClient.dll</b> または <b>OWUtils.dll</b>）の兆候が表示されています。これ自体がOverwolfが原因であることを証明するわけではありませんが、"
+					+ "Minecraftプロセスが通常のバニラ起動よりも修正された環境内で実行されていたことを示しています。</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "CurseForgeでのG1ガベージコレクション中にjvm.dllのネイティブ障害によりJavaが終了しました。</b>"
+				+ "<p>ログには <b>jvm.dll</b> 内の <b>EXCEPTION_ACCESS_VIOLATION</b> が含まれており、"
+				+ "アクティブなスレッドは <b>GCTaskThread</b> です。これは、ガベージコレクタ " + "<b>G1</b> が動作している間にJavaが失敗したことを意味します。</p>"
+				+ "<p>また、ゲームが <b>CurseForge</b> によって管理される環境（例：CurseForgeのパス、<b>DCFInstanceId</b>、またはCurseForgeランチャーのブランド）から"
+				+ "起動されたことを示す兆候もあります。</p>" + textoOverwolf + "<p>ログのみからCurseForgeやOverwolfが正確な原因であることを証明することはできません。 "
+				+ "しかし、このパターンはCurseForgeの起動で頻繁に見られ、 " + "<b>G1 GC</b>、ネイティブメモリ、Minecraftライブラリ、グラフィックスドライバ、 "
+				+ "CurseForgeが管理するネイティブフォルダ、オーバーレイ、またはランチャーの外部コンポーネントの組み合わせに関連している可能性があります。</p>"
+				+ "<p><b>一般的な解決策：</b></p>" + "<ul>" + "<li>次のJVM引数を追加してガベージコレクタを変更します：<b>-XX:+UseShenandoahGC</b></li>"
+				+ "<li>CurseForgeでは、これは通常、プロファイルまたはランチャーの追加Java引数に追加されます。</li>"
+				+ "<li>CurseForgeプロファイルのnatives/binキャッシュをクリアして、ネイティブライブラリを再度抽出するように強制します。</li>"
+				+ "<li>Javaとグラフィックスドライバを更新します。</li>"
+				+ "<li>オーバーレイ、録画ソフト、攻撃的なアンチウイルス、またはゲームに注入される他のツールを使用している場合は、一時的に閉じてみてください。</li>" + "</ul>"
+				+ "<p>CurseForgeで引数を変更するための推奨される英語チュートリアル： "
+				+ "<a href='https://youtu.be/UKFWBOZxB2o'>https://youtu.be/UKFWBOZxB2o</a></p>"
+				+ "<p><b>Minecraft 1.16.5以前のための注意：</b> それらのバージョンは通常Java 8を使用します。 " + "JDK 8を使用していてShenandoahを使用したい場合は、 "
+				+ "<b>Red Hat Build of OpenJDK 8</b> を使用し、CurseForgeをそのJavaインストールに向ける必要があるかもしれません。</p>"
+				+ "<p>WindowsにOpenJDK 8をインストールするためのRed Hatガイド： "
+				+ "<a href='https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index'>"
+				+ "https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index</a></p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllCurseForgeG1() {
+		return "G1 GCを使用したCurseForgeのjvm.dll障害";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllC2Sodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Sodiumまたは類似のmodのコードをコンパイル中にjvm.dllのネイティブ障害によりJavaが終了しました。</b>"
+				+ "<p>ログには <b>jvm.dll</b> 内の <b>EXCEPTION_ACCESS_VIOLATION</b> が含まれており、"
+				+ "アクティブなスレッドは <b>C2 CompilerThread</b> です。これは、障害が通常のMinecraft例外ではなく、"
+				+ "JavaのJITコンパイラ内部で発生したことを意味します。</p>" + "<p>この場合、コンパイルタスクは <b>Sodium</b>、 "
+				+ "<b>Embeddium</b>、<b>Rubidium</b>、または "
+				+ "<b>ClonedChunkSectionCache::acquire</b> のような類似クラスに関連するコードに言及しています。</p>" + "<p><b>推奨される解決策：</b></p>"
+				+ "<ul>"
+				+ "<li><b>Sodium</b>、<b>Embeddium</b>、<b>Rubidium</b>、<b>Oculus</b>、または関連するレンダリングmodを更新してください。</li>"
+				+ "<li>Java 17を更新してください。すでに最新のバージョンを使用している場合は、Temurin、Zulu、またはMicrosoft OpenJDKなどの別の配布を試してください。</li>"
+				+ "<li>グラフィックスカードのドライバを更新してください。</li>"
+				+ "<li>Sodium、Embeddium、Rubidium、またはOculusなしで一時的にテストし、障害が消えるか確認してください。</li>"
+				+ "<li>高度なテストとして、<b>-XX:TieredStopAtLevel=1</b> を使用してC2コンパイラの使用を減らします。 "
+				+ "これはパフォーマンスを低下させる可能性がありますが、障害がJITコンパイラから来ているか確認するのに役立ちます。</li>" + "</ul>"
+				+ "<p>この問題は通常のmodクラッシュと同じではありません。また、<b>GCTaskThread</b> が "
+				+ "アクティブなスレッドとして現れる障害とも異なります。ここでのパターンは、JavaのC2コンパイラが " + "最適化されたレンダリングコードをコンパイルしていることをより示唆しています。</p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllC2Sodium() {
+		return "Sodium / EmbeddiumによるJavaのネイティブ障害";
+	}
+
+	@Override
+	public String mensajeErrorArchivoUsadoPorOtroProceso(String archivo) {
+		String textoArchivo = "";
+
+		if (archivo != null && archivo.length() > 0) {
+			textoArchivo = "<p><b>ロックされたファイル:</b> " + archivo + "</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ファイルが他のプロセスによって使用されています。</b>"
+				+ "<p>ログには <b>java.nio.file.FileSystemException</b> エラーが含まれており、Windowsが "
+				+ "他のプログラムによってファイルが使用されているためアクセスできないことを示しています。</p>" + textoArchivo
+				+ "<p>これは通常、Minecraft、CurseForge、テキストエディタ、ウイルス対策ソフト、OneDrive、 "
+				+ "同期プログラム、またはゲームの別のインスタンスがファイルを開いている場合に発生します。</p>" + "<p><b>推奨される解決策:</b></p>" + "<ul>"
+				+ "<li>Minecraftを完全に終了してください。</li>" + "<li>CurseForgeを閉じて、再度開いてください。</li>"
+				+ "<li>タスクマネージャーを確認し、重複した <b>javaw.exe</b>、<b>java.exe</b>、Minecraft、または CurseForge のプロセスを終了してください。</li>"
+				+ "<li>設定ファイルを開いている可能性のあるテキストエディタを閉じてください。</li>"
+				+ "<li>ファイルが OneDrive、Dropbox、または類似のプログラム内にある場合は、同期を一時的に一時停止してください。</li>"
+				+ "<li>問題が続く場合は、コンピュータを再起動してファイルのロックを解除してください。</li>" + "</ul>"
+				+ "<p>ファイルのロックが解除された後、モッドパックを再起動してください。ロックされたファイルが設定ファイルの場合、 " + "バックアップを作成し、そのファイルを再生成することも役立ちます。</p>";
+	}
+
+	@Override
+	public String nombreErrorArchivoUsadoPorOtroProceso() {
+		return "他のプロセスで使用されているファイル";
+	}
+
 }

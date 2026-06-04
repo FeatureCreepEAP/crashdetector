@@ -10627,4 +10627,172 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Jexel3";
 	}
 
+	public String mcpBotonSidebar() {
+		return "MCP";
+	}
+
+	public String iaAbrirMcp() {
+		return "Відкрити MCP";
+	}
+
+	public String mcpTituloVentana() {
+		return "CrashDetector MCP";
+	}
+
+	public String mcpTituloPrincipal() {
+		return "Сервер MCP для локального ШІ";
+	}
+
+	public String mcpPuerto() {
+		return "Порт MCP:";
+	}
+
+	public String mcpDescargarDependencias() {
+		return "Завантажити залежності MCP/CFR";
+	}
+
+	public String mcpIniciarServidor() {
+		return "Запустити сервер MCP";
+	}
+
+	public String mcpEstadoDependenciasNoCargadas() {
+		return "Залежності MCP/CFR не завантажено. Завантажте їх і перезавантажте, якщо кнопка все ще неактивна.";
+	}
+
+	public String mcpEstadoDependenciasCargadas() {
+		return "Залежності MCP/CFR виявлено. Сервер MCP можна запустити.";
+	}
+
+	public String mcpDependenciasDescargadasReiniciar() {
+		return "Залежності завантажено. Якщо вони все ще не відображаються як завантажені, перезавантажте CrashDetector.";
+	}
+
+	public String mcpErrorDescargandoDependencias(String error) {
+		return "Не вдалося завантажити залежності MCP/CFR: " + error;
+	}
+
+	public String mcpServidorIniciado(int puerto) {
+		return "Сервер MCP запущено на 127.0.0.1:" + puerto + "/mcp";
+	}
+
+	public String mcpErrorIniciandoServidor(String error) {
+		return "Не вдалося запустити сервер MCP: " + error;
+	}
+
+	public String mcpImagenNoDisponible() {
+		return "Зображення MCP недоступне";
+	}
+
+	public String colorAcento() {
+		return "Колір акценту";
+	}
+
+	public String mcpDescripcionHtml() {
+		return "<b>Ця панель запускає локальний сервер MCP для асистентів, таких як Claude Desktop, Qwen Desktop Linux, Red Hat command-line-assistant або Goose.</b>"
+				+ "<br><br>"
+				+ "Спочатку завантажте залежності MCP/CFR. Потім перезавантажте, якщо класи не з'являться в classpath."
+				+ "<br><br>" + "<b>Claude Desktop / Qwen Desktop Linux, приклад:</b>" + "<pre>{\n"
+				+ "  \"mcpServers\": {\n" + "    \"crashdetector\": {\n"
+				+ "      \"url\": \"http://127.0.0.1:8765/mcp\"\n" + "    }\n" + "  }\n" + "}</pre>"
+				+ "<b>Goose / command-line-assistant:</b>" + "<pre>http://127.0.0.1:8765/mcp</pre>"
+				+ "Наразі цей сервер MCP є базовим. Пізніше можна додати реальні інструменти для читання логів, запитів до CFR, перевірки модів, пошуку класів і пояснення крашів.";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllCurseForgeG1(boolean conOverwolf) {
+		String textoOverwolf = "";
+
+		if (conOverwolf) {
+			textoOverwolf = "<p>Лог також показує ознаки <b>Overwolf</b> або пов'язаних DLL, таких як "
+					+ "<b>OWClient.dll</b> або <b>OWUtils.dll</b>. Це саме по собі не доводить, що Overwolf є причиною, "
+					+ "але вказує на те, що процес Minecraft виконувався в більш модифікованому середовищі, "
+					+ "ніж звичайний запуск vanilla.</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java закрилася через нативний збій у jvm.dll під час роботи збирача G1 у CurseForge.</b>"
+				+ "<p>Лог містить <b>EXCEPTION_ACCESS_VIOLATION</b> всередині <b>jvm.dll</b>, "
+				+ "і активний потік — це <b>GCTaskThread</b>. Це означає, що Java впала, поки збирач сміття "
+				+ "<b>G1</b> працював.</p>" + "<p>Також є ознаки того, що гру було запущено з середовища, керованого "
+				+ "<b>CurseForge</b>, наприклад, шляхи CurseForge, <b>DCFInstanceId</b> або мітка лаунчера CurseForge.</p>"
+				+ textoOverwolf + "<p>Неможливо довести лише за логом, що CurseForge або Overwolf є точною причиною. "
+				+ "Однак цей патерн часто зустрічається в запусках CurseForge і може бути пов'язаний "
+				+ "з комбінацією <b>G1 GC</b>, нативної пам'яті, бібліотек Minecraft, графічних драйверів, "
+				+ "нативних папок, керованих CurseForge, оверлеїв або зовнішніх компонентів лаунчера.</p>"
+				+ "<p><b>Загальне рішення:</b></p>" + "<ul>"
+				+ "<li>Змініть збирач сміття, додавши цей аргумент JVM: <b>-XX:+UseShenandoahGC</b></li>"
+				+ "<li>У CurseForge це зазвичай додається в додаткові аргументи Java профілю або лаунчера.</li>"
+				+ "<li>Очистіть кеш natives/bin профілю CurseForge, щоб примусово витягти нативні бібліотеки заново.</li>"
+				+ "<li>Оновіть Java та графічні драйвери.</li>"
+				+ "<li>Якщо ви використовуєте оверлеї, програми запису, агресивні антивіруси або інші інструменти, що впроваджуються в ігри, спробуйте тимчасово їх закрити.</li>"
+				+ "</ul>" + "<p>Рекомендований посібник англійською для зміни аргументів у CurseForge: "
+				+ "<a href='https://youtu.be/UKFWBOZxB2o'>https://youtu.be/UKFWBOZxB2o</a></p>"
+				+ "<p><b>Примітка для Minecraft 1.16.5 або старіше:</b> ці версії зазвичай використовують Java 8. "
+				+ "Якщо ви використовуєте JDK 8 і хочете використовувати Shenandoah, вам, можливо, знадобиться використати "
+				+ "<b>Red Hat Build of OpenJDK 8</b> і вказати CurseForge на цю установку Java.</p>"
+				+ "<p>Посібник Red Hat щодо встановлення OpenJDK 8 у Windows: "
+				+ "<a href='https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index'>"
+				+ "https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index</a></p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllCurseForgeG1() {
+		return "Збій jvm.dll CurseForge з G1 GC";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllC2Sodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java закрилася через нативний збій у jvm.dll під час компіляції коду Sodium або подібного моду.</b>"
+				+ "<p>Лог містить <b>EXCEPTION_ACCESS_VIOLATION</b> всередині <b>jvm.dll</b>, "
+				+ "і активний потік — це <b>C2 CompilerThread</b>. Це означає, що збій стався всередині "
+				+ "JIT-компілятора Java, а не як звичайний виняток Minecraft.</p>"
+				+ "<p>У цьому випадку завдання компіляції згадує код, пов'язаний із <b>Sodium</b>, "
+				+ "<b>Embeddium</b>, <b>Rubidium</b> або подібним класом, таким як "
+				+ "<b>ClonedChunkSectionCache::acquire</b>.</p>" + "<p><b>Рекомендоване рішення:</b></p>" + "<ul>"
+				+ "<li>Оновіть <b>Sodium</b>, <b>Embeddium</b>, <b>Rubidium</b>, <b>Oculus</b> або будь-який пов'язаний мод рендерингу.</li>"
+				+ "<li>Оновіть Java 17. Якщо ви вже використовуєте сучасну версію, спробуйте інший дистрибутив, такий як Temurin, Zulu або Microsoft OpenJDK.</li>"
+				+ "<li>Оновіть драйвери відеокарти.</li>"
+				+ "<li>Спробуйте тимчасово без Sodium, Embeddium, Rubidium або Oculus, щоб підтвердити, чи зникне збій.</li>"
+				+ "<li>Як просунутий тест, використовуйте <b>-XX:TieredStopAtLevel=1</b>, щоб зменшити використання компілятора C2. "
+				+ "Це може знизити продуктивність, але допомагає підтвердити, що збій походить від JIT-компілятора.</li>"
+				+ "</ul>" + "<p>Ця проблема не те саме, що звичайний краш моду. Вона також відрізняється від збоїв, де "
+				+ "<b>GCTaskThread</b> з'являється як активний потік. Тут патерн більше вказує на компілятор C2 Java, "
+				+ "який компілює оптимізований код рендерингу.</p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllC2Sodium() {
+		return "Нативний збій Java з Sodium / Embeddium";
+	}
+
+	@Override
+	public String mensajeErrorArchivoUsadoPorOtroProceso(String archivo) {
+		String textoArchivo = "";
+
+		if (archivo != null && archivo.length() > 0) {
+			textoArchivo = "<p><b>Файл заблоковано:</b> " + archivo + "</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Файл використовується іншим процесом.</b>"
+				+ "<p>Журнал містить помилку <b>java.nio.file.FileSystemException</b>, яка вказує, що Windows не може "
+				+ "отримати доступ до файлу, оскільки інша програма його використовує.</p>" + textoArchivo
+				+ "<p>Це зазвичай трапляється, коли Minecraft, CurseForge, текстовий редактор, антивірус, OneDrive, "
+				+ "програма синхронізації або навіть інший екземпляр гри тримають файл відкритим.</p>"
+				+ "<p><b>Рекомендоване рішення:</b></p>" + "<ul>" + "<li>Повністю закрийте Minecraft.</li>"
+				+ "<li>Закрийте CurseForge і відкрийте його знову.</li>"
+				+ "<li>Перевірте Диспетчер завдань і завершіть дубльовані процеси <b>javaw.exe</b>, <b>java.exe</b>, Minecraft або CurseForge.</li>"
+				+ "<li>Закрийте текстові редактори, які можуть тримати відкритим файл конфігурації.</li>"
+				+ "<li>Якщо файл знаходиться в OneDrive, Dropbox або подібній програмі, тимчасово призупиніть синхронізацію.</li>"
+				+ "<li>Якщо проблема не зникне, перезавантажте комп'ютер, щоб зняти блокування файлу.</li>" + "</ul>"
+				+ "<p>Після звільнення файлу знову запустіть модпак. Якщо заблокований файл є конфігурацією, "
+				+ "також може допомогти створення резервної копії та регенерація цього файлу.</p>";
+	}
+
+	@Override
+	public String nombreErrorArchivoUsadoPorOtroProceso() {
+		return "Файл використовується іншим процесом";
+	}
+
 }

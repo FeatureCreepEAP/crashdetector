@@ -11204,4 +11204,173 @@ public class Arabe implements Idioma {
 		return "Jexel3";
 	}
 
+	// Arabic (العربية)
+	public String mcpBotonSidebar() {
+		return "MCP";
+	}
+
+	public String iaAbrirMcp() {
+		return "فتح MCP";
+	}
+
+	public String mcpTituloVentana() {
+		return "CrashDetector MCP";
+	}
+
+	public String mcpTituloPrincipal() {
+		return "خادم MCP للذكاء الاصطناعي المحلي";
+	}
+
+	public String mcpPuerto() {
+		return "منفذ MCP:";
+	}
+
+	public String mcpDescargarDependencias() {
+		return "تنزيل اعتماديات MCP/CFR";
+	}
+
+	public String mcpIniciarServidor() {
+		return "بدء خادم MCP";
+	}
+
+	public String mcpEstadoDependenciasNoCargadas() {
+		return "لم يتم تحميل اعتماديات MCP/CFR. قم بتنزيلها وأعد التشغيل إذا ظل الزر غير نشط.";
+	}
+
+	public String mcpEstadoDependenciasCargadas() {
+		return "تم اكتشاف اعتماديات MCP/CFR. يمكن بدء خادم MCP.";
+	}
+
+	public String mcpDependenciasDescargadasReiniciar() {
+		return "تم تنزيل الاعتماديات. إذا لم تظهر محملة بعد، أعد تشغيل CrashDetector.";
+	}
+
+	public String mcpErrorDescargandoDependencias(String error) {
+		return "تعذر تنزيل اعتماديات MCP/CFR: " + error;
+	}
+
+	public String mcpServidorIniciado(int puerto) {
+		return "تم بدء خادم MCP على 127.0.0.1:" + puerto + "/mcp";
+	}
+
+	public String mcpErrorIniciandoServidor(String error) {
+		return "تعذر بدء خادم MCP: " + error;
+	}
+
+	public String mcpImagenNoDisponible() {
+		return "صورة MCP غير متاحة";
+	}
+
+	public String colorAcento() {
+		return "لون التمييز";
+	}
+
+	public String mcpDescripcionHtml() {
+		return "<b>يبدأ هذا اللوحة خادم MCP محلي للمساعدات مثل Claude Desktop، Qwen Desktop Linux، Red Hat command-line-assistant أو Goose.</b>"
+				+ "<br><br>"
+				+ "أولاً، قم بتنزيل اعتماديات MCP/CFR. ثم أعد التشغيل إذا لم تظهر الفئات في مسار الكلاس (classpath)."
+				+ "<br><br>" + "<b>Claude Desktop / Qwen Desktop Linux، مثال:</b>" + "<pre>{\n"
+				+ "  \"mcpServers\": {\n" + "    \"crashdetector\": {\n"
+				+ "      \"url\": \"http://127.0.0.1:8765/mcp\"\n" + "    }\n" + "  }\n" + "}</pre>"
+				+ "<b>Goose / command-line-assistant:</b>" + "<pre>http://127.0.0.1:8765/mcp</pre>"
+				+ "حالياً، هذا الخادم MCP أساسي. لاحقاً، يمكن إضافة أدوات حقيقية لقراءة السجلات، استشارة CFR، مراجعة المودات، البحث عن الفئات وشرح الأعطال.";
+	}
+
+	// Arabic (العربية)
+	@Override
+	public String mensajeErrorJvmDllCurseForgeG1(boolean conOverwolf) {
+		String textoOverwolf = "";
+
+		if (conOverwolf) {
+			textoOverwolf = "<p>يظهر السجل أيضاً مؤشرات على وجود <b>Overwolf</b> أو ملفات DLL ذات صلة، مثل "
+					+ "<b>OWClient.dll</b> أو <b>OWUtils.dll</b>. هذا لا يثبت بمفرده أن Overwolf هو السبب، "
+					+ "لكنه يشير إلى أن عملية Minecraft كانت تعمل داخل بيئة أكثر تعديلاً "
+					+ "من الإطلاق العادي (vanilla).</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم إغلاق Java بسبب فشل أصلي في jvm.dll أثناء عمل جامع القمامة G1 في CurseForge.</b>"
+				+ "<p>يحتوي السجل على <b>EXCEPTION_ACCESS_VIOLATION</b> داخل <b>jvm.dll</b>، "
+				+ "والخيط النشط هو <b>GCTaskThread</b>. هذا يعني أن Java فشلت بينما كان جامع القمامة "
+				+ "<b>G1</b> يعمل.</p>" + "<p>توجد أيضاً مؤشرات على أن اللعبة تم إطلاقها من بيئة تديرها "
+				+ "<b>CurseForge</b>، مثل مسارات CurseForge، أو <b>DCFInstanceId</b>، أو علامة launcher الخاصة بـ CurseForge.</p>"
+				+ textoOverwolf + "<p>لا يمكن إثبات أن CurseForge أو Overwolf هما السبب الدقيق فقط من خلال السجل. "
+				+ "ومع ذلك، يُرى هذا النمط بشكل متكرر في عمليات إطلاق CurseForge وقد يكون مرتبطاً "
+				+ "بالجمع بين <b>G1 GC</b>، الذاكرة الأصلية، مكتبات Minecraft، تعريفات الرسومات، "
+				+ "المجلدات الأصلية التي تديرها CurseForge، الطبقات العلوية (overlays) أو المكونات الخارجية للـ launcher.</p>"
+				+ "<p><b>الحل الشائع:</b></p>" + "<ul>"
+				+ "<li>غيّر جامع القمامة بإضافة وسيطة JVM هذه: <b>-XX:+UseShenandoahGC</b></li>"
+				+ "<li>في CurseForge، عادةً ما تتم إضافة هذا في وسائط Java الإضافية للملف الشخصي أو للـ launcher.</li>"
+				+ "<li>امسح ذاكرة التخزين المؤقت لـ natives/bin في ملف CurseForge الشخصي لإجبار استخراج المكتبات الأصلية مرة أخرى.</li>"
+				+ "<li>قم بتحديث Java وتعريفات الرسومات.</li>"
+				+ "<li>إذا كنت تستخدم overlays، أو برامج تسجيل، أو مضاد فيروسات عدواني، أو أدوات أخرى تُحقن في الألعاب، جرب إغلاقها مؤقتاً.</li>"
+				+ "</ul>" + "<p>برنامج تعليمي موصى به باللغة الإنجليزية لتغيير الوسائط في CurseForge: "
+				+ "<a href='https://youtu.be/UKFWBOZxB2o'>https://youtu.be/UKFWBOZxB2o</a></p>"
+				+ "<p><b>ملاحظة لمinecraft 1.16.5 أو أقدم:</b> تلك الإصدارات تستخدم عادةً Java 8. "
+				+ "إذا كنت تستخدم JDK 8 وتريد استخدام Shenandoah، قد تحتاج إلى استخدام "
+				+ "<b>Red Hat Build of OpenJDK 8</b> وتوجيه CurseForge نحو تثبيت Java هذا.</p>"
+				+ "<p>دليل Red Hat لتثبيت OpenJDK 8 على Windows: "
+				+ "<a href='https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index'>"
+				+ "https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index</a></p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllCurseForgeG1() {
+		return "فشل jvm.dll في CurseForge مع G1 GC";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllC2Sodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم إغلاق Java بسبب فشل أصلي في jvm.dll أثناء تجميع كود Sodium أو mod مشابه.</b>"
+				+ "<p>يحتوي السجل على <b>EXCEPTION_ACCESS_VIOLATION</b> داخل <b>jvm.dll</b>، "
+				+ "والخيط النشط هو <b>C2 CompilerThread</b>. هذا يعني أن الفشل حدث داخل "
+				+ "مجمع JIT الخاص بـ Java، وليس كاستثناء عادي في Minecraft.</p>"
+				+ "<p>في هذه الحالة، تذكر مهمة التجميع كوداً مرتبطاً بـ <b>Sodium</b>، "
+				+ "<b>Embeddium</b>، <b>Rubidium</b>، أو فئة مشابهة مثل "
+				+ "<b>ClonedChunkSectionCache::acquire</b>.</p>" + "<p><b>الحل الموصى به:</b></p>" + "<ul>"
+				+ "<li>قم بتحديث <b>Sodium</b>، <b>Embeddium</b>، <b>Rubidium</b>، <b>Oculus</b>، أو أي mod_rendering ذي صلة.</li>"
+				+ "<li>قم بتحديث Java 17. إذا كنت تستخدم بالفعل إصداراً حديثاً، جرب توزيعة أخرى مثل Temurin أو Zulu أو Microsoft OpenJDK.</li>"
+				+ "<li>قم بتحديث تعريفات بطاقة الرسومات.</li>"
+				+ "<li>جرب مؤقتاً بدون Sodium أو Embeddium أو Rubidium أو Oculus للتأكد من اختفاء الفشل.</li>"
+				+ "<li>كاختبار متقدم، استخدم <b>-XX:TieredStopAtLevel=1</b> لتقليل استخدام مجمع C2. "
+				+ "قد يقلل هذا من الأداء، لكنه يساعد في تأكيد ما إذا كان الفشل يأتي من مجمع JIT.</li>" + "</ul>"
+				+ "<p>هذه المشكلة ليست نفس انهيار mod العادي. وهي أيضاً مختلفة عن الأعطال حيث "
+				+ "يظهر <b>GCTaskThread</b> كخيط نشط. هنا يشير النمط أكثر إلى مجمع C2 الخاص بـ Java "
+				+ "وهو يجمع كود rendering محسن.</p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllC2Sodium() {
+		return "فشل أصلي في Java مع Sodium / Embeddium";
+	}
+
+	@Override
+	public String mensajeErrorArchivoUsadoPorOtroProceso(String archivo) {
+		String textoArchivo = "";
+
+		if (archivo != null && archivo.length() > 0) {
+			textoArchivo = "<p><b>ملف محظور:</b> " + archivo + "</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ملف قيد الاستخدام بواسطة عملية أخرى.</b>"
+				+ "<p>يحتوي السجل على خطأ <b>java.nio.file.FileSystemException</b> يشير إلى أن ويندوز لا يمكنه "
+				+ "الوصول إلى ملف لأن برنامجاً آخر يستخدمه.</p>" + textoArchivo
+				+ "<p>يحدث هذا عادةً عندما يكون ماينكرافت، أو CurseForge، أو محرر نصوص، أو برنامج مكافحة فيروسات، أو ون درايف (OneDrive)، "
+				+ "أو برنامج مزامنة، أو حتى نسخة أخرى من اللعبة، قد فتح الملف.</p>" + "<p><b>الحل الموصى به:</b></p>"
+				+ "<ul>" + "<li>أغلق ماينكرافت تماماً.</li>" + "<li>أغلق CurseForge وأعد فتحه.</li>"
+				+ "<li>تحقق من مدير المهام وأنهِ العمليات المكررة لـ <b>javaw.exe</b>، <b>java.exe</b>، ماينكرافت أو CurseForge.</li>"
+				+ "<li>أغلق محررات النصوص التي قد تكون مفتوحة على ملف الإعدادات.</li>"
+				+ "<li>إذا كان الملف داخل ون درايف (OneDrive) أو دروبوكس (Dropbox) أو برنامج مشابه، أوقف المزامنة مؤقتاً.</li>"
+				+ "<li>إذا استمرت المشكلة، أعد تشغيل الكمبيوتر لتحرير قفل الملف.</li>" + "</ul>"
+				+ "<p>بعد تحرير الملف، أعد تشغيل حزمة التعديلات (modpack). إذا كان الملف المحظور هو ملف إعدادات، "
+				+ "فقد يساعد أيضاً عمل نسخة احتياطية وإعادة إنشاء ذلك الملف.</p>";
+	}
+
+	@Override
+	public String nombreErrorArchivoUsadoPorOtroProceso() {
+		return "ملف مستخدم بواسطة عملية أخرى";
+	}
+
 }

@@ -109,6 +109,12 @@ public class IAGUILuotianyi extends IAGUI {
 			lblTitulo.setFont(lblTitulo.getFont().deriveFont(Font.BOLD, 22f));
 		}
 
+		if (btnAbrirMcp != null) {
+			btnAbrirMcp.setBackground(colorBoton.obtener());
+			btnAbrirMcp.setForeground(colorBotonTexto.obtener());
+			btnAbrirMcp.setFocusPainted(false);
+		}
+
 		if (txtDescripcion != null) {
 			txtDescripcion.setBackground(colorCajaTexto.obtener());
 			txtDescripcion.setForeground(colorTexto.obtener());

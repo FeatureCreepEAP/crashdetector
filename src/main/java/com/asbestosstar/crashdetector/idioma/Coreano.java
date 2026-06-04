@@ -10925,4 +10925,165 @@ public class Coreano implements Idioma {
 		return "Jexel3";
 	}
 
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	public String mcpBotonSidebar() {
+		return "MCP";
+	}
+
+	public String iaAbrirMcp() {
+		return "MCP 열기";
+	}
+
+	public String mcpTituloVentana() {
+		return "CrashDetector MCP";
+	}
+
+	public String mcpTituloPrincipal() {
+		return "로컬 AI용 MCP 서버";
+	}
+
+	public String mcpPuerto() {
+		return "MCP 포트:";
+	}
+
+	public String mcpDescargarDependencias() {
+		return "MCP/CFR 종속성 다운로드";
+	}
+
+	public String mcpIniciarServidor() {
+		return "MCP 서버 시작";
+	}
+
+	public String mcpEstadoDependenciasNoCargadas() {
+		return "MCP/CFR 종속성이 로드되지 않았습니다. 버튼이 여전히 비활성화되어 있으면 다운로드하고 재시작하십시오.";
+	}
+
+	public String mcpEstadoDependenciasCargadas() {
+		return "MCP/CFR 종속성이 감지되었습니다. MCP 서버를 시작할 수 있습니다.";
+	}
+
+	public String mcpDependenciasDescargadasReiniciar() {
+		return "종속성이 다운로드되었습니다. 여전히 로드되지 않으면 CrashDetector를 재시작하십시오.";
+	}
+
+	public String mcpErrorDescargandoDependencias(String error) {
+		return "MCP/CFR 종속성을 다운로드할 수 없습니다: " + error;
+	}
+
+	public String mcpServidorIniciado(int puerto) {
+		return "MCP 서버가 127.0.0.1:" + puerto + "/mcp에서 시작되었습니다";
+	}
+
+	public String mcpErrorIniciandoServidor(String error) {
+		return "MCP 서버를 시작할 수 없습니다: " + error;
+	}
+
+	public String mcpImagenNoDisponible() {
+		return "MCP 이미지를 사용할 수 없습니다";
+	}
+
+	public String colorAcento() {
+		return "강조 색상";
+	}
+
+	public String mcpDescripcionHtml() {
+		return "<b>이 패널은 Claude Desktop, Qwen Desktop Linux, Red Hat command-line-assistant 또는 Goose와 같은 어시스턴트를 위한 로컬 MCP 서버를 시작합니다.</b>"
+				+ "<br><br>" + "먼저 MCP/CFR 종속성을 다운로드하십시오. 클래스가 클래스패스에 나타나지 않으면 재시작하십시오." + "<br><br>"
+				+ "<b>Claude Desktop / Qwen Desktop Linux, 예시:</b>" + "<pre>{\n" + "  \"mcpServers\": {\n"
+				+ "    \"crashdetector\": {\n" + "      \"url\": \"http://127.0.0.1:8765/mcp\"\n" + "    }\n" + "  }\n"
+				+ "}</pre>" + "<b>Goose / command-line-assistant:</b>" + "<pre>http://127.0.0.1:8765/mcp</pre>"
+				+ "현재 이 MCP 서버는 기본적입니다. 나중에 로그 읽기, CFR 조회, mod 검토, 클래스 검색 및 충돌 설명을 위한 실제 도구를 추가할 수 있습니다.";
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String mensajeErrorJvmDllCurseForgeG1(boolean conOverwolf) {
+		String textoOverwolf = "";
+
+		if (conOverwolf) {
+			textoOverwolf = "<p>로그에는 또한 <b>Overwolf</b> 또는 관련 DLL(예: "
+					+ "<b>OWClient.dll</b> 또는 <b>OWUtils.dll</b>)의 흔적이 표시됩니다. 이것 자체가 Overwolf가 원인임을 증명하지는 않지만, "
+					+ "Minecraft 프로세스가 일반 바닐라 실행보다 더 수정된 환경에서 실행되고 있었음을 나타냅니다.</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "CurseForge에서 G1 가비지 컬렉션 중 jvm.dll의 네이티브 오류로 인해 Java가 종료되었습니다.</b>"
+				+ "<p>로그에는 <b>jvm.dll</b> 내부의 <b>EXCEPTION_ACCESS_VIOLATION</b>이 포함되어 있으며, "
+				+ "활성 스레드는 <b>GCTaskThread</b>입니다. 이는 <b>G1</b> 가비지 컬렉터가 작동하는 동안 Java가 실패했음을 의미합니다.</p>"
+				+ "<p>또한 게임이 <b>CurseForge</b>가 관리하는 환경(예: CurseForge 경로, <b>DCFInstanceId</b> 또는 CurseForge launcher 마크)에서 "
+				+ "시작되었음을 나타내는 흔적이 있습니다.</p>" + textoOverwolf + "<p>로그만으로 CurseForge나 Overwolf가 정확한 원인임을 증명할 수는 없습니다. "
+				+ "그러나 이 패턴은 CurseForge 실행에서 자주 발생하며 <b>G1 GC</b>, 네이티브 메모리, Minecraft 라이브러리, 그래픽 드라이버, "
+				+ "CurseForge가 관리하는 네이티브 폴더, 오버레이(overlays) 또는 launcher의 외부 구성 요소의 조합과 관련이 있을 수 있습니다.</p>"
+				+ "<p><b>일반적인 해결 방법:</b></p>" + "<ul>"
+				+ "<li>다음 JVM 인수를 추가하여 가비지 컬렉터를 변경하십시오: <b>-XX:+UseShenandoahGC</b></li>"
+				+ "<li>CurseForge에서는 일반적으로 프로필 또는 launcher의 추가 Java 인수에 이를 추가합니다.</li>"
+				+ "<li>CurseForge 프로필의 natives/bin 캐시를 지워 네이티브 라이브러리가 다시 추출되도록 하십시오.</li>"
+				+ "<li>Java와 그래픽 드라이버를 업데이트하십시오.</li>"
+				+ "<li>오버레이, 녹화 소프트웨어, 공격적인 백신 또는 게임에 주입되는 다른 도구를 사용하는 경우 일시적으로 종료해 보십시오.</li>" + "</ul>"
+				+ "<p>CurseForge에서 인수를 변경하는 방법에 대한 권장 영어 튜토리얼: "
+				+ "<a href='https://youtu.be/UKFWBOZxB2o'>https://youtu.be/UKFWBOZxB2o</a></p>"
+				+ "<p><b>Minecraft 1.16.5 이하 주의:</b> 해당 버전은 일반적으로 Java 8을 사용합니다. "
+				+ "JDK 8을 사용 중이고 Shenandoah를 사용하려면 <b>Red Hat Build of OpenJDK 8</b>을 사용하고 "
+				+ "CurseForge를 해당 Java 설치 방향으로 지정해야 할 수 있습니다.</p>" + "<p>Windows에 OpenJDK 8을 설치하기 위한 Red Hat 가이드: "
+				+ "<a href='https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index'>"
+				+ "https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index</a></p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllCurseForgeG1() {
+		return "G1 GC를 사용한 CurseForge의 jvm.dll 오류";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllC2Sodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Sodium 또는 유사한 mod의 코드를 컴파일하는 중 jvm.dll의 네이티브 오류로 인해 Java가 종료되었습니다.</b>"
+				+ "<p>로그에는 <b>jvm.dll</b> 내부의 <b>EXCEPTION_ACCESS_VIOLATION</b>이 포함되어 있으며, "
+				+ "활성 스레드는 <b>C2 CompilerThread</b>입니다. 이는 오류가 일반적인 Minecraft 예외가 아닌 "
+				+ "Java의 JIT 컴파일러 내부에서 발생했음을 의미합니다.</p>"
+				+ "<p>이 경우 컴파일 작업은 <b>Sodium</b>, <b>Embeddium</b>, <b>Rubidium</b> 또는 "
+				+ "<b>ClonedChunkSectionCache::acquire</b>와 같은 유사한 클래스와 관련된 코드를 언급합니다.</p>" + "<p><b>권장 해결 방법:</b></p>"
+				+ "<ul>"
+				+ "<li><b>Sodium</b>, <b>Embeddium</b>, <b>Rubidium</b>, <b>Oculus</b> 또는 관련 렌더링 mod를 업데이트하십시오.</li>"
+				+ "<li>Java 17을 업데이트하십시오. 이미 최신 버전을 사용 중이라면 Temurin, Zulu 또는 Microsoft OpenJDK와 같은 다른 배포판을 시도해 보십시오.</li>"
+				+ "<li>그래픽 카드 드라이버를 업데이트하십시오.</li>"
+				+ "<li>Sodium, Embeddium, Rubidium 또는 Oculus 없이 일시적으로 테스트하여 오류가 사라지는지 확인하십시오.</li>"
+				+ "<li>고급 테스트로 <b>-XX:TieredStopAtLevel=1</b>을 사용하여 C2 컴파일러 사용을 줄입니다. "
+				+ "이는 성능을 낮출 수 있지만 오류가 JIT 컴파일러에서 오는지 확인하는 데 도움이 됩니다.</li>" + "</ul>"
+				+ "<p>이 문제는 일반적인 mod 충돌과 동일하지 않습니다. 또한 <b>GCTaskThread</b>가 활성 스레드로 나타나는 오류와도 다릅니다. "
+				+ "여기의 패턴은 Java의 C2 컴파일러가 최적화된 렌더링 코드를 컴파일하는 것과 더 관련이 있습니다.</p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllC2Sodium() {
+		return "Sodium / Embeddium과 관련된 Java 네이티브 오류";
+	}
+
+	@Override
+	public String mensajeErrorArchivoUsadoPorOtroProceso(String archivo) {
+		String textoArchivo = "";
+
+		if (archivo != null && archivo.length() > 0) {
+			textoArchivo = "<p><b>잠긴 파일:</b> " + archivo + "</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "파일이 다른 프로세스에 의해 사용되고 있습니다.</b>"
+				+ "<p>로그에는 <b>java.nio.file.FileSystemException</b> 오류가 포함되어 있으며, 이는 Windows가 "
+				+ "다른 프로그램이 파일을 사용하고 있어 접근할 수 없음을 나타냅니다.</p>" + textoArchivo
+				+ "<p>이는 보통 Minecraft, CurseForge, 텍스트 편집기, 바이러스 백신, OneDrive, "
+				+ "동기화 프로그램, 또는 게임의 다른 인스턴스가 파일을 열어두고 있을 때 발생합니다.</p>" + "<p><b>권장 해결 방법:</b></p>" + "<ul>"
+				+ "<li>Minecraft를 완전히 종료하십시오.</li>" + "<li>CurseForge를 닫았다가 다시 여십시오.</li>"
+				+ "<li>작업 관리자를 확인하고 중복된 <b>javaw.exe</b>, <b>java.exe</b>, Minecraft 또는 CurseForge 프로세스를 종료하십시오.</li>"
+				+ "<li>구성 파일을 열어둘 수 있는 텍스트 편집기를 닫으십시오.</li>"
+				+ "<li>파일이 OneDrive, Dropbox 또는 유사한 프로그램 안에 있다면 동기화를 일시적으로 중지하십시오.</li>"
+				+ "<li>문제가 계속되면 컴퓨터를 재시동하여 파일 잠금을 해제하십시오.</li>" + "</ul>"
+				+ "<p>파일 잠금이 해제된 후 모드팩을 다시 시작하십시오. 잠긴 파일이 구성 파일이라면, " + "백업을 만들고 해당 파일을 재생성하는 것도 도움이 될 수 있습니다.</p>";
+	}
+
+	@Override
+	public String nombreErrorArchivoUsadoPorOtroProceso() {
+		return "다른 프로세스에서 사용 중인 파일";
+	}
+
 }

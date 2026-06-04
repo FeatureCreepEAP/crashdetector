@@ -4426,4 +4426,48 @@ public interface Idioma {
 
 	public String ideScriptProyectoJexel3();
 
+	public String mcpBotonSidebar();
+
+	public String iaAbrirMcp();
+
+	public String mcpTituloVentana();
+
+	public String mcpTituloPrincipal();
+
+	public String mcpPuerto();
+
+	public String mcpDescargarDependencias();
+
+	public String mcpIniciarServidor();
+
+	public String mcpEstadoDependenciasNoCargadas();
+
+	public String mcpEstadoDependenciasCargadas();
+
+	public String mcpDependenciasDescargadasReiniciar();
+
+	public String mcpErrorDescargandoDependencias(String error);
+
+	public String mcpServidorIniciado(int puerto);
+
+	public String mcpErrorIniciandoServidor(String error);
+
+	public String mcpImagenNoDisponible();
+
+	public String colorAcento();
+
+	public String mcpDescripcionHtml();
+
+	public String mensajeErrorJvmDllC2Sodium();
+
+	public String nombreErrorJvmDllC2Sodium();
+
+	public String mensajeErrorJvmDllCurseForgeG1(boolean posibleOverwolf);
+
+	public String nombreErrorJvmDllCurseForgeG1();
+
+	public String mensajeErrorArchivoUsadoPorOtroProceso(String archivo2);
+
+	public String nombreErrorArchivoUsadoPorOtroProceso();
+
 }

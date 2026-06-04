@@ -10709,4 +10709,154 @@ public class Chino implements Idioma {
 		return "Jexel3";
 	}
 
+	// Chinese (Simplified) (中文)
+	public String mcpBotonSidebar() {
+		return "MCP";
+	}
+
+	public String iaAbrirMcp() {
+		return "打开 MCP";
+	}
+
+	public String mcpTituloVentana() {
+		return "CrashDetector MCP";
+	}
+
+	public String mcpTituloPrincipal() {
+		return "本地 AI 的 MCP 服务器";
+	}
+
+	public String mcpPuerto() {
+		return "MCP 端口：";
+	}
+
+	public String mcpDescargarDependencias() {
+		return "下载 MCP/CFR 依赖项";
+	}
+
+	public String mcpIniciarServidor() {
+		return "启动 MCP 服务器";
+	}
+
+	public String mcpEstadoDependenciasNoCargadas() {
+		return "MCP/CFR 依赖项未加载。如果按钮仍然禁用，请下载并重启。";
+	}
+
+	public String mcpEstadoDependenciasCargadas() {
+		return "已检测到 MCP/CFR 依赖项。可以启动 MCP 服务器。";
+	}
+
+	public String mcpDependenciasDescargadasReiniciar() {
+		return "依赖项已下载。如果仍未加载，请重启 CrashDetector。";
+	}
+
+	public String mcpErrorDescargandoDependencias(String error) {
+		return "无法下载 MCP/CFR 依赖项：" + error;
+	}
+
+	public String mcpServidorIniciado(int puerto) {
+		return "MCP 服务器已启动于 127.0.0.1:" + puerto + "/mcp";
+	}
+
+	public String mcpErrorIniciandoServidor(String error) {
+		return "无法启动 MCP 服务器：" + error;
+	}
+
+	public String mcpImagenNoDisponible() {
+		return "MCP 图片不可用";
+	}
+
+	public String colorAcento() {
+		return "强调色";
+	}
+
+	public String mcpDescripcionHtml() {
+		return "<b>此面板为 Claude Desktop、Qwen Desktop Linux、Red Hat command-line-assistant 或 Goose 等助手启动本地 MCP 服务器。</b>"
+				+ "<br><br>" + "首先下载 MCP/CFR 依赖项。如果类未出现在类路径中，请重启。" + "<br><br>"
+				+ "<b>Claude Desktop / Qwen Desktop Linux，示例：</b>" + "<pre>{\n" + "  \"mcpServers\": {\n"
+				+ "    \"crashdetector\": {\n" + "      \"url\": \"http://127.0.0.1:8765/mcp\"\n" + "    }\n" + "  }\n"
+				+ "}</pre>" + "<b>Goose / command-line-assistant：</b>" + "<pre>http://127.0.0.1:8765/mcp</pre>"
+				+ "目前此 MCP 服务器是基础版。之后可以添加用于读取日志、查询 CFR、检查 mod、搜索类和解释崩溃的真实工具。";
+	}
+
+	// Chinese (Simplified) (中文)
+	@Override
+	public String mensajeErrorJvmDllCurseForgeG1(boolean conOverwolf) {
+		String textoOverwolf = "";
+
+		if (conOverwolf) {
+			textoOverwolf = "<p>日志还显示了 <b>Overwolf</b> 或相关 DLL 的迹象，例如 "
+					+ "<b>OWClient.dll</b> 或 <b>OWUtils.dll</b>。这本身并不能证明 Overwolf 是原因， "
+					+ "但表明 Minecraft 进程是在比正常原版启动更修改过的环境中运行的。</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java 因 CurseForge 中 G1 垃圾回收期间 jvm.dll 的原生故障而关闭。</b>"
+				+ "<p>日志包含 <b>jvm.dll</b> 内的 <b>EXCEPTION_ACCESS_VIOLATION</b>， "
+				+ "活动线程是 <b>GCTaskThread</b>。这意味着 Java 在 <b>G1</b> 垃圾回收器工作时失败。</p>" + "<p>还有迹象表明游戏是从由 "
+				+ "<b>CurseForge</b> 管理的环境中启动的，例如 CurseForge 路径、<b>DCFInstanceId</b> 或 CurseForge launcher 标记。</p>"
+				+ textoOverwolf + "<p>仅凭日志无法证明 CurseForge 或 Overwolf 是确切原因。 " + "然而，这种模式在 CurseForge 启动中经常看到，可能与 "
+				+ "<b>G1 GC</b>、原生内存、Minecraft 库、图形驱动程序、 "
+				+ "CurseForge 管理的原生文件夹、覆盖层 (overlays) 或 launcher 的外部组件的组合有关。</p>" + "<p><b>常见解决方案：</b></p>" + "<ul>"
+				+ "<li>通过添加此 JVM 参数更改垃圾回收器：<b>-XX:+UseShenandoahGC</b></li>"
+				+ "<li>在 CurseForge 中，这通常添加到配置文件或 launcher 的额外 Java 参数中。</li>"
+				+ "<li>清除 CurseForge 配置文件的 natives/bin 缓存，以强制重新提取原生库。</li>" + "<li>更新 Java 和图形驱动程序。</li>"
+				+ "<li>如果您使用覆盖层、录制软件、激进的杀毒软件或其他注入游戏的工具，请尝试暂时关闭它们。</li>" + "</ul>" + "<p>推荐的英文教程，用于在 CurseForge 中更改参数： "
+				+ "<a href='https://youtu.be/UKFWBOZxB2o'>https://youtu.be/UKFWBOZxB2o</a></p>"
+				+ "<p><b>Minecraft 1.16.5 或更早版本的注意：</b>这些版本通常使用 Java 8。 " + "如果您在 JDK 8 上并想使用 Shenandoah，可能需要使用 "
+				+ "<b>Red Hat Build of OpenJDK 8</b> 并将 CurseForge 指向该 Java 安装。</p>"
+				+ "<p>Red Hat 在 Windows 上安装 OpenJDK 8 的指南： "
+				+ "<a href='https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index'>"
+				+ "https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index</a></p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllCurseForgeG1() {
+		return "CurseForge 中 G1 GC 的 jvm.dll 故障";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllC2Sodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java 因在编译 Sodium 或类似 mod 代码时 jvm.dll 的原生故障而关闭。</b>"
+				+ "<p>日志包含 <b>jvm.dll</b> 内的 <b>EXCEPTION_ACCESS_VIOLATION</b>， "
+				+ "活动线程是 <b>C2 CompilerThread</b>。这意味着故障发生在 Java 的 " + "JIT 编译器内部，而不是正常的 Minecraft 异常。</p>"
+				+ "<p>在这种情况下，编译任务提到了与 <b>Sodium</b>、 " + "<b>Embeddium</b>、<b>Rubidium</b> 或类似类（如 "
+				+ "<b>ClonedChunkSectionCache::acquire</b>）相关的代码。</p>" + "<p><b>推荐解决方案：</b></p>" + "<ul>"
+				+ "<li>更新 <b>Sodium</b>、<b>Embeddium</b>、<b>Rubidium</b>、<b>Oculus</b> 或任何相关的渲染 mod。</li>"
+				+ "<li>更新 Java 17。如果您已经使用现代版本，请尝试其他发行版，如 Temurin、Zulu 或 Microsoft OpenJDK。</li>" + "<li>更新显卡驱动程序。</li>"
+				+ "<li>暂时在没有 Sodium、Embeddium、Rubidium 或 Oculus 的情况下测试，以确认故障是否消失。</li>"
+				+ "<li>作为高级测试，使用 <b>-XX:TieredStopAtLevel=1</b> 减少 C2 编译器的使用。 " + "这可能会降低性能，但有助于确认故障是否来自 JIT 编译器。</li>"
+				+ "</ul>" + "<p>此问题与普通 mod 崩溃不同。也不同于 <b>GCTaskThread</b> " + "作为活动线程出现的故障。这里的模式更指向 Java 的 C2 编译器 "
+				+ "正在编译优化的渲染代码。</p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllC2Sodium() {
+		return "Sodium / Embeddium 导致的 Java 原生故障";
+	}
+
+	@Override
+	public String mensajeErrorArchivoUsadoPorOtroProceso(String archivo) {
+		String textoArchivo = "";
+
+		if (archivo != null && archivo.length() > 0) {
+			textoArchivo = "<p><b>文件被锁定：</b> " + archivo + "</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "文件正被另一个进程使用。</b>"
+				+ "<p>日志包含一个 <b>java.nio.file.FileSystemException</b> 错误，表明 Windows 无法 " + "访问该文件，因为另一个程序正在使用它。</p>"
+				+ textoArchivo + "<p>这通常发生在 Minecraft、CurseForge、文本编辑器、杀毒软件、OneDrive、 " + "同步程序，甚至是游戏的另一个实例打开了该文件时。</p>"
+				+ "<p><b>建议解决方案：</b></p>" + "<ul>" + "<li>完全关闭 Minecraft。</li>" + "<li>关闭 CurseForge 并重新打开。</li>"
+				+ "<li>检查任务管理器，结束重复的 <b>javaw.exe</b>、<b>java.exe</b>、Minecraft 或 CurseForge 进程。</li>"
+				+ "<li>关闭可能打开了配置文件的文本编辑器。</li>" + "<li>如果文件位于 OneDrive、Dropbox 或类似程序中，请暂时暂停同步。</li>"
+				+ "<li>如果问题仍然存在，请重启电脑以释放文件锁。</li>" + "</ul>" + "<p>释放文件后，重新启动模组包。如果被锁定的文件是配置文件， "
+				+ "备份并重新生成该文件也可能有帮助。</p>";
+	}
+
+	@Override
+	public String nombreErrorArchivoUsadoPorOtroProceso() {
+		return "文件被其他进程占用";
+	}
+
 }

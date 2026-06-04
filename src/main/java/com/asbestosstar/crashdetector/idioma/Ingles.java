@@ -11348,4 +11348,177 @@ public class Ingles implements Idioma {
 		return "Jexel3";
 	}
 
+	// English (UK)
+	public String mcpBotonSidebar() {
+		return "MCP";
+	}
+
+	public String iaAbrirMcp() {
+		return "Open MCP";
+	}
+
+	public String mcpTituloVentana() {
+		return "CrashDetector MCP";
+	}
+
+	public String mcpTituloPrincipal() {
+		return "MCP Server for Local AI";
+	}
+
+	public String mcpPuerto() {
+		return "MCP Port:";
+	}
+
+	public String mcpDescargarDependencias() {
+		return "Download MCP/CFR Dependencies";
+	}
+
+	public String mcpIniciarServidor() {
+		return "Start MCP Server";
+	}
+
+	public String mcpEstadoDependenciasNoCargadas() {
+		return "MCP/CFR dependencies not loaded. Download them and restart if the button remains disabled.";
+	}
+
+	public String mcpEstadoDependenciasCargadas() {
+		return "MCP/CFR dependencies detected. The MCP server can be started.";
+	}
+
+	public String mcpDependenciasDescargadasReiniciar() {
+		return "Dependencies downloaded. If they still do not appear loaded, restart CrashDetector.";
+	}
+
+	public String mcpErrorDescargandoDependencias(String error) {
+		return "Could not download MCP/CFR dependencies: " + error;
+	}
+
+	public String mcpServidorIniciado(int puerto) {
+		return "MCP server started at 127.0.0.1:" + puerto + "/mcp";
+	}
+
+	public String mcpErrorIniciandoServidor(String error) {
+		return "Could not start MCP server: " + error;
+	}
+
+	public String mcpImagenNoDisponible() {
+		return "MCP image not available";
+	}
+
+	public String colorAcento() {
+		return "Accent colour";
+	}
+
+	public String mcpDescripcionHtml() {
+		return "<b>This panel starts a local MCP server for assistants like Claude Desktop, Qwen Desktop Linux, Red Hat command-line-assistant, or Goose.</b>"
+				+ "<br><br>"
+				+ "First, download the MCP/CFR dependencies. Then restart if the classes do not appear in the classpath."
+				+ "<br><br>" + "<b>Claude Desktop / Qwen Desktop Linux, example:</b>" + "<pre>{\n"
+				+ "  \"mcpServers\": {\n" + "    \"crashdetector\": {\n"
+				+ "      \"url\": \"http://127.0.0.1:8765/mcp\"\n" + "    }\n" + "  }\n" + "}</pre>"
+				+ "<b>Goose / command-line-assistant:</b>" + "<pre>http://127.0.0.1:8765/mcp</pre>"
+				+ "For now, this MCP server is basic. Later, real tools can be added to read logs, consult CFR, check mods, search for classes, and explain crashes.";
+	}
+
+	// English (UK)
+	@Override
+	public String mensajeErrorJvmDllCurseForgeG1(boolean conOverwolf) {
+		String textoOverwolf = "";
+
+		if (conOverwolf) {
+			textoOverwolf = "<p>The log also shows indications of <b>Overwolf</b> or related DLLs, such as "
+					+ "<b>OWClient.dll</b> or <b>OWUtils.dll</b>. This does not prove on its own that Overwolf is the cause, "
+					+ "but indicates that the Minecraft process was running within a more modified environment "
+					+ "than a normal vanilla launch.</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java closed due to a native failure in jvm.dll during G1 garbage collection in CurseForge.</b>"
+				+ "<p>The log contains an <b>EXCEPTION_ACCESS_VIOLATION</b> within <b>jvm.dll</b>, "
+				+ "and the active thread is a <b>GCTaskThread</b>. This means Java failed while the garbage collector "
+				+ "<b>G1</b> was working.</p>"
+				+ "<p>There are also indications that the game was launched from an environment managed by "
+				+ "<b>CurseForge</b>, for example CurseForge paths, <b>DCFInstanceId</b>, or CurseForge launcher branding.</p>"
+				+ textoOverwolf
+				+ "<p>It cannot be proven solely from the log that CurseForge or Overwolf are the exact cause. "
+				+ "However, this pattern is frequently seen in CurseForge launches and may be related "
+				+ "to the combination of <b>G1 GC</b>, native memory, Minecraft libraries, graphics drivers, "
+				+ "native folders managed by CurseForge, overlays, or external components of the launcher.</p>"
+				+ "<p><b>Common solution:</b></p>" + "<ul>"
+				+ "<li>Change the garbage collector by adding this JVM argument: <b>-XX:+UseShenandoahGC</b></li>"
+				+ "<li>In CurseForge, this is normally added in the additional Java arguments of the profile or launcher.</li>"
+				+ "<li>Clear the natives/bin cache of the CurseForge profile to force native libraries to be extracted again.</li>"
+				+ "<li>Update Java and graphics drivers.</li>"
+				+ "<li>If you use overlays, recorders, aggressive antivirus, or other tools that inject into games, try closing them temporarily.</li>"
+				+ "</ul>" + "<p>Recommended English tutorial for changing arguments in CurseForge: "
+				+ "<a href='https://youtu.be/UKFWBOZxB2o'>https://youtu.be/UKFWBOZxB2o</a></p>"
+				+ "<p><b>Note for Minecraft 1.16.5 or earlier:</b> those versions normally use Java 8. "
+				+ "If you are on JDK 8 and want to use Shenandoah, you may need to use the "
+				+ "<b>Red Hat Build of OpenJDK 8</b> and point CurseForge towards that Java installation.</p>"
+				+ "<p>Red Hat guide for installing OpenJDK 8 on Windows: "
+				+ "<a href='https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index'>"
+				+ "https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/8/html-single/installing_and_using_red_hat_build_of_openjdk_8_for_windows/index</a></p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllCurseForgeG1() {
+		return "CurseForge jvm.dll failure with G1 GC";
+	}
+
+	@Override
+	public String mensajeErrorJvmDllC2Sodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java closed due to a native failure in jvm.dll while compiling code from Sodium or a similar mod.</b>"
+				+ "<p>The log contains an <b>EXCEPTION_ACCESS_VIOLATION</b> within <b>jvm.dll</b>, "
+				+ "and the active thread is a <b>C2 CompilerThread</b>. This means the failure occurred within the "
+				+ "Java JIT compiler, not as a normal Minecraft exception.</p>"
+				+ "<p>In this case, the compilation task mentions code related to <b>Sodium</b>, "
+				+ "<b>Embeddium</b>, <b>Rubidium</b>, or a similar class such as "
+				+ "<b>ClonedChunkSectionCache::acquire</b>.</p>" + "<p><b>Recommended solution:</b></p>" + "<ul>"
+				+ "<li>Update <b>Sodium</b>, <b>Embeddium</b>, <b>Rubidium</b>, <b>Oculus</b>, or any related rendering mod.</li>"
+				+ "<li>Update Java 17. If you are already using a modern version, try another distribution like Temurin, Zulu, or Microsoft OpenJDK.</li>"
+				+ "<li>Update your graphics card drivers.</li>"
+				+ "<li>Try temporarily without Sodium, Embeddium, Rubidium, or Oculus to confirm if the failure disappears.</li>"
+				+ "<li>As an advanced test, use <b>-XX:TieredStopAtLevel=1</b> to reduce C2 compiler usage. "
+				+ "This may lower performance, but helps confirm if the failure comes from the JIT compiler.</li>"
+				+ "</ul>"
+				+ "<p>This problem is not the same as a normal mod crash. It is also distinct from failures where "
+				+ "<b>GCTaskThread</b> appears as the active thread. Here the pattern points more to the Java C2 compiler "
+				+ "compiling optimised rendering code.</p>";
+	}
+
+	@Override
+	public String nombreErrorJvmDllC2Sodium() {
+		return "Native Java failure with Sodium / Embeddium";
+	}
+
+	@Override
+	public String mensajeErrorArchivoUsadoPorOtroProceso(String archivo) {
+		String textoArchivo = "";
+
+		if (archivo != null && archivo.length() > 0) {
+			textoArchivo = "<p><b>File locked:</b> " + archivo + "</p>";
+		}
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "A file is being used by another process.</b>"
+				+ "<p>The log contains a <b>java.nio.file.FileSystemException</b> error indicating that Windows cannot "
+				+ "access a file because another programme is using it.</p>" + textoArchivo
+				+ "<p>This usually happens when Minecraft, CurseForge, a text editor, an antivirus, OneDrive, "
+				+ "a synchronisation programme, or even another instance of the game has the file open.</p>"
+				+ "<p><b>Recommended solution:</b></p>" + "<ul>" + "<li>Close Minecraft completely.</li>"
+				+ "<li>Close CurseForge and reopen it.</li>"
+				+ "<li>Check Task Manager and end duplicate processes of <b>javaw.exe</b>, <b>java.exe</b>, Minecraft or CurseForge.</li>"
+				+ "<li>Close text editors that may have the configuration file open.</li>"
+				+ "<li>If the file is inside OneDrive, Dropbox or a similar programme, pause synchronisation temporarily.</li>"
+				+ "<li>If the problem continues, restart the computer to release the file lock.</li>" + "</ul>"
+				+ "<p>After releasing the file, restart the modpack. If the locked file is a configuration, "
+				+ "making a backup and regenerating that file may also help.</p>";
+	}
+
+	@Override
+	public String nombreErrorArchivoUsadoPorOtroProceso() {
+		return "File used by another process";
+	}
+
 }
