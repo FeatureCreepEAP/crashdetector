@@ -116,7 +116,7 @@ Historically important Pagure-related forges included:
 * CentOS source infrastructure
 * SUSE source infrastructure using a Pagure-inspired or related forge style
 
-CrashDetector defaults to Pagure because Pagure fits the project’s culture best. Red Hat, Fedora, and CentOS people frequently appear at open-source events such as SCaLE where we woul often talk with them about Fedora and Pagure and Centos and RHEL and other topics, and this project has a natural affinity with that ecosystem. If Red Hat, Fedora, CentOS, or a related project provides a suitable forge for CrashDetector or FeatureCreep in the future, migrating there would be welcome.
+CrashDetector defaults to Pagure because Pagure fits the project’s culture best. Red Hat, Fedora, and CentOS people frequently appear at open-source events such as SCaLE where we woul often talk with them about Fedora and Pagure and Centos and RHEL and other topics, and this project has a natural affinity with that ecosystem because we use JBoss and Red Hat tools in many of our projects including CrashDetector and FeatureCreep. We daily drive RHEL using MacOS/BSD, Solaris, and Fedora,CentosStream,SUSE as fallbacks when some program we want does not work on RHEL. If Red Hat, Fedora, CentOS, or a related project provides a suitable forge for CrashDetector or FeatureCreep in the future, migrating there would be welcome.
 
 ### Pagure.io Status
 
