@@ -14,6 +14,16 @@ import com.asbestosstar.crashdetector.gui.tipos.scriptide.TipoProyectoScript;
 public class ScriptIntellisenseFactory {
 
 	public static ScriptIntellisense crear(TipoProyectoScript tipo, File carpetaProyecto) {
+		if (tipo == TipoProyectoScript.FEATURECREEP_DMR_JSON) {
+			try {
+				ScriptIntellisense proveedor = new ServidorLenguajeDatafiedFC();
+				proveedor.iniciar(tipo, carpetaProyecto);
+				return proveedor;
+			} catch (Throwable t) {
+				CrashDetectorLogger.log("Intellisense Datafied FC no disponible: " + t.getMessage());
+			}
+		}
+
 		try {
 			Class.forName("org.eclipse.lsp4j.services.LanguageServer");
 			Class.forName("org.eclipse.lsp4j.jsonrpc.Launcher");
