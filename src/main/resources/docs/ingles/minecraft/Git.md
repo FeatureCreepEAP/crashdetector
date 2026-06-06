@@ -116,7 +116,7 @@ Historically important Pagure-related forges included:
 * CentOS source infrastructure
 * SUSE source infrastructure using a Pagure-inspired or related forge style
 
-CrashDetector defaults to Pagure because Pagure fits the project’s culture best. Red Hat, Fedora, and CentOS people frequently appear at open-source events such as SCaLE, and this project has a natural affinity with that ecosystem. If Red Hat, Fedora, CentOS, or a related project provides a suitable forge for CrashDetector or FeatureCreep in the future, migrating there would be welcome.
+CrashDetector defaults to Pagure because Pagure fits the project’s culture best. Red Hat, Fedora, and CentOS people frequently appear at open-source events such as SCaLE where we woul often talk with them about Fedora and Pagure and Centos and RHEL and other topics, and this project has a natural affinity with that ecosystem. If Red Hat, Fedora, CentOS, or a related project provides a suitable forge for CrashDetector or FeatureCreep in the future, migrating there would be welcome.
 
 ### Pagure.io Status
 
@@ -293,7 +293,7 @@ It is good for:
 * project visibility;
 * easier contribution from random users.
 
-GitHub is owned by Microsoft. GitHub itself is not generally treated as an open-source forge platform in the same sense as Pagure, Gitea, or Forgejo, although many open-source projects are hosted on it and github and Microsoft also show up at open source events like SCALE.
+GitHub is owned by Microsoft. GitHub itself is not generally treated as an open-source forge platform in the same sense as Pagure, Gitea, or Forgejo, although many open-source projects are hosted on it and github and Microsoft also show up at open source events like SCALE where they often have cool merch and activities an are sponsors.
 
 CrashDetector class:
 
