@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
@@ -30,26 +28,6 @@ public class VerificacionDeStackTrace {
 	public static List<String> denegadosContiene = new ArrayList<String>();
 
 	Consola consola;
-
-	// Patrón para coincidir con rastros de pila de excepciones de Java
-	private static final Pattern STACK_TRACE_PATTERN = Pattern
-			.compile("(?m)(^\\S.*(?:\\r?\\n[ \\t]*(?://\\s*)?at\\s+.*)+)");
-	// Patrón para coincidir con excepciones que contienen
-	// org.spongepowered.asm.mixin y extraer nombres de JSON (sin incluir refmap)
-	private static final Pattern JSON_PATTERN = Pattern.compile("(\\S+\\.json)(?=[: ])");
-	// Patrón para coincidir con contenido dentro de llaves {}
-	private static final Pattern BRACE_PATTERN = Pattern.compile("\\{([^}]+)\\}");
-
-	// === Patrones para detectar modid de forma estricta ===
-	// Solo acepta frames TRANSFORMER/<modid>@<version>/...
-	private static final Pattern PATRON_MODID_TRANSFORMER = Pattern
-			.compile("^\\s*at\\s+TRANSFORMER/([a-z0-9_\\-.]+)(?:@|/).*$");
-
-	// Opcional y conservador: admite "at <modid>@<ver>/..."
-	// Evita confundir paquetes comunes (java, jdk, sun, org, com, net) y modids con
-	// puntos.
-	private static final Pattern PATRON_MODID_SIMPLE = Pattern
-			.compile("^\\s*at\\s+(?!java\\b|jdk\\b|sun\\b|org\\b|com\\b|net\\b)([a-z0-9_\\-]+)@[^/]+/.*$");
 
 	private static final java.util.Set<String> TOKENS_FALSOS_SM = new java.util.HashSet<>(Arrays.asList("app", "APP",
 			"a", "A", "b", "B", "mixin", "pl", "re", "accesstransformer", "runtimedistcleaner", "classloading"));
@@ -352,10 +330,7 @@ public class VerificacionDeStackTrace {
 			return;
 		}
 
-		Matcher matcher = JSON_PATTERN.matcher(linea.trim());
-
-		while (matcher.find()) {
-			String nombreJson = matcher.group(1);
+		for (String nombreJson : escanearJsonsMixin(linea.trim())) {
 
 			if (nombreJson == null) {
 				continue;
@@ -512,7 +487,7 @@ public class VerificacionDeStackTrace {
 
 		TraceInfo info = new TraceInfo(trace, consolaLineaInicio, nivel, fatal);
 
-		String[] lineas = trace.split(Verificaciones.nl);
+		String[] lineas = dividirPorCadena(trace, Verificaciones.nl);
 
 		for (int i = 0; i < lineas.length; i++) {
 
@@ -628,7 +603,7 @@ public class VerificacionDeStackTrace {
 			TraceInfo info = entrada.getValue();
 
 			boolean fatal = info.trace.contains("/FATAL]");
-			String[] lineas = info.trace.split(Verificaciones.nl);
+			String[] lineas = dividirPorCadena(info.trace, Verificaciones.nl);
 
 			for (int i = 0; i < lineas.length; i++) {
 
@@ -988,7 +963,7 @@ public class VerificacionDeStackTrace {
 		}
 
 		// === ClassNotFound / NoClassDef ===
-		String[] arr = trace.split(Verificaciones.nl);
+		String[] arr = dividirPorCadena(trace, Verificaciones.nl);
 
 		for (int i = 0; i < arr.length; i++) {
 
@@ -1061,11 +1036,11 @@ public class VerificacionDeStackTrace {
 
 		// Forma genérica: dos bloques entre [ ] y el segundo contiene WARN antes de ':'
 		// y luego cualquier texto.
-		if (t.matches(".*\\[[^\\]]*\\]\\s*\\[[^\\]]*\\bWARN\\b[^\\]]*\\]\\s*:.*"))
+		if (coincideWarnDobleBloque(t))
 			return true;
 
 		// También cubrir formatos tipo "[mixin/WARN]:" directamente
-		if (t.matches(".*\\[[^\\]]*\\bWARN\\b[^\\]]*\\]:.*"))
+		if (coincideWarnBloqueSimple(t))
 			return true;
 
 		return false;
@@ -1117,15 +1092,14 @@ public class VerificacionDeStackTrace {
 			return null;
 		t = t.trim();
 
-		Matcher mTrans = PATRON_MODID_TRANSFORMER.matcher(t);
-		if (mTrans.matches()) {
-			return mTrans.group(1);
+		String transformer = modidDesdeTransformer(t);
+		if (transformer != null) {
+			return transformer;
 		}
 
-		Matcher mSimple = PATRON_MODID_SIMPLE.matcher(t);
-		if (mSimple.matches()) {
-			String cand = mSimple.group(1);
-			return esModNoPermite(cand) ? null : cand;
+		String simple = modidDesdeSimple(t);
+		if (simple != null) {
+			return esModNoPermite(simple) ? null : simple;
 		}
 
 		// Detección adicional: handler$...$<modid>$...
@@ -1133,7 +1107,7 @@ public class VerificacionDeStackTrace {
 		int h = t.indexOf("handler$");
 		if (h >= 0) {
 			String tail = t.substring(h + "handler$".length());
-			String[] segs = tail.split("\\$");
+			String[] segs = dividirPorChar(tail, '$');
 			for (String s : segs) {
 				String k = sane(s);
 				if (k.isEmpty())
@@ -1190,8 +1164,16 @@ public class VerificacionDeStackTrace {
 		if (idxLambda != -1)
 			texto = texto.substring(0, idxLambda);
 
-		// purgar direcciones /0x...
-		texto = texto.replaceAll("/0x[0-9a-fA-F]+.*", "");
+		// purgar direcciones /0x... (equivale a replaceAll("/0x[0-9a-fA-F]+.*", ""))
+		int idx0x = texto.indexOf("/0x");
+		while (idx0x >= 0) {
+			int hexPos = idx0x + 3;
+			if (hexPos < texto.length() && esHex(texto.charAt(hexPos))) {
+				texto = texto.substring(0, idx0x);
+				break;
+			}
+			idx0x = texto.indexOf("/0x", idx0x + 1);
+		}
 
 		// formato módulos java: paquete@ver/Clase -> quedarnos con paquete
 		if (texto.contains("@") && texto.contains("/")) {
@@ -1214,12 +1196,28 @@ public class VerificacionDeStackTrace {
 	 */
 	public static List<String> extraerLlavesDeLinea(String linea) {
 		List<String> llaves = new ArrayList<>();
-		Matcher m = BRACE_PATTERN.matcher(linea);
-		while (m.find()) {
-			String contenido = m.group(1).trim();
-			if (esLlaveDeSistema(contenido)) {
-				llaves.add(contenido);
+		if (linea == null) {
+			return llaves;
+		}
+		// Escaneo manual equivalente a "\\{([^}]+)\\}": pares { ... } sin '}' interno.
+		int i = 0;
+		int n = linea.length();
+		while (i < n) {
+			int abrir = linea.indexOf('{', i);
+			if (abrir < 0) {
+				break;
 			}
+			int cerrar = linea.indexOf('}', abrir + 1);
+			if (cerrar < 0) {
+				break;
+			}
+			if (cerrar > abrir + 1) { // [^}]+ requiere al menos un carácter
+				String contenido = linea.substring(abrir + 1, cerrar).trim();
+				if (esLlaveDeSistema(contenido)) {
+					llaves.add(contenido);
+				}
+			}
+			i = cerrar + 1;
 		}
 		return llaves;
 	}
@@ -1245,8 +1243,25 @@ public class VerificacionDeStackTrace {
 		if (s.indexOf(':') < 0)
 			return false;
 
-		String[] segs = s.split("\\s*,\\s*");
-		if (segs.length == 0)
+		// Equivale a s.split("\\s*,\\s*") sobre 's' (ya recortado): segmentos entre
+		// comas con el whitespace adyacente eliminado.
+		List<String> segs = new ArrayList<>();
+		boolean hayComa = s.indexOf(',') >= 0;
+		int ini = 0;
+		int len = s.length();
+		for (int i = 0; i <= len; i++) {
+			if (i == len || s.charAt(i) == ',') {
+				segs.add(s.substring(ini, i).trim());
+				ini = i + 1;
+			}
+		}
+		if (hayComa) {
+			// split con límite 0: quitar segmentos vacíos finales
+			while (!segs.isEmpty() && segs.get(segs.size() - 1).isEmpty()) {
+				segs.remove(segs.size() - 1);
+			}
+		}
+		if (segs.isEmpty())
 			return false;
 
 		int paresValidos = 0;
@@ -1260,14 +1275,14 @@ public class VerificacionDeStackTrace {
 			String valor = seg.substring(p + 1).trim();
 
 			// clave alfanumérica simple para evitar frases
-			if (!clave.matches("[a-z][a-z0-9_\\-]*"))
+			if (!esClaveLlaveValida(clave))
 				return false;
 
 			// evitar valores con '=' (otra señal de toString) o espacios excesivos tipo
 			// frases
 			if (valor.indexOf('=') >= 0)
 				return false;
-			if (valor.matches(".*\\s{2,}.*"))
+			if (tieneEspaciosDoblesRegex(valor))
 				return false;
 
 			paresValidos++;
@@ -1422,8 +1437,21 @@ public class VerificacionDeStackTrace {
 
 	// Heurística: ¿parece un modid válido?
 	private static boolean esModIdPlausible(String s) {
-		// minúsculas, dígitos, guion y guion_bajo, opcionalmente con puntos
-		return s != null && s.matches("^[a-z0-9_\\-.]{2,64}$");
+		// minúsculas, dígitos, guion y guion_bajo, opcionalmente con puntos:
+		// equivale a "^[a-z0-9_\\-.]{2,64}$"
+		if (s == null) {
+			return false;
+		}
+		int n = s.length();
+		if (n < 2 || n > 64) {
+			return false;
+		}
+		for (int i = 0; i < n; i++) {
+			if (!esCharModidPunto(s.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	// Heurística: ¿parece nombre de método o clase?
@@ -1454,7 +1482,7 @@ public class VerificacionDeStackTrace {
 				return;
 
 			String tail = pack.substring(idx + "handler$".length());
-			String[] segs = tail.split("\\$");
+			String[] segs = dividirPorChar(tail, '$');
 			if (segs.length == 0)
 				return;
 
@@ -1500,7 +1528,7 @@ public class VerificacionDeStackTrace {
 
 			if (!modid_malo.contains(candidato)) {
 				modid_malo.add(candidato);
-				String[] lvlLinea = dec.split(",");
+				String[] lvlLinea = dividirPorChar(dec, ',');
 				int nivel_prioridad = Integer.parseInt(lvlLinea[0]);
 				int consoleLineNumber = Integer.parseInt(lvlLinea[1]);
 				// modids.put(candidato, nivel_prioridad,
@@ -1630,7 +1658,7 @@ public class VerificacionDeStackTrace {
 			return false;
 
 		return t.startsWith("at ") || t.startsWith("Caused by:") || t.startsWith("Suppressed:") || t.startsWith("...")
-				|| t.startsWith("SECURE-BOOTSTRAP") || t.matches("^[a-zA-Z0-9_.]+\\.[A-Z][a-zA-Z0-9]+Exception.*");
+				|| t.startsWith("SECURE-BOOTSTRAP") || pareceEncabezadoExcepcion(t);
 	}
 
 	public List<String> obtenerArchivosJsonEnMixinExceptions(String contenido_de_logs) {
@@ -1645,14 +1673,13 @@ public class VerificacionDeStackTrace {
 		// VideoSettingScreenMixin was not found in the hierarchy of target class
 		// 'net/minecraft/client/gui/screens/options/VideoSettingsScreen'
 
-		String[] lineas = contenido_de_logs.split("\r?\n");
+		String[] lineas = dividirEnLineas(contenido_de_logs);
 		for (String linea : lineas) {
 			if (linea.contains("org.spongepowered.asm.mixin")) {
 				CrashDetectorLogger.log(linea + "tiene error SM");
-				Matcher matcher = JSON_PATTERN.matcher(linea.trim());
-				while (matcher.find()) {
-					if (matcher.group(1) != null) {
-						String nombreJson = matcher.group(1).trim();
+				for (String nombreJson : escanearJsonsMixin(linea.trim())) {
+					if (nombreJson != null) {
+						nombreJson = nombreJson.trim();
 						CrashDetectorLogger.log(nombreJson + " json tiene error SM");
 
 						// a veces tiene [
@@ -1872,6 +1899,438 @@ public class VerificacionDeStackTrace {
 		}
 
 		return t;
+	}
+
+	// =====================================================================
+	// Analizadores manuales de alto rendimiento (reemplazan expresiones
+	// regulares). Cada método reproduce exactamente el comportamiento del
+	// patrón original pero con escaneo de caracteres, evitando el coste de
+	// compilar y ejecutar java.util.regex en cada línea de log.
+	// =====================================================================
+
+	private static boolean esEspacioRegex(char c) {
+		// Equivale a \s de Java: [ \t\n\x0B\f\r]
+		return c == ' ' || c == '\t' || c == '\n' || c == '\u000B' || c == '\f' || c == '\r';
+	}
+
+	private static boolean esAlnum(char c) {
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9');
+	}
+
+	private static boolean esWordChar(char c) {
+		// Equivale a \w (sin Unicode): [a-zA-Z0-9_]
+		return esAlnum(c) || c == '_';
+	}
+
+	private static boolean esHex(char c) {
+		return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
+	}
+
+	private static boolean esCharModidPunto(char c) {
+		// [a-z0-9_\-.]
+		return (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_' || c == '-' || c == '.';
+	}
+
+	private static boolean esCharModidSinPunto(char c) {
+		// [a-z0-9_\-]
+		return (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_' || c == '-';
+	}
+
+	/**
+	 * Divide una cadena por un separador literal reproduciendo la semántica de
+	 * String.split(regex) con límite 0 para separadores sin metacaracteres: si no
+	 * hay coincidencias devuelve [s]; en caso contrario elimina las cadenas vacías
+	 * finales.
+	 */
+	private static String[] dividirPorCadena(String s, String sep) {
+		if (s == null) {
+			return new String[0];
+		}
+		if (sep == null || sep.isEmpty()) {
+			return new String[] { s };
+		}
+		int idx = s.indexOf(sep);
+		if (idx < 0) {
+			return new String[] { s };
+		}
+		List<String> partes = new ArrayList<>();
+		int ini = 0;
+		int paso = sep.length();
+		while (idx >= 0) {
+			partes.add(s.substring(ini, idx));
+			ini = idx + paso;
+			idx = s.indexOf(sep, ini);
+		}
+		partes.add(s.substring(ini));
+		int fin = partes.size();
+		while (fin > 0 && partes.get(fin - 1).isEmpty()) {
+			fin--;
+		}
+		return partes.subList(0, fin).toArray(new String[0]);
+	}
+
+	/**
+	 * Divide por un carácter literal con la misma semántica que
+	 * String.split(regexDeUnCaracter) y límite 0.
+	 */
+	private static String[] dividirPorChar(String s, char sep) {
+		if (s == null) {
+			return new String[0];
+		}
+		if (s.indexOf(sep) < 0) {
+			return new String[] { s };
+		}
+		List<String> partes = new ArrayList<>();
+		int ini = 0;
+		int n = s.length();
+		for (int i = 0; i < n; i++) {
+			if (s.charAt(i) == sep) {
+				partes.add(s.substring(ini, i));
+				ini = i + 1;
+			}
+		}
+		partes.add(s.substring(ini));
+		int fin = partes.size();
+		while (fin > 0 && partes.get(fin - 1).isEmpty()) {
+			fin--;
+		}
+		return partes.subList(0, fin).toArray(new String[0]);
+	}
+
+	/**
+	 * Equivale a contenido.split("\\r?\\n") con límite 0: separa por '\n'
+	 * consumiendo un '\r' previo opcional como parte del delimitador.
+	 */
+	private static String[] dividirEnLineas(String s) {
+		if (s == null) {
+			return new String[0];
+		}
+		int n = s.length();
+		boolean hubo = false;
+		List<String> partes = new ArrayList<>();
+		int ini = 0;
+		for (int i = 0; i < n; i++) {
+			if (s.charAt(i) == '\n') {
+				hubo = true;
+				int corte = i;
+				if (corte > ini && s.charAt(corte - 1) == '\r') {
+					corte--; // \r? antes de \n
+				}
+				partes.add(s.substring(ini, corte));
+				ini = i + 1;
+			}
+		}
+		if (!hubo) {
+			return new String[] { s };
+		}
+		// Último segmento: un '\r' final no va seguido de '\n', por lo que NO se
+		// recorta
+		partes.add(s.substring(ini));
+		int fin = partes.size();
+		while (fin > 0 && partes.get(fin - 1).isEmpty()) {
+			fin--;
+		}
+		return partes.subList(0, fin).toArray(new String[0]);
+	}
+
+	/**
+	 * Escáner manual equivalente al patrón "(\\S+\\.json)(?=[: ])": localiza las
+	 * secuencias de caracteres no-espacio que terminan en ".json" seguidas de ':' o
+	 * ' '. Reproduce la voracidad de \S+ (toma el ".json" más a la derecha dentro
+	 * de cada bloque sin espacios y exige al menos un carácter antes del punto).
+	 */
+	private static List<String> escanearJsonsMixin(String linea) {
+		List<String> res = new ArrayList<>();
+		if (linea == null) {
+			return res;
+		}
+		int n = linea.length();
+		int i = 0;
+		while (i < n) {
+			if (esEspacioRegex(linea.charAt(i))) {
+				i++;
+				continue;
+			}
+			int runIni = i;
+			int j = i;
+			while (j < n && !esEspacioRegex(linea.charAt(j))) {
+				j++;
+			}
+			// Buscar el último ".json" del bloque [runIni, j) seguido de ':' o ' '
+			int ultimo = -1;
+			int k = runIni;
+			while (true) {
+				int idx = linea.indexOf(".json", k);
+				if (idx < 0 || idx + 5 > j) {
+					break;
+				}
+				int sig = idx + 5;
+				char c = (sig < n) ? linea.charAt(sig) : '\0';
+				if ((c == ':' || c == ' ') && idx > runIni) {
+					ultimo = idx;
+				}
+				k = idx + 5;
+			}
+			if (ultimo >= 0) {
+				res.add(linea.substring(runIni, ultimo + 5));
+			}
+			i = j;
+		}
+		return res;
+	}
+
+	/**
+	 * Equivale a "^\\s*at\\s+TRANSFORMER/([a-z0-9_\\-.]+)(?:@|/).*$" sobre una
+	 * línea ya recortada. Devuelve el modid o null.
+	 */
+	private static String modidDesdeTransformer(String t) {
+		int n = t.length();
+		int i = 0;
+		while (i < n && esEspacioRegex(t.charAt(i))) {
+			i++;
+		}
+		if (!t.startsWith("at", i)) {
+			return null;
+		}
+		i += 2;
+		int ws = i;
+		while (i < n && esEspacioRegex(t.charAt(i))) {
+			i++;
+		}
+		if (i == ws) {
+			return null; // \s+ requiere al menos un espacio
+		}
+		final String marca = "TRANSFORMER/";
+		if (!t.startsWith(marca, i)) {
+			return null;
+		}
+		i += marca.length();
+		int ini = i;
+		while (i < n && esCharModidPunto(t.charAt(i))) {
+			i++;
+		}
+		if (i == ini || i >= n) {
+			return null; // grupo vacío o falta (?:@|/)
+		}
+		char c = t.charAt(i);
+		if (c != '@' && c != '/') {
+			return null;
+		}
+		return t.substring(ini, i);
+	}
+
+	private static final String[] MODID_SIMPLE_BLOQUEADOS = { "java", "jdk", "sun", "org", "com", "net" };
+
+	/**
+	 * Equivale a
+	 * "^\\s*at\\s+(?!java\\b|jdk\\b|sun\\b|org\\b|com\\b|net\\b)([a-z0-9_\\-]+)@[^/]+/.*$".
+	 * Devuelve el modid candidato o null (sin aplicar esModNoPermite, igual que el
+	 * grupo capturado original).
+	 */
+	private static String modidDesdeSimple(String t) {
+		int n = t.length();
+		int i = 0;
+		while (i < n && esEspacioRegex(t.charAt(i))) {
+			i++;
+		}
+		if (!t.startsWith("at", i)) {
+			return null;
+		}
+		i += 2;
+		int ws = i;
+		while (i < n && esEspacioRegex(t.charAt(i))) {
+			i++;
+		}
+		if (i == ws) {
+			return null;
+		}
+		// Lookahead negativo (?!java\b|jdk\b|sun\b|org\b|com\b|net\b)
+		for (String pre : MODID_SIMPLE_BLOQUEADOS) {
+			if (t.startsWith(pre, i)) {
+				int after = i + pre.length();
+				boolean limite = (after >= n) || !esWordChar(t.charAt(after));
+				if (limite) {
+					return null; // \b se cumple => el lookahead negativo falla
+				}
+			}
+		}
+		int ini = i;
+		while (i < n && esCharModidSinPunto(t.charAt(i))) {
+			i++;
+		}
+		if (i == ini) {
+			return null; // grupo vacío
+		}
+		int finGrupo = i;
+		if (i >= n || t.charAt(i) != '@') {
+			return null;
+		}
+		i++; // '@'
+		int verIni = i;
+		while (i < n && t.charAt(i) != '/') {
+			i++;
+		}
+		if (i == verIni || i >= n) {
+			return null; // [^/]+ seguido de '/'
+		}
+		return t.substring(ini, finGrupo);
+	}
+
+	/**
+	 * Equivale a "[a-z][a-z0-9_\\-]*" (coincidencia completa).
+	 */
+	private static boolean esClaveLlaveValida(String clave) {
+		int n = clave.length();
+		if (n == 0) {
+			return false;
+		}
+		char c0 = clave.charAt(0);
+		if (c0 < 'a' || c0 > 'z') {
+			return false;
+		}
+		for (int i = 1; i < n; i++) {
+			char c = clave.charAt(i);
+			if ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_' || c == '-') {
+				continue;
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Equivale a ".*\\s{2,}.*": ¿hay dos caracteres de espacio (\s) consecutivos?
+	 */
+	private static boolean tieneEspaciosDoblesRegex(String v) {
+		int n = v.length();
+		for (int i = 1; i < n; i++) {
+			if (esEspacioRegex(v.charAt(i)) && esEspacioRegex(v.charAt(i - 1))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Equivale a "^[a-zA-Z0-9_.]+\\.[A-Z][a-zA-Z0-9]+Exception.*" (coincidencia
+	 * completa) sobre una línea de una sola fila.
+	 */
+	private static boolean pareceEncabezadoExcepcion(String t) {
+		int desde = 0;
+		while (true) {
+			int e = t.indexOf("Exception", desde);
+			if (e < 0) {
+				return false;
+			}
+			// Retroceder sobre el bloque alfanumérico (M) inmediatamente anterior
+			int k = e - 1;
+			while (k >= 0 && esAlnum(t.charAt(k))) {
+				k--;
+			}
+			int alnumIni = k + 1;
+			int lenAlnum = e - alnumIni;
+			// [A-Z][a-zA-Z0-9]+ => primer carácter mayúscula y longitud >= 2,
+			// precedido de '.', y antes de ese '.' al menos un carácter de P.
+			if (lenAlnum >= 2 && t.charAt(alnumIni) >= 'A' && t.charAt(alnumIni) <= 'Z' && alnumIni - 1 >= 1
+					&& t.charAt(alnumIni - 1) == '.') {
+				int pFin = alnumIni - 1; // exclusivo: posición del '.'
+				boolean pValido = true;
+				for (int x = 0; x < pFin; x++) {
+					char c = t.charAt(x);
+					if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_'
+							|| c == '.')) {
+						pValido = false;
+						break;
+					}
+				}
+				if (pValido) {
+					return true;
+				}
+			}
+			desde = e + 1;
+		}
+	}
+
+	/**
+	 * ¿El subrango [ini, fin) de t contiene "WARN" como palabra completa
+	 * (\\bWARN\\b)? Los límites de palabra usan los caracteres adyacentes reales de
+	 * t (por ejemplo los corchetes que rodean el bloque de log).
+	 */
+	private static boolean contieneWarnPalabra(String t, int ini, int fin) {
+		int idx = ini;
+		while (true) {
+			int p = t.indexOf("WARN", idx);
+			if (p < 0 || p + 4 > fin) {
+				return false;
+			}
+			boolean limIzq = (p == 0) || !esWordChar(t.charAt(p - 1));
+			boolean limDer = (p + 4 >= t.length()) || !esWordChar(t.charAt(p + 4));
+			if (limIzq && limDer) {
+				return true;
+			}
+			idx = p + 1;
+		}
+	}
+
+	/**
+	 * Equivale a ".*\\[[^\\]]*\\bWARN\\b[^\\]]*\\]:.*": un bloque [..WARN..]
+	 * seguido inmediatamente de ':'.
+	 */
+	private static boolean coincideWarnBloqueSimple(String t) {
+		int n = t.length();
+		int i = 0;
+		while (i < n) {
+			int a = t.indexOf('[', i);
+			if (a < 0) {
+				return false;
+			}
+			int c = t.indexOf(']', a + 1);
+			if (c < 0) {
+				return false;
+			}
+			if (c + 1 < n && t.charAt(c + 1) == ':' && contieneWarnPalabra(t, a + 1, c)) {
+				return true;
+			}
+			i = a + 1;
+		}
+		return false;
+	}
+
+	/**
+	 * Equivale a ".*\\[[^\\]]*\\]\\s*\\[[^\\]]*\\bWARN\\b[^\\]]*\\]\\s*:.*": dos
+	 * bloques [..] [..WARN..] separados por \s* y seguidos de \s*:.
+	 */
+	private static boolean coincideWarnDobleBloque(String t) {
+		int n = t.length();
+		int i = 0;
+		while (i < n) {
+			int a1 = t.indexOf('[', i);
+			if (a1 < 0) {
+				return false;
+			}
+			int c1 = t.indexOf(']', a1 + 1);
+			if (c1 < 0) {
+				return false;
+			}
+			int j = c1 + 1;
+			while (j < n && esEspacioRegex(t.charAt(j))) {
+				j++;
+			}
+			if (j < n && t.charAt(j) == '[') {
+				int c2 = t.indexOf(']', j + 1);
+				if (c2 >= 0 && contieneWarnPalabra(t, j + 1, c2)) {
+					int k = c2 + 1;
+					while (k < n && esEspacioRegex(t.charAt(k))) {
+						k++;
+					}
+					if (k < n && t.charAt(k) == ':') {
+						return true;
+					}
+				}
+			}
+			i = a1 + 1;
+		}
+		return false;
 	}
 
 }

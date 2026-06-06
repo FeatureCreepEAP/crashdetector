@@ -13,8 +13,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
@@ -76,11 +74,23 @@ public class ContenidoDeTrazos implements Verificaciones {
 		int indice = texto.lastIndexOf(' ');
 		String segmento = indice == -1 ? texto : texto.substring(indice + 1);
 
-		Matcher emparejador = Pattern.compile("\\d+").matcher(segmento);
-		while (emparejador.find()) {
-			try {
-				numeros.add(Integer.parseInt(emparejador.group()));
-			} catch (NumberFormatException ignorado) {
+		// Escaneo manual equivalente a Pattern.compile("\\d+"): toma cada secuencia
+		// máxima de dígitos [0-9] y la convierte a entero.
+		int n = segmento.length();
+		int i = 0;
+		while (i < n) {
+			char c = segmento.charAt(i);
+			if (c >= '0' && c <= '9') {
+				int ini = i;
+				do {
+					i++;
+				} while (i < n && segmento.charAt(i) >= '0' && segmento.charAt(i) <= '9');
+				try {
+					numeros.add(Integer.parseInt(segmento.substring(ini, i)));
+				} catch (NumberFormatException ignorado) {
+				}
+			} else {
+				i++;
 			}
 		}
 		return numeros;
@@ -195,9 +205,39 @@ public class ContenidoDeTrazos implements Verificaciones {
 		if (origen == null)
 			return "";
 		String t = origen.trim();
-		// Para dedupe: jar/modid/pack suelen venir iguales; solo normalizamos espacios
-		t = t.replaceAll("\\s+", " ");
+		// Para dedupe: jar/modid/pack suelen venir iguales; solo normalizamos espacios.
+		// Equivale a replaceAll("\\s+", " "): colapsa cada secuencia de espacios en
+		// uno.
+		t = colapsarEspacios(t);
 		return t;
+	}
+
+	private static boolean esEspacioRegex(char c) {
+		// Equivale a \s de Java: [ \t\n\x0B\f\r]
+		return c == ' ' || c == '\t' || c == '\n' || c == '\u000B' || c == '\f' || c == '\r';
+	}
+
+	/**
+	 * Equivale a s.replaceAll("\\s+", " "): reemplaza cada secuencia máxima de
+	 * caracteres de espacio (\s) por un único ' '. Escaneo manual de un solo paso.
+	 */
+	private static String colapsarEspacios(String s) {
+		int n = s.length();
+		StringBuilder sb = new StringBuilder(n);
+		boolean enEspacio = false;
+		for (int i = 0; i < n; i++) {
+			char c = s.charAt(i);
+			if (esEspacioRegex(c)) {
+				if (!enEspacio) {
+					sb.append(' ');
+					enEspacio = true;
+				}
+			} else {
+				sb.append(c);
+				enEspacio = false;
+			}
+		}
+		return sb.toString();
 	}
 
 	private static String claveGlobalLinea(LineaTrazo lt) {
@@ -363,7 +403,21 @@ public class ContenidoDeTrazos implements Verificaciones {
 	private static boolean esModidFalsoGenerado(String origen) {
 		if (origen == null)
 			return false;
-		return origen.matches("^[a-z]{3}\\d{3}$");
+		// Equivale a "^[a-z]{3}\\d{3}$": exactamente 3 letras minúsculas seguidas de 3
+		// dígitos.
+		if (origen.length() != 6)
+			return false;
+		for (int i = 0; i < 3; i++) {
+			char c = origen.charAt(i);
+			if (c < 'a' || c > 'z')
+				return false;
+		}
+		for (int i = 3; i < 6; i++) {
+			char c = origen.charAt(i);
+			if (c < '0' || c > '9')
+				return false;
+		}
+		return true;
 	}
 
 	@Override
