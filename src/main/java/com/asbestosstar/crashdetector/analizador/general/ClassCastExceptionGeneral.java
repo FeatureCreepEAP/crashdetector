@@ -55,6 +55,11 @@ public class ClassCastExceptionGeneral implements Verificaciones {
 				}
 			}
 
+			if (linea.contains(
+					"class com.google.gson.internal.LinkedTreeMap cannot be cast to class java.lang.String")) {
+				return;
+			}
+
 			this.lineaClassCast = linea.trim();
 			this.enlace = consola.agregarErrorALectador(num, this);
 

@@ -42,6 +42,10 @@ public class CrashProvocadoPorComando implements Verificaciones {
 			return;
 		}
 
+		if (recorte.contains("Modlist")) {
+			return;
+		}
+
 		String comandoDetectado = extraerComando(recorte);
 
 		String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);

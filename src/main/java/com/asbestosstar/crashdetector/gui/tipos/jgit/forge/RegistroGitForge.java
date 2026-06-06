@@ -12,6 +12,12 @@ public class RegistroGitForge {
 
 	public static void registrarPredeterminados() {
 		registrar(new PagureGitForgeAPI());
+		registrar(new GitHubGitForgeAPI());
+		registrar(new GitLabGitForgeAPI());
+		registrar(new BitbucketCloudGitForgeAPI());
+		registrar(new BitbucketServerGitForgeAPI());
+		registrar(new BeanstalkGitForgeAPI());
+
 	}
 
 	public static void registrar(GitForgeAPI api) {
