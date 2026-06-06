@@ -120,7 +120,7 @@ CrashDetector defaults to Pagure because Pagure fits the project’s culture bes
 
 ### Pagure.io Status
 
-The public `pagure.io` forge has been planned for decommissioning around Flock 2026. Fedora has been moving Fedora-specific development to a Forgejo instance, but that instance is intended for Fedora-specific work only. CrashDetector and FeatureCreep do not currently qualify for that Fedora-specific Forgejo home.
+The public `pagure.io` forge has been planned for decommissioning around Flock 2026. Fedora has been moving Fedora-specific development to a Forgejo instance, but that instance is intended for Fedora-specific work only. CrashDetector and FeatureCreep do not currently qualify for that Fedora-specific Forgejo home. https://discussion.fedoraproject.org/t/decommissioning-of-pagure-io-anticipated-by-flock-2026/181997/16
 
 This is unfortunate because `pagure.io` was a very good cultural fit for this project.
 
