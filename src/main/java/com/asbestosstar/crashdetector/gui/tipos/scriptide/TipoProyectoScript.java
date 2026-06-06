@@ -7,11 +7,13 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 
 public enum TipoProyectoScript {
 
-	FEATURECREEP_DMR_JSON("featurecreep_dmr_json", false, "dmr", "json"),
-	DATAPACK_RESOURCEPACK("datapack_resourcepack", false, "json", "mcmeta"), KUBEJS("kubejs", true, "js", "json"),
-	ZENSCRIPT("zenscript", true, "zs", "zenscript"), MINEFLAYER("mineflayer", false, "py"),
-	GROOVYSCRIPT("groovyscript", false, "groovy"), COMPUTERCRAFT_LUA("computercraft_lua", false, "lua"),
-	WORLDEDIT_CRAFTSCRIPT("worldedit_craftscript", false, "js"), JEXEL3("jexel3", false, "jexel", "txt");
+	FEATURECREEP_DMR_JSON("featurecreep_dmr_json", true, "dmr", "json"),
+	DATAPACK_RESOURCEPACK("datapack_resourcepack", true, "json", "mcmeta", "mcfunction"),
+	KUBEJS("kubejs", true, "js", "json"), ZENSCRIPT("zenscript", true, "zs", "zenscript"),
+	MINEFLAYER("mineflayer", true, "js", "json"), GROOVYSCRIPT("groovyscript", true, "groovy"),
+	COMPUTERCRAFT_LUA("computercraft_lua", true, "lua"), WORLDEDIT_CRAFTSCRIPT("worldedit_craftscript", true, "js"),
+	JEXEL3("jexel3", true, "jexel", "txt"), JBOSS_FEEL("jboss_feel", true, "feel", "dmn"),
+	PARADOX_CWTOOLS("paradox_cwtools", true, "txt", "gui", "asset", "gfx", "mod", "info", "yml", "yaml");
 
 	public final String id;
 	public final boolean habilitadoAhora;
@@ -50,6 +52,12 @@ public enum TipoProyectoScript {
 		}
 		if (this == JEXEL3) {
 			return MonitorDePID.idioma.ideScriptProyectoJexel3();
+		}
+		if (this == JBOSS_FEEL) {
+			return "JBoss FEEL";
+		}
+		if (this == PARADOX_CWTOOLS) {
+			return "Paradox CWTools";
 		}
 		return id;
 	}

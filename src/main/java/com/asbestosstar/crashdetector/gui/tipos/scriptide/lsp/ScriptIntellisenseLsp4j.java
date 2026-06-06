@@ -88,6 +88,18 @@ public class ScriptIntellisenseLsp4j implements ScriptIntellisense {
 			generarTsconfigKubeJS(carpetaProyecto);
 		}
 
+		if (tipo == TipoProyectoScript.MINEFLAYER && carpetaProyecto != null) {
+			generarJsconfigMineflayer(carpetaProyecto);
+		}
+
+		if (tipo == TipoProyectoScript.WORLDEDIT_CRAFTSCRIPT && carpetaProyecto != null) {
+			generarJsconfigWorldEditCraftScript(carpetaProyecto);
+			generarTiposWorldEditCraftScript(carpetaProyecto);
+		}
+		if (tipo == TipoProyectoScript.COMPUTERCRAFT_LUA && carpetaProyecto != null) {
+			generarLuarcComputerCraft(carpetaProyecto);
+		}
+
 		pb.redirectErrorStream(true);
 		proceso = pb.start();
 
@@ -139,7 +151,7 @@ public class ScriptIntellisenseLsp4j implements ScriptIntellisense {
 		}
 		TextDocumentItem item = new TextDocumentItem();
 		item.setUri(uri(archivo));
-		item.setLanguageId(languageId());
+		item.setLanguageId(languageId(archivo));
 		item.setVersion(versionDocumento++);
 		item.setText(texto == null ? "" : texto);
 		servidor.getTextDocumentService().didOpen(new DidOpenTextDocumentParams(item));
@@ -161,6 +173,108 @@ public class ScriptIntellisenseLsp4j implements ScriptIntellisense {
 		cambios.add(cambio);
 
 		servidor.getTextDocumentService().didChange(new DidChangeTextDocumentParams(id, cambios));
+	}
+
+	public static void generarJsconfigMineflayer(File carpetaProyecto) {
+		File jsconfig = new File(carpetaProyecto, "jsconfig.json");
+		if (jsconfig.exists()) {
+			return;
+		}
+
+		String contenido = "{\n" + "  \"compilerOptions\": {\n" + "    \"target\": \"ES2020\",\n"
+				+ "    \"module\": \"commonjs\",\n" + "    \"checkJs\": true,\n" + "    \"allowJs\": true,\n"
+				+ "    \"noEmit\": true,\n" + "    \"moduleResolution\": \"node\"\n" + "  },\n" + "  \"include\": [\n"
+				+ "    \"**/*.js\"\n" + "  ],\n" + "  \"exclude\": [\n" + "    \"node_modules\"\n" + "  ]\n" + "}\n";
+
+		try (FileWriter fw = new FileWriter(jsconfig)) {
+			fw.write(contenido);
+		} catch (Throwable t) {
+			CrashDetectorLogger.log("No se pudo generar jsconfig.json para Mineflayer: " + t.getMessage());
+		}
+	}
+
+	public static void generarLuarcComputerCraft(File carpetaProyecto) {
+		File luarc = new File(carpetaProyecto, ".luarc.json");
+		if (luarc.exists()) {
+			return;
+		}
+
+		File tiposCC = new File(carpetaProyecto, ".crashdetector/types/cc-tweaked");
+
+		String rutaTipos = tiposCC.getPath().replace("\\", "\\\\");
+
+		String contenido = "{\n" + "  \"runtime.version\": \"Lua 5.2\",\n" + "  \"runtime.special\": {\n"
+				+ "    \"include\": \"require\"\n" + "  },\n" + "  \"diagnostics.globals\": [\n" + "    \"_HOST\",\n"
+				+ "    \"_CC_DEFAULT_SETTINGS\",\n" + "    \"colors\",\n" + "    \"colours\",\n" + "    \"commands\",\n"
+				+ "    \"disk\",\n" + "    \"fs\",\n" + "    \"gps\",\n" + "    \"help\",\n" + "    \"http\",\n"
+				+ "    \"io\",\n" + "    \"keys\",\n" + "    \"multishell\",\n" + "    \"os\",\n"
+				+ "    \"paintutils\",\n" + "    \"parallel\",\n" + "    \"peripheral\",\n" + "    \"pocket\",\n"
+				+ "    \"rednet\",\n" + "    \"redstone\",\n" + "    \"rs\",\n" + "    \"settings\",\n"
+				+ "    \"shell\",\n" + "    \"term\",\n" + "    \"textutils\",\n" + "    \"turtle\",\n"
+				+ "    \"vector\",\n" + "    \"window\"\n" + "  ],\n" + "  \"workspace.library\": [\n" + "    \""
+				+ rutaTipos + "\"\n" + "  ],\n" + "  \"workspace.checkThirdParty\": false,\n"
+				+ "  \"telemetry.enable\": false\n" + "}\n";
+
+		try (FileWriter fw = new FileWriter(luarc)) {
+			fw.write(contenido);
+		} catch (Throwable t) {
+			CrashDetectorLogger.log("No se pudo generar .luarc.json para CC:Tweaked: " + t.getMessage());
+		}
+	}
+
+	public static void generarJsconfigWorldEditCraftScript(File carpetaProyecto) {
+		File jsconfig = new File(carpetaProyecto, "jsconfig.json");
+		if (jsconfig.exists()) {
+			return;
+		}
+
+		String contenido = "{\n" + "  \"compilerOptions\": {\n" + "    \"target\": \"ES2020\",\n"
+				+ "    \"module\": \"commonjs\",\n" + "    \"allowJs\": true,\n" + "    \"checkJs\": true,\n"
+				+ "    \"noEmit\": true,\n" + "    \"moduleResolution\": \"node\",\n" + "    \"types\": [],\n"
+				+ "    \"typeRoots\": [\"./.crashdetector/types\"]\n" + "  },\n" + "  \"include\": [\n"
+				+ "    \"**/*.js\",\n" + "    \".crashdetector/types/**/*.d.ts\"\n" + "  ],\n" + "  \"exclude\": [\n"
+				+ "    \"node_modules\"\n" + "  ]\n" + "}\n";
+
+		try (FileWriter fw = new FileWriter(jsconfig)) {
+			fw.write(contenido);
+		} catch (Throwable t) {
+			CrashDetectorLogger.log("No se pudo generar jsconfig.json para WorldEdit CraftScript: " + t.getMessage());
+		}
+	}
+
+	public static void generarTiposWorldEditCraftScript(File carpetaProyecto) {
+		File carpetaTipos = new File(carpetaProyecto, ".crashdetector/types/worldedit-craftscript");
+		if (!carpetaTipos.exists()) {
+			carpetaTipos.mkdirs();
+		}
+
+		File tipos = new File(carpetaTipos, "index.d.ts");
+
+		String contenido = "" + "declare var argv: string[];\n" + "declare var player: WorldEditPlayer;\n"
+				+ "declare var context: WorldEditCraftScriptContext;\n" + "declare var Packages: any;\n"
+				+ "declare function importPackage(pkg: any): void;\n"
+				+ "declare function importClass(cls: any): void;\n" + "\n" + "interface WorldEditCraftScriptContext {\n"
+				+ "  checkArgs(min: number, max: number, usage: string): void;\n"
+				+ "  remember(): WorldEditEditSession;\n" + "  getBlock(id: string): WorldEditBlockState;\n"
+				+ "  getSafeOpenFile(folder: string, filename: string, defaultExt: string, allowedExts: string[]): any;\n"
+				+ "}\n" + "\n" + "interface WorldEditPlayer {\n" + "  print(message: string): void;\n"
+				+ "  printError(message: string): void;\n" + "  getBlockIn(): WorldEditBlockVectorLike;\n"
+				+ "  getBlockOn(): WorldEditBlockVectorLike;\n" + "  getPosition(): WorldEditVectorLike;\n" + "}\n"
+				+ "\n" + "interface WorldEditEditSession {\n"
+				+ "  setBlock(position: WorldEditVectorLike, block: WorldEditBlockState): void;\n"
+				+ "  getBlock(position: WorldEditVectorLike): WorldEditBlockState;\n" + "}\n" + "\n"
+				+ "interface WorldEditVectorLike {\n" + "  add(x: number, y: number, z: number): WorldEditVectorLike;\n"
+				+ "  subtract(x: number, y: number, z: number): WorldEditVectorLike;\n"
+				+ "  multiply(x: number): WorldEditVectorLike;\n" + "  divide(x: number): WorldEditVectorLike;\n"
+				+ "  toVector(): WorldEditVectorLike;\n" + "  toBlockPoint(): WorldEditBlockVectorLike;\n" + "}\n"
+				+ "\n" + "interface WorldEditBlockVectorLike extends WorldEditVectorLike {}\n" + "\n"
+				+ "interface WorldEditBlockState {\n" + "  id?: string;\n" + "}\n";
+
+		try (FileWriter fw = new FileWriter(tipos)) {
+			fw.write(contenido);
+		} catch (Throwable t) {
+			CrashDetectorLogger.log("No se pudo generar tipos WorldEdit CraftScript: " + t.getMessage());
+		}
 	}
 
 	@Override
@@ -241,8 +355,14 @@ public class ScriptIntellisenseLsp4j implements ScriptIntellisense {
 		return archivo.toURI().toString();
 	}
 
-	public String languageId() {
+	public String languageId(File archivo) {
 		if (tipo == TipoProyectoScript.KUBEJS) {
+			return "javascript";
+		}
+		if (tipo == TipoProyectoScript.MINEFLAYER) {
+			return "javascript";
+		}
+		if (tipo == TipoProyectoScript.WORLDEDIT_CRAFTSCRIPT) {
 			return "javascript";
 		}
 		if (tipo == TipoProyectoScript.ZENSCRIPT) {
@@ -251,8 +371,18 @@ public class ScriptIntellisenseLsp4j implements ScriptIntellisense {
 		if (tipo == TipoProyectoScript.COMPUTERCRAFT_LUA) {
 			return "lua";
 		}
-		if (tipo == TipoProyectoScript.MINEFLAYER) {
-			return "python";
+		if (tipo == TipoProyectoScript.GROOVYSCRIPT) {
+			return "groovy";
+		}
+		if (tipo == TipoProyectoScript.DATAPACK_RESOURCEPACK) {
+			String nombre = archivo == null ? "" : archivo.getName().toLowerCase();
+
+			if (nombre.endsWith(".mcfunction")) {
+				return "mcfunction";
+			}
+			if (nombre.endsWith(".json") || nombre.endsWith(".mcmeta")) {
+				return "json";
+			}
 		}
 		return "plaintext";
 	}

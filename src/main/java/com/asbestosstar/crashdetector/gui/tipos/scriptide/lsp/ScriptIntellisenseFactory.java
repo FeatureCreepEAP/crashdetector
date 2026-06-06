@@ -24,6 +24,26 @@ public class ScriptIntellisenseFactory {
 			}
 		}
 
+		if (tipo == TipoProyectoScript.JEXEL3) {
+			try {
+				ScriptIntellisense proveedor = new ServidorLenguajeJexel3();
+				proveedor.iniciar(tipo, carpetaProyecto);
+				return proveedor;
+			} catch (Throwable t) {
+				CrashDetectorLogger.log("Intellisense Jexel3 no disponible: " + t.getMessage());
+			}
+		}
+
+		if (tipo == TipoProyectoScript.JBOSS_FEEL) {
+			try {
+				ScriptIntellisense proveedor = new ServidorLenguajeFeel();
+				proveedor.iniciar(tipo, carpetaProyecto);
+				return proveedor;
+			} catch (Throwable t) {
+				CrashDetectorLogger.log("Intellisense FEEL no disponible: " + t.getMessage());
+			}
+		}
+
 		try {
 			Class.forName("org.eclipse.lsp4j.services.LanguageServer");
 			Class.forName("org.eclipse.lsp4j.jsonrpc.Launcher");
