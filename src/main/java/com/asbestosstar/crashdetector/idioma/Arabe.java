@@ -438,7 +438,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String anonimizarRegistros() {
-		return "إخفاء هوية السجلات (بيتا)";
+		return "إخفاء هوية السجلات ";
 	}
 
 	@Override
@@ -11371,6 +11371,29 @@ public class Arabe implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "ملف مستخدم بواسطة عملية أخرى";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "خطأ في لوحة ألوان chunk في BetterEnd";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "يظهر BetterEnd في تعطل أثناء عرض الـ chunks.</b>" + "<p>أطلقت اللعبة الخطأ التالي:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>يحدث الخطأ أثناء بناء شبكات الـ chunks (meshes) ويتدخل BetterEnd "
+				+ "في لون الماء عبر <code>betterend$be_getWaterColor</code>.</p>"
+				+ "<p>يشير هذا عادةً إلى مشكلة في BetterEnd، أو BCLib/WorldWeaver، أو توليد العالم، "
+				+ "أو تفاعل مع Sodium/عرض السوائل.</p>"
+				+ "<p>جرب تحديث BetterEnd وملحقاته، أو الاختبار بدون BetterEnd مؤقتاً، "
+				+ "وتحقق مما إذا كان التعطل يحدث فقط بالقرب منChunks أو حيويات (biomes) معينة.</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		return "الكشف التلقائي";
 	}
 
 }

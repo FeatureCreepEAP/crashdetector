@@ -15,7 +15,7 @@ import com.asbestosstar.crashdetector.buscar.AnalizadorBytecodeASM;
  */
 public class CDTracer implements ServicioCDLauncher {
 
-	public static String ID = "cdtracer_wip";
+	public static String ID = "cdtracer";
 
 	/**
 	 * Activa el tracer registrando un transformer en la Instrumentation.

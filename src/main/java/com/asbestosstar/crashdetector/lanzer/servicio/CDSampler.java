@@ -40,7 +40,7 @@ import com.asbestosstar.crashdetector.gui.tipos.sampler.SamplerGUIEineLotta;
  */
 public class CDSampler implements ServicioCDLauncher {
 
-	public static final String ID = "cdsampler_wip";
+	public static final String ID = "cdsampler";
 
 	private static volatile SamplerGUI guiActiva;
 

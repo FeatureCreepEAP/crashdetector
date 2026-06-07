@@ -439,7 +439,7 @@ public class Ingles implements Idioma {
 
 	@Override
 	public String anonimizarRegistros() {
-		return "Anonymise logs (Beta)";
+		return "Anonymise logs";
 	}
 
 	@Override
@@ -11519,6 +11519,29 @@ public class Ingles implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "File used by another process";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "Chunk palette error in BetterEnd";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "BetterEnd appears in a chunk rendering crash.</b>" + "<p>The game threw:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>The error occurs while constructing chunk meshes and BetterEnd intervenes "
+				+ "in the water colour via <code>betterend$be_getWaterColor</code>.</p>"
+				+ "<p>This usually points to an issue with BetterEnd, BCLib/WorldWeaver, world generation, "
+				+ "or an interaction with Sodium/fluid rendering.</p>"
+				+ "<p>Try updating BetterEnd and its dependencies, test without BetterEnd temporarily, "
+				+ "and check if the crash only occurs near certain chunks or biomes.</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		return "Detect automatically";
 	}
 
 }

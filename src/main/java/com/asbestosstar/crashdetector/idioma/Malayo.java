@@ -175,7 +175,7 @@ public class Malayo extends Indonesia {
 
 	@Override
 	public String anonimizarRegistros() {
-		return "Anonimkan log (Beta)";
+		return "Anonimkan log";
 	}
 
 	@Override

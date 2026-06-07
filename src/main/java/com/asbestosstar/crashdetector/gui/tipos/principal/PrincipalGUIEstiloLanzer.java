@@ -347,7 +347,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			comboAplicacion.setForeground(colorTexto.obtener());
 		}
 
-		JCheckBox chkDetectarAuto = new JCheckBox("Detectar automáticamente");
+		JCheckBox chkDetectarAuto = new JCheckBox(MonitorDePID.idioma.detectarAutomaticamente());
 		chkDetectarAuto.setForeground(colorTexto.obtener());
 		chkDetectarAuto.setBackground(colorFondo.obtener());
 		chkDetectarAuto.setOpaque(false);

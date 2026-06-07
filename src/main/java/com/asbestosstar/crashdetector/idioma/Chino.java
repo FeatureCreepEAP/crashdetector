@@ -404,7 +404,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String anonimizarRegistros() {
-		return "匿名化日志 (测试版)";
+		return "匿名化日志";
 	}
 
 	@Override
@@ -10857,6 +10857,26 @@ public class Chino implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "文件被其他进程占用";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "BetterEnd 中的 Chunk 调色板错误";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "BetterEnd 出现在 Chunk 渲染崩溃中。</b>" + "<p>游戏抛出了以下异常：</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>该错误发生在构建 Chunk 网格（meshes）时，BetterEnd 通过 " + "<code>betterend$be_getWaterColor</code> 干预水的颜色。</p>"
+				+ "<p>这通常指向 BetterEnd、BCLib/WorldWeaver、世界生成， " + "或与 Sodium/流体渲染的交互存在问题。</p>"
+				+ "<p>尝试更新 BetterEnd 及其依赖项，暂时在不安装 BetterEnd 的情况下测试， " + "并检查崩溃是否仅发生在特定 Chunk 或生物群系附近。</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		return "自动检测";
 	}
 
 }

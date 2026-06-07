@@ -14,9 +14,9 @@ import net.neoforged.neoforgespi.transformation.ProcessorName;
 
 public class CrashDetectorFancyModLoader implements ClassProcessor {
 
-	private static final boolean PROFILER_ACTIVO = Boolean.getBoolean("crashdetector.cdprofiler_wip");
+	private static final boolean PROFILER_ACTIVO = Boolean.getBoolean("crashdetector.cdprofiler");
 
-	private static final boolean SAMPLER_ACTIVO = Boolean.getBoolean("crashdetector.cdsampler_wip");
+	private static final boolean SAMPLER_ACTIVO = Boolean.getBoolean("crashdetector.cdsampler");
 
 	static {
 

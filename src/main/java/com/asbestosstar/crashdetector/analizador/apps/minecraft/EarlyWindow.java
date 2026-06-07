@@ -19,6 +19,8 @@ public class EarlyWindow implements Verificaciones {
 	private static final String MAIN_LINE = "Loading ImmediateWindowProvider fmlearlywindow";
 	private static final String FALLBACK_1 = "Failed to initialize the mod loading system and display.";
 	private static final String FALLBACK_2 = "Failed to initialize graphics window with current settings.";
+	public static final String wayland_26 = "The platform does not provide the window position";// Comun en Wayland en
+																								// versiones 26+
 
 	private boolean activado = false;
 	private boolean posibleEarlyWindow = false;
@@ -47,7 +49,8 @@ public class EarlyWindow implements Verificaciones {
 		boolean mainLineFinal = ultimasLineas.contains(MAIN_LINE);
 
 		// Otros patrones globales
-		boolean fallbackGlobal = contenido.contains(FALLBACK_1) || contenido.contains(FALLBACK_2);
+		boolean fallbackGlobal = contenido.contains(FALLBACK_1) || contenido.contains(FALLBACK_2)
+				|| contenido.contains(wayland_26);
 
 		// Activar detector si alguno se cumple
 		posibleEarlyWindow = mainLineFinal || limitacionOpenGLMacOSDetectada || fallbackGlobal;
@@ -60,7 +63,7 @@ public class EarlyWindow implements Verificaciones {
 
 		// Activar detector si línea contiene fallback (MAIN_LINE ya comprobado
 		// globalmente)
-		if (linea.contains(FALLBACK_1) || linea.contains(FALLBACK_2)) {
+		if (linea.contains(FALLBACK_1) || linea.contains(FALLBACK_2) || linea.contains(wayland_26)) {
 			mensaje = construirMensaje();
 			activado = true;
 		}

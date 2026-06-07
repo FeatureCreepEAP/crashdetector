@@ -415,7 +415,7 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String anonimizarRegistros() {
-		return "로그 익명화 (베타)";
+		return "로그 익명화";
 	}
 
 	@Override
@@ -11084,6 +11084,28 @@ public class Coreano implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "다른 프로세스에서 사용 중인 파일";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "BetterEnd에서 청크 팔레트 오류";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "청크 렌더링 충돌에서 BetterEnd가 나타납니다.</b>" + "<p>게임이 다음을 발생시켰습니다:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>오류는 청크 메쉬(meshes)를 구축하는 동안 발생하며 BetterEnd가 "
+				+ "<code>betterend$be_getWaterColor</code>를 통해 물 색상에 간섭합니다.</p>"
+				+ "<p>이는 보통 BetterEnd, BCLib/WorldWeaver, 세계 생성, " + "또는 Sodium/유체 렌더링과의 상호작용에 문제가 있음을 나타냅니다.</p>"
+				+ "<p>BetterEnd와 그 의존성을 업데이트해 보고, 일시적으로 BetterEnd 없이 테스트하며, "
+				+ "충돌이 특정 청크나 생물군계 근처에서만 발생하는지 확인하십시오.</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		return "자동 감지";
 	}
 
 }

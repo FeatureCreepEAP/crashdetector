@@ -448,7 +448,7 @@ public class Tailandes implements Idioma {
 	@Override
 	public String anonimizarRegistros() {
 		// TODO Auto-generated method stub
-		return "ทำให้บันทึกไม่ระบุตัวตน (Beta)";
+		return "ทำให้บันทึกไม่ระบุตัวตน ";
 	}
 
 	@Override
@@ -11652,6 +11652,30 @@ public class Tailandes implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "ไฟล์ถูกใช้โดยกระบวนการอื่น";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "ข้อผิดพลาด Palette ของ Chunk ใน BetterEnd";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "BetterEnd ปรากฏในอาการ crash ระหว่างการ render chunks</b>" + "<p>เกมได้แสดงข้อความ:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>ข้อผิดพลาดเกิดขึ้นขณะสร้าง meshes ของ chunks และ BetterEnd เข้าแทรกแซง "
+				+ "สีของน้ำผ่าน <code>betterend$be_getWaterColor</code></p>"
+				+ "<p>สิ่งนี้มักชี้ไปที่ปัญหากับ BetterEnd, BCLib/WorldWeaver, การสร้างโลก, "
+				+ "หรือการโต้ตอบกับ Sodium/การ render ของเหลว</p>"
+				+ "<p>ลองอัปเดต BetterEnd และ dependencies, ทดสอบโดยปิด BetterEnd ชั่วคราว, "
+				+ "และตรวจสอบว่าอาการ crash เกิดขึ้นเฉพาะใกล้ chunks หรือ biomes บางแห่งหรือไม่</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		// TODO Auto-generated method stub
+		return "ตรวจจับอัตโนมัติ";
 	}
 
 }

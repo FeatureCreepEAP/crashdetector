@@ -364,62 +364,51 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/niwa.png", Statics.carpeta.resolve("imagenes/niwa.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/motherv3.png", Statics.carpeta.resolve("imagenes/motherv3.png").toFile());
 
-		
-		
-		
-		
-		
-		
-		
-		
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/AbrolDeMods.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/AbrolDeMods.md").toFile());
+				Statics.carpeta.resolve("docs/espanol/minecraft/AbrolDeMods.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/CDGrepR.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/CDGrepR.md").toFile());
+				Statics.carpeta.resolve("docs/espanol/minecraft/CDGrepR.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/CDLauncher.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/CDLauncher.md").toFile());
+				Statics.carpeta.resolve("docs/espanol/minecraft/CDLauncher.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/Cfr.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/Cfr.md").toFile());
+				Statics.carpeta.resolve("docs/espanol/minecraft/Cfr.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/DepMap.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/DepMap.md").toFile());
+				Statics.carpeta.resolve("docs/espanol/minecraft/DepMap.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/Git.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/Git.md").toFile());
+				Statics.carpeta.resolve("docs/espanol/minecraft/Git.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/GPUCoreccion.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/GPUCoreccion.md").toFile());
+				Statics.carpeta.resolve("docs/espanol/minecraft/GPUCoreccion.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/Guardia.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/Guardia.md").toFile());
+				Statics.carpeta.resolve("docs/espanol/minecraft/Guardia.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/Lanzeres.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/Lanzeres.md").toFile());
+				Statics.carpeta.resolve("docs/espanol/minecraft/Lanzeres.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/MCreatorDetector.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/MCreatorDetector.md").toFile());
+				Statics.carpeta.resolve("docs/espanol/minecraft/MCreatorDetector.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/ModsHistorial.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/ModsHistorial.md").toFile());
+				Statics.carpeta.resolve("docs/espanol/minecraft/ModsHistorial.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/OptimizadorRendimiento.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/OptimizadorRendimiento.md").toFile());
+				Statics.carpeta.resolve("docs/espanol/minecraft/OptimizadorRendimiento.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/RegistrosLanzeres.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/RegistrosLanzeres.md").toFile());
+				Statics.carpeta.resolve("docs/espanol/minecraft/RegistrosLanzeres.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/ScriptCreacion.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/ScriptCreacion.md").toFile());
+				Statics.carpeta.resolve("docs/espanol/minecraft/ScriptCreacion.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/SpongeMixins.md",
-		        Statics.carpeta.resolve("docs/espanol/minecraft/SpongeMixins.md").toFile());
-		
-		
-		
-		
+				Statics.carpeta.resolve("docs/espanol/minecraft/SpongeMixins.md").toFile());
+
 //docs		
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Launchers.md",
@@ -428,58 +417,49 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/LauncherLogs.md",
 				Statics.carpeta.resolve("docs/ingles/minecraft/LauncherLogs.md").toFile());
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/CDGrepR.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/CDGrepR.md").toFile());
+				Statics.carpeta.resolve("docs/ingles/minecraft/CDGrepR.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/CDLauncher.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/CDLauncher.md").toFile());
+				Statics.carpeta.resolve("docs/ingles/minecraft/CDLauncher.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Cfr.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/Cfr.md").toFile());
+				Statics.carpeta.resolve("docs/ingles/minecraft/Cfr.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/DepMap.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/DepMap.md").toFile());
+				Statics.carpeta.resolve("docs/ingles/minecraft/DepMap.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Git.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/Git.md").toFile());
+				Statics.carpeta.resolve("docs/ingles/minecraft/Git.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/GPUFix.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/GPUFix.md").toFile());
+				Statics.carpeta.resolve("docs/ingles/minecraft/GPUFix.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Guard.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/Guard.md").toFile());
+				Statics.carpeta.resolve("docs/ingles/minecraft/Guard.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/LauncherLogs.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/LauncherLogs.md").toFile());
+				Statics.carpeta.resolve("docs/ingles/minecraft/LauncherLogs.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Launchers.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/Launchers.md").toFile());
+				Statics.carpeta.resolve("docs/ingles/minecraft/Launchers.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/MCreatorDetector.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/MCreatorDetector.md").toFile());
+				Statics.carpeta.resolve("docs/ingles/minecraft/MCreatorDetector.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/ModsHistory.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/ModsHistory.md").toFile());
+				Statics.carpeta.resolve("docs/ingles/minecraft/ModsHistory.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/ModsTree.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/ModsTree.md").toFile());
+				Statics.carpeta.resolve("docs/ingles/minecraft/ModsTree.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/PerformanceOptimiser.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/PerformanceOptimiser.md").toFile());
+				Statics.carpeta.resolve("docs/ingles/minecraft/PerformanceOptimiser.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Scripting.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/Scripting.md").toFile());
+				Statics.carpeta.resolve("docs/ingles/minecraft/Scripting.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/SpongeMixins.md",
-		        Statics.carpeta.resolve("docs/ingles/minecraft/SpongeMixins.md").toFile());
-		
-		
-		
-		
-		
-		
-		
-		
-		
+				Statics.carpeta.resolve("docs/ingles/minecraft/SpongeMixins.md").toFile());
 
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {

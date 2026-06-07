@@ -433,7 +433,7 @@ public class Persa implements Idioma {
 
 	@Override
 	public String anonimizarRegistros() {
-		return "بی‌هویت کردن لاگ‌ها (بتا)";
+		return "بی‌هویت کردن لاگ‌ها ";
 	}
 
 	@Override
@@ -11422,6 +11422,30 @@ public class Persa implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "فایل در حال استفاده توسط فرآیند دیگر";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "خطای پالت چانک در BetterEnd";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "BetterEnd در یک کرش رندرینگ چانک ظاهر شده است.</b>" + "<p>بازی خطای زیر را صادر کرد:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>این خطا هنگام ساخت مش‌های چانک رخ می‌دهد و BetterEnd "
+				+ "از طریق <code>betterend$be_getWaterColor</code> در رنگ آب مداخله می‌کند.</p>"
+				+ "<p>این معمولاً به مشکلی با BetterEnd، BCLib/WorldWeaver، تولید جهان، "
+				+ "یا تداخل با Sodium/رندرینگ سیالات اشاره دارد.</p>"
+				+ "<p>به‌روزرسانی BetterEnd و وابستگی‌های آن، آزمایش موقت بدون BetterEnd، "
+				+ "و بررسی اینکه آیا کرش فقط نزدیک چانک‌ها یا بایوم‌های خاصی رخ می‌دهد، توصیه می‌شود.</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		// TODO Auto-generated method stub
+		return "تشخیص خودکار";
 	}
 
 }

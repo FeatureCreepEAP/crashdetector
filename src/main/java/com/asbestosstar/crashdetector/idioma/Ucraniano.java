@@ -448,7 +448,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 	@Override
 	public String anonimizarRegistros() {
-		return "Анонімізувати логи (Бета)";
+		return "Анонімізувати логи";
 	}
 
 	@Override
@@ -10793,6 +10793,30 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "Файл використовується іншим процесом";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "Помилка палітри чанку в BetterEnd";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "BetterEnd фігурує у краші рендерингу чанків.</b>" + "<p>Гра видала:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>Помилка виникає під час побудови мешів чанків, і BetterEnd втручається "
+				+ "у колір води через <code>betterend$be_getWaterColor</code>.</p>"
+				+ "<p>Це зазвичай вказує на проблему з BetterEnd, BCLib/WorldWeaver, генерацією світу, "
+				+ "або взаємодією з Sodium/рендерингом рідин.</p>"
+				+ "<p>Спробуйте оновити BetterEnd та його залежності, тимчасово протестувати без BetterEnd, "
+				+ "та перевірити, чи відбувається краш лише поблизу певних чанків або біомів.</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		// TODO Auto-generated method stub
+		return "Автовизначення";
 	}
 
 }

@@ -461,7 +461,7 @@ public class Khmer implements Idioma {
 	@Override
 	public String anonimizarRegistros() {
 		// TODO Auto-generated method stub
-		return "លុបអត្តសញ្ញាណកំណត់ហេតុ (បេតា)";
+		return "លុបអត្តសញ្ញាណកំណត់ហេតុ";
 	}
 
 	@Override
@@ -11669,6 +11669,29 @@ public class Khmer implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "ឯកសារត្រូវបានប្រើប្រាស់ដោយដំណើរការផ្សេង";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "កំហុសប៉ាលែត Chunk នៅក្នុង BetterEnd";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "BetterEnd លេចឡើងនៅក្នុងការដួលរលំ (crash) នៃការបង្ហាញ Chunk។</b>" + "<p>ហ្គេមបានបង្កើត:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>កំហុសកើតឡើងនៅពេលកំពុងសាងសង់ mesh នៃ chunks និង BetterEnd ជ្រៀតជ្រែក "
+				+ "ទៅលើពណ៌ទឹកតាមរយៈ <code>betterend$be_getWaterColor</code>។</p>"
+				+ "<p>នេះជាធម្មតាចង្អុលបង្ហាញពីបញ្ហាជាមួយ BetterEnd, BCLib/WorldWeaver, ការបង្កើតពិភពលោក, "
+				+ "ឬអន្តរកម្មជាមួយ Sodium/ការបង្ហាញសារធាតុរាវ។</p>"
+				+ "<p>សាកល្បងធ្វើបច្ចុប្បន្នភាព BetterEnd និងភាពអាស្រ័យរបស់វា សាកល្បងដោយគ្មាន BetterEndជាបណ្តោះអាសន្ន, "
+				+ "និងពិនិត្យមើលថាតើការដួលរលំកើតឡើងតែនៅជិត Chunks ឬ Biomes ជាក់លាក់ណាមួយដែរឬទេ។</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		return "ចាប់យកដោយស្វ័យប្រវត្តិ";
 	}
 
 }

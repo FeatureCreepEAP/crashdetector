@@ -4470,4 +4470,10 @@ public interface Idioma {
 
 	public String nombreErrorArchivoUsadoPorOtroProceso();
 
+	public String mensajeErrorBetterEndPaletaChunkAgua();
+
+	public String nombreErrorBetterEndPaletaChunkAgua();
+
+	public String detectarAutomaticamente();
+
 }

@@ -431,7 +431,7 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String anonimizarRegistros() {
-		return "Анонимизация логов (Бета)";
+		return "Анонимизация логов";
 	}
 
 	@Override
@@ -11466,6 +11466,30 @@ public class Ruso implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "Файл используется другим процессом";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "Ошибка палитры чанка в BetterEnd";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "BetterEnd фигурирует в краше рендеринга чанков.</b>" + "<p>Игра выдала:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>Ошибка возникает при построении мешей чанков, и BetterEnd вмешивается "
+				+ "в цвет воды через <code>betterend$be_getWaterColor</code>.</p>"
+				+ "<p>Это обычно указывает на проблему с BetterEnd, BCLib/WorldWeaver, генерацией мира, "
+				+ "или взаимодействием с Sodium/рендерингом жидкостей.</p>"
+				+ "<p>Попробуйте обновить BetterEnd и его зависимости, временно протестировать без BetterEnd, "
+				+ "и проверить, происходит ли краш только рядом с определенными чанками или биомами.</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		// TODO Auto-generated method stub
+		return "Автоопределение";
 	}
 
 }

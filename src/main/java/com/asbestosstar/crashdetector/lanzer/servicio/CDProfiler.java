@@ -28,7 +28,7 @@ import com.asbestosstar.crashdetector.gui.tipos.profiler.ProfilerGUIMinaly;
  */
 public class CDProfiler implements ServicioCDLauncher {
 
-	public static final String ID = "cdprofiler_wip";
+	public static final String ID = "cdprofiler";
 
 	/**
 	 * Lista centralizada de prefijos de clases a ignorar en la instrumentación. Se

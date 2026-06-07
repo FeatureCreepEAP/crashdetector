@@ -466,7 +466,7 @@ public class Vietnamita implements Idioma {
 	@Override
 	public String anonimizarRegistros() {
 		// TODO Auto-generated method stub
-		return "Ẩn danh nhật ký (Beta)";
+		return "Ẩn danh nhật ký";
 	}
 
 	@Override
@@ -11682,6 +11682,30 @@ public class Vietnamita implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "Tệp đang được sử dụng bởi tiến trình khác";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "Lỗi bảng màu chunk trong BetterEnd";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "BetterEnd xuất hiện trong một lỗi crash khi render chunks.</b>" + "<p>Trò chơi đã báo lỗi:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>Lỗi xảy ra khi đang xây dựng các mesh của chunks và BetterEnd can thiệp "
+				+ "vào màu nước thông qua <code>betterend$be_getWaterColor</code>.</p>"
+				+ "<p>Điều này thường chỉ ra vấn đề với BetterEnd, BCLib/WorldWeaver, quá trình tạo thế giới, "
+				+ "hoặc tương tác với Sodium/render chất lỏng.</p>"
+				+ "<p>Hãy thử cập nhật BetterEnd và các phụ thuộc, thử nghiệm tạm thời without BetterEnd, "
+				+ "và kiểm tra xem lỗi crash có chỉ xảy ra gần một số chunks hoặc quần xã sinh vật nhất định không.</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		// TODO Auto-generated method stub
+		return "Tự động phát hiện";
 	}
 
 }

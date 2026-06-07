@@ -434,7 +434,7 @@ public class Indonesia implements Idioma {
 
 	@Override
 	public String anonimizarRegistros() {
-		return "Anonimkan log (Beta)";
+		return "Anonimkan log";
 	}
 
 	@Override
@@ -12052,6 +12052,29 @@ public class Indonesia implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "Berkas digunakan oleh proses lain";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "Kesalahan palet chunk di BetterEnd";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "BetterEnd muncul dalam crash rendering chunk.</b>" + "<p>Game meluncurkan:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>Kesalahan terjadi saat membangun mesh chunk dan BetterEnd mengintervensi "
+				+ "warna air melalui <code>betterend$be_getWaterColor</code>.</p>"
+				+ "<p>Hal ini biasanya menunjukkan masalah dengan BetterEnd, BCLib/WorldWeaver, generasi dunia, "
+				+ "atau interaksi dengan Sodium/rendering cairan.</p>"
+				+ "<p>Coba perbarui BetterEnd dan dependensinya, uji tanpa BetterEnd sementara, "
+				+ "dan periksa apakah crash hanya terjadi di dekat chunk atau bioma tertentu.</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		return "Deteksi otomatis";
 	}
 
 }

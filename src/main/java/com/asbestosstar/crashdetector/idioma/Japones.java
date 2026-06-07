@@ -418,7 +418,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String anonimizarRegistros() {
-		return "ログを匿名化 (ベータ)";
+		return "ログを匿名化";
 	}
 
 	@Override
@@ -11090,6 +11090,27 @@ public class Japones implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "他のプロセスで使用されているファイル";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "BetterEndでのチャンクパレットエラー";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "チャンクレンダリングのクラッシュでBetterEndが検出されました。</b>" + "<p>ゲームは以下の例外をスローしました:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>" + "<p>このエラーはチャンクのメッシュ構築中に発生し、BetterEndが "
+				+ "<code>betterend$be_getWaterColor</code> を介して水の色に干渉しています。</p>"
+				+ "<p>これは通常、BetterEnd、BCLib/WorldWeaver、ワールド生成、 " + "またはSodium/流体レンダリングとの相互作用に問題があることを示唆します。</p>"
+				+ "<p>BetterEndとその依存関係を更新してみてください。一時的にBetterEndなしでテストし、 "
+				+ "クラッシュが特定のチャンクやバイオーム付近でのみ発生するかどうかを確認してください。</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		return "自動検出";
 	}
 
 }

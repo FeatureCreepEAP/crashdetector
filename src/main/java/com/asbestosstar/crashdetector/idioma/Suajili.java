@@ -437,7 +437,7 @@ public class Suajili implements Idioma {
 
 	@Override
 	public String anonimizarRegistros() {
-		return "Fanya kumbukumbu zisitambulike (Beta)";
+		return "Fanya kumbukumbu zisitambulike";
 	}
 
 	@Override
@@ -11909,6 +11909,30 @@ public class Suajili implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "Faili inatumika na mchakato mwingine";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "Hitilafu ya paleti ya chunk katika BetterEnd";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "BetterEnd inaonekana katika crash ya urenderishaji wa chunks.</b>" + "<p>Mchezo umetoa:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>Hitilafu hutokea wakati meshes za chunks zinajengwa na BetterEnd inaingilia "
+				+ "rangi ya maji kupitia <code>betterend$be_getWaterColor</code>.</p>"
+				+ "<p>Hii mara nyingi huashiria tatizo na BetterEnd, BCLib/WorldWeaver, uzalishaji wa ulimwengu, "
+				+ "au mwingiliano na Sodium/urenderishaji wa viowevu.</p>"
+				+ "<p>Jaribu kusasisha BetterEnd na vitegemezi vyake, jaribu bila BetterEnd kwa muda, "
+				+ "na angalia ikiwa crash hutokea karibu na chunks au bioms fulani tu.</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		// TODO Auto-generated method stub
+		return "Gundua kiotomatiki";
 	}
 
 }

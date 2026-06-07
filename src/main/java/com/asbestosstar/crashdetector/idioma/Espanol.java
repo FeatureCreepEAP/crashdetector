@@ -468,7 +468,7 @@ public class Espanol implements Idioma {
 	@Override
 	public String anonimizarRegistros() {
 		// TODO Auto-generated method stub
-		return "Anonimizar registros (Beta)";
+		return "Anonimizar registros";
 	}
 
 	@Override
@@ -12182,6 +12182,30 @@ public class Espanol implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "Archivo usado por otro proceso";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "Error de paleta de chunk en BetterEnd";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "BetterEnd aparece en un crash de renderizado de chunks.</b>" + "<p>El juego lanzó:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>El error ocurre mientras se construyen meshes de chunks y BetterEnd interviene "
+				+ "en el color del agua mediante <code>betterend$be_getWaterColor</code>.</p>"
+				+ "<p>Esto suele apuntar a un problema con BetterEnd, BCLib/WorldWeaver, generación de mundo, "
+				+ "o una interacción con Sodium/renderizado de fluidos.</p>"
+				+ "<p>Prueba actualizar BetterEnd y sus dependencias, probar sin BetterEnd temporalmente, "
+				+ "y comprobar si el crash ocurre solo cerca de ciertos chunks o biomas.</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		// TODO Auto-generated method stub
+		return "Detectar automáticamente";
 	}
 
 }

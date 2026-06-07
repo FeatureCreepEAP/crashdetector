@@ -9,43 +9,32 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public class ErrorJvmDllC2Sodium implements Verificaciones {
 
-	// Indica si el log contiene un fallo fatal nativo del JVM
-	private boolean posibleJvmDll = false;
-
-	// Indica si el fallo ocurrió en el compilador C2 de Java
+	private boolean posibleJvm = false;
 	private boolean posibleC2 = false;
-
-	// Indica si el compilador C2 estaba compilando código de Sodium o un fork
-	// similar
 	private boolean posibleSodium = false;
-
-	// Indica si esta verificación fue activada
 	private boolean activado = false;
-
-	// Enlace a la línea del log donde se detectó el error principal
 	private String enlace = "";
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenido = consola.contenido_verificar;
 
-		// Detección global ligera: el fallo debe ser un acceso inválido dentro de
-		// jvm.dll.
-		if (contenido.contains("EXCEPTION_ACCESS_VIOLATION") && contenido.contains("Problematic frame:")
-				&& contenido.contains("jvm.dll")) {
-			posibleJvmDll = true;
+		if ((contenido.contains("A fatal error has been detected by the Java Runtime Environment")
+				|| contenido.contains("EXCEPTION_ACCESS_VIOLATION") || contenido.contains("SIGBUS")
+				|| contenido.contains("SIGSEGV")) && contenido.contains("Problematic frame:")
+				&& (contenido.contains("jvm.dll") || contenido.contains("libjvm.dylib")
+						|| contenido.contains("libjvm.so"))) {
+			posibleJvm = true;
 		}
 
-		// Esta variante específica ocurre en el compilador C2, no en un hilo normal de
-		// Minecraft.
-		if (contenido.contains("C2 CompilerThread") || contenido.contains("Current CompileTask:")) {
+		if (contenido.contains("C2 CompilerThread") || contenido.contains("Current CompileTask:")
+				|| contenido.contains("C2Compiler::compile_method")) {
 			posibleC2 = true;
 		}
 
-		// Sodium, Rubidium y Embeddium suelen aparecer en la tarea de compilación.
-		// El caso visto con más frecuencia es ClonedChunkSectionCache::acquire.
-		if (contenido.contains("me.jellysquid.mods.sodium") || contenido.contains("org.embeddedt.embeddium")
-				|| contenido.contains("embeddium") || contenido.contains("rubidium")
+		if (contenido.contains("net.caffeinemc.mods.sodium") || contenido.contains("me.jellysquid.mods.sodium")
+				|| contenido.contains("org.embeddedt.embeddium") || contenido.contains("embeddium")
+				|| contenido.contains("rubidium") || contenido.contains("ChunkBuilderMeshingTask::execute")
 				|| contenido.contains("ClonedChunkSectionCache::acquire")) {
 			posibleSodium = true;
 		}
@@ -53,31 +42,26 @@ public class ErrorJvmDllC2Sodium implements Verificaciones {
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		// Salir temprano si el log no tiene los indicios globales necesarios.
-		if (!posibleJvmDll || !posibleC2 || !posibleSodium) {
+		if (!posibleJvm || !posibleC2 || !posibleSodium) {
 			return;
 		}
 
-		// Línea principal del fallo nativo.
 		if (!activado && linea.contains("Problematic frame:")) {
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
 			return;
 		}
 
-		// Si el lector no encuentra la línea anterior por formato extraño, usar la
-		// línea de jvm.dll.
-		if (!activado && linea.contains("jvm.dll")) {
+		if (!activado && (linea.contains("jvm.dll") || linea.contains("libjvm.dylib") || linea.contains("libjvm.so"))) {
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
 			return;
 		}
 
-		// También permitir que se marque directamente la línea de la tarea de
-		// compilación.
 		if (!activado && linea.contains("Current CompileTask:")
-				&& (linea.contains("me.jellysquid.mods.sodium") || linea.contains("org.embeddedt.embeddium")
-						|| linea.contains("embeddium") || linea.contains("rubidium")
+				&& (linea.contains("net.caffeinemc.mods.sodium") || linea.contains("me.jellysquid.mods.sodium")
+						|| linea.contains("org.embeddedt.embeddium") || linea.contains("embeddium")
+						|| linea.contains("rubidium") || linea.contains("ChunkBuilderMeshingTask::execute")
 						|| linea.contains("ClonedChunkSectionCache::acquire"))) {
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;

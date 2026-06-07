@@ -18,9 +18,9 @@ public class TransformacionesCPW implements ITransformer<ClassNode> {
 
 	private static final boolean JAVA_8 = esJava8();
 
-	private static final boolean PROFILER_ACTIVO = !JAVA_8 && Boolean.getBoolean("crashdetector.cdprofiler_wip");
+	private static final boolean PROFILER_ACTIVO = !JAVA_8 && Boolean.getBoolean("crashdetector.cdprofiler");
 
-	private static final boolean SAMPLER_ACTIVO = !JAVA_8 && Boolean.getBoolean("crashdetector.cdsampler_wip");
+	private static final boolean SAMPLER_ACTIVO = !JAVA_8 && Boolean.getBoolean("crashdetector.cdsampler");
 
 	static {
 

@@ -431,7 +431,7 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String anonimizarRegistros() {
-		return "Anonimigi protokolojn (Beta)";
+		return "Anonimigi protokolojn";
 	}
 
 	@Override
@@ -11469,6 +11469,29 @@ public class Esperanto implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "Dosiero uzata de alia procezo";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "Eraro de paletro de chunk en BetterEnd";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "BetterEnd aperas en kraŝo de renderado de chunks.</b>" + "<p>La ludo ĵetis:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>La eraro okazas dum oni konstruas maŝojn (meshes) de chunks kaj BetterEnd intervenas "
+				+ "en la koloro de akvo per <code>betterend$be_getWaterColor</code>.</p>"
+				+ "<p>Tio kutime indikas problemon kun BetterEnd, BCLib/WorldWeaver, mondgenerado, "
+				+ "aŭ interago kun Sodium/renderado de fluidaĵoj.</p>"
+				+ "<p>Provu ĝisdatigi BetterEnd kaj ĝiajn dependecojn, provi sen BetterEnd provizore, "
+				+ "kaj kontroli ĉu la kraŝo okazas nur proksime de certaj chunks aŭ biomoj.</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		return "Aŭtomate detekti";
 	}
 
 }

@@ -444,7 +444,7 @@ public class Lao implements Idioma {
 
 	@Override
 	public String anonimizarRegistros() {
-		return "ປົກປິດຂໍ້ມູນໃນ logs (Beta)";
+		return "ປົກປິດຂໍ້ມູນໃນ logs";
 	}
 
 	@Override
@@ -11880,6 +11880,30 @@ public class Lao implements Idioma {
 	@Override
 	public String nombreErrorArchivoUsadoPorOtroProceso() {
 		return "ໄຟລ໌ຖືກໃຊ້ໂດຍຂະບວນການອື່ນ";
+	}
+
+	@Override
+	public String nombreErrorBetterEndPaletaChunkAgua() {
+		return "ຂໍ້ຜິດພາດ Palette Chunk ໃນ BetterEnd";
+	}
+
+	@Override
+	public String mensajeErrorBetterEndPaletaChunkAgua() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "BetterEnd ປາກົດໃນການ crash ຂອງການ render chunks.</b>" + "<p>ເກມໄດ້ພິມຂໍ້ຜິດພາດ:</p>"
+				+ "<code>EntryMissingException: Missing Palette entry</code>"
+				+ "<p>ຂໍ້ຜິດພາດເກີດຂຶ້ນໃນຂະນະທີ່ສ້າງ meshes ຂອງ chunks ແລະ BetterEnd ເຂົ້າແຊກແຊງ "
+				+ "ໃນສີຂອງນ້ຳຜ່ານ <code>betterend$be_getWaterColor</code>.</p>"
+				+ "<p>ສິ່ງນີ້ມັກຊີ້ບອກເຖິງບັນຫາກັບ BetterEnd, BCLib/WorldWeaver, ການສ້າງໂລກ, "
+				+ "ຫຼືການຕິດຕໍ່ກັບ Sodium/rendering ຂອງຂອງແຫຼວ.</p>"
+				+ "<p>ລອງອັບເດດ BetterEnd ແລະ dependencies ຂອງມັນ, ລອງໃຊ້ໂດຍບໍ່ມີ BetterEnd ຊົ່ວຄາວ, "
+				+ "ແລະ ກວດສອບວ່າການ crash ເກີດຂຶ້ນສະເພາະໃກ້ໆ chunks ຫຼື biomes ບາງຢ່າງບໍ່.</p>";
+	}
+
+	@Override
+	public String detectarAutomaticamente() {
+		// TODO Auto-generated method stub
+		return "ກວດຈັບອັດຕະໂນມັດ";
 	}
 
 }

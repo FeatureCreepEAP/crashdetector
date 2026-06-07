@@ -1,51 +1,28 @@
 package com.asbestosstar.crashdetector.analizador.general;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores NoSuchFieldError que ocurren cuando un mod intenta acceder a
- * un campo que ya no existe en la versión actual del juego u otro mod. Soporta
- * formatos: - "java.lang.NoSuchFieldError: DEAD_PLANKS" -
- * "java.lang.NoSuchFieldError: Class X does not have member field
- * 'paquete.Clase$Tipo nombreCampo'"
+ * un campo que ya no existe en la versión actual del juego u otro mod.
  */
 public class ErrorCampoInexistente implements Verificaciones {
 
-	/**
-	 * Bandera para indicar si ya se detectó este problema en el log.
-	 */
 	private boolean activado = false;
-
-	/**
-	 * Bandera global ligera: solo indica si el log contiene alguna referencia a
-	 * {@code java.lang.NoSuchFieldError}. Sirve como filtro rápido para el análisis
-	 * línea a línea.
-	 */
 	private boolean posibleNoSuchField = false;
-
-	/**
-	 * Bandera interna para indicar que ya se encontró la línea del error y se está
-	 * esperando la primera línea de stack que comience por {@code "at "}.
-	 */
-	private boolean esperandoLineaStack = false;
 
 	private String mensaje = "";
 	private String enlaceHtml = "";
 
-	// Datos que se extraen durante el análisis y se usan al construir el mensaje
 	private String nombreCampoDetectado = "";
 	private String lineaError = "";
 	private String lineaStack = "";
 
-	// Flags para detectar mods específicos
 	private boolean create = false;
 	private boolean epicfight = false;
 	private boolean azurelib = false;
@@ -60,57 +37,127 @@ public class ErrorCampoInexistente implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola) {
-		// Análisis global muy ligero: solo comprobamos si aparece el texto base
-		// de NoSuchFieldError en algún punto del log.
-		// Si no aparece, la verificación por línea saldrá inmediatamente y evitamos
-		// trabajo innecesario.
 		String contenido = consola.contenido_verificar;
-		this.posibleNoSuchField = contenido != null && contenido.contains("java.lang.NoSuchFieldError:");
+		this.posibleNoSuchField = contenido != null && contenido.indexOf("java.lang.NoSuchFieldError:") >= 0;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (linea == null || !posibleNoSuchField) {
+		if (linea == null || !posibleNoSuchField || activado) {
 			return;
 		}
 
-		if (activado && !esperandoLineaStack) {
+		if (linea.indexOf("java.lang.NoSuchFieldError:") < 0) {
 			return;
 		}
 
-		String l = linea;
+		String nombreCampo = extraerCampoNoSuchField(linea);
 
-		if (!activado) {
-			if (l.indexOf("java.lang.NoSuchFieldError:") < 0) {
-				return;
-			}
-
-			String nombreCampo = extraerCampoNoSuchField(l);
-
-			if (nombreCampo == null || nombreCampo.isEmpty()) {
-				return;
-			}
-
-			this.nombreCampoDetectado = nombreCampo;
-			this.lineaError = l.trim();
-			this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-
-			resetearBanderasMods();
-
-			this.activado = true;
-			this.esperandoLineaStack = true;
+		if (nombreCampo == null || nombreCampo.isEmpty()) {
 			return;
 		}
 
-		if (esperandoLineaStack) {
-			String s = l.trim();
+		this.nombreCampoDetectado = nombreCampo;
+		this.lineaError = linea.trim();
+		this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-			if (s.startsWith("at ")) {
-				this.lineaStack = s;
-				detectarModDesdeStack(s);
-				this.esperandoLineaStack = false;
+		resetearBanderasMods();
+
+		this.lineaStack = encontrarLineaStackCulpable(consola.lineas_verificar, numero_de_linea);
+		detectarModDesdeStack(this.lineaStack);
+
+		this.activado = true;
+	}
+
+	private String encontrarLineaStackCulpable(String[] lineas, int numeroDeLineaError) {
+		if (lineas == null || lineas.length == 0) {
+			return "";
+		}
+
+		// numero_de_linea normalmente viene en base 1 desde el lector.
+		// La línea siguiente en el array es el mismo índice.
+		int inicio = numeroDeLineaError;
+
+		if (inicio < 0) {
+			inicio = 0;
+		}
+
+		if (inicio >= lineas.length) {
+			return "";
+		}
+
+		String primeraLineaStack = "";
+		String mejorLinea = "";
+
+		int max = inicio + 80;
+		if (max > lineas.length) {
+			max = lineas.length;
+		}
+
+		for (int i = inicio; i < max; i++) {
+			String linea = lineas[i];
+
+			if (linea == null) {
+				continue;
+			}
+
+			String s = linea.trim();
+
+			if (s.startsWith("Caused by:") && s.indexOf("java.lang.NoSuchFieldError:") < 0) {
+				break;
+			}
+
+			if (!s.startsWith("at ")) {
+				continue;
+			}
+
+			if (primeraLineaStack.isEmpty()) {
+				primeraLineaStack = s;
+			}
+
+			if (esLineaFramework(s)) {
+				continue;
+			}
+
+			mejorLinea = s;
+
+			if (esLineaModMuyProbable(s)) {
+				return mejorLinea;
 			}
 		}
+
+		if (!mejorLinea.isEmpty()) {
+			return mejorLinea;
+		}
+
+		return primeraLineaStack;
+	}
+
+	private boolean esLineaModMuyProbable(String s) {
+		if (s == null || s.isEmpty()) {
+			return false;
+		}
+
+		if (s.indexOf("~[") >= 0 && s.indexOf(".jar") >= 0 && s.indexOf("client-intermediary.jar") < 0
+				&& s.indexOf("server-intermediary.jar") < 0 && s.indexOf("fabric-loader") < 0
+				&& s.indexOf("fabric-api") < 0 && s.indexOf("lwjgl") < 0) {
+			return true;
+		}
+
+		return s.indexOf("io.github.") >= 0 || s.indexOf("com.github.") >= 0 || s.indexOf("curse.maven.") >= 0
+				|| s.indexOf("com.simibubi.") >= 0 || s.indexOf("yesman.epicfight") >= 0 || s.indexOf("mod.azure.") >= 0
+				|| s.indexOf("asbestosstar.") >= 0 || s.indexOf("dangerzone.") >= 0 || s.indexOf("vectorwing.") >= 0;
+	}
+
+	private boolean esLineaFramework(String s) {
+		return s.indexOf("net.fabricmc.") >= 0 || s.indexOf("net/fabricmc/") >= 0 || s.indexOf("net.minecraft.") >= 0
+				|| s.indexOf("net/minecraft/") >= 0 || s.indexOf("com.mojang.") >= 0 || s.indexOf("com/mojang/") >= 0
+				|| s.indexOf("org.lwjgl.") >= 0 || s.indexOf("org/lwjgl/") >= 0 || s.indexOf("java.") >= 0
+				|| s.indexOf("javax.") >= 0 || s.indexOf("jdk.") >= 0 || s.indexOf("sun.") >= 0
+				|| s.indexOf("cpw.mods.modlauncher") >= 0 || s.indexOf("cpw/mods/modlauncher") >= 0
+				|| s.indexOf("net.minecraftforge") >= 0 || s.indexOf("net/minecraftforge") >= 0
+				|| s.indexOf("net.neoforged") >= 0 || s.indexOf("net/neoforged") >= 0
+				|| s.indexOf("org.prismlauncher.") >= 0 || s.indexOf("org/prismlauncher/") >= 0;
 	}
 
 	private void resetearBanderasMods() {
@@ -190,10 +237,10 @@ public class ErrorCampoInexistente implements Verificaciones {
 		return fin > 0 ? resto.substring(0, fin) : "";
 	}
 
-	// Utilidad para escapar HTML básico
 	private String escapeHtml(String s) {
-		if (s == null)
+		if (s == null) {
 			return "";
+		}
 		return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;");
 	}
 
@@ -218,25 +265,23 @@ public class ErrorCampoInexistente implements Verificaciones {
 			return "";
 		}
 
-		// Si ya construimos el mensaje previamente, devolverlo tal cual
 		if (mensaje != null && !mensaje.isEmpty()) {
 			return mensaje;
 		}
 
-		// Construir mensaje: primero el mensaje localizado, luego un bloque
-		// monoespaciado con contexto y enlace
 		StringBuilder sb = new StringBuilder();
 		sb.append(MonitorDePID.idioma.errorCampoInexistente(nombreCampoDetectado, lineaError));
+
 		if (!lineaStack.isEmpty()) {
 			sb.append(Verificaciones.nl_html);
 			sb.append("<span style='color:#888888; font-family:monospace;'>");
 			sb.append(escapeHtml(lineaStack));
 			sb.append("</span>");
 		}
+
 		sb.append(Verificaciones.nl_html);
 		sb.append(enlaceHtml);
 
-		// Agregar mensajes específicos para mods detectados
 		if (create) {
 			sb.append(MonitorDePID.idioma.faltar_de_clases_create());
 		}
@@ -291,30 +336,17 @@ public class ErrorCampoInexistente implements Verificaciones {
 		return "error_campo_inexistente";
 	}
 
-	/**
-	 * Marca trazos que pertenezcan a este problema.
-	 * <p>
-	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
-	 * <ul>
-	 * <li>El verificador ya se ha activado, y</li>
-	 * <li>El trazo contiene claramente "NoSuchFieldError".</li>
-	 * </ul>
-	 * Es intencionadamente conservador: se prefiere un falso negativo a asociar un
-	 * trazo que no corresponda realmente a este error.
-	 * </p>
-	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		if (!activado || trazo == null || trazo.trace == null) {
 			return false;
 		}
-		return trazo.trace.contains("NoSuchFieldError");
+
+		return trazo.trace.indexOf("NoSuchFieldError") >= 0;
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }
