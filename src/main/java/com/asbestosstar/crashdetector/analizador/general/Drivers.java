@@ -76,7 +76,7 @@ public class Drivers implements Verificaciones {
 	// ==========================
 
 	private static final String[] DLLS_INTEL = { "[ig7icd32.dll", "[ig7icd64.dll", "[ig75icd32.dll", "[ig75icd64.dll",
-			"[ig8icd64.dll", "[ig9icd32.dll", "[ig9icd64.dll", "[igxelpicd64" };
+			"[ig8icd64.dll", "[ig9icd32.dll", "[ig9icd64.dll", "[igxelpicd64","[ig11icd64" };
 
 	private static final boolean ES_WINDOWS = System.getProperty("os.name", "").toLowerCase().contains("windows");
 
