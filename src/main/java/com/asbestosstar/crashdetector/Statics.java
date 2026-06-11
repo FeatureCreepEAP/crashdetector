@@ -38,6 +38,8 @@ public class Statics {
 public static String ID_CURSEDFORGE="1224146";//TLMods es el mismo
 public static String ID_MINECRAFTSTORAGE="1606";
 	public static String ID_MCMODCN = "713629";
+	public static String ID_BBSMC = "BPis79MR";
+	public static String ID_MODRINTH = "8wzfQa8F";
 	
 	
 	
