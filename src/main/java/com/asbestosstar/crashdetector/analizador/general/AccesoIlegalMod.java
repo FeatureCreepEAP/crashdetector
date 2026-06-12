@@ -46,6 +46,13 @@ public class AccesoIlegalMod implements Verificaciones {
 		}
 	}
 
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
+	}
+
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 

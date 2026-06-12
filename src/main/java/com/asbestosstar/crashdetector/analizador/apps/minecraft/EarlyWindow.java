@@ -57,6 +57,14 @@ public class EarlyWindow implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleEarlyWindow)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleEarlyWindow || linea == null || linea.isEmpty() || activado)
 			return;

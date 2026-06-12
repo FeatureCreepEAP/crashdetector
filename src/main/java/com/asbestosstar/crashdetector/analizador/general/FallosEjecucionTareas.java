@@ -11,8 +11,8 @@ import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -26,10 +26,19 @@ public class FallosEjecucionTareas implements Verificaciones {
 	// Bandera para indicar si se detectó algún problema
 	private boolean activado = false;
 
+	public boolean posibleError = false;
+
 	@Override
 	public void verificar(Consola consola) {
-		// No se realiza procesamiento aquí, ya que este método se llama antes del
-		// análisis por línea
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+
+		if (log.contains("Failed to execute task") && log.contains(".class")) {
+			posibleError = true;
+		}
+
 	}
 
 	@Override
@@ -44,6 +53,14 @@ public class FallosEjecucionTareas implements Verificaciones {
 				activado = true;
 			}
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleError)
+			return false;
+
+		return true;
 	}
 
 	/**

@@ -22,6 +22,11 @@ public class LegacyRandomSourceMultiHilos implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		return false;
+	}
+
+	@Override
 	public Verificaciones nueva() {
 		// TODO Auto-generated method stub
 		return new LegacyRandomSourceMultiHilos();

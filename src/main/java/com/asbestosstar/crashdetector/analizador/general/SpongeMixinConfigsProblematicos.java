@@ -27,6 +27,7 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 	private final Map<String, Integer> sm_config_con_linea = new HashMap<>();
 	private final Map<String, Boolean> sm_config_es_fatal = new HashMap<>();
 	private final Map<String, String> enlacesPorConfig = new HashMap<>();
+	public boolean posibleErrorMixinPorLinea = false;
 
 	@Override
 	public void verificar(Consola consola) {
@@ -47,7 +48,20 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 			this.activado = true;
 		}
 
+		String cont = consola.contenido_verificar;
+		if (cont.contains("The specified resource '") && cont.contains("' was invalid or could not be read")) {
+			posibleErrorMixinPorLinea = true;
+		}
+
 		// activado = !sm_config_con_linea.isEmpty();
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleErrorMixinPorLinea)
+			return false;
+
+		return true;
 	}
 
 	@Override

@@ -51,6 +51,14 @@ public class AuditorTransformer implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleAuditoriaTransformer)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleAuditoriaTransformer || linea == null) {
 			return;

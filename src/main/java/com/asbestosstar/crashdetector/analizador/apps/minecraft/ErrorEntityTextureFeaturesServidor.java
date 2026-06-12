@@ -28,9 +28,19 @@ public class ErrorEntityTextureFeaturesServidor implements Verificaciones {
 		// Verificamos si Entity Texture Features está presente en el contenido del
 		// registro
 		if (consola.contenido_verificar != null) {
-			encontradoETF = consola.contenido_verificar.toLowerCase().contains("$entity_texture_features$")
-					|| consola.contenido_verificar.contains("$etf$");
+			if (consola.contenido_verificar.contains("$entity_texture_features$")
+					|| consola.contenido_verificar.contains("$etf$")) {
+				encontradoETF = true;
+			}
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!encontradoETF)
+			return false;
+
+		return true;
 	}
 
 	/**

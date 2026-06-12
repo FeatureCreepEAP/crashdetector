@@ -14,11 +14,31 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 public class ErrorEnGarde implements Verificaciones {
 
 	private boolean activado = false;
+	private boolean posible = false;
+
 	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa
+
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains("handler$") && contenido.contains("$en_garde$")) {
+			posible = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
 	}
 
 	@Override

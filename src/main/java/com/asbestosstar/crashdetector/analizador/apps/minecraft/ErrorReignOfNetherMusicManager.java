@@ -26,9 +26,19 @@ public class ErrorReignOfNetherMusicManager implements Verificaciones {
 	public void verificar(Consola consola) {
 		// Verificamos si Reign of Nether está presente en el contenido del registro
 		if (consola.contenido_verificar != null) {
-			encontradoReignOfNether = consola.contenido_verificar
-					.contains("Mixin class: com.solegendary.reignofnether.mixin.MusicManagerMixin");
+			if (consola.contenido_verificar
+					.contains("Mixin class: com.solegendary.reignofnether.mixin.MusicManagerMixin")) {
+				encontradoReignOfNether = true;
+			}
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!encontradoReignOfNether)
+			return false;
+
+		return true;
 	}
 
 	/**

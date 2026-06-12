@@ -45,6 +45,13 @@ public class ErrorVerificacionBytecode implements Verificaciones {
 		}
 	}
 
+	public boolean quiereAnalizarLineas() {
+		if (!posibleError)
+			return false;
+
+		return true;
+	}
+
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 

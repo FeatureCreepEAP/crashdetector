@@ -27,9 +27,19 @@ public class ErrorSupplementariesCargaServidor implements Verificaciones {
 	public void verificar(Consola consola) {
 		// Verificamos si Supplementaries está presente en el contenido del registro
 		if (consola.contenido_verificar != null) {
-			encontradoSupplementaries = consola.contenido_verificar.toLowerCase().contains(
-					"net.mehvahdjukaar.supplementaries.common.block.fire_behaviors.firebehaviorsmanager.registerbehaviors");
+			if (consola.contenido_verificar.toLowerCase().contains(
+					"net.mehvahdjukaar.supplementaries.common.block.fire_behaviors.firebehaviorsmanager.registerbehaviors")) {
+				encontradoSupplementaries = true;
+			}
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!encontradoSupplementaries)
+			return false;
+
+		return true;
 	}
 
 	/**

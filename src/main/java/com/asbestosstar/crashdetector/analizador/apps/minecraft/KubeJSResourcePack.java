@@ -17,6 +17,7 @@ public class KubeJSResourcePack implements Verificaciones {
 	private boolean activado = false;
 	private final Set<String> errores = new HashSet<>();
 	private final Map<String, String> enlacesPorError = new HashMap<>();
+	public boolean posible = false;
 
 	/**
 	 * Verificación global no utilizada en este verificador.
@@ -28,7 +29,24 @@ public class KubeJSResourcePack implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
+
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty())
+			return;
+
+		// Global barato: solo contains, sin recorrer todas las líneas
+		String contenido = consola.contenido_verificar;
+		if (contenido.contains("from pack KubeJS Resource Pack [data]") || contenido.contains("Failed to parse ")) {
+			posible = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
 	}
 
 	/**

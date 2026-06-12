@@ -35,15 +35,12 @@ public class Statics {
 	public static ConfigString nombre_cd = ConfigString.de("nombre_cd", "CrashDetector");
 	public static String GIT = "https://pagure.io/CrashDetectorMC/blob/main/f/";
 	public static String GIT_RAW = "https://pagure.io/CrashDetectorMC/raw/main/f/";
-public static String ID_CURSEDFORGE="1224146";//TLMods es el mismo
-public static String ID_MINECRAFTSTORAGE="1606";
+	public static String ID_CURSEDFORGE = "1224146";// TLMods es el mismo
+	public static String ID_MINECRAFTSTORAGE = "1606";
 	public static String ID_MCMODCN = "713629";
 	public static String ID_BBSMC = "BPis79MR";
 	public static String ID_MODRINTH = "8wzfQa8F";
-	
-	
-	
-	
+
 	/**
 	 * PARA JPMS
 	 */

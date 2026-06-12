@@ -18,6 +18,7 @@ public class ConflictoMovingElevatorsOptiFine implements Verificaciones {
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean encontradoOptiFine = false;
+	public boolean analizarLineas = false;
 
 	/**
 	 * Método de compatibilidad — busca si OptiFine está presente en el contenido
@@ -26,9 +27,29 @@ public class ConflictoMovingElevatorsOptiFine implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 		// Verificamos si OptiFine está presente en el contenido del registro
-		if (consola.contenido_verificar != null) {
-			encontradoOptiFine = consola.contenido_verificar.toLowerCase().contains("optifine");
+
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+
+		if (log.contains("optifine") || log.contains("Optifine")) {
+			encontradoOptiFine = true;
 		}
+
+		if (encontradoOptiFine && log.contains("Critical injection failure") && log.contains("renderLevelBlockEntities")
+				&& log.contains("movingelevators.mixins.json") && log.contains("LevelRendererMixin")) {
+			analizarLineas = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	/**

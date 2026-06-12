@@ -35,6 +35,13 @@ public class ErrorArchivoBloqueadoPorOtroProceso implements Verificaciones {
 		this.posibleArchivoBloqueado = contenido != null && contenido.contains(TEXTO_ERROR);
 	}
 
+	public boolean quiereAnalizarLineas() {
+		if (!posibleArchivoBloqueado)
+			return false;
+
+		return true;
+	}
+
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó este verificador, o el log ni siquiera contiene el texto

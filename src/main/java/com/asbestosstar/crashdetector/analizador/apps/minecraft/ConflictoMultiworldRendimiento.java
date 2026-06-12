@@ -17,13 +17,33 @@ public class ConflictoMultiworldRendimiento implements Verificaciones {
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
+	public boolean analizarLineas = false;
 
 	/**
 	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// Se usa el método verificar(Consola, String, int) en lugar de este.
+
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+
+		if (log.contains("IncompatibleClassChangeError")
+				&& log.contains("net.fabricmc.loader.api.FabricLoader.getInstance()")
+				&& log.contains("must be Methodref constant")) {
+			analizarLineas = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	/**

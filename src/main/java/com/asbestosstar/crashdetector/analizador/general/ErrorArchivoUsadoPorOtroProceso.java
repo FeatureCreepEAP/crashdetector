@@ -33,6 +33,13 @@ public class ErrorArchivoUsadoPorOtroProceso implements Verificaciones {
 		}
 	}
 
+	public boolean quiereAnalizarLineas() {
+		if (!posibleArchivoBloqueado)
+			return false;
+
+		return true;
+	}
+
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Salir temprano si no hay indicios globales.

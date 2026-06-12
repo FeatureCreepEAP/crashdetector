@@ -126,6 +126,14 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posiblePorConsola)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * 
 	 * Analiza cada línea de la consola para detectar patrones de error de

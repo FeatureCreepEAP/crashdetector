@@ -64,6 +64,12 @@ public class JavaVersiones implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+
+		return this.posibleErrorJava || this.posibleFrameJavaProblematico;
+	}
+
 	// =========================
 	// Verificación por línea
 	// =========================

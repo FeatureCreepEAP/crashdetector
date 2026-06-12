@@ -29,12 +29,30 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 	private boolean activado = false;
 	private final Set<String> clases = new LinkedHashSet<>();
 	private final Map<String, String> enlacesPorClase = new HashMap<>(); // Clase -> enlace HTML
+	private boolean analizarLineas = false;
 
 	@Override
 	public void verificar(Consola consola) {
 		// La detección real se hace por línea en verificar(Consola, String, int).
 		// Este método se mantiene vacío para cumplir con la interfaz y permitir
 		// realizar pre-cálculos globales en el futuro si fuera necesario.
+
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+
+		if (log.contains("Error loading class:") && log.contains("WARN")) {
+			analizarLineas = true;
+		}
+
+	}
+
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	/**

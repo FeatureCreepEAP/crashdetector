@@ -58,6 +58,11 @@ public class NoTieneMemoria implements Verificaciones {
 
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return false;
+	}
+
 	// Falta de memoria asignada al heap u otros límites típicos de OOME
 	private boolean esProblemaMemoriaInsuficiente(String contenidoConsola) {
 		if (!contenidoConsola.contains("java.lang.OutOfMemoryError"))

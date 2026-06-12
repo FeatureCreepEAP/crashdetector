@@ -68,6 +68,14 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 		procesarTrazos(consola);
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleErrorResolucion)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificación por línea: analiza líneas sueltas sin traza completa que
 	 * contengan el mensaje de error, típicamente fuera de un stack trace.

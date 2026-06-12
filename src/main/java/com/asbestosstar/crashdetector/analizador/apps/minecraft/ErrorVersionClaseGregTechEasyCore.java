@@ -27,8 +27,18 @@ public class ErrorVersionClaseGregTechEasyCore implements Verificaciones {
 	public void verificar(Consola consola) {
 		// Verificamos si GregTechEasyCore está presente en el contenido del registro
 		if (consola.contenido_verificar != null) {
-			encontradoGTECore = consola.contenido_verificar.toLowerCase().contains("gtecore");
+			if (consola.contenido_verificar.contains("gtecore")) {
+				encontradoGTECore = true;
+			}
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!encontradoGTECore)
+			return false;
+
+		return true;
 	}
 
 	/**

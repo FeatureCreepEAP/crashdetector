@@ -17,13 +17,33 @@ public class ErrorEULANoAceptado implements Verificaciones {
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
+	public boolean posible = false;
 
 	/**
 	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// Se usa el método verificar(Consola, String, int) en lugar de este.
+
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains("You need to agree to the EULA in order to run the server")
+				&& contenido.contains("eula.txt")) {
+			posible = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
 	}
 
 	/**

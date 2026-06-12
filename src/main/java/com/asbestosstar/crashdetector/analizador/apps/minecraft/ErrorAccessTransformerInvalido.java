@@ -40,6 +40,14 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificación por línea del registro.
 	 * <p>

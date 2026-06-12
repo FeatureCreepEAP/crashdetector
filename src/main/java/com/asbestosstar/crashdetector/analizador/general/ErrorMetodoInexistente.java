@@ -44,11 +44,21 @@ public class ErrorMetodoInexistente implements Verificaciones {
 		String contenido = consola.contenido_verificar;
 
 		if (contenido == null) {
-			posibleNoSuchMethodError = false;
 			return;
 		}
 
-		posibleNoSuchMethodError = contenido.contains(PREFIJO_ERROR);
+		if (contenido.contains(PREFIJO_ERROR)) {
+			posibleNoSuchMethodError = true;
+
+		}
+
+	}
+
+	public boolean quiereAnalizarLineas() {
+		if (!posibleNoSuchMethodError)
+			return false;
+
+		return true;
 	}
 
 	@Override

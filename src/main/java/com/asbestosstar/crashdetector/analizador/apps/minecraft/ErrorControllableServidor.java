@@ -18,6 +18,7 @@ public class ErrorControllableServidor implements Verificaciones {
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean encontradoControllable = false;
+	public boolean posible = false;
 
 	/**
 	 * Método de compatibilidad — busca si Controllable está presente en el
@@ -27,8 +28,26 @@ public class ErrorControllableServidor implements Verificaciones {
 	public void verificar(Consola consola) {
 		// Verificamos si Controllable está presente en el contenido del registro
 		if (consola.contenido_verificar != null) {
-			encontradoControllable = consola.contenido_verificar.toLowerCase().contains("com.mrcrayfish.controllable");
+			if (consola.contenido_verificar.contains("com.mrcrayfish.controllable")) {
+				encontradoControllable = true;
+			}
+
+			if (encontradoControllable && consola.contenido_verificar.contains("java.lang.BootstrapMethodError")
+					&& consola.contenido_verificar.contains("Attempted to load class")
+					&& consola.contenido_verificar.contains("net/minecraft/client/gui/screens/Screen")
+					&& consola.contenido_verificar.contains("for invalid dist DEDICATED_SERVER")) {
+				posible = true;
+			}
+
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
 	}
 
 	/**
@@ -48,9 +67,10 @@ public class ErrorControllableServidor implements Verificaciones {
 
 		// Buscamos la línea que contiene el error de carga de clase para servidor
 		// dedicado de Controllable
-		if (linea.contains("java.lang.BootstrapMethodError") && linea.contains("Attempted to load class")
+		if (encontradoControllable && linea.contains("java.lang.BootstrapMethodError")
+				&& linea.contains("Attempted to load class")
 				&& linea.contains("net/minecraft/client/gui/screens/Screen")
-				&& linea.contains("for invalid dist DEDICATED_SERVER") && encontradoControllable) {
+				&& linea.contains("for invalid dist DEDICATED_SERVER")) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);

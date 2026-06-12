@@ -252,6 +252,10 @@ public class AntiManipulacion implements Verificaciones {
 		}
 	}
 
+	public boolean quiereAnalizarLineas() {
+		return false;
+	}
+
 	/**
 	 * Tarea recursiva para calcular hashes en paralelo.
 	 */

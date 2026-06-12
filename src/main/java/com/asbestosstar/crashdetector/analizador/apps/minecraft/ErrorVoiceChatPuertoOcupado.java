@@ -14,11 +14,32 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 public class ErrorVoiceChatPuertoOcupado implements Verificaciones {
 
 	private boolean activado = false;
+	private boolean posible = false;
+
 	private String mensaje = "";
 
 	@Override
 	public void verificar(Consola consola) {
-		// Este método no se usa; el análisis se hace por línea
+
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains("[voicechat] Failed to run voice chat at UDP port")
+				&& consola.contenido_verificar.contains("java.net.BindException: Address already in use")) {
+			posible = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
 	}
 
 	@Override

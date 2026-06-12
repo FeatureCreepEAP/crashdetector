@@ -52,6 +52,14 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificación por línea del registro.
 	 * <p>

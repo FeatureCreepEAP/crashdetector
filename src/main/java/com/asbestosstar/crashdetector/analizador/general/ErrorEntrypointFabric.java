@@ -17,10 +17,29 @@ public class ErrorEntrypointFabric implements Verificaciones {
 	private boolean activado = false;
 	private String mensaje = "";
 	private String modNombre = "";
+	public boolean posibleError = false;
 
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa; el sistema llama a verificar(Consola, String, int)
+		String contenido = consola.contenido_verificar;
+
+		if (contenido == null) {
+			return;
+		}
+
+		if (contenido.contains("net.fabricmc.loader.api.EntrypointException")
+				&& contenido.contains("Exception while loading entries for entrypoint")
+				&& contenido.contains("provided by '")) {
+			posibleError = true;
+		}
+
+	}
+
+	public boolean quiereAnalizarLineas() {
+		if (!posibleError)
+			return false;
+
+		return true;
 	}
 
 	@Override

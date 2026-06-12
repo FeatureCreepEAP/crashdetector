@@ -400,6 +400,10 @@ public class ContenidoDeTrazos implements Verificaciones {
 		contento.put(consola.archivo.getFileName().toString(), new StringBuilder(sb.toString().trim()));
 	}
 
+	public boolean quiereAnalizarLineas() {
+		return false;
+	}
+
 	private static boolean esModidFalsoGenerado(String origen) {
 		if (origen == null)
 			return false;

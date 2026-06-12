@@ -18,13 +18,30 @@ public class ErrorVersionInvalidaModMaven implements Verificaciones {
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private String versionDetectada = "";
+	public boolean posibleError = false;
 
 	/**
 	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// Se usa el método verificar(Consola, String, int) en lugar de este.
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+
+		if (log.contains("org.apache.maven.artifact.versioning.InvalidVersionSpecificationException")
+				&& log.contains("Single version must be surrounded by []:")) {
+			posibleError = true;
+		}
+
+	}
+
+	public boolean quiereAnalizarLineas() {
+		if (!posibleError)
+			return false;
+
+		return true;
 	}
 
 	/**

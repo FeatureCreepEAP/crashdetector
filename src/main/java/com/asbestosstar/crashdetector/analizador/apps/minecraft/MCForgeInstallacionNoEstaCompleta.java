@@ -48,6 +48,14 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleForgeIncompleto)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificacion por linea.
 	 *

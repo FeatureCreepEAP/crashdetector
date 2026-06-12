@@ -190,6 +190,12 @@ public class FaltaModAnimado implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+
+		return false;
+	}
+
 	public boolean esPresentePorRuta(String ruta, Set<String> rutasInstaladas) {
 		if (ruta == null) {
 			return false;

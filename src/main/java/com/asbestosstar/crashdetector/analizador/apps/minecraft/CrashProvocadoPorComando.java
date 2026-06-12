@@ -26,8 +26,20 @@ public class CrashProvocadoPorComando implements Verificaciones {
 			return;
 		}
 
-		posibleCrashPorComando = consola.contenido_verificar.contains(TEXTO_REPORTED_EXCEPTION)
-				&& consola.contenido_verificar.contains(TEXTO_CRASH_ASSISTANT);
+		if (consola.contenido_verificar.contains(TEXTO_REPORTED_EXCEPTION)
+				&& consola.contenido_verificar.contains(TEXTO_CRASH_ASSISTANT)) {
+
+			posibleCrashPorComando = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleCrashPorComando)
+			return false;
+
+		return true;
 	}
 
 	@Override

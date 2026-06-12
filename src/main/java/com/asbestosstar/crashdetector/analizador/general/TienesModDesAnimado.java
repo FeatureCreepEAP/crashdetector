@@ -208,6 +208,12 @@ public class TienesModDesAnimado implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+
+		return false;
+	}
+
 	private static Set<String> obtenerMods(Path archivo) throws IOException {
 		return Files.readAllLines(archivo).stream().filter(line -> !line.trim().isEmpty())
 				.map(line -> line.replace(MonitorDePID.ultimo_mods.toString(), ".")).collect(Collectors.toSet());

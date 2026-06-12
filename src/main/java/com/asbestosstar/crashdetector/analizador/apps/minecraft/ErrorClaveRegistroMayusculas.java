@@ -16,10 +16,28 @@ public class ErrorClaveRegistroMayusculas implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
+	private boolean analizarLineas = false;
 
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa; el sistema llama a verificar(Consola, String, int)
+
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar;
+		if (contenido.contains("java.lang.IllegalStateException") && contenido.contains("key must be lowercase:")) {
+			analizarLineas = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	@Override

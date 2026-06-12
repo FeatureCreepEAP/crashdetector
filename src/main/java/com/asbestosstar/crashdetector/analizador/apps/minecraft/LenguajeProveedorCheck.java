@@ -50,6 +50,14 @@ public class LenguajeProveedorCheck implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posiblePorConsola)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificación por línea del registro.
 	 * <p>

@@ -36,6 +36,14 @@ public class ForgeLanguageProviderNoCarga implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleFalloProvider)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 
 		// Salir temprano si no hay indicios globales

@@ -89,6 +89,14 @@ public class VerificacionFirmasV0 implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (filtro != null && filtro.tipo.equals(TipoDeFiltrodeCodice.DE_LINEA)) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public void verificar(Consola consola) {
 		if (filtro != null && filtro.tipo.equals(TipoDeFiltrodeCodice.DE_TODOS)) {
 			if (filtro.activar(consola.contenido_verificar, para_buscar)) {

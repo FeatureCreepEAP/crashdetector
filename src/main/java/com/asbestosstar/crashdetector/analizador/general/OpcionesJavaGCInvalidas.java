@@ -36,6 +36,14 @@ public class OpcionesJavaGCInvalidas implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleGCInvalido)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificación por línea. Detecta la línea exacta y agrega enlace al lector.
 	 */

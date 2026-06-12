@@ -15,6 +15,8 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 public class ErrorSistemaSonido implements Verificaciones {
 
 	private boolean activado = false;
+	private boolean posible = false;
+
 	private String mensaje = "";
 	private String enlaceHtml = "";
 
@@ -28,7 +30,24 @@ public class ErrorSistemaSonido implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
+
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+
+		if (log.contains("Error starting SoundSystem. Turning off sounds & music")) {
+			posible = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
 	}
 
 	/**

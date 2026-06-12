@@ -35,6 +35,13 @@ public class ErrorDeEnlaceInsatisfecho implements Verificaciones {
 		}
 	}
 
+	public boolean quiereAnalizarLineas() {
+		if (!posibleErrorDeEnlaceInsatisfecho)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificacion por linea.
 	 *

@@ -20,6 +20,8 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 	private boolean azureLibError = false;
 	private boolean geckoLibError = false;
 	private boolean connectorPresente = false;
+	private boolean analizarLineas = false;
+
 	private String enlaceHtml = "";
 
 	// Cadenas que se buscan en el log para detectar el problema.
@@ -34,6 +36,34 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+
+		if (log.contains("SINYTRA CONNECTOR IS PRESENT!") || log.contains("specialcompatibilityoperation")) {
+			connectorPresente = true;
+		}
+
+		if (log.contains(azure)) {
+			azureLibError = true;
+			analizarLineas = true;
+
+		}
+		if (log.contains(geck)) {
+			geckoLibError = true;
+			analizarLineas = true;
+
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	/**
@@ -60,12 +90,6 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 			if (enlaceHtml.isEmpty()) {
 				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			}
-		}
-
-		// Detecta tanto Sinytra Connector como specialcompatibilityoperation como
-		// indicadores del mismo problema.
-		if (linea.contains("SINYTRA CONNECTOR IS PRESENT!") || linea.contains("specialcompatibilityoperation")) {
-			connectorPresente = true;
 		}
 
 		// Si ya se activó el error, actualizamos el mensaje que se va a mostrar.

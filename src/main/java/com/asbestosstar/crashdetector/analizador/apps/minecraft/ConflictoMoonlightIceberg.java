@@ -19,10 +19,27 @@ public class ConflictoMoonlightIceberg implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
+	public boolean analizarLineas = false;
 
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa; análisis por línea
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+		if (log.contains("FATAL ERROR in native method")
+				&& log.contains("No context is current or a function that is not available in the current context")) {
+			analizarLineas = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	@Override

@@ -22,6 +22,14 @@ public class IrisSombrasTerreno implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleErrorIris)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		if (!posibleErrorIris)
 			return;

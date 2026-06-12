@@ -121,6 +121,12 @@ public class LanzerNoAnimado implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+
+		return false;
+	}
+
+	@Override
 	public Verificaciones nueva() {
 		return new LanzerNoAnimado();
 	}

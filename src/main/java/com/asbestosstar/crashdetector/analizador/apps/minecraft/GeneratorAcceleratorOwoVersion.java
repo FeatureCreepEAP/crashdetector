@@ -52,6 +52,14 @@ public class GeneratorAcceleratorOwoVersion implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleProblemaGeneratorAccelerator)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public Verificaciones nueva() {
 		return new GeneratorAcceleratorOwoVersion();
 	}

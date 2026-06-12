@@ -18,6 +18,7 @@ public class ConflictoIrisOptifine implements Verificaciones {
 	private boolean activado = false;
 	private String enlaceHtml = "";
 	private boolean encontroOptifine = false;
+	public boolean analizarLineas = false;
 
 	@Override
 	public void verificar(Consola consola) {
@@ -26,10 +27,29 @@ public class ConflictoIrisOptifine implements Verificaciones {
 		this.encontroOptifine = false;
 
 		// Buscar "optifine" en todo el log (case-insensitive)
-		String contenido = consola.contenido_verificar.toLowerCase();
-		if (contenido.contains("optifine")) {
+		String l = consola.contenido_verificar.toLowerCase();
+		if (l.contains("optifine")) {
 			this.encontroOptifine = true;
 		}
+
+		boolean tieneIrisOculusJson = l.contains("mixins.iris.json") || l.contains("mixins.iris.forge.json")
+				|| l.contains("mixins.iris.fabric.json") || l.contains("mixins.oculus.json");
+		boolean tieneInjectionError = l.contains("injectionerror");
+		boolean tieneMixinLevelRenderer = l.contains("mixinlevelrenderer");
+		boolean tieneFailedCheck = l.contains("failed injection check");
+
+		if (tieneIrisOculusJson && tieneInjectionError && tieneMixinLevelRenderer && tieneFailedCheck) {
+			analizarLineas = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	@Override

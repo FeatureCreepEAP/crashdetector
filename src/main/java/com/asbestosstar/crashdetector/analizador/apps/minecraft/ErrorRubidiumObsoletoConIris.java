@@ -16,10 +16,30 @@ public class ErrorRubidiumObsoletoConIris implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
+	public boolean posible = false;
 
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa; análisis por línea
+
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains("java.lang.IncompatibleClassChangeError") && contenido.contains("ShadowDistanceOption")
+				&& contenido.contains("cannot inherit from final class net.minecraft.client.OptionInstance")) {
+			posible = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
 	}
 
 	@Override

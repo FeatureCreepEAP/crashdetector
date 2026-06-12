@@ -37,6 +37,14 @@ public class ErrorCreacionModeloFallida implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleErrorCreacionModelo)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!this.posibleErrorCreacionModelo) {
 			return;

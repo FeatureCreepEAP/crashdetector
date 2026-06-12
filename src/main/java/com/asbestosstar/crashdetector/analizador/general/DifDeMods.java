@@ -100,6 +100,10 @@ public class DifDeMods implements Verificaciones {
 		}
 	}
 
+	public boolean quiereAnalizarLineas() {
+		return false;
+	}
+
 	private Set<String> obtenerMods(Path archivo) throws IOException {
 		return Files.readAllLines(archivo).stream().filter(line -> !line.trim().isEmpty()).collect(Collectors.toSet());
 	}

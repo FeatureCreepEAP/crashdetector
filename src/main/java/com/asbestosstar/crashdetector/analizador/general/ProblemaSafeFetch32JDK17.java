@@ -43,6 +43,14 @@ public class ProblemaSafeFetch32JDK17 implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleSafeFetch32)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificacion por linea.
 	 *

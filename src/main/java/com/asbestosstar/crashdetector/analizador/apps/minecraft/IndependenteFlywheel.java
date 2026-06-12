@@ -45,6 +45,14 @@ public class IndependenteFlywheel implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!tiene_uno)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public Verificaciones nueva() {
 		// TODO Auto-generated method stub
 		return new IndependenteFlywheel();

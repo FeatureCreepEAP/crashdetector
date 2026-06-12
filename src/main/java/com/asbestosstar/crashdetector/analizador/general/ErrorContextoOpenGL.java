@@ -49,6 +49,13 @@ public class ErrorContextoOpenGL implements Verificaciones {
 		}
 	}
 
+	public boolean quiereAnalizarLineas() {
+		if (!posibleContextoOpenGL)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificacion por linea.
 	 *

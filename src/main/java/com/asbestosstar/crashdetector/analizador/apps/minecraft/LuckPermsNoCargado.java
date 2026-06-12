@@ -27,6 +27,14 @@ public class LuckPermsNoCargado implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleErrorLuckPerms)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Si no se detectó el posible error global, no continuar
 		if (!posibleErrorLuckPerms)

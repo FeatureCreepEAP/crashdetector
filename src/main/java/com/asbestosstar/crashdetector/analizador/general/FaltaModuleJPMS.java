@@ -42,6 +42,14 @@ public class FaltaModuleJPMS implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleFaltaModulo)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si el log no parece contener el error, evitamos trabajo extra por cada línea.
 		if (!posibleFaltaModulo || linea == null) {

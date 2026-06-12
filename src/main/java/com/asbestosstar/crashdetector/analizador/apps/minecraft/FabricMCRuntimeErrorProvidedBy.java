@@ -17,6 +17,7 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 	private boolean activado = false;
 	private final Set<String> modIdsProblematicos = new HashSet<>();
 	private final Map<String, String> enlacesPorModId = new HashMap<>();
+	private boolean posible = false;
 
 	/**
 	 * Verificación global no utilizada en este verificador.
@@ -28,7 +29,25 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
+
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains("Could not execute entrypoint stage") || contenido.contains("provided by")) {
+			posible = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
 	}
 
 	/**

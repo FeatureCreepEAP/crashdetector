@@ -63,6 +63,14 @@ public class ColdSweatInitDynamicTags implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (activado || !indicioBuildStart || !indicioFillTag || !indicioRegistryNulo) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Solo activar cuando ya están presentes los indicios globales
 		if (activado || !indicioBuildStart || !indicioFillTag || !indicioRegistryNulo) {

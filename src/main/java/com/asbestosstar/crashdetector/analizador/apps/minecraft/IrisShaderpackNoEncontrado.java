@@ -31,6 +31,14 @@ public class IrisShaderpackNoEncontrado implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleErrorShaderpack)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		if (!posibleErrorShaderpack)
 			return;

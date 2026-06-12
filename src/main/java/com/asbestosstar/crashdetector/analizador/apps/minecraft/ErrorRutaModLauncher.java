@@ -56,6 +56,14 @@ public class ErrorRutaModLauncher implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!no_UnixUriUtils)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificación por línea del registro.
 	 * <p>

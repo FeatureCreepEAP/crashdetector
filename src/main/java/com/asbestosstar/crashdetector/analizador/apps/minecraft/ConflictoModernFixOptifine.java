@@ -16,12 +16,29 @@ public class ConflictoModernFixOptifine implements Verificaciones {
 
 	private boolean activado = false;
 	private String enlaceHtml = "";
+	public boolean analizarLineas = false;
 
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa; el sistema llama a verificar(Consola, String, int)
-		this.activado = false;
-		this.enlaceHtml = "";
+
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+
+		if (log.contains("OptiFine detected. Use of ModernFix with OptiFine is not supported")) {
+			analizarLineas = true;
+
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	@Override

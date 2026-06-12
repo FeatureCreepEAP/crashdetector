@@ -19,6 +19,7 @@ public class lithostictchctov implements Verificaciones {
 	private boolean patronDetectado = false;
 	private boolean firmaDetectada = false;
 	private int lineaPatron = -1;
+	public boolean posible = true;
 
 	/**
 	 * Verificación global no utilizada en este verificador.
@@ -30,7 +31,23 @@ public class lithostictchctov implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
+
+		final String patron = "Caused by: java.lang.RuntimeException: "
+				+ "Unknown registry key in ResourceKey[minecraft:root / minecraft:worldgen/structure_type]: lithostitched:jigsaw";
+
+		// Detectar la línea que contiene el patrón principal del error
+		if (consola.contenido_verificar.contains(patron)) {
+			posible = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
 	}
 
 	/**

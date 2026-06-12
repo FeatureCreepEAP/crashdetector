@@ -36,6 +36,7 @@ public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
 	private final String interfazObjetivo = "cpw.mods.modlauncher.api.ITransformer";
 	private final String firmaMetodoFaltante = "TargetType getTargetType()";
 	private final List<String> modsUbicacion = new ArrayList<>();
+	public boolean posible = false;
 
 	/**
 	 * Verificación global no utilizada en este verificador.
@@ -47,7 +48,27 @@ public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
+
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String l = consola.contenido_verificar;
+
+		if (l.contains("Receiver class ") && l.contains("does not define or inherit an implementation")
+				&& l.contains("cpw.mods.modlauncher.api.TargetType getTargetType()")
+				&& l.contains("cpw.mods.modlauncher.api.ITransformer")) {
+			posible = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
 	}
 
 	/**

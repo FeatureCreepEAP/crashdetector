@@ -36,8 +36,6 @@ public class AccesoDenegadoBackupConfig implements Verificaciones {
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		if (!posibleErrorAcceso)
-			return;
 
 		if (linea.contains("AccessDeniedException") && linea.contains("->")) {
 
@@ -47,6 +45,13 @@ public class AccesoDenegadoBackupConfig implements Verificaciones {
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
 		}
+	}
+
+	public boolean quiereAnalizarLineas() {
+		if (!posibleErrorAcceso)
+			return false;
+
+		return true;
 	}
 
 	// Extrae las rutas separadas por "->"

@@ -42,6 +42,14 @@ public class JPMSIllegalAccess implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleJPMS)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 
 		if (!posibleJPMS || activado || linea == null)

@@ -42,6 +42,14 @@ public class PreferIPV4Trace implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!argIpv4Encontrado)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int i) {
 		if (!argIpv4Encontrado && linea.trim().startsWith("JVM Flags:")) {
 			argIpv4Encontrado = linea.contains("-Djava.net.preferIPv4Stack=true");

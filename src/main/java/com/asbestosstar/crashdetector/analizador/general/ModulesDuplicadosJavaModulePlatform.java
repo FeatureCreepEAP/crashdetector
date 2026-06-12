@@ -32,6 +32,7 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 	// Nuevo: almacenar consola para finalización
 	private Consola consolaRef = null;
 	boolean mixinextras = false;
+	private boolean posible = false;
 
 	@Override
 	public void verificar(Consola consola) {
@@ -42,18 +43,33 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 			CrashDetectorLogger.log("Finalizando bloque pendiente al final del procesamiento");
 			finalizarBloque(consolaRef, indiceUltimaNoStack >= 0 ? indiceUltimaNoStack : 0);
 		}
+
+		boolean esCabecera = cont.contains("java.lang.module.ResolutionException:") || cont.contains("contains package")
+				|| cont.contains("export package") || cont.contains("exports package")
+				|| (cont.startsWith("Exception in thread") && cont.contains("ResolutionException"));
+		if (esCabecera) {
+			posible = true;
+		}
+
 		consolaRef = null;
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String lineaOriginal, int i) {
 		String linea = lineaOriginal.trim();
-		String lineaMinuscula = linea.toLowerCase();
 
-		boolean esCabecera = lineaMinuscula.contains("java.lang.module.resolutionexception:")
-				|| lineaMinuscula.contains("contains package") || lineaMinuscula.contains("export package")
-				|| lineaMinuscula.contains("exports package")
-				|| (lineaMinuscula.startsWith("exception in thread") && lineaMinuscula.contains("resolutionexception"));
+		boolean esCabecera = linea.contains("java.lang.module.ResolutionException:")
+				|| linea.contains("contains package") || linea.contains("export package")
+				|| linea.contains("exports package")
+				|| (linea.startsWith("Exception in thread") && linea.contains("ResolutionException"));
 
 		if (esCabecera) {
 			if (recolectando) {

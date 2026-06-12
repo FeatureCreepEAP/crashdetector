@@ -18,13 +18,30 @@ public class ConflictoFlywheelRubidium implements Verificaciones {
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean encontradaLinea1 = false;
+	private boolean posibleConflicto = false;
 
 	/**
 	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// Se usa el método verificar(Consola, String, int) en lugar de este.
+
+		String cont = consola.contenido_verificar;
+		if (cont != null) {
+			if (cont.contains("Failure message: Mod flywheel only supports sodium")
+					&& cont.contains("0.6.0-beta.2 or above")) {
+				posibleConflicto = true;
+			}
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleConflicto)
+			return false;
+
+		return true;
 	}
 
 	/**

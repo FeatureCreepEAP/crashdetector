@@ -41,6 +41,13 @@ public class ErrorCampoInexistente implements Verificaciones {
 		this.posibleNoSuchField = contenido != null && contenido.indexOf("java.lang.NoSuchFieldError:") >= 0;
 	}
 
+	public boolean quiereAnalizarLineas() {
+		if (!posibleNoSuchField)
+			return false;
+
+		return true;
+	}
+
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (linea == null || !posibleNoSuchField || activado) {

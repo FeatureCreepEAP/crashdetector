@@ -50,6 +50,14 @@ public class RaptorLakeInestable implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleRaptorLake)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleRaptorLake || activado || linea == null || linea.isEmpty()) {
 			return;

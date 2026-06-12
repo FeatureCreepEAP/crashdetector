@@ -34,6 +34,13 @@ public class ErrorDeMonitorLWJGL implements Verificaciones {
 		}
 	}
 
+	public boolean quiereAnalizarLineas() {
+		if (!posibleErrorMonitor)
+			return false;
+
+		return true;
+	}
+
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó o sabemos que no hay rastro del error en el log, no hacemos

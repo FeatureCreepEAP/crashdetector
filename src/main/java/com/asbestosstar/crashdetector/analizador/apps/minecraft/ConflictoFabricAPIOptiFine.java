@@ -19,6 +19,7 @@ public class ConflictoFabricAPIOptiFine implements Verificaciones {
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean encontradoOptiFine = false;
+	public boolean posibleConflicto = false;
 
 	/**
 	 * Método de compatibilidad — busca si OptiFine está presente en el contenido
@@ -27,9 +28,31 @@ public class ConflictoFabricAPIOptiFine implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 		// Verificamos si OptiFine está presente en el contenido del registro
-		if (consola.contenido_verificar != null) {
-			encontradoOptiFine = consola.contenido_verificar.toLowerCase().contains("optifine");
+		String cont = consola.contenido_verificar;
+		if (cont != null) {
+			if (cont.contains("optifine") || cont.contains("Optifine")) {
+				encontradoOptiFine = true;
+
+				// fabric-resource-loader-v0
+				if (cont.contains("Mixin apply for mod fabric_resource_loader_v0 failed")
+						&& cont.contains("fabric-resource-loader-v0.mixins.json")
+						&& cont.contains("ReloadableResourceManagerImplMixin")
+						&& cont.contains("InvalidInjectionException") && cont.contains("Critical injection failure")
+						&& cont.contains("could not find any targets matching")
+						&& cont.contains("ReloadableResourceManager") && encontradoOptiFine) {
+					posibleConflicto = true;
+				}
+
+			}
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleConflicto)
+			return false;
+
+		return true;
 	}
 
 	/**

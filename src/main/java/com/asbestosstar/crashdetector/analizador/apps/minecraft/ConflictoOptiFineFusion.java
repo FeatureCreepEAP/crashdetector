@@ -18,6 +18,7 @@ public class ConflictoOptiFineFusion implements Verificaciones {
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean encontradoOptiFine = false;
+	public boolean analizarLineas = false;
 
 	/**
 	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
@@ -25,9 +26,31 @@ public class ConflictoOptiFineFusion implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 		// Verificamos si OptiFine está presente en el contenido del registro
-		if (consola.contenido_verificar != null) {
-			encontradoOptiFine = consola.contenido_verificar.toLowerCase().contains("optifine");
+
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+
+		if (log.contains("optifine") || log.contains("Optifine")) {
+			encontradoOptiFine = true;
 		}
+
+		if (log.contains("Critical injection failure")
+				&& log.contains("net/minecraft/client/renderer/entity/EntityRenderDispatcher")
+				&& log.contains("fusion.mixins.json") && log.contains("EntityRenderDispatcherMixin")
+				&& log.contains("renderTail")) {
+			analizarLineas = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	/**

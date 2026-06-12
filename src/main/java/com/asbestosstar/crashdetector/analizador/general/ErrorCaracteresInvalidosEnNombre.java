@@ -39,6 +39,13 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 				&& contenidoConsola.contains("' is not a Java identifier");
 	}
 
+	public boolean quiereAnalizarLineas() {
+		if (!posibleErrorNombreInvalido)
+			return false;
+
+		return true;
+	}
+
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (activado || !posibleErrorNombreInvalido || linea == null) {

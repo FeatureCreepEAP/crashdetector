@@ -32,6 +32,14 @@ public class RutaCaracteresInvalidos implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleRutaInvalida)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 
 		// Salir temprano si no hay indicios globales

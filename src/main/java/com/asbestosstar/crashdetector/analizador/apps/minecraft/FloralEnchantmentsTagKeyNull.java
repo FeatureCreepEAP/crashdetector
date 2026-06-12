@@ -35,6 +35,14 @@ public class FloralEnchantmentsTagKeyNull implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!encontradoFloral)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public Verificaciones nueva() {
 		return new FloralEnchantmentsTagKeyNull();
 	}

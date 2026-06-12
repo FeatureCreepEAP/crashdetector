@@ -65,6 +65,12 @@ public class CursedConsola implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+
+		return false;
+	}
+
+	@Override
 	public Verificaciones nueva() {
 		return new CursedConsola();
 	}

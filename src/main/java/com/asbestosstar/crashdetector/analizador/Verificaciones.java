@@ -169,4 +169,8 @@ public interface Verificaciones {
 
 	}
 
+	public default boolean quiereAnalizarLineas() {
+		return true;
+	}
+
 }

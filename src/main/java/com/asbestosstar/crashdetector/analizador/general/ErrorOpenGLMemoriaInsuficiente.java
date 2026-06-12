@@ -34,6 +34,13 @@ public class ErrorOpenGLMemoriaInsuficiente implements Verificaciones {
 		}
 	}
 
+	public boolean quiereAnalizarLineas() {
+		if (!activado)
+			return false;
+
+		return true;
+	}
+
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 

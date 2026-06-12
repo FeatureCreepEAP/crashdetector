@@ -44,6 +44,13 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 				&& contenido.contains(" cannot inherit from final class ");
 	}
 
+	public boolean quiereAnalizarLineas() {
+		if (!posibleErrorClaseFinal)
+			return false;
+
+		return true;
+	}
+
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (this.activado || !posibleErrorClaseFinal || linea == null) {

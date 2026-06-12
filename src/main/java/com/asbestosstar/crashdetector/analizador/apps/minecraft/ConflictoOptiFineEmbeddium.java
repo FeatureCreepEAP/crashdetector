@@ -19,16 +19,37 @@ public class ConflictoOptiFineEmbeddium implements Verificaciones {
 	private String enlaceHtml = "";
 	private boolean encontradoOptiFine = false;
 
+	public boolean analizarLineas = false;
+
 	/**
 	 * Método de compatibilidad — busca si OptiFine está presente en el contenido
 	 * completo del registro.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// Verificamos si OptiFine está presente en el contenido del registro
-		if (consola.contenido_verificar != null) {
-			encontradoOptiFine = consola.contenido_verificar.contains("optifine");
+
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+
+		if (log.contains("optifine") || log.contains("Optifine")) {
+			encontradoOptiFine = true;
 		}
+
+		if (log.contains("Critical injection failure") && log.contains("redirectFancyGraphicsVignette")
+				&& log.contains("embeddium.mixins.json") && log.contains("InGameHudMixin") && encontradoOptiFine) {
+			analizarLineas = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	/**

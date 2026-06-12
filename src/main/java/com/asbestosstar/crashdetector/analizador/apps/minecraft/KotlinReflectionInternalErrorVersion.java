@@ -32,6 +32,14 @@ public class KotlinReflectionInternalErrorVersion implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleProblemaKotlin)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Salir temprano si no hay indicios globales
 		if (!posibleProblemaKotlin) {

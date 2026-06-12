@@ -32,6 +32,14 @@ public class ControlifyRemoveReloadingScreen implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleIncompatibilidad)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Salir temprano si no hay indicios globales
 		if (!posibleIncompatibilidad) {

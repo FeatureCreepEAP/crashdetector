@@ -16,13 +16,34 @@ public class ErrorCompatibilidadIrisDH implements Verificaciones {
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
+	private boolean analizarLineas = false;
 
 	/**
 	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// Se usa el método verificar(Consola, String, int) en lugar de este.
+
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains("java.lang.RuntimeException: DH found, but one or more API methods are missing.")
+				&& (contenido.contains("Iris requires DH") || contenido.contains("DH API version"))
+				&& (contenido.contains("or newer") || contenido.contains("[2.0.4]") || contenido.contains("[1.1.0]"))) {
+			analizarLineas = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	/**

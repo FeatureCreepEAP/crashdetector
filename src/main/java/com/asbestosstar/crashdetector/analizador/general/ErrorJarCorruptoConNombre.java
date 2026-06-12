@@ -36,6 +36,13 @@ public class ErrorJarCorruptoConNombre implements Verificaciones {
 				&& contenidoConsola.contains(SUFIJO);
 	}
 
+	public boolean quiereAnalizarLineas() {
+		if (!posibleJarCorruptoConNombre)
+			return false;
+
+		return true;
+	}
+
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (this.activado || !posibleJarCorruptoConNombre || linea == null) {

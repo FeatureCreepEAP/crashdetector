@@ -46,6 +46,14 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleError)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleError || linea == null || linea.isEmpty() || activado)
 			return;

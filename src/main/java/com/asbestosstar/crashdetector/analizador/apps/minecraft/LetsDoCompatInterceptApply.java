@@ -33,6 +33,14 @@ public class LetsDoCompatInterceptApply implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleLetsDoCompat)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 
 		// Salida temprana si no hay indicios globales

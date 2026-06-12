@@ -27,8 +27,18 @@ public class ErrorFallingAttackVersion implements Verificaciones {
 	public void verificar(Consola consola) {
 		// Verificamos si Falling Attack está presente en el contenido del registro
 		if (consola.contenido_verificar != null) {
-			encontradoFallingAttack = consola.contenido_verificar.contains("falling-attack");
+			if (consola.contenido_verificar.contains("falling-attack")) {
+				encontradoFallingAttack = true;
+			}
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!encontradoFallingAttack)
+			return false;
+
+		return true;
 	}
 
 	/**

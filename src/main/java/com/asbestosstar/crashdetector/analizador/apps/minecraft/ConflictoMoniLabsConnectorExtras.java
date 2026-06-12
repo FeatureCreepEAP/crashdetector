@@ -18,6 +18,7 @@ public class ConflictoMoniLabsConnectorExtras implements Verificaciones {
 	private String enlaceHtml = "";
 	private boolean encontradoMoniLabs = false;
 	private boolean encontradoConnectorExtras = false;
+	public boolean analizarLineas = false;
 
 	/**
 	 * Método de compatibilidad — busca si MoniLabs y Connector Extras están
@@ -31,7 +32,22 @@ public class ConflictoMoniLabsConnectorExtras implements Verificaciones {
 			String contenido = consola.contenido_verificar.toLowerCase();
 			encontradoMoniLabs = contenido.contains("monilabs");
 			encontradoConnectorExtras = contenido.contains("connectorextras");
+
+			if (consola.contenido_verificar.contains("dev.latvian.mods.kubejs.util.KubeJSPlugins.handler")
+					&& consola.contenido_verificar.contains("$monilabs$moniLabs$injectBeforeLoad")
+					&& (encontradoMoniLabs && encontradoConnectorExtras)) {
+				analizarLineas = true;
+			}
+
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	/**
@@ -116,8 +132,7 @@ public class ConflictoMoniLabsConnectorExtras implements Verificaciones {
 		String t = trazo.trace;
 
 		return t.contains("dev.latvian.mods.kubejs.util.KubeJSPlugins.handler")
-				&& t.contains("$monilabs$moniLabs$injectBeforeLoad")
-				&& (t.toLowerCase().contains("monilabs") && t.toLowerCase().contains("connectorextras"));
+				&& t.contains("$monilabs$moniLabs$injectBeforeLoad") && t.toLowerCase().contains("connectorextras");
 	}
 
 	@Override

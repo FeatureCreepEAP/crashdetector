@@ -36,6 +36,13 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 				&& contieneTipoObjetivo(consola.contenido_verificar);
 	}
 
+	public boolean quiereAnalizarLineas() {
+		if (!posibleError)
+			return false;
+
+		return true;
+	}
+
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleError || activado || linea == null)

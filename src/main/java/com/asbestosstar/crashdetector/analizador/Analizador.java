@@ -422,7 +422,6 @@ public class Analizador {
 		Buscador.cargar();
 		CrashDetectorLogger.log("Iniciando análisis de " + consolas.size() + " registros");
 
-		// Hilos = 2 * núcleos lógicos
 		final int hilos = Math.max(1, 2 * Runtime.getRuntime().availableProcessors());
 		CrashDetectorLogger.log("Analizador paralelo (normales) con hilos=" + hilos);
 
@@ -431,103 +430,132 @@ public class Analizador {
 			t.setDaemon(true);
 			return t;
 		};
+
 		final ExecutorService pool = Executors.newFixedThreadPool(hilos, fabrica);
 
 		try {
 			for (Consola consola : consolas) {
 				CrashDetectorLogger.log("comenz analiz");
-				consola.verificacion_de_stacktrace.reiniciar();
-				CrashDetectorLogger.log("reinciar vdst");
 
+				consola.verificacion_de_stacktrace.reiniciar();
+
+				CrashDetectorLogger.log("reinciar vdst");
 				CrashDetectorLogger.log("Analizando registro: " + consola.archivo.getFileName());
+
 				final String[] lineas = consola.lineas_verificar;
 
-				// 1) Pre-pass en paralelo: verificar(consola) para TODAS las verificaciones
-				// normales
-				List<Callable<Void>> tareasPre = new ArrayList<>(verificaciones_normales_activadas.size());
-				for (Verificaciones ver : verificaciones_normales_activadas) {
-					tareasPre.add(() -> {
-						try {
-							CrashDetectorLogger.log(consola.archivo + " " + ver.nombre());
-							ver.verificar(consola);
-						} catch (Exception e) {
-							CrashDetectorLogger.logException(e);
-						}
-						return null;
-					});
-				}
-				try {
-					pool.invokeAll(tareasPre);
-				} catch (InterruptedException ie) {
-					Thread.currentThread().interrupt();
-					CrashDetectorLogger.logException(ie);
-				}
+				ejecutarVerificacionesGlobalesNormales(consola, pool);
 
-				// 2) PER-LINE multihilo para verificaciones NORMALES (un solo recorrido de
-				// líneas total)
-				final Verificaciones[] normales = verificaciones_normales_activadas.toArray(new Verificaciones[0]);
+				ejecutarVerificacionesPorLineaNormales(consola, lineas, pool, hilos);
 
-				// Particionar líneas en chunks para limitar overhead de tareas
-				final int total = lineas.length;
-				final int chunks = Math.min(total, Math.max(hilos * 4, 1));
-				final int chunkSize = (total + chunks - 1) / chunks;
+				ejecutarVerificacionesGlobalesTardias(consola);
 
-				List<Callable<Void>> tareasLineas = new ArrayList<>(chunks);
-				for (int c = 0; c < chunks; c++) {
-					final int start = c * chunkSize;
-					final int end = Math.min(total, start + chunkSize);
-					if (start >= end)
-						break;
-
-					tareasLineas.add(() -> {
-						for (int i = start; i < end; i++) {
-							final String linea = lineas[i];
-							// IMPORTANTE: protegemos cada instancia de Verificaciones para evitar
-							// condiciones de carrera.
-							// Si ver.verificar(...) es thread-safe, se puede quitar el synchronized para
-							// mayor rendimiento.
-							for (Verificaciones ver : normales) {
-								try {
-									synchronized (ver) {
-										ver.verificarPorLinea(consola, linea, i);
-									}
-								} catch (Exception e) {
-									CrashDetectorLogger.logException(e);
-								}
-							}
-						}
-						return null;
-					});
-				}
-				try {
-					pool.invokeAll(tareasLineas);
-				} catch (InterruptedException ie) {
-					Thread.currentThread().interrupt();
-					CrashDetectorLogger.logException(ie);
-				}
-
-				// 3) Verificaciones TARDÍAS: secuenciales, con su propio recorrido por líneas
-				// (sin cambios)
-				for (Verificaciones ver : verificaciones_tardias_activadas) {
-					try {
-						CrashDetectorLogger.log(consola.archivo + " (tardía) " + ver.nombre());
-						ver.verificar(consola);
-					} catch (Exception e) {
-						CrashDetectorLogger.logException(e);
-					}
-				}
-				for (Verificaciones ver : verificaciones_tardias_activadas) {
-					for (int i = 0; i < lineas.length; i++) {
-						try {
-							ver.verificarPorLinea(consola, lineas[i], i);
-						} catch (Exception e) {
-							CrashDetectorLogger.logException(e);
-						}
-					}
-				}
+				ejecutarVerificacionesPorLineaTardias(consola, lineas);
 			}
 		} finally {
 			pool.shutdown();
+		}
+	}
+
+	private void ejecutarVerificacionesGlobalesNormales(Consola consola, ExecutorService pool) {
+		List<Callable<Void>> tareasPre = new ArrayList<>(verificaciones_normales_activadas.size());
+
+		for (Verificaciones ver : verificaciones_normales_activadas) {
+			tareasPre.add(() -> {
+				try {
+					CrashDetectorLogger.log(consola.archivo + " " + ver.nombre());
+					ver.verificar(consola);
+				} catch (Exception e) {
+					CrashDetectorLogger.logException(e);
+				}
+				return null;
+			});
+		}
+
+		try {
+			pool.invokeAll(tareasPre);
+		} catch (InterruptedException ie) {
+			Thread.currentThread().interrupt();
+			CrashDetectorLogger.logException(ie);
+		}
+	}
+
+	private void ejecutarVerificacionesPorLineaNormales(Consola consola, String[] lineas, ExecutorService pool,
+			int hilos) {
+		final Verificaciones[] normales = obtenerVerificacionesNormalesParaLineas();
+
+		final int total = lineas.length;
+		final int chunks = Math.min(total, Math.max(hilos * 4, 1));
+		final int chunkSize = (total + chunks - 1) / chunks;
+
+		List<Callable<Void>> tareasLineas = new ArrayList<>(chunks);
+
+		for (int c = 0; c < chunks; c++) {
+			final int start = c * chunkSize;
+			final int end = Math.min(total, start + chunkSize);
+
+			if (start >= end) {
+				break;
+			}
+
+			tareasLineas.add(() -> {
+				for (int i = start; i < end; i++) {
+					final String linea = lineas[i];
+
+					for (Verificaciones ver : normales) {
+						try {
+							synchronized (ver) {
+								ver.verificarPorLinea(consola, linea, i);
+							}
+						} catch (Exception e) {
+							CrashDetectorLogger.logException(e);
+						}
+					}
+				}
+				return null;
+			});
+		}
+
+		try {
+			pool.invokeAll(tareasLineas);
+		} catch (InterruptedException ie) {
+			Thread.currentThread().interrupt();
+			CrashDetectorLogger.logException(ie);
+		}
+	}
+
+	private Verificaciones[] obtenerVerificacionesNormalesParaLineas() {
+		List<Verificaciones> activas = new ArrayList<>();
+
+		for (Verificaciones ver : verificaciones_normales_activadas) {
+			if (ver.quiereAnalizarLineas()) {
+				activas.add(ver);
+			}
+		}
+
+		return activas.toArray(new Verificaciones[0]);
+	}
+
+	private void ejecutarVerificacionesGlobalesTardias(Consola consola) {
+		for (Verificaciones ver : verificaciones_tardias_activadas) {
+			try {
+				CrashDetectorLogger.log(consola.archivo + " (tardía) " + ver.nombre());
+				ver.verificar(consola);
+			} catch (Exception e) {
+				CrashDetectorLogger.logException(e);
+			}
+		}
+	}
+
+	private void ejecutarVerificacionesPorLineaTardias(Consola consola, String[] lineas) {
+		for (Verificaciones ver : verificaciones_tardias_activadas) {
+			for (int i = 0; i < lineas.length; i++) {
+				try {
+					ver.verificarPorLinea(consola, lineas[i], i);
+				} catch (Exception e) {
+					CrashDetectorLogger.logException(e);
+				}
+			}
 		}
 	}
 

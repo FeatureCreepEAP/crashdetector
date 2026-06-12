@@ -136,6 +136,14 @@ public class NullPointer implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posiblePorLinea)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int i) {
 
 		if (!posiblePorLinea) {

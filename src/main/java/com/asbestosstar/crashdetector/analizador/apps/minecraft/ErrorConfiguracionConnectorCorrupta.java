@@ -16,10 +16,30 @@ public class ErrorConfiguracionConnectorCorrupta implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
+	private boolean analizarLineas = false;
 
 	@Override
 	public void verificar(Consola consola) {
-		// Este método no se usa; el análisis se hace por línea
+
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+
+		if (log.contains("org.sinytra.connector.locator.ConnectorConfig")
+				&& log.contains("Error loading Connector configuration")
+				&& consola.contenido_verificar.contains("Not a JSON object: \"\\u0000")) {
+			analizarLineas = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	@Override
