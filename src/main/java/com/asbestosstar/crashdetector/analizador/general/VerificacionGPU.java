@@ -22,20 +22,36 @@ public class VerificacionGPU implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 		String log = consola.contenido_verificar;
+		if (log == null || log.isEmpty()) {
+			return;
+		}
 
 		boolean inicio = log.contains(HacerVerificacionGPU.LOG_INICIO);
-		boolean fin = log.contains(HacerVerificacionGPU.LOG_FIN);
-
 		boolean openglInicio = log.contains(HacerVerificacionGPU.LOG_OPENGL_INICIO);
-		boolean openglFin = log.contains(HacerVerificacionGPU.LOG_OPENGL_FIN);
 
-		boolean advertenciaGPU = log.contains(HacerVerificacionGPU.MSG_ADVERTENCIA);
+		// Si no empezó ninguna verificación GPU/OpenGL, todavía puede haber
+		// advertencia.
+		if (!inicio && !openglInicio) {
+			if (!log.contains(HacerVerificacionGPU.MSG_ADVERTENCIA)) {
+				return;
+			}
 
-		// ==========================================================
-		// 1. POSIBLE CRASH POR GPU / OPENGL
-		// ==========================================================
+			this.activado = true;
+			this.prioridad = -1000.0f; // No es tan importante
+			hayProblema = true;
+			this.mensaje = MonitorDePID.idioma.gpu_no_optima() + Verificaciones.nl_html
+					+ MonitorDePID.idioma.gpu_no_optima_detalles() + Verificaciones.nl_html
+					+ MonitorDePID.idioma.gpu_nota_precision() + Verificaciones.nl_html
+					+ MonitorDePID.idioma.gpu_consumo_energia() + Verificaciones.nl_html
+					+ MonitorDePID.idioma.gpu_recomendaciones_rendimiento() + Verificaciones.nl_html
+					+ MonitorDePID.idioma.gpu_parche_info();
+			return;
+		}
+
+		boolean fin = inicio && log.contains(HacerVerificacionGPU.LOG_FIN);
+		boolean openglFin = openglInicio && log.contains(HacerVerificacionGPU.LOG_OPENGL_FIN);
+
 		if ((inicio && !fin) || (openglInicio && !openglFin)) {
-
 			this.activado = true;
 			this.prioridad = 1500.0f;
 			hayProblema = true;
@@ -49,21 +65,20 @@ public class VerificacionGPU implements Verificaciones {
 			return;
 		}
 
-		// ==========================================================
-		// 2. GPU NO ÓPTIMA
-		// ==========================================================
-		if (advertenciaGPU) {
-
-			this.activado = true;
-			this.prioridad = -1000.0f;// No esta importante
-			hayProblema = true;
-			this.mensaje = MonitorDePID.idioma.gpu_no_optima() + Verificaciones.nl_html
-					+ MonitorDePID.idioma.gpu_no_optima_detalles() + Verificaciones.nl_html
-					+ MonitorDePID.idioma.gpu_nota_precision() + Verificaciones.nl_html
-					+ MonitorDePID.idioma.gpu_consumo_energia() + Verificaciones.nl_html
-					+ MonitorDePID.idioma.gpu_recomendaciones_rendimiento() + Verificaciones.nl_html
-					+ MonitorDePID.idioma.gpu_parche_info();
+		// Solo buscar advertencia si no hubo crash GPU/OpenGL.
+		if (!log.contains(HacerVerificacionGPU.MSG_ADVERTENCIA)) {
+			return;
 		}
+
+		this.activado = true;
+		this.prioridad = -1000.0f; // No es tan importante
+		hayProblema = true;
+		this.mensaje = MonitorDePID.idioma.gpu_no_optima() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_no_optima_detalles() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_nota_precision() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_consumo_energia() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_recomendaciones_rendimiento() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_parche_info();
 	}
 
 	@Override

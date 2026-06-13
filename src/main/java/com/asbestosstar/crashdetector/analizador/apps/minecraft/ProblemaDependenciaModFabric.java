@@ -30,26 +30,36 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 
 		String c = consola.contenido_verificar;
 
-		this.posibleProblemaDependenciaFabric =
-				// - Install dep, version x or later
-				(c.contains("- Install ") && c.contains(", version ") && c.contains(" or later"))
+		if (
+		// - Install dep, version x or later
+		(c.contains("- Install ") && c.contains(", version ") && c.contains(" or later"))
 
-						// - Replace mod (...) with any version between x and y
-						|| (c.contains("- Replace ") && c.contains(" with any version between ")
-								&& c.contains(" (inclusive)") && c.contains(" (exclusive)"))
+				// - Replace mod (...) with any version between x and y
+				|| (c.contains("- Replace ") && c.contains(" with any version between ") && c.contains(" (inclusive)")
+						&& c.contains(" (exclusive)"))
 
-						// - Mod (...) requires version x or later of dep, which is missing
-						|| (c.contains("- Mod ") && c.contains(" requires version ") && c.contains(" or later of ")
-								&& c.contains("which is missing"))
+				// - Mod (...) requires version x or later of dep, which is missing
+				|| (c.contains("- Mod ") && c.contains(" requires version ") && c.contains(" or later of ")
+						&& c.contains("which is missing"))
 
-						// - Mod (...) requires any x version of dep, which is missing
-						|| (c.contains("- Mod ") && c.contains(" requires any ") && c.contains(" version of ")
-								&& c.contains("which is missing"))
+				// - Mod (...) requires any x version of dep, which is missing
+				|| (c.contains("- Mod ") && c.contains(" requires any ") && c.contains(" version of ")
+						&& c.contains("which is missing"))
 
-						// - Mod (...) requires any version between x and y ... wrong version is present
-						|| (c.contains("- Mod ") && c.contains(" requires any version between ")
-								&& c.contains(" (inclusive)") && c.contains(" (exclusive)")
-								&& c.contains("wrong version is present:"));
+				// - Mod (...) requires any version between x and y ... wrong version is present
+				|| (c.contains("- Mod ") && c.contains(" requires any version between ") && c.contains(" (inclusive)")
+						&& c.contains(" (exclusive)") && c.contains("wrong version is present:"))) {
+
+			posibleProblemaDependenciaFabric = true;
+		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleProblemaDependenciaFabric)
+			return false;
+
+		return true;
 	}
 
 	@Override

@@ -41,6 +41,12 @@ public class SKLauncherAdvertencia implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		return false;
+
+	}
+
+	@Override
 	public Verificaciones nueva() {
 		return new SKLauncherAdvertencia();
 	}

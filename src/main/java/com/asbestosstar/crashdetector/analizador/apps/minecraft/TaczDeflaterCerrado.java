@@ -40,8 +40,17 @@ public class TaczDeflaterCerrado implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 		String contenido = consola.contenido_verificar;
-		tieneDeflaterCerradoEnLog = contenido
-				.contains("Caused by: java.lang.NullPointerException: Deflater has been closed");
+		if (contenido.contains("Caused by: java.lang.NullPointerException: Deflater has been closed")) {
+			tieneDeflaterCerradoEnLog = true;
+		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!tieneDeflaterCerradoEnLog)
+			return false;
+
+		return true;
 	}
 
 	@Override

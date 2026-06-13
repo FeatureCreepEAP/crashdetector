@@ -41,8 +41,16 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 		if (log == null)
 			return;
 
-		if (log.contains("SINYTRA CONNECTOR IS PRESENT!") || log.contains("specialcompatibilityoperation")) {
+		if (!connectorPresente && log.contains("SINYTRA CONNECTOR IS PRESENT!")
+
+		// || log.contains("specialcompatibilityoperation")TODO
+
+		) {
 			connectorPresente = true;
+		}
+
+		if (!log.contains("Lib was initialized too early!")) {
+			return;
 		}
 
 		if (log.contains(azure)) {

@@ -42,6 +42,14 @@ public class ProblemaDependenciaPluginPocketMine implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleDependenciaFaltante)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleDependenciaFaltante || linea == null || linea.isEmpty()) {
 			return;

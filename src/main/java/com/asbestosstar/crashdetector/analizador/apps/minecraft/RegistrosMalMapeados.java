@@ -38,6 +38,14 @@ public class RegistrosMalMapeados implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleRegistrosMalMapeados)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleRegistrosMalMapeados || linea == null || linea.isEmpty()) {
 			return;

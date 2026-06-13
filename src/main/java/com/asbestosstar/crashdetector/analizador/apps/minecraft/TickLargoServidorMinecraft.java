@@ -22,6 +22,14 @@ public class TickLargoServidorMinecraft implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleTickLargo)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		if (!posibleTickLargo)
 			return;

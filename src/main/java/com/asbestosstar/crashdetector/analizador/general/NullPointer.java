@@ -91,7 +91,7 @@ public class NullPointer implements Verificaciones {
 			return;
 		}
 
-		if (!consola.contenido_verificar.contains("")) {
+		if (!consola.contenido_verificar.contains("NullPointerException")) {
 			return;
 		}
 		posiblePorLinea = true;

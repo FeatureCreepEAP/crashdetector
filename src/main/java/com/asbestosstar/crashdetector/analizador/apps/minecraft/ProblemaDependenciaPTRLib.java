@@ -36,9 +36,17 @@ public class ProblemaDependenciaPTRLib implements Verificaciones {
 		String contenido = consola.contenido_verificar;
 
 		// Simplemente mirar si el log contiene alguna de las cadenas clave
-		if (contenido.contains(TEXTO_EXCEPCION) || contenido.contains(TEXTO_CLASE_FALTANTE)) {
+		if (contenido.contains(TEXTO_CLASE_FALTANTE) || contenido.contains(TEXTO_EXCEPCION)) {
 			posiblePTRLib = true;
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posiblePTRLib)
+			return false;
+
+		return true;
 	}
 
 	/**

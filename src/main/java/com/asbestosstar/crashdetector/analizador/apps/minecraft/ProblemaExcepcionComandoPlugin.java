@@ -46,6 +46,14 @@ public class ProblemaExcepcionComandoPlugin implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleExcepcionComandoPlugin)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificacion por linea.
 	 *

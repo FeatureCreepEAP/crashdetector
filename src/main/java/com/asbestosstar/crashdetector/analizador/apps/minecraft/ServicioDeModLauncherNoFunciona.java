@@ -21,6 +21,7 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 
 	// Texto base que indica fallo de carga de un servicio de ModLauncher
 	private static final String CARGA_FALLIDA = "Service failed to load";
+	public boolean posible = false;
 
 	/**
 	 * Verificación global del contenido de la consola.
@@ -33,7 +34,19 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se realiza análisis global aquí; todo se hace en el método por línea.
+		String contento_de_consola = consola.contenido_verificar;
+		if (contento_de_consola.contains(CARGA_FALLIDA)) {
+			posible = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
 	}
 
 	@Override

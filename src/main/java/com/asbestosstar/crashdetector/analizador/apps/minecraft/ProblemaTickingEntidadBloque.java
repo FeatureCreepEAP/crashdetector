@@ -53,9 +53,17 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 			hayTickingEnLog = false;
 			return;
 		}
-		String lower = contenido.toLowerCase();
-		hayTickingEnLog = lower.contains("description: ticking block entity")
-				|| lower.contains("description: ticking entity");
+		String lower = contenido;
+		hayTickingEnLog = lower.contains("Description: Ticking block entity")
+				|| lower.contains("Description: Ticking entity");// TODO eliminar lower
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!hayTickingEnLog)
+			return false;
+
+		return true;
 	}
 
 	@Override
@@ -65,11 +73,11 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 		}
 
 		String l = linea.trim();
-		String lower = l.toLowerCase();
+		String lower = l;
 
 		// 1) Detectar la "Description" (acepta ticking entity y ticking block entity,
 		// con prefijos)
-		if (lower.contains("description: ticking block entity") || lower.contains("description: ticking entity")) {
+		if (lower.contains("Description: Ticking block entity") || lower.contains("Description: Ticking entity")) {
 			descriptionDetectada = true;
 			lineaDescription = numero_de_linea;
 

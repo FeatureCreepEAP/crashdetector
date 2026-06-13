@@ -48,6 +48,14 @@ public class ProblemaModFaltanteEnMundo implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleModFaltanteEnMundo)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificacion por linea.
 	 *

@@ -19,15 +19,15 @@ import com.asbestosstar.crashdetector.mapas.TriMap;
 
 public class VerificacionDeStackTrace {
 
-	/**
-	 * Stacktraces para ignorar
-	 */
-	public static List<ListaDenegadosTrace> denegados = new ArrayList<ListaDenegadosTrace>();
-
-	// Reglas rápidas: solo "contains" simple.
-	public static List<String> denegadosContiene = new ArrayList<String>();
-
 	Consola consola;
+
+	public interface ReglaDenegadoTrace {
+		boolean deniega(String[] lineas, int inicio, int fin, String traceCompleto);
+	}
+
+	private static final List<String> denegadosContieneRapidos = new ArrayList<>();
+	private static final Set<String> denegadosContieneSet = new HashSet<>();
+	private static final List<ReglaDenegadoTrace> reglasDenegadoTrace = new ArrayList<>();
 
 	private static final java.util.Set<String> TOKENS_FALSOS_SM = new java.util.HashSet<>(Arrays.asList("app", "APP",
 			"a", "A", "b", "B", "mixin", "pl", "re", "accesstransformer", "runtimedistcleaner", "classloading"));
@@ -175,30 +175,39 @@ public class VerificacionDeStackTrace {
 	}
 
 	private static boolean tracePermitePorRango(String[] lineas, int inicio, int fin) {
-
-		if ((denegadosContiene == null || denegadosContiene.isEmpty()) && (denegados == null || denegados.isEmpty())) {
+		if (lineas == null || lineas.length == 0) {
 			return true;
 		}
 
-		for (int i = inicio; i <= fin && i < lineas.length; i++) {
+		boolean necesitaTraceCompleto = !reglasDenegadoTrace.isEmpty();
+		StringBuilder sb = necesitaTraceCompleto ? new StringBuilder() : null;
 
+		for (int i = inicio; i <= fin && i < lineas.length; i++) {
 			String linea = lineas[i];
 			if (linea == null || linea.isEmpty()) {
 				continue;
 			}
 
-			// === Reglas rápidas: contains simple ===
-			for (String texto : denegadosContiene) {
+			for (String texto : denegadosContieneRapidos) {
 				if (linea.contains(texto)) {
 					return false;
 				}
 			}
 
-			// === Reglas avanzadas: lambdas/predicados ===
-			for (ListaDenegadosTrace pred : denegados) {
-				if (pred.predicado(linea)) {
-					return false;
-				}
+			if (sb != null) {
+				sb.append(linea).append(Verificaciones.nl);
+			}
+		}
+
+		if (reglasDenegadoTrace.isEmpty()) {
+			return true;
+		}
+
+		String traceCompleto = sb.toString();
+
+		for (ReglaDenegadoTrace regla : reglasDenegadoTrace) {
+			if (regla.deniega(lineas, inicio, fin, traceCompleto)) {
+				return false;
 			}
 		}
 
@@ -209,14 +218,25 @@ public class VerificacionDeStackTrace {
 		if (texto == null || texto.isEmpty()) {
 			return;
 		}
-		denegadosContiene.add(texto);
+
+		// Evita duplicados como net.minecraftforge.fml.VersionChecker
+		if (denegadosContieneSet.add(texto)) {
+			denegadosContieneRapidos.add(texto);
+		}
 	}
 
 	public static void agregarDenegadoPredicado(ListaDenegadosTrace predicado) {
 		if (predicado == null) {
 			return;
 		}
-		denegados.add(predicado);
+
+		reglasDenegadoTrace.add((lineas, inicio, fin, traceCompleto) -> predicado.predicado(traceCompleto));
+	}
+
+	public static void agregarDenegadoTrace(ReglaDenegadoTrace regla) {
+		if (regla != null) {
+			reglasDenegadoTrace.add(regla);
+		}
 	}
 
 	private TraceInfo construirYProcesarTraceInfo(String[] lineas, int inicio, int fin, int nivel, boolean fatal) {
@@ -1574,7 +1594,7 @@ public class VerificacionDeStackTrace {
 	 * @return true si el modid no está permitido, false en caso contrario
 	 */
 	public static boolean esModNoPermite(String modid) {
-		if (modid == null || modid.replace(" ", "").equals("")) {
+		if (modid == null || estaVacioOEspacios(modid)) {
 			return true;
 		}
 
@@ -1590,6 +1610,15 @@ public class VerificacionDeStackTrace {
 			}
 		}
 		return false;
+	}
+
+	private static boolean estaVacioOEspacios(String s) {
+		for (int i = 0; i < s.length(); i++) {
+			if (s.charAt(i) != ' ') {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -1635,14 +1664,16 @@ public class VerificacionDeStackTrace {
 	}
 
 	public static boolean tracePermite(String str) {
-		for (ListaDenegadosTrace pred : denegados) {
-			if (pred.predicado(str)) {
-				return false;
-			}
+		if (str == null || str.isEmpty()) {
+			return true;
 		}
 
-		// Incluir otras líneas que no coincidan con los criterios de exclusión
-		return true;
+		if (denegadosContieneRapidos.isEmpty() && reglasDenegadoTrace.isEmpty()) {
+			return true;
+		}
+
+		String[] lineas = dividirEnLineas(str);
+		return tracePermitePorRango(lineas, 0, lineas.length - 1);
 	}
 
 	/**

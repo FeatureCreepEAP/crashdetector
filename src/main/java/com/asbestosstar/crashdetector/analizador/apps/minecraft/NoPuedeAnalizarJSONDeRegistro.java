@@ -18,6 +18,7 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 	boolean activado = false;
 	private final List<String> erroresJSON = new ArrayList<>(); // Almacena múltiples errores
 	private final Map<String, String> enlacesPorError = new HashMap<>();
+	boolean posibleError = false;
 
 	/**
 	 * Verificación global no utilizada en este verificador.
@@ -29,7 +30,24 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
+
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+
+		if (log.contains("Failed to parse") || log.contains(".json from pack")) {
+			posibleError = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleError)
+			return false;
+
+		return true;
 	}
 
 	/**

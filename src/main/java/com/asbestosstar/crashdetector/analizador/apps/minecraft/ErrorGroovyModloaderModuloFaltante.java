@@ -27,8 +27,13 @@ public class ErrorGroovyModloaderModuloFaltante implements Verificaciones {
 	public void verificar(Consola consola) {
 		// Verificamos si Groovy Modloader o mods relacionados están presentes en el
 		// contenido del registro
+
+		if (!consola.contenido_verificar.contains("Module com.fasterxml.jackson.core not found")) {
+			return;
+		}
+
 		if (consola.contenido_verificar != null) {
-			String contenido = consola.contenido_verificar.toLowerCase();
+			String contenido = consola.contenido_verificar;
 			encontradoGML = contenido.contains("groovy") || contenido.contains("gml");
 		}
 	}

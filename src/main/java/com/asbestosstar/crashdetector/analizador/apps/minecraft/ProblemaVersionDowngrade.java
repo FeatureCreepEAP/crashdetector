@@ -40,6 +40,14 @@ public class ProblemaVersionDowngrade implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleVersionDowngrade)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificacion por linea.
 	 *

@@ -44,7 +44,7 @@ public class ErrorContextoOpenGL implements Verificaciones {
 
 		String contenido = consola.contenido_verificar;
 
-		if (contenido.contains(TEXTO_CABECERA) && contenido.contains(TEXTO_DETALLE)) {
+		if (contenido.contains(TEXTO_DETALLE) && contenido.contains(TEXTO_CABECERA)) {
 			posibleContextoOpenGL = true;
 		}
 	}

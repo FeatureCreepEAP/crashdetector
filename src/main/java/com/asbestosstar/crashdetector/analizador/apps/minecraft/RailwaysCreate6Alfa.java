@@ -17,25 +17,42 @@ public class RailwaysCreate6Alfa implements Verificaciones {
 	// Flags para comprobaciones globales (evita repetir contains() en cada línea)
 	private boolean tieneObjects = false;
 	private boolean tieneRegistrate = false;
-	private boolean tieneRailways;
+	private boolean tieneRailways = false;
 
 	@Override
 	public void verificar(Consola consola) {
 		String texto = consola.contenido_verificar;
 
 		// Contexto típico del rastro de Create/Registrate
-		tieneObjects = texto.contains("at java.util.Objects.requireNonNull(");
-		tieneRegistrate = texto.contains("at com.tterrag.registrate.util.entry.RegistryEntry.get(");
-
-		// Nueva condición para asegurar que el error provenga de Railways
-		tieneRailways = texto.contains("railways");
-
-		// Si no se cumple el contexto global Y no contiene "railways", salimos
-		if (!tieneObjects || !tieneRegistrate || !tieneRailways) {
+		if (texto.contains("at java.util.Objects.requireNonNull(")) {
+			tieneObjects = true;
+		} else {
 			return;
 		}
 
-		// La detección de la línea concreta se hace en verificar(Consola, String, int)
+		if (texto.contains("at com.tterrag.registrate.util.entry.RegistryEntry.get(")) {
+			tieneRegistrate = true;
+		} else {
+			return;
+		}
+
+		// Nueva condición para asegurar que el error provenga de Railways
+		if (texto.contains("railways")) {
+			tieneRailways = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!tieneObjects)
+			return false;
+		if (!tieneRegistrate)
+			return false;
+		if (!tieneRailways)
+			return false;
+
+		return true;
 	}
 
 	@Override

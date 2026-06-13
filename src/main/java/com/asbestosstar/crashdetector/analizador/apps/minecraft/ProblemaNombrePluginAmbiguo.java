@@ -57,6 +57,14 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 
 		if (!analizarLineas) {

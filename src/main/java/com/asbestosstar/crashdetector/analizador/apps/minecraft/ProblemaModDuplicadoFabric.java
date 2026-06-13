@@ -49,6 +49,14 @@ public class ProblemaModDuplicadoFabric implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleModDuplicadoFabric)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificacion por linea.
 	 *

@@ -43,6 +43,14 @@ public class ProblemaEjecucionPlugin implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleEjecucion)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleEjecucion || linea == null || linea.isEmpty()) {
 			return;

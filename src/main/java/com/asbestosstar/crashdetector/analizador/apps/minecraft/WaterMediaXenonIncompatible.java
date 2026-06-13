@@ -31,6 +31,7 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 	private String modNombre = "";
 	private String modId = "";
 	private final List<String> modsUbicacion = new ArrayList<>();
+	public boolean posible = false;
 
 	/**
 	 * Verificación global.
@@ -43,7 +44,21 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se realiza lógica aquí; todo se hace en verificar(Consola, String, int).
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains("Failed starting WATERMeDIA for Forge")
+				&& contenido.contains("is NOT compatible with WaterMedia")) {
+			posible = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
 	}
 
 	@Override

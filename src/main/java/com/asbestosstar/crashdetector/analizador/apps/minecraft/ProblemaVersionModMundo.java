@@ -54,6 +54,14 @@ public class ProblemaVersionModMundo implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleVersionModMundo)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificación precisa por línea.
 	 *

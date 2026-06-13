@@ -45,6 +45,12 @@ public class PirataMC implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+
+		return false;
+	}
+
 	public static String obtenerDerechosMiranda() {
 		if (!archivo_derechos_piratas.toFile().exists()) {
 			return null;

@@ -38,6 +38,14 @@ public class ProblemaMundoDuplicado implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleMundoDuplicado)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleMundoDuplicado || linea == null || linea.isEmpty()) {
 			return;

@@ -20,6 +20,7 @@ public class ProblemaBlockStarlightEngine implements Verificaciones {
 
 	private boolean activado = false;
 	private String enlace = "";
+	public boolean analizarLineas = false;
 
 	@Override
 	public void verificar(Consola consola) {
@@ -35,14 +36,22 @@ public class ProblemaBlockStarlightEngine implements Verificaciones {
 
 		// Si el método problemático aparece en el log, activamos el detector
 		if (log.contains("BlockStarLightEngine.initNibble")) {
-			activado = true;
+			analizarLineas = true;
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 
-		if (activado || linea == null)
+		if (!analizarLineas || activado || linea == null)
 			return;
 
 		if (linea.contains("BlockStarLightEngine.initNibble")) {

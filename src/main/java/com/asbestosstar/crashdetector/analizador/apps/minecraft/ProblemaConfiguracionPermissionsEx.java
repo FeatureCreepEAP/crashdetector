@@ -34,6 +34,12 @@ public class ProblemaConfiguracionPermissionsEx implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return false;
+
+	}
+
 	/**
 	 * Crea una nueva instancia del verificador.
 	 */

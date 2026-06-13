@@ -25,6 +25,9 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 	private final Map<String, List<String>> plugins = new HashMap<>();
 	private final Map<String, String> enlacesPorPlugin = new HashMap<>();
 	private String nombrePluginActual = "";
+	public boolean posibleProblemaDependencia = false;
+	public boolean posibleProblemaDependencia0 = false;
+	public boolean posibleProblemaDependencia1 = false;
 
 	/**
 	 * Verifica si el log contiene errores de dependencias faltantes.
@@ -36,23 +39,47 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se recorre el contenido completo aquí; el escaneo se hace en el método
-		// verificar(Consola, String, int) que se llama por cada línea.
+
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+
+		if (log.contains("Could not load 'plugins/")) {
+			posibleProblemaDependencia = true;
+		}
+		// 2. Detecta dependencias múltiples
+		else if (log.contains("Unknown/missing dependency plugins:")) {
+			posibleProblemaDependencia0 = true;
+		}
+		// 3. Detecta dependencia única
+		else if (log.contains("Unknown dependency")) {
+			posibleProblemaDependencia1 = true;
+		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleProblemaDependencia && !posibleProblemaDependencia0 && !posibleProblemaDependencia1)
+			return false;
+
+		return true;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// 1. Detecta carga fallida de plugin
-		if (linea.contains("Could not load 'plugins/")) {
+		if (posibleProblemaDependencia && linea.contains("Could not load 'plugins/")) {
 			extraerNombrePluginDesdeRuta(linea, numero_de_linea, consola);
 		}
 		// 2. Detecta dependencias múltiples
-		else if (linea.contains("Unknown/missing dependency plugins:")) {
+		else if (posibleProblemaDependencia0 && linea.contains("Unknown/missing dependency plugins:")) {
 			procesarLineaDependenciaMultiple(linea);
 			reconstruirMensaje();
 		}
 		// 3. Detecta dependencia única
-		else if (linea.contains("Unknown dependency")) {
+		else if (posibleProblemaDependencia1 && linea.contains("Unknown dependency")) {
 			procesarLineaDependenciaUnica(linea);
 			reconstruirMensaje();
 		}

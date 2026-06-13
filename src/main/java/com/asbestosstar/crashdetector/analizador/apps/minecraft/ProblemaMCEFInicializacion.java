@@ -18,6 +18,7 @@ public class ProblemaMCEFInicializacion implements Verificaciones {
 
 	private String enlace = "";
 	private int totalLineasDelLog = -1;
+	public boolean analizarLineas = false;
 
 	private static final String TEXTO_MCEF_1 = "Initializing CEF on ";
 	private static final String TEXTO_MCEF_2 = "[org.cef.CefApp:initialize:";
@@ -35,7 +36,21 @@ public class ProblemaMCEFInicializacion implements Verificaciones {
 			return;
 		}
 
+		if (consola.contenido_verificar.contains(TEXTO_MCEF_1) && consola.contenido_verificar.contains(TEXTO_MCEF_2)) {
+			analizarLineas = true;
+		} else {
+			return;
+		}
+
 		totalLineasDelLog = contarLineas(consola.contenido_verificar);
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	/**

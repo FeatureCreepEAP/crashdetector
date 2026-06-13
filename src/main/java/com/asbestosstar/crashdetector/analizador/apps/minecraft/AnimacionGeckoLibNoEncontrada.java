@@ -34,7 +34,7 @@ public class AnimacionGeckoLibNoEncontrada implements Verificaciones {
 			return;
 
 		// Pre-check global ligero para activar el análisis línea por línea
-		if (log.contains("GeckoLibException") && log.contains("Error loading animation file")) {
+		if (log.contains("Error loading animation file") && log.contains("GeckoLibException")) {
 
 			analizarLineas = true;
 		}

@@ -25,6 +25,8 @@ public class ErrorJvmDllC2Sodium implements Verificaciones {
 				&& (contenido.contains("jvm.dll") || contenido.contains("libjvm.dylib")
 						|| contenido.contains("libjvm.so"))) {
 			posibleJvm = true;
+		} else {
+			return;
 		}
 
 		if (contenido.contains("C2 CompilerThread") || contenido.contains("Current CompileTask:")
@@ -32,12 +34,24 @@ public class ErrorJvmDllC2Sodium implements Verificaciones {
 			posibleC2 = true;
 		}
 
+		else {
+			return;
+		}
+
 		if (contenido.contains("net.caffeinemc.mods.sodium") || contenido.contains("me.jellysquid.mods.sodium")
-				|| contenido.contains("org.embeddedt.embeddium") || contenido.contains("embeddium")
-				|| contenido.contains("rubidium") || contenido.contains("ChunkBuilderMeshingTask::execute")
+				|| contenido.contains("ChunkBuilderMeshingTask::execute")
 				|| contenido.contains("ClonedChunkSectionCache::acquire")) {
 			posibleSodium = true;
 		}
+
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleSodium)
+			return false;
+
+		return true;
 	}
 
 	@Override

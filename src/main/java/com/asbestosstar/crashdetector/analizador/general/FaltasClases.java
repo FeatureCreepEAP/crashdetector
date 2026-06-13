@@ -127,8 +127,9 @@ public class FaltasClases implements Verificaciones {
 
 			if (numero_linea_consola > 0) {
 				String linea_menos1 = consola.lineas_verificar[numero_linea_consola - 1];
-				if (linea_menos1.toLowerCase().contains("catching")
-						|| linea_menos1.toLowerCase().contains("rhino.CachedClassInfo")) {
+				if (linea_menos1.contains("catching") || linea_menos1.contains("Catching") ||
+
+						linea_menos1.contains("rhino.CachedClassInfo")) {
 					continue; // Skip catching errors
 				}
 			}
@@ -210,7 +211,7 @@ public class FaltasClases implements Verificaciones {
 				if (index != -1) {
 					String candidato = linea.substring(index + lleva.length()).trim();
 					if (!candidato.isEmpty()) {
-						claseCruda = candidato.split("[\\s\\)]")[0].trim();
+						claseCruda = primerTokenClase(candidato);
 						break;
 					}
 				}
@@ -222,7 +223,7 @@ public class FaltasClases implements Verificaciones {
 			if (index != -1) {
 				String candidato = linea.substring(index + "Error loading class:".length()).trim();
 				if (!candidato.isEmpty()) {
-					claseCruda = candidato.split("[\\s\\)]")[0].trim();
+					claseCruda = primerTokenClase(candidato);
 				}
 			}
 		}
@@ -234,8 +235,11 @@ public class FaltasClases implements Verificaciones {
 		if (numero_de_linea > 0) {
 			String linea_menos1 = consola.lineas_verificar[numero_de_linea - 1];
 			// CrashDetectorLogger.log(linea_menos1+ " linea menos 1");
-			if (linea_menos1.toLowerCase().contains("catching")
-					|| linea_menos1.toLowerCase().contains("rhino.CachedClassInfo")) {// A veces lineas tiene esta
+			if (linea_menos1.toLowerCase().contains("catching") || linea_menos1.contains("rhino.CachedClassInfo")) {// A
+																													// veces
+																													// lineas
+																													// tiene
+																													// esta
 				return;// TODO apender a Advertencia faltas clases
 			}
 		}
@@ -515,41 +519,112 @@ public class FaltasClases implements Verificaciones {
 		return "";
 	}
 
-	/**
-	 * Formatea un nombre de clase a formato con barras en lugar de puntos,
-	 * eliminando cualquier basura extra (paréntesis, espacios, etc.).
-	 */
+	// Parser rápido: valida nombres tipo paquete/clase sin regex.
+	// Acepta formato con "/" o ".", y acepta "$" para clases internas.
+	// Requiere al menos 2 segmentos: paquete + clase.
+	private boolean esNombreClaseValido(String clase) {
+		if (clase == null) {
+			return false;
+		}
+
+		int len = clase.length();
+		if (len == 0) {
+			return false;
+		}
+
+		boolean inicioSegmento = true;
+		boolean vioSeparador = false;
+		int largoSegmento = 0;
+
+		for (int i = 0; i < len; i++) {
+			char c = clase.charAt(i);
+
+			if (c == '/' || c == '.') {
+				if (inicioSegmento || largoSegmento == 0) {
+					return false;
+				}
+				vioSeparador = true;
+				inicioSegmento = true;
+				largoSegmento = 0;
+				continue;
+			}
+
+			if (inicioSegmento) {
+				if (!esInicioIdentificadorJavaRapido(c)) {
+					return false;
+				}
+				inicioSegmento = false;
+				largoSegmento = 1;
+			} else {
+				if (!esParteIdentificadorJavaRapido(c)) {
+					return false;
+				}
+				largoSegmento++;
+			}
+		}
+
+		return vioSeparador && !inicioSegmento && largoSegmento > 0;
+	}
+
+	// Inicio permitido: letra ASCII, "_".
+	// No usa Character.isJavaIdentifierStart porque es más caro y permite Unicode.
+	private boolean esInicioIdentificadorJavaRapido(char c) {
+		return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_';
+	}
+
+	// Parte permitida: letra ASCII, número, "_", "$".
+	private boolean esParteIdentificadorJavaRapido(char c) {
+		return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_' || c == '$';
+	}
+
+	// Reemplazo rápido para candidato.split("[\\s\\)]")[0].trim()
+	private String primerTokenClase(String texto) {
+		if (texto == null) {
+			return "";
+		}
+
+		int inicio = 0;
+		int len = texto.length();
+
+		while (inicio < len && Character.isWhitespace(texto.charAt(inicio))) {
+			inicio++;
+		}
+
+		int fin = inicio;
+		while (fin < len) {
+			char c = texto.charAt(fin);
+			if (Character.isWhitespace(c) || c == ')') {
+				break;
+			}
+			fin++;
+		}
+
+		return fin > inicio ? texto.substring(inicio, fin) : "";
+	}
+
+	// Formatea sin replace(regex). Corta en '(' o espacio y convierte "." a "/".
 	private String formatearClase(String clase) {
 		if (clase == null) {
 			return "";
 		}
-		// Quitar contenido después de '('
-		int indiceParentesis = clase.indexOf('(');
-		if (indiceParentesis != -1) {
-			clase = clase.substring(0, indiceParentesis).trim();
-		}
-		// Quitar contenido después de primer espacio
-		int indiceEspacio = clase.indexOf(' ');
-		if (indiceEspacio != -1) {
-			clase = clase.substring(0, indiceEspacio).trim();
-		}
-		// Convertir puntos a barras
-		return clase.replace(".", "/");
-	}
 
-	// Validar que el nombre siga el patrón de una clase Java.
-	// Ahora permite '$' para clases internas (inner classes).
-	private boolean esNombreClaseValido(String clase) {
-		if (clase == null || clase.isEmpty()) {
-			return false;
-		}
-		// Convertir a formato punto para validación
-		String dotForm = clase.replace('/', '.');
+		int fin = clase.length();
 
-		// Segmentos tipo paquete/clase:
-		// - empiezan por letra o '_'
-		// - luego letras, dígitos, '_' o '$' (para inner classes)
-		return dotForm.matches("[a-zA-Z_][a-zA-Z0-9_\\$]*(\\.[a-zA-Z_][a-zA-Z0-9_\\$]*)+");
+		for (int i = 0; i < clase.length(); i++) {
+			char c = clase.charAt(i);
+			if (c == '(' || Character.isWhitespace(c)) {
+				fin = i;
+				break;
+			}
+		}
+
+		StringBuilder sb = new StringBuilder(fin);
+		for (int i = 0; i < fin; i++) {
+			char c = clase.charAt(i);
+			sb.append(c == '.' ? '/' : c);
+		}
+
+		return sb.toString();
 	}
 
 	@Override
@@ -698,121 +773,114 @@ public class FaltasClases implements Verificaciones {
 	 * información agregada por VerificacionDeStackTrace (packs, modids, jars).
 	 */
 	private void completarOrigenesSiFaltan(VerificacionDeStackTrace vdst) {
-		if (vdst == null || clases.isEmpty())
+		if (vdst == null || clases.isEmpty()) {
 			return;
+		}
+
+		IndiceOrigenes indice = construirIndiceOrigenes(vdst);
 
 		for (Map.Entry<String, String> e : clases.entrySet()) {
 			String clase = e.getKey();
+
 			if (esClaseNoRelevante(clase)) {
 				continue;
 			}
-			if (e.getValue() != null && !e.getValue().isEmpty())
-				continue;
 
-			String origen = inferirOrigenParaClase(clase, vdst);
+			String actual = e.getValue();
+			if (actual != null && !actual.isEmpty()) {
+				continue;
+			}
+
+			String origen = inferirOrigenParaClaseRapido(clase, indice);
 			if (origen != null && !origen.isEmpty()) {
 				e.setValue(origen);
 			}
 		}
 	}
 
-	/**
-	 * Intenta inferir un origen plausible (jar / modid / paquete) para una clase
-	 * faltante usando los TraceInfo ya construidos.
-	 *
-	 * Orden de preferencia: 1) Línea cuya clase coincida exactamente 2) Línea cuyo
-	 * paquete sea prefijo más largo 3) Modid plausible visto en trazos relacionados
-	 * 4) Jar permitido visto en trazos relacionados
-	 */
-	private String inferirOrigenParaClase(String claseSlash, VerificacionDeStackTrace vdst) {
-		if (claseSlash == null || claseSlash.isEmpty() || vdst == null) {
-			return "";
+	private static class IndiceOrigenes {
+		final Map<String, String> origenPorClase = new HashMap<>();
+		final Map<String, String> origenPorPaquete = new HashMap<>();
+		String primerJar = "";
+		String primerModid = "";
+	}
+
+	private IndiceOrigenes construirIndiceOrigenes(VerificacionDeStackTrace vdst) {
+		IndiceOrigenes idx = new IndiceOrigenes();
+
+		if (vdst.trazos_completos == null) {
+			return idx;
 		}
 
-		// Seguridad: usar solo el nuevo contenedor canónico
-		List<TraceInfo> trazos;
-		try {
-			trazos = vdst.trazos_completos;
-		} catch (Throwable t) {
-			return "";
-		}
-
-		if (trazos == null || trazos.isEmpty()) {
-			return "";
-		}
-
-		String paqueteClase = claseSlash.contains("/") ? claseSlash.substring(0, claseSlash.lastIndexOf('/'))
-				: claseSlash;
-
-		String mejorPaquete = "";
-		String mejorModid = "";
-		String mejorJar = "";
-
-		for (TraceInfo trace : trazos) {
+		for (TraceInfo trace : vdst.trazos_completos) {
 			if (trace == null || trace.lineas == null) {
 				continue;
 			}
 
 			for (VerificacionDeStackTrace.LineaTrazo lt : trace.lineas) {
-				if (lt == null) {
+				if (lt == null || lt.origen == null || lt.origen.isEmpty() || lt.clase == null || lt.clase.isEmpty()) {
 					continue;
 				}
 
 				String origen = lt.origen;
-				String claseLinea = lt.clase;
+				String clase = lt.clase;
 
-				if (origen == null || origen.isEmpty()) {
-					continue;
-				}
+				idx.origenPorClase.putIfAbsent(clase, origen);
 
-				// 1) Coincidencia EXACTA de clase → máxima prioridad
-				if (claseLinea != null && claseLinea.equals(claseSlash)) {
-					String limpio = limpiarOrigen(origen);
-					if (!limpio.isEmpty()) {
-						return limpio;
+				int slash = clase.lastIndexOf('/');
+				if (slash > 0) {
+					String paquete = clase.substring(0, slash);
+					if (!esPaqueteNoPermitido(paquete)) {
+						idx.origenPorPaquete.putIfAbsent(paquete, origen);
 					}
 				}
 
-				// 2) Paquete más específico permitido
-				if (claseLinea != null && claseLinea.startsWith(paqueteClase)) {
-					String paqueteLinea = claseLinea.contains("/")
-							? claseLinea.substring(0, claseLinea.lastIndexOf('/'))
-							: "";
-
-					if (!paqueteLinea.isEmpty() && paqueteClase.startsWith(paqueteLinea)
-							&& paqueteLinea.length() > mejorPaquete.length() && !esPaqueteNoPermitido(paqueteLinea)) {
-
-						mejorPaquete = paqueteLinea;
-					}
+				if (idx.primerJar.isEmpty() && origen.endsWith(".jar")
+						&& !VerificacionDeStackTrace.isJarNoPermite(origen)) {
+					idx.primerJar = origen;
 				}
 
-				// 3) Modid plausible
-				if (mejorModid.isEmpty() && !origen.contains("/") && !origen.endsWith(".jar")
+				if (idx.primerModid.isEmpty() && origen.indexOf('/') < 0 && !origen.endsWith(".jar")
 						&& !VerificacionDeStackTrace.esModNoPermite(origen) && !esModidSospechoso(origen)) {
-
-					// heurística: el modid aparece en el paquete
-					if (paqueteClase.contains(origen)) {
-						mejorModid = origen;
-					}
-				}
-
-				// 4) Jar permitido
-				if (mejorJar.isEmpty() && origen.endsWith(".jar") && !VerificacionDeStackTrace.isJarNoPermite(origen)) {
-
-					mejorJar = origen;
+					idx.primerModid = origen;
 				}
 			}
 		}
 
-		// Resolver por prioridad
-		if (!mejorPaquete.isEmpty()) {
-			return mejorPaquete.replace('/', '.');
+		return idx;
+	}
+
+	private String inferirOrigenParaClaseRapido(String claseSlash, IndiceOrigenes idx) {
+		if (claseSlash == null || claseSlash.isEmpty() || idx == null) {
+			return "";
 		}
-		if (!mejorModid.isEmpty()) {
-			return mejorModid;
+
+		String exacto = idx.origenPorClase.get(claseSlash);
+		if (exacto != null && !exacto.isEmpty()) {
+			return limpiarOrigen(exacto);
 		}
-		if (!mejorJar.isEmpty()) {
-			return mejorJar;
+
+		int slash = claseSlash.lastIndexOf('/');
+		while (slash > 0) {
+			String paquete = claseSlash.substring(0, slash);
+
+			String origen = idx.origenPorPaquete.get(paquete);
+			if (origen != null && !origen.isEmpty()) {
+				String limpio = limpiarOrigen(origen);
+				if (!limpio.isEmpty()) {
+					return limpio;
+				}
+			}
+
+			slash = claseSlash.lastIndexOf('/', slash - 1);
+		}
+
+		if (!idx.primerModid.isEmpty() && claseSlash.contains(idx.primerModid)) {
+			return idx.primerModid;
+		}
+
+		if (!idx.primerJar.isEmpty()) {
+			return idx.primerJar;
 		}
 
 		return "";

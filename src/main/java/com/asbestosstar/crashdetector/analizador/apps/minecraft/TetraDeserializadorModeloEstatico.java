@@ -35,6 +35,14 @@ public class TetraDeserializadorModeloEstatico implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleErrorTetra)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Salir temprano si no existen ambos indicios globales
 		if (!posibleErrorTetra || activado) {

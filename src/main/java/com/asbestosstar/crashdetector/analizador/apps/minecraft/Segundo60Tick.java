@@ -26,6 +26,12 @@ public class Segundo60Tick implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+
+		return false;
+	}
+
+	@Override
 	public Verificaciones nueva() {
 		return new Segundo60Tick();
 	}

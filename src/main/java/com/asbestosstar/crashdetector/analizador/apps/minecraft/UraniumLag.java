@@ -22,6 +22,12 @@ public class UraniumLag implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		return false;
+
+	}
+
+	@Override
 	public Verificaciones nueva() {
 		// TODO Auto-generated method stub
 		return new UraniumLag();

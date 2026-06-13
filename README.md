@@ -38,3 +38,13 @@ Esto no se ha probado en quilt-loader ni en la biblioteca de registro de QSL.
 
 Esto no funciona en los servidores Theseus ni modrinth.gg del lanzador; sin embargo, se puede cambiar fácilmente con coremods.
 Enviar comentarios
+
+
+
+
+## Repositorio trasladado a GitHub
+
+Debido al cierre de Pagure.io, tal como se ha discutido aquĆ­: https://discussion.fedoraproject.org/t/decommissioning-of-pagure-io-anticipated-by-flock-2026/181997, este proyecto ha sido trasladado de Pagure a GitHub:
+
+- Antiguo: https://pagure.io/CrashDetectorMC
+- Nuevo: https://github.com/FeatureCreepEAP/crashdetector

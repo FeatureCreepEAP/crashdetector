@@ -50,6 +50,14 @@ public class ProblemaModIncompatibleConMinecraft implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleModIncompatibleConMinecraft)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificacion por linea.
 	 *

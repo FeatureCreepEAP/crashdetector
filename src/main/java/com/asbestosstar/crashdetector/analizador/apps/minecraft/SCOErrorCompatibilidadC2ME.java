@@ -47,6 +47,16 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!c2mePresente)
+			return false;
+		if (!connectorPresente)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Analiza cada línea del registro para detectar los errores específicos.
 	 * <p>

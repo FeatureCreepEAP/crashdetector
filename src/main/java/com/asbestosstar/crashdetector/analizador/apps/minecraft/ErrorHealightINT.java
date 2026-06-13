@@ -30,6 +30,10 @@ public class ErrorHealightINT implements Verificaciones {
 	public void verificar(Consola consola) {
 		String contenido = consola.contenido_verificar;
 
+		if (!contenido.contains("healight")) {
+			return;
+		}
+
 		// Patrón que detecta la cadena de errores típica:
 		// Caused by: java.lang.NoSuchFieldError: INT
 		// y que aparezca en contexto de inicialización de LivingEntity o EntityType
@@ -37,10 +41,9 @@ public class ErrorHealightINT implements Verificaciones {
 				|| contenido.contains("EntityType.<clinit>") || contenido.contains("net.minecraft.world.entity"))) {
 
 			// Verificar si el mod 'healight' está presente en la lista de mods cargados
-			if (contenido.contains("healight")) {
-				this.mensaje = MonitorDePID.idioma.errorHealightINT();
-				this.activado = true;
-			}
+			this.mensaje = MonitorDePID.idioma.errorHealightINT();
+			this.activado = true;
+
 		}
 	}
 

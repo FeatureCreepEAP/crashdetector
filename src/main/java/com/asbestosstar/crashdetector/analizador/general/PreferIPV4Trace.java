@@ -26,11 +26,6 @@ public class PreferIPV4Trace implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola) {
-		activado = false;
-
-		if (consola.contenido_verificar.contains("gml")) {
-			gml = true;
-		}
 
 		// Verificar errores de conexión relacionados con IPv6
 		// Buscar argumento JVM en el contenido del reporte
@@ -38,7 +33,14 @@ public class PreferIPV4Trace implements Verificaciones {
 		String propiedadIpv4 = System.getProperty("java.net.preferIPv4Stack");
 		if ("true".equalsIgnoreCase(propiedadIpv4)) {
 			argIpv4Encontrado = true;
+		} else {
+			return;
 		}
+
+		if (consola.contenido_verificar.contains("gml")) {
+			gml = true;
+		}
+
 	}
 
 	@Override

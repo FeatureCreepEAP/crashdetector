@@ -5,6 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
@@ -27,18 +28,14 @@ public class ConflictoIrisOptifine implements Verificaciones {
 		this.encontroOptifine = false;
 
 		// Buscar "optifine" en todo el log (case-insensitive)
-		String l = consola.contenido_verificar.toLowerCase();
-		if (l.contains("optifine")) {
+		String l = consola.contenido_verificar;
+		if (l.contains("optifine") && Buscador.existeClaseEnAlgunMod("optifine.Utils")) {
 			this.encontroOptifine = true;
 		}
 
-		boolean tieneIrisOculusJson = l.contains("mixins.iris.json") || l.contains("mixins.iris.forge.json")
-				|| l.contains("mixins.iris.fabric.json") || l.contains("mixins.oculus.json");
-		boolean tieneInjectionError = l.contains("injectionerror");
-		boolean tieneMixinLevelRenderer = l.contains("mixinlevelrenderer");
-		boolean tieneFailedCheck = l.contains("failed injection check");
+		boolean tieneIrisOculusJson = l.contains("mixins.iris") || l.contains("mixins.oculus.json");
 
-		if (tieneIrisOculusJson && tieneInjectionError && tieneMixinLevelRenderer && tieneFailedCheck) {
+		if (tieneIrisOculusJson) {
 			analizarLineas = true;
 		}
 
@@ -58,19 +55,15 @@ public class ConflictoIrisOptifine implements Verificaciones {
 			return;
 		}
 
-		String l = linea.toLowerCase();
+		String l = linea;
 
 		// Verificar que la línea contenga:
 		// - El archivo de mixin de Iris u Oculus
 		// - El error de inyección
 		// - La clase MixinLevelRenderer
-		boolean tieneIrisOculusJson = l.contains("mixins.iris.json") || l.contains("mixins.iris.forge.json")
-				|| l.contains("mixins.iris.fabric.json") || l.contains("mixins.oculus.json");
-		boolean tieneInjectionError = l.contains("injectionerror");
-		boolean tieneMixinLevelRenderer = l.contains("mixinlevelrenderer");
-		boolean tieneFailedCheck = l.contains("failed injection check");
+		boolean tieneIrisOculusJson = l.contains("mixins.iris") || l.contains("mixins.oculus.json");
 
-		if (tieneIrisOculusJson && tieneInjectionError && tieneMixinLevelRenderer && tieneFailedCheck) {
+		if (tieneIrisOculusJson) {
 			this.activado = true;
 			this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 		}

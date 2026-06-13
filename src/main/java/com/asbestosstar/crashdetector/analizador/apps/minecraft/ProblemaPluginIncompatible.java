@@ -59,6 +59,12 @@ public class ProblemaPluginIncompatible implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return false;
+
+	}
+
 	private void extraerPluginsIncompatibles(String contenido, String sufijo) {
 		int desde = 0;
 

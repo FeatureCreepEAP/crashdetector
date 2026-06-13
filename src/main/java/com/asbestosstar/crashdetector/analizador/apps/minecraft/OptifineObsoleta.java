@@ -17,15 +17,34 @@ public class OptifineObsoleta implements Verificaciones {
 		String contento_de_consola = consola.contenido_verificar;
 
 		boolean errorOptifine = contento_de_consola.contains("Error loading OptiFine ZIP file");
+		if (!errorOptifine) {
+			return;
+		}
+
 		boolean uriInvalida = contento_de_consola.contains("URI is not hierarchical");
+		if (!uriInvalida) {
+			return;
+		}
 		boolean incompatibilidad = contento_de_consola
 				.contains("cpw.mods.modlauncher.api.IncompatibleEnvironmentException");
+		if (!incompatibilidad) {
+			return;
+		}
 		boolean servicioFallido = contento_de_consola.contains("Service failed to load OptiFine");
+		if (!servicioFallido) {
+			return;
+		}
 
 		if (errorOptifine && uriInvalida && incompatibilidad && servicioFallido) {
 			this.mensaje = MonitorDePID.idioma.optifineObsoleta() + Verificaciones.nl_html;
 			activado = true;
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+
+		return false;
 	}
 
 	@Override

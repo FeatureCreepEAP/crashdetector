@@ -32,6 +32,14 @@ public class RenderOutlineRendertypeInvalidoBetterEnchants implements Verificaci
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleError)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 
 		if (!posibleError) {

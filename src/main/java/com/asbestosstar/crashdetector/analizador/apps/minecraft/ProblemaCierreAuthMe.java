@@ -34,6 +34,12 @@ public class ProblemaCierreAuthMe implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+
+		return false;
+	}
+
 	/**
 	 * Crea una nueva instancia de este verificador.
 	 */

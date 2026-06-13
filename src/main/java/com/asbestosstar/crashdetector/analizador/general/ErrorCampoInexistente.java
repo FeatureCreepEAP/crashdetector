@@ -38,7 +38,9 @@ public class ErrorCampoInexistente implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 		String contenido = consola.contenido_verificar;
-		this.posibleNoSuchField = contenido != null && contenido.indexOf("java.lang.NoSuchFieldError:") >= 0;
+		if (contenido.contains("java.lang.NoSuchFieldError:")) {
+			this.posibleNoSuchField = true;
+		}
 	}
 
 	public boolean quiereAnalizarLineas() {
@@ -54,7 +56,7 @@ public class ErrorCampoInexistente implements Verificaciones {
 			return;
 		}
 
-		if (linea.indexOf("java.lang.NoSuchFieldError:") < 0) {
+		if (linea.contains("java.lang.NoSuchFieldError:")) {
 			return;
 		}
 

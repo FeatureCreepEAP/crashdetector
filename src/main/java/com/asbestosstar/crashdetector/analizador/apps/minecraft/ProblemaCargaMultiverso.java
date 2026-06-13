@@ -36,6 +36,14 @@ public class ProblemaCargaMultiverso implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleCargaMultiverso)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleCargaMultiverso || activado || linea == null || linea.isEmpty()) {
 			return;

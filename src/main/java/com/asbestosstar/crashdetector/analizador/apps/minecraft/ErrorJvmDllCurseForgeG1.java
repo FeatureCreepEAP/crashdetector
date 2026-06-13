@@ -36,11 +36,15 @@ public class ErrorJvmDllCurseForgeG1 implements Verificaciones {
 		if (contenido.contains("EXCEPTION_ACCESS_VIOLATION") && contenido.contains("Problematic frame:")
 				&& contenido.contains("jvm.dll")) {
 			posibleJvmDll = true;
+		} else {
+			return;
 		}
 
 		// Esta variante específica ocurre durante trabajo del recolector G1.
 		if (contenido.contains("GCTaskThread") && (contenido.contains("g1 gc") || contenido.contains("UseG1GC"))) {
 			posibleG1 = true;
+		} else {
+			return;
 		}
 
 		// CurseForge puede aparecer como launcher propio o como lanzamiento
@@ -50,6 +54,8 @@ public class ErrorJvmDllCurseForgeG1 implements Verificaciones {
 				|| contenido.contains("curseforge\\minecraft") || contenido.contains("curseforge/minecraft")
 				|| contenido.contains("CurseForge")) {
 			posibleCurseForge = true;
+		} else {
+			return;
 		}
 
 		// No usamos esto como requisito absoluto, porque no todos los hs_err muestran
@@ -58,6 +64,14 @@ public class ErrorJvmDllCurseForgeG1 implements Verificaciones {
 				|| contenido.contains("overwolf")) {
 			posibleOverwolf = true;
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleOverwolf)
+			return false;
+
+		return true;
 	}
 
 	@Override

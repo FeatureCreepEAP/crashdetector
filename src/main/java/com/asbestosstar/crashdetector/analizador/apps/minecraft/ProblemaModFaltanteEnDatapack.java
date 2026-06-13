@@ -45,6 +45,14 @@ public class ProblemaModFaltanteEnDatapack implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleModFaltanteEnDatapack)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificación por línea.
 	 *

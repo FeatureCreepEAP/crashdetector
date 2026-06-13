@@ -50,6 +50,14 @@ public class ProblemaModIncompatibleFabric implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleModIncompatibleFabric)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificacion por linea.
 	 *

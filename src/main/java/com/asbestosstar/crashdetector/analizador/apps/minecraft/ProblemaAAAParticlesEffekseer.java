@@ -20,6 +20,7 @@ public class ProblemaAAAParticlesEffekseer implements Verificaciones {
 
 	private boolean activado = false;
 	private String enlace = "";
+	public boolean posible = false;
 
 	@Override
 	public void verificar(Consola consola) {
@@ -35,14 +36,22 @@ public class ProblemaAAAParticlesEffekseer implements Verificaciones {
 
 		if (log.contains("[libEffekseerNativeForJava.so") || log.contains("[EffekseerNativeForJava.dll")) {
 
-			activado = true;
+			posible = true;
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posible)
+			return false;
+
+		return true;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 
-		if (activado || linea == null)
+		if (activado || linea == null || !posible)
 			return;
 
 		if (linea.contains("[libEffekseerNativeForJava.so") || linea.contains("[EffekseerNativeForJava.dll")) {

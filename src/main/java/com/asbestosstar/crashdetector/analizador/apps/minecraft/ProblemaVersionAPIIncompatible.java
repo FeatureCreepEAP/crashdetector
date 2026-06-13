@@ -61,6 +61,14 @@ public class ProblemaVersionAPIIncompatible implements Verificaciones {
 		}
 	}
 
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleVersionAPIIncompatible)
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Verificacion por linea.
 	 *

@@ -31,6 +31,14 @@ public class VulkanModGPUIncompatible implements Verificaciones {
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!posibleVulkanGPU)
+			return false;
+
+		return true;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 
 		// Salida temprana si no hay indicios globales

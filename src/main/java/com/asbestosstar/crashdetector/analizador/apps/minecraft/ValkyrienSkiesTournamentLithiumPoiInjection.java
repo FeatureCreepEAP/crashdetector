@@ -50,15 +50,35 @@ public class ValkyrienSkiesTournamentLithiumPoiInjection implements Verificacion
 
 		if (contenido.contains("org.spongepowered.asm.mixin.injection.throwables.InvalidInjectionException")) {
 			indicioInvalidInjection = true;
+		} else {
+			return;
 		}
 
 		if (contenido.contains("me.jellysquid.mods.lithium.mixin.ai.poi.PointOfInterestStorageMixin")) {
 			indicioLithiumPoiMixin = true;
+		} else {
+			return;
 		}
 
 		if (contenido.contains("valkyrienskies-common.mixins.json:feature.poi.MixinPOIManager")) {
 			indicioVSPoiMixin = true;
+		} else {
+			return;
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!indicioInvalidInjection)
+			return false;
+
+		if (!indicioLithiumPoiMixin)
+			return false;
+
+		if (!indicioVSPoiMixin)
+			return false;
+
+		return true;
 	}
 
 	@Override

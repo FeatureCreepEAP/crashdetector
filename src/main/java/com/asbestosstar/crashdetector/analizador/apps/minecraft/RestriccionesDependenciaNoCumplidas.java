@@ -26,6 +26,7 @@ public class RestriccionesDependenciaNoCumplidas implements Verificaciones {
 	private boolean activado = false;
 	private String enlace = "";
 	private String cantidad = "varias";
+	public boolean analizarLineas;
 	// Mapa: Nombre del Archivo -> Lista de dependencias solicitadas
 	private Map<String, List<String>> conflictosPorMod = new HashMap<>();
 
@@ -40,8 +41,16 @@ public class RestriccionesDependenciaNoCumplidas implements Verificaciones {
 		// Global check barato: solo activa si están las piezas necesarias.
 		if (log.contains("EarlyLoadingException") && log.contains("Dependency restrictions were not met")
 				&& (log.contains("Failed to select jars") || log.contains("ResolutionFailureInformation"))) {
-			activado = true;
+			analizarLineas = true;
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		if (!analizarLineas)
+			return false;
+
+		return true;
 	}
 
 	@Override
