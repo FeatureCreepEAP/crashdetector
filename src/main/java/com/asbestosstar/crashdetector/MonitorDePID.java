@@ -25,6 +25,9 @@ import javax.swing.UIManager;
 import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.bajo.hw.cpu.sparc.DaxInit;
+import com.asbestosstar.crashdetector.bajo.hw.cpu.sparc.UmemInit;
+import com.asbestosstar.crashdetector.bajo.vectorapi.VectorAPIInit;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.buscarparajava.BuscarParaJava8Unix;
 import com.asbestosstar.crashdetector.buscarparajava.BuscarParaJava8Windows;
@@ -568,15 +571,30 @@ public class MonitorDePID {
 		// Launch the child monitor process
 		try {
 			String cp = obtenerClassPath(jar);
-			// System.out.println("******************" + cp);
 
-			ProcessBuilder pb = new ProcessBuilder(javaBinary, obtenerXMXPorMitadDeRAM(),
-					// "-XX:MaxJavaStackTraceDepth=1000000",
-					"-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID", "--monitor", String.valueOf(pid))
-			// .inheritIO()
-			;
+			List<String> comando = new ArrayList<String>();
+			comando.add(javaBinary);
+			comando.add(obtenerXMXPorMitadDeRAM());
 
-			// System.out.println("classpath"+cp);
+			if (DaxInit.necesitaArgEspecialDax()) {
+				comando.add(DaxInit.obtenerArgEspecialDax());
+			}
+
+			if (VectorAPIInit.necesitaArgEspecialVectorAPI()) {
+				comando.add(VectorAPIInit.obtenerArgEspecialVectorAPI());
+			}
+
+			// comando.add("-XX:MaxJavaStackTraceDepth=1000000");
+			comando.add("-cp");
+			comando.add(cp);
+			comando.add("com.asbestosstar.crashdetector.MonitorDePID");
+			comando.add("--monitor");
+			comando.add(String.valueOf(pid));
+
+			ProcessBuilder pb = new ProcessBuilder(comando);
+			// pb.inheritIO();
+			UmemInit.aplicarA(pb);
+			// System.out.println("classpath" + cp);
 			// pb.redirectError(new File(CrashDetectorLogger.LOG_ERR_FILE_PATH));
 			// pb.redirectOutput(new File(CrashDetectorLogger.LOG_FILE_PATH));
 
@@ -596,6 +614,8 @@ public class MonitorDePID {
 		if (jar != null && !jar.trim().isEmpty()) {
 			agregarJarAlClasspathSiNoConflicta(classPath, nombresYaAgregados, new File(jar));
 		}
+
+		DaxInit.agregarJarsOracleStreamOffload(classPath, nombresYaAgregados);
 
 		try {
 			File cfrJar = BuscarParaCFR.encontrarCfr();
@@ -665,7 +685,7 @@ public class MonitorDePID {
 		}
 	}
 
-	private static void agregarJarAlClasspathSiNoConflicta(StringBuilder classPath, List<String> nombresYaAgregados,
+	public static void agregarJarAlClasspathSiNoConflicta(StringBuilder classPath, List<String> nombresYaAgregados,
 			File archivo) {
 		if (archivo == null || !archivo.exists() || !archivo.isFile()) {
 			return;
