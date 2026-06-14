@@ -60,7 +60,7 @@ public class ErrorCodigo1073741819 implements Verificaciones {
 		}
 
 		// Buscamos la línea que contiene el código de error específico
-		if (linea.toLowerCase().contains("exit") && linea.contains("-1073741819")) {
+		if (linea.contains("-1073741819") && linea.toLowerCase().contains("exit")) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);

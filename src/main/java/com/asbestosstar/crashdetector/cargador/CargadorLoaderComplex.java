@@ -1,8 +1,5 @@
 package com.asbestosstar.crashdetector.cargador;
 
-import java.io.File;
-import java.util.Locale;
-
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 
 /**
@@ -19,17 +16,14 @@ public class CargadorLoaderComplex implements Cargador {
 			return false;
 		}
 
-		String norm = ubicacion.replace('\\', '/');
-		String lower = norm.toLowerCase(Locale.ROOT);
-
 		// LoaderComplex carga desde:
 		// - mods/*.lc.jar
 		// - addons/*.jar
-		if (lower.endsWith(".lc.jar")) {
+		if (ubicacion.endsWith(".lc.jar")) {
 			return true;
 		}
 
-		return estaEnCarpetaAddons(lower) && lower.endsWith(".jar");
+		return estaEnCarpetaAddons(ubicacion) && ubicacion.endsWith(".jar");
 	}
 
 	@Override

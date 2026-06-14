@@ -18,36 +18,27 @@ public class CargadorMCForge implements Cargador {
 
 	@Override
 	public boolean modEsDeCargador(ArchivoDeMod mod) {
-		// Se recorre la lista de rutas internas del mod
-
-		if (mod.ubicacion_para_publicar().contains("kotlinforforge")) {
-			return true;
-		}
-
 		for (String archivo : mod.archivos()) {
-			String norm = archivo.replace('\\', '/');
-			String lower = norm.toLowerCase(Locale.ROOT);
+			if (archivo == null || archivo.isEmpty()) {
+				continue;
+			}
 
-			// Deteccion de mods.toml en META-INF
-			if (lower.equals("meta-inf/mods.toml")) {
+			String ruta = archivo.indexOf('\\') >= 0 ? archivo.replace('\\', '/') : archivo;
+
+			if (ruta.equals("mcmod.info") || ruta.equals("META-INF/mcmod.info") || ruta.equals("META-INF/mods.toml")) {
 				return true;
 			}
 
-			// Deteccion de mcmod.info en raiz o META-INF
-			if (lower.equals("mcmod.info") || lower.equals("meta-inf/mcmod.info")) {
-				return true;
-			}
+			if (ruta.startsWith("META-INF/services/")) {
+				String servicio = ruta.substring("META-INF/services/".length());
 
-			// Deteccion de servicios bajo META-INF
-			if (lower.startsWith("meta-inf/services/")) {
-				String servicio = lower.substring("meta-inf/services/".length());
 				if (servicio.startsWith("cpw") || servicio.startsWith("net.minecraftforge")) {
 					return true;
 				}
 			}
 		}
 
-		return false;
+		return mod.ubicacion_para_publicar().contains("kotlinforforge");
 	}
 
 	@Override
@@ -214,4 +205,9 @@ public class CargadorMCForge implements Cargador {
 
 		return "";
 	}
+
+	public boolean suporteModsDeCarpetas() {
+		return true;
+	}
+
 }

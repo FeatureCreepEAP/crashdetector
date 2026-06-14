@@ -15,30 +15,31 @@ public class CargadorSponge implements Cargador {
 	@Override
 	public boolean modEsDeCargador(ArchivoDeMod mod) {
 		for (String archivo : mod.archivos()) {
-			String norm = archivo.replace('\\', '/');
-			String lower = norm.toLowerCase(Locale.ROOT);
+			if (archivo == null || archivo.isEmpty()) {
+				continue;
+			}
 
-			// Detección estándar de metadatos de Sponge en API 8+
-			if (lower.equals("meta-inf/sponge_plugins.json")) {
+			// Detección estándar de metadatos de Sponge en API 8+.
+			if (archivo.equals("META-INF/sponge_plugins.json")) {
 				return true;
 			}
 
-			// Compatibilidad heredada (Legacy Sponge API 7 y anteriores usaban mcmod.info
-			// modificado)
-			if (lower.equals("mcmod.info")) {
+			// Compatibilidad heredada: Sponge API 7 y anteriores podían usar mcmod.info
+			// modificado.
+			if (archivo.equals("mcmod.info")) {
 				try {
-					// Usamos obtenerArchivoRecursivo para extraer el contenido de texto de forma
-					// segura
 					String contenido = mod.obtenerArchivoRecursivo(archivo);
+
 					if (contenido != null
 							&& (contenido.contains("\"spongeapi\"") || contenido.contains("spongepowered"))) {
 						return true;
 					}
 				} catch (Throwable ignorado) {
-					// Prevenir caídas si el archivo está corrupto o ilegible
+					// Prevenir caídas si el archivo está corrupto o ilegible.
 				}
 			}
 		}
+
 		return false;
 	}
 

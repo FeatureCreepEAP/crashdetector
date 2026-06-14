@@ -21,7 +21,6 @@ import java.util.function.Supplier;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -32,7 +31,6 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.TransferHandler;
-import javax.swing.TransferHandler.TransferSupport;
 import javax.swing.border.Border;
 
 import com.asbestosstar.crashdetector.Config;
@@ -50,7 +48,7 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
  * de lanzador. La apariencia, el layout y la creación de componentes se manejan
  * exclusivamente en implementaciones concretas.
  */
-public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDetectorGUI {
+public abstract class NoRegistroLanzadorGUI extends JFrame implements CrashDetectorGUI {
 
 	private static final long serialVersionUID = 1L;
 

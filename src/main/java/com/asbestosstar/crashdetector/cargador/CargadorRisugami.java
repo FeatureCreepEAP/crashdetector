@@ -19,11 +19,9 @@ public class CargadorRisugami implements Cargador {
 		// y que extienden BaseMod. Como no leemos bytecode aqui,
 		// usamos la regla fuerte del nombre de clase.
 		for (String archivo : mod.archivos()) {
-			String norm = archivo.replace('\\', '/');
-			String lower = norm.toLowerCase(Locale.ROOT);
 
-			if (lower.endsWith(".class")) {
-				String nombreClase = norm;
+			if (archivo.endsWith(".class")) {
+				String nombreClase = archivo;
 
 				int slash = nombreClase.lastIndexOf('/');
 				if (slash >= 0) {

@@ -17,10 +17,8 @@ public class CargadorFlint implements Cargador {
 	public boolean modEsDeCargador(ArchivoDeMod mod) {
 
 		for (String archivo : mod.archivos()) {
-			String norm = archivo.replace('\\', '/');
-			String lower = norm.toLowerCase(Locale.ROOT);
 
-			if (lower.equals("flintmodule.json")) {
+			if (archivo.equals("flintmodule.json")) {
 				return true;
 			}
 		}

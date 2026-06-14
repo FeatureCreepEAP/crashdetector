@@ -16,7 +16,7 @@ public class FloralEnchantmentsTagKeyNull implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 		// Buscar referencia global al mod
-		if (consola.contenido_verificar.toLowerCase().contains("floralench")) {
+		if (consola.contenido_verificar.contains("floralench")) {
 			encontradoFloral = true;
 		}
 	}

@@ -23,7 +23,7 @@ import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 public class CargadorMeddle implements Cargador {
 
 	@Override
-	public boolean modEsDeCargador(ArchivoDeMod mod) {
+	public boolean modEsDeCargador(ArchivoDeMod mod) {// TODO annotacion
 
 		boolean tieneManifest = false;
 		boolean tieneAnotacion = false;
@@ -34,6 +34,7 @@ public class CargadorMeddle implements Cargador {
 
 			if (lower.equals("meta-inf/manifest.mf")) {
 				tieneManifest = true;
+				return true;
 			}
 
 			// Si existe la propia anotacion de Meddle en el jar, es una pista fuerte

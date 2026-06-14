@@ -19,11 +19,9 @@ public class CargadorRift implements Cargador {
 
 		// Se recorre la lista de rutas internas del mod
 		for (String archivo : mod.archivos()) {
-			String norm = archivo.replace('\\', '/');
-			String lower = norm.toLowerCase(Locale.ROOT);
 
 			// Deteccion de riftmod.json en la raiz del mod
-			if (lower.equals("riftmod.json")) {
+			if (archivo.equals("riftmod.json")) {
 				return true;
 			}
 		}

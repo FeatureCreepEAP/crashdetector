@@ -21,14 +21,12 @@ public class CargadorCanary implements Cargador {
 		boolean tieneClasePlugin = false;
 
 		for (String archivo : mod.archivos()) {
-			String norm = archivo.replace('\\', '/');
-			String lower = norm.toLowerCase(Locale.ROOT);
 
-			if (lower.equals("canary.inf")) {
+			if (archivo.equals("Canary.inf")) {
 				tieneCanaryInf = true;
 			}
 
-			if (lower.endsWith(".class")) {
+			if (archivo.endsWith(".class")) {
 				tieneClasePlugin = true;
 			}
 		}

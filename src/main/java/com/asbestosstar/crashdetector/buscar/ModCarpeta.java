@@ -147,7 +147,7 @@ public class ModCarpeta implements ArchivoDeMod {
 			}
 
 			for (Cargador cargador : Cargador.cargadores) {
-				if (cargador.modEsDeCargador(this)) {
+				if (cargador.suporteModsDeCarpetas() && cargador.modEsDeCargador(this)) {
 					cargadores_de_mod.add(cargador);
 				}
 			}

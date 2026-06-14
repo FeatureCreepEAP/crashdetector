@@ -19,11 +19,9 @@ public class CargadorBukkit implements Cargador {
 
 		// Se recorre la lista de rutas internas del archivo
 		for (String archivo : mod.archivos()) {
-			String norm = archivo.replace('\\', '/');
-			String lower = norm.toLowerCase(Locale.ROOT);
 
 			// Bukkit y derivados usan plugin.yml o paper-plugin.yml
-			if (lower.equals("plugin.yml") || lower.equals("paper-plugin.yml")) {
+			if (archivo.equals("plugin.yml") || archivo.equals("paper-plugin.yml")) {
 				return true;
 			}
 		}

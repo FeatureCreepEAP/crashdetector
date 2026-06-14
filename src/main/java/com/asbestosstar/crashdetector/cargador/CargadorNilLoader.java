@@ -24,10 +24,8 @@ public class CargadorNilLoader implements Cargador {
 	public boolean modEsDeCargador(ArchivoDeMod mod) {
 
 		for (String archivo : mod.archivos()) {
-			String norm = archivo.replace('\\', '/');
-			String lower = norm.toLowerCase(Locale.ROOT);
 
-			if (lower.endsWith(".nilmod.css")) {
+			if (archivo.endsWith(".nilmod.css")) {
 				return true;
 			}
 		}

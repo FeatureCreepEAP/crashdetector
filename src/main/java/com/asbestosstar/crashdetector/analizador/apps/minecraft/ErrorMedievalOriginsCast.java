@@ -27,7 +27,7 @@ public class ErrorMedievalOriginsCast implements Verificaciones {
 	public void verificar(Consola consola) {
 		// Verificamos si Medieval Origins está presente en el contenido del registro
 		if (consola.contenido_verificar != null) {
-			encontradoMedievalOrigins = consola.contenido_verificar.toLowerCase().contains("medievalorigins");
+			encontradoMedievalOrigins = consola.contenido_verificar.contains("medievalorigins");
 		}
 	}
 

@@ -519,11 +519,23 @@ public interface ArchivoDeMod {
 		private final String descriptor;
 		private final boolean esMetodo;
 
+		private final String claseOrigen;
+		private final String metodoOrigen;
+		private final String descriptorOrigen;
+
 		public Referencia(String clase, String nombre, String descriptor, boolean esMetodo) {
+			this(clase, nombre, descriptor, esMetodo, null, null, null);
+		}
+
+		public Referencia(String clase, String nombre, String descriptor, boolean esMetodo, String claseOrigen,
+				String metodoOrigen, String descriptorOrigen) {
 			this.clase = clase;
 			this.nombre = nombre;
 			this.descriptor = descriptor;
 			this.esMetodo = esMetodo;
+			this.claseOrigen = claseOrigen;
+			this.metodoOrigen = metodoOrigen;
+			this.descriptorOrigen = descriptorOrigen;
 		}
 
 		public String obtenerClase() {
@@ -544,6 +556,22 @@ public interface ArchivoDeMod {
 
 		public boolean esCampo() {
 			return !esMetodo;
+		}
+
+		public String obtenerClaseOrigen() {
+			return claseOrigen;
+		}
+
+		public String obtenerMetodoOrigen() {
+			return metodoOrigen;
+		}
+
+		public String obtenerDescriptorOrigen() {
+			return descriptorOrigen;
+		}
+
+		public boolean tieneOrigen() {
+			return claseOrigen != null && metodoOrigen != null && descriptorOrigen != null;
 		}
 	}
 

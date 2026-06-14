@@ -15,14 +15,12 @@ public class CargadorFabric implements Cargador {
 
 		// Se recorre la lista de rutas internas del mod
 		for (String archivo : mod.archivos()) {
-			String norm = archivo.replace('\\', '/');
-			String lower = norm.toLowerCase(Locale.ROOT);
 
-			if (lower.equals("fabric.mod.json")) {
+			if (archivo.equals("fabric.mod.json")) {
 				tieneFabric = true;
 			}
 
-			if (lower.equals("quilt.mod.json")) {
+			if (archivo.equals("quilt.mod.json")) {
 				tieneQuilt = true;
 			}
 		}

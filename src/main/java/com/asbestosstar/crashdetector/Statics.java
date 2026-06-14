@@ -41,6 +41,9 @@ public class Statics {
 	public static String ID_BBSMC = "BPis79MR";
 	public static String ID_MODRINTH = "8wzfQa8F";
 
+	public static final long discordRichPresenceID = 1444964488406110208L;
+	public static final String detallesDiscordRichPresence = "https://www.curseforge.com/minecraft/mc-mods/crashdetector";
+
 	/**
 	 * PARA JPMS
 	 */

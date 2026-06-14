@@ -19,11 +19,9 @@ public class CargadorLiteLoader implements Cargador {
 
 		// Se recorre la lista de rutas internas del mod
 		for (String archivo : mod.archivos()) {
-			String norm = archivo.replace('\\', '/');
-			String lower = norm.toLowerCase(Locale.ROOT);
 
 			// Deteccion de litemod.json en la raiz del mod
-			if (lower.equals("litemod.json")) {
+			if (archivo.equals("litemod.json")) {
 				return true;
 			}
 		}

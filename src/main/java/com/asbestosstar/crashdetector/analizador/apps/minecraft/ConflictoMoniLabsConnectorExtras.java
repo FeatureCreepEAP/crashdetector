@@ -29,7 +29,7 @@ public class ConflictoMoniLabsConnectorExtras implements Verificaciones {
 		// Verificamos si MoniLabs y Connector Extras están presentes en el contenido
 		// del registro
 		if (consola.contenido_verificar != null) {
-			String contenido = consola.contenido_verificar.toLowerCase();
+			String contenido = consola.contenido_verificar;
 			encontradoMoniLabs = contenido.contains("monilabs");
 			encontradoConnectorExtras = contenido.contains("connectorextras");
 

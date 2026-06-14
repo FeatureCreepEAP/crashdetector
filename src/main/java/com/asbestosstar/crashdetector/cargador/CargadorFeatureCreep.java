@@ -23,25 +23,24 @@ public class CargadorFeatureCreep implements Cargador {
 
 		// FeatureCreep historicamente puede consumir muchos formatos,
 		// pero ahora tambien detectamos de forma explicita FlatMods.
-		for (String archivo : mod.archivos()) {
-			String norm = archivo.replace('\\', '/');
-			String lower = norm.toLowerCase(Locale.ROOT);
-
-			// FlatMods de FeatureCreep
-			if (lower.equals("fcflat.properties")) {
-				return true;
-			}
-
-			// JBoss modules
-			if (lower.endsWith("modules.xml")) {
-				return true;
-			}
-
-			// Mods tipo HOI4
-			if (lower.endsWith(".mod")) {
-				return true;
-			}
-		}
+//		for (String archivo : mod.archivos()) {
+//
+//
+//			// FlatMods de FeatureCreep
+//			if (archivo.equals("fcflat.properties")) {
+//				return true;
+//			}
+//
+//			// JBoss modules
+//			if (archivo.endsWith("modules.xml")) {
+//				return true;
+//			}
+//
+//			// Mods tipo HOI4
+//			if (archivo.endsWith(".mod")) {
+//				return true;
+//			}
+//		}
 
 		// Mantener compatibilidad anterior:
 		// FeatureCreep puede leer casi cualquier mod/archivo por ahora.
@@ -211,4 +210,10 @@ public class CargadorFeatureCreep implements Cargador {
 	public static String parsearVersionFlatMod(byte[] contenido) throws IOException {
 		return parsearVersionModFlat(contenido);
 	}
+
+	@Override
+	public boolean suporteModsDeCarpetas() {
+		return true;
+	}
+
 }

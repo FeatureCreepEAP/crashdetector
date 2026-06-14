@@ -61,7 +61,7 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 	public void preparar(JFrame blanco, Instant instant) {
 		this.instant = instant;
 
-		setModal(true);
+		// setModal(true);
 		setAlwaysOnTop(true);
 		setTitle(Config.obtenerInstancia().obtenerNombreCD() + " – " + MonitorDePID.idioma.noRegistroLauncherTitulo());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

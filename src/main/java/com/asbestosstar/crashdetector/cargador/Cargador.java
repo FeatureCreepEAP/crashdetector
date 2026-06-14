@@ -46,4 +46,13 @@ public interface Cargador {
 	 */
 	public String id();
 
+	/**
+	 * Los mayores de cargadores no suporte mods de carpetas
+	 * 
+	 * @return
+	 */
+	public default boolean suporteModsDeCarpetas() {
+		return false;
+	}
+
 }

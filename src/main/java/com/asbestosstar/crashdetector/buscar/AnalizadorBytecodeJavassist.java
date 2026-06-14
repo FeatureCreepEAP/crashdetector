@@ -501,38 +501,50 @@ public class AnalizadorBytecodeJavassist {
 
 	public static List<ArchivoDeMod.InfoMetodo> analizarMetodos(ArchivoDeMod mod, String nombreClase) {
 		byte[] bytesClase = mod.obtenerBytesClase(nombreClase);
-		if (bytesClase == null)
+		if (bytesClase == null) {
 			return new ArrayList<>();
+		}
+
 		try {
 			ClassPool pool = new ClassPool();
 			pool.appendSystemPath();
+
 			ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(bytesClase)));
+			CtClass ctClass = pool.makeClass(classFile, false);
+
+			String claseOrigen = classFile.getName().replace('.', '/');
 			List<ArchivoDeMod.InfoMetodo> resultados = new ArrayList<>();
+
 			for (MethodInfo methodInfo : classFile.getMethods()) {
 				String methodName = methodInfo.getName();
 				String descriptor = methodInfo.getDescriptor();
+
 				if ((methodInfo.getAccessFlags() & (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0) {
 					resultados.add(
 							new ArchivoDeMod.InfoMetodo(methodName, descriptor, new ArrayList<>(), new ArrayList<>()));
 					continue;
 				}
+
 				List<ArchivoDeMod.Referencia> refMetodos = new ArrayList<>();
 				List<ArchivoDeMod.Referencia> refCampos = new ArrayList<>();
-				CtClass ctClass = pool.makeClass(classFile, false);
+
 				CtMethod ctMethod = ctClass.getMethod(methodName, descriptor);
 				ctMethod.instrument(new ExprEditor() {
 					@Override
 					public void edit(MethodCall m) {
-						refMetodos.add(convertirAMiReferencia(m));
+						refMetodos.add(convertirAMiReferencia(m, claseOrigen, methodName, descriptor));
 					}
 
 					@Override
 					public void edit(FieldAccess f) {
-						refCampos.add(convertirAMiReferencia(f));
+						refCampos.add(convertirAMiReferencia(f, claseOrigen, methodName, descriptor));
 					}
 				});
+
 				resultados.add(new ArchivoDeMod.InfoMetodo(methodName, descriptor, refMetodos, refCampos));
 			}
+
+			ctClass.detach();
 			return resultados;
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
@@ -560,12 +572,17 @@ public class AnalizadorBytecodeJavassist {
 	public static List<ArchivoDeMod.Referencia> analizarReferenciasEnMetodo(ArchivoDeMod mod, String nombreClase,
 			String nombreMetodo, String descriptor) {
 		byte[] bytesClase = mod.obtenerBytesClase(nombreClase);
-		if (bytesClase == null)
+		if (bytesClase == null) {
 			return new ArrayList<>();
+		}
+
 		try {
 			ClassPool pool = new ClassPool();
 			pool.appendSystemPath();
+
 			ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(bytesClase)));
+			String claseOrigen = classFile.getName().replace('.', '/');
+
 			MethodInfo methodInfo = null;
 			for (MethodInfo mi : classFile.getMethods()) {
 				if (mi.getName().equals(nombreMetodo) && mi.getDescriptor().equals(descriptor)) {
@@ -573,22 +590,28 @@ public class AnalizadorBytecodeJavassist {
 					break;
 				}
 			}
-			if (methodInfo == null || (methodInfo.getAccessFlags() & (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0)
+
+			if (methodInfo == null || (methodInfo.getAccessFlags() & (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0) {
 				return new ArrayList<>();
+			}
+
 			List<ArchivoDeMod.Referencia> resultados = new ArrayList<>();
 			CtClass ctClass = pool.makeClass(classFile, false);
 			CtMethod ctMethod = ctClass.getMethod(nombreMetodo, descriptor);
+
 			ctMethod.instrument(new ExprEditor() {
 				@Override
 				public void edit(MethodCall m) {
-					resultados.add(convertirAMiReferencia(m));
+					resultados.add(convertirAMiReferencia(m, claseOrigen, nombreMetodo, descriptor));
 				}
 
 				@Override
 				public void edit(FieldAccess f) {
-					resultados.add(convertirAMiReferencia(f));
+					resultados.add(convertirAMiReferencia(f, claseOrigen, nombreMetodo, descriptor));
 				}
 			});
+
+			ctClass.detach();
 			return resultados;
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
@@ -599,34 +622,52 @@ public class AnalizadorBytecodeJavassist {
 	public static List<ArchivoDeMod.Referencia> analizarReferenciasAMetodo(ArchivoDeMod mod, String claseObjetivo,
 			String metodoObjetivo, String descriptorObjetivo) {
 		List<ArchivoDeMod.Referencia> resultados = new ArrayList<>();
+
+		String claseObjetivoInterna = claseObjetivo.replace('.', '/');
+
 		ClassPool pool = new ClassPool();
 		pool.appendSystemPath();
+
 		for (String className : mod.obtenerTodosLosNombresDeClases()) {
 			byte[] bytes = mod.obtenerBytesClase(className);
-			if (bytes == null)
+			if (bytes == null) {
 				continue;
+			}
+
 			try {
 				ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(bytes)));
 				CtClass ctClass = pool.makeClass(classFile, false);
+
+				String claseOrigen = classFile.getName().replace('.', '/');
+
 				for (CtMethod method : ctClass.getDeclaredMethods()) {
-					if ((method.getMethodInfo().getAccessFlags() & (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0)
+					if ((method.getMethodInfo().getAccessFlags() & (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0) {
 						continue;
+					}
+
+					String metodoOrigen = method.getName();
+					String descriptorOrigen = method.getSignature();
+
 					method.instrument(new ExprEditor() {
 						@Override
 						public void edit(MethodCall m) {
 							String owner = m.getClassName().replace('.', '/');
-							if (owner.equals(claseObjetivo) && m.getMethodName().equals(metodoObjetivo)
+
+							if (owner.equals(claseObjetivoInterna) && m.getMethodName().equals(metodoObjetivo)
 									&& m.getSignature().equals(descriptorObjetivo)) {
-								resultados.add(
-										new ArchivoDeMod.Referencia(owner, metodoObjetivo, descriptorObjetivo, true));
+								resultados.add(new ArchivoDeMod.Referencia(owner, metodoObjetivo, descriptorObjetivo,
+										true, claseOrigen, metodoOrigen, descriptorOrigen));
 							}
 						}
 					});
 				}
+
+				ctClass.detach();
 			} catch (Throwable t) {
 				CrashDetectorLogger.logException(t);
 			}
 		}
+
 		return resultados;
 	}
 
@@ -635,9 +676,21 @@ public class AnalizadorBytecodeJavassist {
 				true);
 	}
 
+	public static ArchivoDeMod.Referencia convertirAMiReferencia(MethodCall m, String claseOrigen, String metodoOrigen,
+			String descriptorOrigen) {
+		return new ArchivoDeMod.Referencia(m.getClassName().replace('.', '/'), m.getMethodName(), m.getSignature(),
+				true, claseOrigen, metodoOrigen, descriptorOrigen);
+	}
+
 	public static ArchivoDeMod.Referencia convertirAMiReferencia(FieldAccess f) {
 		return new ArchivoDeMod.Referencia(f.getClassName().replace('.', '/'), f.getFieldName(), f.getSignature(),
 				false);
+	}
+
+	public static ArchivoDeMod.Referencia convertirAMiReferencia(FieldAccess f, String claseOrigen, String metodoOrigen,
+			String descriptorOrigen) {
+		return new ArchivoDeMod.Referencia(f.getClassName().replace('.', '/'), f.getFieldName(), f.getSignature(),
+				false, claseOrigen, metodoOrigen, descriptorOrigen);
 	}
 
 	public static List<String> obtenerNombreModuloInfo(byte[] classBytes) {

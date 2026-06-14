@@ -1,47 +1,51 @@
 package com.asbestosstar.crashdetector.stream.intstream;
 
-import java.util.function.IntPredicate;
-import java.util.function.IntUnaryOperator;
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 /**
- * Interfaz base para streams de int.
+ * Fabrica para crear IntStream.
  *
- * Puede usar Oracle DAX Streams si el JAR existe, o Java IntStream normal si
- * Oracle no esta disponible.
+ * Si com.oracle.stream.DaxIntStream existe en el classpath, usa el motor
+ * Oracle. Si no existe, usa Java IntStream normal.
  */
-public interface CDIntStream {
+public final class CDIntStream {
 
-	CDIntStream paralelo();
+	private static final String CLASE_DAX_INT_STREAM = "com.oracle.stream.DaxIntStream";
 
-	CDIntStream filtro(IntPredicate predicado);
-
-	CDIntStream mapa(IntUnaryOperator operador);
-
-	long contar();
-
-	int[] aArray();
-
-	boolean todosCoinciden(IntPredicate predicado);
-
-	boolean algunoCoincide(IntPredicate predicado);
-
-	boolean ningunoCoincide(IntPredicate predicado);
-
-	public static CDIntStream de(int[] datos) {
-		CDIntStream oracle = CDOracleIntStream.intentarCrear(datos);
-
-		if (oracle != null) {
-			return oracle;
-		}
-
-		return CDJavaIntStream.de(datos);
+	private CDIntStream() {
 	}
 
-	public static CDIntStream deJava(int[] datos) {
-		return CDJavaIntStream.de(datos);
+	public static IntStream de(int[] datos) {
+		if (oracleDisponible()) {
+			return CDOracleIntStream.de(datos);
+		}
+
+		return deJava(datos);
+	}
+
+	public static IntStream deJava(int[] datos) {
+		return Arrays.stream(datos);
 	}
 
 	public static boolean oracleDisponible() {
-		return CDOracleIntStream.oracleDisponible();
+		if (!esSparcV9()) {
+			return false;
+		}
+
+		try {
+			Class.forName(CLASE_DAX_INT_STREAM, false, CDIntStream.class.getClassLoader());
+			return true;
+		} catch (Throwable t) {
+			return false;
+		}
 	}
+
+	private static boolean esSparcV9() {
+		String arch = System.getProperty("os.arch", "").toLowerCase();
+		String os = System.getProperty("os.name", "").toLowerCase();
+
+		return os.contains("sunos") && (arch.contains("sparcv9") || arch.contains("sparc64") || arch.equals("sparc"));
+	}
+
 }

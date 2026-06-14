@@ -229,7 +229,7 @@ public class FallosEjecucionTareas implements Verificaciones {
 			return false;
 		}
 
-		String contenido = trazo.trace.toLowerCase();
+		String contenido = trazo.trace;
 		return contenido.contains("failed to execute task") && contenido.contains("class")
 				&& contenido.contains("executionexception");
 	}

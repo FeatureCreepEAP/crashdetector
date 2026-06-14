@@ -661,20 +661,26 @@ public class AnalizadorBytecodeASM {
 	public static List<ArchivoDeMod.Referencia> analizarReferenciasAMetodo(ArchivoDeMod mod, String claseObjetivo,
 			String metodoObjetivo, String descriptorObjetivo) {
 		List<ArchivoDeMod.Referencia> resultados = new ArrayList<>();
+
+		String claseObjetivoInterna = claseObjetivo.replace('.', '/');
+
 		for (String nombreClase : mod.obtenerTodosLosNombresDeClases()) {
 			byte[] bytesClase = mod.obtenerBytesClase(nombreClase);
-			if (bytesClase != null) {
-				try {
-					ClassReader lector = new ClassReader(bytesClase);
-					RecolectorLlamadasAMetodo recolector = new RecolectorLlamadasAMetodo(claseObjetivo, metodoObjetivo,
-							descriptorObjetivo);
-					lector.accept(recolector, ClassReader.SKIP_DEBUG);
-					resultados.addAll(recolector.obtenerResultados());
-				} catch (Throwable t) {
-					CrashDetectorLogger.logException(t);
-				}
+			if (bytesClase == null) {
+				continue;
+			}
+
+			try {
+				ClassReader lector = new ClassReader(bytesClase);
+				RecolectorLlamadasAMetodo recolector = new RecolectorLlamadasAMetodo(claseObjetivoInterna,
+						metodoObjetivo, descriptorObjetivo);
+				lector.accept(recolector, ClassReader.SKIP_DEBUG);
+				resultados.addAll(recolector.obtenerResultados());
+			} catch (Throwable t) {
+				CrashDetectorLogger.logException(t);
 			}
 		}
+
 		return resultados;
 	}
 
@@ -695,9 +701,16 @@ public class AnalizadorBytecodeASM {
 
 	static class RecolectorInformacionMetodos extends ClassVisitor {
 		private final List<ArchivoDeMod.InfoMetodo> resultados = new ArrayList<>();
+		private String claseActual;
 
 		public RecolectorInformacionMetodos() {
 			super(obtenerVersionMaximaASM());
+		}
+
+		@Override
+		public void visit(int version, int access, String name, String signature, String superName,
+				String[] interfaces) {
+			this.claseActual = name;
 		}
 
 		@Override
@@ -728,14 +741,16 @@ public class AnalizadorBytecodeASM {
 			}
 
 			@Override
-			public void visitMethodInsn(int opcode, String propietario, String nombre, String descriptor,
+			public void visitMethodInsn(int opcode, String propietario, String nombreRef, String descriptorRef,
 					boolean esInterfaz) {
-				refMetodos.add(new ArchivoDeMod.Referencia(propietario, nombre, descriptor, true));
+				refMetodos.add(new ArchivoDeMod.Referencia(propietario, nombreRef, descriptorRef, true, claseActual,
+						nombre, descriptor));
 			}
 
 			@Override
-			public void visitFieldInsn(int opcode, String propietario, String nombre, String descriptor) {
-				refCampos.add(new ArchivoDeMod.Referencia(propietario, nombre, descriptor, false));
+			public void visitFieldInsn(int opcode, String propietario, String nombreRef, String descriptorRef) {
+				refCampos.add(new ArchivoDeMod.Referencia(propietario, nombreRef, descriptorRef, false, claseActual,
+						nombre, descriptor));
 			}
 
 			@Override
@@ -810,6 +825,8 @@ public class AnalizadorBytecodeASM {
 		private final String descriptorObjetivo;
 		private final List<ArchivoDeMod.Referencia> resultados = new ArrayList<>();
 
+		private String claseActual;
+
 		public RecolectorLlamadasAMetodo(String clase, String metodo, String descriptor) {
 			super(obtenerVersionMaximaASM());
 			this.claseObjetivo = clase;
@@ -818,9 +835,15 @@ public class AnalizadorBytecodeASM {
 		}
 
 		@Override
-		public MethodVisitor visitMethod(int acceso, String nombre, String descriptor, String firma,
-				String[] excepciones) {
-			return new RecolectorLlamadas();
+		public void visit(int version, int access, String name, String signature, String superName,
+				String[] interfaces) {
+			this.claseActual = name;
+		}
+
+		@Override
+		public MethodVisitor visitMethod(int acceso, String nombreMetodoOrigen, String descriptorMetodoOrigen,
+				String firma, String[] excepciones) {
+			return new RecolectorLlamadas(nombreMetodoOrigen, descriptorMetodoOrigen);
 		}
 
 		public List<ArchivoDeMod.Referencia> obtenerResultados() {
@@ -828,8 +851,13 @@ public class AnalizadorBytecodeASM {
 		}
 
 		private class RecolectorLlamadas extends MethodVisitor {
-			public RecolectorLlamadas() {
+			private final String metodoOrigen;
+			private final String descriptorOrigen;
+
+			public RecolectorLlamadas(String metodoOrigen, String descriptorOrigen) {
 				super(obtenerVersionMaximaASM());
+				this.metodoOrigen = metodoOrigen;
+				this.descriptorOrigen = descriptorOrigen;
 			}
 
 			@Override
@@ -837,7 +865,8 @@ public class AnalizadorBytecodeASM {
 					boolean esInterfaz) {
 				if (propietario.equals(claseObjetivo) && nombre.equals(metodoObjetivo)
 						&& descriptor.equals(descriptorObjetivo)) {
-					resultados.add(new ArchivoDeMod.Referencia(propietario, nombre, descriptor, true));
+					resultados.add(new ArchivoDeMod.Referencia(propietario, nombre, descriptor, true, claseActual,
+							metodoOrigen, descriptorOrigen));
 				}
 			}
 		}

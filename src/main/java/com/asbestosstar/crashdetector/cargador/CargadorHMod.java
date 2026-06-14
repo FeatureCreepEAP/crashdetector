@@ -20,9 +20,8 @@ public class CargadorHMod implements Cargador {
 		boolean tieneClaseEnPaqueteDefault = false;
 
 		for (String archivo : mod.archivos()) {
-			String norm = archivo.replace('\\', '/');
 
-			if (norm.endsWith(".class") && !norm.contains("/")) {
+			if (archivo.endsWith(".class") && !archivo.contains("/")) {
 				tieneClaseEnPaqueteDefault = true;
 				break;
 			}

@@ -16,14 +16,11 @@ public class CargadorLitLaunch implements Cargador {
 	public boolean modEsDeCargador(ArchivoDeMod mod) {
 
 		for (String archivo : mod.archivos()) {
-			String norm = archivo.replace('\\', '/');
-			String lower = norm.toLowerCase(Locale.ROOT);
-
-			if (!lower.endsWith(".class")) {
+			if (!archivo.endsWith(".class")) {
 				continue;
 			}
 
-			String nombreClase = norm;
+			String nombreClase = archivo;
 
 			int slash = nombreClase.lastIndexOf('/');
 			if (slash >= 0) {

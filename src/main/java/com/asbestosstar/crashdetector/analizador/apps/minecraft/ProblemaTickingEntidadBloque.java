@@ -358,7 +358,7 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 		}
 
 		String t = trazo.trace;
-		String lower = t.toLowerCase();
+		String lower = t;
 
 		// Coincidencia genérica (entity o block entity)
 		if (lower.contains("description: ticking block entity") || lower.contains("description: ticking entity")) {
@@ -371,10 +371,10 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 		}
 
 		// Afinar por tipo/nombre
-		if (!tipoEntidad.isEmpty() && lower.contains(tipoEntidad.toLowerCase())) {
+		if (!tipoEntidad.isEmpty() && lower.contains(tipoEntidad)) {
 			return true;
 		}
-		if (!nombreEntidad.isEmpty() && lower.contains(nombreEntidad.toLowerCase())) {
+		if (!nombreEntidad.isEmpty() && lower.contains(nombreEntidad)) {
 			return true;
 		}
 

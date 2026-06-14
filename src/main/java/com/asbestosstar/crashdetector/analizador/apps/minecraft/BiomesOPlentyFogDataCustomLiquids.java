@@ -25,7 +25,7 @@ public class BiomesOPlentyFogDataCustomLiquids implements Verificaciones {
 		// puede indicar un problema relacionado con líquidos personalizados o niebla.
 		if (consola.contenido_verificar
 				.contains("class org.joml.Vector4f cannot be cast to class net.minecraft.client.renderer.fog.FogData")
-				&& consola.contenido_verificar.toLowerCase().contains("biomesoplenty")) {
+				&& consola.contenido_verificar.contains("biomesoplenty")) {
 			posibleProblemaBOP = true;
 		}
 	}
@@ -55,7 +55,7 @@ public class BiomesOPlentyFogDataCustomLiquids implements Verificaciones {
 
 		// Alternativa: si el lector encuentra primero la referencia a Biomes O' Plenty,
 		// también puede enlazar ahí.
-		if (linea.toLowerCase().contains("biomesoplenty")) {
+		if (linea.contains("biomesoplenty")) {
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
 		}

@@ -668,7 +668,12 @@
 
 
 
-
+<dependency>
+    <groupId>com.asbestosstar</groupId>
+    <artifactId>comoraclestream-dax-stub</artifactId>
+    <version>0.0.1</version>
+        <scope>provided</scope>
+</dependency>
 
 
 
