@@ -1,18 +1,24 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta conflictos de IDs de Minecraft (colisión de ID o rango máximo) sin
  * regex. Modernized with global flag and per-line detection for speed.
  */
-public class ConflictoDeIDsMinecraft implements Verificaciones {
+public class ConflictoDeIDsMinecraft implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posibleConflicto = false;
@@ -27,6 +33,27 @@ public class ConflictoDeIDsMinecraft implements Verificaciones {
 	private static final String SLOT_OCCUPIED = "java.lang.IllegalArgumentException: Slot ";
 	private static final String ID_OCCUPIED_MID = " is already occupied by ";
 	private static final String ID_OCCUPIED_END = " when adding ";
+
+	private static final Set<String> REPORTADOS = Collections.synchronizedSet(new HashSet<String>());
+
+	public static void reiniciarGlobal() {
+		REPORTADOS.clear();
+	}
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { MAX_RANGO, SLOT_OCCUPIED };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		this.posibleConflicto = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
@@ -43,10 +70,7 @@ public class ConflictoDeIDsMinecraft implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleConflicto)
-			return false;
-
-		return true;
+		return posibleConflicto && !activado;
 	}
 
 	@Override
@@ -58,27 +82,42 @@ public class ConflictoDeIDsMinecraft implements Verificaciones {
 		// Conflicto de rango máximo
 		if (linea.contains(MAX_RANGO)) {
 			tipoConflicto = "maximo_rango";
-			enlace = consola.agregarErrorALectador(numero_de_linea, this);
-			activado = true;
+			activar(consola, numero_de_linea, tipoConflicto);
 			return;
 		}
 
 		// Colisión de ID
 		int idxSlot = linea.indexOf(SLOT_OCCUPIED);
 		if (idxSlot >= 0) {
-			int idxIsAlready = linea.indexOf(ID_OCCUPIED_MID, idxSlot);
-			int idxWhenAdding = linea.indexOf(ID_OCCUPIED_END, idxIsAlready);
-			if (idxIsAlready > idxSlot && idxWhenAdding > idxIsAlready) {
-				idConflictivo = linea.substring(idxSlot + SLOT_OCCUPIED.length(), idxIsAlready).trim();
-				modOrigen = linea.substring(idxIsAlready + ID_OCCUPIED_MID.length(), idxWhenAdding).trim();
-				modDestino = linea.substring(idxWhenAdding + ID_OCCUPIED_END.length()).trim();
-				if (!idConflictivo.isEmpty() && !modOrigen.isEmpty() && !modDestino.isEmpty()) {
-					tipoConflicto = "colision_id";
-					enlace = consola.agregarErrorALectador(numero_de_linea, this);
-					activado = true;
-				}
+			int idxIsAlready = linea.indexOf(ID_OCCUPIED_MID, idxSlot + SLOT_OCCUPIED.length());
+			if (idxIsAlready < 0) {
+				return;
+			}
+
+			int idxWhenAdding = linea.indexOf(ID_OCCUPIED_END, idxIsAlready + ID_OCCUPIED_MID.length());
+			if (idxWhenAdding < 0) {
+				return;
+			}
+
+			idConflictivo = linea.substring(idxSlot + SLOT_OCCUPIED.length(), idxIsAlready).trim();
+			modOrigen = linea.substring(idxIsAlready + ID_OCCUPIED_MID.length(), idxWhenAdding).trim();
+			modDestino = linea.substring(idxWhenAdding + ID_OCCUPIED_END.length()).trim();
+
+			if (!idConflictivo.isEmpty() && !modOrigen.isEmpty() && !modDestino.isEmpty()) {
+				tipoConflicto = "colision_id";
+				activar(consola, numero_de_linea,
+						tipoConflicto + ":" + idConflictivo + ":" + modOrigen + ":" + modDestino);
 			}
 		}
+	}
+
+	private void activar(Consola consola, int numero_de_linea, String clave) {
+		if (!REPORTADOS.add(clave)) {
+			return;
+		}
+
+		enlace = consola.agregarErrorALectador(numero_de_linea, this);
+		activado = true;
 	}
 
 	@Override

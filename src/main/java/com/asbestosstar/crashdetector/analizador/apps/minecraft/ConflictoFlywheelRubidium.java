@@ -1,10 +1,16 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,7 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Sodium o sus forks que no cumplen con el requisito mínimo de versión
  * 0.6.0-beta.2.
  */
-public class ConflictoFlywheelRubidium implements Verificaciones {
+public class ConflictoFlywheelRubidium implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -20,28 +26,67 @@ public class ConflictoFlywheelRubidium implements Verificaciones {
 	private boolean encontradaLinea1 = false;
 	private boolean posibleConflicto = false;
 
+	private static final String FAILURE_FLYWHEEL_SODIUM = "Failure message: Mod flywheel only supports sodium";
+	private static final String VERSION_MINIMA = "0.6.0-beta.2 or above";
+	private static final String CURRENTLY_SODIUM = "Currently, sodium is";
+
+	private static final String SODIUM = "sodium";
+	private static final String RUBIDIUM = "rubidium";
+	private static final String EMBEDDIUM = "embeddium";
+
+	private static final String V_05 = "0.5.";
+	private static final String V_04 = "0.4.";
+	private static final String V_03 = "0.3.";
+	private static final String V_02 = "0.2.";
+	private static final String V_01 = "0.1.";
+	private static final String V_00 = "0.0.";
+
+	private static final Set<String> REPORTADOS = Collections.synchronizedSet(new HashSet<String>());
+
+	public static void reiniciarGlobal() {
+		REPORTADOS.clear();
+	}
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { FAILURE_FLYWHEEL_SODIUM, VERSION_MINIMA, CURRENTLY_SODIUM, RUBIDIUM, EMBEDDIUM, SODIUM };
+	}
+
 	/**
 	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-
-		String cont = consola.contenido_verificar;
-		if (cont != null) {
-			if (cont.contains("Failure message: Mod flywheel only supports sodium")
-					&& cont.contains("0.6.0-beta.2 or above")) {
-				posibleConflicto = true;
-			}
+		// Modo streaming puro: puede no existir contenido_verificar
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
 		}
 
+		String cont = consola.contenido_verificar;
+		if (cont.contains(FAILURE_FLYWHEEL_SODIUM) && cont.contains(VERSION_MINIMA)) {
+			posibleConflicto = true;
+		}
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		String linea = evento.linea;
+
+		if (linea.contains(FAILURE_FLYWHEEL_SODIUM) && linea.contains(VERSION_MINIMA)) {
+			posibleConflicto = true;
+			encontradaLinea1 = true;
+		}
+
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleConflicto)
-			return false;
-
-		return true;
+		return posibleConflicto && !activado;
 	}
 
 	/**
@@ -54,55 +99,87 @@ public class ConflictoFlywheelRubidium implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (activado || linea == null || linea.isEmpty()) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;
 		}
 
 		// Primera línea: "Failure message: Mod flywheel only supports sodium
 		// 0.6.0-beta.2 or above"
-		if (linea.contains("Failure message: Mod flywheel only supports sodium")
-				&& linea.contains("0.6.0-beta.2 or above")) {
+		if (linea.contains(FAILURE_FLYWHEEL_SODIUM) && linea.contains(VERSION_MINIMA)) {
+			posibleConflicto = true;
 			encontradaLinea1 = true;
+			return;
+		}
+
+		if (!posibleConflicto || !encontradaLinea1) {
+			return;
 		}
 
 		// Segunda línea: "Currently, sodium is 0.5.3" o similar
-		if (encontradaLinea1 && linea.contains("Currently, sodium is")) {
+		if (linea.contains(CURRENTLY_SODIUM)) {
 			// Verificamos si la versión actual es inferior a 0.6.0-beta.2
-			if (linea.contains("0.5.") || linea.contains("0.4.") || linea.contains("0.3.") || linea.contains("0.2.")
-					|| linea.contains("0.1.") || linea.contains("0.0.")) {
-
-				// Enlazar a la línea del error en el lector
-				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-
-				// Mensaje de error en HTML con referencia a la incompatibilidad
-				mensaje = MonitorDePID.idioma.errorConflictoFlywheelSodium() + Verificaciones.nl_html;
-				activado = true;
+			if (contieneVersionAntigua(linea)) {
+				activar(consola, numero_de_linea);
 			} else {
 				// Si encontramos la segunda línea pero la versión es compatible, reiniciamos
 				encontradaLinea1 = false;
 			}
+			return;
 		}
 
 		// Si encontramos la primera línea pero no la segunda en la siguiente iteración,
 		// y encontramos otra línea que sugiere una versión incompatible
-		if (encontradaLinea1 && !linea.contains("Currently, sodium is")) {
-			// Buscamos también posibles forks de Sodium con versiones antiguas
-			if (linea.toLowerCase().contains("rubidium") || linea.toLowerCase().contains("embeddium")
-					|| linea.toLowerCase().contains("sodium")) {
-				// Verificamos si hay alguna mención de versiones antiguas
-				if (linea.contains("0.5.") || linea.contains("0.4.") || linea.contains("0.3.") || linea.contains("0.2.")
-						|| linea.contains("0.1.") || linea.contains("0.0.")) {
+		// Buscamos también posibles forks de Sodium con versiones antiguas
+		if (contieneNombreSodiumOFork(linea) && contieneVersionAntigua(linea)) {
+			activar(consola, numero_de_linea);
+		}
+	}
 
-					// Enlazar a la línea del error en el lector
-					enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+	private boolean contieneVersionAntigua(String linea) {
+		return linea.contains(V_05) || linea.contains(V_04) || linea.contains(V_03) || linea.contains(V_02)
+				|| linea.contains(V_01) || linea.contains(V_00);
+	}
 
-					// Mensaje de error en HTML con referencia a la incompatibilidad
-					mensaje = MonitorDePID.idioma.errorConflictoFlywheelSodium() + Verificaciones.nl_html;
-					activado = true;
+	private boolean contieneNombreSodiumOFork(String linea) {
+		return contieneAsciiIgnoreCase(linea, SODIUM) || contieneAsciiIgnoreCase(linea, RUBIDIUM)
+				|| contieneAsciiIgnoreCase(linea, EMBEDDIUM);
+	}
+
+	private boolean contieneAsciiIgnoreCase(String texto, String patronMinuscula) {
+		int max = texto.length() - patronMinuscula.length();
+		for (int i = 0; i <= max; i++) {
+			int j = 0;
+			while (j < patronMinuscula.length()) {
+				char c = texto.charAt(i + j);
+				if (c >= 'A' && c <= 'Z') {
+					c = (char) (c + 32);
 				}
+
+				if (c != patronMinuscula.charAt(j)) {
+					break;
+				}
+				j++;
+			}
+
+			if (j == patronMinuscula.length()) {
+				return true;
 			}
 		}
+		return false;
+	}
+
+	private void activar(Consola consola, int numero_de_linea) {
+		if (!REPORTADOS.add(id())) {
+			return;
+		}
+
+		// Enlazar a la línea del error en el lector
+		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+
+		// Mensaje de error en HTML con referencia a la incompatibilidad
+		mensaje = MonitorDePID.idioma.errorConflictoFlywheelSodium() + Verificaciones.nl_html;
+		activado = true;
 	}
 
 	@Override
@@ -156,9 +233,8 @@ public class ConflictoFlywheelRubidium implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("Failure message: Mod flywheel only supports sodium") && t.contains("0.6.0-beta.2 or above")
-				&& (t.contains("Currently, sodium is") || t.toLowerCase().contains("rubidium")
-						|| t.toLowerCase().contains("embeddium"));
+		return t.contains(FAILURE_FLYWHEEL_SODIUM) && t.contains(VERSION_MINIMA) && (t.contains(CURRENTLY_SODIUM)
+				|| contieneAsciiIgnoreCase(t, RUBIDIUM) || contieneAsciiIgnoreCase(t, EMBEDDIUM));
 	}
 
 	@Override

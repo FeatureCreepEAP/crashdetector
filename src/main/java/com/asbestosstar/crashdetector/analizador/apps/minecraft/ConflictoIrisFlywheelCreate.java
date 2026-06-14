@@ -1,10 +1,16 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,7 +21,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Iris Flywheel 2.0 para Create 6 solo es compatible oficialmente con NeoForge.
  */
-public class ConflictoIrisFlywheelCreate implements Verificaciones {
+public class ConflictoIrisFlywheelCreate implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -23,47 +29,77 @@ public class ConflictoIrisFlywheelCreate implements Verificaciones {
 	private boolean vioIrisFlywheel = false;
 	private String enlace = "";
 
+	private static final String NO_SUCH_FIELD_TESSELATION = "java.lang.NoSuchFieldError: TESSELATION_SHADERS";
+	private static final String TESSELATION_SHADERS = "TESSELATION_SHADERS";
+	private static final String IRISFLW = "$irisflw$";
+
+	private static final Set<String> REPORTADOS = Collections.synchronizedSet(new HashSet<String>());
+
+	public static void reiniciarGlobal() {
+		REPORTADOS.clear();
+	}
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TESSELATION_SHADERS, IRISFLW };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		analizarLineas = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		// Modo streaming puro: puede no existir contenido_verificar
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
 
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
 		// Pre-check global: deben existir ambas cadenas
-		if (log.contains("TESSELATION_SHADERS") && log.contains("$irisflw$")) {
-
+		if (log.contains(TESSELATION_SHADERS) && log.contains(IRISFLW)) {
 			analizarLineas = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!analizarLineas || linea == null || activado)
+		if (!analizarLineas || linea == null || activado) {
 			return;
+		}
 
-		if (linea.contains("java.lang.NoSuchFieldError: TESSELATION_SHADERS")) {
+		if (linea.contains(NO_SUCH_FIELD_TESSELATION)) {
 			vioNoSuchField = true;
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 		}
 
-		if (linea.contains("$irisflw$")) {
+		if (linea.contains(IRISFLW)) {
 			vioIrisFlywheel = true;
 		}
 
 		if (vioNoSuchField && vioIrisFlywheel) {
-			activado = true;
+			activar();
 		}
+	}
+
+	private void activar() {
+		if (!REPORTADOS.add(id())) {
+			return;
+		}
+
+		activado = true;
 	}
 
 	@Override

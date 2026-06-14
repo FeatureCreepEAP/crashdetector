@@ -1,10 +1,16 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,7 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * inyección crítica relacionado con LevelRenderer durante la inicialización del
  * juego.
  */
-public class ConflictoMovingElevatorsOptiFine implements Verificaciones {
+public class ConflictoMovingElevatorsOptiFine implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -20,36 +26,72 @@ public class ConflictoMovingElevatorsOptiFine implements Verificaciones {
 	private boolean encontradoOptiFine = false;
 	public boolean analizarLineas = false;
 
+	private static final String OPTIFINE_MINUSCULA = "optifine";
+	private static final String OPTIFINE_MIXTA = "Optifine";
+	private static final String OPTIFINE_CORRECTA = "OptiFine";
+
+	private static final String CRITICAL_INJECTION = "Critical injection failure";
+	private static final String RENDER_LEVEL_BLOCK_ENTITIES = "renderLevelBlockEntities";
+	private static final String MOVING_ELEVATORS_MIXINS = "movingelevators.mixins.json";
+	private static final String LEVEL_RENDERER_MIXIN = "LevelRendererMixin";
+
+	private static final Set<String> REPORTADOS = Collections.synchronizedSet(new HashSet<String>());
+
+	public static void reiniciarGlobal() {
+		REPORTADOS.clear();
+	}
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { OPTIFINE_MINUSCULA, OPTIFINE_MIXTA, OPTIFINE_CORRECTA, CRITICAL_INJECTION,
+				RENDER_LEVEL_BLOCK_ENTITIES, MOVING_ELEVATORS_MIXINS, LEVEL_RENDERER_MIXIN };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		String linea = evento.linea;
+
+		if (contieneOptiFine(linea)) {
+			encontradoOptiFine = true;
+		}
+
+		if (lineaContieneErrorMovingElevators(linea)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
+
 	/**
 	 * Método de compatibilidad — busca si OptiFine está presente en el contenido
 	 * completo del registro.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// Verificamos si OptiFine está presente en el contenido del registro
+		// Modo streaming puro: puede no existir contenido_verificar
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
 
+		// Verificamos si OptiFine está presente en el contenido del registro
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
-		if (log.contains("optifine") || log.contains("Optifine")) {
+		if (contieneOptiFine(log)) {
 			encontradoOptiFine = true;
 		}
 
-		if (encontradoOptiFine && log.contains("Critical injection failure") && log.contains("renderLevelBlockEntities")
-				&& log.contains("movingelevators.mixins.json") && log.contains("LevelRendererMixin")) {
+		if (encontradoOptiFine && lineaContieneErrorMovingElevators(log)) {
 			analizarLineas = true;
 		}
-
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	/**
@@ -62,25 +104,44 @@ public class ConflictoMovingElevatorsOptiFine implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
+			return;
+		}
+
+		if (!analizarLineas || !encontradoOptiFine) {
 			return;
 		}
 
 		// Verificamos si la línea contiene el error de inyección crítica de Moving
 		// Elevators con LevelRenderer
-		if (linea.contains("Critical injection failure") && linea.contains("renderLevelBlockEntities")
-				&& linea.contains("movingelevators.mixins.json") && linea.contains("LevelRendererMixin")
-				&& encontradoOptiFine) {
-
-			// Enlazar a la línea del error en el lector
-			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-
-			// Mensaje de error en HTML con referencia al conflicto entre Moving Elevators y
-			// OptiFine
-			mensaje = MonitorDePID.idioma.errorConflictoMovingElevatorsOptiFine() + Verificaciones.nl_html;
-			activado = true;
+		if (lineaContieneErrorMovingElevators(linea)) {
+			activar(consola, numero_de_linea);
 		}
+	}
+
+	private boolean contieneOptiFine(String texto) {
+		return texto.contains(OPTIFINE_MINUSCULA) || texto.contains(OPTIFINE_MIXTA)
+				|| texto.contains(OPTIFINE_CORRECTA);
+	}
+
+	private boolean lineaContieneErrorMovingElevators(String linea) {
+		return linea.contains(CRITICAL_INJECTION) && linea.contains(RENDER_LEVEL_BLOCK_ENTITIES)
+				&& linea.contains(MOVING_ELEVATORS_MIXINS) && linea.contains(LEVEL_RENDERER_MIXIN);
+	}
+
+	private void activar(Consola consola, int numero_de_linea) {
+		if (!REPORTADOS.add(id())) {
+			return;
+		}
+
+		// Enlazar a la línea del error en el lector
+		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+
+		// Mensaje de error en HTML con referencia al conflicto entre Moving Elevators y
+		// OptiFine
+		mensaje = MonitorDePID.idioma.errorConflictoMovingElevatorsOptiFine() + Verificaciones.nl_html;
+		activado = true;
 	}
 
 	@Override
@@ -134,8 +195,7 @@ public class ConflictoMovingElevatorsOptiFine implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("Critical injection failure") && t.contains("renderLevelBlockEntities")
-				&& t.contains("movingelevators.mixins.json") && t.contains("LevelRendererMixin") && encontradoOptiFine;
+		return lineaContieneErrorMovingElevators(t) && encontradoOptiFine;
 	}
 
 	@Override

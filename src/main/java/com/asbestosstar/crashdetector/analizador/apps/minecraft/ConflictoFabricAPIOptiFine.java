@@ -1,10 +1,16 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,7 +19,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * crítica relacionado con ReloadableResourceManager durante la inicialización
  * del juego.
  */
-public class ConflictoFabricAPIOptiFine implements Verificaciones {
+public class ConflictoFabricAPIOptiFine implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -21,38 +27,76 @@ public class ConflictoFabricAPIOptiFine implements Verificaciones {
 	private boolean encontradoOptiFine = false;
 	public boolean posibleConflicto = false;
 
+	private static final String OPTIFINE_MINUSCULA = "optifine";
+	private static final String OPTIFINE_MIXTA = "Optifine";
+
+	private static final String MIXIN_FAILED = "Mixin apply for mod fabric_resource_loader_v0 failed";
+	private static final String MIXINS_JSON = "fabric-resource-loader-v0.mixins.json";
+	private static final String RESOURCE_MANAGER_MIXIN = "ReloadableResourceManagerImplMixin";
+	private static final String INVALID_INJECTION = "InvalidInjectionException";
+	private static final String CRITICAL_INJECTION = "Critical injection failure";
+	private static final String NO_TARGETS = "could not find any targets matching";
+	private static final String RESOURCE_MANAGER = "ReloadableResourceManager";
+
+	private static final Set<String> REPORTADOS = Collections.synchronizedSet(new HashSet<String>());
+
+	public static void reiniciarGlobal() {
+		REPORTADOS.clear();
+	}
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { OPTIFINE_MINUSCULA, OPTIFINE_MIXTA, MIXIN_FAILED, MIXINS_JSON, RESOURCE_MANAGER_MIXIN,
+				INVALID_INJECTION, CRITICAL_INJECTION, NO_TARGETS, RESOURCE_MANAGER };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		String linea = evento.linea;
+
+		if (linea.contains(OPTIFINE_MINUSCULA) || linea.contains(OPTIFINE_MIXTA)) {
+			encontradoOptiFine = true;
+		}
+
+		if (lineaContieneErrorFabricResourceLoader(linea)) {
+			posibleConflicto = true;
+		}
+
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
+
 	/**
 	 * Método de compatibilidad — busca si OptiFine está presente en el contenido
 	 * completo del registro.
 	 */
 	@Override
 	public void verificar(Consola consola) {
+		// Modo streaming puro: puede no existir contenido_verificar
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
+
 		// Verificamos si OptiFine está presente en el contenido del registro
 		String cont = consola.contenido_verificar;
-		if (cont != null) {
-			if (cont.contains("optifine") || cont.contains("Optifine")) {
-				encontradoOptiFine = true;
+		if (cont.contains(OPTIFINE_MINUSCULA) || cont.contains(OPTIFINE_MIXTA)) {
+			encontradoOptiFine = true;
 
-				// fabric-resource-loader-v0
-				if (cont.contains("Mixin apply for mod fabric_resource_loader_v0 failed")
-						&& cont.contains("fabric-resource-loader-v0.mixins.json")
-						&& cont.contains("ReloadableResourceManagerImplMixin")
-						&& cont.contains("InvalidInjectionException") && cont.contains("Critical injection failure")
-						&& cont.contains("could not find any targets matching")
-						&& cont.contains("ReloadableResourceManager") && encontradoOptiFine) {
-					posibleConflicto = true;
-				}
-
+			// fabric-resource-loader-v0
+			if (cont.contains(MIXIN_FAILED) && cont.contains(MIXINS_JSON) && cont.contains(RESOURCE_MANAGER_MIXIN)
+					&& cont.contains(INVALID_INJECTION) && cont.contains(CRITICAL_INJECTION)
+					&& cont.contains(NO_TARGETS) && cont.contains(RESOURCE_MANAGER)) {
+				posibleConflicto = true;
 			}
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleConflicto)
-			return false;
-
-		return true;
+		return posibleConflicto && !activado;
 	}
 
 	/**
@@ -65,27 +109,40 @@ public class ConflictoFabricAPIOptiFine implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (activado || linea == null || linea.isEmpty()) {
 			// Si ya se activó, no seguimos verificando más líneas.
+			return;
+		}
+
+		if (!encontradoOptiFine || !posibleConflicto) {
 			return;
 		}
 
 		// Verificamos si la línea contiene el error de inyección crítica de
 		// fabric-resource-loader-v0
-		if (linea.contains("Mixin apply for mod fabric_resource_loader_v0 failed")
-				&& linea.contains("fabric-resource-loader-v0.mixins.json")
-				&& linea.contains("ReloadableResourceManagerImplMixin") && linea.contains("InvalidInjectionException")
-				&& linea.contains("Critical injection failure") && linea.contains("could not find any targets matching")
-				&& linea.contains("ReloadableResourceManager") && encontradoOptiFine) {
-
-			// Enlazar a la línea del error en el lector
-			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-
-			// Mensaje de error en HTML con referencia al conflicto entre Fabric API y
-			// OptiFine
-			mensaje = MonitorDePID.idioma.errorConflictoFabricAPIOptiFine() + Verificaciones.nl_html;
-			activado = true;
+		if (lineaContieneErrorFabricResourceLoader(linea)) {
+			activar(consola, numero_de_linea);
 		}
+	}
+
+	private boolean lineaContieneErrorFabricResourceLoader(String linea) {
+		return linea.contains(MIXIN_FAILED) && linea.contains(MIXINS_JSON) && linea.contains(RESOURCE_MANAGER_MIXIN)
+				&& linea.contains(INVALID_INJECTION) && linea.contains(CRITICAL_INJECTION) && linea.contains(NO_TARGETS)
+				&& linea.contains(RESOURCE_MANAGER);
+	}
+
+	private void activar(Consola consola, int numero_de_linea) {
+		if (!REPORTADOS.add(id())) {
+			return;
+		}
+
+		// Enlazar a la línea del error en el lector
+		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+
+		// Mensaje de error en HTML con referencia al conflicto entre Fabric API y
+		// OptiFine
+		mensaje = MonitorDePID.idioma.errorConflictoFabricAPIOptiFine() + Verificaciones.nl_html;
+		activado = true;
 	}
 
 	@Override
@@ -139,11 +196,7 @@ public class ConflictoFabricAPIOptiFine implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("Mixin apply for mod fabric_resource_loader_v0 failed")
-				&& t.contains("fabric-resource-loader-v0.mixins.json")
-				&& t.contains("ReloadableResourceManagerImplMixin") && t.contains("InvalidInjectionException")
-				&& t.contains("Critical injection failure") && t.contains("could not find any targets matching")
-				&& t.contains("ReloadableResourceManager") && encontradoOptiFine;
+		return lineaContieneErrorFabricResourceLoader(t) && encontradoOptiFine;
 	}
 
 	@Override

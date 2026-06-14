@@ -1,10 +1,16 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -26,7 +32,13 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * registros o tags dinámicos, normalmente por incompatibilidad, error del mod o
  * combinación conflictiva con otro contenido.
  */
-public class ColdSweatInitDynamicTags implements Verificaciones {
+public class ColdSweatInitDynamicTags implements VerificacionRapida {
+
+	private static final String INDICIO_BUILD_START = "$cold_sweat$onBuildStart";
+	private static final String INDICIO_FILL_TAG = "com.momosoftworks.coldsweat.api.event.core.init.InitDynamicTagsEvent.fillTag";
+	private static final String INDICIO_REGISTRY_NULO = "java.lang.NullPointerException: Cannot invoke \"net.minecraft.core.Registry.m_123023_()\" because \"this.registry\" is null";
+
+	private static final Set<String> REPORTADOS = Collections.synchronizedSet(new HashSet<String>());
 
 	// Indica si apareció el mixin o punto de inyección de Cold Sweat
 	private boolean indicioBuildStart = false;
@@ -44,52 +56,91 @@ public class ColdSweatInitDynamicTags implements Verificaciones {
 	private String enlace = "";
 
 	@Override
-	public void verificar(Consola consola) {
-		// Búsqueda global ligera para evitar trabajo innecesario por línea
-		String contenido = consola.contenido_verificar;
+	public String[] patronesRapidos() {
+		return new String[] { INDICIO_BUILD_START, INDICIO_FILL_TAG, INDICIO_REGISTRY_NULO };
+	}
 
-		if (contenido.contains("$cold_sweat$onBuildStart")) {
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		String linea = evento.linea;
+
+		if (linea.contains(INDICIO_BUILD_START)) {
 			indicioBuildStart = true;
 		}
 
-		if (contenido.contains("com.momosoftworks.coldsweat.api.event.core.init.InitDynamicTagsEvent.fillTag")) {
+		if (linea.contains(INDICIO_FILL_TAG)) {
 			indicioFillTag = true;
 		}
 
-		if (contenido.contains(
-				"java.lang.NullPointerException: Cannot invoke \"net.minecraft.core.Registry.m_123023_()\" because \"this.registry\" is null")) {
+		if (linea.contains(INDICIO_REGISTRY_NULO)) {
+			indicioRegistryNulo = true;
+		}
+
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
+
+	public static void reiniciarGlobal() {
+		REPORTADOS.clear();
+	}
+
+	@Override
+	public void verificar(Consola consola) {
+		// Modo streaming puro: puede no existir contenido_verificar
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
+
+		// Búsqueda global ligera para evitar trabajo innecesario por línea
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains(INDICIO_BUILD_START)) {
+			indicioBuildStart = true;
+		}
+
+		if (contenido.contains(INDICIO_FILL_TAG)) {
+			indicioFillTag = true;
+		}
+
+		if (contenido.contains(INDICIO_REGISTRY_NULO)) {
 			indicioRegistryNulo = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (activado || !indicioBuildStart || !indicioFillTag || !indicioRegistryNulo) {
-			return false;
-		}
-		return true;
+		return !activado && indicioBuildStart && indicioFillTag && indicioRegistryNulo;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Solo activar cuando ya están presentes los indicios globales
-		if (activado || !indicioBuildStart || !indicioFillTag || !indicioRegistryNulo) {
+		if (activado || linea == null || !indicioBuildStart || !indicioFillTag || !indicioRegistryNulo) {
 			return;
 		}
 
 		// Preferimos enlazar la línea del NPE, porque suele ser la más clara
-		if (linea.contains(
-				"java.lang.NullPointerException: Cannot invoke \"net.minecraft.core.Registry.m_123023_()\" because \"this.registry\" is null")) {
-			this.enlace = consola.agregarErrorALectador(num, this);
-			this.activado = true;
+		if (linea.contains(INDICIO_REGISTRY_NULO)) {
+			activar(consola, num);
 			return;
 		}
 
 		// Respaldo por si el formato del log hace más útil la otra línea
-		if (linea.contains("com.momosoftworks.coldsweat.api.event.core.init.InitDynamicTagsEvent.fillTag")) {
-			this.enlace = consola.agregarErrorALectador(num, this);
-			this.activado = true;
+		if (linea.contains(INDICIO_FILL_TAG)) {
+			activar(consola, num);
 		}
+	}
+
+	private void activar(Consola consola, int num) {
+		if (!REPORTADOS.add(id())) {
+			return;
+		}
+
+		this.enlace = consola.agregarErrorALectador(num, this);
+		this.activado = true;
 	}
 
 	@Override

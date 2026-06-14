@@ -1,52 +1,79 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
  * Detecta conflicto entre OptiFine e Iris/Oculus basado en errores de inyección
  * de mixins. Requiere que aparezca "mixins.iris.json" o "mixins.oculus.json" y
  * "OptiFine" en el log.
  */
-public class ConflictoIrisOptifine implements Verificaciones {
+public class ConflictoIrisOptifine implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String enlaceHtml = "";
 	private boolean encontroOptifine = false;
 	public boolean analizarLineas = false;
 
-	@Override
-	public void verificar(Consola consola) {
-		this.activado = false;
-		this.enlaceHtml = "";
-		this.encontroOptifine = false;
+	private static final String OPTIFINE_CLASE = "optifine.Utils";
+	private static final String OPTIFINE_MINUSCULA = "optifine";
+	private static final String OPTIFINE_MIXTA = "Optifine";
+	private static final String OPTIFINE_CORRECTA = "OptiFine";
 
-		// Buscar "optifine" en todo el log (case-insensitive)
-		String l = consola.contenido_verificar;
-		if (l.contains("optifine") && Buscador.existeClaseEnAlgunMod("optifine.Utils")) {
-			this.encontroOptifine = true;
+	private static final String MIXINS_IRIS = "mixins.iris";
+	private static final String MIXINS_OCULUS = "mixins.oculus.json";
+
+	private static final Set<String> REPORTADOS = Collections.synchronizedSet(new HashSet<String>());
+
+	public static void reiniciarGlobal() {
+		REPORTADOS.clear();
+	}
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { OPTIFINE_MINUSCULA, OPTIFINE_MIXTA, OPTIFINE_CORRECTA, MIXINS_IRIS, MIXINS_OCULUS };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
 		}
 
-		boolean tieneIrisOculusJson = l.contains("mixins.iris") || l.contains("mixins.oculus.json");
+		String linea = evento.linea;
 
-		if (tieneIrisOculusJson) {
+		if (!encontroOptifine && contieneOptifine(linea) && Buscador.existeClaseEnAlgunMod(OPTIFINE_CLASE)) {
+			encontroOptifine = true;
+		}
+
+		if (contieneIrisOculusJson(linea)) {
 			analizarLineas = true;
 		}
 
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public void verificar(Consola consola) {
+		// Ignorado en el motor rápido.
+		// Se mantiene para compatibilidad legacy y modo streaming puro.
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
@@ -61,12 +88,29 @@ public class ConflictoIrisOptifine implements Verificaciones {
 		// - El archivo de mixin de Iris u Oculus
 		// - El error de inyección
 		// - La clase MixinLevelRenderer
-		boolean tieneIrisOculusJson = l.contains("mixins.iris") || l.contains("mixins.oculus.json");
+		boolean tieneIrisOculusJson = contieneIrisOculusJson(l);
 
 		if (tieneIrisOculusJson) {
-			this.activado = true;
-			this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			activar(consola, numero_de_linea);
 		}
+	}
+
+	private boolean contieneOptifine(String linea) {
+		return linea.contains(OPTIFINE_MINUSCULA) || linea.contains(OPTIFINE_MIXTA)
+				|| linea.contains(OPTIFINE_CORRECTA);
+	}
+
+	private boolean contieneIrisOculusJson(String linea) {
+		return linea.contains(MIXINS_IRIS) || linea.contains(MIXINS_OCULUS);
+	}
+
+	private void activar(Consola consola, int numero_de_linea) {
+		if (!REPORTADOS.add(id())) {
+			return;
+		}
+
+		this.activado = true;
+		this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 	}
 
 	@Override
