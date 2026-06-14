@@ -20,16 +20,29 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.waifu.RespuestaWaifu;
 import com.asbestosstar.crashdetector.waifu.VersionWaifu;
 import com.asbestosstar.crashdetector.waifu.WaifuAPI;
 
-public class AdvertenciaFaltasClases implements Verificaciones {
+public class AdvertenciaFaltasClases implements VerificacionRapida {
 
 	private boolean activado = false;
 	private final Set<String> clases = new LinkedHashSet<>();
 	private final Map<String, String> enlacesPorClase = new HashMap<>(); // Clase -> enlace HTML
 	private boolean analizarLineas = false;
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { "Error loading class:" };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		analizarLineas = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {

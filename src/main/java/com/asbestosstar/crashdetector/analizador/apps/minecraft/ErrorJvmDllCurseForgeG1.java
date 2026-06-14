@@ -1,105 +1,147 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ErrorJvmDllCurseForgeG1 implements Verificaciones {
+public class ErrorJvmDllCurseForgeG1 implements VerificacionRapida {
 
-	// Indica si el log contiene un fallo fatal nativo dentro de Java
+	private static final Set<String> REPORTADOS_GLOBAL = Collections.synchronizedSet(new HashSet<>());
+
 	private boolean posibleJvmDll = false;
-
-	// Indica si el fallo ocurrió en un hilo del recolector de basura G1
 	private boolean posibleG1 = false;
-
-	// Indica si el lanzamiento parece venir de CurseForge o de un perfil
-	// administrado por CurseForge
 	private boolean posibleCurseForge = false;
-
-	// Indica si el log muestra indicios de Overwolf o DLLs relacionadas
 	private boolean posibleOverwolf = false;
-
-	// Indica si esta verificación fue activada
 	private boolean activado = false;
-
-	// Enlace a la línea del log donde se detectó el error principal
 	private String enlace = "";
 
 	@Override
+	public String[] patronesRapidos() {
+		return new String[] { "EXCEPTION_ACCESS_VIOLATION", "Problematic frame:", "jvm.dll", "GCTaskThread", "UseG1GC",
+				"g1 gc", "DCFInstanceId", "minecraft.launcher.brand=CurseForge", "curseforge\\minecraft",
+				"curseforge/minecraft", "CurseForge", "Overwolf", "OWClient.dll", "OWUtils.dll" };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado)
+			return;
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null)
+			return;
+
 		String contenido = consola.contenido_verificar;
 
-		// Detección global ligera: fallo nativo de la JVM.
-		if (contenido.contains("EXCEPTION_ACCESS_VIOLATION") && contenido.contains("Problematic frame:")
-				&& contenido.contains("jvm.dll")) {
+		if (contenido.indexOf("EXCEPTION_ACCESS_VIOLATION") >= 0 && contenido.indexOf("Problematic frame:") >= 0
+				&& contenido.indexOf("jvm.dll") >= 0) {
 			posibleJvmDll = true;
 		} else {
 			return;
 		}
 
-		// Esta variante específica ocurre durante trabajo del recolector G1.
-		if (contenido.contains("GCTaskThread") && (contenido.contains("g1 gc") || contenido.contains("UseG1GC"))) {
+		if (contenido.indexOf("GCTaskThread") >= 0
+				&& (contenido.indexOf("g1 gc") >= 0 || contenido.indexOf("UseG1GC") >= 0)) {
 			posibleG1 = true;
 		} else {
 			return;
 		}
 
-		// CurseForge puede aparecer como launcher propio o como lanzamiento
-		// administrado
-		// por CurseForge usando el launcher vanilla.
-		if (contenido.contains("DCFInstanceId") || contenido.contains("minecraft.launcher.brand=CurseForge")
-				|| contenido.contains("curseforge\\minecraft") || contenido.contains("curseforge/minecraft")
-				|| contenido.contains("CurseForge")) {
+		if (contenido.indexOf("DCFInstanceId") >= 0 || contenido.indexOf("minecraft.launcher.brand=CurseForge") >= 0
+				|| contenido.indexOf("curseforge\\minecraft") >= 0 || contenido.indexOf("curseforge/minecraft") >= 0
+				|| contenido.indexOf("CurseForge") >= 0) {
 			posibleCurseForge = true;
 		} else {
 			return;
 		}
 
-		// No usamos esto como requisito absoluto, porque no todos los hs_err muestran
-		// la lista completa de DLLs cargadas. Solo sirve para reforzar el mensaje.
-		if (contenido.contains("Overwolf") || contenido.contains("OWClient.dll") || contenido.contains("OWUtils.dll")
-				|| contenido.contains("overwolf")) {
+		if (contenido.indexOf("Overwolf") >= 0 || contenido.indexOf("OWClient.dll") >= 0
+				|| contenido.indexOf("OWUtils.dll") >= 0 || contenido.indexOf("overwolf") >= 0) {
 			posibleOverwolf = true;
 		}
+
+		activarSiCompleto(consola, 0);
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleOverwolf)
-			return false;
-
-		return true;
+		return false;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		// Salir temprano si no está el patrón principal.
-		if (!posibleJvmDll || !posibleG1 || !posibleCurseForge) {
+		if (consola == null || linea == null || activado)
 			return;
+
+		if (linea.indexOf("EXCEPTION_ACCESS_VIOLATION") >= 0)
+			posibleJvmDll = true;
+
+		if (linea.indexOf("Problematic frame:") >= 0 || linea.indexOf("jvm.dll") >= 0)
+			posibleJvmDll = true;
+
+		if (linea.indexOf("GCTaskThread") >= 0)
+			posibleG1 = true;
+
+		if (linea.indexOf("g1 gc") >= 0 || linea.indexOf("UseG1GC") >= 0)
+			posibleG1 = true;
+
+		if (linea.indexOf("DCFInstanceId") >= 0 || linea.indexOf("minecraft.launcher.brand=CurseForge") >= 0
+				|| linea.indexOf("curseforge\\minecraft") >= 0 || linea.indexOf("curseforge/minecraft") >= 0
+				|| linea.indexOf("CurseForge") >= 0) {
+			posibleCurseForge = true;
 		}
 
-		// Línea principal del fallo fatal.
-		if (!activado && linea.contains("Problematic frame:")) {
-			this.enlace = consola.agregarErrorALectador(num, this);
-			this.activado = true;
-			return;
+		if (linea.indexOf("Overwolf") >= 0 || linea.indexOf("OWClient.dll") >= 0 || linea.indexOf("OWUtils.dll") >= 0
+				|| linea.indexOf("overwolf") >= 0) {
+			posibleOverwolf = true;
 		}
 
-		// Fallback para logs con formato raro.
-		if (!activado && linea.contains("jvm.dll")) {
-			this.enlace = consola.agregarErrorALectador(num, this);
-			this.activado = true;
-			return;
+		if (linea.indexOf("Problematic frame:") >= 0 || linea.indexOf("jvm.dll") >= 0
+				|| linea.indexOf("GCTaskThread") >= 0) {
+			activarSiCompleto(consola, num);
 		}
+	}
 
-		// Fallback adicional: marcar la línea del hilo GC si aparece antes.
-		if (!activado && linea.contains("GCTaskThread")) {
-			this.enlace = consola.agregarErrorALectador(num, this);
-			this.activado = true;
-		}
+	private void activarSiCompleto(Consola consola, int num) {
+		if (activado)
+			return;
+
+		if (!posibleJvmDll || !posibleG1 || !posibleCurseForge)
+			return;
+
+		String clave = id();
+
+		if (!REPORTADOS_GLOBAL.add(clave))
+			return;
+
+		this.enlace = consola.agregarErrorALectador(num, this);
+		this.activado = true;
+	}
+
+	@Override
+	public void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
+		if (consola == null || activado)
+			return;
+
+		activarSiCompleto(consola, 0);
+	}
+
+	public static void reiniciarGlobal() {
+		REPORTADOS_GLOBAL.clear();
 	}
 
 	@Override

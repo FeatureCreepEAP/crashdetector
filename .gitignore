@@ -7,3 +7,5 @@ ia/codigo_para_agente.txt
 TLauncherAdditional.json
 logs/
 .idea/*
+.output.txt
+build.log

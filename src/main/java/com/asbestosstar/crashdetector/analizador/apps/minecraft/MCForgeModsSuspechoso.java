@@ -11,13 +11,15 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta mods sospechosos y excepciones relacionadas con Forge.
  */
-public class MCForgeModsSuspechoso implements Verificaciones {
+public class MCForgeModsSuspechoso implements VerificacionRapida {
 
 	private boolean activado = false;
 
@@ -35,12 +37,48 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 	private final Map<String, String> modidPorError = new HashMap<>();
 
 	@Override
+	public String[] patronesRapidos() {
+		return new String[] { "Suspected Mod:", "Suspected Mods:", "-- MOD ", "Failed to create mod instance. ModID:",
+				"for modid ", "Mod ID:", "ModID:", "modid=", "dispatch" };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		EstadoConsola estado = obtenerEstado(evento.consola);
+		estado.posibleForgeModSospechoso = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public boolean activarEscaneoPorLinea(Consola consola) {
+		EstadoConsola estado = estadosPorConsola.get(consola);
+		return estado != null && estado.posibleForgeModSospechoso;
+	}
+
+	@Override
+	public boolean necesitaTodasLasLineas() {
+		// No necesitamos todas las líneas por defecto, se activará vía
+		// quiereAnalizarLineas
+		// cuando detectemos que es un posible reporte de Forge.
+		return false;
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		// Esta se llama tanto en el motor streaming como en el legacy.
+		// Queremos analizar líneas si ya detectamos que es un posible problema de
+		// Forge.
+		return true; // MCForgeModsSuspechoso gestiona su propio estado interno en verificarPorLinea
+	}
+
+	@Override
 	public void verificar(Consola consola) {
+		EstadoConsola estado = obtenerEstado(consola);
 		if (consola == null || consola.contenido_verificar == null) {
+			estado.posibleForgeModSospechoso = true; // Por defecto asumimos que sí en modo streaming
 			return;
 		}
 
-		EstadoConsola estado = obtenerEstado(consola);
 		String c = consola.contenido_verificar;
 
 		estado.posibleForgeModSospechoso = c.contains("Suspected Mod:") || c.contains("Suspected Mods:")
@@ -56,20 +94,43 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 			return;
 		}
 
-		EstadoConsola estado = estadosPorConsola.get(consola);
+		EstadoConsola estado = obtenerEstado(consola);
 		if (estado == null) {
-			// CrashDetectorLogger.log("MCForgeModsSuspechoso: estado null en linea " +
-			// numero_de_linea);
 			return;
 		}
 
 		if (!estado.posibleForgeModSospechoso) {
-			return;
+			// Si no hemos detectado que es posible forge, revisamos rápidamente esta línea
+			// para ver si activamos el modo.
+			if (lineaOriginal.contains("Suspected Mod:") || lineaOriginal.contains("Suspected Mods:")
+					|| lineaOriginal.contains("-- MOD ") || lineaOriginal.contains("Failed to create mod instance")
+					|| lineaOriginal.contains("for modid ") || lineaOriginal.contains("ModID:")
+					|| lineaOriginal.contains("modid=")) {
+				estado.posibleForgeModSospechoso = true;
+				// CrashDetectorLogger.log("[DEBUG_LOG] MCForgeModsSuspechoso ACTIVADO para " +
+				// consola.archivo.getFileName() + " en línea " + numero_de_linea);
+			} else {
+				return;
+			}
 		}
 
 		String linea = lineaOriginal.trim();
 
 		if (linea.isEmpty()) {
+			return;
+		}
+
+		// Si encontramos "Suspected Mods:" activamos el modo de captura de lista
+		if (linea.contains("Suspected Mod:") || linea.contains("Suspected Mods:")) {
+			estado.encontradoModSospechoso = true;
+			estado.encontradoStacktrace = false;
+			return;
+		}
+
+		// Si encontramos "Stacktrace:" salimos del modo de captura de lista
+		if (linea.contains("Stacktrace:")) {
+			estado.encontradoModSospechoso = false;
+			estado.encontradoStacktrace = true;
 			return;
 		}
 
@@ -79,42 +140,18 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 			return;
 		}
 
-		// CrashDetectorLogger.log("MCForgeModsSuspechoso linea " + numero_de_linea + ":
-		// " + linea);
-
 		if (esLineaDebugOTrace(linea)) {
-			// CrashDetectorLogger.log("MCForgeModsSuspechoso saltada DEBUG/TRACE");
 			return;
 		}
 
 		String modDeSeccion = extraerSeccionMod(linea);
 		if (modDeSeccion != null) {
-			// CrashDetectorLogger.log("MCForgeModsSuspechoso MOD section detectada: " +
-			// modDeSeccion);
 			estado.encontradoModSection = true;
 			registrarMod(consola, numero_de_linea, modDeSeccion);
 			return;
 		}
 
-		if (linea.contains("Suspected Mod:") || linea.contains("Suspected Mods:")) {
-			// CrashDetectorLogger.log("MCForgeModsSuspechoso ENTRA en Suspected Mods en
-			// linea " + numero_de_linea);
-			estado.encontradoModSospechoso = true;
-			estado.encontradoStacktrace = false;
-			return;
-		}
-
-		if (linea.contains("Stacktrace:")) {
-			// CrashDetectorLogger.log("MCForgeModsSuspechoso SALE de Suspected Mods por
-			// Stacktrace en linea " + numero_de_linea);
-			estado.encontradoModSospechoso = false;
-			estado.encontradoStacktrace = true;
-			return;
-		}
-
 		if (estado.encontradoModSospechoso) {
-			// CrashDetectorLogger.log("MCForgeModsSuspechoso procesando linea dentro de
-			// Suspected Mods: " + linea);
 			procesarLineaSuspectedMods(consola, linea, numero_de_linea);
 			return;
 		}
@@ -123,13 +160,8 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 			String prefijo = "Failed to create mod instance. ModID: ";
 			int indiceInicio = linea.indexOf(prefijo);
 
-			// CrashDetectorLogger.log("MCForgeModsSuspechoso Failed to create mod instance
-			// detectado");
-
 			if (indiceInicio != -1) {
 				String modID = extraerToken(linea.substring(indiceInicio + prefijo.length()).trim());
-				// CrashDetectorLogger.log("MCForgeModsSuspechoso modID extraido de Failed
-				// instance: " + modID);
 				registrarMod(consola, numero_de_linea, modID);
 			}
 
@@ -138,16 +170,12 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 
 		String modDespacho = extraerDespachoModid(linea);
 		if (modDespacho != null) {
-			// CrashDetectorLogger.log("MCForgeModsSuspechoso mod despacho detectado: " +
-			// modDespacho);
 			registrarMod(consola, numero_de_linea, modDespacho);
 			return;
 		}
 
 		if (!estado.encontradoModSection && tieneIndicadorError(linea)) {
 			String modID = extraerModidDeLinea(linea, false);
-			// CrashDetectorLogger.log("MCForgeModsSuspechoso fallback indicador error,
-			// modID=" + modID + ", linea=" + linea);
 			registrarMod(consola, numero_de_linea, modID);
 		}
 	}

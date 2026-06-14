@@ -1,7 +1,9 @@
 package com.asbestosstar.crashdetector.analizador.general;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -21,12 +23,14 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.mapas.TriMap;
 import com.asbestosstar.crashdetector.waifu.RespuestaWaifu;
 import com.asbestosstar.crashdetector.waifu.WaifuAPI;
 
-public class FaltasClases implements Verificaciones {
+public class FaltasClases implements VerificacionRapida {
 
 	private boolean activado = false;
 	public boolean create = false;
@@ -58,6 +62,53 @@ public class FaltasClases implements Verificaciones {
 	public static List<String> ignorar = new ArrayList<>();
 
 	/**
+	 * Cache de elementos a ignorar en formato normalizado con '/'.
+	 */
+	private static List<String> ignorarNormalizado = null;
+
+	/**
+	 * Si ignoremos un clase o linea
+	 * 
+	 * @return
+	 */
+	public static boolean ignorarClaseOLinea(String str) {
+		if (str == null) {
+			return false;
+		}
+
+		// CrashDetectorLogger.log(str);
+
+		if (ignorarNormalizado == null) {
+			synchronized (FaltasClases.class) {
+				if (ignorarNormalizado == null) {
+					List<String> lista = new ArrayList<>();
+					for (String s : ignorar) {
+						if (s != null) {
+							lista.add(s.replace('.', '/'));
+						}
+					}
+					ignorarNormalizado = lista;
+				}
+			}
+		}
+
+		// Early exit: if the string doesn't contain '.' or '/', it can't be a
+		// class/path
+		// But it might be a modid. The previous implementation always did replace.
+
+		// Optimization: only normalize once and avoid repeat allocations if possible
+		// However, for contains check, we need to match the format.
+		String strNorm = str.indexOf('.') >= 0 ? str.replace('.', '/') : str;
+
+		for (String ign : ignorarNormalizado) {
+			if (strNorm.contains(ign)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Conjunto auxiliar para evitar duplicados. Guardamos el nombre de la clase en
 	 * formato ruta (con "/").
 	 */
@@ -81,12 +132,24 @@ public class FaltasClases implements Verificaciones {
 	private Map<String, String> clasesFiltradas = null;
 
 	/**
+	 * Conjunto global de clases detectadas para evitar duplicados entre logs.
+	 */
+	private static final Set<String> CLASES_GLOBALES_VISTAS = Collections.synchronizedSet(new HashSet<>());
+
+	/**
 	 * Marca para asegurarnos de que el post-procesado (completar orígenes +
 	 * filtrado) solo se hace una vez.
 	 */
 	private boolean postProcesado = false;
 
 	public boolean posible = false;
+
+	/**
+	 * Limpia el conjunto de clases vistas globalmente.
+	 */
+	public static void reiniciarGlobal() {
+		CLASES_GLOBALES_VISTAS.clear();
+	}
 
 	static {
 		ignorar.add("avaritia");// Positiva falsa comun con KubJS y avaritia TODO agregar a advertencia
@@ -105,64 +168,90 @@ public class FaltasClases implements Verificaciones {
 	}
 
 	@Override
+	public String[] patronesRapidos() {
+		return new String[] { "java.lang.ClassNotFoundException:", "java.lang.NoClassDefFoundError:",
+				"Error loading class:", "ClassMetadataNotFoundException" };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		posible = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
 	public void verificar(Consola consola) {
 		this.vdst = consola.verificacion_de_stacktrace;
 		String cont = consola.contenido_verificar;
 
-		if (cont.contains("ClassMetadataNotFoundException") && !cont.contains("ClassNotFoundException")
-				&& !cont.contains("NoClassDefFoundError") && vdst.clases_fatales_no_existentes.isEmpty()
+		if (cont != null) {
+			if (cont.contains("ClassMetadataNotFoundException") && !cont.contains("ClassNotFoundException")
+					&& !cont.contains("NoClassDefFoundError")
+					&& (vdst == null || vdst.clases_fatales_no_existentes.isEmpty())
 
-		) {
+			) {
+				return;
+			}
+		} else if (vdst == null || vdst.clases_fatales_no_existentes.isEmpty()) {
 			return;
 		}
 		posible = true;
 
 		// Agregar clases faltantes desde stacktraces fatales
-		for (TriMap.TripleKey<String, Integer, Integer> llave : vdst.clases_fatales_no_existentes.keySet()) {
-			String claseCruda = llave.key1; // nombre de la clase tal cual viene
-			int nivel_prioridad = llave.key2; // nivel de prioridad (no lo usamos aquí)
-			int numero_linea_consola = llave.key3; // número de línea en la consola
-			String sospechoso = vdst.clases_fatales_no_existentes.get(claseCruda, nivel_prioridad,
-					numero_linea_consola);
+		if (vdst != null && vdst.clases_fatales_no_existentes != null) {
+			for (TriMap.TripleKey<String, Integer, Integer> llave : vdst.clases_fatales_no_existentes.keySet()) {
+				String claseCruda = llave.key1; // nombre de la clase tal cual viene
+				int nivel_prioridad = llave.key2; // nivel de prioridad (no lo usamos aquí)
+				int numero_linea_consola = llave.key3; // número de línea en la consola
+				String sospechoso = vdst.clases_fatales_no_existentes.get(claseCruda, nivel_prioridad,
+						numero_linea_consola);
 
-			if (numero_linea_consola > 0) {
-				String linea_menos1 = consola.lineas_verificar[numero_linea_consola - 1];
-				if (linea_menos1.contains("catching") || linea_menos1.contains("Catching") ||
+				if (numero_linea_consola > 0 && consola.lineas_verificar != null
+						&& numero_linea_consola < consola.lineas_verificar.length) {
+					String linea_menos1 = consola.lineas_verificar[numero_linea_consola - 1];
+					if (linea_menos1.contains("catching") || linea_menos1.contains("Catching") ||
 
-						linea_menos1.contains("rhino.CachedClassInfo")) {
-					continue; // Skip catching errors
+							linea_menos1.contains("rhino.CachedClassInfo")) {
+						continue; // Skip catching errors
+					}
 				}
-			}
 
-			String claseFormateada = formatearClase(claseCruda);
-			if (!esNombreClaseValido(claseFormateada)) {
-				continue;
-			}
-
-			if (ignorarClaseOLinea(claseFormateada)) {
-				continue;
-			}
-
-			// Ignorar clases no relevantes (kotlin, gg/essential, etc.)
-			if (esClaseNoRelevante(claseFormateada)) {
-				continue;
-			}
-			String origenLimpio = limpiarOrigen(sospechoso);
-
-			// Si ya vimos esta clase antes, SOLO actualizamos si falta origen
-			if (!todos.add(claseFormateada)) {
-				String actual = clases.getOrDefault(claseFormateada, "");
-				if ((actual == null || actual.isEmpty()) && origenLimpio != null && !origenLimpio.isEmpty()) {
-					clases.put(claseFormateada, origenLimpio);
+				String claseFormateada = formatearClase(claseCruda);
+				if (!esNombreClaseValido(claseFormateada)) {
+					continue;
 				}
-				continue;
+
+				if (ignorarClaseOLinea(claseFormateada)) {
+					continue;
+				}
+
+				// Ignorar clases no relevantes (kotlin, gg/essential, etc.)
+				if (esClaseNoRelevante(claseFormateada)) {
+					continue;
+				}
+
+				// Deduplicación global entre logs
+				if (!CLASES_GLOBALES_VISTAS.add(claseFormateada)) {
+					continue;
+				}
+
+				String origenLimpio = limpiarOrigen(sospechoso);
+
+				// Si ya vimos esta clase antes, SOLO actualizamos si falta origen
+				if (!todos.add(claseFormateada)) {
+					String actual = clases.getOrDefault(claseFormateada, "");
+					if ((actual == null || actual.isEmpty()) && origenLimpio != null && !origenLimpio.isEmpty()) {
+						clases.put(claseFormateada, origenLimpio);
+					}
+					continue;
+				}
+
+				// Primera vez que aparece
+				clases.put(claseFormateada, origenLimpio);
+
+				String enlace = consola.agregarErrorALectador(numero_linea_consola, this);
+				enlacesPorClase.put(claseFormateada, enlace);
 			}
-
-			// Primera vez que aparece
-			clases.put(claseFormateada, origenLimpio);
-
-			String enlace = consola.agregarErrorALectador(numero_linea_consola, this);
-			enlacesPorClase.put(claseFormateada, enlace);
 		}
 	}
 
@@ -176,10 +265,17 @@ public class FaltasClases implements Verificaciones {
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (linea == null) {
+		if (linea == null || linea.isEmpty()) {
 			return;
 		}
 		if (!posible) {
+			return;
+		}
+
+		// Optimization: Quick check for interesting patterns before doing more
+		// expensive checks
+		if (!linea.contains("java.lang.ClassNotFoundException:") && !linea.contains("java.lang.NoClassDefFoundError:")
+				&& !linea.contains("Error loading class:")) {
 			return;
 		}
 
@@ -201,30 +297,32 @@ public class FaltasClases implements Verificaciones {
 			// Eliminar prefijo de log tipo "[hh:mm:ss] [Server thread/INFO]: ..."
 			int indiceDosPuntos = linea.indexOf(':');
 			if (indiceDosPuntos != -1 && linea.charAt(0) == '[') {
-				linea = linea.substring(indiceDosPuntos + 1).trim();
+				// Safety check: is it a real timestamp format? [00:00:00]
+				if (indiceDosPuntos < 20) {
+					linea = linea.substring(indiceDosPuntos + 1).trim();
+				}
 			}
 
-			String[] llevas = { "java.lang.ClassNotFoundException:", "java.lang.NoClassDefFoundError:" };
-
-			for (String lleva : llevas) {
-				int index = linea.indexOf(lleva);
-				if (index != -1) {
-					String candidato = linea.substring(index + lleva.length()).trim();
-					if (!candidato.isEmpty()) {
-						claseCruda = primerTokenClase(candidato);
-						break;
-					}
+			if (linea.contains("java.lang.ClassNotFoundException:")) {
+				int index = linea.indexOf("java.lang.ClassNotFoundException:");
+				String candidato = linea.substring(index + 33).trim();
+				if (!candidato.isEmpty()) {
+					claseCruda = primerTokenClase(candidato);
+				}
+			} else {
+				int index = linea.indexOf("java.lang.NoClassDefFoundError:");
+				String candidato = linea.substring(index + 31).trim();
+				if (!candidato.isEmpty()) {
+					claseCruda = primerTokenClase(candidato);
 				}
 			}
 
 		} else if (linea.contains("Error loading class:")) {
 			// Caso antiguo, se deja por seguridad
 			int index = linea.indexOf("Error loading class:");
-			if (index != -1) {
-				String candidato = linea.substring(index + "Error loading class:".length()).trim();
-				if (!candidato.isEmpty()) {
-					claseCruda = primerTokenClase(candidato);
-				}
+			String candidato = linea.substring(index + 20).trim();
+			if (!candidato.isEmpty()) {
+				claseCruda = primerTokenClase(candidato);
 			}
 		}
 
@@ -232,20 +330,16 @@ public class FaltasClases implements Verificaciones {
 			return;
 		}
 
-		if (numero_de_linea > 0) {
+		if (numero_de_linea > 0 && consola.lineas_verificar != null
+				&& numero_de_linea < consola.lineas_verificar.length) {
 			String linea_menos1 = consola.lineas_verificar[numero_de_linea - 1];
-			// CrashDetectorLogger.log(linea_menos1+ " linea menos 1");
-			if (linea_menos1.toLowerCase().contains("catching") || linea_menos1.contains("rhino.CachedClassInfo")) {// A
-																													// veces
-																													// lineas
-																													// tiene
-																													// esta
-				return;// TODO apender a Advertencia faltas clases
+			if (linea_menos1.toLowerCase().contains("catching") || linea_menos1.contains("rhino.CachedClassInfo")) {
+				return;
 			}
 		}
 
-		if (linea.contains("Valkyrian skies compatibility disabled")) {// A veces lineas tiene esta
-			return;// TODO apender a Advertencia faltas clases
+		if (linea.contains("Valkyrian skies compatibility disabled")) {
+			return;
 		}
 
 		// [28Dec2025 00:14:05.843] [modloading-worker-0/INFO] [STDERR/]:
@@ -262,7 +356,12 @@ public class FaltasClases implements Verificaciones {
 		if (esClaseNoRelevante(claseFormateada)) {
 			return;
 		}
-		// Buscar el origen en la misma línea o líneas cercanas
+
+		// Deduplicación global entre logs
+		if (!CLASES_GLOBALES_VISTAS.add(claseFormateada)) {
+			return;
+		}
+
 		// Buscar el origen en la misma línea o líneas cercanas
 		String origen = encontrarOrigenEnLinea(linea, numero_de_linea, consola);
 		String origenLimpio = limpiarOrigen(origen);
@@ -278,8 +377,8 @@ public class FaltasClases implements Verificaciones {
 
 		// Si ya existe la clase, solo rellenamos si le falta origen
 		if (!todos.add(claseFormateada)) {
-			String actual = clases.getOrDefault(claseFormateada, "");
-			if ((actual == null || actual.isEmpty()) && origenLimpio != null && !origenLimpio.isEmpty()) {
+			String actual = clases.get(claseFormateada);
+			if ((actual == null || actual.isEmpty()) && (origenLimpio != null && !origenLimpio.isEmpty())) {
 				clases.put(claseFormateada, origenLimpio);
 			}
 			return;
@@ -288,7 +387,8 @@ public class FaltasClases implements Verificaciones {
 		// Primera vez que aparece
 		clases.put(claseFormateada, origenLimpio);
 
-		CrashDetectorLogger.log("Fatals clases clase no advertencia " + claseFormateada);
+		// CrashDetectorLogger.log("Fatals clases clase no advertencia " +
+		// claseFormateada);
 
 		String enlace = consola.agregarErrorALectador(numero_de_linea, this);
 		enlacesPorClase.put(claseFormateada, enlace);
@@ -307,16 +407,30 @@ public class FaltasClases implements Verificaciones {
 	// Esto evita que el escaneo se vaya a otras secciones del log (WARN/INFO
 	// sueltos).
 	private boolean esLineaStackish(String l) {
-		if (l == null)
+		if (l == null || l.isEmpty())
 			return false;
-		String t = l.trim();
+
+		int start = 0;
+		while (start < l.length() && Character.isWhitespace(l.charAt(start))) {
+			start++;
+		}
+
+		if (start >= l.length())
+			return false;
 
 		// Permitir líneas comentadas tipo "// at ..."
-		if (t.startsWith("//"))
-			t = t.substring(2).trim();
+		if (l.startsWith("//", start)) {
+			start += 2;
+			while (start < l.length() && Character.isWhitespace(l.charAt(start))) {
+				start++;
+			}
+		}
 
-		return t.startsWith("at ") || t.startsWith("Caused by:") || t.startsWith("Suppressed:") || t.startsWith("...")
-				|| t.startsWith("SECURE-BOOTSTRAP");
+		if (start >= l.length())
+			return false;
+
+		return l.startsWith("at ", start) || l.startsWith("Caused by:", start) || l.startsWith("Suppressed:", start)
+				|| l.startsWith("...", start) || l.startsWith("SECURE-BOOTSTRAP", start);
 	}
 
 	// Heurística para rechazar modids sospechosos típicos de handlers/mixins.
@@ -373,20 +487,6 @@ public class FaltasClases implements Verificaciones {
 			}
 			clasesFiltradas.put(clase, e.getValue());
 		}
-	}
-
-	/**
-	 * Si ignoremos un clase o linea
-	 * 
-	 * @return
-	 */
-	public static boolean ignorarClaseOLinea(String str) {
-		for (String ign : ignorar) {
-			if (str.replace(".", "/").contains(ign.replace(".", "/"))) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/**
@@ -459,27 +559,34 @@ public class FaltasClases implements Verificaciones {
 			return resultado;
 		}
 
+		if (consola.lineas_verificar == null) {
+			return "";
+		}
+
 		String[] lineas = consola.lineas_verificar;
+		int totalLineas = lineas.length;
 
 		// Buscar hacia abajo SOLO dentro del mismo bloque de stacktrace
-		for (int i = numeroLinea + 1; i < lineas.length && i <= numeroLinea + 50; i++) {
+		int maxAbajo = Math.min(numeroLinea + 50, totalLineas - 1);
+		for (int i = numeroLinea + 1; i <= maxAbajo; i++) {
 			String siguiente = lineas[i];
 			if (!esLineaStackish(siguiente)) {
 				break; // Ya salimos del stacktrace, no seguir buscando
 			}
-			resultado = buscarOrigenEnLinea(siguiente.trim());
+			resultado = buscarOrigenEnLinea(siguiente);
 			if (!resultado.isEmpty()) {
 				return resultado;
 			}
 		}
 
 		// Buscar hacia arriba SOLO dentro del mismo bloque de stacktrace
-		for (int i = numeroLinea - 1; i >= 0 && i >= numeroLinea - 20; i--) {
+		int maxArriba = Math.max(0, numeroLinea - 20);
+		for (int i = numeroLinea - 1; i >= maxArriba; i--) {
 			String anterior = lineas[i];
 			if (!esLineaStackish(anterior)) {
 				break; // Ya salimos del stacktrace, no seguir buscando
 			}
-			resultado = buscarOrigenEnLinea(anterior.trim());
+			resultado = buscarOrigenEnLinea(anterior);
 			if (!resultado.isEmpty()) {
 				return resultado;
 			}
@@ -492,18 +599,23 @@ public class FaltasClases implements Verificaciones {
 	 * Busca origen en una línea específica utilizando los métodos existentes.
 	 */
 	private String buscarOrigenEnLinea(String linea) {
+		if (linea == null || linea.isEmpty())
+			return "";
+
 		// 1) Buscar JARs (prioridad más alta)
 		List<String> jarsEncontrados = VerificacionDeStackTrace.extraerJarsDeLinea(linea);
-		for (String jar : jarsEncontrados) {
-			if (jar.contains(".jar") && !VerificacionDeStackTrace.isJarNoPermite(jar)) {
-				return jar;
+		if (jarsEncontrados != null && !jarsEncontrados.isEmpty()) {
+			for (String jar : jarsEncontrados) {
+				if (jar.contains(".jar") && !VerificacionDeStackTrace.isJarNoPermite(jar)) {
+					return jar;
+				}
 			}
 		}
 
 		// 2) Buscar modid:
 		// IMPORTANTE: ignorar modids detectados desde líneas "handler$"
 		// porque suelen ser artefactos de mixins y generan falsos positivos.
-		if (!linea.contains("handler$")) {// TODO filtrar hablerers importantes, pero no hld000 o cdk000
+		if (linea.indexOf("handler$") < 0) {
 			String modid = VerificacionDeStackTrace.extraerModidDeLinea(linea);
 			if (modid != null && !VerificacionDeStackTrace.esModNoPermite(modid) && !esModidSospechoso(modid)) {
 				return modid;

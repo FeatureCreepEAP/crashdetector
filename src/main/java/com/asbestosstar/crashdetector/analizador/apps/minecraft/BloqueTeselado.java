@@ -1,25 +1,45 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores relacionados con el teselado de bloques en Minecraft.
  * Modernized: no regex, no regionMatches, exact-case scan.
  */
-public class BloqueTeselado implements Verificaciones {
+public class BloqueTeselado implements VerificacionRapida {
+
+	private static final Set<String> REPORTADOS_GLOBAL = Collections.synchronizedSet(new HashSet<>());
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlace = "";
 
-	private boolean posibleTesselado = false;
-
 	private static final String TEXTO_TESSELADO = "Tesselating block in world";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_TESSELADO };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado)
+			return;
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
@@ -28,30 +48,58 @@ public class BloqueTeselado implements Verificaciones {
 		}
 
 		// Global check: inexpensive exact-case contains
-		if (consola.contenido_verificar.contains(TEXTO_TESSELADO)) {
-			posibleTesselado = true;
+		int pos = consola.contenido_verificar.indexOf(TEXTO_TESSELADO);
+
+		if (pos < 0) {
+			return;
 		}
+
+		verificarPorLinea(consola, extraerLinea(consola.contenido_verificar, pos), 0);
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleTesselado)
-			return false;
-
-		return true;
+		return false;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleTesselado || activado || linea == null || linea.isEmpty()) {
+		if (consola == null || activado || linea == null || linea.isEmpty()) {
 			return;
 		}
 
-		if (linea.contains(TEXTO_TESSELADO)) {
+		if (linea.indexOf(TEXTO_TESSELADO) >= 0) {
+			if (!REPORTADOS_GLOBAL.add(id()))
+				return;
+
 			enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			mensaje = MonitorDePID.idioma.errorDeBloqueTeselado() + " " + enlace;
 			activado = true;
 		}
+	}
+
+	private String extraerLinea(String log, int pos) {
+		int inicio = log.lastIndexOf('\n', pos);
+		int fin = log.indexOf('\n', pos);
+
+		if (inicio < 0)
+			inicio = 0;
+		else
+			inicio++;
+
+		if (fin < 0)
+			fin = log.length();
+
+		return log.substring(inicio, fin);
+	}
+
+	@Override
+	public void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
+		// No necesita procesamiento final.
+	}
+
+	public static void reiniciarGlobal() {
+		REPORTADOS_GLOBAL.clear();
 	}
 
 	@Override
@@ -94,7 +142,7 @@ public class BloqueTeselado implements Verificaciones {
 		if (!activado || trazo == null || trazo.trace == null) {
 			return false;
 		}
-		return trazo.trace.contains(TEXTO_TESSELADO);
+		return trazo.trace.indexOf(TEXTO_TESSELADO) >= 0;
 	}
 
 	@Override

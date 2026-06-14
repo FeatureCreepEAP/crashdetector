@@ -9,12 +9,14 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores de ejecución en plugins de PocketMine-MP sin usar regex.
  */
-public class ProblemaEjecucionPlugin implements Verificaciones {
+public class ProblemaEjecucionPlugin implements VerificacionRapida {
 
 	private boolean posibleEjecucion = false;
 	private boolean activado = false;
@@ -27,6 +29,22 @@ public class ProblemaEjecucionPlugin implements Verificaciones {
 	private static final String TEXTO_ERROR = "Error: ";
 	private static final String TEXTO_PLUGINS = "plugins/";
 	private static final String TEXTO_EXCEPTION = "$EXCEPTION$ in ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_EXCEPTION };
+	}
+
+	@Override
+	public boolean activarEscaneoPorLinea(Consola consola) {
+		return posibleEjecucion;
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		posibleEjecucion = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {

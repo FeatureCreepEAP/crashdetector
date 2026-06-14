@@ -4,6 +4,7 @@ import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public interface Verificaciones {
@@ -169,8 +170,40 @@ public interface Verificaciones {
 
 	}
 
+	/**
+	 * Se ejecuta cuando el motor rápido encuentra uno de los patrones declarados.
+	 */
+	public default void verificarCoincidencia(EventoDeCoincidencia evento) {
+	}
+
 	public default boolean quiereAnalizarLineas() {
 		return true;
+	}
+
+	/**
+	 * Devuelve patrones literales que sirven como disparadores rápidos.
+	 *
+	 * El motor usa estos textos en un escáner rápido. Cuando uno aparece, la
+	 * verificación recibe un EventoDeCoincidencia con archivo, línea y contexto.
+	 */
+	public default String[] patronesRapidos() {
+		return new String[0];
+	}
+
+	/**
+	 * Indica si esta verificación necesita ver todas las líneas aunque no haya
+	 * coincidencia rápida.
+	 */
+	public default boolean necesitaTodasLasLineas() {
+		return false;
+	}
+
+	/**
+	 * Indica si la verificación quiere activarse para el escaneo línea a línea a
+	 * partir de este momento (por ejemplo, tras encontrar un patrón global).
+	 */
+	public default boolean activarEscaneoPorLinea(Consola consola) {
+		return false;
 	}
 
 }

@@ -1,5 +1,10 @@
 # CrashDetectorMC
 
+
+
+Actualmente estamos llevando a cabo una refactorización importante de este repositorio. Sugerimos consultar el repositorio archivado en Pagure para ver el estado previo a la refactorización: https://pagure.io/CrashDetectorMC
+
+
 ¡Este mod te dice por qué se ha bloqueado (crasheado) el juego!
 
 De manera realista, podemos ayudar con más del 75% de los bloqueos más comunes en listas de mods personalizadas y con más del 95% de los bloqueos en modpacks preconfigurados. Contamos con más de 220 comprobaciones comunes, una combinación de análisis estáticos y dinámicos, que cubren los problemas más frecuentes y conocidos del modding de Minecraft, así como muchos otros menos conocidos.

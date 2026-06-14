@@ -1,10 +1,17 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,20 +20,37 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * "GeckoLib was initialized too early!". Identifica la presencia de mods de
  * conexión como Sinytra Connector o specialcompatibilityoperation.
  */
-public class AzureGeckoLibInicializoPronto implements Verificaciones {
+public class AzureGeckoLibInicializoPronto implements VerificacionRapida {
+
+	private static final Set<String> REPORTADOS_GLOBAL = Collections.synchronizedSet(new HashSet<>());
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private boolean azureLibError = false;
 	private boolean geckoLibError = false;
 	private boolean connectorPresente = false;
-	private boolean analizarLineas = false;
 
 	private String enlaceHtml = "";
 
 	// Cadenas que se buscan en el log para detectar el problema.
 	private final String azure = "AzureLib was initialized too early!";
 	private final String geck = "GeckoLib was initialized too early!";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { "AzureLib was initialized too early!", "GeckoLib was initialized too early!",
+				"SINYTRA CONNECTOR IS PRESENT!"
+				// "specialcompatibilityoperation" TODO
+		};
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null)
+			return;
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Método de verificación "antiguo" que trabaja con todo el contenido de la
@@ -35,13 +59,12 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null)
+			return;
 
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
-		if (!connectorPresente && log.contains("SINYTRA CONNECTOR IS PRESENT!")
+		if (!connectorPresente && log.indexOf("SINYTRA CONNECTOR IS PRESENT!") >= 0
 
 		// || log.contains("specialcompatibilityoperation")TODO
 
@@ -49,29 +72,24 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 			connectorPresente = true;
 		}
 
-		if (!log.contains("Lib was initialized too early!")) {
+		if (log.indexOf("Lib was initialized too early!") < 0) {
 			return;
 		}
 
-		if (log.contains(azure)) {
-			azureLibError = true;
-			analizarLineas = true;
-
-		}
-		if (log.contains(geck)) {
-			geckoLibError = true;
-			analizarLineas = true;
-
+		int posAzure = log.indexOf(azure);
+		if (posAzure >= 0) {
+			verificarPorLinea(consola, extraerLinea(log, posAzure), 0);
 		}
 
+		int posGeck = log.indexOf(geck);
+		if (posGeck >= 0) {
+			verificarPorLinea(consola, extraerLinea(log, posGeck), 0);
+		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return false;
 	}
 
 	/**
@@ -81,30 +99,82 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
+		if (consola == null || linea == null)
+			return;
+
+		// Detecta la presencia de Sinytra Connector para añadir contexto al mensaje.
+		if (!connectorPresente && linea.indexOf("SINYTRA CONNECTOR IS PRESENT!") >= 0
+
+		// || linea.contains("specialcompatibilityoperation")TODO
+
+		) {
+			connectorPresente = true;
+			actualizarMensaje();
+			return;
+		}
+
+		boolean cambio = false;
+
 		// Detecta el error específico de AzureLib inicializada demasiado pronto.
-		if (linea.contains(azure)) {
+		if (linea.indexOf(azure) >= 0) {
 			azureLibError = true;
-			activado = true;
+			cambio = true;
+
 			// Mantener la semántica original: AzureLib siempre sobrescribe el enlace.
-			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			if (REPORTADOS_GLOBAL.add(id() + ":azure")) {
+				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			}
 		}
 
 		// Detecta el error específico de GeckoLib inicializada demasiado pronto.
-		if (linea.contains(geck)) {
+		if (linea.indexOf(geck) >= 0) {
 			geckoLibError = true;
-			activado = true;
+			cambio = true;
+
 			// Solo registrar el enlace si aún no hay uno (mismo comportamiento original:
 			// si ya hubo AzureLib, se mantiene ese enlace).
-			if (enlaceHtml.isEmpty()) {
+			if (enlaceHtml.isEmpty() && REPORTADOS_GLOBAL.add(id() + ":gecko")) {
 				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			}
 		}
 
 		// Si ya se activó el error, actualizamos el mensaje que se va a mostrar.
-		if (activado) {
-			mensaje = MonitorDePID.idioma.errorAzureGeckoLibInicializoPronto(azureLibError, geckoLibError,
-					connectorPresente) + Verificaciones.nl_html + enlaceHtml;
+		if (cambio) {
+			activado = true;
+			actualizarMensaje();
 		}
+	}
+
+	private void actualizarMensaje() {
+		if (!activado)
+			return;
+
+		mensaje = MonitorDePID.idioma.errorAzureGeckoLibInicializoPronto(azureLibError, geckoLibError,
+				connectorPresente) + Verificaciones.nl_html + enlaceHtml;
+	}
+
+	private String extraerLinea(String log, int pos) {
+		int inicio = log.lastIndexOf('\n', pos);
+		int fin = log.indexOf('\n', pos);
+
+		if (inicio < 0)
+			inicio = 0;
+		else
+			inicio++;
+
+		if (fin < 0)
+			fin = log.length();
+
+		return log.substring(inicio, fin);
+	}
+
+	@Override
+	public void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
+		// No necesita procesamiento final.
+	}
+
+	public static void reiniciarGlobal() {
+		REPORTADOS_GLOBAL.clear();
 	}
 
 	@Override
@@ -153,7 +223,7 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		return trazo.trace.contains(geck) || trazo.trace.contains(azure);
+		return trazo != null && trazo.trace != null && (trazo.trace.contains(geck) || trazo.trace.contains(azure));
 	}
 
 	@Override
@@ -161,5 +231,4 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

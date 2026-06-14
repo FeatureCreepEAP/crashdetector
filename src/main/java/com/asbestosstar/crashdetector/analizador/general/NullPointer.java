@@ -16,22 +16,29 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Verificación especializada para detectar y resumir todas las
  * {@code NullPointerException} (NPE) que aparecen en la consola.
- * <p>
- * - Analiza tanto el texto crudo de la consola como los trazos ya extraídos por
- * {@link VerificacionDeStackTrace} para asegurar que no se escape ningún caso.
- * - Para cada NPE, identifica (si es posible) el método y el objeto nulo
- * implicado. - Añade un posible origen (JAR, modid o clase) usando solo
- * información del trazo actual, evitando falsos positivos al no usar datos
- * globales de otros errores. - Agrupa errores idénticos mostrando todos los
- * JARs relacionados en un solo mensaje. - La salida es un bloque HTML con lista
- * de errores, pensado para mostrarse en la UI.
  */
-public class NullPointer implements Verificaciones {
+public class NullPointer implements VerificacionRapida {
+
+	/**
+	 * Conjunto global de NPEs detectadas para evitar duplicados entre logs. Clave:
+	 * mensajeBase (idioma-específico)
+	 */
+	private static final java.util.Set<String> ERRORES_GLOBALES_VISTOS = java.util.Collections
+			.synchronizedSet(new java.util.HashSet<>());
+
+	/**
+	 * Limpia el conjunto de errores vistos globalmente.
+	 */
+	public static void reiniciarGlobal() {
+		ERRORES_GLOBALES_VISTOS.clear();
+	}
 
 	/**
 	 * Separador de líneas, definido en la interfaz base
@@ -84,6 +91,17 @@ public class NullPointer implements Verificaciones {
 	}
 
 	@Override
+	public String[] patronesRapidos() {
+		return new String[] { "NullPointerException", "Cannot invoke", "because", "is null" };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		posiblePorLinea = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
 	public void verificar(Consola consola) {
 
 		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
@@ -123,6 +141,11 @@ public class NullPointer implements Verificaciones {
 			String origen = inferirOrigenDesdeTrace(trace);
 
 			String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
+
+			// Deduplicación global entre logs
+			if (!ERRORES_GLOBALES_VISTOS.add(mensajeBase)) {
+				continue;
+			}
 
 			enlacesPorLinea.putIfAbsent(mensajeBase, consola.agregarErrorALectador(trace.consolaLineaComenzar, this));
 
@@ -180,6 +203,11 @@ public class NullPointer implements Verificaciones {
 		// Buscar origen SOLO en esta línea
 		String origen = detectarOrigenEnLinea(linea, vdst, numeroLinea);
 		String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
+
+		// Deduplicación global entre logs
+		if (!ERRORES_GLOBALES_VISTOS.add(mensajeBase)) {
+			return;
+		}
 
 		// Registrar el error en el sistema de lectura (enlace para la línea suelta)
 		enlacesPorLinea.put(mensajeBase, consola.agregarErrorALectador(numeroLinea, this));

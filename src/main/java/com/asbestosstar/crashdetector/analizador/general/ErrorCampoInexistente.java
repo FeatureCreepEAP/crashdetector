@@ -11,7 +11,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Detecta errores NoSuchFieldError que ocurren cuando un mod intenta acceder a
  * un campo que ya no existe en la versión actual del juego u otro mod.
  */
-public class ErrorCampoInexistente implements Verificaciones {
+public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posibleNoSuchField = false;
@@ -36,6 +36,22 @@ public class ErrorCampoInexistente implements Verificaciones {
 	private boolean pillowmc = false;
 
 	@Override
+	public String[] patronesRapidos() {
+		return new String[] { "java.lang.NoSuchFieldError:" };
+	}
+
+	@Override
+	public void verificarCoincidencia(com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia evento) {
+		this.posibleNoSuchField = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public boolean activarEscaneoPorLinea(Consola consola) {
+		return posibleNoSuchField;
+	}
+
+	@Override
 	public void verificar(Consola consola) {
 		String contenido = consola.contenido_verificar;
 		if (contenido.contains("java.lang.NoSuchFieldError:")) {
@@ -52,22 +68,27 @@ public class ErrorCampoInexistente implements Verificaciones {
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (linea == null || !posibleNoSuchField || activado) {
+		if (linea == null || activado) {
 			return;
+		}
+
+		if (!posibleNoSuchField) {
+			if (linea.contains("java.lang.NoSuchFieldError:")) {
+				posibleNoSuchField = true;
+			} else {
+				return;
+			}
 		}
 
 		if (linea.contains("java.lang.NoSuchFieldError:")) {
+			this.lineaError = linea.trim();
+			this.nombreCampoDetectado = extraerCampoNoSuchField(linea);
 			return;
 		}
 
-		String nombreCampo = extraerCampoNoSuchField(linea);
-
-		if (nombreCampo == null || nombreCampo.isEmpty()) {
+		if (this.nombreCampoDetectado == null || this.nombreCampoDetectado.isEmpty()) {
 			return;
 		}
-
-		this.nombreCampoDetectado = nombreCampo;
-		this.lineaError = linea.trim();
 		this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 		resetearBanderasMods();

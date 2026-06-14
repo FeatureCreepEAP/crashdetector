@@ -11,9 +11,21 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class Drivers implements Verificaciones {
+public class Drivers implements VerificacionRapida {
+
+	private static final java.util.Set<String> MENSAJES_GLOBALES_VISTOS = java.util.Collections
+			.synchronizedSet(new java.util.HashSet<>());
+
+	/**
+	 * Limpia el estado global de mensajes agregados.
+	 */
+	public static void reiniciarGlobal() {
+		MENSAJES_GLOBALES_VISTOS.clear();
+	}
 
 	private boolean activado = false;
 
@@ -88,6 +100,27 @@ public class Drivers implements Verificaciones {
 	 * No usa regex. No convierte todo el log a minúsculas. Solo marca señales muy
 	 * baratas que ayudan a la verificación por línea.
 	 */
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { "EXCEPTION_ACCESS_VIOLATION", "[libopenal.so+", "Pixel format not accelerated",
+				"The driver does not appear to support OpenGL", "GLFW error 65542", "GLFW error 65543",
+				"GLFW error 1282", "No context is current or a function that is not available in the current context",
+				"The driver does not appear to support framebuffer objects", "org.lwjgl.LWJGLException",
+				"libnouveau.so", "libdrm_nouveau.so", "Trying GL version" };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento.patron.equals("EXCEPTION_ACCESS_VIOLATION")) {
+			hayAccessViolation = true;
+		} else if (evento.patron.contains("libnouveau.so") || evento.patron.contains("libdrm_nouveau.so")) {
+			// No activamos nada global, dejamos que verificarPorLinea haga el resto
+		} else if (evento.patron.contains("libopenal.so+")) {
+			posibleOpenAL = true;
+		}
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
@@ -323,30 +356,28 @@ public class Drivers implements Verificaciones {
 	}
 
 	private void procesarProblemaGraficos(Consola consola, int numero_de_linea) {
-		if (mensajeGraficosAgregado) {
-			agregarEnlace(consola, numero_de_linea);
-			return;
-		}
-
 		boolean esWindows = esWindows();
 		boolean tieneNvidia = esWindows && tieneNvidiaGPU();
 		boolean esWindowsNuevo = esWindows && esWindows11OServer2025();
 
-		if (tieneNvidia) {
-			mensajes.append(esWindowsNuevo ? MonitorDePID.idioma.problema_con_graficas_nvidia_windows_nuevo()
-					: MonitorDePID.idioma.problema_con_graficas_nvidia_windows_viejo());
-		} else {
-			mensajes.append(MonitorDePID.idioma.problema_con_graficas_general());
+		String msg = tieneNvidia
+				? (esWindowsNuevo ? MonitorDePID.idioma.problema_con_graficas_nvidia_windows_nuevo()
+						: MonitorDePID.idioma.problema_con_graficas_nvidia_windows_viejo())
+				: MonitorDePID.idioma.problema_con_graficas_general();
+
+		if (MENSAJES_GLOBALES_VISTOS.add(msg)) {
+			mensajes.append(msg);
+			mensajeGraficosAgregado = true;
+			activado = true;
 		}
 
-		mensajeGraficosAgregado = true;
-		activado = true;
 		agregarEnlace(consola, numero_de_linea);
 	}
 
 	private void procesarProblemaSodiumDrivers(Consola consola, int numero_de_linea) {
-		if (!mensajeSodiumAgregado) {
-			mensajes.append(MonitorDePID.idioma.problema_con_graficas_sodium());
+		String msg = MonitorDePID.idioma.problema_con_graficas_sodium();
+		if (MENSAJES_GLOBALES_VISTOS.add(msg)) {
+			mensajes.append(msg);
 			mensajeSodiumAgregado = true;
 			activado = true;
 		}
@@ -355,8 +386,9 @@ public class Drivers implements Verificaciones {
 	}
 
 	private void procesarGpuNoCompatible(Consola consola, int numero_de_linea) {
-		if (!mensajeGpuNoCompatibleAgregado) {
-			mensajes.append(MonitorDePID.idioma.gpu_no_compatible());
+		String msg = MonitorDePID.idioma.gpu_no_compatible();
+		if (MENSAJES_GLOBALES_VISTOS.add(msg)) {
+			mensajes.append(msg);
 			mensajeGpuNoCompatibleAgregado = true;
 			activado = true;
 		}
@@ -365,8 +397,9 @@ public class Drivers implements Verificaciones {
 	}
 
 	private void procesarProblemaAMD(Consola consola, int numero_de_linea) {
-		if (!mensajeAMDAgregado) {
-			mensajes.append(MonitorDePID.idioma.problema_con_graficas_ati());
+		String msg = MonitorDePID.idioma.problema_con_graficas_ati();
+		if (MENSAJES_GLOBALES_VISTOS.add(msg)) {
+			mensajes.append(msg);
 			mensajeAMDAgregado = true;
 			activado = true;
 		}
@@ -375,8 +408,9 @@ public class Drivers implements Verificaciones {
 	}
 
 	private void procesarProblemaMatrox(Consola consola, int numero_de_linea) {
-		if (!mensajeMatroxAgregado) {
-			mensajes.append(MonitorDePID.idioma.problema_con_graficas_matrox());
+		String msg = MonitorDePID.idioma.problema_con_graficas_matrox();
+		if (MENSAJES_GLOBALES_VISTOS.add(msg)) {
+			mensajes.append(msg);
 			mensajeMatroxAgregado = true;
 			activado = true;
 		}
@@ -428,9 +462,10 @@ public class Drivers implements Verificaciones {
 	}
 
 	private void procesarProblemaOpenAL(Consola consola, int numero_de_linea) {
-		if (!mensajeOpenALAgregado) {
+		String msg = MonitorDePID.idioma.problema_con_openAL();
+		if (MENSAJES_GLOBALES_VISTOS.add(msg)) {
 			mensajes.append(nl_html);
-			mensajes.append(MonitorDePID.idioma.problema_con_openAL());
+			mensajes.append(msg);
 			mensajeOpenALAgregado = true;
 			activado = true;
 		}
@@ -439,8 +474,9 @@ public class Drivers implements Verificaciones {
 	}
 
 	private void procesarProblemaIntel(Consola consola, int numero_de_linea) {
-		if (!mensajeIntelAgregado) {
-			mensajes.append(MonitorDePID.idioma.problema_con_graficas_intel());
+		String msg = MonitorDePID.idioma.problema_con_graficas_intel();
+		if (MENSAJES_GLOBALES_VISTOS.add(msg)) {
+			mensajes.append(msg);
 			mensajeIntelAgregado = true;
 			activado = true;
 		}

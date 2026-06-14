@@ -64,6 +64,135 @@ public class VerificacionDeStackTrace {
 	 */
 	public List<TraceInfo> trazos_completos = new ArrayList<>();
 
+	// --- ESTADO PARA ESCANEO INCREMENTAL ---
+	private int nivelPrioridadActual = 0;
+	private int lineaInicioBuffer = -1;
+	private List<String> bufferLineas = new ArrayList<>();
+	private boolean bufferEsFatal = false;
+	private List<TraceInfo> bufferTracesFatal = new ArrayList<>();
+	private List<TraceInfo> bufferTracesNormales = new ArrayList<>();
+
+	public void procesarLineaIncremental(String linea, int numeroLinea) {
+		if (linea == null || linea.isEmpty())
+			return;
+
+		// Fast check for 'at ', '/FATAL]', 'Caused by:', 'Suppressed:', '...' or common
+		// exception headers before calling normalizarLineaStack
+		boolean esFatal = linea.contains("/FATAL]");
+		boolean containsAt = linea.contains("at ");
+		boolean containsException = linea.contains("Exception") || linea.contains("Error");
+		boolean isContinuation = linea.contains("Caused by:") || linea.contains("Suppressed:") || linea.contains("...");
+
+		if (!esFatal && !containsAt && !containsException && !isContinuation) {
+			if (lineaInicioBuffer != -1) {
+				finalizarBufferIncremental();
+			}
+			return;
+		}
+
+		String normalizada = normalizarLineaStack(linea);
+		boolean esAt = normalizada != null && normalizada.startsWith("at ");
+		boolean esEncabezado = !esAt && normalizada != null && pareceEncabezadoExcepcion(normalizada);
+		boolean esContinuacion = !esAt && !esEncabezado && normalizada != null && (normalizada.startsWith("Caused by:")
+				|| normalizada.startsWith("Suppressed:") || normalizada.startsWith("..."));
+
+		if (lineaInicioBuffer == -1) {
+			// No estamos en un trazo, ver si esta linea empieza uno
+			if (esFatal || esAt || esEncabezado) {
+				lineaInicioBuffer = numeroLinea;
+				bufferEsFatal = esFatal;
+				bufferLineas.add(linea);
+			}
+		} else {
+			// Ya estamos en un trazo
+			if (esAt || esEncabezado || esContinuacion) {
+				bufferLineas.add(linea);
+			} else if (esFatal) {
+				finalizarBufferIncremental();
+				lineaInicioBuffer = numeroLinea;
+				bufferEsFatal = true;
+				bufferLineas.add(linea);
+			} else {
+				// La linea no es parte de un stack ni es fatal, fin del trazo
+				finalizarBufferIncremental();
+			}
+		}
+	}
+
+	/**
+	 * Finaliza el escaneo incremental y procesa los buffers acumulados.
+	 */
+	public void finalizarEscaneoIncremental() {
+		finalizarBufferIncremental();
+
+		if (bufferTracesFatal.isEmpty() && bufferTracesNormales.isEmpty()) {
+			return;
+		}
+
+		// Pre-calculate lineas to avoid re-splitting or re-scanning the whole file
+		// but since we already have the traces in bufferTraces*, we use them.
+
+		// Optimization: If we have many lines, we should ensure the lineas array is
+		// available
+		String[] lineas = consola.lineas_verificar;
+		if (lineas == null) {
+			// fallback if somehow null
+			return;
+		}
+
+		// FATALES (en el orden original de descubrimiento)
+		for (TraceInfo base : bufferTracesFatal) {
+			nivelPrioridadActual++;
+			TraceInfo info = construirYProcesarTraceInfo(lineas, base.consolaLineaComenzar, base.consolaLineaTerminar,
+					nivelPrioridadActual, true);
+			trazos_completos.add(info);
+			nivel_trazo.put(nivelPrioridadActual, info);
+		}
+
+		// NORMALES (en el orden original de descubrimiento)
+		for (TraceInfo base : bufferTracesNormales) {
+			nivelPrioridadActual++;
+			TraceInfo info = construirYProcesarTraceInfo(lineas, base.consolaLineaComenzar, base.consolaLineaTerminar,
+					nivelPrioridadActual, false);
+			trazos_completos.add(info);
+			nivel_trazo.put(nivelPrioridadActual, info);
+		}
+
+		// Reset buffers for next file/run
+		bufferTracesFatal.clear();
+		bufferTracesNormales.clear();
+	}
+
+	private void finalizarBufferIncremental() {
+		if (lineaInicioBuffer == -1)
+			return;
+
+		if (!bufferLineas.isEmpty()) {
+			// Optimization: use tracePermitePorRango directly which is now very fast
+			String[] arr = bufferLineas.toArray(new String[0]);
+			if (tracePermitePorRango(arr, 0, arr.length - 1)) {
+				StringBuilder sb = new StringBuilder();
+				for (String l : bufferLineas) {
+					sb.append(l).append(Verificaciones.nl);
+				}
+
+				TraceInfo base = new TraceInfo(sb.toString(), lineaInicioBuffer, -1, bufferEsFatal);
+				base.consolaLineaTerminar = lineaInicioBuffer + bufferLineas.size() - 1;
+
+				if (bufferEsFatal) {
+					bufferTracesFatal.add(base);
+				} else {
+					bufferTracesNormales.add(base);
+				}
+			}
+		}
+
+		// Reset buffer
+		lineaInicioBuffer = -1;
+		bufferLineas.clear();
+		bufferEsFatal = false;
+	}
+
 	static {
 		StackTracesDenegadosDeMinecraftPorDefecto.init();
 	}
@@ -90,6 +219,14 @@ public class VerificacionDeStackTrace {
 
 		nivel_trazo.clear();
 		trazos_completos.clear();
+
+		// Reset estado incremental
+		nivelPrioridadActual = 0;
+		lineaInicioBuffer = -1;
+		bufferLineas.clear();
+		bufferEsFatal = false;
+		bufferTracesFatal.clear();
+		bufferTracesNormales.clear();
 
 		String[] lineas = consola.lineas_verificar;
 		if (lineas == null || lineas.length == 0) {
@@ -179,6 +316,10 @@ public class VerificacionDeStackTrace {
 			return true;
 		}
 
+		if (denegadosContieneRapidos.isEmpty() && reglasDenegadoTrace.isEmpty()) {
+			return true;
+		}
+
 		boolean necesitaTraceCompleto = !reglasDenegadoTrace.isEmpty();
 		StringBuilder sb = necesitaTraceCompleto ? new StringBuilder() : null;
 
@@ -250,42 +391,53 @@ public class VerificacionDeStackTrace {
 		for (int i = inicio; i <= fin && i < lineas.length; i++) {
 
 			String lineaOriginal = lineas[i];
-			String normalizada = normalizarLineaStack(lineaOriginal);
-			if (normalizada == null) {
+			if (lineaOriginal == null || lineaOriginal.isEmpty()) {
 				continue;
 			}
 
-			String t = normalizada.trim();
-			if (t.isEmpty()) {
+			// Optimization: avoid full normalization if not needed
+			// Check if it's likely a stack trace line or something interesting
+			boolean containsAt = lineaOriginal.contains("at ");
+			boolean containsMixin = lineaOriginal.contains("mixin");
+			boolean containsException = lineaOriginal.contains("Exception") || lineaOriginal.contains("Error");
+
+			if (!containsAt && !containsMixin && !containsException) {
+				continue;
+			}
+
+			String normalizada = normalizarLineaStack(lineaOriginal);
+			if (normalizada == null || normalizada.isEmpty()) {
 				continue;
 			}
 
 			// === SpongeMixin JSON, sin split extra ===
-			if (t.contains("org.spongepowered.asm.mixin")) {
-				procesarJsonMixinEnLinea(t, inicio, fatal);
+			if (containsMixin && normalizada.contains("org.spongepowered.asm.mixin")) {
+				procesarJsonMixinEnLinea(normalizada, inicio, fatal);
 			}
 
 			// === ClassNotFound / NoClassDef, sin volver a escanear todo el trace ===
-			if ((t.contains("ClassNotFoundException") || t.contains("NoClassDefFoundError"))
-					&& !esLineaDeAdvertenciaEstandar(t)) {
+			if (containsException
+					&& (normalizada.contains("ClassNotFoundException") || normalizada.contains("NoClassDefFoundError"))
+					&& !esLineaDeAdvertenciaEstandar(normalizada)) {
 
-				claseFaltantePendiente = extraerClaseFaltanteDeLinea(t);
+				claseFaltantePendiente = extraerClaseFaltanteDeLinea(normalizada);
 				lineaClaseFaltantePendiente = i;
 			}
 
-			if (t.contains("org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException:")) {
-				String clase = extraerClaseDeMetadataNoEncontrada(t);
+			if (containsMixin
+					&& normalizada.contains("org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException:")) {
+				String clase = extraerClaseDeMetadataNoEncontrada(normalizada);
 				if (clase != null && !clase.isEmpty()) {
 					clases_fatales_no_existentes.put(clase, nivel, i, "");
 				}
 			}
 
 			// Solo las líneas "at ..." producen LineaTrazo
-			if (!t.startsWith("at ")) {
+			if (!normalizada.startsWith("at ")) {
 				continue;
 			}
 
-			LineaTrazo lt = construirLineaTrazoDesdeLinea(t, nivel, i, fatal);
+			LineaTrazo lt = construirLineaTrazoDesdeLinea(normalizada, nivel, i, fatal);
 			if (lt == null) {
 				continue;
 			}
@@ -307,24 +459,25 @@ public class VerificacionDeStackTrace {
 
 	private static String extraerClaseFaltanteDeLinea(String linea) {
 
-		if (linea == null) {
+		if (linea == null || linea.isEmpty()) {
 			return null;
 		}
 
 		String claseFaltante;
+		int startIdx;
 
-		if (linea.contains("ClassNotFoundException")) {
-			int startIdx = linea.indexOf("ClassNotFoundException:") + "ClassNotFoundException:".length();
+		if ((startIdx = linea.indexOf("ClassNotFoundException:")) >= 0) {
+			startIdx += 23; // length of "ClassNotFoundException:"
 			claseFaltante = linea.substring(startIdx).trim();
-		} else if (linea.contains("NoClassDefFoundError")) {
-			int startIdx = linea.indexOf("NoClassDefFoundError:") + "NoClassDefFoundError:".length();
+		} else if ((startIdx = linea.indexOf("NoClassDefFoundError:")) >= 0) {
+			startIdx += 21; // length of "NoClassDefFoundError:"
 			claseFaltante = linea.substring(startIdx).trim();
 		} else {
 			return null;
 		}
 
 		if (claseFaltante.startsWith("Could not initialize class ")) {
-			claseFaltante = claseFaltante.substring("Could not initialize class ".length()).trim();
+			claseFaltante = claseFaltante.substring(27).trim();
 		}
 
 		int espacio = claseFaltante.indexOf(' ');
@@ -364,7 +517,7 @@ public class VerificacionDeStackTrace {
 
 			if (!sm_config.containsKey0(nombreJson)) {
 				sm_config.put(nombreJson, consolaLineaInicio, fatal);
-				CrashDetectorLogger.log("Agregando JSON " + nombreJson);
+				// CrashDetectorLogger.log("Agregando JSON " + nombreJson);
 			}
 		}
 	}
@@ -713,55 +866,51 @@ public class VerificacionDeStackTrace {
 	}
 
 	public static String extraerClaseDeLinea(String linea) {
-		if (linea == null) {
+		if (linea == null || linea.isEmpty()) {
 			return "";
 		}
 
-		String texto = linea.trim();
-
-		// Quitar comentarios tipo "// at ..."
-		if (texto.startsWith("//")) {
-			texto = texto.substring(2).trim();
-		}
+		String texto = linea;
 
 		// Quitar prefijo "at "
 		if (texto.startsWith("at ")) {
-			texto = texto.substring(3).trim();
+			texto = texto.substring(3);
 		}
 
-		// Quitar prefijos de cargador (pueden venir anidados: knot//MC//...)
+		// Quitar prefijos de cargador
 		texto = limpiarPrefijosYCargadores(texto);
 
 		// Cortar "(Clase.java:123)"
 		int idxPar = texto.indexOf('(');
 		if (idxPar >= 0) {
-			texto = texto.substring(0, idxPar).trim();
+			texto = texto.substring(0, idxPar);
 		}
 
 		// Eliminar sufijos sintéticos ($$Lambda, $$Enhancer, etc.)
 		int idxDoble = texto.indexOf("$$");
 		if (idxDoble >= 0) {
-			texto = texto.substring(0, idxDoble).trim();
+			texto = texto.substring(0, idxDoble);
 		}
 
 		// Quitar el nombre del método (si existe)
-		// Ej: net.minecraft.client.MinecraftClient.render ->
-		// net.minecraft.client.MinecraftClient
-		// Ej: net.minecraft.class_156.method_654 -> net.minecraft.class_156
 		int ultimoPunto = texto.lastIndexOf('.');
 		if (ultimoPunto > 0) {
-			texto = texto.substring(0, ultimoPunto).trim();
+			texto = texto.substring(0, ultimoPunto);
 		}
 
 		// Normalizar a formato interno con '/'
-		texto = texto.replace('.', '/').trim();
+		texto = texto.replace('.', '/');
 
 		// Limpieza defensiva de barras iniciales
-		while (texto.startsWith("/")) {
-			texto = texto.substring(1);
+		int start = 0;
+		while (start < texto.length() && texto.charAt(start) == '/') {
+			start++;
+		}
+		if (start > 0) {
+			texto = texto.substring(start);
 		}
 
-		return texto;
+		return texto.trim();
 	}
 
 	/**
@@ -776,7 +925,17 @@ public class VerificacionDeStackTrace {
 			return "";
 		}
 
-		String t = texto.trim();
+		String t = texto;
+		int startTrim = 0;
+		int endTrim = t.length();
+		while (startTrim < endTrim && Character.isWhitespace(t.charAt(startTrim)))
+			startTrim++;
+		while (startTrim < endTrim && Character.isWhitespace(t.charAt(endTrim - 1)))
+			endTrim--;
+
+		if (startTrim > 0 || endTrim < t.length()) {
+			t = t.substring(startTrim, endTrim);
+		}
 
 		// Quitar prefijos simples anidados (con //)
 		boolean cambio;
@@ -784,55 +943,52 @@ public class VerificacionDeStackTrace {
 			cambio = false;
 
 			if (t.startsWith("knot//")) {
-				t = t.substring("knot//".length()).trim();
+				t = t.substring(6).trim();
 				cambio = true;
-			}
-			if (t.startsWith("knott//")) {
-				t = t.substring("knott//".length()).trim();
+			} else if (t.startsWith("knott//")) {
+				t = t.substring(7).trim();
 				cambio = true;
-			}
-			if (t.startsWith("app//")) {
-				t = t.substring("app//".length()).trim();
+			} else if (t.startsWith("app//")) {
+				t = t.substring(5).trim();
 				cambio = true;
-			}
-			if (t.startsWith("MC//")) {
-				t = t.substring("MC//".length()).trim();
+			} else if (t.startsWith("MC//")) {
+				t = t.substring(4).trim();
 				cambio = true;
-			}
-
-			// Quitar prefijos simples con /
-			if (t.startsWith("jdk/")) {
-				t = t.substring("jdk/".length()).trim();
+			} else if (t.startsWith("jdk/")) {
+				t = t.substring(4).trim();
 				cambio = true;
 			}
 
 			// Agregar este bloque junto con los otros prefijos con metadata
 			if (t.startsWith("SECURE-BOOTSTRAP/")) {
-				t = t.substring("SECURE-BOOTSTRAP/".length()).trim();
+				t = t.substring(17).trim();
 				// Saltar el primer segmento (modulo/modid + version) hasta la siguiente '/'
 				int idx = t.indexOf('/');
 				if (idx >= 0 && idx + 1 < t.length()) {
 					t = t.substring(idx + 1).trim();
+					cambio = true;
 				}
 			}
 
 			// Agregar este bloque junto con los otros prefijos con metadata
 			if (t.startsWith("MC-BOOTSTRAP/")) {
-				t = t.substring("MC-BOOTSTRAP/".length()).trim();
+				t = t.substring(13).trim();
 				// Saltar el primer segmento (modulo/modid + version) hasta la siguiente '/'
 				int idx = t.indexOf('/');
 				if (idx >= 0 && idx + 1 < t.length()) {
 					t = t.substring(idx + 1).trim();
+					cambio = true;
 				}
 			}
 
 			// Agregar este bloque junto con los otros prefijos con metadata
 			if (t.startsWith("MC/")) {
-				t = t.substring("MC/".length()).trim();
+				t = t.substring(3).trim();
 				// Saltar el primer segmento (modulo/modid + version) hasta la siguiente '/'
 				int idx = t.indexOf('/');
 				if (idx >= 0 && idx + 1 < t.length()) {
 					t = t.substring(idx + 1).trim();
+					cambio = true;
 				}
 			}
 
@@ -862,23 +1018,19 @@ public class VerificacionDeStackTrace {
 			cambio = false;
 
 			if (t.startsWith("knot//MC//")) {
-				t = t.substring("knot//MC//".length()).trim();
+				t = t.substring(10).trim();
 				cambio = true;
-			}
-			if (t.startsWith("knott//")) {
-				t = t.substring("knott//".length()).trim();
+			} else if (t.startsWith("knott//")) {
+				t = t.substring(7).trim();
 				cambio = true;
-			}
-			if (t.startsWith("app//")) {
-				t = t.substring("app//".length()).trim();
+			} else if (t.startsWith("app//")) {
+				t = t.substring(5).trim();
 				cambio = true;
-			}
-			if (t.startsWith("MC//")) {
-				t = t.substring("MC//".length()).trim();
+			} else if (t.startsWith("MC//")) {
+				t = t.substring(4).trim();
 				cambio = true;
-			}
-			if (t.startsWith("jdk/")) {
-				t = t.substring("jdk/".length()).trim();
+			} else if (t.startsWith("jdk/")) {
+				t = t.substring(4).trim();
 				cambio = true;
 			}
 
@@ -1893,29 +2045,45 @@ public class VerificacionDeStackTrace {
 	public static String normalizarLineaStack(String l) {
 		if (l == null)
 			return null;
-		String t = l.trim();
+
+		int start = 0;
+		int end = l.length();
+
+		// Trim manually to avoid creating intermediate strings if not needed
+		while (start < end && Character.isWhitespace(l.charAt(start)))
+			start++;
+		while (start < end && Character.isWhitespace(l.charAt(end - 1)))
+			end--;
+
+		if (start >= end)
+			return "";
 
 		// Si la línea viene comentada tipo "// at ..."
-		if (t.startsWith("//")) {
-			t = t.substring(2).trim();
+		if (end - start >= 2 && l.charAt(start) == '/' && l.charAt(start + 1) == '/') {
+			start += 2;
+			while (start < end && Character.isWhitespace(l.charAt(start)))
+				start++;
 		}
+
+		if (start >= end)
+			return "";
+
+		String t = l.substring(start, end);
+
 		// Quitar prefijos de cargador antes de "at " o justo después de "at "
-		// Casos: "at knot//com.paquete.Clase.metodo(...)" ó "knot//at com..."
 		if (t.startsWith("at ")) {
 			// remover prefijos justo después de "at "
 			for (String p : PREFIJOS_CARGADOR) {
-				String marca = "at " + p;
-				if (t.startsWith(marca)) {
-					t = "at " + t.substring(marca.length());
+				if (t.startsWith(p, 3)) { // "at " is length 3
+					t = "at " + t.substring(3 + p.length());
 					break;
 				}
 			}
 		} else {
 			// si viene como "knot//at ..."
 			for (String p : PREFIJOS_CARGADOR) {
-				String marca = p + "at ";
-				if (t.startsWith(marca)) {
-					t = "at " + t.substring(marca.length());
+				if (t.startsWith(p) && t.startsWith("at ", p.length())) {
+					t = "at " + t.substring(p.length() + 3);
 					break;
 				}
 			}
@@ -1924,8 +2092,8 @@ public class VerificacionDeStackTrace {
 		// También limpiar cualquier prefijo repetido "knot//" al inicio de la parte de
 		// clase/paquete
 		for (String p : PREFIJOS_CARGADOR) {
-			if (t.startsWith("at " + p)) {
-				t = "at " + t.substring(("at " + p).length());
+			if (t.startsWith(p, 3)) {
+				t = "at " + t.substring(3 + p.length());
 			}
 		}
 

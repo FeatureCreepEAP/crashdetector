@@ -11,7 +11,25 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
  * Detecta errores NoSuchMethodError que ocurren cuando un mod intenta llamar a
  * un metodo que ya no existe en la version actual del juego o de otro mod.
  */
-public class ErrorMetodoInexistente implements Verificaciones {
+public class ErrorMetodoInexistente implements com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida {
+
+	private boolean posibleNoSuchMethod = false;
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { "java.lang.NoSuchMethodError:" };
+	}
+
+	@Override
+	public void verificarCoincidencia(com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia evento) {
+		this.posibleNoSuchMethod = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public boolean activarEscaneoPorLinea(Consola consola) {
+		return posibleNoSuchMethod;
+	}
 
 	private static final String PREFIJO_ERROR = "java.lang.NoSuchMethodError:";
 
@@ -20,6 +38,8 @@ public class ErrorMetodoInexistente implements Verificaciones {
 	private String enlaceHtml = "";
 	private String firmaMetodo = "";
 	private String lineaSiguiente = "";
+	private String lineaError = "";
+	private String nombreMetodoDetectado = "";
 
 	/**
 	 * Chequeo global barato.
@@ -48,14 +68,12 @@ public class ErrorMetodoInexistente implements Verificaciones {
 		}
 
 		if (contenido.contains(PREFIJO_ERROR)) {
-			posibleNoSuchMethodError = true;
-
+			posibleNoSuchMethod = true;
 		}
-
 	}
 
 	public boolean quiereAnalizarLineas() {
-		if (!posibleNoSuchMethodError)
+		if (!posibleNoSuchMethod)
 			return false;
 
 		return true;
@@ -63,11 +81,25 @@ public class ErrorMetodoInexistente implements Verificaciones {
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numLinea) {
-		if (activado || !posibleNoSuchMethodError || linea == null) {
+		if (activado || linea == null) {
 			return;
 		}
 
-		if (!linea.contains(PREFIJO_ERROR)) {
+		if (!posibleNoSuchMethod) {
+			if (linea.contains(PREFIJO_ERROR)) {
+				posibleNoSuchMethod = true;
+			} else {
+				return;
+			}
+		}
+
+		if (linea.contains(PREFIJO_ERROR)) {
+			this.lineaError = linea.trim();
+			this.nombreMetodoDetectado = extraerMetodoNoSuchMethod(linea);
+			return;
+		}
+
+		if (this.nombreMetodoDetectado == null || this.nombreMetodoDetectado.isEmpty()) {
 			return;
 		}
 
@@ -233,6 +265,22 @@ public class ErrorMetodoInexistente implements Verificaciones {
 		}
 
 		return linea.substring(inicio).trim();
+	}
+
+	private static String extraerMetodoNoSuchMethod(String linea) {
+		String firma = extraerFirmaMetodo(linea);
+		if (firma == null || firma.isEmpty()) {
+			return "";
+		}
+
+		int parentesis = firma.indexOf('(');
+		if (parentesis < 0) {
+			return firma;
+		}
+
+		String sinArgumentos = firma.substring(0, parentesis);
+		int punto = sinArgumentos.lastIndexOf('.');
+		return punto >= 0 ? sinArgumentos.substring(punto + 1) : sinArgumentos;
 	}
 
 	private static boolean contiene(String texto, String a, String b) {

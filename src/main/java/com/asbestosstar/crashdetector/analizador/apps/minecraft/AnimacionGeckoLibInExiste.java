@@ -1,85 +1,134 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-/**
- * Detecta errores de GeckoLib donde un archivo de animación .json no puede ser
- * encontrado (Unable to find).
- *
- * Ejemplo: software.bernie.geckolib.GeckoLibException:
- * afomni:animations/echoecho.animation.json: Unable to find animation file.
- *
- * Generalmente causado por: - Archivo de animación faltante en el sistema de
- * archivos del mod. - Ruta mal configurada en el registro del modelo/animación.
- * - Error de minusculas/mayúsculas en el nombre del archivo (Case sensitivity).
- */
-public class AnimacionGeckoLibInExiste implements Verificaciones {
+public class AnimacionGeckoLibInExiste implements VerificacionRapida {
+
+	private static final Set<String> REPORTADOS_GLOBAL = Collections.synchronizedSet(new HashSet<>());
 
 	private boolean activado = false;
-	private boolean analizarLineas = false;
 	private String enlace = "";
 	private String archivo = "";
 
 	@Override
+	public String[] patronesRapidos() {
+		return new String[] { "Unable to find animation file", "GeckoLibException" };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado)
+			return;
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null)
+			return;
 
 		String log = consola.contenido_verificar;
 
-		if (log == null)
+		if (log.indexOf("Unable to find animation file") < 0 || log.indexOf("GeckoLibException") < 0)
 			return;
 
-		// Pre-check global para activar el análisis línea por línea
-		// Buscamos la nueva firma del error: "Unable to find animation file"
-		if (log.contains("GeckoLibException") && log.contains("Unable to find animation file")) {
+		int desde = 0;
+		while (!activado) {
+			int pos = log.indexOf("Unable to find animation file", desde);
+			if (pos < 0)
+				break;
 
-			analizarLineas = true;
+			int inicioLinea = log.lastIndexOf('\n', pos);
+			int finLinea = log.indexOf('\n', pos);
+
+			if (inicioLinea < 0)
+				inicioLinea = 0;
+			else
+				inicioLinea++;
+
+			if (finLinea < 0)
+				finLinea = log.length();
+
+			String linea = log.substring(inicioLinea, finLinea);
+			verificarPorLinea(consola, linea, 0);
+
+			desde = finLinea + 1;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return false;
 	}
 
 	@Override
-	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!analizarLineas || linea == null || activado)
+	public void verificarPorLinea(Consola consola, String linea, int numeroDeLinea) {
+		if (consola == null || linea == null || activado)
 			return;
 
-		// Buscamos la línea específica que contiene la excepción y el error de búsqueda
-		if (linea.contains("GeckoLibException") && linea.contains("Unable to find animation file")) {
+		if (linea.indexOf("Unable to find animation file") < 0)
+			return;
 
-			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
+		if (linea.indexOf("GeckoLibException") < 0)
+			return;
 
-			// Intentar extraer el nombre del archivo antes de ": Unable to find animation
-			// file"
-			int separador = linea.indexOf(": Unable to find animation file");
-			if (separador > 0) {
-				String temp = linea.substring(0, separador).trim();
+		String archivoDetectado = extraerArchivo(linea);
 
-				// La línea suele ser: "software.bernie.geckolib.GeckoLibException:
-				// modid:ruta/file.json"
-				// Debemos separar la excepción de la ruta.
-				// Buscamos el último espacio para separar la basura de la ruta.
-				int ultimoEspacio = temp.lastIndexOf(' ');
-				if (ultimoEspacio > 0) {
-					archivo = temp.substring(ultimoEspacio).trim();
-				} else {
-					archivo = temp;
-				}
-			}
+		String clave = archivoDetectado;
+		if (clave == null || clave.isEmpty())
+			clave = linea;
 
-			activado = true;
-		}
+		if (!REPORTADOS_GLOBAL.add(clave))
+			return;
+
+		this.archivo = archivoDetectado;
+		this.enlace = consola.agregarErrorALectador(numeroDeLinea, this);
+		this.activado = true;
+	}
+
+	private static String extraerArchivo(String linea) {
+		int fin = linea.indexOf(": Unable to find animation file");
+		if (fin < 0)
+			return "";
+
+		int inicio = linea.lastIndexOf(' ', fin - 1);
+		if (inicio < 0)
+			inicio = linea.lastIndexOf(':', fin - 1);
+
+		if (inicio < 0)
+			inicio = 0;
+		else
+			inicio++;
+
+		while (inicio < fin && linea.charAt(inicio) <= ' ')
+			inicio++;
+
+		while (fin > inicio && linea.charAt(fin - 1) <= ' ')
+			fin--;
+
+		return linea.substring(inicio, fin);
+	}
+
+	@Override
+	public void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
+		// No necesita procesamiento final.
+	}
+
+	public static void reiniciarGlobal() {
+		REPORTADOS_GLOBAL.clear();
 	}
 
 	@Override
@@ -99,7 +148,6 @@ public class AnimacionGeckoLibInExiste implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-
 		return MonitorDePID.idioma.mensajeAnimacionGeckoInexiste(archivo) + this.enlace;
 	}
 
@@ -127,5 +175,4 @@ public class AnimacionGeckoLibInExiste implements Verificaciones {
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

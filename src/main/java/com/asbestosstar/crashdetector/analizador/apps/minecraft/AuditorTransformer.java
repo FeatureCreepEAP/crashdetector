@@ -13,10 +13,13 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class AuditorTransformer implements Verificaciones {
+public class AuditorTransformer implements VerificacionRapida {
 
 	private boolean posibleAuditoriaTransformer = false;
 	private boolean activado = false;
@@ -34,6 +37,20 @@ public class AuditorTransformer implements Verificaciones {
 			"PLUGIN: crashdetector", "REASON: classloading", "TRANSFORMER: crashdetector" };
 
 	@Override
+	public String[] patronesRapidos() {
+		return new String[] { "Transformer Audit:", "TRANSFORMER:", "PLUGIN:", "REASON:" };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null)
+			return;
+
+		posibleAuditoriaTransformer = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
 	public void verificar(Consola consola) {
 		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
 			return;
@@ -44,18 +61,15 @@ public class AuditorTransformer implements Verificaciones {
 		// varios archivos de log con la misma instancia.
 		String contenido = consola.contenido_verificar;
 
-		if (contenido.contains("Transformer Audit:") || contenido.contains("TRANSFORMER:")
-				|| contenido.contains("PLUGIN:") || contenido.contains("REASON:")) {
+		if (contenido.indexOf("Transformer Audit:") >= 0 || contenido.indexOf("TRANSFORMER:") >= 0
+				|| contenido.indexOf("PLUGIN:") >= 0 || contenido.indexOf("REASON:") >= 0) {
 			posibleAuditoriaTransformer = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleAuditoriaTransformer)
-			return false;
-
-		return true;
+		return false;
 	}
 
 	@Override
@@ -64,25 +78,28 @@ public class AuditorTransformer implements Verificaciones {
 			return;
 		}
 
-		String línea = linea.trim();
+		int inicio = inicioSinEspacios(linea);
+		int fin = finSinEspacios(linea);
 
-		if (línea.isEmpty()) {
+		if (fin <= inicio) {
 			return;
 		}
 
 		try {
-			if (línea.startsWith("Transformer Audit:")) {
+			if (empiezaCon(linea, inicio, fin, "Transformer Audit:")) {
 				auditIndex++;
 				return;
 			}
 
-			if (!esEntradaValida(línea)) {
+			if (!esEntradaValida(linea, inicio, fin)) {
 				return;
 			}
 
-			if (estaEnDenylist(línea)) {
+			if (estaEnDenylist(linea, inicio, fin)) {
 				return;
 			}
+
+			String línea = linea.substring(inicio, fin);
 
 			if (procesados.contains(línea)) {
 				return;
@@ -95,7 +112,7 @@ public class AuditorTransformer implements Verificaciones {
 			procesados.add(línea);
 			procesarEntrada(consola, línea, numero_de_linea);
 		} catch (Exception e) {
-			CrashDetectorLogger.log("Error procesando línea: " + línea);
+			CrashDetectorLogger.log("Error procesando línea: " + linea);
 		}
 	}
 
@@ -139,7 +156,7 @@ public class AuditorTransformer implements Verificaciones {
 	 * TRANSFORMER: fml:([^:\s]+)
 	 */
 	private List<String> obtenerJarsRelacionados(String línea) {
-		if (línea.contains("mixin:APP:")) {
+		if (línea.indexOf("mixin:APP:") >= 0) {
 			String jsonFile = extraerDespuesHastaSeparador(línea, "mixin:APP:");
 
 			if (jsonFile != null && !jsonFile.isEmpty()) {
@@ -179,16 +196,17 @@ public class AuditorTransformer implements Verificaciones {
 	/**
 	 * Verifica si una línea contiene una entrada válida.
 	 */
-	private boolean esEntradaValida(String línea) {
-		return línea.startsWith("REASON") || línea.startsWith("TRANSFORMER") || línea.startsWith("PLUGIN");
+	private boolean esEntradaValida(String línea, int inicio, int fin) {
+		return empiezaCon(línea, inicio, fin, "REASON") || empiezaCon(línea, inicio, fin, "TRANSFORMER")
+				|| empiezaCon(línea, inicio, fin, "PLUGIN");
 	}
 
 	/**
 	 * Verifica si la línea está en la lista negada.
 	 */
-	private boolean estaEnDenylist(String línea) {
+	private boolean estaEnDenylist(String línea, int inicio, int fin) {
 		for (String bloque : LISTA_DE_DENEGADOS) {
-			if (línea.startsWith(bloque)) {
+			if (empiezaCon(línea, inicio, fin, bloque)) {
 				return true;
 			}
 		}
@@ -258,7 +276,42 @@ public class AuditorTransformer implements Verificaciones {
 			return null;
 		}
 
-		return línea.substring(inicio, fin).trim();
+		return línea.substring(inicio, fin);
+	}
+
+	private int inicioSinEspacios(String linea) {
+		int i = 0;
+
+		while (i < linea.length() && Character.isWhitespace(linea.charAt(i))) {
+			i++;
+		}
+
+		return i;
+	}
+
+	private int finSinEspacios(String linea) {
+		int i = linea.length();
+
+		while (i > 0 && Character.isWhitespace(linea.charAt(i - 1))) {
+			i--;
+		}
+
+		return i;
+	}
+
+	private boolean empiezaCon(String linea, int inicio, int fin, String prefijo) {
+		int longitud = prefijo.length();
+
+		if (inicio + longitud > fin) {
+			return false;
+		}
+
+		return linea.regionMatches(inicio, prefijo, 0, longitud);
+	}
+
+	@Override
+	public void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
+		// No necesita procesamiento final.
 	}
 
 	@Override
@@ -329,5 +382,4 @@ public class AuditorTransformer implements Verificaciones {
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

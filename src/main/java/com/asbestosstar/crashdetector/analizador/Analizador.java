@@ -54,6 +54,7 @@ import com.asbestosstar.crashdetector.analizador.general.LanzerNoAnimado;
 import com.asbestosstar.crashdetector.analizador.general.ModIncompatibleConCargadorActivo;
 import com.asbestosstar.crashdetector.analizador.general.ModulesDuplicadosJavaModulePlatform;
 import com.asbestosstar.crashdetector.analizador.general.NoTieneMemoria;
+import com.asbestosstar.crashdetector.analizador.general.NoTieneMemoriaRapida;
 import com.asbestosstar.crashdetector.analizador.general.NullPointer;
 import com.asbestosstar.crashdetector.analizador.general.OpcionesJavaGCInvalidas;
 import com.asbestosstar.crashdetector.analizador.general.PreferIPV4Trace;
@@ -65,6 +66,7 @@ import com.asbestosstar.crashdetector.analizador.general.SpongeMixinConfigsProbl
 import com.asbestosstar.crashdetector.analizador.general.TienesModDesAnimado;
 import com.asbestosstar.crashdetector.analizador.general.VerificacionGPU;
 import com.asbestosstar.crashdetector.analizador.general.VersionInvalidaSemver;
+import com.asbestosstar.crashdetector.analizador.rapido.AnalizadorNuevo;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.config.ConfigStringArray;
 
@@ -145,7 +147,7 @@ public class Analizador {
 		verificaciones.add(new FaltasDependenciasModLaunche());
 		verificaciones.add(new KubeJSResourcePack());
 		verificaciones.add(new Segundo60Tick());
-		verificaciones.add(new NoTieneMemoria());
+		verificaciones.add(new NoTieneMemoriaRapida());
 		verificaciones.add(new Theseus());
 		verificaciones.add(new CursedConsola());
 		verificaciones.add(new NullPointer());
@@ -418,7 +420,44 @@ public class Analizador {
 		verificaciones_activados.addAll(verificaciones_tardias_activadas);
 	}
 
+	public void analizar(List<Consola> consolas, Set<Verificaciones> todasLasVerificaciones) {
+		Buscador.cargar();
+
+		// Reiniciar estados globales de deduplicación antes de comenzar
+		FaltasClases.reiniciarGlobal();
+		NullPointer.reiniciarGlobal();
+		ClassCastExceptionGeneral.reiniciarGlobal();
+		ContenidoDeTrazos.reiniciarGlobal();
+		Drivers.reiniciarGlobal();
+
+		// Debug logging to verify analyze is called
+		CrashDetectorLogger.log("[DEBUG_LOG] Analizador.analizar() called with " + consolas.size() + " consolas");
+
+		// Delegamos el análisis a AnalizadorNuevo que maneja el motor de streaming
+		// y la compatibilidad con verificaciones legacy.
+		// AnalizadorNuevo ya se encarga del log de inicio.
+		AnalizadorNuevo nuevo = new AnalizadorNuevo(this);
+
+		// Pasamos TODAS las verificaciones disponibles para que el analizador nuevo las
+		// gestione.
+		// El método obtenerActivados() puede devolver una lista vacía si ninguna ha
+		// sido activada aún.
+		// En AnalizadorNuevo.analizar() se clasificarán en rápidas o legacy.
+		nuevo.analizar(consolas, todasLasVerificaciones);
+
+		// Verificamos si se encontraron resultados
+		int totalErrores = 0;
+		for (Consola c : consolas) {
+			totalErrores += c.errores_de_lectadores.size();
+		}
+		CrashDetectorLogger.log("[DEBUG_LOG] Análisis finalizado. Total errores encontrados: " + totalErrores);
+	}
+
 	public void analizar(List<Consola> consolas) {
+		analizar(consolas, obtenerVerificacionesUnion());
+	}
+
+	public void analizarLegacy(List<Consola> consolas) {
 		Buscador.cargar();
 		CrashDetectorLogger.log("Iniciando análisis de " + consolas.size() + " registros");
 

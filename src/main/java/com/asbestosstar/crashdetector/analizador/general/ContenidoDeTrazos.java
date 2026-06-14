@@ -23,6 +23,8 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.LineaTrazo;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -34,7 +36,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * (global). - No duplicar items dentro del mismo log. - CFR siempre basado en
  * la clase de la linea.
  */
-public class ContenidoDeTrazos implements Verificaciones {
+public class ContenidoDeTrazos implements VerificacionRapida {
 
 	public boolean activado = false;
 
@@ -51,6 +53,13 @@ public class ContenidoDeTrazos implements Verificaciones {
 	// Si la misma linea (clase+linea) aparece en multiples logs, solo se muestra
 	// una vez.
 	private static final Set<String> TRAZOS_GLOBALES_VISTOS = Collections.synchronizedSet(new HashSet<>());
+
+	/**
+	 * Limpia el conjunto de trazos vistos globalmente.
+	 */
+	public static void reiniciarGlobal() {
+		TRAZOS_GLOBALES_VISTOS.clear();
+	}
 
 	private static class Problema {
 		String nombre; // jar/modid/pack/clase (posiblemente combinado)
@@ -259,6 +268,26 @@ public class ContenidoDeTrazos implements Verificaciones {
 		if (clase == null || clase.trim().isEmpty() || !Buscador.hablicar.obtener())
 			return "";
 		return "<a href=\"cfr://" + clase + "\">[CFR]</a>";
+	}
+
+	@Override
+	public String[] patronesRapidos() {
+		// Se activa con cualquier linea de stacktrace para asegurar que procesa al
+		// final
+		return new String[] { "at " };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		// Simplemente nos activamos para indicar que queremos ser procesados al final
+		// del archivo
+		this.activado = true;
+	}
+
+	@Override
+	public void finalizarArchivo(Consola consola,
+			com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo estado) {
+		verificar(consola);
 	}
 
 	@Override

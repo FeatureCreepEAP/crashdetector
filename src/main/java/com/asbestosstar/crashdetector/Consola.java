@@ -332,7 +332,7 @@ public class Consola {
 				for (LimpiadorDeRegistro limp : limpiadores) {
 					if (limp.predicado(archivo)) {
 						contenido_verificar = limp.limpiarConsola(para_verificar.toString());
-						lineas_verificar = contenido_verificar.split(Verificaciones.nl);
+						lineas_verificar = contenido_verificar.split("\\r?\\n", -1);
 						this.limpiador = limp;
 						limpiado = true;
 					}
@@ -340,7 +340,7 @@ public class Consola {
 				if (!limpiado) {
 					this.limpiador = new LimpiadorNingun();
 					contenido_verificar = para_verificar.toString();
-					lineas_verificar = contenido_verificar.split(Verificaciones.nl);
+					lineas_verificar = contenido_verificar.split("\\r?\\n", -1);
 				}
 
 //				if (contenido_verificar.contains(MonitorDePID.mensaje_de_registro_lanzer_completo)) {

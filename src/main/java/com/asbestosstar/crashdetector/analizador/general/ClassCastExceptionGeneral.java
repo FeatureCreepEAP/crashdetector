@@ -9,6 +9,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -16,7 +18,21 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 /**
  * Detecta errores generales de ClassCastException en logs de Minecraft.
  */
-public class ClassCastExceptionGeneral implements Verificaciones {
+public class ClassCastExceptionGeneral implements VerificacionRapida {
+
+	/**
+	 * Conjunto global de ClassCastExceptions detectadas para evitar duplicados
+	 * entre logs. Clave: lineaClassCast (normalizada)
+	 */
+	private static final java.util.Set<String> ERRORES_GLOBALES_VISTOS = java.util.Collections
+			.synchronizedSet(new java.util.HashSet<>());
+
+	/**
+	 * Limpia el conjunto de errores vistos globalmente.
+	 */
+	public static void reiniciarGlobal() {
+		ERRORES_GLOBALES_VISTOS.clear();
+	}
 
 	private boolean posibleError = false;
 	private boolean activado = false;
@@ -29,6 +45,17 @@ public class ClassCastExceptionGeneral implements Verificaciones {
 
 	private final List<ArchivoDeMod> modsClaseOrigen = new ArrayList<>();
 	private final List<ArchivoDeMod> modsClaseDestino = new ArrayList<>();
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { "java.lang.ClassCastException:", " cannot be cast to " };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		posibleError = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
@@ -67,7 +94,14 @@ public class ClassCastExceptionGeneral implements Verificaciones {
 				return;
 			}
 
-			this.lineaClassCast = linea.trim();
+			String limpia = linea.trim();
+
+			// Deduplicación global entre logs
+			if (!ERRORES_GLOBALES_VISTOS.add(limpia)) {
+				return;
+			}
+
+			this.lineaClassCast = limpia;
 			this.enlace = consola.agregarErrorALectador(num, this);
 
 			extraerClases(lineaClassCast);

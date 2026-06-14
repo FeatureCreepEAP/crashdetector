@@ -19,7 +19,13 @@ public class NoTieneMemoria implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null)
+			return;
 		String contenidoConsola = consola.contenido_verificar;
+
+		if (contenidoConsola == null || contenidoConsola.isEmpty()) {
+			return;
+		}
 
 		// Muchos de las ideas son de TLauncher signatures.json o HMCL
 		// CrashAnalyzer.java
@@ -63,7 +69,9 @@ public class NoTieneMemoria implements Verificaciones {
 	}
 
 	// Falta de memoria asignada al heap u otros límites típicos de OOME
-	private boolean esProblemaMemoriaInsuficiente(String contenidoConsola) {
+	protected boolean esProblemaMemoriaInsuficiente(String contenidoConsola) {
+		if (contenidoConsola == null)
+			return false;
 		if (!contenidoConsola.contains("java.lang.OutOfMemoryError"))
 			return false;
 		if (contenidoConsola.contains("Could not reserve enough space for")
@@ -88,7 +96,9 @@ public class NoTieneMemoria implements Verificaciones {
 	 * Determina si el problema es que se asignó demasiada memoria al juego (dejando
 	 * insuficiente para el sistema operativo u otros procesos)
 	 */
-	private boolean esProblemaMemoriaExcesiva(String contenidoConsola) {
+	protected boolean esProblemaMemoriaExcesiva(String contenidoConsola) {
+		if (contenidoConsola == null)
+			return false;
 		return contenidoConsola.contains("Could not reserve enough space for")
 				|| contenidoConsola.contains("The specified size exceeds the maximum representable size")
 				|| contenidoConsola.contains("Invalid maximum heap size") || contenidoConsola
