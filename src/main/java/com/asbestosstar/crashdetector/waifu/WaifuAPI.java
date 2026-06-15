@@ -19,10 +19,11 @@ import com.asbestosstar.crashdetector.config.json.Json;
  *
  * Version con logs detallados para diagnosticar por que no encuentra
  * resultados.
+ * https://github.com/ChiefArug/MinecraftDiscordHelperBot/blob/main/src/commands/classCommand.ts
  */
 public class WaifuAPI {
 
-	private static final String GRAPHQL_URL = "https://api.waifu.neoforged.net/graphql";
+	private static final String GRAPHQL_URL = "https://waifu.neoforged.net/api/graphql";
 
 	public static List<RespuestaWaifu.Mod> obtanerModDesdeClase(String clase) {
 
@@ -49,14 +50,12 @@ public class WaifuAPI {
 				return modsEncontrados;
 			}
 
-			String patron = usarRegex ? clase : escaparRegex(clase);
-
-			CrashDetectorLogger.log("WaifuAPI: patron final = " + patron);
+			CrashDetectorLogger.log("WaifuAPI: patron final = " + clase);
 
 			String consulta = generarConsultaGraphQL();
 			CrashDetectorLogger.log("WaifuAPI: consulta GraphQL =\n" + consulta);
 
-			String respuestaJson = enviarSolicitudGraphQL(consulta, patron);
+			String respuestaJson = enviarSolicitudGraphQL(consulta, clase, usarRegex);
 
 			CrashDetectorLogger.log("WaifuAPI: respuesta JSON cruda longitud = " + respuestaJson.length());
 			CrashDetectorLogger.log("WaifuAPI: respuesta JSON cruda = " + limitar(respuestaJson, 12000));
@@ -177,13 +176,13 @@ public class WaifuAPI {
 	private static String generarConsultaGraphQL() {
 
 		return "query JIJ($predicate: StringPredicate) {\n" + "  gameVersions {\n" + "    version\n" + "    loader\n"
-				+ "    mods(where: {anyClass: {name: $predicate}} first: 10) {\n" + "      count\n" + "      edges {\n"
+				+ "    mods(where: {anyClass: {name: $predicate}}) {\n" + "      count\n" + "      edges {\n"
 				+ "        node {\n" + "          curseforgeProjectId\n" + "          modrinthProjectId\n"
 				+ "          modIds\n" + "          classes(where: {name: $predicate}) {\n" + "            name\n"
 				+ "          }\n" + "        }\n" + "      }\n" + "    }\n" + "  }\n" + "}";
 	}
 
-	private static String enviarSolicitudGraphQL(String consulta, String patron) throws IOException {
+	private static String enviarSolicitudGraphQL(String consulta, String patron, boolean usarRegex) throws IOException {
 
 		CrashDetectorLogger.log("WaifuAPI: enviando solicitud GraphQL a " + GRAPHQL_URL);
 
@@ -196,8 +195,11 @@ public class WaifuAPI {
 		conn.setRequestProperty("User-Agent", Statics.nombre_cd.obtener() + "/WaifuAPI");
 		conn.setDoOutput(true);
 
+		String tipoPredicado = usarRegex ? "matches" : "equals";
+
 		String cuerpo = "{" + "\"query\":\"" + escaparJson(consulta) + "\"," + "\"operationName\":\"JIJ\","
-				+ "\"variables\":{" + "\"predicate\":{\"matches\":\"" + escaparJson(patron) + "\"}" + "}" + "}";
+				+ "\"variables\":{" + "\"predicate\":{\"" + tipoPredicado + "\":\"" + escaparJson(patron) + "\"}" + "}"
+				+ "}";
 
 		CrashDetectorLogger.log("WaifuAPI: cuerpo JSON enviado = " + cuerpo);
 
