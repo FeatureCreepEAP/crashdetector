@@ -2,14 +2,14 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -20,7 +20,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * modlauncher esta corrupto, es de version incorrecta, o el mod no es
  * compatible con la version actual del cargador de mods.
  */
-public class ErrorConfiguracionServicioIDependencyLocator implements Verificaciones {
+public class ErrorConfiguracionServicioIDependencyLocator implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -29,6 +29,29 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 	private String enlaceHtml = "";
 
 	public boolean posible = false;
+
+	private static final String SERVICE_CONFIGURATION_ERROR = "ServiceConfigurationError";
+	private static final String IDEPENDENCY_LOCATOR = "IDependencyLocator";
+	private static final String UNABLE_TO_LOAD = "Unable to load";
+	private static final String MARCADOR = "IDependencyLocator: Unable to load ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { SERVICE_CONFIGURATION_ERROR, IDEPENDENCY_LOCATOR, MARCADOR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(SERVICE_CONFIGURATION_ERROR) || evento.linea.contains(IDEPENDENCY_LOCATOR)) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global no utilizada en este verificador.
@@ -41,18 +64,19 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 	@Override
 	public void verificar(Consola consola) {
 		// No se usa: este verificador funciona en modo por línea.
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		String cont = consola.contenido_verificar;
-		if (cont.contains("ServiceConfigurationError") && cont.contains("IDependencyLocator")) {
+		if (cont.contains(SERVICE_CONFIGURATION_ERROR) && cont.contains(IDEPENDENCY_LOCATOR)) {
 			posible = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	/**
@@ -67,19 +91,16 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó o el chequeo global dijo que no es posible,
 		// no seguimos revisando más líneas.
-		if (activado || !posible) {
+		if (activado || !posible || linea == null) {
 			return;
 		}
 
 		// Verificación rápida inicial.
-		if (!linea.contains("ServiceConfigurationError") || !linea.contains("IDependencyLocator")) {
+		if (!linea.contains(SERVICE_CONFIGURATION_ERROR) || !linea.contains(IDEPENDENCY_LOCATOR)) {
 			return;
 		}
 
-		// Texto que aparece justo antes del nombre de la clase.
-		String marcador = "IDependencyLocator: Unable to load ";
-
-		int inicio = linea.indexOf(marcador);
+		int inicio = linea.indexOf(MARCADOR);
 
 		// Si no existe el marcador, salir.
 		if (inicio < 0) {
@@ -87,7 +108,7 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 		}
 
 		// Mover al inicio real del nombre de clase.
-		inicio += marcador.length();
+		inicio += MARCADOR.length();
 
 		// Buscar el final de la clase.
 		// Normalmente termina en espacio o final de línea.
@@ -182,13 +203,12 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 		String t = trazo.trace;
 
 		if (claseProblematica != null && !claseProblematica.isEmpty()) {
-			return t.contains("ServiceConfigurationError") && t.contains("IDependencyLocator")
+			return t.contains(SERVICE_CONFIGURATION_ERROR) && t.contains(IDEPENDENCY_LOCATOR)
 					&& t.contains(claseProblematica);
 		}
 
 		// Fallback muy estricto si por alguna razón no se guardó la clase.
-		return t.contains("ServiceConfigurationError") && t.contains("IDependencyLocator")
-				&& t.contains("Unable to load");
+		return t.contains(SERVICE_CONFIGURATION_ERROR) && t.contains(IDEPENDENCY_LOCATOR) && t.contains(UNABLE_TO_LOAD);
 	}
 
 	@Override
@@ -196,5 +216,4 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

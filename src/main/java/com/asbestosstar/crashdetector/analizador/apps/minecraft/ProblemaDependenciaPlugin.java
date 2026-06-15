@@ -10,15 +10,17 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Clase que detecta múltiples plugins con dependencias faltantes. Gracias a
  * Aternos por que esta es una implementacion de su codex
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaDependenciaPlugin implements Verificaciones {
+public class ProblemaDependenciaPlugin implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -28,6 +30,34 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 	public boolean posibleProblemaDependencia = false;
 	public boolean posibleProblemaDependencia0 = false;
 	public boolean posibleProblemaDependencia1 = false;
+
+	private static final String COULD_NOT_LOAD_PLUGIN = "Could not load 'plugins/";
+	private static final String UNKNOWN_MISSING_DEPENDENCY_PLUGINS = "Unknown/missing dependency plugins:";
+	private static final String UNKNOWN_DEPENDENCY = "Unknown dependency";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { COULD_NOT_LOAD_PLUGIN, UNKNOWN_MISSING_DEPENDENCY_PLUGINS, UNKNOWN_DEPENDENCY };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		String linea = evento.linea;
+
+		if (linea.contains(COULD_NOT_LOAD_PLUGIN)) {
+			posibleProblemaDependencia = true;
+		} else if (linea.contains(UNKNOWN_MISSING_DEPENDENCY_PLUGINS)) {
+			posibleProblemaDependencia0 = true;
+		} else if (linea.contains(UNKNOWN_DEPENDENCY)) {
+			posibleProblemaDependencia1 = true;
+		}
+
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verifica si el log contiene errores de dependencias faltantes.
@@ -39,47 +69,34 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-
-		String log = consola.contenido_verificar;
-
-		if (log == null)
-			return;
-
-		if (log.contains("Could not load 'plugins/")) {
-			posibleProblemaDependencia = true;
-		}
-		// 2. Detecta dependencias múltiples
-		else if (log.contains("Unknown/missing dependency plugins:")) {
-			posibleProblemaDependencia0 = true;
-		}
-		// 3. Detecta dependencia única
-		else if (log.contains("Unknown dependency")) {
-			posibleProblemaDependencia1 = true;
-		}
-
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleProblemaDependencia && !posibleProblemaDependencia0 && !posibleProblemaDependencia1)
-			return false;
-
-		return true;
+		return posibleProblemaDependencia || posibleProblemaDependencia0 || posibleProblemaDependencia1;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// 1. Detecta carga fallida de plugin
-		if (posibleProblemaDependencia && linea.contains("Could not load 'plugins/")) {
-			extraerNombrePluginDesdeRuta(linea, numero_de_linea, consola);
+		if (linea == null) {
+			return;
 		}
+
+		// 1. Detecta carga fallida de plugin
+		if (posibleProblemaDependencia && linea.contains(COULD_NOT_LOAD_PLUGIN)) {
+			extraerNombrePluginDesdeRuta(linea, numero_de_linea, consola);
+			return;
+		}
+
 		// 2. Detecta dependencias múltiples
-		else if (posibleProblemaDependencia0 && linea.contains("Unknown/missing dependency plugins:")) {
+		if (posibleProblemaDependencia0 && linea.contains(UNKNOWN_MISSING_DEPENDENCY_PLUGINS)) {
 			procesarLineaDependenciaMultiple(linea);
 			reconstruirMensaje();
+			return;
 		}
+
 		// 3. Detecta dependencia única
-		else if (posibleProblemaDependencia1 && linea.contains("Unknown dependency")) {
+		if (posibleProblemaDependencia1 && linea.contains(UNKNOWN_DEPENDENCY)) {
 			procesarLineaDependenciaUnica(linea);
 			reconstruirMensaje();
 		}
@@ -135,7 +152,7 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 		if (nombrePluginActual.isEmpty())
 			return;
 
-		int inicioDep = linea.indexOf("Unknown dependency ") + "Unknown dependency ".length();
+		int inicioDep = linea.indexOf(UNKNOWN_DEPENDENCY) + UNKNOWN_DEPENDENCY.length();
 		int finDep = linea.indexOf(".", inicioDep);
 
 		if (inicioDep > 0 && finDep > inicioDep) {
@@ -277,5 +294,4 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

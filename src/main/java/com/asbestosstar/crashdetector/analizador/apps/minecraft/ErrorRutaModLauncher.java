@@ -6,8 +6,10 @@ import java.util.Map;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -20,7 +22,10 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * mensaje principal - La salida es un bloque HTML con información detallada
  * para la UI
  */
-public class ErrorRutaModLauncher implements Verificaciones {
+public class ErrorRutaModLauncher implements VerificacionRapida {
+
+	private static final String BAD_ESCAPE = "java.lang.IllegalArgumentException: Bad escape";
+	private static final String UNIX_URI_UTILS = "sun.nio.fs.UnixUriUtils.fromUri";
 
 	/**
 	 * Almacena los mensajes de error únicos detectados
@@ -37,7 +42,32 @@ public class ErrorRutaModLauncher implements Verificaciones {
 	 */
 	private final Map<String, String> enlacesPorLinea = new HashMap<>();
 
-	boolean no_UnixUriUtils = false;
+	private boolean vioBadEscape = false;
+	private boolean vioUnixUriUtils = false;
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { BAD_ESCAPE, UNIX_URI_UTILS };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		String linea = evento.linea;
+
+		if (linea.contains(BAD_ESCAPE)) {
+			vioBadEscape = true;
+		}
+
+		if (linea.contains(UNIX_URI_UTILS)) {
+			vioUnixUriUtils = true;
+		}
+
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global no utilizada en este verificador.
@@ -49,19 +79,24 @@ public class ErrorRutaModLauncher implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		String contenido = consola.contenido_verificar;
-		if (!contenido.contains("java.lang.IllegalArgumentException: Bad escape")
-				|| !contenido.contains("sun.nio.fs.UnixUriUtils.fromUri")) {
-			no_UnixUriUtils = true;
+
+		if (contenido.contains(BAD_ESCAPE)) {
+			vioBadEscape = true;
+		}
+
+		if (contenido.contains(UNIX_URI_UTILS)) {
+			vioUnixUriUtils = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!no_UnixUriUtils)
-			return false;
-
-		return true;
+		return vioBadEscape && vioUnixUriUtils && !activado;
 	}
 
 	/**
@@ -75,13 +110,12 @@ public class ErrorRutaModLauncher implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Comprobación global del tipo de error (igual que en la versión original).
-		if (!no_UnixUriUtils) {
+		if (!vioBadEscape || !vioUnixUriUtils || linea == null) {
 			return;
 		}
 
 		// Analizar solo líneas que contengan el mensaje concreto
-		if (!linea.contains("java.lang.IllegalArgumentException: Bad escape")) {
+		if (!linea.contains(BAD_ESCAPE)) {
 			return;
 		}
 
@@ -171,8 +205,7 @@ public class ErrorRutaModLauncher implements Verificaciones {
 		}
 
 		String t = trazo.trace;
-		return t.contains("java.lang.IllegalArgumentException: Bad escape")
-				&& t.contains("sun.nio.fs.UnixUriUtils.fromUri");
+		return t.contains(BAD_ESCAPE) && t.contains(UNIX_URI_UTILS);
 	}
 
 	@Override

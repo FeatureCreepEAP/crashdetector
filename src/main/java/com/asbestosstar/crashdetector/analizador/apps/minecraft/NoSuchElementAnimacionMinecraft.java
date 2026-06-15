@@ -12,10 +12,12 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class NoSuchElementAnimacionMinecraft implements Verificaciones {
+public class NoSuchElementAnimacionMinecraft implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -26,12 +28,30 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 	private static final String PREFIJO_ERROR = "java.util.NoSuchElementException: No animation with registry name ";
 
 	@Override
+	public String[] patronesRapidos() {
+		return new String[] { PREFIJO_ERROR, "No animation with registry name" };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(PREFIJO_ERROR)) {
+			this.analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
 	public void verificar(Consola consola) {
 
 		// Chequeo global barato:
 		// si el log completo no contiene la señal principal,
 		// no hace falta procesar línea por línea.
-		if (consola == null || consola.contenido_verificar == null) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
 			return;
 		}
 
@@ -42,21 +62,13 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si el chequeo global no encontró la señal principal, no analizamos líneas.
-		if (!analizarLineas) {
-			return;
-		}
-
-		// Si ya se activó, no seguimos buscando más coincidencias.
-		if (activado) {
+		if (!analizarLineas || activado || linea == null) {
 			return;
 		}
 

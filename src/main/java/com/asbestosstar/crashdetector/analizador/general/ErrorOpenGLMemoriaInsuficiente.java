@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,45 +15,67 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Ejemplo: Error has been generated. GL error GL_OUT_OF_MEMORY in (null): (ID:
  * 173538523) Generic error
  */
-public class ErrorOpenGLMemoriaInsuficiente implements Verificaciones {
+public class ErrorOpenGLMemoriaInsuficiente implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String enlace = "";
 
+	private static final String GL_OUT_OF_MEMORY = "GL_OUT_OF_MEMORY";
+	private static final String GL_ERROR = "GL error";
+	private static final String OPENGL = "OpenGL";
+	private static final String ERROR_GENERATED = "Error has been generated";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { GL_OUT_OF_MEMORY, GL_ERROR, OPENGL, ERROR_GENERATED };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 
-		String log = consola.contenido_verificar;
-
-		if (log == null)
+		if (consola == null || consola.contenido_verificar == null)
 			return;
 
+		String log = consola.contenido_verificar;
+
 		// Detección global ligera
-		if (log.contains("GL_OUT_OF_MEMORY")
-				&& (log.contains("GL error") || log.contains("OpenGL") || log.contains("Error has been generated"))) {
+		if (log.contains(GL_OUT_OF_MEMORY)
+				&& (log.contains(GL_ERROR) || log.contains(OPENGL) || log.contains(ERROR_GENERATED))) {
 
 			activado = true;
 		}
 	}
 
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!activado)
-			return false;
-
-		return true;
+		return !activado || enlace.length() == 0;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 
 		// Evitar trabajo innecesario
-		if (!activado)
+		if (activado && enlace.length() != 0)
 			return;
 
-		// Solo registrar el primer error encontrado
-		if (enlace.length() == 0 && linea.contains("GL_OUT_OF_MEMORY")) {
+		if (linea == null)
+			return;
 
-			enlace = consola.agregarErrorALectador(num, this);
+		if (!linea.contains(GL_OUT_OF_MEMORY))
+			return;
+
+		if (linea.contains(GL_ERROR) || linea.contains(OPENGL) || linea.contains(ERROR_GENERATED)) {
+			this.enlace = consola.agregarErrorALectador(num, this);
+			this.activado = true;
 		}
 	}
 

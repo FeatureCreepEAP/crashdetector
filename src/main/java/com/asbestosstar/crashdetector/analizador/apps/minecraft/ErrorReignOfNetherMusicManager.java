@@ -3,20 +3,44 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta problemas con Reign of Nether que causan un error de Registry Object
  * no presente en MusicManager, relacionado con el mixin de MusicManager.
  */
-public class ErrorReignOfNetherMusicManager implements Verificaciones {
+public class ErrorReignOfNetherMusicManager implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean encontradoReignOfNether = false;
+
+	private static final String MIXIN_MUSIC_MANAGER = "Mixin class: com.solegendary.reignofnether.mixin.MusicManagerMixin";
+	private static final String MUSIC_MANAGER = "at net.minecraft.client.sounds.MusicManager";
+	private static final String REIGN_OF_NETHER_TICK = "$reignofnether$tick";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { MIXIN_MUSIC_MANAGER, REIGN_OF_NETHER_TICK };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(MIXIN_MUSIC_MANAGER)) {
+			encontradoReignOfNether = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Método de compatibilidad — busca si Reign of Nether está presente en el
@@ -24,21 +48,19 @@ public class ErrorReignOfNetherMusicManager implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		// Verificamos si Reign of Nether está presente en el contenido del registro
-		if (consola.contenido_verificar != null) {
-			if (consola.contenido_verificar
-					.contains("Mixin class: com.solegendary.reignofnether.mixin.MusicManagerMixin")) {
-				encontradoReignOfNether = true;
-			}
+		if (consola.contenido_verificar.contains(MIXIN_MUSIC_MANAGER)) {
+			encontradoReignOfNether = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!encontradoReignOfNether)
-			return false;
-
-		return true;
+		return encontradoReignOfNether && !activado;
 	}
 
 	/**
@@ -50,14 +72,13 @@ public class ErrorReignOfNetherMusicManager implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (activado || !encontradoReignOfNether || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;
 		}
 
 		// Buscamos la línea específica con el handler de mixin de MusicManager
-		if (linea.contains("at net.minecraft.client.sounds.MusicManager") && linea.contains("$reignofnether$tick")
-				&& encontradoReignOfNether) {
+		if (linea.contains(MUSIC_MANAGER) && linea.contains(REIGN_OF_NETHER_TICK)) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -65,9 +86,7 @@ public class ErrorReignOfNetherMusicManager implements Verificaciones {
 			// Mensaje de error en HTML con referencia al problema de Reign of Nether
 			mensaje = MonitorDePID.idioma.errorReignOfNetherMusicManager() + Verificaciones.nl_html;
 			activado = true;
-
 		}
-
 	}
 
 	@Override
@@ -121,7 +140,7 @@ public class ErrorReignOfNetherMusicManager implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("at net.minecraft.client.sounds.MusicManager") && t.contains("$reignofnether$tick");
+		return t.contains(MUSIC_MANAGER) && t.contains(REIGN_OF_NETHER_TICK);
 	}
 
 	@Override

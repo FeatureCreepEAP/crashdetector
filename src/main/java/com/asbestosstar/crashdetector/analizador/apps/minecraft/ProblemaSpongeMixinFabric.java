@@ -9,6 +9,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -16,7 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * por línea pero añade pre-check global para mejorar rendimiento en logs
  * grandes.
  */
-public class ProblemaSpongeMixinFabric implements Verificaciones {
+public class ProblemaSpongeMixinFabric implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -24,17 +26,46 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
 	// mod -> enlace
 	private final Map<String, String> modsConEnlace = new LinkedHashMap<>();
 
+	private static final String TEXTO_MIXIN_TRANSFORMER = "MixinTransformerError";
+	private static final String TEXTO_INVALID_MIXIN = "InvalidMixinException";
+	private static final String TEXTO_MIXIN_APPLY = "MixinApplyError";
+	private static final String TEXTO_CRITICAL_INJECTION = "Critical injection failure";
+	private static final String TEXTO_MIXIN_INITIALISATION = "MixinInitialisationError";
+	private static final String TEXTO_FROM_MOD = "from mod ";
+	private static final String TEXTO_MIXINS_JSON = ".mixins.json";
+	private static final String TEXTO_CONFIG = "config ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_MIXIN_TRANSFORMER, TEXTO_INVALID_MIXIN, TEXTO_MIXIN_APPLY, TEXTO_CRITICAL_INJECTION,
+				TEXTO_MIXIN_INITIALISATION, TEXTO_FROM_MOD, TEXTO_MIXINS_JSON };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneIndicioMixinFatal(evento.linea)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
-		if (log.contains("MixinTransformerError") || log.contains("InvalidMixinException")
-				|| log.contains("MixinApplyError") || log.contains("Critical injection failure")
-				|| log.contains("MixinInitialisationError")) {
+		if (log.contains(TEXTO_MIXIN_TRANSFORMER) || log.contains(TEXTO_INVALID_MIXIN)
+				|| log.contains(TEXTO_MIXIN_APPLY) || log.contains(TEXTO_CRITICAL_INJECTION)
+				|| log.contains(TEXTO_MIXIN_INITIALISATION)) {
 
 			analizarLineas = true;
 		}
@@ -42,36 +73,25 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 
-		if (!analizarLineas || linea == null)
+		if (!analizarLineas || linea == null || consola == null)
 			return;
 
-		boolean lineaEsErrorFatal = false;
-
-		// Errores fatales conocidos
-		if (linea.contains("MixinTransformerError") || linea.contains("InvalidMixinException")
-				|| linea.contains("MixinApplyError") || linea.contains("Critical injection failure")
-				|| linea.contains("MixinInitialisationError")) {
-
-			lineaEsErrorFatal = true;
-		}
+		boolean lineaEsErrorFatal = lineaEsErrorFatalMixin(linea);
 
 		// Caso clásico: "... from mod X"
-		if (lineaEsErrorFatal && linea.contains("from mod ")) {
+		if (lineaEsErrorFatal && linea.contains(TEXTO_FROM_MOD)) {
 
-			int indice = linea.indexOf("from mod ");
+			int indice = linea.indexOf(TEXTO_FROM_MOD);
 			if (indice == -1)
 				return;
 
-			String candidato = linea.substring(indice + "from mod ".length()).trim();
+			String candidato = linea.substring(indice + TEXTO_FROM_MOD.length()).trim();
 
 			int fin = candidato.indexOf(' ');
 			if (fin == -1)
@@ -89,15 +109,15 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
 		}
 
 		// Nuevo caso: MixinInitialisationError con mixins.json
-		if (linea.contains("MixinInitialisationError") && linea.contains(".mixins.json")) {
+		if (linea.contains(TEXTO_MIXIN_INITIALISATION) && linea.contains(TEXTO_MIXINS_JSON)) {
 
 			String enlace = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Extraer nombre del config mixin
-			int inicio = linea.indexOf("config ");
+			int inicio = linea.indexOf(TEXTO_CONFIG);
 			if (inicio != -1) {
 
-				String restante = linea.substring(inicio + "config ".length()).trim();
+				String restante = linea.substring(inicio + TEXTO_CONFIG.length()).trim();
 
 				int fin = restante.indexOf(' ');
 				if (fin == -1)
@@ -106,15 +126,25 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
 				String mixinConfig = restante.substring(0, fin).trim();
 
 				// Obtener modId aproximado (antes de ".mixins.json")
-				int punto = mixinConfig.indexOf(".mixins.json");
+				int punto = mixinConfig.indexOf(TEXTO_MIXINS_JSON);
 				String nombreMod = punto > 0 ? mixinConfig.substring(0, punto) : mixinConfig;
 
-				if (!modsConEnlace.containsKey(nombreMod)) {
+				if (!nombreMod.isEmpty() && !modsConEnlace.containsKey(nombreMod)) {
 					modsConEnlace.put(nombreMod, enlace);
 					this.activado = true;
 				}
 			}
 		}
+	}
+
+	private boolean lineaContieneIndicioMixinFatal(String linea) {
+		return lineaEsErrorFatalMixin(linea) || linea.contains(TEXTO_FROM_MOD) || linea.contains(TEXTO_MIXINS_JSON);
+	}
+
+	private boolean lineaEsErrorFatalMixin(String linea) {
+		return linea.contains(TEXTO_MIXIN_TRANSFORMER) || linea.contains(TEXTO_INVALID_MIXIN)
+				|| linea.contains(TEXTO_MIXIN_APPLY) || linea.contains(TEXTO_CRITICAL_INJECTION)
+				|| linea.contains(TEXTO_MIXIN_INITIALISATION);
 	}
 
 	@Override

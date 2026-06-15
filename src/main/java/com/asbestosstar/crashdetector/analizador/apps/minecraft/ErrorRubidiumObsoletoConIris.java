@@ -4,63 +4,85 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta el error causado por usar Rubidium (fork obsoleto de Sodium) con
  * Iris/Oculus en versiones recientes de Minecraft donde OptionInstance es
  * final.
  */
-public class ErrorRubidiumObsoletoConIris implements Verificaciones {
+public class ErrorRubidiumObsoletoConIris implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	public boolean posible = false;
 
+	private static final String INCOMPATIBLE_CLASS_CHANGE_ERROR = "java.lang.IncompatibleClassChangeError";
+	private static final String SHADOW_DISTANCE_OPTION = "ShadowDistanceOption";
+	private static final String FINAL_OPTION_INSTANCE = "cannot inherit from final class net.minecraft.client.OptionInstance";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { INCOMPATIBLE_CLASS_CHANGE_ERROR, SHADOW_DISTANCE_OPTION, FINAL_OPTION_INSTANCE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneErrorRubidium(evento.linea)) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
-
 		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
 			return;
 		}
 
 		String contenido = consola.contenido_verificar;
 
-		if (contenido.contains("java.lang.IncompatibleClassChangeError") && contenido.contains("ShadowDistanceOption")
-				&& contenido.contains("cannot inherit from final class net.minecraft.client.OptionInstance")) {
+		if (contenido.contains(INCOMPATIBLE_CLASS_CHANGE_ERROR) && contenido.contains(SHADOW_DISTANCE_OPTION)
+				&& contenido.contains(FINAL_OPTION_INSTANCE)) {
 			posible = true;
 		}
-
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (this.activado) {
+		if (!posible || this.activado || linea == null) {
 			return;
 		}
 
-		if (linea.contains("java.lang.IncompatibleClassChangeError") && linea.contains("ShadowDistanceOption")
-				&& linea.contains("cannot inherit from final class net.minecraft.client.OptionInstance")) {
-
+		if (lineaContieneErrorRubidium(linea)) {
 			String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			this.mensaje = MonitorDePID.idioma.errorRubidiumObsoletoConIris() + enlaceHtml;
 			this.activado = true;
 		}
 	}
 
+	private boolean lineaContieneErrorRubidium(String linea) {
+		return linea.contains(INCOMPATIBLE_CLASS_CHANGE_ERROR) && linea.contains(SHADOW_DISTANCE_OPTION)
+				&& linea.contains(FINAL_OPTION_INSTANCE);
+	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		return trazo.trace.contains("ShadowDistanceOption")
-				&& trazo.trace.contains("cannot inherit from final class net.minecraft.client.OptionInstance");
+		return trazo != null && trazo.trace != null && trazo.trace.contains(SHADOW_DISTANCE_OPTION)
+				&& trazo.trace.contains(FINAL_OPTION_INSTANCE);
 	}
 
 	@Override

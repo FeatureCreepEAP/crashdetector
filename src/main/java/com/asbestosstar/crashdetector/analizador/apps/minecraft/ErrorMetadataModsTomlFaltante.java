@@ -5,8 +5,10 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -16,7 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * [modid]". Utiliza Buscardor para identificar mods que podrían estar causando
  * el problema.
  */
-public class ErrorMetadataModsTomlFaltante implements Verificaciones {
+public class ErrorMetadataModsTomlFaltante implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posible = false;
@@ -28,12 +30,30 @@ public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 
 	private static final String TEXTO_ERROR = "mods.toml missing metadata for modid ";
 
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		posible = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	/**
 	 * Verificación global barata.
 	 * <p>
 	 * Solo revisa si el texto base aparece en el log completo. Así evitamos hacer
 	 * trabajo línea por línea cuando este error claramente no aparece.
 	 * </p>
+	 * 
+	 * Método legacy seguro: en modo streaming puro, consola.contenido_verificar
+	 * puede ser nulo.
 	 */
 	@Override
 	public void verificar(Consola consola) {
@@ -44,6 +64,11 @@ public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 		if (consola.contenido_verificar.contains(TEXTO_ERROR)) {
 			posible = true;
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return posible && !activado;
 	}
 
 	/**

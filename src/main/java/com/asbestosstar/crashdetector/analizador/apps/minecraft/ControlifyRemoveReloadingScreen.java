@@ -5,9 +5,11 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ControlifyRemoveReloadingScreen implements Verificaciones {
+public class ControlifyRemoveReloadingScreen implements VerificacionRapida {
 
 	// Indica si el log contiene indicios globales del error.
 	// Esto evita hacer verificaciones más específicas en cada línea si el log no
@@ -20,27 +22,42 @@ public class ControlifyRemoveReloadingScreen implements Verificaciones {
 	// Enlace a la línea del log donde ocurre el error
 	private String enlace = "";
 
+	private static final String CONTROLIFY_CONFIG_READY = "Attempted to fetch default config before DefaultConfigManager was ready!";
+	private static final String RRLS_INIT = "$rrls$init";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { CONTROLIFY_CONFIG_READY, RRLS_INIT };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		posibleIncompatibilidad = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	/**
+	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		// Detección global ligera: ambas cadenas suelen aparecer cuando existe el
-		// conflicto entre Controlify y Remove Reloading Screen.
-		if (consola.contenido_verificar
-				.contains("Attempted to fetch default config before DefaultConfigManager was ready!")
-				&& consola.contenido_verificar.contains("$rrls$init")) {
-			posibleIncompatibilidad = true;
-		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleIncompatibilidad)
-			return false;
-
-		return true;
+		return posibleIncompatibilidad && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
+		if (activado || linea == null) {
+			return;
+		}
+
 		// Salir temprano si no hay indicios globales
 		if (!posibleIncompatibilidad) {
 			return;
@@ -48,18 +65,21 @@ public class ControlifyRemoveReloadingScreen implements Verificaciones {
 
 		// Verificación precisa: normalmente esta línea es el síntoma más claro del
 		// problema de inicialización causado por el conflicto.
-		if (linea.contains("Attempted to fetch default config before DefaultConfigManager was ready!")) {
-			this.enlace = consola.agregarErrorALectador(num, this);
-			this.activado = true;
+		if (linea.contains(CONTROLIFY_CONFIG_READY)) {
+			activar(consola, num);
 			return;
 		}
 
 		// Alternativa: si el lector encuentra primero la línea transformada por
 		// Remove Reloading Screen, también podemos enlazar ahí.
-		if (linea.contains("$rrls$init")) {
-			this.enlace = consola.agregarErrorALectador(num, this);
-			this.activado = true;
+		if (linea.contains(RRLS_INIT)) {
+			activar(consola, num);
 		}
+	}
+
+	private void activar(Consola consola, int num) {
+		this.enlace = consola.agregarErrorALectador(num, this);
+		this.activado = true;
 	}
 
 	@Override

@@ -14,9 +14,11 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
 import com.asbestosstar.crashdetector.analizador.firmas.TipoDeFiltrodeCodice;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class VerificacionFirmasV0 implements Verificaciones {
+public class VerificacionFirmasV0 implements VerificacionRapida {
 
 	public String id;
 	public Criticalidad criticalidad;
@@ -89,8 +91,46 @@ public class VerificacionFirmasV0 implements Verificaciones {
 	}
 
 	@Override
+	public String[] patronesRapidos() {
+		if (filtro == null || para_buscar == null || para_buscar.isEmpty()) {
+			return new String[0];
+		}
+
+		// Aho-Corasick solo puede acelerar búsquedas literales.
+		// Los filtros regex siguen usando la ruta legacy.
+		if (filtro == FiltrodeCodice.CONTAINE_TODOS || filtro == FiltrodeCodice.CONTAINE_LINEA) {
+			return new String[] { para_buscar };
+		}
+
+		return new String[0];
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (activado || evento == null || evento.linea == null || filtro == null) {
+			return;
+		}
+
+		if (filtro == FiltrodeCodice.CONTAINE_LINEA) {
+			if (filtro.activar(evento.linea, para_buscar)) {
+				this.activado = true;
+				this.enlace = evento.consola.agregarErrorALectador(evento.numeroDeLinea, this);
+			}
+			return;
+		}
+
+		if (filtro == FiltrodeCodice.CONTAINE_TODOS) {
+			// Si el autómata encontró el patrón literal, ya basta para activar
+			// la firma global.
+			this.activado = true;
+		}
+	}
+
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (filtro != null && filtro.tipo.equals(TipoDeFiltrodeCodice.DE_LINEA)) {
+		// Los contains_linea son manejados por verificarCoincidencia().
+		// Solo regex_linea necesita seguir escaneando línea por línea.
+		if (filtro != null && filtro == FiltrodeCodice.REGEX_LINEA) {
 			return true;
 		}
 		return false;
@@ -98,7 +138,12 @@ public class VerificacionFirmasV0 implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola) {
-		if (filtro != null && filtro.tipo.equals(TipoDeFiltrodeCodice.DE_TODOS)) {
+		if (activado || consola == null || consola.contenido_verificar == null || filtro == null) {
+			return;
+		}
+
+		// Compatibilidad legacy y soporte para regex_todos.
+		if (filtro.tipo.equals(TipoDeFiltrodeCodice.DE_TODOS)) {
 			if (filtro.activar(consola.contenido_verificar, para_buscar)) {
 				this.activado = true;
 			}
@@ -107,7 +152,13 @@ public class VerificacionFirmasV0 implements Verificaciones {
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (filtro != null && filtro.tipo.equals(TipoDeFiltrodeCodice.DE_LINEA)) {
+		if (activado || linea == null || filtro == null) {
+			return;
+		}
+
+		// Compatibilidad legacy. En modo rápido, contains_linea normalmente se activa
+		// desde verificarCoincidencia(); regex_linea entra por aquí.
+		if (filtro.tipo.equals(TipoDeFiltrodeCodice.DE_LINEA)) {
 			if (filtro.activar(linea, para_buscar)) {
 				this.activado = true;
 				this.enlace = consola.agregarErrorALectador(numero_de_linea, this);

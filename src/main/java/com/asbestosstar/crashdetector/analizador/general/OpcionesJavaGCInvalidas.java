@@ -6,13 +6,15 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta la opción de GC inválida "Conflicting collector combinations in
  * option list" en Java. Esto genera errores de arranque en la JVM.
  */
-public class OpcionesJavaGCInvalidas implements Verificaciones {
+public class OpcionesJavaGCInvalidas implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posibleGCInvalido = false;
@@ -21,6 +23,21 @@ public class OpcionesJavaGCInvalidas implements Verificaciones {
 	private String enlace = "";
 
 	private static final String TEXTO_GC_INVALIDO = "Conflicting collector combinations in option list";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_GC_INVALIDO };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado) {
+			return;
+		}
+
+		posibleGCInvalido = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global ligera. Marca si el log contiene la cadena GC inválida.
@@ -38,10 +55,7 @@ public class OpcionesJavaGCInvalidas implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleGCInvalido)
-			return false;
-
-		return true;
+		return posibleGCInvalido && !activado;
 	}
 
 	/**
@@ -54,7 +68,10 @@ public class OpcionesJavaGCInvalidas implements Verificaciones {
 		}
 
 		if (linea.contains(TEXTO_GC_INVALIDO)) {
-			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
+			if (consola != null) {
+				this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
+			}
+
 			this.mensaje = MonitorDePID.idioma.errorOpcionesGCJava() + " " + enlace;
 			this.activado = true;
 		}

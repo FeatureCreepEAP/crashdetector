@@ -5,9 +5,6 @@ import java.nio.file.Path;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
-/**
- * Representa una coincidencia encontrada por el motor rápido.
- */
 public final class EventoDeCoincidencia {
 
 	public final Consola consola;
@@ -18,9 +15,10 @@ public final class EventoDeCoincidencia {
 	public final int numeroDeLinea;
 	public final int inicioEnLinea;
 	public final int finEnLinea;
+	public final EstadoAnalisisArchivo estado;
 
 	public EventoDeCoincidencia(Consola consola, Path archivo, Verificaciones verificacion, String patron, String linea,
-			int numeroDeLinea, int inicioEnLinea, int finEnLinea) {
+			int numeroDeLinea, int inicioEnLinea, int finEnLinea, EstadoAnalisisArchivo estado) {
 
 		this.consola = consola;
 		this.archivo = archivo;
@@ -30,5 +28,6 @@ public final class EventoDeCoincidencia {
 		this.numeroDeLinea = numeroDeLinea;
 		this.inicioEnLinea = inicioEnLinea;
 		this.finEnLinea = finEnLinea;
+		this.estado = estado;
 	}
 }

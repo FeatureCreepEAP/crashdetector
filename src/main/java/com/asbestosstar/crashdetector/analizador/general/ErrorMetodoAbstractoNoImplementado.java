@@ -3,8 +3,11 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,7 +15,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * un método de una interfaz. Extrae los nombres concretos y el origen desde el
  * trace, sin usar regex ni mantener todas las líneas en memoria.
  */
-public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
+public class ErrorMetodoAbstractoNoImplementado implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -23,6 +26,24 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 	private static final String TEXTO_NO_IMPLEMENTA = "does not define or inherit an implementation";
 	private static final String TEXTO_INTERFACE = "of interface";
 	private static final String TEXTO_CLASE_ABSTRACTA = "of abstract class";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ABSTRACT, TEXTO_NO_IMPLEMENTA, TEXTO_INTERFACE, TEXTO_CLASE_ABSTRACTA };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneMetodoAbstracto(evento.linea)) {
+			posibleError = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
@@ -36,11 +57,9 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 				&& contieneTipoObjetivo(consola.contenido_verificar);
 	}
 
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleError)
-			return false;
-
-		return true;
+		return posibleError && !activado;
 	}
 
 	@Override
@@ -48,11 +67,11 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 		if (!posibleError || activado || linea == null)
 			return;
 
-		String recorte = linea.trim();
-		if (!recorte.contains(TEXTO_ABSTRACT) || !recorte.contains(TEXTO_NO_IMPLEMENTA)
-				|| !contieneTipoObjetivo(recorte)) {
+		if (!lineaContieneMetodoAbstracto(linea)) {
 			return;
 		}
+
+		String recorte = linea.trim();
 
 		String textoTipoObjetivo = obtenerTextoTipoObjetivo(recorte);
 		if (textoTipoObjetivo == null) {
@@ -60,9 +79,9 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 		}
 
 		// Extraer clase, método e interfaz
-		int idxClaseStart = recorte.indexOf(":") + 1;
-		int idxMetodoStart = recorte.indexOf("'", idxClaseStart);
-		int idxMetodoEnd = recorte.indexOf("'", idxMetodoStart + 1);
+		int idxClaseStart = recorte.indexOf(':') + 1;
+		int idxMetodoStart = recorte.indexOf('\'', idxClaseStart);
+		int idxMetodoEnd = recorte.indexOf('\'', idxMetodoStart + 1);
 		int idxInterfaz = recorte.lastIndexOf(textoTipoObjetivo);
 
 		if (idxClaseStart <= 0 || idxMetodoStart < 0 || idxMetodoEnd < 0 || idxInterfaz < 0)
@@ -73,35 +92,7 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 		String interfaz = recorte.substring(idxInterfaz + textoTipoObjetivo.length()).trim();
 
 		// Buscar origen dinámicamente en las siguientes 10 líneas
-		String origen = "";
-		if (consola != null && consola.contenido_verificar != null) {
-			String[] lineas = consola.lineas_verificar;
-			for (int j = numero_de_linea + 1; j < Math.min(numero_de_linea + 11, lineas.length); j++) {
-				String l = lineas[j].trim();
-				if (l.startsWith("at ")) {
-					String posibleOrigen = com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace
-							.extraerModidDeLinea(l);
-					if (posibleOrigen == null || com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace
-							.esModNoPermite(posibleOrigen)) {
-						java.util.List<String> jars = com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace
-								.extraerJarsDeLinea(l);
-						if (!jars.isEmpty())
-							posibleOrigen = jars.get(0);
-						else
-							posibleOrigen = com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace
-									.extraerPaqueteDeLinea(l);
-					}
-					if (posibleOrigen != null && !posibleOrigen.isEmpty()
-							&& !com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace
-									.esModNoPermite(posibleOrigen)) {
-						origen = posibleOrigen;
-						break;
-					}
-				} else if (!l.isEmpty() && !l.startsWith("Caused by") && !l.startsWith("...")) {
-					break;
-				}
-			}
-		}
+		String origen = buscarOrigenCercano(consola, numero_de_linea);
 
 		// Registrar el enlace a la línea concreta
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -110,6 +101,51 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 				origen) + Verificaciones.nl_html + enlaceHtml;
 
 		activado = true;
+	}
+
+	private boolean lineaContieneMetodoAbstracto(String linea) {
+		return linea.contains(TEXTO_ABSTRACT) && linea.contains(TEXTO_NO_IMPLEMENTA) && contieneTipoObjetivo(linea);
+	}
+
+	private String buscarOrigenCercano(Consola consola, int numero_de_linea) {
+		if (consola == null || consola.lineas_verificar == null) {
+			return "";
+		}
+
+		String[] lineas = consola.lineas_verificar;
+		int inicio = numero_de_linea + 1;
+		int fin = Math.min(numero_de_linea + 11, lineas.length);
+
+		for (int j = inicio; j < fin; j++) {
+			String l = lineas[j];
+
+			if (l == null) {
+				continue;
+			}
+
+			l = l.trim();
+
+			if (l.startsWith("at ")) {
+				String posibleOrigen = VerificacionDeStackTrace.extraerModidDeLinea(l);
+
+				if (posibleOrigen == null || VerificacionDeStackTrace.esModNoPermite(posibleOrigen)) {
+					java.util.List<String> jars = VerificacionDeStackTrace.extraerJarsDeLinea(l);
+					if (!jars.isEmpty())
+						posibleOrigen = jars.get(0);
+					else
+						posibleOrigen = VerificacionDeStackTrace.extraerPaqueteDeLinea(l);
+				}
+
+				if (posibleOrigen != null && !posibleOrigen.isEmpty()
+						&& !VerificacionDeStackTrace.esModNoPermite(posibleOrigen)) {
+					return posibleOrigen;
+				}
+			} else if (!l.isEmpty() && !l.startsWith("Caused by") && !l.startsWith("...")) {
+				break;
+			}
+		}
+
+		return "";
 	}
 
 	private boolean contieneTipoObjetivo(String texto) {

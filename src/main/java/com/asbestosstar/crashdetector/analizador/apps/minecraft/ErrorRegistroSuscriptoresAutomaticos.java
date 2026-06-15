@@ -6,8 +6,10 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -21,7 +23,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Incluye tanto el modid como la clase en el mensaje y usa Buscardor para
  * encontrar los JARs relacionados.
  */
-public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
+public class ErrorRegistroSuscriptoresAutomaticos implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posible = false;
@@ -35,8 +37,22 @@ public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 	private String enlaceHtml = "";
 
 	private static final String TEXTO_ERROR = "Failed to register automatic subscribers. ModID: ";
-
 	private static final String TEXTO_CLASE = ", class ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		posible = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global barata.
@@ -54,6 +70,11 @@ public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 		if (consola.contenido_verificar.contains(TEXTO_ERROR)) {
 			posible = true;
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return posible && !activado;
 	}
 
 	/**

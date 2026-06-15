@@ -18,12 +18,11 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.waifu.RespuestaWaifu;
-import com.asbestosstar.crashdetector.waifu.VersionWaifu;
 import com.asbestosstar.crashdetector.waifu.WaifuAPI;
 
 public class AdvertenciaFaltasClases implements VerificacionRapida {
@@ -33,14 +32,25 @@ public class AdvertenciaFaltasClases implements VerificacionRapida {
 	private final Map<String, String> enlacesPorClase = new HashMap<>(); // Clase -> enlace HTML
 	private boolean analizarLineas = false;
 
+	private static final String ERROR_LOADING_CLASS = "Error loading class:";
+	private static final String ERROR_LOADING_CLASS_CON_ESPACIO = "Error loading class: ";
+	private static final String WARN = "WARN";
+
 	@Override
 	public String[] patronesRapidos() {
-		return new String[] { "Error loading class:" };
+		return new String[] { ERROR_LOADING_CLASS };
 	}
 
 	@Override
 	public void verificarCoincidencia(EventoDeCoincidencia evento) {
-		analizarLineas = true;
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneAdvertenciaClase(evento.linea)) {
+			analizarLineas = true;
+		}
+
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
@@ -50,22 +60,20 @@ public class AdvertenciaFaltasClases implements VerificacionRapida {
 		// Este método se mantiene vacío para cumplir con la interfaz y permitir
 		// realizar pre-cálculos globales en el futuro si fuera necesario.
 
-		String log = consola.contenido_verificar;
-
-		if (log == null)
+		if (consola == null || consola.contenido_verificar == null)
 			return;
 
-		if (log.contains("Error loading class:") && log.contains("WARN")) {
+		String log = consola.contenido_verificar;
+
+		if (log.contains(ERROR_LOADING_CLASS) && log.contains(WARN)) {
 			analizarLineas = true;
 		}
 
 	}
 
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas;
 	}
 
 	/**
@@ -85,14 +93,18 @@ public class AdvertenciaFaltasClases implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (linea == null) {
+		if (!analizarLineas || linea == null) {
 			return;
 		}
 
-		if (linea.contains("Error loading class:") && linea.contains("WARN")) {
+		if (lineaContieneAdvertenciaClase(linea)) {
 			try {
-				String clase = linea.split("Error loading class: ")[1].split(" ")[0].trim();
-				String claseFormateada = clase.replace(".", "/");
+				String clase = extraerClase(linea);
+				if (clase.isEmpty()) {
+					return;
+				}
+
+				String claseFormateada = clase.replace('.', '/');
 
 				// Solo registrar el enlace si es una clase nueva
 				if (clases.add(claseFormateada)) {
@@ -106,6 +118,34 @@ public class AdvertenciaFaltasClases implements VerificacionRapida {
 		}
 
 		activado = !clases.isEmpty();
+	}
+
+	private boolean lineaContieneAdvertenciaClase(String linea) {
+		return linea.contains(ERROR_LOADING_CLASS) && linea.contains(WARN);
+	}
+
+	private String extraerClase(String linea) {
+		int inicio = linea.indexOf(ERROR_LOADING_CLASS_CON_ESPACIO);
+		if (inicio == -1) {
+			inicio = linea.indexOf(ERROR_LOADING_CLASS);
+			if (inicio == -1) {
+				return "";
+			}
+			inicio += ERROR_LOADING_CLASS.length();
+		} else {
+			inicio += ERROR_LOADING_CLASS_CON_ESPACIO.length();
+		}
+
+		int fin = linea.indexOf(' ', inicio);
+		if (fin == -1) {
+			fin = linea.length();
+		}
+
+		if (fin <= inicio) {
+			return "";
+		}
+
+		return linea.substring(inicio, fin).trim();
 	}
 
 	@Override

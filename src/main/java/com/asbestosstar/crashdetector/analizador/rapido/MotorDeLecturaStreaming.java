@@ -36,6 +36,8 @@ public final class MotorDeLecturaStreaming {
 
 		inicializarAutomata(verificaciones);
 
+		List<Verificaciones> legacyLineales = obtenerLegacyLineales(consola, legacy);
+
 		Path path = consola.archivo;
 		if (path == null)
 			return;
@@ -92,8 +94,7 @@ public final class MotorDeLecturaStreaming {
 							contenidoLinea = contenidoLinea.substring(0, contenidoLinea.length() - 1);
 						}
 
-						procesarLinea(consola, contenidoLinea, numeroLineaActual++, verificaciones, legacy, estado);
-
+						procesarLinea(consola, contenidoLinea, numeroLineaActual++, legacyLineales, estado);
 						inicioActual = finLinea + 1;
 					}
 
@@ -127,7 +128,8 @@ public final class MotorDeLecturaStreaming {
 					ultimaLinea = ultimaLinea.substring(0, ultimaLinea.length() - 1);
 				}
 
-				procesarLinea(consola, ultimaLinea, numeroLineaActual++, verificaciones, legacy, estado);
+				procesarLinea(consola, ultimaLinea, numeroLineaActual++, legacyLineales, estado);
+
 			}
 
 		} catch (IOException e) {
@@ -135,64 +137,67 @@ public final class MotorDeLecturaStreaming {
 		}
 	}
 
-	public void procesarLinea(Consola consola, String linea, int numeroLinea, List<VerificacionRapida> verificaciones,
-			List<Verificaciones> legacy, EstadoAnalisisArchivo estado) {
+	private List<Verificaciones> obtenerLegacyLineales(Consola consola, List<Verificaciones> legacy) {
+		List<Verificaciones> resultado = new ArrayList<>();
 
-		if (linea == null || linea.isEmpty())
-			return;
-
-		if (consola.verificacion_de_stacktrace != null) {
-			consola.verificacion_de_stacktrace.procesarLineaIncremental(linea, numeroLinea);
+		if (legacy == null || legacy.isEmpty()) {
+			return resultado;
 		}
 
-		if (automata == null) {
-			inicializarAutomata(verificaciones);
-		}
-
-		if (automata != null) {
-			List<AutomataDePatrones.Coincidencia> coincidencias = automata.buscar(linea);
-
-			for (AutomataDePatrones.Coincidencia coincidencia : coincidencias) {
-				List<VerificacionRapida> vers = patronesAVerificaciones.get(coincidencia.patron);
-
-				if (vers == null)
-					continue;
-
-				for (VerificacionRapida ver : vers) {
-					try {
-						EventoDeCoincidencia evento = new EventoDeCoincidencia(consola, consola.archivo, ver,
-								coincidencia.patron, linea, numeroLinea, coincidencia.posicion,
-								coincidencia.posicion + coincidencia.patron.length());
-
-						estado.agregarCoincidencia(evento);
-						ver.verificarCoincidencia(evento);
-					} catch (Exception e) {
-						CrashDetectorLogger.logException(e);
-					}
-				}
-			}
-		}
-
-		// Only true "every-line" verifications should run here.
-		for (VerificacionRapida ver : verificaciones) {
+		for (Verificaciones ver : legacy) {
 			try {
-				if (ver.necesitaTodasLasLineas()) {
-					ver.verificarPorLinea(consola, linea, numeroLinea);
+				if (ver.quiereAnalizarLineas() || ver.activarEscaneoPorLinea(consola)) {
+					resultado.add(ver);
 				}
 			} catch (Exception e) {
 				CrashDetectorLogger.logException(e);
 			}
 		}
 
-		if (legacy != null) {
-			for (Verificaciones ver : legacy) {
-				try {
-					if (ver.necesitaTodasLasLineas()) {
-						ver.verificarPorLinea(consola, linea, numeroLinea);
+		return resultado;
+	}
+
+	public void procesarLinea(Consola consola, String linea, int numeroLinea, List<Verificaciones> legacyLineales,
+			EstadoAnalisisArchivo estado) {
+
+		if (linea == null || linea.isEmpty()) {
+			return;
+		}
+
+		if (automata != null) {
+			List<AutomataDePatrones.Coincidencia> coincidenciasBase = automata.buscar(linea);
+
+			if (coincidenciasBase != null && !coincidenciasBase.isEmpty()) {
+				for (AutomataDePatrones.Coincidencia base : coincidenciasBase) {
+					List<VerificacionRapida> verificaciones = patronesAVerificaciones.get(base.patron);
+
+					if (verificaciones == null || verificaciones.isEmpty()) {
+						continue;
 					}
-				} catch (Exception e) {
-					CrashDetectorLogger.logException(e);
+
+					for (VerificacionRapida ver : verificaciones) {
+						try {
+							EventoDeCoincidencia evento = new EventoDeCoincidencia(consola, consola.archivo, ver,
+									base.patron, linea, numeroLinea, base.inicio, base.fin, estado);
+
+							ver.verificarCoincidencia(evento);
+						} catch (Exception e) {
+							CrashDetectorLogger.logException(e);
+						}
+					}
 				}
+			}
+		}
+
+		if (legacyLineales == null || legacyLineales.isEmpty()) {
+			return;
+		}
+
+		for (Verificaciones ver : legacyLineales) {
+			try {
+				ver.verificarPorLinea(consola, linea, numeroLinea);
+			} catch (Exception e) {
+				CrashDetectorLogger.logException(e);
 			}
 		}
 	}
@@ -203,27 +208,39 @@ public final class MotorDeLecturaStreaming {
 		}
 
 		patronesAVerificaciones.clear();
+
+		if (verificaciones == null || verificaciones.isEmpty()) {
+			CrashDetectorLogger.log("[DEBUG_LOG] No hay verificaciones rápidas para inicializar el autómata");
+			return;
+		}
+
 		for (VerificacionRapida ver : verificaciones) {
 			String[] patrones = ver.patronesRapidos();
-			if (patrones == null) {
-				CrashDetectorLogger
-						.log("[DEBUG_LOG] ADVERTENCIA: Verificación " + ver.id() + " devolvió patrones null");
+
+			if (patrones == null || patrones.length == 0) {
 				continue;
 			}
+
 			for (String patron : patrones) {
-				if (patron != null && !patron.isEmpty()) {
-					patronesAVerificaciones.computeIfAbsent(patron, k -> new ArrayList<>()).add(ver);
+				if (patron == null || patron.isEmpty()) {
+					continue;
 				}
+
+				patronesAVerificaciones.computeIfAbsent(patron, k -> new ArrayList<>()).add(ver);
 			}
 		}
 
-		if (!patronesAVerificaciones.isEmpty()) {
-			String[] todosLosPatrones = patronesAVerificaciones.keySet().toArray(new String[0]);
-			CrashDetectorLogger
-					.log("[DEBUG_LOG] Inicializando autómata con " + todosLosPatrones.length + " patrones únicos");
-			this.automata = new AutomataDePatrones(todosLosPatrones);
-		} else {
+		if (patronesAVerificaciones.isEmpty()) {
 			CrashDetectorLogger.log("[DEBUG_LOG] No se encontraron patrones para inicializar el autómata");
+			return;
 		}
+
+		String[] todosLosPatrones = patronesAVerificaciones.keySet().toArray(new String[0]);
+
+		CrashDetectorLogger
+				.log("[DEBUG_LOG] Inicializando autómata con " + todosLosPatrones.length + " patrones únicos");
+
+		this.automata = new AutomataDePatrones(todosLosPatrones);
 	}
+
 }

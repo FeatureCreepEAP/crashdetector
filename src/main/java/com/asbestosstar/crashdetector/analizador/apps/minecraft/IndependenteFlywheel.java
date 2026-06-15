@@ -8,24 +8,52 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class IndependenteFlywheel implements Verificaciones {
+public class IndependenteFlywheel implements VerificacionRapida {
 
 	boolean tiene_uno = false;
 	public Set<String> mods = new HashSet<>();
 	boolean activado = false;
 	String enlace = "";
 
+	private static final String FLYWHEEL_IS_1 = "flywheel is 1";
+	private static final String REQUIRES_FLYWHEEL = "requires flywheel";
+	private static final String AND_BELOW_0 = "and below 0.";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { FLYWHEEL_IS_1, REQUIRES_FLYWHEEL, AND_BELOW_0 };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(FLYWHEEL_IS_1)) {
+			tiene_uno = true;
+			mods.addAll(Buscador.obtenerModsConNombre("flywheel"));
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 		// TODO Auto-generated method stub
-		if (consola.contenido_verificar.contains("flywheel is 1")) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		if (consola.contenido_verificar.contains(FLYWHEEL_IS_1)) {
 			tiene_uno = true;
 
 			mods.addAll(Buscador.obtenerModsConNombre("flywheel"));
-
 		}
 
 	}
@@ -33,23 +61,19 @@ public class IndependenteFlywheel implements Verificaciones {
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// TODO Auto-generated method stub
-		if (tiene_uno) {
-
-			if (linea.contains("requires flywheel") && linea.contains("and below 0.")) {
-				this.enlace = consola.agregarErrorALectador(num, this);
-				this.activado = true;
-			}
-
+		if (!tiene_uno || activado || linea == null) {
+			return;
 		}
 
+		if (linea.contains(REQUIRES_FLYWHEEL) && linea.contains(AND_BELOW_0)) {
+			this.enlace = consola.agregarErrorALectador(num, this);
+			this.activado = true;
+		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!tiene_uno)
-			return false;
-
-		return true;
+		return tiene_uno && !activado;
 	}
 
 	@Override

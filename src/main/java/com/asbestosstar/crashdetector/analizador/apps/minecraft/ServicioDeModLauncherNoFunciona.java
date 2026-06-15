@@ -11,9 +11,11 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ServicioDeModLauncherNoFunciona implements Verificaciones {
+public class ServicioDeModLauncherNoFunciona implements VerificacionRapida {
 
 	private boolean activado = false;
 	private final Set<String> serviciosFallidos = new HashSet<>();
@@ -22,6 +24,24 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 	// Texto base que indica fallo de carga de un servicio de ModLauncher
 	private static final String CARGA_FALLIDA = "Service failed to load";
 	public boolean posible = false;
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { CARGA_FALLIDA };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(CARGA_FALLIDA)) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global del contenido de la consola.
@@ -34,6 +54,10 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		String contento_de_consola = consola.contenido_verificar;
 		if (contento_de_consola.contains(CARGA_FALLIDA)) {
 			posible = true;
@@ -51,15 +75,14 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (linea == null) {
+		if (!posible || linea == null || consola == null) {
 			return;
 		}
 
 		// Buscar el patrón "Service failed to load" en la línea actual
 		if (linea.contains(CARGA_FALLIDA)) {
 			// Extraer el nombre/identificador del servicio que no pudo cargar
-			String[] partes = linea.split(CARGA_FALLIDA, 2);
-			String servicio = partes.length > 1 ? partes[1].trim() : "";
+			String servicio = extraerServicio(linea);
 
 			String mensaje = MonitorDePID.idioma.servicioMLNoPudoCargar(servicio);
 
@@ -70,6 +93,20 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 			}
 			activado = true;
 		}
+	}
+
+	private String extraerServicio(String linea) {
+		int idx = linea.indexOf(CARGA_FALLIDA);
+		if (idx == -1) {
+			return "";
+		}
+
+		int inicio = idx + CARGA_FALLIDA.length();
+		if (inicio >= linea.length()) {
+			return "";
+		}
+
+		return linea.substring(inicio).trim();
 	}
 
 	@Override

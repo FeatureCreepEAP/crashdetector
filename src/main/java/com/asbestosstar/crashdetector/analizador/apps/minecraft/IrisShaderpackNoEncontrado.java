@@ -5,9 +5,11 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class IrisShaderpackNoEncontrado implements Verificaciones {
+public class IrisShaderpackNoEncontrado implements VerificacionRapida {
 
 	// Indica si el log contiene indicios globales del error
 	private boolean posibleErrorShaderpack = false;
@@ -21,29 +23,53 @@ public class IrisShaderpackNoEncontrado implements Verificaciones {
 	// Nombre del shaderpack detectado
 	private String shaderpack = "";
 
+	private static final String FILE_SYSTEM_NOT_FOUND = "FileSystemNotFoundException";
+	private static final String FILE_SYSTEM_NOT_FOUND_COMPLETO = "java.nio.file.FileSystemNotFoundException";
+	private static final String SHADERPACKS = "shaderpacks";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { FILE_SYSTEM_NOT_FOUND, SHADERPACKS };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneErrorShaderpack(evento.linea)) {
+			posibleErrorShaderpack = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		// Detección global por rendimiento
-		if (consola.contenido_verificar.contains("java.nio.file.FileSystemNotFoundException")
-				&& consola.contenido_verificar.contains("shaderpacks")) {
+		if (consola.contenido_verificar.contains(FILE_SYSTEM_NOT_FOUND_COMPLETO)
+				&& consola.contenido_verificar.contains(SHADERPACKS)) {
 			posibleErrorShaderpack = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleErrorShaderpack)
-			return false;
-
-		return true;
+		return posibleErrorShaderpack && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		if (!posibleErrorShaderpack)
+		if (!posibleErrorShaderpack || activado || linea == null) {
 			return;
+		}
 
-		if (linea.contains("FileSystemNotFoundException") && linea.contains("shaderpacks")) {
+		if (lineaContieneErrorShaderpack(linea)) {
 
 			// Intentar extraer el nombre del shaderpack desde la ruta
 			this.shaderpack = extraerNombreShaderpack(linea);
@@ -55,24 +81,41 @@ public class IrisShaderpackNoEncontrado implements Verificaciones {
 
 	// Extrae el nombre del archivo .zip desde la línea del log
 	private String extraerNombreShaderpack(String linea) {
-		try {
-			int idx = linea.lastIndexOf("shaderpacks");
-			if (idx == -1)
-				return "";
-
-			String sub = linea.substring(idx);
-
-			// Soporte para rutas Windows y Unix
-			sub = sub.replace("\\", "/");
-
-			int slash = sub.lastIndexOf("/");
-			if (slash != -1)
-				return sub.substring(slash + 1).trim();
-
+		int idx = linea.lastIndexOf(SHADERPACKS);
+		if (idx == -1)
 			return "";
-		} catch (Exception e) {
+
+		String sub = linea.substring(idx);
+
+		int slashUnix = sub.lastIndexOf('/');
+		int slashWindows = sub.lastIndexOf('\\');
+		int slash = Math.max(slashUnix, slashWindows);
+
+		if (slash != -1) {
+			return limpiarEspacios(sub, slash + 1, sub.length());
+		}
+
+		return "";
+	}
+
+	private boolean lineaContieneErrorShaderpack(String linea) {
+		return linea.contains(FILE_SYSTEM_NOT_FOUND) && linea.contains(SHADERPACKS);
+	}
+
+	private String limpiarEspacios(String texto, int inicio, int fin) {
+		while (inicio < fin && texto.charAt(inicio) <= ' ') {
+			inicio++;
+		}
+
+		while (fin > inicio && texto.charAt(fin - 1) <= ' ') {
+			fin--;
+		}
+
+		if (inicio >= fin) {
 			return "";
 		}
+
+		return texto.substring(inicio, fin);
 	}
 
 	@Override

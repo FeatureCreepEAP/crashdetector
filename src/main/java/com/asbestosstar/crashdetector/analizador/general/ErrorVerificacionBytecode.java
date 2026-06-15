@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,7 +16,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Ejemplo: java.lang.VerifyError: Bad type on operand stack
  */
-public class ErrorVerificacionBytecode implements Verificaciones {
+public class ErrorVerificacionBytecode implements VerificacionRapida {
 
 	private boolean posibleError = false;
 	private boolean activado = false;
@@ -27,40 +29,64 @@ public class ErrorVerificacionBytecode implements Verificaciones {
 	private boolean esperandoUbicacion = false;
 	private boolean esperandoRazon = false;
 
+	private static final String VERIFY_ERROR = "java.lang.VerifyError";
+	private static final String BAD_TYPE = "Bad type on operand stack";
+	private static final String BAD_LOCAL_VARIABLE_TYPE = "Bad local variable type";
+	private static final String INCONSISTENT_STACKMAP = "Inconsistent stackmap frames";
+	private static final String EXPECTING_STACKMAP = "Expecting a stackmap frame";
+	private static final String OPERAND_STACK_OVERFLOW = "Operand stack overflow";
+	private static final String REGISTER_FINALIZER = "Register finalizer expects";
+
+	private static final String LOCATION = "Location:";
+	private static final String REASON = "Reason:";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { VERIFY_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(VERIFY_ERROR)) {
+			posibleError = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 
-		String log = consola.contenido_verificar;
-
-		if (log == null)
+		if (consola == null || consola.contenido_verificar == null)
 			return;
 
+		String log = consola.contenido_verificar;
+
 		// Detección global ligera
-		if (log.contains("java.lang.VerifyError")
-				&& (log.contains("Bad type on operand stack") || log.contains("Bad local variable type")
-						|| log.contains("Inconsistent stackmap frames") || log.contains("Expecting a stackmap frame")
-						|| log.contains("Operand stack overflow") || log.contains("Register finalizer expects"))) {
+		if (log.contains(VERIFY_ERROR) && (log.contains(BAD_TYPE) || log.contains(BAD_LOCAL_VARIABLE_TYPE)
+				|| log.contains(INCONSISTENT_STACKMAP) || log.contains(EXPECTING_STACKMAP)
+				|| log.contains(OPERAND_STACK_OVERFLOW) || log.contains(REGISTER_FINALIZER))) {
 
 			posibleError = true;
 		}
 	}
 
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleError)
-			return false;
-
-		return true;
+		return posibleError;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 
-		if (!posibleError)
+		if (!posibleError || linea == null)
 			return;
 
-		String limpia = linea.trim();
-
-		if (!activado && limpia.contains("java.lang.VerifyError")) {
+		if (!activado && linea.contains(VERIFY_ERROR)) {
 
 			activado = true;
 			enlace = consola.agregarErrorALectador(num, this);
@@ -70,54 +96,54 @@ public class ErrorVerificacionBytecode implements Verificaciones {
 		if (!activado)
 			return;
 
-		if (limpia.equals("Location:")) {
+		if (equalsSinEspaciosLaterales(linea, LOCATION)) {
 
 			esperandoUbicacion = true;
 			esperandoRazon = false;
 			return;
 		}
 
-		if (esperandoUbicacion && ubicacion.length() == 0 && limpia.length() > 0) {
+		if (esperandoUbicacion && ubicacion.length() == 0 && tieneTexto(linea)) {
 
-			if (pareceUbicacionVerifyError(limpia)) {
+			if (pareceUbicacionVerifyError(linea)) {
 
-				ubicacion = limpia;
+				ubicacion = sinEspaciosLaterales(linea);
 				claseSospechosa = extraerClaseDesdeUbicacion(ubicacion);
 				esperandoUbicacion = false;
 				return;
 			}
 
-			if (!limpia.startsWith("["))
+			if (!empiezaConSinEspacios(linea, "["))
 				esperandoUbicacion = false;
 
 			return;
 		}
 
-		if (limpia.equals("Reason:")) {
+		if (equalsSinEspaciosLaterales(linea, REASON)) {
 
 			esperandoRazon = true;
 			esperandoUbicacion = false;
 			return;
 		}
 
-		if (esperandoRazon && razon.length() == 0 && limpia.length() > 0) {
+		if (esperandoRazon && razon.length() == 0 && tieneTexto(linea)) {
 
-			if (pareceRazonVerifyError(limpia)) {
+			if (pareceRazonVerifyError(linea)) {
 
-				razon = limpia;
+				razon = sinEspaciosLaterales(linea);
 				esperandoRazon = false;
 				return;
 			}
 
-			if (!limpia.startsWith("["))
+			if (!empiezaConSinEspacios(linea, "["))
 				esperandoRazon = false;
 
 			return;
 		}
 
-		if (ubicacion.length() == 0 && limpia.startsWith("Location:")) {
+		if (ubicacion.length() == 0 && empiezaConSinEspacios(linea, LOCATION)) {
 
-			String posibleUbicacion = limpia.substring("Location:".length()).trim();
+			String posibleUbicacion = despuesDePrefijoSinEspacios(linea, LOCATION);
 
 			if (pareceUbicacionVerifyError(posibleUbicacion)) {
 
@@ -128,9 +154,9 @@ public class ErrorVerificacionBytecode implements Verificaciones {
 			return;
 		}
 
-		if (razon.length() == 0 && limpia.startsWith("Reason:")) {
+		if (razon.length() == 0 && empiezaConSinEspacios(linea, REASON)) {
 
-			String posibleRazon = limpia.substring("Reason:".length()).trim();
+			String posibleRazon = despuesDePrefijoSinEspacios(linea, REASON);
 
 			if (pareceRazonVerifyError(posibleRazon))
 				razon = posibleRazon;
@@ -138,15 +164,15 @@ public class ErrorVerificacionBytecode implements Verificaciones {
 			return;
 		}
 
-		if (razon.length() == 0 && pareceRazonVerifyError(limpia)) {
+		if (razon.length() == 0 && pareceRazonVerifyError(linea)) {
 
-			razon = limpia;
+			razon = sinEspaciosLaterales(linea);
 			return;
 		}
 
-		if (claseSospechosa.length() == 0 && limpia.contains("~[") && limpia.contains(".jar")) {
+		if (claseSospechosa.length() == 0 && linea.contains("~[") && linea.contains(".jar")) {
 
-			claseSospechosa = extraerClaseDesdeStack(limpia);
+			claseSospechosa = extraerClaseDesdeStack(linea);
 		}
 	}
 
@@ -155,7 +181,7 @@ public class ErrorVerificacionBytecode implements Verificaciones {
 		if (linea == null)
 			return false;
 
-		String limpia = linea.trim();
+		String limpia = sinEspaciosLaterales(linea);
 
 		if (limpia.startsWith("["))
 			return false;
@@ -169,13 +195,13 @@ public class ErrorVerificacionBytecode implements Verificaciones {
 		if (linea == null)
 			return false;
 
-		String limpia = linea.trim();
+		String limpia = sinEspaciosLaterales(linea);
 
 		if (limpia.startsWith("["))
 			return false;
 
-		return limpia.contains("Type ") || limpia.contains("Bad type") || limpia.contains("Bad local variable type")
-				|| limpia.contains("Inconsistent stackmap frames") || limpia.contains("Expecting a stackmap frame")
+		return limpia.contains("Type ") || limpia.contains("Bad type") || limpia.contains(BAD_LOCAL_VARIABLE_TYPE)
+				|| limpia.contains(INCONSISTENT_STACKMAP) || limpia.contains(EXPECTING_STACKMAP)
 				|| limpia.contains("Operand stack") || limpia.contains("Current Frame")
 				|| limpia.contains("is not assignable to");
 	}
@@ -185,13 +211,13 @@ public class ErrorVerificacionBytecode implements Verificaciones {
 		if (ubicacion == null)
 			return "";
 
-		String limpia = ubicacion.trim();
+		String limpia = sinEspaciosLaterales(ubicacion);
 
 		int idxMetodo = limpia.indexOf(".");
 		if (idxMetodo > 0)
 			limpia = limpia.substring(0, idxMetodo);
 
-		limpia = limpia.replace('/', '.').trim();
+		limpia = limpia.replace('/', '.');
 
 		return obtenerNombreBasicoClase(limpia);
 	}
@@ -214,7 +240,7 @@ public class ErrorVerificacionBytecode implements Verificaciones {
 		if (linea == null)
 			return "";
 
-		String limpia = linea.trim();
+		String limpia = sinEspaciosLaterales(linea);
 
 		if (limpia.startsWith("at "))
 			limpia = limpia.substring(3);
@@ -228,6 +254,96 @@ public class ErrorVerificacionBytecode implements Verificaciones {
 			limpia = limpia.substring(0, idxMetodo);
 
 		return obtenerNombreBasicoClase(limpia);
+	}
+
+	private boolean tieneTexto(String texto) {
+		if (texto == null)
+			return false;
+
+		for (int i = 0; i < texto.length(); i++) {
+			if (!Character.isWhitespace(texto.charAt(i)))
+				return true;
+		}
+
+		return false;
+	}
+
+	private boolean equalsSinEspaciosLaterales(String texto, String esperado) {
+		if (texto == null || esperado == null)
+			return false;
+
+		int inicio = primerNoEspacio(texto);
+		if (inicio < 0)
+			return esperado.length() == 0;
+
+		int fin = ultimoNoEspacioMasUno(texto);
+
+		if (fin - inicio != esperado.length())
+			return false;
+
+		return texto.regionMatches(inicio, esperado, 0, esperado.length());
+	}
+
+	private boolean empiezaConSinEspacios(String texto, String prefijo) {
+		if (texto == null || prefijo == null)
+			return false;
+
+		int inicio = primerNoEspacio(texto);
+		if (inicio < 0)
+			return prefijo.length() == 0;
+
+		if (texto.length() - inicio < prefijo.length())
+			return false;
+
+		return texto.regionMatches(inicio, prefijo, 0, prefijo.length());
+	}
+
+	private String despuesDePrefijoSinEspacios(String texto, String prefijo) {
+		if (texto == null || prefijo == null)
+			return "";
+
+		int inicio = primerNoEspacio(texto);
+		if (inicio < 0)
+			return "";
+
+		if (texto.length() - inicio < prefijo.length())
+			return "";
+
+		if (!texto.regionMatches(inicio, prefijo, 0, prefijo.length()))
+			return "";
+
+		return sinEspaciosLaterales(texto.substring(inicio + prefijo.length()));
+	}
+
+	private String sinEspaciosLaterales(String texto) {
+		if (texto == null)
+			return "";
+
+		int inicio = primerNoEspacio(texto);
+		if (inicio < 0)
+			return "";
+
+		int fin = ultimoNoEspacioMasUno(texto);
+
+		return texto.substring(inicio, fin);
+	}
+
+	private int primerNoEspacio(String texto) {
+		for (int i = 0; i < texto.length(); i++) {
+			if (!Character.isWhitespace(texto.charAt(i)))
+				return i;
+		}
+
+		return -1;
+	}
+
+	private int ultimoNoEspacioMasUno(String texto) {
+		for (int i = texto.length() - 1; i >= 0; i--) {
+			if (!Character.isWhitespace(texto.charAt(i)))
+				return i + 1;
+		}
+
+		return 0;
 	}
 
 	@Override

@@ -6,13 +6,15 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Clase que detecta mods duplicados en Fabric. Gracias a Aternos porque esta es
  * una implementacion de su codex: https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaModDuplicadoFabric implements Verificaciones {
+public class ProblemaModDuplicadoFabric implements VerificacionRapida {
 
 	private boolean posibleModDuplicadoFabric = false;
 	private boolean activado = false;
@@ -26,8 +28,28 @@ public class ProblemaModDuplicadoFabric implements Verificaciones {
 	private int lineasEsperando = 0;
 
 	private static final String TEXTO_ERROR_CRITICO = "A critical error occurred";
+	private static final String TEXTO_DUPLICATE_VERSIONS = "Duplicate versions for mod ID";
+	private static final String TEXTO_MOD_RESOLUTION = "net.fabricmc.loader.discovery.ModResolutionException";
 	private static final String TEXTO_EXCEPCION_DUPLICADO = "net.fabricmc.loader.discovery.ModResolutionException: Duplicate versions for mod ID '";
 	private static final String TEXTO_AT = " at ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR_CRITICO, TEXTO_DUPLICATE_VERSIONS, TEXTO_MOD_RESOLUTION };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneIndicioFabricDuplicado(evento.linea)) {
+			posibleModDuplicadoFabric = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificacion global ligera.
@@ -43,18 +65,14 @@ public class ProblemaModDuplicadoFabric implements Verificaciones {
 
 		String contenido = consola.contenido_verificar;
 
-		if (contenido.contains("Duplicate versions for mod ID")
-				&& contenido.contains("net.fabricmc.loader.discovery.ModResolutionException")) {
+		if (contenido.contains(TEXTO_DUPLICATE_VERSIONS) && contenido.contains(TEXTO_MOD_RESOLUTION)) {
 			posibleModDuplicadoFabric = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleModDuplicadoFabric)
-			return false;
-
-		return true;
+		return posibleModDuplicadoFabric && !activado;
 	}
 
 	/**
@@ -68,9 +86,7 @@ public class ProblemaModDuplicadoFabric implements Verificaciones {
 			return;
 		}
 
-		String l = linea.trim();
-
-		if (l.contains(TEXTO_ERROR_CRITICO)) {
+		if (linea.contains(TEXTO_ERROR_CRITICO)) {
 			esperandoLineaDuplicado = true;
 			lineasEsperando = 0;
 		}
@@ -86,11 +102,11 @@ public class ProblemaModDuplicadoFabric implements Verificaciones {
 
 		// El error puede estar en la misma linea del texto critico o unas lineas
 		// después.
-		if (!l.contains(TEXTO_EXCEPCION_DUPLICADO)) {
+		if (!linea.contains(TEXTO_EXCEPCION_DUPLICADO)) {
 			return;
 		}
 
-		DatosModDuplicado datos = extraerDatosModDuplicado(l);
+		DatosModDuplicado datos = extraerDatosModDuplicado(linea);
 
 		if (datos == null || datos.nombreMod.isEmpty()) {
 			return;
@@ -103,6 +119,11 @@ public class ProblemaModDuplicadoFabric implements Verificaciones {
 		this.mensaje = MonitorDePID.idioma.mensajeModDuplicadoFabric(nombreMod) + Verificaciones.nl_html + enlace;
 
 		this.activado = true;
+	}
+
+	private boolean lineaContieneIndicioFabricDuplicado(String linea) {
+		return linea.contains(TEXTO_DUPLICATE_VERSIONS) || linea.contains(TEXTO_MOD_RESOLUTION)
+				|| linea.contains(TEXTO_ERROR_CRITICO);
 	}
 
 	/**
@@ -232,8 +253,7 @@ public class ProblemaModDuplicadoFabric implements Verificaciones {
 			return false;
 		}
 
-		return trazo.trace.contains("Duplicate versions for mod ID")
-				&& trazo.trace.contains("net.fabricmc.loader.discovery.ModResolutionException");
+		return trazo.trace.contains(TEXTO_DUPLICATE_VERSIONS) && trazo.trace.contains(TEXTO_MOD_RESOLUTION);
 	}
 
 	@Override

@@ -3,8 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,30 +14,54 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * específicamente cuando Jackson core no se encuentra pero es requerido por
  * Jackson module paramnames, común en mods como Valkyrien Skies.
  */
-public class ErrorGroovyModloaderModuloFaltante implements Verificaciones {
+public class ErrorGroovyModloaderModuloFaltante implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean encontradoGML = false;
 
-	/**
-	 * Método de compatibilidad — busca si Groovy Modloader está presente en el
-	 * contenido completo del registro.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		// Verificamos si Groovy Modloader o mods relacionados están presentes en el
-		// contenido del registro
+	private static final String FIND_EXCEPTION = "java.lang.module.FindException";
+	private static final String JACKSON_CORE_NOT_FOUND = "Module com.fasterxml.jackson.core not found";
+	private static final String REQUIRED_BY_JACKSON = "required by com.fasterxml.jackson";
+	private static final String REQUIRED_BY_PARAMNAMES = "required by com.fasterxml.jackson.module.paramnames";
+	private static final String GROOVY = "groovy";
+	private static final String GML = "gml";
+	private static final String VALKYRIEN = "valkyrien";
+	private static final String VALKERIAN = "valkerian";
+	private static final String GROOVY_MODLOADER = "groovy modloader";
 
-		if (!consola.contenido_verificar.contains("Module com.fasterxml.jackson.core not found")) {
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { JACKSON_CORE_NOT_FOUND, REQUIRED_BY_JACKSON, FIND_EXCEPTION, GROOVY, GML, VALKYRIEN,
+				VALKERIAN };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
 			return;
 		}
 
-		if (consola.contenido_verificar != null) {
-			String contenido = consola.contenido_verificar;
-			encontradoGML = contenido.contains("groovy") || contenido.contains("gml");
+		// Verificamos si Groovy Modloader o mods relacionados están presentes en la
+		// línea que disparó el patrón rápido.
+		if (lineaContieneGML(evento.linea)) {
+			encontradoGML = true;
 		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	/**
+	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
+	 */
+	@Override
+	public void verificar(Consola consola) {
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return encontradoGML && !activado;
 	}
 
 	/**
@@ -48,15 +74,13 @@ public class ErrorGroovyModloaderModuloFaltante implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (!encontradoGML || activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;
 		}
 
 		// Buscamos la línea que contiene el error de módulo faltante de Jackson
-		if (linea.contains("java.lang.module.FindException")
-				&& linea.contains("Module com.fasterxml.jackson.core not found")
-				&& linea.contains("required by com.fasterxml.jackson") && encontradoGML) {
+		if (lineaContieneModuloJacksonFaltante(linea)) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -65,6 +89,15 @@ public class ErrorGroovyModloaderModuloFaltante implements Verificaciones {
 			mensaje = MonitorDePID.idioma.errorGroovyModloaderModuloFaltante() + Verificaciones.nl_html;
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneModuloJacksonFaltante(String linea) {
+		return linea.contains(FIND_EXCEPTION) && linea.contains(JACKSON_CORE_NOT_FOUND)
+				&& linea.contains(REQUIRED_BY_JACKSON);
+	}
+
+	private boolean lineaContieneGML(String linea) {
+		return linea.contains(GROOVY) || linea.contains(GML) || linea.contains(VALKYRIEN) || linea.contains(VALKERIAN);
 	}
 
 	@Override
@@ -118,10 +151,8 @@ public class ErrorGroovyModloaderModuloFaltante implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("java.lang.module.FindException") && t.contains("Module com.fasterxml.jackson.core not found")
-				&& t.contains("required by com.fasterxml.jackson.module.paramnames")
-				&& (t.toLowerCase().contains("groovy modloader") || t.toLowerCase().contains("valkyrien")
-						|| t.toLowerCase().contains("valkerian") || t.toLowerCase().contains("gml"));
+		return t.contains(FIND_EXCEPTION) && t.contains(JACKSON_CORE_NOT_FOUND) && t.contains(REQUIRED_BY_PARAMNAMES)
+				&& (t.contains(GROOVY_MODLOADER) || t.contains(VALKYRIEN) || t.contains(VALKERIAN) || t.contains(GML));
 	}
 
 	@Override
@@ -129,5 +160,4 @@ public class ErrorGroovyModloaderModuloFaltante implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

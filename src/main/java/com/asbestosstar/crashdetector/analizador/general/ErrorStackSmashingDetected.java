@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,34 +14,50 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * problemas con Early Window en Forge/NeoForge/PillowMC o con LWJGL 3.2.2 y más
  * nuevos.
  */
-public class ErrorStackSmashingDetected implements Verificaciones {
+public class ErrorStackSmashingDetected implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	public boolean posibleError = false;
 
+	private static final String STACK_SMASHING = "*** stack smashing detected ***: terminated";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { STACK_SMASHING };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		posibleError = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	/**
-	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
+	 * Método de compatibilidad — mantiene el análisis legacy por contenido
+	 * completo.
 	 */
 	@Override
 	public void verificar(Consola consola) {
 
+		if (consola == null || consola.contenido_verificar == null)
+			return;
+
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-		if (log.contains("*** stack smashing detected ***: terminated")) {
+		if (log.contains(STACK_SMASHING)) {
 			posibleError = true;
 		}
-
 	}
 
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleError)
-			return false;
-
-		return true;
+		return posibleError && !activado;
 	}
 
 	/**
@@ -55,8 +73,12 @@ public class ErrorStackSmashingDetected implements Verificaciones {
 			return;
 		}
 
+		if (!posibleError || linea == null) {
+			return;
+		}
+
 		// Buscamos la línea que contiene el error de stack smashing
-		if (linea.contains("*** stack smashing detected ***: terminated")) {
+		if (linea.contains(STACK_SMASHING)) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -118,7 +140,7 @@ public class ErrorStackSmashingDetected implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("*** stack smashing detected ***: terminated");
+		return t.contains(STACK_SMASHING);
 	}
 
 	@Override

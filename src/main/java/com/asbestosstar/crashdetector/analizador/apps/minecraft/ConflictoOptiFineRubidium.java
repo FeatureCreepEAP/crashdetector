@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,7 +14,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * inyección crítica relacionado con WorldRenderer durante la inicialización del
  * juego.
  */
-public class ConflictoOptiFineRubidium implements Verificaciones {
+public class ConflictoOptiFineRubidium implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -20,34 +22,50 @@ public class ConflictoOptiFineRubidium implements Verificaciones {
 	private boolean encontradoOptiFine = false;
 	public boolean analizarLineas = false;
 
-	/**
-	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
-	 */
+	private static final String OPTIFINE_MINUSCULA = "optifine";
+	private static final String OPTIFINE_MIXTA = "Optifine";
+	private static final String OPTIFINE_CORRECTA = "OptiFine";
+
+	private static final String CRITICAL_INJECTION = "Critical injection failure";
+	private static final String REDIRECT_FANCY_WEATHER = "redirectGetFancyWeather";
+	private static final String RUBIDIUM_MIXINS = "rubidium.mixins.json";
+	private static final String WORLD_RENDERER_MIXIN = "WorldRendererMixin";
+
 	@Override
-	public void verificar(Consola consola) {
+	public String[] patronesRapidos() {
+		return new String[] { OPTIFINE_MINUSCULA, OPTIFINE_MIXTA, OPTIFINE_CORRECTA, CRITICAL_INJECTION,
+				REDIRECT_FANCY_WEATHER, RUBIDIUM_MIXINS, WORLD_RENDERER_MIXIN };
+	}
 
-		String log = consola.contenido_verificar;
-
-		if (log == null)
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
 			return;
+		}
 
-		if (log.contains("optifine") || log.contains("Optifine")) {
+		String linea = evento.linea;
+
+		if (contieneOptiFine(linea)) {
 			encontradoOptiFine = true;
 		}
 
-		if (log.contains("Critical injection failure") && log.contains("redirectGetFancyWeather")
-				&& log.contains("rubidium.mixins.json") && log.contains("WorldRendererMixin")) {
+		if (lineaContieneErrorRubidium(linea)) {
 			analizarLineas = true;
 		}
 
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
+
+	/**
+	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
+	 */
+	@Override
+	public void verificar(Consola consola) {
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	/**
@@ -59,27 +77,36 @@ public class ConflictoOptiFineRubidium implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
+			return;
+		}
+
+		if (!analizarLineas || !encontradoOptiFine) {
 			return;
 		}
 
 		// Verificamos si la línea contiene el error de inyección crítica de Rubidium
 		// con WorldRenderer
-		if (linea.contains("Critical injection failure") && linea.contains("redirectGetFancyWeather")
-				&& linea.contains("rubidium.mixins.json") && linea.contains("WorldRendererMixin")) {
+		if (lineaContieneErrorRubidium(linea)) {
+			// Enlazar a la línea del error en el lector
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-			// Verificamos también que OptiFine esté presente en el registro
-			if (encontradoOptiFine) {
-				// Enlazar a la línea del error en el lector
-				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-
-				// Mensaje de error en HTML con referencia al conflicto entre OptiFine y
-				// Rubidium
-				mensaje = MonitorDePID.idioma.errorConflictoOptiFineRubidium() + Verificaciones.nl_html;
-				activado = true;
-			}
+			// Mensaje de error en HTML con referencia al conflicto entre OptiFine y
+			// Rubidium
+			mensaje = MonitorDePID.idioma.errorConflictoOptiFineRubidium() + Verificaciones.nl_html;
+			activado = true;
 		}
+	}
+
+	private boolean contieneOptiFine(String texto) {
+		return texto.contains(OPTIFINE_MINUSCULA) || texto.contains(OPTIFINE_MIXTA)
+				|| texto.contains(OPTIFINE_CORRECTA);
+	}
+
+	private boolean lineaContieneErrorRubidium(String linea) {
+		return linea.contains(CRITICAL_INJECTION) && linea.contains(REDIRECT_FANCY_WEATHER)
+				&& linea.contains(RUBIDIUM_MIXINS) && linea.contains(WORLD_RENDERER_MIXIN);
 	}
 
 	@Override
@@ -131,10 +158,7 @@ public class ConflictoOptiFineRubidium implements Verificaciones {
 			return false;
 		}
 
-		String t = trazo.trace;
-
-		return t.contains("Critical injection failure") && t.contains("redirectGetFancyWeather")
-				&& t.contains("rubidium.mixins.json") && t.contains("WorldRendererMixin") && encontradoOptiFine;
+		return lineaContieneErrorRubidium(trazo.trace) && encontradoOptiFine;
 	}
 
 	@Override

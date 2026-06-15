@@ -9,6 +9,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -16,7 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Gracias a Aternos porque esta es una implementacion de su codex:
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaModIncompatibleConMinecraft implements Verificaciones {
+public class ProblemaModIncompatibleConMinecraft implements VerificacionRapida {
 
 	private boolean posibleModIncompatibleConMinecraft = false;
 	private boolean activado = false;
@@ -30,6 +32,24 @@ public class ProblemaModIncompatibleConMinecraft implements Verificaciones {
 	private static final String TEXTO_INICIO = "The mod ";
 	private static final String TEXTO_MEDIO = " does not wish to run in Minecraft version Minecraft ";
 	private static final String TEXTO_FINAL = ". You will have to remove it to play.";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_MEDIO, TEXTO_FINAL };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (contieneIndicioModIncompatible(evento.linea)) {
+			posibleModIncompatibleConMinecraft = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificacion global ligera.
@@ -52,10 +72,7 @@ public class ProblemaModIncompatibleConMinecraft implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleModIncompatibleConMinecraft)
-			return false;
-
-		return true;
+		return posibleModIncompatibleConMinecraft;
 	}
 
 	/**
@@ -86,6 +103,10 @@ public class ProblemaModIncompatibleConMinecraft implements Verificaciones {
 
 		activado = true;
 		reconstruirMensaje();
+	}
+
+	private boolean contieneIndicioModIncompatible(String linea) {
+		return linea.contains(TEXTO_MEDIO) || linea.contains(TEXTO_FINAL);
 	}
 
 	/**

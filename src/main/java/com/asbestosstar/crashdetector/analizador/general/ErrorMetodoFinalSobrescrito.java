@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,7 +17,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * qouteall.imm_ptl.core.portal.Portal overrides final method
  * net.minecraft.world.entity.Entity.m20191()Lnet/minecraft/world/phys/AABB;
  */
-public class ErrorMetodoFinalSobrescrito implements Verificaciones {
+public class ErrorMetodoFinalSobrescrito implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posibleError = false;
@@ -24,6 +26,25 @@ public class ErrorMetodoFinalSobrescrito implements Verificaciones {
 
 	private static final String TEXTO_ERROR = "java.lang.IncompatibleClassChangeError";
 	private static final String TEXTO_OVERRIDES_FINAL = "overrides final method";
+	private static final String CLASS_PREFIX = "class ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR, TEXTO_OVERRIDES_FINAL };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneMetodoFinalSobrescrito(evento.linea)) {
+			posibleError = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
@@ -36,11 +57,9 @@ public class ErrorMetodoFinalSobrescrito implements Verificaciones {
 				&& consola.contenido_verificar.contains(TEXTO_OVERRIDES_FINAL);
 	}
 
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleError)
-			return false;
-
-		return true;
+		return posibleError && !activado;
 	}
 
 	@Override
@@ -49,20 +68,20 @@ public class ErrorMetodoFinalSobrescrito implements Verificaciones {
 			return;
 		}
 
-		String recorte = linea.trim();
-
-		if (!recorte.contains(TEXTO_ERROR) || !recorte.contains(TEXTO_OVERRIDES_FINAL)) {
+		if (!lineaContieneMetodoFinalSobrescrito(linea)) {
 			return;
 		}
+
+		String recorte = linea.trim();
 
 		String claseQueSobrescribe = "";
 		String metodoFinal = "";
 
-		int indiceClase = recorte.indexOf("class ");
+		int indiceClase = recorte.indexOf(CLASS_PREFIX);
 		int indiceOverrides = recorte.indexOf(TEXTO_OVERRIDES_FINAL);
 
 		if (indiceClase >= 0 && indiceOverrides > indiceClase) {
-			claseQueSobrescribe = recorte.substring(indiceClase + "class ".length(), indiceOverrides).trim();
+			claseQueSobrescribe = recorte.substring(indiceClase + CLASS_PREFIX.length(), indiceOverrides).trim();
 			metodoFinal = recorte.substring(indiceOverrides + TEXTO_OVERRIDES_FINAL.length()).trim();
 		}
 
@@ -72,6 +91,10 @@ public class ErrorMetodoFinalSobrescrito implements Verificaciones {
 				+ Verificaciones.nl_html + enlaceHtml;
 
 		activado = true;
+	}
+
+	private boolean lineaContieneMetodoFinalSobrescrito(String linea) {
+		return linea.contains(TEXTO_ERROR) && linea.contains(TEXTO_OVERRIDES_FINAL);
 	}
 
 	@Override

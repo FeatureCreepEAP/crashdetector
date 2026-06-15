@@ -9,6 +9,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -26,7 +28,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Luego se extrae el nombre de la clase receptora, se buscan los JARs que
  * contienen esa clase y se construye el mensaje y el enlace.
  */
-public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
+public class LexForgeMLTransformerEnNeoForge implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -37,6 +39,30 @@ public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
 	private final String firmaMetodoFaltante = "TargetType getTargetType()";
 	private final List<String> modsUbicacion = new ArrayList<>();
 	public boolean posible = false;
+
+	private static final String RECEIVER_CLASS = "Receiver class ";
+	private static final String DOES_NOT_DEFINE = "does not define or inherit an implementation";
+	private static final String TARGET_TYPE_GET_TARGET_TYPE = "cpw.mods.modlauncher.api.TargetType getTargetType()";
+	private static final String I_TRANSFORMER = "cpw.mods.modlauncher.api.ITransformer";
+	private static final String DOES_NOT_DEFINE_PREFIX = " does not define";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { RECEIVER_CLASS, DOES_NOT_DEFINE, TARGET_TYPE_GET_TARGET_TYPE, I_TRANSFORMER };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneErrorTransformer(evento.linea)) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global no utilizada en este verificador.
@@ -49,15 +75,13 @@ public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 
-		if (consola == null || consola.contenido_verificar == null) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
 			return;
 		}
 
 		String l = consola.contenido_verificar;
 
-		if (l.contains("Receiver class ") && l.contains("does not define or inherit an implementation")
-				&& l.contains("cpw.mods.modlauncher.api.TargetType getTargetType()")
-				&& l.contains("cpw.mods.modlauncher.api.ITransformer")) {
+		if (lineaContieneErrorTransformer(l)) {
 			posible = true;
 		}
 
@@ -65,10 +89,7 @@ public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	/**
@@ -88,24 +109,22 @@ public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó, no seguimos procesando más líneas.
-		if (activado) {
+		if (activado || !posible || linea == null) {
 			return;
 		}
 
 		String l = linea;
 
 		// Comprobación mínima: todo en la misma línea
-		if (l.contains("Receiver class ") && l.contains("does not define or inherit an implementation")
-				&& l.contains("cpw.mods.modlauncher.api.TargetType getTargetType()")
-				&& l.contains("cpw.mods.modlauncher.api.ITransformer")) {
+		if (lineaContieneErrorTransformer(l)) {
 
 			CrashDetectorLogger.log("LexForgeMLTransformerEnNeoForge: coincidencia -> " + l);
 
 			// Extraer la clase entre "Receiver class " y " does not define"
-			int s = l.indexOf("Receiver class ");
+			int s = l.indexOf(RECEIVER_CLASS);
 			if (s >= 0) {
-				s += "Receiver class ".length();
-				int e = l.indexOf(" does not define", s);
+				s += RECEIVER_CLASS.length();
+				int e = l.indexOf(DOES_NOT_DEFINE_PREFIX, s);
 				if (e > s) {
 					claseReceptora = l.substring(s, e).trim();
 				}
@@ -130,6 +149,11 @@ public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneErrorTransformer(String l) {
+		return l.contains(RECEIVER_CLASS) && l.contains(DOES_NOT_DEFINE) && l.contains(TARGET_TYPE_GET_TARGET_TYPE)
+				&& l.contains(I_TRANSFORMER);
 	}
 
 	@Override
@@ -197,17 +221,14 @@ public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
 
 		String t = trazo.trace;
 
-		boolean contieneBase = t.contains("Receiver class ")
-				&& t.contains("does not define or inherit an implementation")
-				&& t.contains("cpw.mods.modlauncher.api.TargetType getTargetType()")
-				&& t.contains("cpw.mods.modlauncher.api.ITransformer");
+		boolean contieneBase = lineaContieneErrorTransformer(t);
 
 		if (!contieneBase) {
 			return false;
 		}
 
 		if (claseReceptora != null && !claseReceptora.isEmpty()) {
-			return t.contains("Receiver class " + claseReceptora);
+			return t.contains(RECEIVER_CLASS + claseReceptora);
 		}
 
 		// Fallback muy estricto si no se pudo extraer la clase

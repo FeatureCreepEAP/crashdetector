@@ -39,7 +39,9 @@ public final class AnalizadorNuevo {
 		CrashDetectorLogger.log("Iniciando AnalizadorNuevo con " + consolas.size() + " registros");
 		CrashDetectorLogger.log("[DEBUG_LOG] Verificaciones rápidas cargadas: " + verificacionesRapidas.size());
 		for (VerificacionRapida v : verificacionesRapidas) {
-			CrashDetectorLogger.log("[DEBUG_LOG] - " + v.id() + " (patrones: " + v.patronesRapidos().length + ")");
+			String[] patrones = v.patronesRapidos();
+			int cantidad = patrones == null ? 0 : patrones.length;
+			CrashDetectorLogger.log("[DEBUG_LOG] - " + v.id() + " (patrones: " + cantidad + ")");
 		}
 		CrashDetectorLogger.log("[DEBUG_LOG] Verificaciones legacy cargadas: " + verificacionesLegacy.size());
 
@@ -55,15 +57,10 @@ public final class AnalizadorNuevo {
 			CrashDetectorLogger.log("[DEBUG_LOG] Analizando registro: "
 					+ (consola.archivo != null ? consola.archivo.getFileName() : "unknown"));
 
-			// Asegurarse de que el contenido de la consola esté finalizado/cargado si es
-			// posible
-			// Esto es importante para las verificaciones legacy que usan
-			// contenido_verificar.
 			if (consola.contenido_verificar == null && consola.archivo != null && consola.archivo.toFile().exists()) {
 				try {
-					// Intentamos cargar el contenido si es pequeño, para compatibilidad legacy
 					long size = consola.archivo.toFile().length();
-					if (size < 10 * 1024 * 1024) { // < 10MB
+					if (size < 10 * 1024 * 1024) {
 						consola.finalizarContenido(java.time.Instant.now(), true);
 						CrashDetectorLogger.log(
 								"[DEBUG_LOG] Contenido precargado para compatibilidad legacy (tamaño: " + size + ")");
@@ -73,57 +70,42 @@ public final class AnalizadorNuevo {
 				}
 			}
 
-			// Reiniciar el verificador de stacktrace para esta consola
 			if (consola.verificacion_de_stacktrace != null) {
 				consola.verificacion_de_stacktrace.reiniciar();
 			}
 
-			// Primero ejecutamos las verificaciones globales (legacy)
 			ejecutarGlobalesLegacy(consola);
 
-			// Ejecutamos el motor de streaming para las verificaciones rápidas y por línea
 			if (consola.archivo != null && consola.archivo.toFile().exists()) {
 				CrashDetectorLogger.log("[DEBUG_LOG] Iniciando motor streaming para: " + consola.archivo);
 				motorStreaming.procesar(consola, verificacionesRapidas, verificacionesLegacy, estado);
-
-				// Una vez terminado el streaming, finalizamos el escaneo incremental de trazas
-				if (consola.verificacion_de_stacktrace != null) {
-					consola.verificacion_de_stacktrace.finalizarEscaneoIncremental();
-				}
 			} else {
-				// SI el contenido fue inyectado o no tiene archivo físico
+				List<Verificaciones> legacyLineales = obtenerLegacyLineales(consola);
+
 				if (consola.lineas_verificar != null) {
 					CrashDetectorLogger.log("[DEBUG_LOG] Procesando líneas inyectadas ("
 							+ consola.lineas_verificar.length + ") para verificaciones rápidas");
+
 					for (int i = 0; i < consola.lineas_verificar.length; i++) {
-						motorStreaming.procesarLinea(consola, consola.lineas_verificar[i], i, verificacionesRapidas,
-								verificacionesLegacy, estado);
-					}
-					// Finalizar extracción de trazas para logs inyectados
-					if (consola.verificacion_de_stacktrace != null) {
-						consola.verificacion_de_stacktrace.finalizarEscaneoIncremental();
+						motorStreaming.procesarLinea(consola, consola.lineas_verificar[i], i, legacyLineales, estado);
 					}
 				} else if (consola.contenido_verificar != null) {
-					// Fallback si lineas_verificar es null pero contenido_verificar existe
-					String contenido = consola.contenido_verificar;
-					// Usar un split robusto para diferentes tipos de saltos de línea
-					String[] lineas = contenido.split("\\r?\\n", -1);
+					String[] lineas = consola.contenido_verificar.split("\\r?\\n", -1);
+					consola.lineas_verificar = lineas;
+
+					if (consola.verificacion_de_stacktrace != null) {
+						consola.verificacion_de_stacktrace.reiniciar();
+					}
+
 					CrashDetectorLogger.log("[DEBUG_LOG] Procesando contenido inyectado (" + lineas.length
 							+ " líneas) para verificaciones rápidas");
-					// Almacenamos las líneas divididas para uso posterior de verificaciones
-					consola.lineas_verificar = lineas;
+
 					for (int i = 0; i < lineas.length; i++) {
-						motorStreaming.procesarLinea(consola, lineas[i], i, verificacionesRapidas, verificacionesLegacy,
-								estado);
-					}
-					// Finalizar extracción de trazas para logs inyectados
-					if (consola.verificacion_de_stacktrace != null) {
-						consola.verificacion_de_stacktrace.finalizarEscaneoIncremental();
+						motorStreaming.procesarLinea(consola, lineas[i], i, legacyLineales, estado);
 					}
 				}
 			}
 
-			// Finalizamos el análisis del archivo para las verificaciones rápidas
 			for (VerificacionRapida verificacion : verificacionesRapidas) {
 				try {
 					verificacion.finalizarArchivo(consola, estado);
@@ -138,6 +120,22 @@ public final class AnalizadorNuevo {
 		} catch (Exception e) {
 			CrashDetectorLogger.logException(e);
 		}
+	}
+
+	private List<Verificaciones> obtenerLegacyLineales(Consola consola) {
+		List<Verificaciones> resultado = new ArrayList<>();
+
+		for (Verificaciones ver : verificacionesLegacy) {
+			try {
+				if (ver.quiereAnalizarLineas() || ver.activarEscaneoPorLinea(consola)) {
+					resultado.add(ver);
+				}
+			} catch (Exception e) {
+				CrashDetectorLogger.logException(e);
+			}
+		}
+
+		return resultado;
 	}
 
 	private void ejecutarGlobalesLegacy(Consola consola) {

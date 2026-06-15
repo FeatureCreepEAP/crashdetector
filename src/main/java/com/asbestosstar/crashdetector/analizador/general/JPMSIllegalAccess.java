@@ -9,11 +9,13 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class JPMSIllegalAccess implements Verificaciones {
+public class JPMSIllegalAccess implements VerificacionRapida {
 
 	private boolean posibleJPMS = false;
 	private boolean activado = false;
@@ -26,16 +28,52 @@ public class JPMSIllegalAccess implements Verificaciones {
 
 	private final List<ArchivoDeMod> modsRelacionados = new ArrayList<>();
 
-	@Override
-	public void verificar(Consola consola) {
+	private static final String ILLEGAL_ACCESS_EXCEPTION = "IllegalAccessException";
+	private static final String IN_MODULE = "in module";
+	private static final String CANNOT_ACCESS = "cannot access";
 
-		if (consola.contenido_verificar == null) {
+	private static final String CLASS = "class ";
+	private static final String INTERFACE = "interface ";
+	private static final String IN_MODULE_PARENTESIS = "(in module ";
+	private static final String IN = " in ";
+
+	private static final String IO_NETTY = "io.netty";
+	private static final String JDK_INTERNAL_UNSAFE = "jdk.internal.misc.Unsafe";
+	private static final String MODULE_JAVA_BASE = "module java.base";
+
+	private static final String FORGE_PLUGIN_FINDER = "mezz.jei.forge.startup.ForgePluginFinder";
+	private static final String EXPANDEDAE_JEI = "lu.kolja.expandedae.xmod.recipemanager.JEI";
+	private static final String MODULE_JEI = "module jei";
+	private static final String MODULE_EXPANDEDAE = "module expandedae";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { ILLEGAL_ACCESS_EXCEPTION, IN_MODULE, CANNOT_ACCESS };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
 			return;
 		}
 
-		if (consola.contenido_verificar.contains("IllegalAccessException")
-				&& consola.contenido_verificar.contains("in module")
-				&& consola.contenido_verificar.contains("cannot access")) {
+		if (lineaContieneJPMSIllegalAccess(evento.linea)) {
+			posibleJPMS = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public void verificar(Consola consola) {
+
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		if (consola.contenido_verificar.contains(ILLEGAL_ACCESS_EXCEPTION)
+				&& consola.contenido_verificar.contains(IN_MODULE)
+				&& consola.contenido_verificar.contains(CANNOT_ACCESS)) {
 
 			posibleJPMS = true;
 		}
@@ -43,10 +81,7 @@ public class JPMSIllegalAccess implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleJPMS)
-			return false;
-
-		return true;
+		return posibleJPMS && !activado;
 	}
 
 	@Override
@@ -55,17 +90,14 @@ public class JPMSIllegalAccess implements Verificaciones {
 		if (!posibleJPMS || activado || linea == null)
 			return;
 
-		if (linea.contains("IllegalAccessException") && linea.contains("in module")
-				&& linea.contains("cannot access")) {
+		if (lineaContieneJPMSIllegalAccess(linea)) {
 
-			if (linea.contains("io.netty") && linea.contains("jdk.internal.misc.Unsafe")
-					&& linea.contains("module java.base")) {
+			if (linea.contains(IO_NETTY) && linea.contains(JDK_INTERNAL_UNSAFE) && linea.contains(MODULE_JAVA_BASE)) {
 				return;
 			}
 
-			if (linea.contains("mezz.jei.forge.startup.ForgePluginFinder")
-					&& linea.contains("lu.kolja.expandedae.xmod.recipemanager.JEI") && linea.contains("module jei")
-					&& linea.contains("module expandedae")) {
+			if (linea.contains(FORGE_PLUGIN_FINDER) && linea.contains(EXPANDEDAE_JEI) && linea.contains(MODULE_JEI)
+					&& linea.contains(MODULE_EXPANDEDAE)) {
 				return;
 			}
 
@@ -77,28 +109,33 @@ public class JPMSIllegalAccess implements Verificaciones {
 		}
 	}
 
+	private boolean lineaContieneJPMSIllegalAccess(String linea) {
+		return linea.contains(ILLEGAL_ACCESS_EXCEPTION) && linea.contains(IN_MODULE) && linea.contains(CANNOT_ACCESS);
+	}
+
 	private void extraerDatos(String linea) {
 		try {
-			int idxClassA = linea.indexOf("class ");
-			int idxModuleA = linea.indexOf("(in module ", idxClassA);
+			int idxClassA = linea.indexOf(CLASS);
+			int idxModuleA = linea.indexOf(IN_MODULE_PARENTESIS, idxClassA);
 
 			if (idxClassA != -1 && idxModuleA != -1 && idxModuleA > idxClassA) {
-				claseOrigen = limpiarClase(linea.substring(idxClassA + "class ".length(), idxModuleA));
+				claseOrigen = limpiarClase(linea.substring(idxClassA + CLASS.length(), idxModuleA));
 
 				int finModuleA = linea.indexOf(")", idxModuleA);
 				if (finModuleA != -1) {
-					moduloOrigen = limpiarTermino(linea.substring(idxModuleA + "(in module ".length(), finModuleA));
+					moduloOrigen = limpiarTermino(
+							linea.substring(idxModuleA + IN_MODULE_PARENTESIS.length(), finModuleA));
 
-					int idxClassB = linea.indexOf("class ", finModuleA);
-					int idxModuleB = linea.indexOf("(in module ", idxClassB);
+					int idxClassB = linea.indexOf(CLASS, finModuleA);
+					int idxModuleB = linea.indexOf(IN_MODULE_PARENTESIS, idxClassB);
 
 					if (idxClassB != -1 && idxModuleB != -1 && idxModuleB > idxClassB) {
-						claseDestino = limpiarClase(linea.substring(idxClassB + "class ".length(), idxModuleB));
+						claseDestino = limpiarClase(linea.substring(idxClassB + CLASS.length(), idxModuleB));
 
 						int finModuleB = linea.indexOf(")", idxModuleB);
 						if (finModuleB != -1) {
 							moduloDestino = limpiarTermino(
-									linea.substring(idxModuleB + "(in module ".length(), finModuleB));
+									linea.substring(idxModuleB + IN_MODULE_PARENTESIS.length(), finModuleB));
 						}
 					}
 				}
@@ -125,12 +162,12 @@ public class JPMSIllegalAccess implements Verificaciones {
 	}
 
 	private void agregarResultados(String termino) {
-		if (termino == null || termino.trim().isEmpty()) {
+		if (termino == null || sinEspaciosLaterales(termino).isEmpty()) {
 			return;
 		}
 
 		try {
-			List<ArchivoDeMod> encontrados = Buscador.buscarModsConTermino(termino.trim());
+			List<ArchivoDeMod> encontrados = Buscador.buscarModsConTermino(sinEspaciosLaterales(termino));
 			if (encontrados != null) {
 				modsRelacionados.addAll(encontrados);
 			}
@@ -143,22 +180,22 @@ public class JPMSIllegalAccess implements Verificaciones {
 			return "";
 		}
 
-		String limpia = clase.trim();
+		String limpia = sinEspaciosLaterales(clase);
 
-		if (limpia.startsWith("class ")) {
-			limpia = limpia.substring("class ".length()).trim();
+		if (limpia.startsWith(CLASS)) {
+			limpia = sinEspaciosLaterales(limpia.substring(CLASS.length()));
 		}
 
-		if (limpia.startsWith("interface ")) {
-			limpia = limpia.substring("interface ".length()).trim();
+		if (limpia.startsWith(INTERFACE)) {
+			limpia = sinEspaciosLaterales(limpia.substring(INTERFACE.length()));
 		}
 
-		int modulo = limpia.indexOf(" in ");
+		int modulo = limpia.indexOf(IN);
 		if (modulo > -1) {
-			limpia = limpia.substring(0, modulo).trim();
+			limpia = sinEspaciosLaterales(limpia.substring(0, modulo));
 		}
 
-		return limpia.replace('/', '.').replace("'", "").replace("\"", "").trim();
+		return limpiarComillas(limpia.replace('/', '.'));
 	}
 
 	private String limpiarTermino(String texto) {
@@ -166,7 +203,43 @@ public class JPMSIllegalAccess implements Verificaciones {
 			return "";
 		}
 
-		return texto.replace("'", "").replace("\"", "").trim();
+		return limpiarComillas(texto);
+	}
+
+	private String limpiarComillas(String texto) {
+		if (texto == null)
+			return "";
+
+		String limpia = sinEspaciosLaterales(texto);
+		StringBuilder sb = new StringBuilder(limpia.length());
+
+		for (int i = 0; i < limpia.length(); i++) {
+			char c = limpia.charAt(i);
+
+			if (c != '\'' && c != '"') {
+				sb.append(c);
+			}
+		}
+
+		return sinEspaciosLaterales(sb.toString());
+	}
+
+	private String sinEspaciosLaterales(String texto) {
+		if (texto == null)
+			return "";
+
+		int inicio = 0;
+		int fin = texto.length();
+
+		while (inicio < fin && Character.isWhitespace(texto.charAt(inicio))) {
+			inicio++;
+		}
+
+		while (fin > inicio && Character.isWhitespace(texto.charAt(fin - 1))) {
+			fin--;
+		}
+
+		return texto.substring(inicio, fin);
 	}
 
 	private String formatearMods(List<ArchivoDeMod> mods) {

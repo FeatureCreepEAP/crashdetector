@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -16,34 +18,52 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Generalmente causado por: - Archivo faltante - Ruta mal configurada - Error
  * en resources del mod
  */
-public class ModeloGeckoLibNoEncontrado implements Verificaciones {
+public class ModeloGeckoLibNoEncontrado implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
 	private String enlace = "";
 	private String modelo = "";
 
+	private static final String UNABLE_TO_FIND_MODEL = "Unable to find model";
+	private static final String GEO_JSON = ".geo.json";
+	private static final String SEPARADOR_MODELO = ": Unable to find model";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { UNABLE_TO_FIND_MODEL, GEO_JSON };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneModeloGeckoNoEncontrado(evento.linea)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
 
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
 		// Pre-check global ligero
-		if (log.contains("Unable to find model") && log.contains(".geo.json")) {
-
+		if (log.contains(UNABLE_TO_FIND_MODEL) && log.contains(GEO_JSON)) {
 			analizarLineas = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
@@ -52,18 +72,22 @@ public class ModeloGeckoLibNoEncontrado implements Verificaciones {
 		if (!analizarLineas || linea == null || activado)
 			return;
 
-		if (linea.contains("Unable to find model") && linea.contains(".geo.json")) {
+		if (lineaContieneModeloGeckoNoEncontrado(linea)) {
 
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Intentar extraer el nombre del modelo antes de ": Unable to find model"
-			int separador = linea.indexOf(": Unable to find model");
+			int separador = linea.indexOf(SEPARADOR_MODELO);
 			if (separador > 0) {
 				modelo = linea.substring(0, separador).trim();
 			}
 
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneModeloGeckoNoEncontrado(String linea) {
+		return linea.contains(UNABLE_TO_FIND_MODEL) && linea.contains(GEO_JSON);
 	}
 
 	@Override
@@ -83,7 +107,6 @@ public class ModeloGeckoLibNoEncontrado implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-
 		return MonitorDePID.idioma.mensajeModeloGeckoNoEncontrado(modelo) + this.enlace;
 	}
 

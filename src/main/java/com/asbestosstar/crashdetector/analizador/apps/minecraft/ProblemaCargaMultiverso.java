@@ -6,13 +6,15 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores al cargar un mundo con Multiverse. Moderniza la detección sin
  * usar Pattern/Matcher.
  */
-public class ProblemaCargaMultiverso implements Verificaciones {
+public class ProblemaCargaMultiverso implements VerificacionRapida {
 
 	private boolean posibleCargaMultiverso = false;
 	private boolean activado = false;
@@ -23,6 +25,24 @@ public class ProblemaCargaMultiverso implements Verificaciones {
 
 	private static final String TEXTO_ERROR = "The world '";
 	private static final String TEXTO_FIN = "' could NOT be loaded because it contains errors and is probably corrupt!";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR, TEXTO_FIN };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_ERROR) || evento.linea.contains(TEXTO_FIN)) {
+			posibleCargaMultiverso = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
@@ -37,10 +57,7 @@ public class ProblemaCargaMultiverso implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleCargaMultiverso)
-			return false;
-
-		return true;
+		return posibleCargaMultiverso && !activado;
 	}
 
 	@Override

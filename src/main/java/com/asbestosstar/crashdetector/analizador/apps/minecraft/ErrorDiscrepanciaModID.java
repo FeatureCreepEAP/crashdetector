@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,7 +15,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Mod File [...] has mods that were not found" que ocurre durante el
  * desarrollo.
  */
-public class ErrorDiscrepanciaModID implements Verificaciones {
+public class ErrorDiscrepanciaModID implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posible = false;
@@ -25,6 +27,24 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 
 	private static final String TEXTO_INICIO = "The Mod File ";
 	private static final String TEXTO_FIN = " has mods that were not found";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_INICIO, TEXTO_FIN };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_INICIO) || evento.linea.contains(TEXTO_FIN)) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global barata.
@@ -48,10 +68,7 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	/**
@@ -66,11 +83,7 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó o el chequeo global dijo que no es posible,
 		// no seguimos revisando líneas.
-		if (activado || !posible) {
-			return;
-		}
-
-		if (linea == null) {
+		if (activado || !posible || linea == null) {
 			return;
 		}
 
@@ -195,5 +208,4 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

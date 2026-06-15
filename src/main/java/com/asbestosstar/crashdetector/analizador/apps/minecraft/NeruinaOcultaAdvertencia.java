@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,32 +20,52 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Esto indica que Neruina está fallando en su intento de manejar un error de
  * otra entidad, ocultando la verdadera causa del problema original.
  */
-public class NeruinaOcultaAdvertencia implements Verificaciones {
+public class NeruinaOcultaAdvertencia implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
 	private String enlace = "";
 
+	private static final String NULL_POINTER_EXCEPTION = "NullPointerException";
+	private static final String NERUINA = "com.bawnorton.neruina";
+	private static final String NERUINA_STACK = "at com.bawnorton.neruina";
+	private static final String WRITE_STACK_TRACE_NBT = "writeStackTraceNbt";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { NULL_POINTER_EXCEPTION, NERUINA, WRITE_STACK_TRACE_NBT };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(NULL_POINTER_EXCEPTION) || evento.linea.contains(NERUINA)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
 
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
 		// Pre-check global: Debe haber un NullPointerException y rastros de Neruina
-		if (log.contains("NullPointerException") && log.contains("com.bawnorton.neruina")) {
+		if (log.contains(NULL_POINTER_EXCEPTION) && log.contains(NERUINA)) {
 			analizarLineas = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
@@ -53,7 +75,7 @@ public class NeruinaOcultaAdvertencia implements Verificaciones {
 			return;
 
 		// Buscamos la línea específica del stack trace de Neruina
-		if (linea.contains("at com.bawnorton.neruina") && linea.contains("writeStackTraceNbt")) {
+		if (linea.contains(NERUINA_STACK) && linea.contains(WRITE_STACK_TRACE_NBT)) {
 
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;

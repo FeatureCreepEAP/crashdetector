@@ -5,66 +5,86 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores de Fabric al cargar entrypoints (ej: ModMenu). Estos errores
  * suelen indicar incompatibilidad del mod.
  */
-public class ErrorEntrypointFabric implements Verificaciones {
+public class ErrorEntrypointFabric implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String modNombre = "";
 	public boolean posibleError = false;
 
-	@Override
-	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
+	private static final String ENTRYPOINT_EXCEPTION = "net.fabricmc.loader.api.EntrypointException";
+	private static final String EXCEPTION_WHILE_LOADING = "Exception while loading entries for entrypoint";
+	private static final String PROVIDED_BY = "provided by '";
+	private static final String MOD_DESCONOCIDO = "mod desconocido";
 
-		if (contenido == null) {
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { ENTRYPOINT_EXCEPTION, EXCEPTION_WHILE_LOADING, PROVIDED_BY };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
 			return;
 		}
 
-		if (contenido.contains("net.fabricmc.loader.api.EntrypointException")
-				&& contenido.contains("Exception while loading entries for entrypoint")
-				&& contenido.contains("provided by '")) {
+		if (lineaContieneErrorEntrypoint(evento.linea)) {
+			posibleError = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains(ENTRYPOINT_EXCEPTION) && contenido.contains(EXCEPTION_WHILE_LOADING)
+				&& contenido.contains(PROVIDED_BY)) {
 			posibleError = true;
 		}
 
 	}
 
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleError)
-			return false;
-
-		return true;
+		return posibleError && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado || linea == null) {
+		if (activado || !posibleError || linea == null) {
 			return;
 		}
 
 		// Buscar el patrón base sin regex
-		if (linea.contains("net.fabricmc.loader.api.EntrypointException")
-				&& linea.contains("Exception while loading entries for entrypoint")
-				&& linea.contains("provided by '")) {
+		if (lineaContieneErrorEntrypoint(linea)) {
 
 			// Extraer el nombre del mod entre comillas simples después de "provided by '"
-			int inicio = linea.indexOf("provided by '");
+			int inicio = linea.indexOf(PROVIDED_BY);
 			if (inicio != -1) {
-				inicio += "provided by '".length();
+				inicio += PROVIDED_BY.length();
 				int fin = linea.indexOf('\'', inicio);
 				if (fin != -1) {
 					this.modNombre = linea.substring(inicio, fin).trim();
 				} else {
-					this.modNombre = "mod desconocido";
+					this.modNombre = MOD_DESCONOCIDO;
 				}
 			} else {
-				this.modNombre = "mod desconocido";
+				this.modNombre = MOD_DESCONOCIDO;
 			}
 
 			this.activado = true;
@@ -72,6 +92,11 @@ public class ErrorEntrypointFabric implements Verificaciones {
 			this.mensaje = MonitorDePID.idioma.error_entrypoint_fabric_html(modNombre)
 					+ (enlace.isEmpty() ? "" : " " + enlace);
 		}
+	}
+
+	private boolean lineaContieneErrorEntrypoint(String linea) {
+		return linea.contains(ENTRYPOINT_EXCEPTION) && linea.contains(EXCEPTION_WHILE_LOADING)
+				&& linea.contains(PROVIDED_BY);
 	}
 
 	@Override

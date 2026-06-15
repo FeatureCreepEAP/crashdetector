@@ -4,15 +4,17 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta cuando el servidor no puede iniciar porque un archivo del mundo está
  * bloqueado por otro proceso (por ejemplo: otra instancia del servidor,
  * antivirus, explorador de archivos).
  */
-public class ErrorArchivoBloqueadoPorOtroProceso implements Verificaciones {
+public class ErrorArchivoBloqueadoPorOtroProceso implements VerificacionRapida {
 
 	private static final String TEXTO_ERROR = "java.io.IOException: The process cannot access the file because another process has locked a portion of the file";
 
@@ -27,30 +29,50 @@ public class ErrorArchivoBloqueadoPorOtroProceso implements Verificaciones {
 	private boolean posibleArchivoBloqueado = false;
 
 	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_ERROR)) {
+			this.posibleArchivoBloqueado = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		// Análisis global muy ligero: solo comprobamos si el texto de error aparece
 		// en algún punto del log. Si no aparece, la verificación por línea saldrá
 		// inmediatamente y evitamos trabajo innecesario.
 		String contenido = consola.contenido_verificar;
-		this.posibleArchivoBloqueado = contenido != null && contenido.contains(TEXTO_ERROR);
+		this.posibleArchivoBloqueado = contenido.contains(TEXTO_ERROR);
 	}
 
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleArchivoBloqueado)
-			return false;
-
-		return true;
+		return posibleArchivoBloqueado && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó este verificador, o el log ni siquiera contiene el texto
 		// característico, no hacemos nada más.
-		if (this.activado || !this.posibleArchivoBloqueado) {
+		if (this.activado || !this.posibleArchivoBloqueado || linea == null) {
 			return;
 		}
 
-		if (linea != null && linea.contains(TEXTO_ERROR)) {
+		if (linea.contains(TEXTO_ERROR)) {
 			String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			this.mensaje = MonitorDePID.idioma.errorArchivoBloqueadoPorOtroProceso() + enlaceHtml;
 			this.activado = true;

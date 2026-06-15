@@ -9,6 +9,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -16,7 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Aternos porque esta es una implementacion de su codex:
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaModFaltanteEnMundo implements Verificaciones {
+public class ProblemaModFaltanteEnMundo implements VerificacionRapida {
 
 	private boolean posibleModFaltanteEnMundo = false;
 	private boolean activado = false;
@@ -28,6 +30,24 @@ public class ProblemaModFaltanteEnMundo implements Verificaciones {
 
 	private static final String TEXTO_INICIO = "This world was saved with mod ";
 	private static final String TEXTO_FINAL = " which appears to be missing";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_INICIO, TEXTO_FINAL };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (contieneIndicioModFaltanteEnMundo(evento.linea)) {
+			posibleModFaltanteEnMundo = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificacion global ligera.
@@ -50,10 +70,7 @@ public class ProblemaModFaltanteEnMundo implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleModFaltanteEnMundo)
-			return false;
-
-		return true;
+		return posibleModFaltanteEnMundo;
 	}
 
 	/**
@@ -96,6 +113,11 @@ public class ProblemaModFaltanteEnMundo implements Verificaciones {
 
 			indiceBusqueda = fin + TEXTO_FINAL.length();
 		}
+	}
+
+	private boolean contieneIndicioModFaltanteEnMundo(String linea) {
+		return linea.contains(TEXTO_INICIO) || linea.contains(TEXTO_FINAL)
+				|| indexOfIgnoreCase(linea, TEXTO_INICIO, 0) >= 0 || indexOfIgnoreCase(linea, TEXTO_FINAL, 0) >= 0;
 	}
 
 	/**
@@ -183,14 +205,54 @@ public class ProblemaModFaltanteEnMundo implements Verificaciones {
 		}
 
 		int limite = largoTexto - largoBuscar;
+		char primero = buscar.charAt(0);
+		char primeroAlt = cambiarCasoAscii(primero);
 
 		for (int i = desde; i <= limite; i++) {
-			if (texto.regionMatches(true, i, buscar, 0, largoBuscar)) {
+			char actual = texto.charAt(i);
+
+			if (actual != primero && actual != primeroAlt) {
+				continue;
+			}
+
+			if (coincideAsciiIgnoreCase(texto, i, buscar)) {
 				return i;
 			}
 		}
 
 		return -1;
+	}
+
+	private boolean coincideAsciiIgnoreCase(String texto, int inicio, String buscar) {
+		for (int i = 0; i < buscar.length(); i++) {
+			char a = texto.charAt(inicio + i);
+			char b = buscar.charAt(i);
+
+			if (a == b) {
+				continue;
+			}
+
+			if (a != cambiarCasoAscii(b)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Cambia mayúscula/minúscula solo para ASCII A-Z / a-z.
+	 */
+	private char cambiarCasoAscii(char c) {
+		if (c >= 'A' && c <= 'Z') {
+			return (char) (c + 32);
+		}
+
+		if (c >= 'a' && c <= 'z') {
+			return (char) (c - 32);
+		}
+
+		return c;
 	}
 
 	/**

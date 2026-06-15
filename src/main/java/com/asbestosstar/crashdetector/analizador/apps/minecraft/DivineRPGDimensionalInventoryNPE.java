@@ -5,46 +5,66 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class DivineRPGDimensionalInventoryNPE implements Verificaciones {
+public class DivineRPGDimensionalInventoryNPE implements VerificacionRapida {
 
 	private boolean posibleError = false;
 	private boolean activado = false;
 	private String enlace = "";
 
+	private static final String SAVE_INVENTORY_COMPLETO = "divinerpg.capability.DimensionalInventory.saveInventory";
+	private static final String SAVE_INVENTORY_CORTO = "DimensionalInventory.saveInventory";
+	private static final String CANNOT_INVOKE = "Cannot invoke";
+	private static final String IS_NULL = "is null";
+
 	@Override
-	public void verificar(Consola consola) {
+	public String[] patronesRapidos() {
+		return new String[] { SAVE_INVENTORY_COMPLETO, SAVE_INVENTORY_CORTO, CANNOT_INVOKE, IS_NULL };
+	}
 
-		if (consola.contenido_verificar.contains("divinerpg.capability.DimensionalInventory.saveInventory")
-				&& consola.contenido_verificar.contains("Cannot invoke")
-				&& consola.contenido_verificar.contains("is null")) {
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
 
+		if (lineaContieneError(evento.linea)) {
 			posibleError = true;
 		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	/**
+	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
+	 */
+	@Override
+	public void verificar(Consola consola) {
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleError)
-			return false;
-
-		return true;
+		return posibleError && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-
-		if (!posibleError)
+		if (!posibleError || activado || linea == null) {
 			return;
-
-		if (linea.contains("DimensionalInventory.saveInventory")) {
-
-			if (!activado) {
-				this.enlace = consola.agregarErrorALectador(num, this);
-				this.activado = true;
-			}
 		}
+
+		if (linea.contains(SAVE_INVENTORY_CORTO)) {
+			this.enlace = consola.agregarErrorALectador(num, this);
+			this.activado = true;
+		}
+	}
+
+	private boolean lineaContieneError(String linea) {
+		return linea.contains(SAVE_INVENTORY_COMPLETO) || linea.contains(SAVE_INVENTORY_CORTO)
+				|| linea.contains(CANNOT_INVOKE) || linea.contains(IS_NULL);
 	}
 
 	@Override

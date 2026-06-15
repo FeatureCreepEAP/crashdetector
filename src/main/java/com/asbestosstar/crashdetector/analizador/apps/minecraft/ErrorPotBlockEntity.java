@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,40 +20,68 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Es un error común en la versión 1.19.2 de L_Enders_Cataclysm. Solución
  * conocida: Instalar el mod PotFix.
  */
-public class ErrorPotBlockEntity implements Verificaciones {
+public class ErrorPotBlockEntity implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
 	private String enlace = "";
 
+	private static final String DECORATED_POT_BLOCK_ENTITY = "com.min01.archaeology.blockentity.DecoratedPotBlockEntity";
+	private static final String DECORATED_POT_BLOCK_ENTITY_CORTO = "DecoratedPotBlockEntity";
+	private static final String DOES_NOT_DEFINE_OR_INHERIT = "does not define or inherit an implementation";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { DECORATED_POT_BLOCK_ENTITY, DOES_NOT_DEFINE_OR_INHERIT };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneErrorPotBlockEntity(evento.linea)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
 
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
 		// Pre-check global: Buscamos la combinación de la clase y el error de método
-		if (log.contains("com.min01.archaeology.blockentity.DecoratedPotBlockEntity")
-				&& log.contains("does not define or inherit an implementation")) {
+		if (log.contains(DECORATED_POT_BLOCK_ENTITY) && log.contains(DOES_NOT_DEFINE_OR_INHERIT)) {
 			analizarLineas = true;
 		}
 	}
 
 	@Override
-	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
+	public boolean quiereAnalizarLineas() {
+		return analizarLineas && !activado;
+	}
 
-		if (!analizarLineas || linea == null || activado)
+	@Override
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
+		if (!analizarLineas || linea == null || activado) {
 			return;
+		}
 
 		// Buscamos la línea exacta del error
-		if (linea.contains("DecoratedPotBlockEntity")
-				&& linea.contains("does not define or inherit an implementation")) {
-
+		if (lineaContieneErrorPotBlockEntity(linea)) {
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneErrorPotBlockEntity(String linea) {
+		return linea.contains(DECORATED_POT_BLOCK_ENTITY_CORTO) && linea.contains(DOES_NOT_DEFINE_OR_INHERIT);
 	}
 
 	@Override

@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,32 +17,47 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Suele estar relacionado con Sodium, Iris o shaderpacks incompatibles.
  */
-public class ErrorCompilacionShader implements Verificaciones {
+public class ErrorCompilacionShader implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
 	private String enlace = "";
 
+	private static final String SHADER_COMPILATION_FAILED = "Shader compilation failed";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { SHADER_COMPILATION_FAILED };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		analizarLineas = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
 		// Pre-check global ligero
-		if (log.contains("Shader compilation failed")) {
+		if (log.contains(SHADER_COMPILATION_FAILED)) {
 			analizarLineas = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
@@ -49,7 +66,7 @@ public class ErrorCompilacionShader implements Verificaciones {
 		if (!analizarLineas || linea == null || activado)
 			return;
 
-		if (linea.contains("Shader compilation failed")) {
+		if (linea.contains(SHADER_COMPILATION_FAILED)) {
 
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			this.activado = true;
@@ -100,5 +117,4 @@ public class ErrorCompilacionShader implements Verificaciones {
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

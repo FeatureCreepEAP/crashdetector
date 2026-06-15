@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,7 +14,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * faltantes. Detecta específicamente el error "Missing required field mandatory
  * in dependency" y muestra el nombre del JAR problemático.
  */
-public class ErrorDependenciaModFaltante implements Verificaciones {
+public class ErrorDependenciaModFaltante implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posible = false;
@@ -22,6 +24,21 @@ public class ErrorDependenciaModFaltante implements Verificaciones {
 	private String enlaceHtml = "";
 
 	private static final String TEXTO_ERROR = "Missing required field mandatory in dependency";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		posible = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global barata.
@@ -44,10 +61,7 @@ public class ErrorDependenciaModFaltante implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	/**
@@ -61,11 +75,7 @@ public class ErrorDependenciaModFaltante implements Verificaciones {
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó o el chequeo global dijo que no es posible,
 		// no seguimos revisando líneas.
-		if (activado || !posible) {
-			return;
-		}
-
-		if (linea == null) {
+		if (activado || !posible || linea == null) {
 			return;
 		}
 
@@ -174,5 +184,4 @@ public class ErrorDependenciaModFaltante implements Verificaciones {
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

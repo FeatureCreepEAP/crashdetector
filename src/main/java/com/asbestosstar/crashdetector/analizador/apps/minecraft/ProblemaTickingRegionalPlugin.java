@@ -9,6 +9,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -16,7 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Folia. Gracias a Aternos porque esta es una implementacion de su codex:
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaTickingRegionalPlugin implements Verificaciones {
+public class ProblemaTickingRegionalPlugin implements VerificacionRapida {
 
 	private boolean posibleTickingRegionalPlugin = false;
 	private boolean activado = false;
@@ -36,6 +38,22 @@ public class ProblemaTickingRegionalPlugin implements Verificaciones {
 	private static final String TEXTO_COULD_NOT_LOAD_PLUGIN = "Could not load plugin '";
 	private static final String TEXTO_IN_FOLDER = "in folder '";
 	private static final String TEXTO_TICKING_REGIONAL = "not marked as supporting regionised multithreading";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_COULD_NOT_LOAD_PLUGIN, TEXTO_TICKING_REGIONAL };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		posibleTickingRegionalPlugin = true;
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificacion global ligera.
@@ -58,10 +76,7 @@ public class ProblemaTickingRegionalPlugin implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleTickingRegionalPlugin)
-			return false;
-
-		return true;
+		return posibleTickingRegionalPlugin && !activado;
 	}
 
 	/**
@@ -159,7 +174,7 @@ public class ProblemaTickingRegionalPlugin implements Verificaciones {
 	 * Registra el plugin afectado evitando duplicados.
 	 */
 	private void registrarPlugin(Consola consola, String rutaCompleta, int numero_de_linea) {
-		if (rutaCompleta == null || rutaCompleta.isEmpty()) {
+		if (consola == null || rutaCompleta == null || rutaCompleta.isEmpty()) {
 			return;
 		}
 

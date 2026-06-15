@@ -5,9 +5,11 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class EntradaDuplicadaIdModerno implements Verificaciones {
+public class EntradaDuplicadaIdModerno implements VerificacionRapida {
 
 	// Indica si el log contiene indicios globales del error
 	private boolean posibleEntradaDuplicada = false;
@@ -18,39 +20,55 @@ public class EntradaDuplicadaIdModerno implements Verificaciones {
 	// Enlace a la línea del log donde ocurre el error
 	private String enlace = "";
 
+	private static final String DUPLICATE_ENTRY = "java.lang.IllegalArgumentException: Duplicate entry on id";
+	private static final String CURRENT = "current=";
+	private static final String PREVIOUS = "previous=";
+
 	@Override
-	public void verificar(Consola consola) {
-		// Detección global ligera: en versiones modernas de Minecraft este error suele
-		// indicar que dos mods registraron entradas distintas usando el mismo ID.
-		if (consola.contenido_verificar.contains("java.lang.IllegalArgumentException: Duplicate entry on id")
-				&& consola.contenido_verificar.contains("current=")
-				&& consola.contenido_verificar.contains("previous=")) {
+	public String[] patronesRapidos() {
+		return new String[] { DUPLICATE_ENTRY, CURRENT, PREVIOUS };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneEntradaDuplicada(evento.linea)) {
 			posibleEntradaDuplicada = true;
 		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	/**
+	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
+	 */
+	@Override
+	public void verificar(Consola consola) {
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleEntradaDuplicada)
-			return false;
-
-		return true;
+		return posibleEntradaDuplicada && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		// Salir temprano si no hay indicios globales
-		if (!posibleEntradaDuplicada) {
+		if (!posibleEntradaDuplicada || activado || linea == null) {
 			return;
 		}
 
 		// Verificación precisa en la línea principal del error
-		if (linea.contains("java.lang.IllegalArgumentException: Duplicate entry on id") && linea.contains("current=")
-				&& linea.contains("previous=")) {
-
+		if (lineaContieneEntradaDuplicada(linea)) {
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
 		}
+	}
+
+	private boolean lineaContieneEntradaDuplicada(String linea) {
+		return linea.contains(DUPLICATE_ENTRY) && linea.contains(CURRENT) && linea.contains(PREVIOUS);
 	}
 
 	@Override

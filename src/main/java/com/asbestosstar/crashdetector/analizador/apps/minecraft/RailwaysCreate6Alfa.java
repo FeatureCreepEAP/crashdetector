@@ -3,11 +3,13 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class RailwaysCreate6Alfa implements Verificaciones {
+public class RailwaysCreate6Alfa implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -19,28 +21,64 @@ public class RailwaysCreate6Alfa implements Verificaciones {
 	private boolean tieneRegistrate = false;
 	private boolean tieneRailways = false;
 
+	private static final String TEXTO_OBJECTS = "at java.util.Objects.requireNonNull(";
+	private static final String TEXTO_REGISTRATE = "at com.tterrag.registrate.util.entry.RegistryEntry.get(";
+	private static final String TEXTO_RAILWAYS = "railways";
+	private static final String TEXTO_NPE_REGISTRY = "java.lang.NullPointerException: Registry entry not present:";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_OBJECTS, TEXTO_REGISTRATE, TEXTO_RAILWAYS, TEXTO_NPE_REGISTRY };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		String linea = evento.linea;
+
+		if (linea.contains(TEXTO_OBJECTS)) {
+			tieneObjects = true;
+		}
+
+		if (linea.contains(TEXTO_REGISTRATE)) {
+			tieneRegistrate = true;
+		}
+
+		if (linea.contains(TEXTO_RAILWAYS)) {
+			tieneRailways = true;
+		}
+
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
+
 		String texto = consola.contenido_verificar;
 
 		// Contexto típico del rastro de Create/Registrate
-		if (texto.contains("at java.util.Objects.requireNonNull(")) {
+		if (texto.contains(TEXTO_OBJECTS)) {
 			tieneObjects = true;
 		} else {
 			return;
 		}
 
-		if (texto.contains("at com.tterrag.registrate.util.entry.RegistryEntry.get(")) {
+		if (texto.contains(TEXTO_REGISTRATE)) {
 			tieneRegistrate = true;
 		} else {
 			return;
 		}
 
 		// Nueva condición para asegurar que el error provenga de Railways
-		if (texto.contains("railways")) {
+		if (texto.contains(TEXTO_RAILWAYS)) {
 			tieneRailways = true;
 		}
-
 	}
 
 	@Override
@@ -52,7 +90,7 @@ public class RailwaysCreate6Alfa implements Verificaciones {
 		if (!tieneRailways)
 			return false;
 
-		return true;
+		return !activado;
 	}
 
 	@Override
@@ -63,7 +101,7 @@ public class RailwaysCreate6Alfa implements Verificaciones {
 		}
 
 		// Buscar la línea que contiene el NullPointer con la clave de registro
-		if (linea.contains("java.lang.NullPointerException: Registry entry not present:")) {
+		if (linea.contains(TEXTO_NPE_REGISTRY)) {
 			int idx = linea.indexOf("present:");
 			if (idx >= 0) {
 				claveFaltante = linea.substring(idx + "present:".length()).trim();
@@ -139,13 +177,13 @@ public class RailwaysCreate6Alfa implements Verificaciones {
 		String t = trazo.trace;
 
 		// Coincidencia fuerte: el propio mensaje de NPE de Registry
-		if (t.contains("java.lang.NullPointerException: Registry entry not present:")) {
+		if (t.contains(TEXTO_NPE_REGISTRY)) {
 			return true;
 		}
 
 		// Afinar con la clave faltante y el frame de Registrate, si los tenemos
 		if (!claveFaltante.isEmpty() && t.contains("Registry entry not present:") && t.contains(claveFaltante)
-				&& t.contains("com.tterrag.registrate.util.entry.RegistryEntry.get(")) {
+				&& t.contains(TEXTO_REGISTRATE)) {
 			return true;
 		}
 
@@ -157,5 +195,4 @@ public class RailwaysCreate6Alfa implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

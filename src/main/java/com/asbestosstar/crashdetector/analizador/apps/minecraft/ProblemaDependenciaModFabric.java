@@ -11,9 +11,11 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ProblemaDependenciaModFabric implements Verificaciones {
+public class ProblemaDependenciaModFabric implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posibleProblemaDependenciaFabric = false;
@@ -21,37 +23,32 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 	private final Set<String> problemasDetectados = new LinkedHashSet<String>();
 	private final Set<String> problemasSalida = new LinkedHashSet<String>();
 
+	private static final String INSTALL = "- Install ";
+	private static final String REPLACE = "- Replace ";
+	private static final String MOD_REQUIRES = "- Mod ";
+	private static final String WRONG_VERSION = "wrong version is present:";
+	private static final String MISSING = "which is missing";
+
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			this.posibleProblemaDependenciaFabric = false;
+	public String[] patronesRapidos() {
+		return new String[] { INSTALL, REPLACE, MOD_REQUIRES, WRONG_VERSION, MISSING };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+
+		if (evento == null || evento.linea == null) {
 			return;
 		}
 
-		String c = consola.contenido_verificar;
+		posibleProblemaDependenciaFabric = true;
 
-		if (
-		// - Install dep, version x or later
-		(c.contains("- Install ") && c.contains(", version ") && c.contains(" or later"))
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
-				// - Replace mod (...) with any version between x and y
-				|| (c.contains("- Replace ") && c.contains(" with any version between ") && c.contains(" (inclusive)")
-						&& c.contains(" (exclusive)"))
+	@Override
+	public void verificar(Consola consola) {
 
-				// - Mod (...) requires version x or later of dep, which is missing
-				|| (c.contains("- Mod ") && c.contains(" requires version ") && c.contains(" or later of ")
-						&& c.contains("which is missing"))
-
-				// - Mod (...) requires any x version of dep, which is missing
-				|| (c.contains("- Mod ") && c.contains(" requires any ") && c.contains(" version of ")
-						&& c.contains("which is missing"))
-
-				// - Mod (...) requires any version between x and y ... wrong version is present
-				|| (c.contains("- Mod ") && c.contains(" requires any version between ") && c.contains(" (inclusive)")
-						&& c.contains(" (exclusive)") && c.contains("wrong version is present:"))) {
-
-			posibleProblemaDependenciaFabric = true;
-		}
 	}
 
 	@Override
@@ -68,16 +65,17 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 			return;
 		}
 
+		if (!lineaContienePistaRapida(linea)) {
+			return;
+		}
+
 		String lineaLimpia = limpiarLineaRapida(linea).trim();
+
 		if (lineaLimpia.isEmpty()) {
 			return;
 		}
 
 		String lower = lineaLimpia.toLowerCase(Locale.ROOT);
-
-		if (!lineaContienePistaRapida(lower)) {
-			return;
-		}
 
 		if (procesarInstalar(consola, numero_de_linea, lineaLimpia, lower)) {
 			return;
@@ -98,9 +96,9 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 		procesarRangoPresenteIncorrecto(consola, numero_de_linea, lineaLimpia, lower);
 	}
 
-	private boolean lineaContienePistaRapida(String lower) {
-		return lower.indexOf("install") >= 0 || lower.indexOf("replace") >= 0 || lower.indexOf("requires") >= 0
-				|| lower.indexOf("wrong version is present") >= 0 || lower.indexOf("which is missing") >= 0;
+	private boolean lineaContienePistaRapida(String linea) {
+		return linea.indexOf("Install") >= 0 || linea.indexOf("Replace") >= 0 || linea.indexOf("requires") >= 0
+				|| linea.indexOf("missing") >= 0 || linea.indexOf("wrong version") >= 0;
 	}
 
 	private boolean procesarInstalar(Consola consola, int numeroDeLinea, String linea, String lower) {

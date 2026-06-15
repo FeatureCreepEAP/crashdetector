@@ -5,9 +5,11 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class lithostictchctov implements Verificaciones {
+public class lithostictchctov implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -19,7 +21,30 @@ public class lithostictchctov implements Verificaciones {
 	private boolean patronDetectado = false;
 	private boolean firmaDetectada = false;
 	private int lineaPatron = -1;
-	public boolean posible = true;
+	public boolean posible = false;
+
+	private static final String PATRON = "Caused by: java.lang.RuntimeException: "
+			+ "Unknown registry key in ResourceKey[minecraft:root / minecraft:worldgen/structure_type]: lithostitched:jigsaw";
+	private static final String REGISTRY_KEY = "Unknown registry key in ResourceKey[minecraft:root / minecraft:worldgen/structure_type]: lithostitched:jigsaw";
+	private static final String FIRMA_CTOV = "ctov";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { REGISTRY_KEY, "lithostitched:jigsaw", FIRMA_CTOV };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(PATRON) || evento.linea.contains(FIRMA_CTOV)) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global no utilizada en este verificador.
@@ -32,11 +57,12 @@ public class lithostictchctov implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 
-		final String patron = "Caused by: java.lang.RuntimeException: "
-				+ "Unknown registry key in ResourceKey[minecraft:root / minecraft:worldgen/structure_type]: lithostitched:jigsaw";
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
 
 		// Detectar la línea que contiene el patrón principal del error
-		if (consola.contenido_verificar.contains(patron)) {
+		if (consola.contenido_verificar.contains(PATRON)) {
 			posible = true;
 		}
 
@@ -44,10 +70,7 @@ public class lithostictchctov implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	/**
@@ -65,22 +88,18 @@ public class lithostictchctov implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (activado || !posible || linea == null) {
 			return;
 		}
 
-		final String patron = "Caused by: java.lang.RuntimeException: "
-				+ "Unknown registry key in ResourceKey[minecraft:root / minecraft:worldgen/structure_type]: lithostitched:jigsaw";
-		final String firmaCTOV = "ctov";
-
 		// Detectar la línea que contiene el patrón principal del error
-		if (!patronDetectado && linea.contains(patron)) {
+		if (!patronDetectado && linea.contains(PATRON)) {
 			patronDetectado = true;
 			lineaPatron = numero_de_linea;
 		}
 
 		// Detectar la firma "ctov" en cualquier parte del log
-		if (!firmaDetectada && linea.contains(firmaCTOV)) {
+		if (!firmaDetectada && linea.contains(FIRMA_CTOV)) {
 			firmaDetectada = true;
 		}
 
@@ -158,9 +177,7 @@ public class lithostictchctov implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains(
-				"Unknown registry key in ResourceKey[minecraft:root / minecraft:worldgen/structure_type]: lithostitched:jigsaw")
-				&& t.contains("ctov");
+		return t.contains(REGISTRY_KEY) && t.contains(FIRMA_CTOV);
 	}
 
 	@Override

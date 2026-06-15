@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,35 +17,56 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * La presencia de este Mixin en el crash suele indicar un conflicto durante la
  * generación o apareamiento de mobs.
  */
-public class ErrorMobAITweaks implements Verificaciones {
+public class ErrorMobAITweaks implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
 	private String enlace = "";
 
+	private static final String FIRMA_MIXIN = "$mob-ai-tweaks$onSpawned";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { FIRMA_MIXIN };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		analizarLineas = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
 
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
 		// Pre-check global: Buscamos la firma del Mixin de Mob AI Tweaks
-		if (log.contains("$mob-ai-tweaks$onSpawned")) {
+		if (log.contains(FIRMA_MIXIN)) {
 			analizarLineas = true;
 		}
 	}
 
 	@Override
-	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
+	public boolean quiereAnalizarLineas() {
+		return analizarLineas && !activado;
+	}
 
-		if (!analizarLineas || linea == null || activado)
+	@Override
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
+		if (!analizarLineas || linea == null || activado) {
 			return;
+		}
 
 		// Buscamos la línea exacta donde aparece el mixin problemático
-		if (linea.contains("$mob-ai-tweaks$onSpawned")) {
-
+		if (linea.contains(FIRMA_MIXIN)) {
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}

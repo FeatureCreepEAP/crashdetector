@@ -1,16 +1,15 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -21,14 +20,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * verificación por línea para agregar enlace exacto. - También analiza trazos
  * completos mediante VerificacionDeStackTrace.
  */
-public class ErrorResolucionDeTextura implements Verificaciones {
+public class ErrorResolucionDeTextura implements VerificacionRapida {
 
 	private static final String TEXTO_STITCHER = "net.minecraft.client.renderer.texture.StitcherException:";
-
 	private static final String TEXTO_UNABLE = "Unable to fit:";
-
 	private static final String TEXTO_SIZE = " - size:";
-
 	private static final String TEXTO_RESOURCEPACK = "Maybe try a lower resolution resourcepack?";
 
 	/**
@@ -42,7 +38,37 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 	private final Map<String, String> enlacesPorLinea = new HashMap<>();
 
 	private boolean posibleErrorResolucion = false;
+	private boolean vioUnable = false;
+	private boolean vioResourcePack = false;
 	private boolean activado = false;
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_STITCHER, TEXTO_UNABLE, TEXTO_RESOURCEPACK };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		String linea = evento.linea;
+
+		if (linea.contains(TEXTO_UNABLE)) {
+			vioUnable = true;
+		}
+
+		if (linea.contains(TEXTO_RESOURCEPACK)) {
+			vioResourcePack = true;
+		}
+
+		if (vioUnable && vioResourcePack) {
+			posibleErrorResolucion = true;
+		}
+
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global ligera.
@@ -63,17 +89,13 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 		}
 
 		posibleErrorResolucion = true;
-
-		// Analizar trazos completos para enlazar el inicio del stacktrace.
-		procesarTrazos(consola);
+		vioUnable = true;
+		vioResourcePack = true;
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleErrorResolucion)
-			return false;
-
-		return true;
+		return posibleErrorResolucion;
 	}
 
 	/**
@@ -87,35 +109,11 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 		}
 
 		// Solo consideramos líneas que parecen mensaje, no frames de stack.
-		if (!linea.contains(TEXTO_UNABLE) || !linea.contains(TEXTO_RESOURCEPACK) || linea.contains("at ")
-				|| !VerificacionDeStackTrace.tracePermite(linea)) {
+		if (!linea.contains(TEXTO_UNABLE) || !linea.contains(TEXTO_RESOURCEPACK) || linea.contains("at ")) {
 			return;
 		}
 
 		procesarTextoError(linea, numero_de_linea, consola);
-	}
-
-	/**
-	 * Analiza stack traces completos usando VerificacionDeStackTrace.
-	 */
-	private void procesarTrazos(Consola consola) {
-		List<VerificacionDeStackTrace.TraceInfo> trazosInfo = new ArrayList<>();
-		trazosInfo.addAll(VerificacionDeStackTrace.obtenerTracesConLinea(consola));
-		trazosInfo.addAll(VerificacionDeStackTrace.obtenerTracesFatalConLinea(consola));
-
-		for (VerificacionDeStackTrace.TraceInfo traceInfo : trazosInfo) {
-			String trazo = traceInfo.trace;
-
-			if (trazo == null || trazo.isEmpty()) {
-				continue;
-			}
-
-			if (!trazo.contains(TEXTO_UNABLE) || !trazo.contains(TEXTO_RESOURCEPACK)) {
-				continue;
-			}
-
-			procesarTextoError(traceInfo.trace, traceInfo.consolaLineaComenzar, consola);
-		}
 	}
 
 	/**

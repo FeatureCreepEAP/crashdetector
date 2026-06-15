@@ -9,6 +9,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -20,7 +22,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Ejemplo: java.lang.IllegalAccessError: class X tried to access private method
  * Y
  */
-public class AccesoIlegalMod implements Verificaciones {
+public class AccesoIlegalMod implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -33,24 +35,45 @@ public class AccesoIlegalMod implements Verificaciones {
 	private final List<ArchivoDeMod> modsClaseOrigen = new ArrayList<>();
 	private final List<ArchivoDeMod> modsClaseMiembroAccedido = new ArrayList<>();
 
+	private static final String ILLEGAL_ACCESS_ERROR = "java.lang.IllegalAccessError";
+	private static final String TRIED_TO_ACCESS = " tried to access ";
+	private static final String CLASS_PREFIX = "class ";
+	private static final String INTERFACE_PREFIX = "interface ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { ILLEGAL_ACCESS_ERROR, TRIED_TO_ACCESS };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneAccesoIlegal(evento.linea)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 
-		String log = consola.contenido_verificar;
-
-		if (log == null)
+		if (consola == null || consola.contenido_verificar == null)
 			return;
 
-		if (log.contains("java.lang.IllegalAccessError") && log.contains(" tried to access ")) {
+		String log = consola.contenido_verificar;
+
+		if (log.contains(ILLEGAL_ACCESS_ERROR) && log.contains(TRIED_TO_ACCESS)) {
 			analizarLineas = true;
 		}
 	}
 
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
@@ -59,27 +82,34 @@ public class AccesoIlegalMod implements Verificaciones {
 		if (!analizarLineas || linea == null || activado)
 			return;
 
-		if (linea.contains("java.lang.IllegalAccessError") && linea.contains(" tried to access ")) {
+		if (lineaContieneAccesoIlegal(linea)) {
 
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 
-			int inicioClase = linea.indexOf("class ");
+			int inicioClase = linea.indexOf(CLASS_PREFIX);
 			int finClase = linea.indexOf(" tried to access");
 
 			if (inicioClase > -1 && finClase > inicioClase) {
-				claseOrigen = limpiarClase(linea.substring(inicioClase + 6, finClase));
+				claseOrigen = limpiarClase(linea.substring(inicioClase + CLASS_PREFIX.length(), finClase));
 			}
 
-			int inicioMiembro = linea.indexOf("tried to access") + "tried to access".length();
-			if (inicioMiembro > -1 && inicioMiembro < linea.length()) {
-				miembroAccedido = linea.substring(inicioMiembro).trim();
-				claseMiembroAccedido = extraerClaseDesdeMiembro(miembroAccedido);
+			int idxTried = linea.indexOf("tried to access");
+			if (idxTried > -1) {
+				int inicioMiembro = idxTried + "tried to access".length();
+				if (inicioMiembro < linea.length()) {
+					miembroAccedido = linea.substring(inicioMiembro).trim();
+					claseMiembroAccedido = extraerClaseDesdeMiembro(miembroAccedido);
+				}
 			}
 
 			buscarModsRelacionados();
 
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneAccesoIlegal(String linea) {
+		return linea.contains(ILLEGAL_ACCESS_ERROR) && linea.contains(TRIED_TO_ACCESS);
 	}
 
 	private void buscarModsRelacionados() {
@@ -136,12 +166,12 @@ public class AccesoIlegalMod implements Verificaciones {
 			limpia = limpia.substring(0, modulo).trim();
 		}
 
-		if (limpia.startsWith("class ")) {
-			limpia = limpia.substring("class ".length()).trim();
+		if (limpia.startsWith(CLASS_PREFIX)) {
+			limpia = limpia.substring(CLASS_PREFIX.length()).trim();
 		}
 
-		if (limpia.startsWith("interface ")) {
-			limpia = limpia.substring("interface ".length()).trim();
+		if (limpia.startsWith(INTERFACE_PREFIX)) {
+			limpia = limpia.substring(INTERFACE_PREFIX.length()).trim();
 		}
 
 		return limpia.replace('/', '.').replace("'", "").replace("\"", "").trim();
@@ -156,10 +186,11 @@ public class AccesoIlegalMod implements Verificaciones {
 		int parentesis = texto.indexOf('(');
 		String antesParentesis = parentesis > -1 ? texto.substring(0, parentesis) : texto;
 
-		String[] partes = antesParentesis.split("\\s+");
+		int fin = antesParentesis.length();
 
-		for (int i = partes.length - 1; i >= 0; i--) {
-			String posible = partes[i].trim();
+		while (fin > 0) {
+			int inicio = antesParentesis.lastIndexOf(' ', fin - 1);
+			String posible = antesParentesis.substring(inicio + 1, fin).trim();
 
 			int ultimoPunto = posible.lastIndexOf('.');
 			if (ultimoPunto > 0) {
@@ -168,6 +199,12 @@ public class AccesoIlegalMod implements Verificaciones {
 					return limpiarClase(clase);
 				}
 			}
+
+			if (inicio < 0) {
+				break;
+			}
+
+			fin = inicio;
 		}
 
 		return "";

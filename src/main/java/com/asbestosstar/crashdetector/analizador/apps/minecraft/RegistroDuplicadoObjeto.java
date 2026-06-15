@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,7 +20,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * mismo nombre. - Conflictos de IDs entre mods. - Error interno de un mod al no
  * verificar si el nombre ya está en uso.
  */
-public class RegistroDuplicadoObjeto implements Verificaciones {
+public class RegistroDuplicadoObjeto implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -27,16 +29,39 @@ public class RegistroDuplicadoObjeto implements Verificaciones {
 	private String mod2 = "";
 	private String objeto = "";
 
+	private static final String TEXTO_ILLEGAL_ARGUMENT = "IllegalArgumentException";
+	private static final String TEXTO_REGISTERED_TWICE = "has been registered twice";
+	private static final String TEXTO_THE_OBJECT = "The object ";
+	private static final String TEXTO_USING_THE_NAMES = "using the names ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ILLEGAL_ARGUMENT, TEXTO_REGISTERED_TWICE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_ILLEGAL_ARGUMENT) || evento.linea.contains(TEXTO_REGISTERED_TWICE)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 
-		String log = consola.contenido_verificar;
-
-		if (log == null)
+		if (consola == null || consola.contenido_verificar == null)
 			return;
 
+		String log = consola.contenido_verificar;
+
 		// Pre-check global para activar el análisis línea por línea
-		if (log.contains("IllegalArgumentException") && log.contains("has been registered twice")) {
+		if (log.contains(TEXTO_ILLEGAL_ARGUMENT) && log.contains(TEXTO_REGISTERED_TWICE)) {
 
 			analizarLineas = true;
 		}
@@ -44,10 +69,7 @@ public class RegistroDuplicadoObjeto implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
@@ -56,40 +78,70 @@ public class RegistroDuplicadoObjeto implements Verificaciones {
 		if (!analizarLineas || linea == null || activado)
 			return;
 
-		if (linea.contains("IllegalArgumentException") && linea.contains("has been registered twice")) {
+		if (linea.contains(TEXTO_ILLEGAL_ARGUMENT) && linea.contains(TEXTO_REGISTERED_TWICE)) {
 
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Intentamos extraer el nombre del objeto (ej: follow{7c1bf98b})
-			int inicioObj = linea.indexOf("The object ");
-			int finObj = linea.indexOf(" has been registered twice");
+			int inicioObj = linea.indexOf(TEXTO_THE_OBJECT);
+			int finObj = linea.indexOf(" " + TEXTO_REGISTERED_TWICE);
 			if (inicioObj != -1 && finObj != -1) {
-				objeto = linea.substring(inicioObj + "The object ".length(), finObj).trim();
+				objeto = linea.substring(inicioObj + TEXTO_THE_OBJECT.length(), finObj).trim();
 			}
 
 			// Intentamos extraer los nombres de los mods (ej: tfc y fowlplay)
-			int inicioNombres = linea.indexOf("using the names ");
+			int inicioNombres = linea.indexOf(TEXTO_USING_THE_NAMES);
 			if (inicioNombres != -1) {
-				String temp = linea.substring(inicioNombres + "using the names ".length());
-				// Dividimos por " and " que separa ambos registros
-				String[] partes = temp.split(" and ");
-				if (partes.length >= 2) {
+				String temp = linea.substring(inicioNombres + TEXTO_USING_THE_NAMES.length());
+
+				// Dividimos por " and " que separa ambos registros, pero sin split()
+				int separador = temp.indexOf(" and ");
+				if (separador >= 0) {
+					String parte1 = temp.substring(0, separador);
+					String parte2 = temp.substring(separador + " and ".length());
+
 					// Limpiamos el nombre del mod (todo lo que está antes de los dos puntos)
-					mod1 = partes[0].contains(":") ? partes[0].split(":")[0] : partes[0];
-					mod2 = partes[1].contains(":") ? partes[1].split(":")[0] : partes[1];
+					mod1 = extraerModAntesDeDosPuntos(parte1);
+					mod2 = extraerModAntesDeDosPuntos(parte2);
 
 					// Limpieza extra para eliminar puntuación residual
-					if (mod2.contains(".")) {
-						mod2 = mod2.substring(0, mod2.indexOf("."));
-					}
-					if (mod2.contains("(")) {
-						mod2 = mod2.substring(0, mod2.indexOf("(")).trim();
-					}
+					mod2 = limpiarPuntuacionResidual(mod2);
 				}
 			}
 
 			activado = true;
 		}
+	}
+
+	private String extraerModAntesDeDosPuntos(String texto) {
+		if (texto == null) {
+			return "";
+		}
+
+		int dosPuntos = texto.indexOf(':');
+		if (dosPuntos >= 0) {
+			return texto.substring(0, dosPuntos).trim();
+		}
+
+		return texto.trim();
+	}
+
+	private String limpiarPuntuacionResidual(String texto) {
+		if (texto == null || texto.isEmpty()) {
+			return "";
+		}
+
+		int punto = texto.indexOf(".");
+		if (punto >= 0) {
+			texto = texto.substring(0, punto);
+		}
+
+		int parentesis = texto.indexOf("(");
+		if (parentesis >= 0) {
+			texto = texto.substring(0, parentesis);
+		}
+
+		return texto.trim();
 	}
 
 	@Override
@@ -136,5 +188,4 @@ public class RegistroDuplicadoObjeto implements Verificaciones {
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

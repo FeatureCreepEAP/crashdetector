@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,7 +20,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * animaciones JSON mal formadas o incompatibles. Source FIle #500 en Maven!
  * Gracias PriestessKokomi para esta problema
  */
-public class ProblemaAzureLibAnimaciones implements Verificaciones {
+public class ProblemaAzureLibAnimaciones implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -28,42 +30,59 @@ public class ProblemaAzureLibAnimaciones implements Verificaciones {
 
 	private String enlace = "";
 
+	private static final String EXPECTED_POST_JSON_ARRAY = "Expected post to be a JsonArray, was an object";
+	private static final String AZURELIB_BAKED_ANIMATIONS_ADAPTER = "mod.azure.azurelib.loading.json.typeadapter.BakedAnimationsAdapter";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { EXPECTED_POST_JSON_ARRAY, AZURELIB_BAKED_ANIMATIONS_ADAPTER };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(EXPECTED_POST_JSON_ARRAY)
+				|| evento.linea.contains(AZURELIB_BAKED_ANIMATIONS_ADAPTER)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
 
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
 		// Pre-check global para rendimiento: ambas cadenas deben existir en el log
-		if (log.contains("Expected post to be a JsonArray, was an object")
-				&& log.contains("mod.azure.azurelib.loading.json.typeadapter.BakedAnimationsAdapter")) {
-
+		if (log.contains(EXPECTED_POST_JSON_ARRAY) && log.contains(AZURELIB_BAKED_ANIMATIONS_ADAPTER)) {
 			analizarLineas = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 
-		if (!analizarLineas || linea == null)
+		if (!analizarLineas || linea == null || activado)
 			return;
 
-		if (linea.contains("Expected post to be a JsonArray, was an object")) {
+		if (linea.contains(EXPECTED_POST_JSON_ARRAY)) {
 			vioJsonSyntax = true;
 			enlace = consola.agregarErrorALectador(numero_de_linea, this);
 		}
 
-		if (linea.contains("mod.azure.azurelib.loading.json.typeadapter.BakedAnimationsAdapter")) {
+		if (linea.contains(AZURELIB_BAKED_ANIMATIONS_ADAPTER)) {
 			vioAzureLib = true;
 			enlace = consola.agregarErrorALectador(numero_de_linea, this);
 		}
@@ -120,8 +139,7 @@ public class ProblemaAzureLibAnimaciones implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("Expected post to be a JsonArray, was an object")
-				&& t.contains("mod.azure.azurelib.loading.json.typeadapter.BakedAnimationsAdapter");
+		return t.contains(EXPECTED_POST_JSON_ARRAY) && t.contains(AZURELIB_BAKED_ANIMATIONS_ADAPTER);
 	}
 
 	@Override

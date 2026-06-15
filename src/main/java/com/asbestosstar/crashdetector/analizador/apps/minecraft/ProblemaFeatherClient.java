@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,7 +15,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Requiere que también esté presente el paquete net.digitalingot.feather
  */
-public class ProblemaFeatherClient implements Verificaciones {
+public class ProblemaFeatherClient implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -21,27 +23,35 @@ public class ProblemaFeatherClient implements Verificaciones {
 	private boolean vioPaqueteFeather = false;
 	private String enlace = "";
 
+	private static final String NO_CLASS_DEF = "java.lang.NoClassDefFoundError: feather/lib/sentry/Sentry";
+	private static final String SENTRY = "feather/lib/sentry/Sentry";
+	private static final String PAQUETE_FEATHER = "net.digitalingot.feather";
+
 	@Override
-	public void verificar(Consola consola) {
+	public String[] patronesRapidos() {
+		return new String[] { NO_CLASS_DEF, SENTRY, PAQUETE_FEATHER };
+	}
 
-		String log = consola.contenido_verificar;
-
-		if (log == null)
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado) {
 			return;
+		}
 
-		// Pre-check global: deben existir ambas cadenas
-		if (log.contains("feather/lib/sentry/Sentry") || log.contains("net.digitalingot.feather")) {
-
+		if (evento.linea.contains(SENTRY) || evento.linea.contains(PAQUETE_FEATHER)) {
 			analizarLineas = true;
 		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public void verificar(Consola consola) {
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
@@ -50,16 +60,16 @@ public class ProblemaFeatherClient implements Verificaciones {
 		if (!analizarLineas || linea == null || activado)
 			return;
 
-		if (linea.contains("java.lang.NoClassDefFoundError: feather/lib/sentry/Sentry")) {
+		if (linea.contains(NO_CLASS_DEF)) {
 			vioNoClassDef = true;
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 		}
 
-		if (linea.contains("net.digitalingot.feather")) {
+		if (linea.contains(PAQUETE_FEATHER)) {
 			vioPaqueteFeather = true;
 		}
 
-		if (vioNoClassDef || vioPaqueteFeather) {
+		if (vioNoClassDef && vioPaqueteFeather) {
 			activado = true;
 		}
 	}
@@ -81,6 +91,8 @@ public class ProblemaFeatherClient implements Verificaciones {
 
 	@Override
 	public String mensaje() {
+		if (!activado)
+			return "";
 
 		return MonitorDePID.idioma.mensajeProblemaFeatherClientSodium() + this.enlace;
 	}
@@ -109,5 +121,4 @@ public class ProblemaFeatherClient implements Verificaciones {
 	public Documento docs() {
 		return Documento.builder().doc("en", "minecraft/Launchers.md").build();
 	}
-
 }

@@ -9,6 +9,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -16,7 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * guardado. Gracias a Aternos por que esta es una implementacion de su codex
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaVersionModMundo implements Verificaciones {
+public class ProblemaVersionModMundo implements VerificacionRapida {
 
 	// Indica si el log contiene indicios globales del error
 	private boolean posibleVersionModMundo = false;
@@ -37,6 +39,22 @@ public class ProblemaVersionModMundo implements Verificaciones {
 	private static final String MARCADOR_VERSION_ACTUAL = " and it is now at version ";
 	private static final String FINAL = ", things may not work well";
 
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { INICIO, MARCADOR_VERSION_ACTUAL, FINAL };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		posibleVersionModMundo = true;
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	/**
 	 * Verificación global ligera.
 	 *
@@ -45,6 +63,10 @@ public class ProblemaVersionModMundo implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
+
 		String contenido = consola.contenido_verificar;
 
 		if (contenido.contains(INICIO) && contenido.contains(MARCADOR_VERSION_ACTUAL)
@@ -56,10 +78,7 @@ public class ProblemaVersionModMundo implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleVersionModMundo)
-			return false;
-
-		return true;
+		return posibleVersionModMundo;
 	}
 
 	/**
@@ -70,7 +89,7 @@ public class ProblemaVersionModMundo implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		if (!posibleVersionModMundo) {
+		if (!posibleVersionModMundo || linea == null || linea.isEmpty()) {
 			return;
 		}
 
@@ -108,12 +127,28 @@ public class ProblemaVersionModMundo implements Verificaciones {
 			return;
 		}
 
+		if (contieneMod(nombreMod, versionEsperada, versionActual)) {
+			return;
+		}
+
 		nombresMods.add(nombreMod);
 		versionesEsperadas.add(versionEsperada);
 		versionesActuales.add(versionActual);
 		enlaces.add(consola.agregarErrorALectador(num, this));
 
 		this.activado = true;
+	}
+
+	private boolean contieneMod(String nombreMod, String versionEsperada, String versionActual) {
+		for (int i = 0; i < nombresMods.size(); i++) {
+			if (nombresMods.get(i).equalsIgnoreCase(nombreMod)
+					&& versionesEsperadas.get(i).equalsIgnoreCase(versionEsperada)
+					&& versionesActuales.get(i).equalsIgnoreCase(versionActual)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

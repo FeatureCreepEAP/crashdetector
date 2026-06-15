@@ -9,6 +9,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -16,7 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * es una implementacion de su codex:
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaModFaltanteEnDatapack implements Verificaciones {
+public class ProblemaModFaltanteEnDatapack implements VerificacionRapida {
 
 	private boolean posibleModFaltanteEnDatapack = false;
 	private boolean activado = false;
@@ -27,6 +29,24 @@ public class ProblemaModFaltanteEnDatapack implements Verificaciones {
 	private final List<String> enlaces = new ArrayList<>();
 
 	private static final String TEXTO_MOD_FALTANTE = "Missing data pack mod:";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_MOD_FALTANTE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_MOD_FALTANTE)) {
+			posibleModFaltanteEnDatapack = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global ligera.
@@ -47,10 +67,7 @@ public class ProblemaModFaltanteEnDatapack implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleModFaltanteEnDatapack)
-			return false;
-
-		return true;
+		return posibleModFaltanteEnDatapack;
 	}
 
 	/**

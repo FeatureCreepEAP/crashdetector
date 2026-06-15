@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -24,7 +26,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * pack de shaders incompatible, o una combinación conflictiva entre shaders y
  * otros mods gráficos.
  */
-public class OculusIrisUnknownShaderVariable implements Verificaciones {
+public class OculusIrisUnknownShaderVariable implements VerificacionRapida {
 
 	// Indica si apareció la traza típica del resolvedor de expresiones
 	private boolean indicioResolver = false;
@@ -38,40 +40,63 @@ public class OculusIrisUnknownShaderVariable implements Verificaciones {
 	// Enlace a la línea más representativa del problema
 	private String enlace = "";
 
-	@Override
-	public void verificar(Consola consola) {
-		// Búsqueda global ligera para evitar trabajo innecesario por línea
-		String contenido = consola.contenido_verificar;
+	private static final String EXPRESSION_RESOLVER = "kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal";
+	private static final String UNKNOWN_VARIABLE = "java.lang.RuntimeException: Unknown variable:";
 
-		if (contenido.contains("kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal")) {
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { EXPRESSION_RESOLVER, UNKNOWN_VARIABLE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(EXPRESSION_RESOLVER)) {
 			indicioResolver = true;
 		}
 
-		if (contenido.contains("java.lang.RuntimeException: Unknown variable:")) {
+		if (evento.linea.contains(UNKNOWN_VARIABLE)) {
+			indicioVariableDesconocida = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
+
+		// Búsqueda global ligera para evitar trabajo innecesario por línea
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains(EXPRESSION_RESOLVER)) {
+			indicioResolver = true;
+		}
+
+		if (contenido.contains(UNKNOWN_VARIABLE)) {
 			indicioVariableDesconocida = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!indicioResolver)
-			return false;
-
-		if (!indicioVariableDesconocida)
-			return false;
-
-		return true;
+		return indicioResolver && indicioVariableDesconocida && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Si no están ambos indicios globales, esta verificación no aplica
-		if (activado || !indicioResolver || !indicioVariableDesconocida) {
+		if (activado || !indicioResolver || !indicioVariableDesconocida || linea == null) {
 			return;
 		}
 
 		// Guardamos como enlace la línea más útil para el usuario
-		if (linea.contains("java.lang.RuntimeException: Unknown variable:")) {
+		if (linea.contains(UNKNOWN_VARIABLE)) {
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
 			return;
@@ -79,7 +104,7 @@ public class OculusIrisUnknownShaderVariable implements Verificaciones {
 
 		// Respaldo: si por alguna razón no se enlazó con la línea principal,
 		// usar la otra línea relevante
-		if (linea.contains("kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal")) {
+		if (linea.contains(EXPRESSION_RESOLVER)) {
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
 		}

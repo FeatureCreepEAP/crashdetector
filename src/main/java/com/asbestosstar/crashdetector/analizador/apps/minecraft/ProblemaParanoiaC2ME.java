@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,7 +20,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * com.ishland.c2me.fixes.worldgen.threading_issues.common.CheckedThreadLocalRandom$1:
  * ThreadLocalRandom accessed from a different thread
  */
-public class ProblemaParanoiaC2ME implements Verificaciones {
+public class ProblemaParanoiaC2ME implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -28,17 +30,40 @@ public class ProblemaParanoiaC2ME implements Verificaciones {
 
 	private String enlace = "";
 
+	private static final String TEXTO_PARANOIA = "net.mcreator.paranoia.procedures.ParanoiaProcedure";
+	private static final String TEXTO_PARANOIA_CORTO = "ParanoiaProcedure";
+	private static final String TEXTO_CHECKED_RANDOM = "CheckedThreadLocalRandom";
+	private static final String TEXTO_THREADLOCAL_RANDOM = "ThreadLocalRandom accessed from a different thread";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_PARANOIA, TEXTO_CHECKED_RANDOM, TEXTO_THREADLOCAL_RANDOM };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneIndicioParanoiaC2ME(evento.linea)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
 		// Pre-check global para rendimiento
-		if (log.contains("net.mcreator.paranoia.procedures.ParanoiaProcedure")
-				&& log.contains("CheckedThreadLocalRandom")) {
+		if (log.contains(TEXTO_PARANOIA) && log.contains(TEXTO_CHECKED_RANDOM)) {
 
 			analizarLineas = true;
 		}
@@ -46,25 +71,21 @@ public class ProblemaParanoiaC2ME implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 
-		if (!analizarLineas || linea == null)
+		if (!analizarLineas || activado || linea == null || consola == null)
 			return;
 
-		if (linea.contains("net.mcreator.paranoia.procedures.ParanoiaProcedure")) {
+		if (linea.contains(TEXTO_PARANOIA)) {
 			vistoParanoia = true;
 			enlace = consola.agregarErrorALectador(numero_de_linea, this);
 		}
 
-		if (linea.contains("CheckedThreadLocalRandom")
-				&& linea.contains("ThreadLocalRandom accessed from a different thread")) {
+		if (linea.contains(TEXTO_CHECKED_RANDOM) && linea.contains(TEXTO_THREADLOCAL_RANDOM)) {
 
 			vistoC2ME = true;
 			enlace = consola.agregarErrorALectador(numero_de_linea, this);
@@ -73,6 +94,11 @@ public class ProblemaParanoiaC2ME implements Verificaciones {
 		if (vistoParanoia && vistoC2ME) {
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneIndicioParanoiaC2ME(String linea) {
+		return linea.contains(TEXTO_PARANOIA) || linea.contains(TEXTO_CHECKED_RANDOM)
+				|| linea.contains(TEXTO_THREADLOCAL_RANDOM);
 	}
 
 	@Override
@@ -122,7 +148,7 @@ public class ProblemaParanoiaC2ME implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("ParanoiaProcedure") && t.contains("CheckedThreadLocalRandom");
+		return t.contains(TEXTO_PARANOIA_CORTO) && t.contains(TEXTO_CHECKED_RANDOM);
 	}
 
 	@Override

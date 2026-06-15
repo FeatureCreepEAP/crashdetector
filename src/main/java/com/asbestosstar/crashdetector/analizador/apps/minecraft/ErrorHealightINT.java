@@ -4,8 +4,10 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Verificación que detecta el error crítico causado por el mod 'healight' en
@@ -17,10 +19,35 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
  * versiones recientes de Minecraft (1.20+), lo que provoca un fallo al
  * inicializar entidades.
  */
-public class ErrorHealightINT implements Verificaciones {
+public class ErrorHealightINT implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
+	private boolean encontradoHealight = false;
+
+	private static final String HEALIGHT = "healight";
+	private static final String NO_SUCH_FIELD_INT = "java.lang.NoSuchFieldError: INT";
+	private static final String LIVING_ENTITY_CLINIT = "LivingEntity.<clinit>";
+	private static final String ENTITY_TYPE_CLINIT = "EntityType.<clinit>";
+	private static final String WORLD_ENTITY = "net.minecraft.world.entity";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { HEALIGHT, NO_SUCH_FIELD_INT, LIVING_ENTITY_CLINIT, ENTITY_TYPE_CLINIT, WORLD_ENTITY };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(HEALIGHT)) {
+			encontradoHealight = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Analiza el contenido del log en busca del patrón de error específico
@@ -28,23 +55,33 @@ public class ErrorHealightINT implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
+	}
 
-		if (!contenido.contains("healight")) {
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return encontradoHealight && !activado;
+	}
+
+	@Override
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
+		if (!encontradoHealight || activado || linea == null) {
 			return;
 		}
 
 		// Patrón que detecta la cadena de errores típica:
 		// Caused by: java.lang.NoSuchFieldError: INT
 		// y que aparezca en contexto de inicialización de LivingEntity o EntityType
-		if (contenido.contains("java.lang.NoSuchFieldError: INT") && (contenido.contains("LivingEntity.<clinit>")
-				|| contenido.contains("EntityType.<clinit>") || contenido.contains("net.minecraft.world.entity"))) {
+		if (lineaContieneErrorHealightINT(linea)) {
 
 			// Verificar si el mod 'healight' está presente en la lista de mods cargados
 			this.mensaje = MonitorDePID.idioma.errorHealightINT();
 			this.activado = true;
-
 		}
+	}
+
+	private boolean lineaContieneErrorHealightINT(String linea) {
+		return linea.contains(NO_SUCH_FIELD_INT) && (linea.contains(LIVING_ENTITY_CLINIT)
+				|| linea.contains(ENTITY_TYPE_CLINIT) || linea.contains(WORLD_ENTITY));
 	}
 
 	/**
@@ -108,13 +145,11 @@ public class ErrorHealightINT implements Verificaciones {
 	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		String contenido = trazo.trace;
-		if (contenido.contains("java.lang.NoSuchFieldError: INT") && (contenido.contains("LivingEntity.<clinit>")
-				|| contenido.contains("EntityType.<clinit>") || contenido.contains("net.minecraft.world.entity"))) {
-			return true;
+		if (trazo == null || trazo.trace == null) {
+			return false;
 		}
 
-		return false;
+		return lineaContieneErrorHealightINT(trazo.trace);
 	}
 
 	@Override
@@ -128,5 +163,4 @@ public class ErrorHealightINT implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

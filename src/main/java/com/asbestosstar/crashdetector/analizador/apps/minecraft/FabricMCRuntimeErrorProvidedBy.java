@@ -8,16 +8,40 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
+public class FabricMCRuntimeErrorProvidedBy implements VerificacionRapida {
 
 	private boolean activado = false;
 	private final Set<String> modIdsProblematicos = new HashSet<>();
 	private final Map<String, String> enlacesPorModId = new HashMap<>();
 	private boolean posible = false;
+
+	private static final String ENTRYPOINT_STAGE = "Could not execute entrypoint stage";
+	private static final String PROVIDED_BY = "provided by";
+	private static final String PROVIDED_BY_COMILLA = "provided by '";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { ENTRYPOINT_STAGE, PROVIDED_BY };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(ENTRYPOINT_STAGE) || evento.linea.contains(PROVIDED_BY)) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global no utilizada en este verificador.
@@ -36,18 +60,14 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 
 		String contenido = consola.contenido_verificar;
 
-		if (contenido.contains("Could not execute entrypoint stage") || contenido.contains("provided by")) {
+		if (contenido.contains(ENTRYPOINT_STAGE) || contenido.contains(PROVIDED_BY)) {
 			posible = true;
 		}
-
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible;
 	}
 
 	/**
@@ -63,31 +83,33 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!linea.contains("Could not execute entrypoint stage") || !linea.contains("provided by")) {
+		if (!posible || linea == null) {
 			return;
 		}
 
-		try {
-			// Buscamos el mod ID que está entre comillas simples después de "provided by"
-			int startIndex = linea.indexOf("provided by '");
-			if (startIndex >= 0) {
-				// Ajustamos el índice para saltar "provided by '"
-				startIndex += "provided by '".length();
-				int endIndex = linea.indexOf('\'', startIndex);
-				if (endIndex > startIndex) {
-					// Extraemos solo el texto entre las comillas simples (el mod ID)
-					String modId = linea.substring(startIndex, endIndex);
-					// Solo registrar si es nuevo
-					if (modIdsProblematicos.add(modId)) {
-						String enlace = consola.agregarErrorALectador(numero_de_linea, this);
-						enlacesPorModId.put(modId, enlace);
-					}
-					activado = true;
+		if (!linea.contains(ENTRYPOINT_STAGE) || !linea.contains(PROVIDED_BY)) {
+			return;
+		}
+
+		// Buscamos el mod ID que está entre comillas simples después de "provided by"
+		int startIndex = linea.indexOf(PROVIDED_BY_COMILLA);
+		if (startIndex >= 0) {
+			// Ajustamos el índice para saltar "provided by '"
+			startIndex += PROVIDED_BY_COMILLA.length();
+
+			int endIndex = linea.indexOf('\'', startIndex);
+			if (endIndex > startIndex) {
+				// Extraemos solo el texto entre las comillas simples (el mod ID)
+				String modId = linea.substring(startIndex, endIndex);
+
+				// Solo registrar si es nuevo
+				if (modIdsProblematicos.add(modId)) {
+					String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+					enlacesPorModId.put(modId, enlace);
 				}
+
+				activado = true;
 			}
-		} catch (Exception e) {
-			// Ignora líneas mal formateadas, pero aún así registra la línea como problema
-			consola.agregarErrorALectador(numero_de_linea, this);
 		}
 	}
 
@@ -158,12 +180,12 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 
 		String t = trazo.trace;
 
-		if (!t.contains("Could not execute entrypoint stage") || !t.contains("provided by")) {
+		if (!t.contains(ENTRYPOINT_STAGE) || !t.contains(PROVIDED_BY)) {
 			return false;
 		}
 
 		for (String modId : modIdsProblematicos) {
-			String fragmento = "provided by '" + modId + "'";
+			String fragmento = PROVIDED_BY_COMILLA + modId + "'";
 			if (t.contains(fragmento)) {
 				return true;
 			}

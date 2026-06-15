@@ -32,7 +32,7 @@ public class ProblemaEjecucionPlugin implements VerificacionRapida {
 
 	@Override
 	public String[] patronesRapidos() {
-		return new String[] { TEXTO_EXCEPTION };
+		return new String[] { TEXTO_EXCEPTION, TEXTO_PLUGINS };
 	}
 
 	@Override
@@ -42,35 +42,31 @@ public class ProblemaEjecucionPlugin implements VerificacionRapida {
 
 	@Override
 	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
 		posibleEjecucion = true;
+
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
 	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(TEXTO_ERROR) && contenido.contains(TEXTO_PLUGINS)
-				&& contenido.contains(TEXTO_EXCEPTION)) {
-			posibleEjecucion = true;
-		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleEjecucion)
-			return false;
-
-		return true;
+		return posibleEjecucion;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!posibleEjecucion || linea == null || linea.isEmpty()) {
+			return;
+		}
+
+		if (linea.indexOf(TEXTO_PLUGINS) < 0 || linea.indexOf(TEXTO_EXCEPTION) < 0) {
 			return;
 		}
 
@@ -192,5 +188,4 @@ public class ProblemaEjecucionPlugin implements VerificacionRapida {
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

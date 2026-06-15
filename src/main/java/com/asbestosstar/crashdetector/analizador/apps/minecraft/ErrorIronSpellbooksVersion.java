@@ -3,8 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,19 +15,51 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * causando un NoSuchMethodError al intentar usar
  * ResourceLocation.fromNamespaceAndPath.
  */
-public class ErrorIronSpellbooksVersion implements Verificaciones {
+public class ErrorIronSpellbooksVersion implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean encontradaLinea1 = false;
 
+	private static final String IRONS_SPELLBOOKS_1201 = "irons_spellbooks@1.20.1";
+	private static final String SCHOOL_REGISTRY_CLINIT = "SchoolRegistry.<clinit>";
+	private static final String RESOURCE_LOCATION_METHOD = "ResourceLocation.fromNamespaceAndPath";
+	private static final String FAILED_TO_CREATE_MOD_INSTANCE = "Failed to create mod instance";
+	private static final String IRONS_SPELLBOOKS_MOD_ID = "ModID: irons_spellbooks";
+	private static final String NO_SUCH_METHOD_ERROR = "java.lang.NoSuchMethodError";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { IRONS_SPELLBOOKS_1201, SCHOOL_REGISTRY_CLINIT, RESOURCE_LOCATION_METHOD,
+				IRONS_SPELLBOOKS_MOD_ID, NO_SUCH_METHOD_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(RESOURCE_LOCATION_METHOD)) {
+			encontradaLinea1 = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	/**
 	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// Se usa el método verificar(Consola, String, int) en lugar de este.
+		// Se usa el método verificarCoincidencia(EventoDeCoincidencia) en lugar de
+		// este.
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return encontradaLinea1 && !activado;
 	}
 
 	/**
@@ -38,15 +72,14 @@ public class ErrorIronSpellbooksVersion implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (!encontradaLinea1 || activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;
 		}
 
 		// Tercera línea: "at [.../irons_spellbooks@1.20.1-3.4.0.11/...]
 		// SchoolRegistry.<clinit>(SchoolRegistry.java:29)"
-		if (linea.contains("irons_spellbooks@1.20.1") && linea.contains("SchoolRegistry.<clinit>")
-				&& consola.contenido_verificar.contains("ResourceLocation.fromNamespaceAndPath")) {
+		if (linea.contains(IRONS_SPELLBOOKS_1201) && linea.contains(SCHOOL_REGISTRY_CLINIT)) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -109,9 +142,9 @@ public class ErrorIronSpellbooksVersion implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("Failed to create mod instance") && t.contains("ModID: irons_spellbooks")
-				&& t.contains("java.lang.NoSuchMethodError") && t.contains("ResourceLocation.fromNamespaceAndPath")
-				&& t.contains("SchoolRegistry.<clinit>");
+		return t.contains(FAILED_TO_CREATE_MOD_INSTANCE) && t.contains(IRONS_SPELLBOOKS_MOD_ID)
+				&& t.contains(NO_SUCH_METHOD_ERROR) && t.contains(RESOURCE_LOCATION_METHOD)
+				&& t.contains(SCHOOL_REGISTRY_CLINIT);
 	}
 
 	@Override
@@ -119,5 +152,4 @@ public class ErrorIronSpellbooksVersion implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

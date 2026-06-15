@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.swing.JOptionPane;
 
@@ -14,14 +13,15 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.EliminadorDeMod;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 
-public class SpongeMixinConfigsProblematicos implements Verificaciones {
+public class SpongeMixinConfigsProblematicos implements VerificacionRapida {
 
 	private boolean activado = false;
 	private final Map<String, Integer> sm_config_con_linea = new HashMap<>();
@@ -29,27 +29,63 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 	private final Map<String, String> enlacesPorConfig = new HashMap<>();
 	public boolean posibleErrorMixinPorLinea = false;
 
+	private static final String TEXTO_RESOURCE = "The specified resource '";
+	private static final String TEXTO_INVALID_OR_UNREADABLE = "' was invalid or could not be read";
+	private static final String TEXTO_MIXINS = "mixins";
+	private static final String TEXTO_JSON = ".json";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_RESOURCE, TEXTO_INVALID_OR_UNREADABLE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneMixinConfigProblematico(evento.linea)) {
+			posibleErrorMixinPorLinea = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 //		sm_config_con_linea.clear();
 //		sm_config_es_fatal.clear();
 //		enlacesPorConfig.clear();
 
+		if (consola == null) {
+			return;
+		}
+
 		// Origen existente: parser de stacktrace
-		BiMap<String, Integer, Boolean> configs = consola.verificacion_de_stacktrace.sm_config;
-		for (BiMap.DoubleKey<String, Integer> clave : configs.keySet()) {
-			String nombreArchivo = clave.key0;
-			int linea = clave.key1;
-			boolean esFatal = configs.get(nombreArchivo, linea);
-			CrashDetectorLogger.log("JSON in SM Problematico " + nombreArchivo);
-			sm_config_con_linea.put(nombreArchivo, linea);
-			sm_config_es_fatal.put(nombreArchivo, esFatal);
-			enlacesPorConfig.put(nombreArchivo, consola.agregarErrorALectador(linea, this));
-			this.activado = true;
+		if (consola.verificacion_de_stacktrace != null && consola.verificacion_de_stacktrace.sm_config != null) {
+			BiMap<String, Integer, Boolean> configs = consola.verificacion_de_stacktrace.sm_config;
+
+			for (BiMap.DoubleKey<String, Integer> clave : configs.keySet()) {
+				String nombreArchivo = clave.key0;
+				int linea = clave.key1;
+				boolean esFatal = configs.get(nombreArchivo, linea);
+
+				CrashDetectorLogger.log("JSON in SM Problematico " + nombreArchivo);
+
+				sm_config_con_linea.put(nombreArchivo, linea);
+				sm_config_es_fatal.put(nombreArchivo, esFatal);
+				enlacesPorConfig.put(nombreArchivo, consola.agregarErrorALectador(linea, this));
+				this.activado = true;
+			}
 		}
 
 		String cont = consola.contenido_verificar;
-		if (cont.contains("The specified resource '") && cont.contains("' was invalid or could not be read")) {
+		if (cont == null || cont.isEmpty()) {
+			return;
+		}
+
+		if (cont.contains(TEXTO_RESOURCE) && cont.contains(TEXTO_INVALID_OR_UNREADABLE)) {
 			posibleErrorMixinPorLinea = true;
 		}
 
@@ -58,28 +94,44 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleErrorMixinPorLinea)
-			return false;
-
-		return true;
+		return posibleErrorMixinPorLinea;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int i) {
-		if (linea.contains("The specified resource '") && linea.contains("' was invalid or could not be read")) {
-			int ini = linea.indexOf("The specified resource '") + "The specified resource '".length();
-			int fin = linea.indexOf("'", ini);
-			if (fin > ini) {
-				String nombre = linea.substring(ini, fin).trim();
-				// Solo mixins *.json
-				if (nombre.contains("mixins") && nombre.endsWith(".json") && !sm_config_con_linea.containsKey(nombre)) {
-					sm_config_con_linea.put(nombre, i);
-					sm_config_es_fatal.put(nombre, true);
+		if (linea == null || linea.isEmpty()) {
+			return;
+		}
+
+		if (!lineaContieneMixinConfigProblematico(linea)) {
+			return;
+		}
+
+		posibleErrorMixinPorLinea = true;
+
+		int ini = linea.indexOf(TEXTO_RESOURCE) + TEXTO_RESOURCE.length();
+		int fin = linea.indexOf("'", ini);
+
+		if (fin > ini) {
+			String nombre = linea.substring(ini, fin).trim();
+
+			// Solo mixins *.json
+			if (nombre.contains(TEXTO_MIXINS) && nombre.endsWith(TEXTO_JSON)
+					&& !sm_config_con_linea.containsKey(nombre)) {
+				sm_config_con_linea.put(nombre, i);
+				sm_config_es_fatal.put(nombre, true);
+
+				if (consola != null) {
 					enlacesPorConfig.put(nombre, consola.agregarErrorALectador(i, this));
-					activado = true;
 				}
+
+				activado = true;
 			}
 		}
+	}
+
+	private boolean lineaContieneMixinConfigProblematico(String linea) {
+		return linea.contains(TEXTO_RESOURCE) && linea.contains(TEXTO_INVALID_OR_UNREADABLE);
 	}
 
 	@Override
@@ -115,7 +167,6 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 			String sm = entry.getKey();
 
 			CrashDetectorLogger.log(" SM en mensaje " + sm);
-			int lineNumber = entry.getValue();
 			boolean isFatal = sm_config_es_fatal.getOrDefault(sm, false);
 
 			String jars_de_sm_string = "";

@@ -11,14 +11,40 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
+public class NoPuedeAnalizarJSONDeRegistro implements VerificacionRapida {
 
 	boolean activado = false;
 	private final List<String> erroresJSON = new ArrayList<>(); // Almacena múltiples errores
 	private final Map<String, String> enlacesPorError = new HashMap<>();
 	boolean posibleError = false;
+
+	private static final String FAILED_TO_PARSE = "Failed to parse";
+	private static final String JSON_FROM_PACK = ".json from pack";
+	private static final String FROM_PACK = "from pack ";
+	private static final String FROM_PACK_SEPARATOR = " from pack";
+	private static final String JAR = ".jar";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { FAILED_TO_PARSE, JSON_FROM_PACK, FROM_PACK };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneErrorJSON(evento.linea)) {
+			posibleError = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global no utilizada en este verificador.
@@ -30,24 +56,20 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
 
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
-		if (log.contains("Failed to parse") || log.contains(".json from pack")) {
+		if (log.contains(FAILED_TO_PARSE) || log.contains(JSON_FROM_PACK)) {
 			posibleError = true;
 		}
-
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleError)
-			return false;
-
-		return true;
+		return posibleError;
 	}
 
 	/**
@@ -62,15 +84,19 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!linea.contains("Failed to parse") || !linea.contains(".json from pack")) {
+		if (!posibleError || linea == null || !lineaContieneErrorJSON(linea)) {
 			return;
 		}
 
 		CrashDetectorLogger.log("Se detectó error de análisis JSON en registro");
 
 		try {
-			String archivoJar = linea.split("from pack ")[1].split("\\.jar")[0].trim() + ".jar";
-			String recurso = linea.split("Failed to parse ")[1].split(" from pack")[0].trim();
+			String archivoJar = extraerArchivoJar(linea);
+			String recurso = extraerRecurso(linea);
+
+			if (archivoJar.isEmpty() || recurso.isEmpty()) {
+				throw new IllegalArgumentException("No se pudo extraer archivo jar o recurso JSON");
+			}
 
 			String mensaje = MonitorDePID.idioma.errorConJSONDeRegistro(archivoJar, recurso);
 
@@ -87,6 +113,42 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 			// Aún así registrar la línea como problema
 			consola.agregarErrorALectador(numero_de_linea, this);
 		}
+	}
+
+	private boolean lineaContieneErrorJSON(String linea) {
+		return linea.contains(FAILED_TO_PARSE) && linea.contains(JSON_FROM_PACK);
+	}
+
+	private String extraerArchivoJar(String linea) {
+		int inicio = linea.indexOf(FROM_PACK);
+		if (inicio < 0) {
+			return "";
+		}
+
+		inicio += FROM_PACK.length();
+
+		int fin = linea.indexOf(JAR, inicio);
+		if (fin < inicio) {
+			return "";
+		}
+
+		return linea.substring(inicio, fin).trim() + JAR;
+	}
+
+	private String extraerRecurso(String linea) {
+		int inicio = linea.indexOf(FAILED_TO_PARSE);
+		if (inicio < 0) {
+			return "";
+		}
+
+		inicio += FAILED_TO_PARSE.length();
+
+		int fin = linea.indexOf(FROM_PACK_SEPARATOR, inicio);
+		if (fin < inicio) {
+			return "";
+		}
+
+		return linea.substring(inicio, fin).trim();
 	}
 
 	@Override
@@ -152,7 +214,7 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 
 		String t = trazo.trace;
 
-		if (!t.contains("Failed to parse") || !t.contains(".json from pack")) {
+		if (!lineaContieneErrorJSON(t)) {
 			return false;
 		}
 

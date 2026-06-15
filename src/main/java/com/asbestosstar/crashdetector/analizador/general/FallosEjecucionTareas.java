@@ -13,11 +13,13 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class FallosEjecucionTareas implements Verificaciones {
+public class FallosEjecucionTareas implements VerificacionRapida {
 
 	// Mapa para almacenar clases con problemas y sus números de línea
 	private final Map<String, String> clasesConProblema = new HashMap<>();
@@ -28,14 +30,35 @@ public class FallosEjecucionTareas implements Verificaciones {
 
 	public boolean posibleError = false;
 
+	private static final String FAILED_TO_EXECUTE_TASK = "Failed to execute task";
+	private static final String CLASS_EXTENSION = ".class";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { FAILED_TO_EXECUTE_TASK, CLASS_EXTENSION };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneFalloEjecucion(evento.linea)) {
+			posibleError = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
-		String log = consola.contenido_verificar;
-
-		if (log == null)
+		if (consola == null || consola.contenido_verificar == null)
 			return;
 
-		if (log.contains("Failed to execute task") && log.contains(".class")) {
+		String log = consola.contenido_verificar;
+
+		if (log.contains(FAILED_TO_EXECUTE_TASK) && log.contains(CLASS_EXTENSION)) {
 			posibleError = true;
 		}
 
@@ -43,9 +66,12 @@ public class FallosEjecucionTareas implements Verificaciones {
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
+		if (!posibleError || linea == null)
+			return;
+
 		// Verificación rápida por línea para mejor rendimiento
 		// Buscamos el patrón de error de ejecución de tarea
-		if (linea.contains("Failed to execute task") && linea.contains(".class")) {
+		if (lineaContieneFalloEjecucion(linea)) {
 			String clase = extraerNombreClase(linea);
 			if (!clase.isEmpty()) {
 				// Almacenamos la clase y su número de línea
@@ -57,10 +83,11 @@ public class FallosEjecucionTareas implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleError)
-			return false;
+		return posibleError;
+	}
 
-		return true;
+	private boolean lineaContieneFalloEjecucion(String linea) {
+		return linea.contains(FAILED_TO_EXECUTE_TASK) && linea.contains(CLASS_EXTENSION);
 	}
 
 	/**
@@ -70,24 +97,36 @@ public class FallosEjecucionTareas implements Verificaciones {
 	 * @return nombre de la clase si se encuentra, cadena vacía en caso contrario
 	 */
 	private String extraerNombreClase(String linea) {
+		if (linea == null)
+			return "";
+
 		try {
 			// Buscamos la parte que contiene el nombre de la clase
-			int inicio = linea.indexOf("Failed to execute task");
+			int inicio = linea.indexOf(FAILED_TO_EXECUTE_TASK);
 			if (inicio != -1) {
 				// Tomamos el texto después de "Failed to execute task"
-				String resto = linea.substring(inicio + "Failed to execute task".length()).trim();
-				// Dividimos por espacios para obtener las partes individuales
-				String[] partes = resto.split("\\s+");
+				int inicioResto = inicio + FAILED_TO_EXECUTE_TASK.length();
 
-				if (partes.length > 0) {
-					String clasePosible = partes[0];
+				while (inicioResto < linea.length() && Character.isWhitespace(linea.charAt(inicioResto))) {
+					inicioResto++;
+				}
+
+				int finResto = inicioResto;
+				while (finResto < linea.length() && !Character.isWhitespace(linea.charAt(finResto))) {
+					finResto++;
+				}
+
+				if (finResto > inicioResto) {
+					String clasePosible = linea.substring(inicioResto, finResto);
+
 					// Verificamos si contiene ".class" para confirmar que es una clase
-					if (clasePosible.contains(".class")) {
+					int indiceClass = clasePosible.indexOf(CLASS_EXTENSION);
+					if (indiceClass >= 0) {
 						// Extraemos solo el nombre de la clase hasta ".class"
-						int indiceFin = clasePosible.indexOf(".class") + ".class".length();
+						int indiceFin = indiceClass + CLASS_EXTENSION.length();
 						String clase = clasePosible.substring(0, indiceFin);
 						// Eliminamos comillas y otros caracteres de formato
-						clase = clase.replace("\"", "").replace("'", "").trim();
+						clase = limpiarClase(clase);
 						return clase;
 					}
 				}
@@ -96,6 +135,26 @@ public class FallosEjecucionTareas implements Verificaciones {
 			// En caso de error, no devolvemos nada
 		}
 		return "";
+	}
+
+	private String limpiarClase(String clase) {
+		if (clase == null)
+			return "";
+
+		int inicio = 0;
+		int fin = clase.length();
+
+		while (inicio < fin && (Character.isWhitespace(clase.charAt(inicio)) || clase.charAt(inicio) == '"'
+				|| clase.charAt(inicio) == '\'')) {
+			inicio++;
+		}
+
+		while (fin > inicio && (Character.isWhitespace(clase.charAt(fin - 1)) || clase.charAt(fin - 1) == '"'
+				|| clase.charAt(fin - 1) == '\'')) {
+			fin--;
+		}
+
+		return clase.substring(inicio, fin);
 	}
 
 	@Override

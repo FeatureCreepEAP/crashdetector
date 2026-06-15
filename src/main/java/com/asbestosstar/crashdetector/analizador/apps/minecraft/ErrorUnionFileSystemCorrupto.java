@@ -3,8 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,7 +17,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Este error es común en modpacks debido a problemas con archivos JAR
  * corruptos, descargas incompletas o problemas del lanzador.
  */
-public class ErrorUnionFileSystemCorrupto implements Verificaciones {
+public class ErrorUnionFileSystemCorrupto implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posible = false;
@@ -28,9 +30,40 @@ public class ErrorUnionFileSystemCorrupto implements Verificaciones {
 
 	private String enlaceHtml = "";
 
-	private static final String TEXTO_UNION = "cpw.mods.niofs.union.UnionFileSystem$UncheckedIOException";
+	private boolean vioUnion = false;
+	private boolean vioZip = false;
 
+	private static final String TEXTO_UNION = "cpw.mods.niofs.union.UnionFileSystem$UncheckedIOException";
 	private static final String TEXTO_ZIP = "java.util.zip.ZipException: zip END header not found";
+	private static final String EXT_JAR = ".jar";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_UNION, TEXTO_ZIP, EXT_JAR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		String linea = evento.linea;
+
+		if (linea.contains(TEXTO_UNION)) {
+			vioUnion = true;
+		}
+
+		if (linea.contains(TEXTO_ZIP)) {
+			vioZip = true;
+		}
+
+		if (vioUnion && vioZip) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global barata.
@@ -48,18 +81,22 @@ public class ErrorUnionFileSystemCorrupto implements Verificaciones {
 
 		String contenido = consola.contenido_verificar;
 
-		if (contenido.contains(TEXTO_UNION) && contenido.contains(TEXTO_ZIP)) {
+		if (contenido.contains(TEXTO_UNION)) {
+			vioUnion = true;
+		}
 
+		if (contenido.contains(TEXTO_ZIP)) {
+			vioZip = true;
+		}
+
+		if (vioUnion && vioZip) {
 			posible = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	/**
@@ -94,7 +131,6 @@ public class ErrorUnionFileSystemCorrupto implements Verificaciones {
 
 		// Detecta el error específico.
 		if (!linea.contains(TEXTO_UNION) || !linea.contains(TEXTO_ZIP)) {
-
 			return;
 		}
 
@@ -103,8 +139,13 @@ public class ErrorUnionFileSystemCorrupto implements Verificaciones {
 		String contenidoConsola = consola.contenido_verificar;
 
 		if (contenidoConsola != null) {
-
 			String jarDetectado = buscarPrimerJarEnContenido(contenidoConsola);
+
+			if (jarDetectado != null && !jarDetectado.isEmpty()) {
+				nombreArchivo = jarDetectado;
+			}
+		} else {
+			String jarDetectado = buscarPrimerJarEnContenido(linea);
 
 			if (jarDetectado != null && !jarDetectado.isEmpty()) {
 				nombreArchivo = jarDetectado;
@@ -134,7 +175,7 @@ public class ErrorUnionFileSystemCorrupto implements Verificaciones {
 			return null;
 		}
 
-		int posicionJar = contenido.indexOf(".jar");
+		int posicionJar = contenido.indexOf(EXT_JAR);
 
 		if (posicionJar < 0) {
 			return null;
@@ -156,7 +197,7 @@ public class ErrorUnionFileSystemCorrupto implements Verificaciones {
 		}
 
 		// Incluir ".jar"
-		int fin = posicionJar + 4;
+		int fin = posicionJar + EXT_JAR.length();
 
 		if (inicio >= fin || fin > contenido.length()) {
 			return null;

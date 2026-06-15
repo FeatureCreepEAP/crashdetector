@@ -6,6 +6,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,7 +15,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * es una implementacion de su codex:
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaModIncompatibleFabric implements Verificaciones {
+public class ProblemaModIncompatibleFabric implements VerificacionRapida {
 
 	private boolean posibleModIncompatibleFabric = false;
 	private boolean activado = false;
@@ -30,6 +32,24 @@ public class ProblemaModIncompatibleFabric implements Verificaciones {
 	private static final String TEXTO_OF = " of ";
 	private static final String TEXTO_OF_MOD = " of mod ";
 
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_INCOMPATIBLE, TEXTO_CONFLICTS, TEXTO_WITH, TEXTO_OF_MOD };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneIndicioIncompatibilidadFabric(evento.linea)) {
+			posibleModIncompatibleFabric = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	/**
 	 * Verificacion global ligera.
 	 *
@@ -44,18 +64,16 @@ public class ProblemaModIncompatibleFabric implements Verificaciones {
 
 		String contenido = consola.contenido_verificar;
 
-		if (contenido.contains("- Mod ") && (contenido.contains(" is incompatible") || contenido.contains(" conflicts"))
-				&& contenido.contains(" with ") && contenido.contains(" of ")) {
+		if (contenido.contains("- Mod ")
+				&& (contenido.contains(TEXTO_INCOMPATIBLE) || contenido.contains(TEXTO_CONFLICTS))
+				&& contenido.contains(TEXTO_WITH) && contenido.contains(TEXTO_OF)) {
 			posibleModIncompatibleFabric = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleModIncompatibleFabric)
-			return false;
-
-		return true;
+		return posibleModIncompatibleFabric && !activado;
 	}
 
 	/**
@@ -81,6 +99,11 @@ public class ProblemaModIncompatibleFabric implements Verificaciones {
 
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneIndicioIncompatibilidadFabric(String linea) {
+		return linea.contains(TEXTO_INCOMPATIBLE) || linea.contains(TEXTO_CONFLICTS) || linea.contains(TEXTO_WITH)
+				|| linea.contains(TEXTO_OF_MOD);
 	}
 
 	/**
@@ -253,7 +276,7 @@ public class ProblemaModIncompatibleFabric implements Verificaciones {
 			return false;
 		}
 
-		return texto.regionMatches(true, inicio, buscar, 0, buscar.length());
+		return coincideAsciiIgnoreCase(texto, inicio, buscar);
 	}
 
 	private int indexOfIgnoreCase(String texto, String buscar, int desde) {
@@ -277,14 +300,54 @@ public class ProblemaModIncompatibleFabric implements Verificaciones {
 		}
 
 		int limite = largoTexto - largoBuscar;
+		char primero = buscar.charAt(0);
+		char primeroAlt = cambiarCasoAscii(primero);
 
 		for (int i = desde; i <= limite; i++) {
-			if (texto.regionMatches(true, i, buscar, 0, largoBuscar)) {
+			char actual = texto.charAt(i);
+
+			if (actual != primero && actual != primeroAlt) {
+				continue;
+			}
+
+			if (coincideAsciiIgnoreCase(texto, i, buscar)) {
 				return i;
 			}
 		}
 
 		return -1;
+	}
+
+	private boolean coincideAsciiIgnoreCase(String texto, int inicio, String buscar) {
+		for (int i = 0; i < buscar.length(); i++) {
+			char a = texto.charAt(inicio + i);
+			char b = buscar.charAt(i);
+
+			if (a == b) {
+				continue;
+			}
+
+			if (a != cambiarCasoAscii(b)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Cambia mayúscula/minúscula solo para ASCII A-Z / a-z.
+	 */
+	private char cambiarCasoAscii(char c) {
+		if (c >= 'A' && c <= 'Z') {
+			return (char) (c + 32);
+		}
+
+		if (c >= 'a' && c <= 'z') {
+			return (char) (c - 32);
+		}
+
+		return c;
 	}
 
 	private static class DatosModsIncompatibles {

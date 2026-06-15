@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,12 +14,31 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * por overlays de software como GameCaster de Razer, Discord, OBS Studio o
  * problemas con drivers de NVIDIA.
  */
-public class ErrorCodigo1073741819 implements Verificaciones {
+public class ErrorCodigo1073741819 implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean analizarLineas = false;
+
+	private static final String CODIGO_ERROR = "-1073741819";
+	private static final String TEXTO_EXIT = "exit";
+	private static final String TEXTO_ERROR = "error";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { CODIGO_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		analizarLineas = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
@@ -31,18 +52,14 @@ public class ErrorCodigo1073741819 implements Verificaciones {
 
 		String contenido = consola.contenido_verificar;
 
-		if (contenido.contains("-1073741819")) {
+		if (contenido.contains(CODIGO_ERROR)) {
 			analizarLineas = true;
 		}
-
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	/**
@@ -54,32 +71,54 @@ public class ErrorCodigo1073741819 implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (!analizarLineas || activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;
 		}
 
 		// Buscamos la línea que contiene el código de error específico
-		if (linea.contains("-1073741819") && linea.toLowerCase().contains("exit")) {
-
-			// Enlazar a la línea del error en el lector
-			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-
-			// Mensaje de error en HTML con referencia al problema de overlays o drivers
-			mensaje = MonitorDePID.idioma.errorCodigo1073741819() + Verificaciones.nl_html;
-			activado = true;
+		if (linea.contains(CODIGO_ERROR) && contieneIgnoreCase(linea, TEXTO_EXIT)) {
+			activar(consola, numero_de_linea);
+			return;
 		}
 
 		// También buscamos líneas que contengan "error code" y el valor específico
-		if (linea.toLowerCase().contains("error") && linea.contains("-1073741819")) {
-
-			// Enlazar a la línea del error en el lector
-			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-
-			// Mensaje de error en HTML con referencia al problema de overlays o drivers
-			mensaje = MonitorDePID.idioma.errorCodigo1073741819() + Verificaciones.nl_html;
-			activado = true;
+		if (linea.contains(CODIGO_ERROR) && contieneIgnoreCase(linea, TEXTO_ERROR)) {
+			activar(consola, numero_de_linea);
 		}
+	}
+
+	private void activar(Consola consola, int numero_de_linea) {
+		// Enlazar a la línea del error en el lector
+		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+
+		// Mensaje de error en HTML con referencia al problema de overlays o drivers
+		mensaje = MonitorDePID.idioma.errorCodigo1073741819() + Verificaciones.nl_html;
+		activado = true;
+	}
+
+	private boolean contieneIgnoreCase(String texto, String buscadoLower) {
+		int max = texto.length() - buscadoLower.length();
+		for (int i = 0; i <= max; i++) {
+			if (regionMatchesLowerAscii(texto, i, buscadoLower)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean regionMatchesLowerAscii(String texto, int inicio, String buscadoLower) {
+		for (int i = 0; i < buscadoLower.length(); i++) {
+			char c = texto.charAt(inicio + i);
+			if (c >= 'A' && c <= 'Z') {
+				c = (char) (c + 32);
+			}
+
+			if (c != buscadoLower.charAt(i)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -132,8 +171,8 @@ public class ErrorCodigo1073741819 implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return (t.contains("exit code") && t.contains("-1073741819"))
-				|| (t.contains("error code") && t.contains("-1073741819"));
+		return (t.contains("exit code") && t.contains(CODIGO_ERROR))
+				|| (t.contains("error code") && t.contains(CODIGO_ERROR));
 	}
 
 	@Override
@@ -146,5 +185,4 @@ public class ErrorCodigo1073741819 implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

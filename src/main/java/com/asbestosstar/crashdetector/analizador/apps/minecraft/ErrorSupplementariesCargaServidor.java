@@ -3,8 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,7 +14,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * servidor debido a errores en el registro de comportamientos de fuego,
  * causando un NullPointerException durante la carga de datapacks.
  */
-public class ErrorSupplementariesCargaServidor implements Verificaciones {
+public class ErrorSupplementariesCargaServidor implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -20,26 +22,48 @@ public class ErrorSupplementariesCargaServidor implements Verificaciones {
 	private boolean encontradoSupplementaries = false;
 
 	private static final String SUPPLEMENTARIES_FIRE_BEHAVIOR = "net.mehvahdjukaar.supplementaries.common.block.fire_behaviors.FireBehaviorsManager.registerBehaviors";
+	private static final String FAILED_TO_LOAD_DATAPACKS = "Failed to load datapacks";
+	private static final String FAILED_TO_LOAD_DATAPACKS_COMPLETO = "Failed to load datapacks, can't proceed with server load";
+	private static final String EXECUTION_EXCEPTION = "java.util.concurrent.ExecutionException";
+	private static final String NULL_POINTER_EXCEPTION = "java.lang.NullPointerException";
+	private static final String CANNOT_INVOKE = "Cannot invoke";
 
 	/**
 	 * Método de compatibilidad — busca si Supplementaries está presente en el
 	 * contenido completo del registro.
 	 */
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { SUPPLEMENTARIES_FIRE_BEHAVIOR, FAILED_TO_LOAD_DATAPACKS };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(SUPPLEMENTARIES_FIRE_BEHAVIOR)) {
+			encontradoSupplementaries = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
-		if (consola.contenido_verificar != null
-				&& consola.contenido_verificar.contains(SUPPLEMENTARIES_FIRE_BEHAVIOR)) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		if (consola.contenido_verificar.contains(SUPPLEMENTARIES_FIRE_BEHAVIOR)) {
 			encontradoSupplementaries = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!encontradoSupplementaries)
-			return false;
-
-		return true;
+		return encontradoSupplementaries && !activado;
 	}
 
 	/**
@@ -51,14 +75,14 @@ public class ErrorSupplementariesCargaServidor implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (activado || !encontradoSupplementaries || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;
 		}
 
 		// Buscamos la combinación de mensajes que indican el problema de
 		// Supplementaries
-		if (linea.contains("Failed to load datapacks") && encontradoSupplementaries) {
+		if (linea.contains(FAILED_TO_LOAD_DATAPACKS)) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -120,10 +144,9 @@ public class ErrorSupplementariesCargaServidor implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("Failed to load datapacks, can't proceed with server load")
-				&& t.contains("java.util.concurrent.ExecutionException") && t.contains("java.lang.NullPointerException")
-				&& t.contains("Cannot invoke") && t.contains(
-						"et.mehvahdjukaar.supplementaries.common.block.fire_behaviors.FireBehaviorsManager.registerBehaviors");
+		return t.contains(FAILED_TO_LOAD_DATAPACKS_COMPLETO) && t.contains(EXECUTION_EXCEPTION)
+				&& t.contains(NULL_POINTER_EXCEPTION) && t.contains(CANNOT_INVOKE)
+				&& t.contains(SUPPLEMENTARIES_FIRE_BEHAVIOR);
 	}
 
 	@Override

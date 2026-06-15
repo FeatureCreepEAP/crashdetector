@@ -5,17 +5,16 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
-
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 /**
  * Analiza errores cuando un mod tiene una configuración inválida de access
  * transformer. Detecta específicamente el error "Invalid access transformer
  * line in [nombre.jar]".
  */
-public class ErrorAccessTransformerInvalido implements Verificaciones {
+public class ErrorAccessTransformerInvalido implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -23,6 +22,24 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 	private String enlaceHtml = "";
 
 	public boolean posible = false;
+
+	private static final String MARCADOR_INICIO = "Invalid access transformer line in ";
+	private static final String MARCADOR_FIN = ":";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { MARCADOR_INICIO };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		posible = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global no utilizada en este verificador.
@@ -34,18 +51,18 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		if (consola.contenido_verificar.contains("Invalid access transformer line in")) {
-			posible = true;
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
 		}
 
+		if (consola.contenido_verificar.contains(MARCADOR_INICIO)) {
+			posible = true;
+		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	/**
@@ -59,24 +76,21 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó o el chequeo global dijo que no es posible,
 		// no seguimos revisando líneas.
-		if (activado || !posible) {
+		if (activado || !posible || linea == null) {
 			return;
 		}
 
-		String marcadorInicio = "Invalid access transformer line in ";
-		String marcadorFin = ":";
-
 		// Detecta el error específico de access transformer inválido.
-		int inicio = linea.indexOf(marcadorInicio);
+		int inicio = linea.indexOf(MARCADOR_INICIO);
 		if (inicio < 0) {
 			return;
 		}
 
 		// Mueve el índice hasta el inicio real del nombre del JAR.
-		inicio += marcadorInicio.length();
+		inicio += MARCADOR_INICIO.length();
 
 		// Busca los dos puntos después del nombre del JAR.
-		int fin = linea.indexOf(marcadorFin, inicio);
+		int fin = linea.indexOf(MARCADOR_FIN, inicio);
 		if (fin < 0 || fin <= inicio) {
 			return;
 		}
@@ -154,12 +168,12 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 		String t = trazo.trace;
 
 		if (!nombreJar.isEmpty()) {
-			return t.contains("Invalid access transformer line in") && t.contains(nombreJar);
+			return t.contains(MARCADOR_INICIO) && t.contains(nombreJar);
 		}
 
 		// Caso de fallback si por alguna razón no se llegó a capturar el nombre del
 		// JAR.
-		return t.contains("Invalid access transformer line in");
+		return t.contains(MARCADOR_INICIO);
 	}
 
 	@Override
@@ -167,5 +181,4 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

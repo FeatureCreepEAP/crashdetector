@@ -10,11 +10,12 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class FaltaModuleJPMS implements Verificaciones {
+public class FaltaModuleJPMS implements VerificacionRapida {
 
 	private boolean activado = false;
 	private final Set<String> errores = new HashSet<>();
@@ -27,26 +28,48 @@ public class FaltaModuleJPMS implements Verificaciones {
 	 */
 	private boolean posibleFaltaModulo = false;
 
+	private static final String FIND_EXCEPTION_MODULE = "java.lang.module.FindException: Module ";
+	private static final String NOT_FOUND_REQUIRED_BY = " not found, required by ";
+	private static final String MODULE = "Module ";
+	private static final String NOT_FOUND = " not found";
+	private static final String REQUIRED_BY = "required by ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { FIND_EXCEPTION_MODULE, NOT_FOUND_REQUIRED_BY };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneFaltaModulo(evento.linea)) {
+			posibleFaltaModulo = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		if (contenidoConsola == null || contenidoConsola.isEmpty()) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
 			posibleFaltaModulo = false;
 			return;
 		}
 
+		String contenidoConsola = consola.contenido_verificar;
+
 		// Verificación global mínima: solo comprobamos si aparecen los fragmentos
 		// clave del error JPMS. El análisis real se hace en el método por línea.
-		posibleFaltaModulo = contenidoConsola.contains("java.lang.module.FindException: Module ")
-				&& contenidoConsola.contains(" not found, required by ");
+		posibleFaltaModulo = contenidoConsola.contains(FIND_EXCEPTION_MODULE)
+				&& contenidoConsola.contains(NOT_FOUND_REQUIRED_BY);
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleFaltaModulo)
-			return false;
-
-		return true;
+		return posibleFaltaModulo;
 	}
 
 	@Override
@@ -56,14 +79,18 @@ public class FaltaModuleJPMS implements Verificaciones {
 			return;
 		}
 
-		if (linea.contains("java.lang.module.FindException: Module ") && linea.contains(" not found, required by ")) {
+		if (lineaContieneFaltaModulo(linea)) {
 
 			try {
-				String modNecesitado = linea.split("Module ")[1].split(" not found")[0].trim();
-				String modRequeridor = linea.split("required by ")[1].trim();
+				String modNecesitado = extraerEntre(linea, MODULE, NOT_FOUND);
+				String modRequeridor = extraerDespues(linea, REQUIRED_BY);
+
+				if (modNecesitado.length() == 0 || modRequeridor.length() == 0) {
+					return;
+				}
 
 				String mensaje = MonitorDePID.idioma.jpms_modules_faltas(modNecesitado,
-						modRequeridor + ModulesDuplicadosJavaModulePlatform.procesarModulo(modRequeridor.trim()));
+						modRequeridor + ModulesDuplicadosJavaModulePlatform.procesarModulo(modRequeridor));
 
 				// Solo agregar si es un error nuevo
 				if (errores.add(mensaje)) {
@@ -77,6 +104,61 @@ public class FaltaModuleJPMS implements Verificaciones {
 				consola.agregarErrorALectador(numero_de_linea, this);
 			}
 		}
+	}
+
+	private boolean lineaContieneFaltaModulo(String linea) {
+		return linea.contains(FIND_EXCEPTION_MODULE) && linea.contains(NOT_FOUND_REQUIRED_BY);
+	}
+
+	private String extraerEntre(String texto, String inicioTexto, String finTexto) {
+		if (texto == null || inicioTexto == null || finTexto == null)
+			return "";
+
+		int inicio = texto.indexOf(inicioTexto);
+		if (inicio < 0)
+			return "";
+
+		inicio += inicioTexto.length();
+
+		int fin = texto.indexOf(finTexto, inicio);
+		if (fin < 0 || fin <= inicio)
+			return "";
+
+		return sinEspaciosLaterales(texto.substring(inicio, fin));
+	}
+
+	private String extraerDespues(String texto, String marcador) {
+		if (texto == null || marcador == null)
+			return "";
+
+		int inicio = texto.indexOf(marcador);
+		if (inicio < 0)
+			return "";
+
+		inicio += marcador.length();
+
+		if (inicio >= texto.length())
+			return "";
+
+		return sinEspaciosLaterales(texto.substring(inicio));
+	}
+
+	private String sinEspaciosLaterales(String texto) {
+		if (texto == null)
+			return "";
+
+		int inicio = 0;
+		int fin = texto.length();
+
+		while (inicio < fin && Character.isWhitespace(texto.charAt(inicio))) {
+			inicio++;
+		}
+
+		while (fin > inicio && Character.isWhitespace(texto.charAt(fin - 1))) {
+			fin--;
+		}
+
+		return texto.substring(inicio, fin);
 	}
 
 	@Override
@@ -142,7 +224,7 @@ public class FaltaModuleJPMS implements Verificaciones {
 		}
 
 		String t = trazo.trace;
-		return t.contains("java.lang.module.FindException: Module ") && t.contains(" not found, required by ");
+		return t.contains(FIND_EXCEPTION_MODULE) && t.contains(NOT_FOUND_REQUIRED_BY);
 	}
 
 	@Override

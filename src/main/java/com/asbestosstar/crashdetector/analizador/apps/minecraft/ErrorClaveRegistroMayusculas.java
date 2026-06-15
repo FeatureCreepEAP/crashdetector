@@ -5,18 +5,41 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores de claves de registro inválidas con mayúsculas o caracteres
  * no permitidos.
  */
-public class ErrorClaveRegistroMayusculas implements Verificaciones {
+public class ErrorClaveRegistroMayusculas implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private boolean analizarLineas = false;
+
+	private static final String TEXTO_ILLEGAL_STATE = "java.lang.IllegalStateException";
+	private static final String TEXTO_KEY_LOWERCASE = "key must be lowercase:";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ILLEGAL_STATE, TEXTO_KEY_LOWERCASE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_ILLEGAL_STATE) || evento.linea.contains(TEXTO_KEY_LOWERCASE)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
@@ -26,31 +49,27 @@ public class ErrorClaveRegistroMayusculas implements Verificaciones {
 		}
 
 		String contenido = consola.contenido_verificar;
-		if (contenido.contains("java.lang.IllegalStateException") && contenido.contains("key must be lowercase:")) {
+		if (contenido.contains(TEXTO_ILLEGAL_STATE) && contenido.contains(TEXTO_KEY_LOWERCASE)) {
 			analizarLineas = true;
 		}
-
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado || linea == null) {
+		if (!analizarLineas || activado || linea == null) {
 			return;
 		}
 
-		if (linea.contains("java.lang.IllegalStateException") && linea.contains("key must be lowercase:")) {
+		if (linea.contains(TEXTO_ILLEGAL_STATE) && linea.contains(TEXTO_KEY_LOWERCASE)) {
 
 			// Extraer la clave problemática
-			int idx = linea.indexOf("key must be lowercase:");
-			String clave = idx != -1 ? linea.substring(idx + 22).trim() : "clave desconocida";
+			int idx = linea.indexOf(TEXTO_KEY_LOWERCASE);
+			String clave = idx != -1 ? linea.substring(idx + TEXTO_KEY_LOWERCASE.length()).trim() : "clave desconocida";
 
 			// Limitar longitud para seguridad
 			if (clave.length() > 256)
@@ -111,5 +130,4 @@ public class ErrorClaveRegistroMayusculas implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

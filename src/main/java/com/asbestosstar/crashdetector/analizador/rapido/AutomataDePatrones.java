@@ -99,11 +99,14 @@ public final class AutomataDePatrones {
 
 	public static final class Coincidencia {
 		public final String patron;
-		public final int posicion;
+		public final int inicio;
+		public final int fin;
 
-		public Coincidencia(String patron, int posicion) {
+		public Coincidencia(String patron, int inicio) {
 			this.patron = patron;
-			this.posicion = posicion;
+			this.inicio = inicio;
+			this.fin = inicio + patron.length();
 		}
 	}
+
 }

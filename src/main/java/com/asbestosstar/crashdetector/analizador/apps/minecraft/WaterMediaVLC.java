@@ -8,18 +8,44 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class WaterMediaVLC implements Verificaciones {
+public class WaterMediaVLC implements VerificacionRapida {
 	private boolean activado = false;
 	private String mensaje = "";
 
+	private static final String VLC_BINARIES_MISSING = "WATERMeDIA doesn't contains VLC binaries for your OS and ARCH, you had to download it manually";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { VLC_BINARIES_MISSING };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado) {
+			return;
+		}
+
+		if (evento.linea.contains(VLC_BINARIES_MISSING)) {
+			this.mensaje = MonitorDePID.idioma.noTienesVLCBin() + Verificaciones.nl_html;
+			activado = true;
+		}
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		// Compatibilidad legacy: en modo streaming puro contenido_verificar puede ser
+		// nulo
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		String contenido = consola.contenido_verificar;
-		if (contenido.contains(
-				"WATERMeDIA doesn't contains VLC binaries for your OS and ARCH, you had to download it manually")) {
+		if (contenido.contains(VLC_BINARIES_MISSING)) {
 			this.mensaje = MonitorDePID.idioma.noTienesVLCBin() + Verificaciones.nl_html;
 			activado = true;
 		}

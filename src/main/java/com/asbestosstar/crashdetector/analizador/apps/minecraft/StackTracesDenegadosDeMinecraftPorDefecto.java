@@ -178,294 +178,284 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 		VerificacionDeStackTrace
 				.agregarDenegadoContiene("com.momosoftworks.coldsweat.config.ConfigLoadingHandler$CreateRegistries");
 
-		VerificacionDeStackTrace.agregarDenegadoPredicado(contentido -> contentido.equals("Stacktrace:"));// Incluir
-																											// líneas
-// que sean
-// exactamente
-// "Stacktrace:"
-// o contengan
-// "Stacktrace:"
+		VerificacionDeStackTrace.agregarDenegadoTodos("Stacktrace:");// Incluir
+		// líneas
+//que sean
+//exactamente
+//"Stacktrace:"
+//o contengan
+//"Stacktrace:"
 
 //como inicio
-		VerificacionDeStackTrace.agregarDenegadoPredicado(contentido -> contentido.startsWith("Stacktrace:"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("Stacktrace:");
 
-		VerificacionDeStackTrace.agregarDenegadoPredicado(
-				contentido -> contentido.contains("Unable to create Lookup for") && contentido.contains("optifine."));// Comun
-		// problema,
-		// pero
-		// no
-		// creo
-		// es
-		// fatal
+		VerificacionDeStackTrace.agregarDenegadoTodos("Unable to create Lookup for", "optifine.");// Comun
+//problema,
+//pero
+//no
+//creo
+//es
+//fatal
 
-		VerificacionDeStackTrace.agregarDenegadoPredicado(
-				contentido -> contentido.contains("Unable to create custom") && contentido.contains("optifine."));// Comun
-		// problema,
-		// pero
-		// no
-		// creo
-		// es
-		// fatal
+		VerificacionDeStackTrace.agregarDenegadoTodos("Unable to create custom", "optifine.");// Comun
+//problema,
+//pero
+//no
+//creo
+//es
+//fatal
 
-		VerificacionDeStackTrace
-				.agregarDenegadoPredicado(contentido -> contentido.contains("com.google.gson.JsonObject")
-						&& contentido.split(Verificaciones.nl).length == 1);/// Creo no es fatal pero puedo ser
-																			/// incorrecto
+		VerificacionDeStackTrace.agregarDenegadoUnaLinea("com.google.gson.JsonObject");/// Creo no es fatal pero puedo
+																						/// ser
+/// incorrecto
 
-		VerificacionDeStackTrace.agregarDenegadoPredicado(
-				contentido -> contentido.contains("java.io.FileNotFoundException") && contentido.contains("minecraft"));// Comun
-		// problema,
-		// pero
-		// no
-		// creo
-		// es
-		// fatal
+		VerificacionDeStackTrace.agregarDenegadoTodos("java.io.FileNotFoundException", "minecraft");// Comun
+//problema,
+//pero
+//no
+//creo
+//es
+//fatal
 
-		VerificacionDeStackTrace.agregarDenegadoPredicado(contentido -> contentido
-				.contains("vectorwing.farmersdelight.common.crafting.CuttingBoardRecipe$Serializer.fromJson")
-				|| contentido.contains(
-						"vectorwing.farmersdelight.common.crafting.CookingPotRecipe$Serializer.readIngredients"));
+		VerificacionDeStackTrace.agregarDenegadoCualquiera(
+				"vectorwing.farmersdelight.common.crafting.CuttingBoardRecipe$Serializer.fromJson",
+				"vectorwing.farmersdelight.common.crafting.CookingPotRecipe$Serializer.readIngredients");
 
-		VerificacionDeStackTrace.agregarDenegadoPredicado(contentido -> contentido.contains("tacz")
-				&& contentido.contains("Couldn't parse data file") && contentido.contains("from"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("tacz", "Couldn't parse data file", "from");
 
 //Ignorar errores internos de carga y caché de GeckoLib
-		VerificacionDeStackTrace
-				.agregarDenegadoPredicado(contentido -> contentido.contains("software.bernie.geckolib.cache.")
-						|| contentido.contains("software.bernie.geckolib.loading."));
+		VerificacionDeStackTrace.agregarDenegadoCualquiera("software.bernie.geckolib.cache.",
+				"software.bernie.geckolib.loading.");
 
 //Ignorar errores de escaneo y preparación de datos de TACZ (usualmente no
 //fatales)
-		VerificacionDeStackTrace.agregarDenegadoPredicado(
-				contentido -> contentido.contains("com.tacz.guns.util.ResourceScanner.scanDirectory")
-						&& contentido.contains("com.tacz.guns.resource.manager.JsonDataManager.prepare"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.tacz.guns.util.ResourceScanner.scanDirectory",
+				"com.tacz.guns.resource.manager.JsonDataManager.prepare");
 
 //Ignorar errores de AllTheLeaks relacionados con Iron's Spellbooks (problema
 //conocido y controlado)
-		VerificacionDeStackTrace.agregarDenegadoPredicado(contentido -> contentido.contains(
-				"java.lang.NoClassDefFoundError: io/redspace/ironsspellbooks/entity/mobs/dead_king_boss/DeadKingMusicManager")
-				&& contentido.contains("alltheleaks"));
+		VerificacionDeStackTrace.agregarDenegadoTodos(
+				"java.lang.NoClassDefFoundError: io/redspace/ironsspellbooks/entity/mobs/dead_king_boss/DeadKingMusicManager",
+				"alltheleaks");
 
 //Ignorar errores de carga de clase genéricos para Iron's Spellbooks
 //(DeadKingMusicManager)
-		VerificacionDeStackTrace.agregarDenegadoPredicado(contentido -> contentido.contains(
-				"java.lang.ClassNotFoundException: io.redspace.ironsspellbooks.entity.mobs.dead_king_boss.DeadKingMusicManager")
-				&& contentido.contains("cpw.mods.cl.ModuleClassLoader.loadClass")
-				&& contentido.contains("java.lang.ClassLoader.loadClass"));
+		VerificacionDeStackTrace.agregarDenegadoTodos(
+				"java.lang.ClassNotFoundException: io.redspace.ironsspellbooks.entity.mobs.dead_king_boss.DeadKingMusicManager",
+				"cpw.mods.cl.ModuleClassLoader.loadClass", "java.lang.ClassLoader.loadClass");
 
 //Ignorar NPE de ServerLevel donde la instancia es null (error de estado
 //interno)
-		VerificacionDeStackTrace.agregarDenegadoPredicado(contentido -> contentido.contains(
-				"java.lang.NullPointerException: Cannot invoke \"net.minecraft.server.level.ServerLevel.m_6857_()\" because \"serverlevel2\" is null"));
+		VerificacionDeStackTrace.agregarDenegadoTodos(
+				"java.lang.NullPointerException: Cannot invoke \"net.minecraft.server.level.ServerLevel.m_6857_()\" because \"serverlevel2\" is null");
 
 //Ignorar errores de inicialización relacionados con AllTheLeaks
-		VerificacionDeStackTrace
-				.agregarDenegadoPredicado(contentido -> contentido.contains("java.lang.ExceptionInInitializerError")
-						&& contentido.contains("dev.uncandango.alltheleaks.leaks.IssueManager"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("java.lang.ExceptionInInitializerError",
+				"dev.uncandango.alltheleaks.leaks.IssueManager");
 
 //Ignorar errores de VarHandler nulo causados por AllTheLeaks (reflexión)
-		VerificacionDeStackTrace.agregarDenegadoPredicado(
-				contentido -> contentido.contains("java.lang.RuntimeException: VarHandler is null")
-						&& contentido.contains("dev.uncandango.alltheleaks.utils.ReflectionHelper.getFieldFromClass"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("java.lang.RuntimeException: VarHandler is null",
+				"dev.uncandango.alltheleaks.utils.ReflectionHelper.getFieldFromClass");
 
 //Ignorar errores de conexión de Citadel (WebHelper) al intentar acceder a URLs
-		VerificacionDeStackTrace.agregarDenegadoPredicado(
-				contentido -> contentido.contains("com.github.alexthe666.citadel.web.WebHelper.getURLContents")
-						&& contentido.contains("java.net.SocketTimeoutException"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.github.alexthe666.citadel.web.WebHelper.getURLContents",
+				"java.net.SocketTimeoutException");
 
 //Ignorar errores de conexión al cargar la lista de contribuidores de Quark
-		VerificacionDeStackTrace.agregarDenegadoPredicado(contentido -> contentido
-				.contains("org.violetmoon.quark.base.handler.ContributorRewardHandler$ThreadContributorListLoader.run")
-				&& contentido.contains("java.net.SocketTimeoutException"));
+		VerificacionDeStackTrace.agregarDenegadoTodos(
+				"org.violetmoon.quark.base.handler.ContributorRewardHandler$ThreadContributorListLoader.run",
+				"java.net.SocketTimeoutException");
 
 //Ignorar errores de conexión de Conjurer Illager al buscar contribuidores
-		VerificacionDeStackTrace.agregarDenegadoPredicado(
-				contentido -> contentido.contains("com.legacy.conjurer_illager.MLSupporter$GetSupportersThread.run")
-						&& contentido.contains("java.net.ConnectException: Connection timed out"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.legacy.conjurer_illager.MLSupporter$GetSupportersThread.run",
+				"java.net.ConnectException: Connection timed out");
 
 //Ignorar errores de red de Essential al conectar con los servidores de Mojang
-		VerificacionDeStackTrace.agregarDenegadoPredicado(contentido -> contentido.contains("gg.essential.lib.okhttp3")
-				&& contentido.contains("java.net.UnknownHostException:"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("gg.essential.lib.okhttp3", "java.net.UnknownHostException:");
 
 //Ignorar errores de red de Essential al conectar con los servidores de Mojang
-		VerificacionDeStackTrace.agregarDenegadoPredicado(contentido -> contentido.contains("gg.essential.lib.okhttp3")
-				&& contentido.contains("java.net.SocketException: Network is unreachable: getsockopt"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("gg.essential.lib.okhttp3",
+				"java.net.SocketException: Network is unreachable: getsockopt");
 
 //Ignorar errores de red de Essential al conectar con los servidores de Mojang
-		VerificacionDeStackTrace.agregarDenegadoPredicado(contentido -> contentido.contains("gg.essential.lib.okhttp3")
-				&& contentido.contains("java.net.SocketTimeoutException"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("gg.essential.lib.okhttp3", "java.net.SocketTimeoutException");
 
-		VerificacionDeStackTrace.agregarDenegadoPredicado(contentido -> contentido.contains("gg.essential")
-				&& contentido.contains("AuthenticationUnavailableException"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("gg.essential", "AuthenticationUnavailableException");
 
 //Ignorar NPE de Mixin causado por Connector (Sinytra Connector)
-		VerificacionDeStackTrace.agregarDenegadoPredicado(contentido ->
+		VerificacionDeStackTrace.agregarDenegadoTodos(
 //contentido.contains("java.lang.NullPointerException: Cannot invoke
 //\"org.spongepowered.asm.mixin.transformer.ClassInfo.isMixin()\" because
 //\"superClass\" is null")&&
-		contentido.contains("org.sinytra.connector.service.ConnectorLoaderService"));
+				"org.sinytra.connector.service.ConnectorLoaderService");
 
 //Ignorar errores de reflexión interna de LibJF Unsafe
-		VerificacionDeStackTrace
-				.agregarDenegadoPredicado(contentido -> contentido.contains("java.lang.NoSuchFieldException: delegate")
-						&& contentido.contains("io.gitlab.jfronny.libjf.unsafe.MixinPlugin"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("java.lang.NoSuchFieldException: delegate",
+				"io.gitlab.jfronny.libjf.unsafe.MixinPlugin");
 
 //Kotlin de Essential Mod: infraestructura de coroutines
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c.contains("java.lang.ClassNotFoundException: kotlin")
-				|| c.contains("java.lang.ClassNotFoundException: gg.essential")
-				|| c.contains("java.nio.file.NoSuchFileException: C:\\Windows\\System32\\etc\\hosts")
-				|| c.contains("Missing elements in vertex:") && c.contains("gg.essential"));
+		VerificacionDeStackTrace.agregarDenegadoCualquiera("java.lang.ClassNotFoundException: kotlin",
+				"java.lang.ClassNotFoundException: gg.essential",
+				"java.nio.file.NoSuchFileException: C:\\Windows\\System32\\etc\\hosts");
+		VerificacionDeStackTrace.agregarDenegadoTodos("Missing elements in vertex:", "gg.essential");
 
-		VerificacionDeStackTrace
-				.agregarDenegadoPredicado(contentido -> contentido.contains("Reflective setAccessible(true) disabled")
-						&& contentido.contains("io.netty.util.internal.ReflectionUtil.trySetAccessible"));// Común en
-// Java 9+
-// con
-// módulos,
-// no es
-// fatal y
-// no se
-// puede
-// arreglar
-// sin
-// modificar
-// el
-// entorno
-// de
-// ejecución
-// (ej.
-// agregar
-// --add-opens)
+		VerificacionDeStackTrace.agregarDenegadoTodos("Reflective setAccessible(true) disabled",
+				"io.netty.util.internal.ReflectionUtil.trySetAccessible");// Común en
+//Java 9+
+//con
+//módulos,
+//no es
+//fatal y
+//no se
+//puede
+//arreglar
+//sin
+//modificar
+//el
+//entorno
+//de
+//ejecución
+//(ej.
+//agregar
+//--add-opens)
 
-		VerificacionDeStackTrace
-				.agregarDenegadoPredicado(contentido -> contentido.contains("team.creative.creativecore")
-						&& contentido.contains("registerReloadListener called on wrong thread"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("team.creative.creativecore",
+				"registerReloadListener called on wrong thread");
 
 //TLauncher: aborta el lanzamiento mostrando mensaje de skin (no es un crash
 //real)
-		VerificacionDeStackTrace.agregarDenegadoPredicado(
-				c -> c.contains("MinecraftLauncher$MinecraftLauncherAborted: shown skin message")
-						&& c.contains("MinecraftLauncher.checkExtraConditions"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("MinecraftLauncher$MinecraftLauncherAborted: shown skin message",
+				"MinecraftLauncher.checkExtraConditions");
 
 //Error conocido de coremod (field_to_method.js biome), aparece en este log y
 //no indica fallo crítico
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c
-				.contains("Error occurred applying transform of coremod coremods/field_to_method.js function biome")
-				&& c.contains("java.lang.IllegalStateException: Field f_47437_ is not private and an instance field")
-				&& c.contains("ASMAPI.redirectFieldToMethod"));
+		VerificacionDeStackTrace.agregarDenegadoTodos(
+				"Error occurred applying transform of coremod coremods/field_to_method.js function biome",
+				"java.lang.IllegalStateException: Field f_47437_ is not private and an instance field",
+				"ASMAPI.redirectFieldToMethod");
 
 //Conflicto de mixins entre CheatUtils y Sodium/Embeddium (inyección inválida,
 //pero común)
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c.contains("InvalidInjectionException")
-				&& c.contains("onRenderChunkLayer") && c.contains("handler$zpp000$cheatutils$onRenderChunkLayer")
-				&& c.contains("WorldRendererMixin"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("InvalidInjectionException", "onRenderChunkLayer",
+				"handler$zpp000$cheatutils$onRenderChunkLayer", "WorldRendererMixin");
 
 //HauntedHarvest: integración opcional con JEI falla por falta de
 //Supplementaries (no fatal)
-		VerificacionDeStackTrace.agregarDenegadoPredicado(
-				c -> c.contains("Failed to load: net.mehvahdjukaar.hauntedharvest.integration.JEICompat")
-						&& c.contains("NoClassDefFoundError: net/mehvahdjukaar/supplementaries/Supplementaries")
-						&& c.contains("mezz.jei.forge.startup.ForgePluginFinder"));
+		VerificacionDeStackTrace.agregarDenegadoTodos(
+				"Failed to load: net.mehvahdjukaar.hauntedharvest.integration.JEICompat",
+				"NoClassDefFoundError: net/mehvahdjukaar/supplementaries/Supplementaries",
+				"mezz.jei.forge.startup.ForgePluginFinder");
 
 //MrCrayfish Vehicle: falta archivo de cosméticos → NPE durante carga por
 //defecto (no rompe ejecución)
-		VerificacionDeStackTrace.agregarDenegadoPredicado(
-				c -> c.contains("Missing cosmetic definitions file: /data/vehicle/vehicles/cosmetics/")
-						&& c.contains("java.lang.NullPointerException")
-						&& c.contains("VehicleProperties.loadDefaultCosmetics"));
+		VerificacionDeStackTrace.agregarDenegadoTodos(
+				"Missing cosmetic definitions file: /data/vehicle/vehicles/cosmetics/",
+				"java.lang.NullPointerException", "VehicleProperties.loadDefaultCosmetics");
 
 //Forge VersionChecker: fallo al procesar JSON de actualización (muy común, no
 //crítico)
-		VerificacionDeStackTrace.agregarDenegadoPredicado(
-				c -> c.contains("Forge Version Check") && c.contains("Failed to process update information")
-						&& c.contains("net.minecraftforge.fml.VersionChecker$1.process"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("Forge Version Check", "Failed to process update information",
+				"net.minecraftforge.fml.VersionChecker$1.process");
 
 //Forge VersionChecker: promos null (error de datos remotos, no afecta
 //ejecución del juego)
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c.contains(
-				"java.lang.NullPointerException: Cannot invoke \"java.util.Map.get(Object)\" because \"promos\" is null")
-				&& c.contains("net.minecraftforge.fml.VersionChecker$1.process"));
+		VerificacionDeStackTrace.agregarDenegadoTodos(
+				"java.lang.NullPointerException: Cannot invoke \"java.util.Map.get(Object)\" because \"promos\" is null",
+				"net.minecraftforge.fml.VersionChecker$1.process");
 
 //Errores de modelos JSON (faltan loaders o estructura inválida), típicos en
 //assets de mods
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c.contains("com.google.gson.JsonParseException")
-				&& (c.contains("Model loader 'dtru:palm_fronds' not found")
-						|| c.contains("Model loader 'botania:floating_flower' not found")
-						|| c.contains("Composite model requires a \"children\" element")
-						|| c.contains("for LLibrary bug not putting particle into textures set")));
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.google.gson.JsonParseException",
+				"Model loader 'dtru:palm_fronds' not found");
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.google.gson.JsonParseException",
+				"Model loader 'botania:floating_flower' not found");
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.google.gson.JsonParseException",
+				"Composite model requires a \"children\" element");
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.google.gson.JsonParseException",
+				"for LLibrary bug not putting particle into textures set");
 
 //EPCA/GeckoLib: errores de parseo Molang/animaciones durante carga de recursos
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c.contains("org.tdddd.epca.impl.")
-				&& (c.contains("MolangParser") || c.contains("BakedAnimationsAdapter") || c.contains("FileLoader")
-						|| c.contains("GeckoLibCache")));
+		VerificacionDeStackTrace.agregarDenegadoTodos("org.tdddd.epca.impl.", "MolangParser");
+		VerificacionDeStackTrace.agregarDenegadoTodos("org.tdddd.epca.impl.", "BakedAnimationsAdapter");
+		VerificacionDeStackTrace.agregarDenegadoTodos("org.tdddd.epca.impl.", "FileLoader");
+		VerificacionDeStackTrace.agregarDenegadoTodos("org.tdddd.epca.impl.", "GeckoLibCache");
 
 //AzureLib Armor: errores de parseo Molang/animaciones durante carga de
 //recursos
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c.contains("mod.azure.azurelibarmor.")
-				&& (c.contains("MolangParser") || c.contains("MathBuilder") || c.contains("BakedAnimationsAdapter")
-						|| c.contains("FileLoader") || c.contains("AzureLibCache")));
+		VerificacionDeStackTrace.agregarDenegadoTodos("mod.azure.azurelibarmor.", "MolangParser");
+		VerificacionDeStackTrace.agregarDenegadoTodos("mod.azure.azurelibarmor.", "MathBuilder");
+		VerificacionDeStackTrace.agregarDenegadoTodos("mod.azure.azurelibarmor.", "BakedAnimationsAdapter");
+		VerificacionDeStackTrace.agregarDenegadoTodos("mod.azure.azurelibarmor.", "FileLoader");
+		VerificacionDeStackTrace.agregarDenegadoTodos("mod.azure.azurelibarmor.", "AzureLibCache");
 
 //AzureLib: errores de parseo/caché de animaciones durante carga de recursos
-		VerificacionDeStackTrace.agregarDenegadoPredicado(
-				c -> c.contains("mod.azure.azurelib.") && (c.contains("MathBuilder") || c.contains("MolangParser")
-						|| c.contains("AzBakedAnimationsAdapter") || c.contains("FileLoader")
-						|| c.contains("AzBakedAnimationCache") || c.contains("AzResourceCache")));
+		VerificacionDeStackTrace.agregarDenegadoTodos("mod.azure.azurelib.", "MathBuilder");
+		VerificacionDeStackTrace.agregarDenegadoTodos("mod.azure.azurelib.", "MolangParser");
+		VerificacionDeStackTrace.agregarDenegadoTodos("mod.azure.azurelib.", "AzBakedAnimationsAdapter");
+		VerificacionDeStackTrace.agregarDenegadoTodos("mod.azure.azurelib.", "FileLoader");
+		VerificacionDeStackTrace.agregarDenegadoTodos("mod.azure.azurelib.", "AzBakedAnimationCache");
+		VerificacionDeStackTrace.agregarDenegadoTodos("mod.azure.azurelib.", "AzResourceCache");
 
 //Moonlight/Immersive Weathering: generación dinámica de recursos/texturas
-		VerificacionDeStackTrace.agregarDenegadoPredicado(
-				c -> c.contains("com.ordana.immersive_weathering.dynamicpack.ClientDynamicResourcesHandler")
-						&& c.contains("net.mehvahdjukaar.moonlight.api.resources"));
+		VerificacionDeStackTrace.agregarDenegadoTodos(
+				"com.ordana.immersive_weathering.dynamicpack.ClientDynamicResourcesHandler",
+				"net.mehvahdjukaar.moonlight.api.resources");
 
 //Moonlight: wrappers/eventos de reload de recursos dinámicos
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c.contains("net.mehvahdjukaar.moonlight.")
-				&& (c.contains("TextureImage") || c.contains("DynResourceGenerator")
-						|| c.contains("MoonlightEventsHelper") || c.contains("ReloadInstanceWrapper")));
+		VerificacionDeStackTrace.agregarDenegadoTodos("net.mehvahdjukaar.moonlight.", "TextureImage");
+		VerificacionDeStackTrace.agregarDenegadoTodos("net.mehvahdjukaar.moonlight.", "DynResourceGenerator");
+		VerificacionDeStackTrace.agregarDenegadoTodos("net.mehvahdjukaar.moonlight.", "MoonlightEventsHelper");
+		VerificacionDeStackTrace.agregarDenegadoTodos("net.mehvahdjukaar.moonlight.", "ReloadInstanceWrapper");
 
 //Physics Mod: ColladaParser devuelve null al cargar modelo estático
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c.contains("net.diebuddies.model.ColladaParser")
-				&& c.contains("Cannot invoke \"java.util.Map.values()\""));
+		VerificacionDeStackTrace.agregarDenegadoTodos("net.diebuddies.model.ColladaParser",
+				"Cannot invoke \"java.util.Map.values()\"");
 
 //Paladin Furniture Mod: overlay/generación de assets antes de que Minecraft
 //tenga TextureManager
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c.contains("com.unlikepaladin.pfm.")
-				&& (c.contains("PFMGeneratingOverlay") || c.contains("ClientOverlaySetter")
-						|| c.contains("PFMAssetGenerator") || c.contains("PFMRuntimeResources")
-						|| c.contains("PaladinFurnitureModForge") || c.contains("PathPackRPWrapper")));
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.unlikepaladin.pfm.", "PFMGeneratingOverlay");
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.unlikepaladin.pfm.", "ClientOverlaySetter");
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.unlikepaladin.pfm.", "PFMAssetGenerator");
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.unlikepaladin.pfm.", "PFMRuntimeResources");
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.unlikepaladin.pfm.", "PaladinFurnitureModForge");
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.unlikepaladin.pfm.", "PathPackRPWrapper");
 
 //Palladium addon packs: errores de source/pack manager durante carga de addons
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c.contains("net.threetag.palladium.addonpack.")
-				&& (c.contains("AddonPackManagerImpl$ModPackSource") || c.contains("AddonPackManager")));
+		VerificacionDeStackTrace.agregarDenegadoTodos("net.threetag.palladium.addonpack.",
+				"AddonPackManagerImpl$ModPackSource");
+		VerificacionDeStackTrace.agregarDenegadoTodos("net.threetag.palladium.addonpack.", "AddonPackManager");
 
 //KubeJS: errores/cascadas de script manager durante carga cliente
-		VerificacionDeStackTrace
-				.agregarDenegadoPredicado(c -> c.contains("dev.latvian.mods.kubejs.") && (c.contains("ScriptManager")
-						|| c.contains("KubeJSClient") || c.contains("KubeJSForge") || c.contains("KubeJSPlugins")));
+		VerificacionDeStackTrace.agregarDenegadoTodos("dev.latvian.mods.kubejs.", "ScriptManager");
+		VerificacionDeStackTrace.agregarDenegadoTodos("dev.latvian.mods.kubejs.", "KubeJSClient");
+		VerificacionDeStackTrace.agregarDenegadoTodos("dev.latvian.mods.kubejs.", "KubeJSForge");
+		VerificacionDeStackTrace.agregarDenegadoTodos("dev.latvian.mods.kubejs.", "KubeJSPlugins");
 
 //Custom Crosshair: ImageIO/custom crosshair asset loading
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c.contains("com.wjbaker.ccm.")
-				&& (c.contains("CustomCrosshairDrawer") || c.contains("CustomCrosshairMod")));
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.wjbaker.ccm.", "CustomCrosshairDrawer");
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.wjbaker.ccm.", "CustomCrosshairMod");
 
 //PointBlank: extensión/registro durante carga, aparece como cascada aquí
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c.contains("com.vicmatskiv.pointblank.")
-				&& (c.contains("ExtensionRegistry") || c.contains("PointBlankMod")));
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.vicmatskiv.pointblank.", "ExtensionRegistry");
+		VerificacionDeStackTrace.agregarDenegadoTodos("com.vicmatskiv.pointblank.", "PointBlankMod");
 
 //EMI/JEMI/JEI: integración EMI↔JEI durante llamada de plugins
-		VerificacionDeStackTrace.agregarDenegadoPredicado(
-				c -> (c.contains("dev.emi.emi.platform.EmiAgnos") || c.contains("dev.emi.emi.jemi.JemiUtil"))
-						&& c.contains("mezz.jei"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("dev.emi.emi.platform.EmiAgnos", "mezz.jei");
+		VerificacionDeStackTrace.agregarDenegadoTodos("dev.emi.emi.jemi.JemiUtil", "mezz.jei");
 
 //JEI startup/plugin caller como cascada de integración
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c.contains("mezz.jei.")
-				&& (c.contains("PluginCaller") || c.contains("JeiStarter") || c.contains("JustEnoughItemsClient")
-						|| c.contains("JustEnoughItemsClientSafeRunner") || c.contains("JustEnoughItems")));
+		VerificacionDeStackTrace.agregarDenegadoTodos("mezz.jei.", "PluginCaller");
+		VerificacionDeStackTrace.agregarDenegadoTodos("mezz.jei.", "JeiStarter");
+		VerificacionDeStackTrace.agregarDenegadoTodos("mezz.jei.", "JustEnoughItemsClient");
+		VerificacionDeStackTrace.agregarDenegadoTodos("mezz.jei.", "JustEnoughItemsClientSafeRunner");
+		VerificacionDeStackTrace.agregarDenegadoTodos("mezz.jei.", "JustEnoughItems");
 
 //HauntedHarvest JEICompat: clase opcional faltante de Supplementaries
-		VerificacionDeStackTrace
-				.agregarDenegadoPredicado(c -> c.contains("net.mehvahdjukaar.hauntedharvest.integration.JEICompat")
-						&& c.contains("net/mehvahdjukaar/supplementaries/Supplementaries"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("net.mehvahdjukaar.hauntedharvest.integration.JEICompat",
+				"net/mehvahdjukaar/supplementaries/Supplementaries");
 
-		VerificacionDeStackTrace.agregarDenegadoPredicado(c -> c.contains("observable.Observable.clientInit")
-				&& c.contains("dev.architectury.registry.client.keymappings.forge.KeyMappingRegistryImpl.register"));
+		VerificacionDeStackTrace.agregarDenegadoTodos("observable.Observable.clientInit",
+				"dev.architectury.registry.client.keymappings.forge.KeyMappingRegistryImpl.register");
 
 	}
 }

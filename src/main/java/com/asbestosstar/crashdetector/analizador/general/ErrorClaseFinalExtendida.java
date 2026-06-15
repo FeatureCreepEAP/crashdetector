@@ -9,6 +9,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -20,7 +22,13 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Ejemplo: java.lang.IncompatibleClassChangeError: class A cannot inherit from
  * final class B
  */
-public class ErrorClaseFinalExtendida implements Verificaciones {
+public class ErrorClaseFinalExtendida implements VerificacionRapida {
+
+	private static final String TEXTO_ERROR = "IncompatibleClassChangeError: class";
+	private static final String TEXTO_INICIO = "IncompatibleClassChangeError: class ";
+	private static final String TEXTO_SEPARADOR = " cannot inherit from final class ";
+	private static final String CLASS_PREFIX = "class ";
+	private static final String INTERFACE_PREFIX = "interface ";
 
 	private boolean activado = false;
 	private boolean posibleErrorClaseFinal = false;
@@ -33,22 +41,37 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 	private final List<ArchivoDeMod> modsClasePadreFinal = new ArrayList<>();
 
 	@Override
-	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR, TEXTO_SEPARADOR };
+	}
 
-		if (contenido == null) {
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
 			return;
 		}
 
-		posibleErrorClaseFinal = contenido.contains("IncompatibleClassChangeError: class")
-				&& contenido.contains(" cannot inherit from final class ");
+		if (lineaContieneClaseFinal(evento.linea)) {
+			posibleErrorClaseFinal = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
-	public boolean quiereAnalizarLineas() {
-		if (!posibleErrorClaseFinal)
-			return false;
+	@Override
+	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
 
-		return true;
+		String contenido = consola.contenido_verificar;
+
+		posibleErrorClaseFinal = contenido.contains(TEXTO_ERROR) && contenido.contains(TEXTO_SEPARADOR);
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return posibleErrorClaseFinal && !activado;
 	}
 
 	@Override
@@ -57,8 +80,7 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 			return;
 		}
 
-		if (!linea.contains("IncompatibleClassChangeError: class")
-				|| !linea.contains(" cannot inherit from final class ")) {
+		if (!lineaContieneClaseFinal(linea)) {
 			return;
 		}
 
@@ -96,24 +118,25 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 		this.activado = true;
 	}
 
-	private boolean extraerClases(String linea) {
-		String inicioTexto = "IncompatibleClassChangeError: class ";
-		String separador = " cannot inherit from final class ";
+	private boolean lineaContieneClaseFinal(String linea) {
+		return linea.contains(TEXTO_ERROR) && linea.contains(TEXTO_SEPARADOR);
+	}
 
-		int inicio = linea.indexOf(inicioTexto);
+	private boolean extraerClases(String linea) {
+		int inicio = linea.indexOf(TEXTO_INICIO);
 		if (inicio == -1) {
 			return false;
 		}
 
-		inicio += inicioTexto.length();
+		inicio += TEXTO_INICIO.length();
 
-		int medio = linea.indexOf(separador, inicio);
+		int medio = linea.indexOf(TEXTO_SEPARADOR, inicio);
 		if (medio == -1) {
 			return false;
 		}
 
 		String hija = linea.substring(inicio, medio).trim();
-		String padre = linea.substring(medio + separador.length()).trim();
+		String padre = linea.substring(medio + TEXTO_SEPARADOR.length()).trim();
 
 		if (hija.isEmpty() || padre.isEmpty()) {
 			return false;
@@ -174,12 +197,12 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 
 		String limpia = clase.trim();
 
-		if (limpia.startsWith("class ")) {
-			limpia = limpia.substring("class ".length()).trim();
+		if (limpia.startsWith(CLASS_PREFIX)) {
+			limpia = limpia.substring(CLASS_PREFIX.length()).trim();
 		}
 
-		if (limpia.startsWith("interface ")) {
-			limpia = limpia.substring("interface ".length()).trim();
+		if (limpia.startsWith(INTERFACE_PREFIX)) {
+			limpia = limpia.substring(INTERFACE_PREFIX.length()).trim();
 		}
 
 		int modulo = limpia.indexOf(" in ");
@@ -210,8 +233,7 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 			return false;
 		}
 
-		return trazo.trace.contains("IncompatibleClassChangeError: class")
-				&& trazo.trace.contains(" cannot inherit from final class ");
+		return trazo.trace.contains(TEXTO_ERROR) && trazo.trace.contains(TEXTO_SEPARADOR);
 	}
 
 	@Override

@@ -3,8 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,38 +14,53 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * YSM, lo cual ha sido corregido en versiones más recientes desde el 23 de
  * noviembre.
  */
-public class ErrorYesSteveModelLinux implements Verificaciones {
+public class ErrorYesSteveModelLinux implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean posible = false;
 
+	private static final String YSM_LINUX_COMPLETO = "java.lang.RuntimeException: Only YSM server is supported on linux.";
+	private static final String YSM_LINUX = "Only YSM server is supported on linux";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { YSM_LINUX };
+	}
+
 	/**
 	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
 	 */
 	@Override
-	public void verificar(Consola consola) {
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
 
+		if (lineaContieneErrorYesSteveModel(evento.linea)) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public void verificar(Consola consola) {
 		if (consola == null || consola.contenido_verificar == null) {
 			return;
 		}
 
 		String contenido = consola.contenido_verificar;
 
-		if (contenido.contains("java.lang.RuntimeException: Only YSM server is supported on linux.")
-				|| contenido.contains("Only YSM server is supported on linux")) {
+		if (contenido.contains(YSM_LINUX_COMPLETO) || contenido.contains(YSM_LINUX)) {
 			posible = true;
 		}
-
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	/**
@@ -55,14 +72,13 @@ public class ErrorYesSteveModelLinux implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (activado || !posible || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;
 		}
 
 		// Buscamos la línea que contiene el error de YesSteveModel en Linux
-		if (linea.contains("java.lang.RuntimeException: Only YSM server is supported on linux.")
-				|| linea.contains("Only YSM server is supported on linux")) {
+		if (lineaContieneErrorYesSteveModel(linea)) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -71,6 +87,10 @@ public class ErrorYesSteveModelLinux implements Verificaciones {
 			mensaje = MonitorDePID.idioma.errorYesSteveModelLinux() + Verificaciones.nl_html;
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneErrorYesSteveModel(String linea) {
+		return linea.contains(YSM_LINUX_COMPLETO) || linea.contains(YSM_LINUX);
 	}
 
 	@Override
@@ -124,8 +144,7 @@ public class ErrorYesSteveModelLinux implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("java.lang.RuntimeException: Only YSM server is supported on linux.")
-				|| t.contains("Only YSM server is supported on linux");
+		return t.contains(YSM_LINUX_COMPLETO) || t.contains(YSM_LINUX);
 	}
 
 	@Override

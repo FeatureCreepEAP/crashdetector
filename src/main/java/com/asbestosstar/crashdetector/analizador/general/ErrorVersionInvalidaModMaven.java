@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,7 +14,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * versión no está correctamente rodeada por corchetes, causando un
  * InvalidVersionSpecificationException.
  */
-public class ErrorVersionInvalidaModMaven implements Verificaciones {
+public class ErrorVersionInvalidaModMaven implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -20,28 +22,48 @@ public class ErrorVersionInvalidaModMaven implements Verificaciones {
 	private String versionDetectada = "";
 	public boolean posibleError = false;
 
+	private static final String INVALID_VERSION_SPECIFICATION = "org.apache.maven.artifact.versioning.InvalidVersionSpecificationException";
+	private static final String SINGLE_VERSION_SURROUNDED = "Single version must be surrounded by []:";
+	private static final String MUST_BE_SURROUNDED = "must be surrounded by []:";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { INVALID_VERSION_SPECIFICATION, SINGLE_VERSION_SURROUNDED };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneVersionInvalida(evento.linea)) {
+			posibleError = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	/**
-	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
+	 * Método de compatibilidad — mantiene el análisis legacy por contenido
+	 * completo.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		String log = consola.contenido_verificar;
-
-		if (log == null)
+		if (consola == null || consola.contenido_verificar == null)
 			return;
 
-		if (log.contains("org.apache.maven.artifact.versioning.InvalidVersionSpecificationException")
-				&& log.contains("Single version must be surrounded by []:")) {
+		String log = consola.contenido_verificar;
+
+		if (log.contains(INVALID_VERSION_SPECIFICATION) && log.contains(SINGLE_VERSION_SURROUNDED)) {
 			posibleError = true;
 		}
 
 	}
 
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleError)
-			return false;
-
-		return true;
+		return posibleError && !activado;
 	}
 
 	/**
@@ -58,14 +80,19 @@ public class ErrorVersionInvalidaModMaven implements Verificaciones {
 			return;
 		}
 
+		if (!posibleError || linea == null) {
+			return;
+		}
+
 		// Buscamos la línea que contiene el error de especificación de versión inválida
-		if (linea.contains("org.apache.maven.artifact.versioning.InvalidVersionSpecificationException")
-				&& linea.contains("Single version must be surrounded by []:")) {
+		if (lineaContieneVersionInvalida(linea)) {
 
 			// Extraemos la versión detectada del error, que está después de "must be
 			// surrounded by []:"
-			int inicio = linea.indexOf("must be surrounded by []:") + "must be surrounded by []:".length();
-			if (inicio != -1 && inicio < linea.length()) {
+			int idx = linea.indexOf(MUST_BE_SURROUNDED);
+			int inicio = idx >= 0 ? idx + MUST_BE_SURROUNDED.length() : -1;
+
+			if (inicio >= 0 && inicio < linea.length()) {
 				versionDetectada = linea.substring(inicio).trim();
 			}
 
@@ -76,6 +103,10 @@ public class ErrorVersionInvalidaModMaven implements Verificaciones {
 			mensaje = MonitorDePID.idioma.errorVersionInvalidaMod(versionDetectada) + Verificaciones.nl_html;
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneVersionInvalida(String linea) {
+		return linea.contains(INVALID_VERSION_SPECIFICATION) && linea.contains(SINGLE_VERSION_SURROUNDED);
 	}
 
 	@Override
@@ -129,8 +160,7 @@ public class ErrorVersionInvalidaModMaven implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("org.apache.maven.artifact.versioning.InvalidVersionSpecificationException")
-				&& t.contains("Single version must be surrounded by []:");
+		return t.contains(INVALID_VERSION_SPECIFICATION) && t.contains(SINGLE_VERSION_SURROUNDED);
 	}
 
 	@Override

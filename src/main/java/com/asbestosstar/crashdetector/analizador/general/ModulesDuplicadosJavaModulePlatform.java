@@ -1,8 +1,12 @@
 package com.asbestosstar.crashdetector.analizador.general;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
@@ -13,13 +17,18 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.EliminadorDeMod;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
+public class ModulesDuplicadosJavaModulePlatform implements VerificacionRapida {
+
+	private static final Set<String> REPORTADOS_GLOBALMENTE = Collections.synchronizedSet(new HashSet<>());
 
 	private boolean activado = false;
 	private final CDStringBuilder mensajes = new CDStringBuilder();
@@ -29,54 +38,80 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 	private boolean recolectando = false;
 	private StringBuilder mensajeBuilder = null;
 	private int indiceUltimaNoStack = -1;
-	// Nuevo: almacenar consola para finalización
-	private Consola consolaRef = null;
 	boolean mixinextras = false;
 	private boolean posible = false;
 
-	@Override
-	public void verificar(Consola consola) {
-		String cont = consola.contenido_verificar;
+	private static final String RESOLUTION_EXCEPTION = "java.lang.module.ResolutionException";
+	private static final String CONTAINS_PACKAGE = "contains package";
+	private static final String EXPORT_PACKAGE = "export package";
+	private static final String EXPORTS_PACKAGE = "exports package";
+	private static final String TO_MODULE = "to module";
+	private static final String EXCEPTION_IN_THREAD = "Exception in thread";
 
-		// Finalizar cualquier bloque pendiente al final del procesamiento
-		if (recolectando && consolaRef != null) {
-			CrashDetectorLogger.log("Finalizando bloque pendiente al final del procesamiento");
-			finalizarBloque(consolaRef, indiceUltimaNoStack >= 0 ? indiceUltimaNoStack : 0);
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { RESOLUTION_EXCEPTION, CONTAINS_PACKAGE, EXPORT_PACKAGE, EXPORTS_PACKAGE, TO_MODULE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
 		}
 
-		boolean esCabecera = cont.contains("java.lang.module.ResolutionException:") || cont.contains("contains package")
-				|| cont.contains("export package") || cont.contains("exports package")
-				|| (cont.startsWith("Exception in thread") && cont.contains("ResolutionException"));
-		if (esCabecera) {
+		if (esCabecera(evento.linea)) {
 			posible = true;
 		}
 
-		consolaRef = null;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
+		if (recolectando && mensajeBuilder != null) {
+			CrashDetectorLogger.log("Finalizando bloque pendiente al final del procesamiento");
+
+			int indice = indiceUltimaNoStack >= 0 ? indiceUltimaNoStack : 0;
+			finalizarBloque(consola, indice);
+		}
+	}
+
+	@Override
+	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null)
+			return;
+
+		String cont = consola.contenido_verificar;
+
+		boolean esCabecera = cont.contains(RESOLUTION_EXCEPTION) || cont.contains(CONTAINS_PACKAGE)
+				|| cont.contains(EXPORT_PACKAGE) || cont.contains(EXPORTS_PACKAGE)
+				|| (cont.startsWith(EXCEPTION_IN_THREAD) && cont.contains("ResolutionException"));
+
+		if (esCabecera) {
+			posible = true;
+		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String lineaOriginal, int i) {
-		String linea = lineaOriginal.trim();
+		if (lineaOriginal == null)
+			return;
 
-		boolean esCabecera = linea.contains("java.lang.module.ResolutionException:")
-				|| linea.contains("contains package") || linea.contains("export package")
-				|| linea.contains("exports package")
-				|| (linea.startsWith("Exception in thread") && linea.contains("ResolutionException"));
+		String linea = sinEspaciosLaterales(lineaOriginal);
 
-		if (esCabecera) {
+		if (esCabecera(linea)) {
 			if (recolectando) {
 				finalizarBloque(consola, i - 1);
 			}
+
 			recolectando = true;
 			mensajeBuilder = new StringBuilder(linea);
+			indiceUltimaNoStack = i;
 
 			// Procesar inmediatamente si es una línea completa sin stack trace
 			if (!linea.contains("\tat ")) {
@@ -96,57 +131,92 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 		}
 	}
 
-	// Resto del código igual, pero con este cambio crucial en finalizarBloque:
+	private boolean esCabecera(String linea) {
+		if (linea == null)
+			return false;
+
+		return linea.contains(RESOLUTION_EXCEPTION) || linea.contains(CONTAINS_PACKAGE)
+				|| linea.contains(EXPORT_PACKAGE) || linea.contains(EXPORTS_PACKAGE)
+				|| (linea.startsWith(EXCEPTION_IN_THREAD) && linea.contains("ResolutionException"));
+	}
+
 	private void finalizarBloque(Consola consola, int indiceParaEnlace) {
 		try {
-			String mensajeCompleto = mensajeBuilder.toString().trim();
+			if (mensajeBuilder == null)
+				return;
+
+			String mensajeCompleto = sinEspaciosLaterales(mensajeBuilder.toString());
 
 			// Limpieza específica para el formato problemático
 			String mensaje = mensajeCompleto.replace("Exception in thread \"main\" ", "")
-					.replace("java.lang.module.ResolutionException: ", "").trim();
+					.replace("java.lang.module.ResolutionException: ", "");
+			mensaje = sinEspaciosLaterales(mensaje);
 
 			String modulosCombinados = "";
 			String paquete = "";
 			boolean encontrado = false;
 
+			String mensajeLower = mensaje.toLowerCase();
+
 			// Detección específica para: "Modules jlayer and mts export package
 			// javazoom.jl.player to module fabric_screen_handler_api_v1"
-			if (mensaje.toLowerCase().contains("modules") && mensaje.toLowerCase().contains("export package")
-					&& mensaje.toLowerCase().contains("to module")) {
+			if (mensajeLower.contains("modules") && mensajeLower.contains(EXPORT_PACKAGE)
+					&& mensajeLower.contains(TO_MODULE)) {
 
 				// Extraer los módulos conflictivos
-				String parteModulos = mensaje.substring(0, mensaje.toLowerCase().indexOf("export package")).trim();
+				int idxExportPackage = mensajeLower.indexOf(EXPORT_PACKAGE);
+				String parteModulos = sinEspaciosLaterales(mensaje.substring(0, idxExportPackage));
+
 				if (parteModulos.toLowerCase().startsWith("modules")) {
-					parteModulos = parteModulos.substring("modules".length()).trim();
+					parteModulos = sinEspaciosLaterales(parteModulos.substring("modules".length()));
 				}
-				modulosCombinados = parteModulos.replace("and", "+").trim();
+
+				modulosCombinados = parteModulos.replace("and", "+");
 
 				// Extraer el paquete problemático
-				int inicioPaquete = mensaje.toLowerCase().indexOf("export package") + "export package".length();
-				int finPaquete = mensaje.toLowerCase().indexOf("to module");
-				paquete = mensaje.substring(inicioPaquete, finPaquete).trim().replace("\"", "");
+				int inicioPaquete = idxExportPackage + EXPORT_PACKAGE.length();
+				int finPaquete = mensajeLower.indexOf(TO_MODULE, inicioPaquete);
 
-				encontrado = true;
-				activado = true;
+				if (finPaquete > inicioPaquete) {
+					paquete = limpiarComillas(mensaje.substring(inicioPaquete, finPaquete));
+					encontrado = true;
+				}
 			}
 
 			// Mantener compatibilidad con otros formatos
-			if (!encontrado && mensaje.toLowerCase().contains("contains package")) {
-				String[] partes = mensaje.split("contains package", 2);
-				if (partes.length > 1) {
-					modulosCombinados = partes[0].replace("Module", "").trim();
-					String[] resto = partes[1].split("module ");
-					if (resto.length > 1) {
-						paquete = resto[1].split(" ")[0].trim().replace("\"", "");
+			if (!encontrado && mensajeLower.contains(CONTAINS_PACKAGE)) {
+				int idxContains = mensajeLower.indexOf(CONTAINS_PACKAGE);
+
+				if (idxContains > 0) {
+					modulosCombinados = sinEspaciosLaterales(mensaje.substring(0, idxContains).replace("Module", ""));
+
+					int inicioResto = idxContains + CONTAINS_PACKAGE.length();
+					int idxModule = mensaje.indexOf("module ", inicioResto);
+
+					if (idxModule >= 0) {
+						int inicioPaquete = idxModule + "module ".length();
+						int finPaquete = inicioPaquete;
+
+						while (finPaquete < mensaje.length() && !Character.isWhitespace(mensaje.charAt(finPaquete))) {
+							finPaquete++;
+						}
+
+						paquete = limpiarComillas(mensaje.substring(inicioPaquete, finPaquete));
 						encontrado = true;
-						activado = true;
 					}
 				}
 			}
 
 			if (encontrado && !paquete.isEmpty()) {
+				String claveGlobal = paquete + "|" + modulosCombinados;
+
+				if (!REPORTADOS_GLOBALMENTE.add(claveGlobal)) {
+					return;
+				}
+
 				paqueteProblematico = paquete;
 				CrashDetectorLogger.log("paqueteProblematico " + paqueteProblematico);
+
 				Buscador.cargar();
 				List<ArchivoDeMod> mods = Buscador.buscarModsConTermino(paquete);
 
@@ -160,18 +230,15 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 				mensajeFinal.append(MonitorDePID.idioma.module_resolution_exception());
 
 				mensajeFinal.append("<br><br><b>").append(MonitorDePID.idioma.modulos()).append(":</b><br><ul>");
-				for (String modulo : modulosCombinados.split("\\+")) {
-					String trim = modulo.trim();
-					mensajeFinal.append("<li>").append("<b>").append(trim).append("</b>").append(procesarModulo(trim))
-							.append("</li>");
-				}
+
+				agregarModulosAlMensaje(mensajeFinal, modulosCombinados);
+
 				mensajeFinal.append("</ul>");
 
 				if (modulosCombinados.contains("MixinExtras") || modulosCombinados.contains("mixinextras.neoforge")) {
 					mixinextras = true;
 
 					mensajeFinal.append(nl_html).append(MonitorDePID.idioma.mixinExtrasDuplicados()).append(nl_html);
-
 				}
 
 				mensajeFinal.append("<b>").append(MonitorDePID.idioma.paquete()).append(":</b><br>").append("<code>")
@@ -184,6 +251,7 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 				mensajeFinal.append(Verificaciones.nl_html).append(enlace);
 
 				mensajes.append(mensajeFinal.toString());
+				activado = true;
 			}
 		} catch (Exception e) {
 			CrashDetectorLogger.logException(e);
@@ -194,12 +262,31 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 		}
 	}
 
-	// Resto de los métodos sin cambios (formatearResultadoBusqueda, nueva,
-	// activado, etc.)
-	// [Mantener todos los métodos existentes iguales]
+	private void agregarModulosAlMensaje(StringBuilder mensajeFinal, String modulosCombinados) {
+		if (modulosCombinados == null || modulosCombinados.isEmpty())
+			return;
+
+		int inicio = 0;
+
+		while (inicio < modulosCombinados.length()) {
+			int fin = modulosCombinados.indexOf('+', inicio);
+
+			if (fin < 0) {
+				fin = modulosCombinados.length();
+			}
+
+			String modulo = sinEspaciosLaterales(modulosCombinados.substring(inicio, fin));
+
+			if (!modulo.isEmpty()) {
+				mensajeFinal.append("<li>").append("<b>").append(modulo).append("</b>").append(procesarModulo(modulo))
+						.append("</li>");
+			}
+
+			inicio = fin + 1;
+		}
+	}
 
 	public static String procesarModulo(String modulo) {
-		// TODO Auto-generated method stub
 		List<String> mods = Buscador.obtenerModsConNombre(modulo);
 		if (!mods.isEmpty()) {
 			return "(" + String.join(",", mods) + ")";
@@ -208,7 +295,6 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 		return "";
 	}
 
-	// Solo para referencia, asegurarse de tener estos métodos:
 	private String formatearResultadoBusqueda(List<ArchivoDeMod> mods) {
 		if (mods.isEmpty())
 			return "()";
@@ -218,6 +304,46 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 				.collect(Collectors.joining(", "));
 
 		return "(" + contenido + ")";
+	}
+
+	private String limpiarComillas(String texto) {
+		if (texto == null)
+			return "";
+
+		String limpia = sinEspaciosLaterales(texto);
+		StringBuilder sb = new StringBuilder(limpia.length());
+
+		for (int i = 0; i < limpia.length(); i++) {
+			char c = limpia.charAt(i);
+
+			if (c != '"' && c != '\'') {
+				sb.append(c);
+			}
+		}
+
+		return sinEspaciosLaterales(sb.toString());
+	}
+
+	private String sinEspaciosLaterales(String texto) {
+		if (texto == null)
+			return "";
+
+		int inicio = 0;
+		int fin = texto.length();
+
+		while (inicio < fin && Character.isWhitespace(texto.charAt(inicio))) {
+			inicio++;
+		}
+
+		while (fin > inicio && Character.isWhitespace(texto.charAt(fin - 1))) {
+			fin--;
+		}
+
+		return texto.substring(inicio, fin);
+	}
+
+	public static void reiniciarGlobal() {
+		REPORTADOS_GLOBALMENTE.clear();
 	}
 
 	@Override
@@ -247,7 +373,6 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
-		// [Mantener implementación existente]
 		QuickFix.Builder builder = new QuickFix.Builder(MonitorDePID.idioma.nombre_de_modules_duplicados_jmps());
 
 		if (!activado || paqueteProblematico == null || paqueteProblematico.isEmpty()) {
@@ -307,7 +432,6 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 

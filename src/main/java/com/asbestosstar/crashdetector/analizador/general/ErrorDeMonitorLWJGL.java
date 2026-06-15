@@ -3,12 +3,13 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ErrorDeMonitorLWJGL implements Verificaciones {
+public class ErrorDeMonitorLWJGL implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -20,25 +21,43 @@ public class ErrorDeMonitorLWJGL implements Verificaciones {
 	 */
 	private boolean posibleErrorMonitor = false;
 
+	private static final String TEXTO_ERROR = "org.lwjgl.LWJGLException: Failed to set display mode";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_ERROR)) {
+			posibleErrorMonitor = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			posibleErrorMonitor = false;
+			return;
+		}
+
 		String contenidoConsola = consola.contenido_verificar;
 
 		// Trabajo global mínimo: solo comprobamos si aparece el texto del error.
 		// Si no está, la verificación por línea se saltará completamente.
-		if (contenidoConsola != null
-				&& contenidoConsola.contains("org.lwjgl.LWJGLException: Failed to set display mode")) {
-			posibleErrorMonitor = true;
-		} else {
-			posibleErrorMonitor = false;
-		}
+		posibleErrorMonitor = contenidoConsola.contains(TEXTO_ERROR);
 	}
 
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleErrorMonitor)
-			return false;
-
-		return true;
+		return posibleErrorMonitor && !activado;
 	}
 
 	@Override
@@ -50,7 +69,7 @@ public class ErrorDeMonitorLWJGL implements Verificaciones {
 		}
 
 		// Verifica cada línea buscando el error específico
-		if (linea.contains("org.lwjgl.LWJGLException: Failed to set display mode")) {
+		if (linea.contains(TEXTO_ERROR)) {
 			mensaje = MonitorDePID.idioma.errorMonitorLWJGL() + Verificaciones.nl_html;
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
@@ -103,7 +122,7 @@ public class ErrorDeMonitorLWJGL implements Verificaciones {
 		if (!activado || trazo == null || trazo.trace == null) {
 			return false;
 		}
-		return trazo.trace.contains("org.lwjgl.LWJGLException: Failed to set display mode");
+		return trazo.trace.contains(TEXTO_ERROR);
 	}
 
 	@Override

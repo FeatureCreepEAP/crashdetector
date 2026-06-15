@@ -11,6 +11,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -19,7 +21,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Detecta funciones de densidad no vinculadas en mods de Minecraft. Patrón
  * moderno: verificación global barata (contains) + per-línea.
  */
-public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
+public class FuncionesDeDensidadNoVinculadas implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posibleError = false;
@@ -32,6 +34,24 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 
 	private static final String TEXTO_GLOBAL_1 = "unbound values in registry";
 	private static final String TEXTO_GLOBAL_2 = "Trying to access unbound value";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_GLOBAL_1, TEXTO_GLOBAL_2 };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneError(evento.linea)) {
+			posibleError = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
@@ -47,10 +67,7 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleError)
-			return false;
-
-		return true;
+		return posibleError && !activado;
 	}
 
 	@Override
@@ -59,28 +76,36 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 			return;
 
 		// Formato lista: "unbound values in registry ...: [namespace:key,...]"
-		if (linea.contains("unbound values in registry")) {
+		if (linea.contains(TEXTO_GLOBAL_1)) {
 			int start = linea.indexOf("]: [");
 			if (start >= 0) {
 				start += 4;
 				int end = linea.indexOf(']', start);
 				if (end >= 0) {
 					String lista = linea.substring(start, end);
-					String[] partes = lista.split(",");
 					Set<String> namespaces = new HashSet<>();
 
-					for (String p : partes) {
-						String k = p.trim();
-						if (k.isEmpty())
-							continue;
-						int c = k.indexOf(':');
-						if (c <= 0)
-							continue;
-						String ns = k.substring(0, c);
-						if (!"minecraft".equals(ns)) {
-							clavesFaltantes.add(k);
-							namespaces.add(ns);
+					int desde = 0;
+					while (desde < lista.length()) {
+						int coma = lista.indexOf(',', desde);
+						int hasta = coma >= 0 ? coma : lista.length();
+
+						String k = limpiarEspacios(lista, desde, hasta);
+						if (!k.isEmpty()) {
+							int c = k.indexOf(':');
+							if (c > 0) {
+								String ns = k.substring(0, c);
+								if (!"minecraft".equals(ns)) {
+									clavesFaltantes.add(k);
+									namespaces.add(ns);
+								}
+							}
 						}
+
+						if (coma < 0)
+							break;
+
+						desde = coma + 1;
 					}
 
 					if (!namespaces.isEmpty()) {
@@ -99,7 +124,7 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 
 		// Formato individual: "Trying to access unbound value 'ResourceKey[...] /
 		// namespace:key]'"
-		if (linea.contains("Trying to access unbound value")) {
+		if (linea.contains(TEXTO_GLOBAL_2)) {
 			int keyStart = linea.indexOf("ResourceKey[");
 			if (keyStart >= 0) {
 				int keyEnd = linea.indexOf("]'", keyStart);
@@ -107,7 +132,7 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 					String inner = linea.substring(keyStart + "ResourceKey[".length(), keyEnd);
 					int lastSeparator = inner.lastIndexOf(" / ");
 					if (lastSeparator >= 0) {
-						String valorClave = inner.substring(lastSeparator + 3).trim();
+						String valorClave = limpiarEspacios(inner, lastSeparator + 3, inner.length());
 						int colonIdx = valorClave.indexOf(':');
 						if (colonIdx > 0 && !"minecraft".equals(valorClave.substring(0, colonIdx))) {
 							clavesFaltantes.add(valorClave);
@@ -140,6 +165,26 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneError(String linea) {
+		return linea.contains(TEXTO_GLOBAL_1) || linea.contains(TEXTO_GLOBAL_2);
+	}
+
+	private String limpiarEspacios(String texto, int inicio, int fin) {
+		while (inicio < fin && texto.charAt(inicio) <= ' ') {
+			inicio++;
+		}
+
+		while (fin > inicio && texto.charAt(fin - 1) <= ' ') {
+			fin--;
+		}
+
+		if (inicio >= fin) {
+			return "";
+		}
+
+		return texto.substring(inicio, fin);
 	}
 
 	@Override

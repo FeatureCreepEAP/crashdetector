@@ -11,9 +11,11 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class RegistrosMalMapeados implements Verificaciones {
+public class RegistrosMalMapeados implements VerificacionRapida {
 
 	private boolean posibleRegistrosMalMapeados = false;
 	private boolean activado = false;
@@ -23,6 +25,22 @@ public class RegistrosMalMapeados implements Verificaciones {
 
 	private static final String TEXTO_MISSING_ID = "Found a missing id from the world ";
 	private static final String TEXTO_UNIDENTIFIED = "Unidentified mapping from registry ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_MISSING_ID, TEXTO_UNIDENTIFIED };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		posibleRegistrosMalMapeados = true;
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
@@ -39,10 +57,7 @@ public class RegistrosMalMapeados implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleRegistrosMalMapeados)
-			return false;
-
-		return true;
+		return posibleRegistrosMalMapeados;
 	}
 
 	@Override
@@ -260,7 +275,7 @@ public class RegistrosMalMapeados implements Verificaciones {
 	}
 
 	private void registrarEntrada(Consola consola, String entrada, int numero_de_linea) {
-		if (!esEntradaValida(entrada)) {
+		if (consola == null || !esEntradaValida(entrada)) {
 			return;
 		}
 
@@ -350,5 +365,4 @@ public class RegistrosMalMapeados implements Verificaciones {
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

@@ -6,8 +6,10 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -20,7 +22,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Utiliza Buscardor para identificar mods que contienen la clase problemática.
  */
-public class ErrorSinListenersEnClase implements Verificaciones {
+public class ErrorSinListenersEnClase implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posible = false;
@@ -33,6 +35,21 @@ public class ErrorSinListenersEnClase implements Verificaciones {
 	private String enlaceHtml = "";
 
 	private static final String TEXTO_ERROR = "No listeners found in class ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		posible = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global barata.
@@ -55,10 +72,7 @@ public class ErrorSinListenersEnClase implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	/**

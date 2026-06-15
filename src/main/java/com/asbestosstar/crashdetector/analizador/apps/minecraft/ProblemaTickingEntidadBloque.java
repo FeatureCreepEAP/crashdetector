@@ -6,6 +6,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -17,7 +19,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * "Description: Ticking entity" - "-- Entity being ticked --" + "Entity Type:"
  * + "Entity Name:" + "Entity's Block location: World: (x,y,z)"
  */
-public class ProblemaTickingEntidadBloque implements Verificaciones {
+public class ProblemaTickingEntidadBloque implements VerificacionRapida {
 
 	// Estado final
 	private boolean activado = false;
@@ -41,10 +43,32 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 
 	private boolean seccionEntidadBloqueTickeadaActiva = false;
 	private int lineaInicioSeccionBloque = -1;
+	private boolean posibleTicking = false;
 
 	// Ventanas de parseo (conservadoras pero amplias)
 	private static final int VENTANA_DESDE_DESCRIPTION = 600; // para cubrir casos donde los detalles están lejos
 	private static final int VENTANA_SECCION_DETALLES = 120; // líneas a partir del encabezado de sección
+
+	private static final String TICKING_BLOCK = "Description: Ticking block entity";
+	private static final String TICKING_ENTITY = "Description: Ticking entity";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TICKING_BLOCK, TICKING_ENTITY, "-- Entity being ticked --",
+				"-- Block entity being ticked --" };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		posibleTicking = true;
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {

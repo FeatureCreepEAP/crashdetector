@@ -6,22 +6,45 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta cuando el mod MCEF se inicializa al final del log, lo que indica
  * probablemente un cuelgue silencioso durante la carga.
  */
-public class ProblemaMCEFInicializacion implements Verificaciones {
+public class ProblemaMCEFInicializacion implements VerificacionRapida {
 
 	private boolean activado = false;
 
 	private String enlace = "";
 	private int totalLineasDelLog = -1;
+	private int lineaMCEF = -1;
 	public boolean analizarLineas = false;
 
 	private static final String TEXTO_MCEF_1 = "Initializing CEF on ";
 	private static final String TEXTO_MCEF_2 = "[org.cef.CefApp:initialize:";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_MCEF_1, TEXTO_MCEF_2 };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (contienePatronMCEF(evento.linea)) {
+			analizarLineas = true;
+			lineaMCEF = evento.numeroDeLinea;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificacion global ligera.
@@ -47,22 +70,30 @@ public class ProblemaMCEFInicializacion implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	/**
 	 * Verificacion por linea.
 	 *
-	 * Solo revisa las ultimas 5 lineas del log y agrega enlace a la linea exacta.
+	 * En modo legacy, solo revisa las ultimas 5 lineas del log y agrega enlace a la
+	 * linea exacta.
+	 *
+	 * En modo streaming puro, guarda la ultima linea MCEF encontrada y la valida en
+	 * finalizarArchivo(), cuando ya se conoce el final real del archivo.
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (activado || linea == null || linea.isEmpty()) {
 			return;
 		}
+
+		if (!contienePatronMCEF(linea)) {
+			return;
+		}
+
+		analizarLineas = true;
+		lineaMCEF = numero_de_linea;
 
 		if (totalLineasDelLog <= 0) {
 			return;
@@ -74,9 +105,29 @@ public class ProblemaMCEFInicializacion implements Verificaciones {
 			return;
 		}
 
-		if (contienePatronMCEF(linea)) {
+		this.activado = true;
+		this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
+	}
+
+	@Override
+	public void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
+		if (activado || !analizarLineas || consola == null || lineaMCEF < 0) {
+			return;
+		}
+
+		if (totalLineasDelLog <= 0 && estado != null) {
+			totalLineasDelLog = estado.lineasLeidas;
+		}
+
+		if (totalLineasDelLog <= 0) {
+			return;
+		}
+
+		int primeraLineaPermitida = Math.max(0, totalLineasDelLog - 5);
+
+		if (lineaMCEF >= primeraLineaPermitida) {
 			this.activado = true;
-			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
+			this.enlace = consola.agregarErrorALectador(lineaMCEF, this);
 		}
 	}
 

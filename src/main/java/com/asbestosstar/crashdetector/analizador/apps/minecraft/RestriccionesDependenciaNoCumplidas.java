@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 import java.util.ArrayList;
@@ -21,14 +23,45 @@ import java.util.Map;
  * Ejemplo: net.minecraftforge.fml.loading.EarlyLoadingException: 3 Dependency
  * restrictions were not met.
  */
-public class RestriccionesDependenciaNoCumplidas implements Verificaciones {
+public class RestriccionesDependenciaNoCumplidas implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String enlace = "";
 	private String cantidad = "varias";
 	public boolean analizarLineas;
+
 	// Mapa: Nombre del Archivo -> Lista de dependencias solicitadas
 	private Map<String, List<String>> conflictosPorMod = new HashMap<>();
+
+	private static final String EARLY_LOADING_EXCEPTION = "EarlyLoadingException";
+	private static final String DEPENDENCY_RESTRICTIONS = "Dependency restrictions were not met";
+	private static final String FAILED_TO_SELECT_JARS = "Failed to select jars";
+	private static final String RESOLUTION_FAILURE = "ResolutionFailureInformation";
+	private static final String RESOLUTION_FAILURE_BLOQUE = "ResolutionFailureInformation{";
+	private static final String ARTIFACT = "artifact=";
+	private static final String MOD_FILE = "Mod File:";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { EARLY_LOADING_EXCEPTION, DEPENDENCY_RESTRICTIONS, FAILED_TO_SELECT_JARS,
+				RESOLUTION_FAILURE, ARTIFACT, MOD_FILE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		String linea = evento.linea;
+
+		if (linea.contains(EARLY_LOADING_EXCEPTION) || linea.contains(DEPENDENCY_RESTRICTIONS)
+				|| linea.contains(FAILED_TO_SELECT_JARS) || linea.contains(RESOLUTION_FAILURE)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
@@ -39,8 +72,8 @@ public class RestriccionesDependenciaNoCumplidas implements Verificaciones {
 		String log = consola.contenido_verificar;
 
 		// Global check barato: solo activa si están las piezas necesarias.
-		if (log.contains("EarlyLoadingException") && log.contains("Dependency restrictions were not met")
-				&& (log.contains("Failed to select jars") || log.contains("ResolutionFailureInformation"))) {
+		if (log.contains(EARLY_LOADING_EXCEPTION) && log.contains(DEPENDENCY_RESTRICTIONS)
+				&& (log.contains(FAILED_TO_SELECT_JARS) || log.contains(RESOLUTION_FAILURE))) {
 			analizarLineas = true;
 		}
 	}
@@ -55,24 +88,24 @@ public class RestriccionesDependenciaNoCumplidas implements Verificaciones {
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!activado || consola == null || linea == null) {
+		if (!analizarLineas || consola == null || linea == null) {
 			return;
 		}
 
 		// Línea principal con la cantidad.
-		if (linea.contains("EarlyLoadingException") && linea.contains("Dependency restrictions were not met")) {
+		if (linea.contains(EARLY_LOADING_EXCEPTION) && linea.contains(DEPENDENCY_RESTRICTIONS)) {
 			extraerCantidadDesdeLinea(linea);
 
 			if (this.enlace == null || this.enlace.isEmpty()) {
 				this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			}
 
+			this.activado = true;
 			return;
 		}
 
 		// Línea detallada donde vienen los ResolutionFailureInformation.
-		if (linea.contains("ResolutionFailureInformation{") && linea.contains("artifact=")
-				&& linea.contains("Mod File:")) {
+		if (linea.contains(RESOLUTION_FAILURE_BLOQUE) && linea.contains(ARTIFACT) && linea.contains(MOD_FILE)) {
 			parsearConflictosAgrupados(linea);
 		}
 	}
@@ -103,12 +136,13 @@ public class RestriccionesDependenciaNoCumplidas implements Verificaciones {
 		int pos = 0;
 
 		while (true) {
-			int inicioBloque = texto.indexOf("ResolutionFailureInformation{", pos);
+			int inicioBloque = texto.indexOf(RESOLUTION_FAILURE_BLOQUE, pos);
 			if (inicioBloque == -1) {
 				break;
 			}
 
-			int siguienteBloque = texto.indexOf("ResolutionFailureInformation{", inicioBloque + 29);
+			int siguienteBloque = texto.indexOf(RESOLUTION_FAILURE_BLOQUE,
+					inicioBloque + RESOLUTION_FAILURE_BLOQUE.length());
 			int finBloque = siguienteBloque == -1 ? texto.length() : siguienteBloque;
 
 			parsearBloque(texto, inicioBloque, finBloque);
@@ -118,12 +152,12 @@ public class RestriccionesDependenciaNoCumplidas implements Verificaciones {
 	}
 
 	private void parsearBloque(String texto, int inicioBloque, int finBloque) {
-		int idxArt = texto.indexOf("artifact=", inicioBloque);
+		int idxArt = texto.indexOf(ARTIFACT, inicioBloque);
 		if (idxArt == -1 || idxArt >= finBloque) {
 			return;
 		}
 
-		String dependencia = extraerValorHastaSeparador(texto, idxArt + 9, finBloque);
+		String dependencia = extraerValorHastaSeparador(texto, idxArt + ARTIFACT.length(), finBloque);
 
 		if (dependencia == null || dependencia.isEmpty()) {
 			dependencia = "Desconocida";
@@ -132,12 +166,12 @@ public class RestriccionesDependenciaNoCumplidas implements Verificaciones {
 		int pos = inicioBloque;
 
 		while (true) {
-			int idxSource = texto.indexOf("Mod File:", pos);
+			int idxSource = texto.indexOf(MOD_FILE, pos);
 			if (idxSource == -1 || idxSource >= finBloque) {
 				break;
 			}
 
-			String archivo = extraerValorHastaSeparador(texto, idxSource + 9, finBloque);
+			String archivo = extraerValorHastaSeparador(texto, idxSource + MOD_FILE.length(), finBloque);
 
 			if (archivo == null || archivo.isEmpty()) {
 				archivo = "Desconocido";
@@ -158,7 +192,7 @@ public class RestriccionesDependenciaNoCumplidas implements Verificaciones {
 				}
 			}
 
-			pos = idxSource + 9;
+			pos = idxSource + MOD_FILE.length();
 		}
 	}
 

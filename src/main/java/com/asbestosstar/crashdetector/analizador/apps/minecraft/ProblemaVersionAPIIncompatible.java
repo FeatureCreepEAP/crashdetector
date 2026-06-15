@@ -9,6 +9,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -16,7 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Aternos porque esta es una implementacion de su codex:
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaVersionAPIIncompatible implements Verificaciones {
+public class ProblemaVersionAPIIncompatible implements VerificacionRapida {
 
 	private boolean posibleVersionAPIIncompatible = false;
 	private boolean activado = false;
@@ -40,6 +42,24 @@ public class ProblemaVersionAPIIncompatible implements Verificaciones {
 	private static final String TEXTO_PLUGIN_API_VERSION = "Plugin API version ";
 	private static final String TEXTO_LOWER_THAN_MINIMUM = " is lower than the minimum allowed version";
 	private static final String TEXTO_NOT_SUPPORTED = " is not supported by this server";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_COULD_NOT_LOAD_OLD, TEXTO_COULD_NOT_LOAD_PLUGIN, TEXTO_INVALID_API,
+				TEXTO_PLUGIN_API_VERSION };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		posibleVersionAPIIncompatible = true;
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificacion global ligera.

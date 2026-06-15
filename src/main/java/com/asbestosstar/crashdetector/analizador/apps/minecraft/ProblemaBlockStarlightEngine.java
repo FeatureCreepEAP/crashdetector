@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -16,36 +18,54 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Este tipo de error suele aparecer cuando Starlight falla durante la
  * inicialización del sistema de iluminación del mundo.
  */
-public class ProblemaBlockStarlightEngine implements Verificaciones {
+public class ProblemaBlockStarlightEngine implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String enlace = "";
 	public boolean analizarLineas = false;
 
+	private static final String STARLIGHT = "ca.spottedleaf.starlight";
+	private static final String INIT_NIBBLE = "BlockStarLightEngine.initNibble";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { STARLIGHT, INIT_NIBBLE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(STARLIGHT) || evento.linea.contains(INIT_NIBBLE)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 
-		String log = consola.contenido_verificar;
-
-		if (log == null)
+		if (consola == null || consola.contenido_verificar == null)
 			return;
 
+		String log = consola.contenido_verificar;
+
 		// Pre-check global rápido para evitar análisis innecesario
-		if (!log.contains("ca.spottedleaf.starlight"))
+		if (!log.contains(STARLIGHT))
 			return;
 
 		// Si el método problemático aparece en el log, activamos el detector
-		if (log.contains("BlockStarLightEngine.initNibble")) {
+		if (log.contains(INIT_NIBBLE)) {
 			analizarLineas = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
@@ -54,7 +74,7 @@ public class ProblemaBlockStarlightEngine implements Verificaciones {
 		if (!analizarLineas || activado || linea == null)
 			return;
 
-		if (linea.contains("BlockStarLightEngine.initNibble")) {
+		if (linea.contains(INIT_NIBBLE)) {
 
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			this.activado = true;
@@ -106,13 +126,11 @@ public class ProblemaBlockStarlightEngine implements Verificaciones {
 		if (trazo == null || trazo.trace == null)
 			return false;
 
-		return trazo.trace.contains("ca.spottedleaf.starlight")
-				&& trazo.trace.contains("BlockStarLightEngine.initNibble");
+		return trazo.trace.contains(STARLIGHT) && trazo.trace.contains(INIT_NIBBLE);
 	}
 
 	@Override
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

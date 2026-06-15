@@ -5,17 +5,45 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.parches.ConfigDeParches;
 
-public class WaterMediaTL implements Verificaciones {
+public class WaterMediaTL implements VerificacionRapida {
+
 	private boolean activado = false;
 	private String mensaje = "";
 
+	private static final String TLAUNCHER_WATERMEDIA = "TLauncher is NOT supported by WATERMeDIA, please stop using it";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TLAUNCHER_WATERMEDIA };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado) {
+			return;
+		}
+
+		if (evento.linea.contains(TLAUNCHER_WATERMEDIA)) {
+			this.mensaje = MonitorDePID.idioma.waterMediaTL() + Verificaciones.nl_html;
+			activado = true;
+		}
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		// Compatibilidad legacy: en modo streaming puro contenido_verificar puede ser
+		// nulo
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		String contento_de_consola = consola.contenido_verificar;
-		if (contento_de_consola.contains("TLauncher is NOT supported by WATERMeDIA, please stop using it")) {
+		if (contento_de_consola.contains(TLAUNCHER_WATERMEDIA)) {
 			this.mensaje = MonitorDePID.idioma.waterMediaTL() + Verificaciones.nl_html;
 			activado = true;
 		}

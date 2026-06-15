@@ -5,33 +5,56 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Clase que detecta errores de configuración en PermissionsEx (PEX).Gracias a
  * Aternos por que esta es una implementacion de su codex
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaConfiguracionPermissionsEx implements Verificaciones {
+public class ProblemaConfiguracionPermissionsEx implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
+
+	private static final String MENSAJE_ERROR = "Your configuration must be fixed before PEX will enable";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { MENSAJE_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado) {
+			return;
+		}
+
+		if (evento.linea.contains(MENSAJE_ERROR)) {
+			activar();
+		}
+	}
 
 	/**
 	 * Verifica si el log contiene el error de configuración de PermissionsEx.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
-
-		// Mensaje específico que indica que PEX tiene un problema de configuración
-		String mensajeError = "Your configuration must be fixed before PEX will enable";
-
-		if (contenido.contains(mensajeError)) {
-			this.mensaje = MonitorDePID.idioma.mensajeConfiguracionPermissionsEx() + Verificaciones.nl_html;
-			activado = true;
+		if (consola == null || consola.contenido_verificar == null || activado) {
+			return;
 		}
+
+		if (consola.contenido_verificar.contains(MENSAJE_ERROR)) {
+			activar();
+		}
+	}
+
+	private void activar() {
+		this.mensaje = MonitorDePID.idioma.mensajeConfiguracionPermissionsEx() + Verificaciones.nl_html;
+		this.activado = true;
 	}
 
 	@Override
@@ -116,5 +139,4 @@ public class ProblemaConfiguracionPermissionsEx implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

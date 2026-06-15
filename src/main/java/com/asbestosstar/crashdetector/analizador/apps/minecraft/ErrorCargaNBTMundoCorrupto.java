@@ -4,15 +4,17 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores al cargar datos NBT de un mundo, típicamente causados por
  * corrupción del archivo level.dat, playerdata/*.dat o chunks. Extrae el byte
  * corrupto y proporciona orientación detallada para la reparación.
  */
-public class ErrorCargaNBTMundoCorrupto implements Verificaciones {
+public class ErrorCargaNBTMundoCorrupto implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -23,6 +25,28 @@ public class ErrorCargaNBTMundoCorrupto implements Verificaciones {
 	private static final String TEXTO_LOADING_NBT = "net.minecraft.ReportedException: Loading NBT data";
 	private static final String TEXTO_MALFORMED_INPUT = "java.io.UTFDataFormatException: malformed input";
 	private static final String TEXTO_BYTE = "malformed input around byte ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_LOADING_NBT, TEXTO_MALFORMED_INPUT, TEXTO_BYTE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_MALFORMED_INPUT) || evento.linea.contains(TEXTO_BYTE)) {
+			this.byteCorrupto = extraerByteCorrupto(evento.linea);
+		}
+
+		if (evento.linea.contains(TEXTO_LOADING_NBT) || evento.linea.contains(TEXTO_MALFORMED_INPUT)) {
+			this.analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
@@ -44,20 +68,17 @@ public class ErrorCargaNBTMundoCorrupto implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!analizarLineas || this.activado) {
+		if (!analizarLineas || this.activado || linea == null) {
 			return;
 		}
 
-		if (linea == null) {
-			return;
+		if (linea.contains(TEXTO_BYTE)) {
+			this.byteCorrupto = extraerByteCorrupto(linea);
 		}
 
 		if (linea.contains(TEXTO_LOADING_NBT)) {
@@ -143,5 +164,4 @@ public class ErrorCargaNBTMundoCorrupto implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

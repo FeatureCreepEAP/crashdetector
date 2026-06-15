@@ -272,16 +272,16 @@ public class ContenidoDeTrazos implements VerificacionRapida {
 
 	@Override
 	public String[] patronesRapidos() {
-		// Se activa con cualquier linea de stacktrace para asegurar que procesa al
-		// final
-		return new String[] { "at " };
+		// No necesita activar por línea.
+		// Usa vdst.trazos_completos en finalizarArchivo().
+		return new String[0];
 	}
 
 	@Override
 	public void verificarCoincidencia(EventoDeCoincidencia evento) {
 		// Simplemente nos activamos para indicar que queremos ser procesados al final
 		// del archivo
-		this.activado = true;
+		// this.activado = true;
 	}
 
 	@Override

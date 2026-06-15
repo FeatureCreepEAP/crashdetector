@@ -9,6 +9,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -22,7 +24,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Forge: Xenon(xenon) is NOT compatible with WaterMedia. Please replace it with
  * Embeddium (embeddium) or Sodium (sodium)
  */
-public class WaterMediaXenonIncompatible implements Verificaciones {
+public class WaterMediaXenonIncompatible implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -32,6 +34,29 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 	private String modId = "";
 	private final List<String> modsUbicacion = new ArrayList<>();
 	public boolean posible = false;
+
+	private static final String FAILED_WATERMEDIA_FORGE = "Failed starting WATERMeDIA for Forge";
+	private static final String NOT_COMPATIBLE_WATERMEDIA = "is NOT compatible with WaterMedia";
+	private static final String FORGE_PREFIX = "Forge: ";
+	private static final String IS_NOT = " is NOT";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { FAILED_WATERMEDIA_FORGE, NOT_COMPATIBLE_WATERMEDIA };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado) {
+			return;
+		}
+
+		if (lineaContieneError(evento.linea)) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global.
@@ -44,10 +69,15 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
+		// Compatibilidad legacy: en modo streaming puro contenido_verificar puede ser
+		// nulo
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		String contenido = consola.contenido_verificar;
 
-		if (contenido.contains("Failed starting WATERMeDIA for Forge")
-				&& contenido.contains("is NOT compatible with WaterMedia")) {
+		if (contenido.contains(FAILED_WATERMEDIA_FORGE) && contenido.contains(NOT_COMPATIBLE_WATERMEDIA)) {
 			posible = true;
 		}
 
@@ -55,30 +85,26 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó o la línea es nula, no seguimos
-		if (activado || linea == null) {
+		if (activado || !posible || linea == null) {
 			return;
 		}
 
 		// Condiciones mínimas para considerar este error
-		if (linea.contains("Failed starting WATERMeDIA for Forge")
-				&& linea.contains("is NOT compatible with WaterMedia")) {
+		if (lineaContieneError(linea)) {
 
 			// Extraer "Nombre(id)" después de "Forge: "
 			int forgeIdx = linea.indexOf("Forge:");
 			if (forgeIdx >= 0) {
-				int start = forgeIdx + "Forge: ".length();
+				int start = forgeIdx + FORGE_PREFIX.length();
 				int open = linea.indexOf('(', start);
 				int close = (open >= 0) ? linea.indexOf(')', open + 1) : -1;
-				int endName = (open >= 0) ? open : linea.indexOf(" is NOT", start);
+				int endName = (open >= 0) ? open : linea.indexOf(IS_NOT, start);
 
 				if (endName > start) {
 					modNombre = linea.substring(start, endName).trim();
@@ -108,6 +134,10 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneError(String linea) {
+		return linea.contains(FAILED_WATERMEDIA_FORGE) && linea.contains(NOT_COMPATIBLE_WATERMEDIA);
 	}
 
 	@Override
@@ -178,7 +208,7 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 		String t = trazo.trace;
 
 		// Patrón base del error
-		if (!t.contains("Failed starting WATERMeDIA for Forge") || !t.contains("is NOT compatible with WaterMedia")) {
+		if (!t.contains(FAILED_WATERMEDIA_FORGE) || !t.contains(NOT_COMPATIBLE_WATERMEDIA)) {
 			return false;
 		}
 

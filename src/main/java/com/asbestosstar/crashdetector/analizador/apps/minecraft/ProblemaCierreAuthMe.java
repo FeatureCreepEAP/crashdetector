@@ -5,38 +5,60 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Clase que detecta si el plugin AuthMe causó el cierre del servidor.Gracias a
  * Aternos por que esta es una implementacion de su codex
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaCierreAuthMe implements Verificaciones {
+public class ProblemaCierreAuthMe implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
+
+	private static final String MENSAJE_AUTHME = "[AuthMe] THE SERVER IS GOING TO SHUT DOWN AS DEFINED IN THE CONFIGURATION!";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { MENSAJE_AUTHME };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado) {
+			return;
+		}
+
+		if (evento.linea.contains(MENSAJE_AUTHME)) {
+			activar();
+		}
+	}
 
 	/**
 	 * Verifica si el log contiene el mensaje de cierre de AuthMe.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoDeConsola = consola.contenido_verificar;
-
-		// Mensaje específico que indica que AuthMe está cerrando el servidor
-		String mensajeAuthMe = "[AuthMe] THE SERVER IS GOING TO SHUT DOWN AS DEFINED IN THE CONFIGURATION!";
-
-		if (contenidoDeConsola.contains(mensajeAuthMe)) {
-			this.mensaje = MonitorDePID.idioma.mensajeCierreAuthMe() + Verificaciones.nl_html;
-			activado = true;
+		if (consola == null || consola.contenido_verificar == null || activado) {
+			return;
 		}
+
+		if (consola.contenido_verificar.contains(MENSAJE_AUTHME)) {
+			activar();
+		}
+	}
+
+	private void activar() {
+		this.mensaje = MonitorDePID.idioma.mensajeCierreAuthMe() + Verificaciones.nl_html;
+		this.activado = true;
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-
 		return false;
 	}
 
@@ -118,5 +140,4 @@ public class ProblemaCierreAuthMe implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

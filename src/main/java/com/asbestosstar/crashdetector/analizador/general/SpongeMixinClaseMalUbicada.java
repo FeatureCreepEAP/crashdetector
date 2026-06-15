@@ -9,11 +9,13 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class SpongeMixinClaseMalUbicada implements Verificaciones {
+public class SpongeMixinClaseMalUbicada implements VerificacionRapida {
 
 	private boolean posibleErrorMixin = false;
 	private boolean activado = false;
@@ -26,16 +28,37 @@ public class SpongeMixinClaseMalUbicada implements Verificaciones {
 
 	private final List<ArchivoDeMod> modsRelacionados = new ArrayList<>();
 
-	@Override
-	public void verificar(Consola consola) {
+	private static final String TEXTO_ILLEGAL_CLASS_LOAD = "IllegalClassLoadError";
+	private static final String TEXTO_DEFINED_MIXIN_PACKAGE = "defined mixin package";
+	private static final String TEXTO_CANNOT_BE_REFERENCED = "cannot be referenced directly";
 
-		if (consola.contenido_verificar == null) {
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ILLEGAL_CLASS_LOAD, TEXTO_DEFINED_MIXIN_PACKAGE, TEXTO_CANNOT_BE_REFERENCED };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado) {
 			return;
 		}
 
-		if (consola.contenido_verificar.contains("IllegalClassLoadError")
-				&& consola.contenido_verificar.contains("defined mixin package")
-				&& consola.contenido_verificar.contains("cannot be referenced directly")) {
+		if (lineaContieneErrorMixin(evento.linea)) {
+			posibleErrorMixin = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		if (consola.contenido_verificar.contains(TEXTO_ILLEGAL_CLASS_LOAD)
+				&& consola.contenido_verificar.contains(TEXTO_DEFINED_MIXIN_PACKAGE)
+				&& consola.contenido_verificar.contains(TEXTO_CANNOT_BE_REFERENCED)) {
 
 			posibleErrorMixin = true;
 		}
@@ -43,27 +66,30 @@ public class SpongeMixinClaseMalUbicada implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleErrorMixin)
-			return false;
-
-		return true;
+		return posibleErrorMixin && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numeroLinea) {
-
-		if (!posibleErrorMixin || activado || linea == null)
+		if (!posibleErrorMixin || activado || linea == null) {
 			return;
+		}
 
-		if (linea.contains("IllegalClassLoadError") && linea.contains("defined mixin package")
-				&& linea.contains("cannot be referenced directly")) {
-
+		if (lineaContieneErrorMixin(linea)) {
 			extraerDatos(linea);
 			buscarModsRelacionados();
 
-			this.enlace = consola.agregarErrorALectador(numeroLinea, this);
+			if (consola != null) {
+				this.enlace = consola.agregarErrorALectador(numeroLinea, this);
+			}
+
 			this.activado = true;
 		}
+	}
+
+	private boolean lineaContieneErrorMixin(String linea) {
+		return linea.contains(TEXTO_ILLEGAL_CLASS_LOAD) && linea.contains(TEXTO_DEFINED_MIXIN_PACKAGE)
+				&& linea.contains(TEXTO_CANNOT_BE_REFERENCED);
 	}
 
 	private void extraerDatos(String linea) {
@@ -75,11 +101,12 @@ public class SpongeMixinClaseMalUbicada implements Verificaciones {
 				claseConflictiva = limpiarTermino(linea.substring(idxClase + 1, idxEs));
 			}
 
-			int idxPaquete = linea.indexOf("defined mixin package");
+			int idxPaquete = linea.indexOf(TEXTO_DEFINED_MIXIN_PACKAGE);
 			int idxOwned = linea.indexOf(" owned by");
 
 			if (idxPaquete != -1 && idxOwned != -1 && idxOwned > idxPaquete) {
-				paqueteMixin = limpiarTermino(linea.substring(idxPaquete + "defined mixin package".length(), idxOwned));
+				paqueteMixin = limpiarTermino(
+						linea.substring(idxPaquete + TEXTO_DEFINED_MIXIN_PACKAGE.length(), idxOwned));
 			}
 
 			int idxOwnedBy = linea.indexOf("owned by");

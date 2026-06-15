@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -17,46 +19,67 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Este problema suele ocurrir cuando el launcher no instala correctamente los
  * assets del juego.
  */
-public class ProblemaAssetsDirFaltante implements Verificaciones {
+public class ProblemaAssetsDirFaltante implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
 	private String enlace = "";
 
+	private static final String OPTION_ARGUMENT_CONVERSION_EXCEPTION = "OptionArgumentConversionException";
+	private static final String ASSETS_DIR = "assetsDir";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { OPTION_ARGUMENT_CONVERSION_EXCEPTION, ASSETS_DIR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneProblemaAssetsDir(evento.linea)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
 
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
 		// Pre-check global para rendimiento
-		if (log.contains("OptionArgumentConversionException") && log.contains("assetsDir")) {
-
+		if (log.contains(OPTION_ARGUMENT_CONVERSION_EXCEPTION) && log.contains(ASSETS_DIR)) {
 			analizarLineas = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 
-		if (!analizarLineas || linea == null)
+		if (!analizarLineas || linea == null || activado)
 			return;
 
-		if (linea.contains("OptionArgumentConversionException") && linea.contains("assetsDir")) {
+		if (lineaContieneProblemaAssetsDir(linea)) {
 
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			this.activado = true;
 		}
+	}
+
+	private boolean lineaContieneProblemaAssetsDir(String linea) {
+		return linea.contains(OPTION_ARGUMENT_CONVERSION_EXCEPTION) && linea.contains(ASSETS_DIR);
 	}
 
 	@Override
@@ -104,9 +127,7 @@ public class ProblemaAssetsDirFaltante implements Verificaciones {
 		if (trazo == null || trazo.trace == null)
 			return false;
 
-		String t = trazo.trace;
-
-		return t.contains("OptionArgumentConversionException") && t.contains("assetsDir");
+		return lineaContieneProblemaAssetsDir(trazo.trace);
 	}
 
 	@Override

@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,22 +17,44 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Estos errores son fallos propios del cliente Lunar.
  */
-public class ProblemaLunarClient implements Verificaciones {
+public class ProblemaLunarClient implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
 	private String enlace = "";
 
+	private static final String LUNAR_PACKAGE = "com.moonsworth.lunar";
+	private static final String LUNAR_LAUNCH_ERROR = "An error occurred while launching Lunar Client.";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { LUNAR_PACKAGE, LUNAR_LAUNCH_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneProblemaLunar(evento.linea)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
 		// Pre-check global rápido: cualquiera de las dos cadenas activa el análisis
-		if (log.contains("com.moonsworth.lunar") || log.contains("An error occurred while launching Lunar Client.")) {
+		if (log.contains(LUNAR_PACKAGE) || log.contains(LUNAR_LAUNCH_ERROR)) {
 
 			analizarLineas = true;
 		}
@@ -38,10 +62,7 @@ public class ProblemaLunarClient implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
@@ -50,12 +71,15 @@ public class ProblemaLunarClient implements Verificaciones {
 		if (!analizarLineas || linea == null || activado)
 			return;
 
-		if (linea.contains("com.moonsworth.lunar")
-				|| linea.contains("An error occurred while launching Lunar Client.")) {
+		if (lineaContieneProblemaLunar(linea)) {
 
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			this.activado = true;
 		}
+	}
+
+	private boolean lineaContieneProblemaLunar(String linea) {
+		return linea.contains(LUNAR_PACKAGE) || linea.contains(LUNAR_LAUNCH_ERROR);
 	}
 
 	@Override

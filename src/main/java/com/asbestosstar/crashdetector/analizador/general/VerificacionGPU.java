@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.bajo.hw.gpu.HacerVerificacionGPU;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -12,19 +14,42 @@ import com.asbestosstar.crashdetector.gui.tipos.gpu.GPUFixGUI;
 import com.asbestosstar.crashdetector.gui.tipos.gpu.GPUFixOptimusPrime;
 import com.asbestosstar.crashdetector.parches.ConfigDeParches;
 
-public class VerificacionGPU implements Verificaciones {
+public class VerificacionGPU implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private float prioridad = 0;
 	public static boolean hayProblema = false;
 
+	private boolean inicioGPU = false;
+	private boolean finGPU = false;
+	private boolean inicioOpenGL = false;
+	private boolean finOpenGL = false;
+	private boolean advertenciaGPU = false;
+
 	@Override
-	public void verificar(Consola consola) {
-		String log = consola.contenido_verificar;
-		if (log == null || log.isEmpty()) {
+	public String[] patronesRapidos() {
+		return new String[] { HacerVerificacionGPU.LOG_INICIO, HacerVerificacionGPU.LOG_FIN,
+				HacerVerificacionGPU.LOG_OPENGL_INICIO, HacerVerificacionGPU.LOG_OPENGL_FIN,
+				HacerVerificacionGPU.MSG_ADVERTENCIA };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado) {
 			return;
 		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
+
+		String log = consola.contenido_verificar;
 
 		boolean inicio = log.contains(HacerVerificacionGPU.LOG_INICIO);
 		boolean openglInicio = log.contains(HacerVerificacionGPU.LOG_OPENGL_INICIO);
@@ -36,15 +61,7 @@ public class VerificacionGPU implements Verificaciones {
 				return;
 			}
 
-			this.activado = true;
-			this.prioridad = -1000.0f; // No es tan importante
-			hayProblema = true;
-			this.mensaje = MonitorDePID.idioma.gpu_no_optima() + Verificaciones.nl_html
-					+ MonitorDePID.idioma.gpu_no_optima_detalles() + Verificaciones.nl_html
-					+ MonitorDePID.idioma.gpu_nota_precision() + Verificaciones.nl_html
-					+ MonitorDePID.idioma.gpu_consumo_energia() + Verificaciones.nl_html
-					+ MonitorDePID.idioma.gpu_recomendaciones_rendimiento() + Verificaciones.nl_html
-					+ MonitorDePID.idioma.gpu_parche_info();
+			activarAdvertenciaGPU();
 			return;
 		}
 
@@ -52,16 +69,7 @@ public class VerificacionGPU implements Verificaciones {
 		boolean openglFin = openglInicio && log.contains(HacerVerificacionGPU.LOG_OPENGL_FIN);
 
 		if ((inicio && !fin) || (openglInicio && !openglFin)) {
-			this.activado = true;
-			this.prioridad = 1500.0f;
-			hayProblema = true;
-
-			this.mensaje = MonitorDePID.idioma.gpu_crash_posible() + Verificaciones.nl_html
-					+ MonitorDePID.idioma.gpu_crash_causas() + Verificaciones.nl_html
-					+ MonitorDePID.idioma.gpu_crash_recomendaciones() + Verificaciones.nl_html
-					+ MonitorDePID.idioma.gpu_nota_precision() + Verificaciones.nl_html
-					+ MonitorDePID.idioma.gpu_parche_info();
-
+			activarCrashGPU();
 			return;
 		}
 
@@ -70,20 +78,82 @@ public class VerificacionGPU implements Verificaciones {
 			return;
 		}
 
+		activarAdvertenciaGPU();
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return !activado;
+	}
+
+	@Override
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
+		if (linea == null || linea.isEmpty() || activado) {
+			return;
+		}
+
+		if (linea.contains(HacerVerificacionGPU.LOG_INICIO)) {
+			inicioGPU = true;
+		}
+
+		if (linea.contains(HacerVerificacionGPU.LOG_FIN)) {
+			finGPU = true;
+		}
+
+		if (linea.contains(HacerVerificacionGPU.LOG_OPENGL_INICIO)) {
+			inicioOpenGL = true;
+		}
+
+		if (linea.contains(HacerVerificacionGPU.LOG_OPENGL_FIN)) {
+			finOpenGL = true;
+		}
+
+		if (linea.contains(HacerVerificacionGPU.MSG_ADVERTENCIA)) {
+			advertenciaGPU = true;
+			activarAdvertenciaGPU();
+		}
+	}
+
+	@Override
+	public void finalizarArchivo(Consola consola,
+			com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo estado) {
+		if (activado) {
+			return;
+		}
+
+		if ((inicioGPU && !finGPU) || (inicioOpenGL && !finOpenGL)) {
+			activarCrashGPU();
+			return;
+		}
+
+		if (advertenciaGPU) {
+			activarAdvertenciaGPU();
+		}
+	}
+
+	private void activarCrashGPU() {
+		this.activado = true;
+		this.prioridad = 1500.0f;
+		hayProblema = true;
+
+		this.mensaje = MonitorDePID.idioma.gpu_crash_posible() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_crash_causas() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_crash_recomendaciones() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_nota_precision() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_parche_info();
+	}
+
+	private void activarAdvertenciaGPU() {
 		this.activado = true;
 		this.prioridad = -1000.0f; // No es tan importante
 		hayProblema = true;
+
 		this.mensaje = MonitorDePID.idioma.gpu_no_optima() + Verificaciones.nl_html
 				+ MonitorDePID.idioma.gpu_no_optima_detalles() + Verificaciones.nl_html
 				+ MonitorDePID.idioma.gpu_nota_precision() + Verificaciones.nl_html
 				+ MonitorDePID.idioma.gpu_consumo_energia() + Verificaciones.nl_html
 				+ MonitorDePID.idioma.gpu_recomendaciones_rendimiento() + Verificaciones.nl_html
 				+ MonitorDePID.idioma.gpu_parche_info();
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return false;
 	}
 
 	@Override

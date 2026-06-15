@@ -9,12 +9,14 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta plugins con dependencias faltantes en PocketMine-MP sin usar regex.
  */
-public class ProblemaDependenciaPluginPocketMine implements Verificaciones {
+public class ProblemaDependenciaPluginPocketMine implements VerificacionRapida {
 
 	private boolean posibleDependenciaFaltante = false;
 	private boolean activado = false;
@@ -29,24 +31,28 @@ public class ProblemaDependenciaPluginPocketMine implements Verificaciones {
 	private static final String TEXTO_FINAL = ".";
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_PLUGIN, TEXTO_DEPENDENCIA };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
 			return;
 		}
 
-		String contenido = consola.contenido_verificar;
+		posibleDependenciaFaltante = true;
 
-		if (contenido.contains(TEXTO_PLUGIN) && contenido.contains(TEXTO_DEPENDENCIA)) {
-			posibleDependenciaFaltante = true;
-		}
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public void verificar(Consola consola) {
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleDependenciaFaltante)
-			return false;
-
-		return true;
+		return posibleDependenciaFaltante;
 	}
 
 	@Override
@@ -56,10 +62,17 @@ public class ProblemaDependenciaPluginPocketMine implements Verificaciones {
 		}
 
 		int idxPlugin = linea.indexOf(TEXTO_PLUGIN);
-		int idxDependencia = linea.indexOf(TEXTO_DEPENDENCIA, idxPlugin);
-		int idxFinal = linea.indexOf(TEXTO_FINAL, idxDependencia + TEXTO_DEPENDENCIA.length());
+		if (idxPlugin < 0) {
+			return;
+		}
 
-		if (idxPlugin < 0 || idxDependencia <= idxPlugin || idxFinal <= idxDependencia) {
+		int idxDependencia = linea.indexOf(TEXTO_DEPENDENCIA, idxPlugin + TEXTO_PLUGIN.length());
+		if (idxDependencia <= idxPlugin) {
+			return;
+		}
+
+		int idxFinal = linea.indexOf(TEXTO_FINAL, idxDependencia + TEXTO_DEPENDENCIA.length());
+		if (idxFinal <= idxDependencia) {
 			return;
 		}
 

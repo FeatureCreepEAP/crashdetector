@@ -3,8 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,38 +14,44 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * el EULA de Minecraft, lo cual requiere cambiar 'eula=false' a 'eula=true' en
  * eula.txt.
  */
-public class ErrorEULANoAceptado implements Verificaciones {
+public class ErrorEULANoAceptado implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	public boolean posible = false;
 
+	private static final String TEXTO_EULA = "You need to agree to the EULA in order to run the server";
+	private static final String EULA_TXT = "eula.txt";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_EULA, EULA_TXT };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneEulaNoAceptado(evento.linea)) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	/**
 	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains("You need to agree to the EULA in order to run the server")
-				&& contenido.contains("eula.txt")) {
-			posible = true;
-		}
-
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	/**
@@ -55,13 +63,13 @@ public class ErrorEULANoAceptado implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (!posible || activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;
 		}
 
 		// Buscamos la línea que contiene el mensaje de EULA no aceptado
-		if (linea.contains("You need to agree to the EULA in order to run the server") && linea.contains("eula.txt")) {
+		if (lineaContieneEulaNoAceptado(linea)) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -70,6 +78,10 @@ public class ErrorEULANoAceptado implements Verificaciones {
 			mensaje = MonitorDePID.idioma.errorEULANoAceptado() + Verificaciones.nl_html;
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneEulaNoAceptado(String linea) {
+		return linea.contains(TEXTO_EULA) && linea.contains(EULA_TXT);
 	}
 
 	@Override
@@ -122,7 +134,7 @@ public class ErrorEULANoAceptado implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("You need to agree to the EULA in order to run the server") && t.contains("eula.txt");
+		return t.contains(TEXTO_EULA) && t.contains(EULA_TXT);
 	}
 
 	@Override
@@ -135,5 +147,4 @@ public class ErrorEULANoAceptado implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;// Si la paquete para servidores no tiene el archivo de eula.txt
 	}
-
 }

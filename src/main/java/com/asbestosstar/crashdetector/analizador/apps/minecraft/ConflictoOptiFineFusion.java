@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,7 +14,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * crítica relacionado con EntityRenderDispatcher durante la inicialización del
  * juego.
  */
-public class ConflictoOptiFineFusion implements Verificaciones {
+public class ConflictoOptiFineFusion implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -20,37 +22,51 @@ public class ConflictoOptiFineFusion implements Verificaciones {
 	private boolean encontradoOptiFine = false;
 	public boolean analizarLineas = false;
 
-	/**
-	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
-	 */
+	private static final String OPTIFINE_MINUSCULA = "optifine";
+	private static final String OPTIFINE_MIXTA = "Optifine";
+	private static final String OPTIFINE_CORRECTA = "OptiFine";
+
+	private static final String CRITICAL_INJECTION = "Critical injection failure";
+	private static final String ENTITY_RENDER_DISPATCHER = "net/minecraft/client/renderer/entity/EntityRenderDispatcher";
+	private static final String FUSION_MIXINS = "fusion.mixins.json";
+	private static final String ENTITY_RENDER_DISPATCHER_MIXIN = "EntityRenderDispatcherMixin";
+	private static final String RENDER_TAIL = "renderTail";
+
 	@Override
-	public void verificar(Consola consola) {
-		// Verificamos si OptiFine está presente en el contenido del registro
+	public String[] patronesRapidos() {
+		return new String[] { OPTIFINE_MINUSCULA, OPTIFINE_MIXTA, OPTIFINE_CORRECTA, CRITICAL_INJECTION,
+				ENTITY_RENDER_DISPATCHER, FUSION_MIXINS, ENTITY_RENDER_DISPATCHER_MIXIN, RENDER_TAIL };
+	}
 
-		String log = consola.contenido_verificar;
-
-		if (log == null)
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
 			return;
+		}
 
-		if (log.contains("optifine") || log.contains("Optifine")) {
+		String linea = evento.linea;
+
+		if (contieneOptiFine(linea)) {
 			encontradoOptiFine = true;
 		}
 
-		if (log.contains("Critical injection failure")
-				&& log.contains("net/minecraft/client/renderer/entity/EntityRenderDispatcher")
-				&& log.contains("fusion.mixins.json") && log.contains("EntityRenderDispatcherMixin")
-				&& log.contains("renderTail")) {
+		if (lineaContieneErrorFusion(linea)) {
 			analizarLineas = true;
 		}
 
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
+
+	/**
+	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
+	 */
+	@Override
+	public void verificar(Consola consola) {
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	/**
@@ -62,28 +78,36 @@ public class ConflictoOptiFineFusion implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
+			return;
+		}
+
+		if (!analizarLineas || !encontradoOptiFine) {
 			return;
 		}
 
 		// Verificamos si la línea contiene el error de inyección crítica de Fusion con
 		// EntityRenderDispatcher
-		if (linea.contains("Critical injection failure")
-				&& linea.contains("net/minecraft/client/renderer/entity/EntityRenderDispatcher")
-				&& linea.contains("fusion.mixins.json") && linea.contains("EntityRenderDispatcherMixin")
-				&& linea.contains("renderTail")) {
+		if (lineaContieneErrorFusion(linea)) {
+			// Enlazar a la línea del error en el lector
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-			// Verificamos también que OptiFine esté presente en el registro
-			if (encontradoOptiFine) {
-				// Enlazar a la línea del error en el lector
-				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-
-				// Mensaje de error en HTML con referencia al conflicto entre OptiFine y Fusion
-				mensaje = MonitorDePID.idioma.errorConflictoOptiFineFusion() + Verificaciones.nl_html;
-				activado = true;
-			}
+			// Mensaje de error en HTML con referencia al conflicto entre OptiFine y Fusion
+			mensaje = MonitorDePID.idioma.errorConflictoOptiFineFusion() + Verificaciones.nl_html;
+			activado = true;
 		}
+	}
+
+	private boolean contieneOptiFine(String texto) {
+		return texto.contains(OPTIFINE_MINUSCULA) || texto.contains(OPTIFINE_MIXTA)
+				|| texto.contains(OPTIFINE_CORRECTA);
+	}
+
+	private boolean lineaContieneErrorFusion(String linea) {
+		return linea.contains(CRITICAL_INJECTION) && linea.contains(ENTITY_RENDER_DISPATCHER)
+				&& linea.contains(FUSION_MIXINS) && linea.contains(ENTITY_RENDER_DISPATCHER_MIXIN)
+				&& linea.contains(RENDER_TAIL);
 	}
 
 	@Override
@@ -135,12 +159,7 @@ public class ConflictoOptiFineFusion implements Verificaciones {
 			return false;
 		}
 
-		String t = trazo.trace;
-
-		return t.contains("Critical injection failure")
-				&& t.contains("net/minecraft/client/renderer/entity/EntityRenderDispatcher")
-				&& t.contains("fusion.mixins.json") && t.contains("EntityRenderDispatcherMixin")
-				&& t.contains("renderTail") && encontradoOptiFine;
+		return lineaContieneErrorFusion(trazo.trace) && encontradoOptiFine;
 	}
 
 	@Override

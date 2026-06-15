@@ -7,8 +7,10 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores de carga de chunks procesando línea por línea.
@@ -16,7 +18,7 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
  * Versión sin regex para evitar costo de Pattern/Matcher. Basado en Codex de
  * Aternos.
  */
-public class ProblemaCargaChunk implements Verificaciones {
+public class ProblemaCargaChunk implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String enlace = "";
@@ -36,6 +38,38 @@ public class ProblemaCargaChunk implements Verificaciones {
 	 */
 	private boolean viUnexpectedException = false;
 
+	private static final String CHUNK_REGION_LOADER = "ChunkRegionLoader";
+	private static final String EXCEPTION_GENERATING_NEW_CHUNK = "Exception generating new chunk";
+	private static final String COULDNT_LOAD_CHUNK = "Couldn't load chunk";
+	private static final String UNEXPECTED_EXCEPTION = "Encountered an unexpected exception";
+
+	private static final String LOWER_EXCEPTION = "exception";
+	private static final String LOWER_CHUNK = "chunk";
+	private static final String LOWER_LOAD = "load";
+	private static final String LOWER_GENERATE = "generate";
+	private static final String LOWER_UNEXPECTED_EXCEPTION = "encountered an unexpected exception";
+	private static final String LOWER_EXCEPTION_GENERATING_NEW_CHUNK = "exception generating new chunk";
+	private static final String LOWER_COULDNT_LOAD_CHUNK = "couldn't load chunk";
+	private static final String LOWER_LOAD_CHUNK = "loadchunk";
+	private static final String LOWER_LOAD_ENTITIES = "loadentities";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { CHUNK_REGION_LOADER, EXCEPTION_GENERATING_NEW_CHUNK, COULDNT_LOAD_CHUNK,
+				UNEXPECTED_EXCEPTION };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		this.analizarLineas = true;
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 
@@ -48,40 +82,32 @@ public class ProblemaCargaChunk implements Verificaciones {
 
 		String contenido = consola.contenido_verificar;
 
-		if (contieneAlguna(contenido, "ChunkRegionLoader", "Exception generating new chunk", "Couldn't load chunk")) {
-
+		if (contieneAlguna(contenido, CHUNK_REGION_LOADER, EXCEPTION_GENERATING_NEW_CHUNK, COULDNT_LOAD_CHUNK)) {
 			this.analizarLineas = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!analizarLineas) {
+		if (!analizarLineas || activado || linea == null) {
 			return;
 		}
 
-		if (linea == null)
-			return;
-
-		String l = linea.trim();
-		String lower = l.toLowerCase(Locale.ROOT);
+		String lower = linea.toLowerCase(Locale.ROOT);
 
 		// Reiniciar estado si la línea no está relacionada
-		if (!contieneAlguna(lower, "exception", "chunk", "load", "generate")) {
+		if (!contieneAlguna(lower, LOWER_EXCEPTION, LOWER_CHUNK, LOWER_LOAD, LOWER_GENERATE)) {
 			viUnexpectedException = false;
 			return;
 		}
 
 		// 1. Detectar "Encountered an unexpected exception"
-		if (lower.contains("encountered an unexpected exception")) {
+		if (lower.contains(LOWER_UNEXPECTED_EXCEPTION)) {
 			viUnexpectedException = true;
 			return;
 		}
@@ -89,7 +115,8 @@ public class ProblemaCargaChunk implements Verificaciones {
 		// 2. Si ya vimos "unexpected exception", buscar trazas de ChunkRegionLoader
 		if (viUnexpectedException) {
 
-			if (esTrazaChunkRegionLoader(lower, "loadchunk") || esTrazaChunkRegionLoader(lower, "loadentities")) {
+			if (esTrazaChunkRegionLoader(lower, LOWER_LOAD_CHUNK)
+					|| esTrazaChunkRegionLoader(lower, LOWER_LOAD_ENTITIES)) {
 
 				activar(consola, numero_de_linea);
 				return;
@@ -97,8 +124,7 @@ public class ProblemaCargaChunk implements Verificaciones {
 		}
 
 		// 3. Otros errores directos (no necesitan contexto previo)
-		if (lower.contains("exception generating new chunk") || lower.contains("couldn't load chunk")) {
-
+		if (lower.contains(LOWER_EXCEPTION_GENERATING_NEW_CHUNK) || lower.contains(LOWER_COULDNT_LOAD_CHUNK)) {
 			activar(consola, numero_de_linea);
 		}
 	}
@@ -210,5 +236,4 @@ public class ProblemaCargaChunk implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

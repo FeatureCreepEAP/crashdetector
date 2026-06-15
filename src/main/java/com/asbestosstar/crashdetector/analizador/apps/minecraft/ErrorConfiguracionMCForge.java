@@ -11,9 +11,11 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ErrorConfiguracionMCForge implements Verificaciones {
+public class ErrorConfiguracionMCForge implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -27,6 +29,21 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 	private static final String CFG_HANDLER = "ConfigFileTypeHandler$ConfigLoadingException:";
 	private static final String CFG_WRAPPER = "ConfigSpecWrapper$ConfigLoadingException:";
 	private static final String CFG_FAILED = "Failed loading config file";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { PARSING_EXCEPTION, CFG_HANDLER, CFG_WRAPPER, CFG_FAILED };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		analizarLineas = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global barata.
@@ -54,10 +71,7 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	/**
@@ -77,18 +91,11 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 
-		if (!analizarLineas) {
+		if (!analizarLineas || linea == null) {
 			return;
 		}
-
-		if (linea == null) {
-			return;
-		}
-
-		boolean esErrorConfig = false;
 
 		// 1) Detección base del error (si aún no se ha activado).
-
 		if (!activado) {
 
 			// Caso clásico Forge
@@ -99,7 +106,6 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 				activado = true;
-				esErrorConfig = true;
 
 				generarListaArchivosVacios();
 			}
@@ -112,7 +118,6 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 				activado = true;
-				esErrorConfig = true;
 
 				generarListaArchivosVacios();
 			}
@@ -121,7 +126,6 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 		// 2) (Opcional) Intentar complementar con detalle de archivo/modid.
 		// No exigimos que "activado" sea true aquí: puede aparecer antes o después.
 		// Solo se mostrará si al final el verificador está activado.
-
 		if ((detalleArchivoHtml == null || detalleArchivoHtml.isEmpty())
 				&& ((linea.contains(CFG_HANDLER) || linea.contains(CFG_WRAPPER)) && linea.contains(CFG_FAILED))) {
 
@@ -142,12 +146,12 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 	 */
 	private ResultadoConfig extraerArchivoYModid(String linea) {
 
-		int posFailed = linea.indexOf("Failed loading config file");
+		int posFailed = linea.indexOf(CFG_FAILED);
 		if (posFailed < 0) {
 			return null;
 		}
 
-		int inicioArchivo = posFailed + "Failed loading config file".length();
+		int inicioArchivo = posFailed + CFG_FAILED.length();
 		inicioArchivo = saltarEspacios(linea, inicioArchivo);
 
 		int posOfType = linea.indexOf(" of type ", inicioArchivo);
@@ -387,5 +391,4 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

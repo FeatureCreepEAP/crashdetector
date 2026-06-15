@@ -5,13 +5,15 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta crashes provocados manualmente usando comandos como: /crash_assistant
  * crash /crash_assistant *
  */
-public class CrashProvocadoPorComando implements Verificaciones {
+public class CrashProvocadoPorComando implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posibleCrashPorComando = false;
@@ -19,27 +21,38 @@ public class CrashProvocadoPorComando implements Verificaciones {
 
 	private static final String TEXTO_REPORTED_EXCEPTION = "net.minecraft.ReportedException";
 	private static final String TEXTO_CRASH_ASSISTANT = "/crash_assistant";
+	private static final String TEXTO_MODLIST = "Modlist";
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_REPORTED_EXCEPTION, TEXTO_CRASH_ASSISTANT };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
 			return;
 		}
 
-		if (consola.contenido_verificar.contains(TEXTO_REPORTED_EXCEPTION)
-				&& consola.contenido_verificar.contains(TEXTO_CRASH_ASSISTANT)) {
+		String linea = evento.linea;
 
+		if (linea.contains(TEXTO_REPORTED_EXCEPTION) || linea.contains(TEXTO_CRASH_ASSISTANT)) {
 			posibleCrashPorComando = true;
 		}
 
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
+
+	/**
+	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
+	 */
+	@Override
+	public void verificar(Consola consola) {
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleCrashPorComando)
-			return false;
-
-		return true;
+		return posibleCrashPorComando && !activado;
 	}
 
 	@Override
@@ -48,17 +61,15 @@ public class CrashProvocadoPorComando implements Verificaciones {
 			return;
 		}
 
-		String recorte = linea.trim();
-
-		if (!recorte.contains(TEXTO_CRASH_ASSISTANT)) {
+		if (!linea.contains(TEXTO_CRASH_ASSISTANT)) {
 			return;
 		}
 
-		if (recorte.contains("Modlist")) {
+		if (linea.contains(TEXTO_MODLIST)) {
 			return;
 		}
 
-		String comandoDetectado = extraerComando(recorte);
+		String comandoDetectado = extraerComando(linea);
 
 		String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
@@ -74,16 +85,16 @@ public class CrashProvocadoPorComando implements Verificaciones {
 			return TEXTO_CRASH_ASSISTANT;
 		}
 
-		String comando = linea.substring(inicio).trim();
+		String comando = linea.substring(inicio);
 
 		int comillaFinal = comando.indexOf("'", 1);
 		if (comillaFinal > 0) {
-			comando = comando.substring(0, comillaFinal).trim();
+			comando = comando.substring(0, comillaFinal);
 		}
 
 		int comillaDobleFinal = comando.indexOf("\"", 1);
 		if (comillaDobleFinal > 0) {
-			comando = comando.substring(0, comillaDobleFinal).trim();
+			comando = comando.substring(0, comillaDobleFinal);
 		}
 
 		return comando;

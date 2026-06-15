@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,7 +20,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * BiomeColors.handler$cak000$betterend$be_getWaterColor Sodium FluidRenderer /
  * ChunkBuilderMeshingTask
  */
-public class ErrorBetterEndPaletaChunkAgua implements Verificaciones {
+public class ErrorBetterEndPaletaChunkAgua implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -30,25 +32,51 @@ public class ErrorBetterEndPaletaChunkAgua implements Verificaciones {
 
 	private String enlace = "";
 
+	private static final String MISSING_PALETTE_ENTRY = "Missing Palette entry";
+	private static final String MISSING_PALETTE_ENTRY_FULL = "net.minecraft.world.chunk.EntryMissingException: Missing Palette entry";
+	private static final String MISSING_PALETTE_ENTRY_INDEX = "Missing Palette entry for index";
+	private static final String BETTEREND_WATER_COLOR = "betterend$be_getWaterColor";
+	private static final String CHUNK_MESHES = "Description: Encountered exception while building chunk meshes";
+	private static final String CHUNK_BUILDER_MESHING_TASK = "ChunkBuilderMeshingTask";
+	private static final String FLUID_RENDERER_IMPL = "FluidRendererImpl";
+	private static final String DEFAULT_FLUID_RENDERER = "DefaultFluidRenderer";
+	private static final String SODIUM = "net.caffeinemc.mods.sodium";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { MISSING_PALETTE_ENTRY, BETTEREND_WATER_COLOR, CHUNK_BUILDER_MESHING_TASK,
+				FLUID_RENDERER_IMPL, DEFAULT_FLUID_RENDERER, SODIUM };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(MISSING_PALETTE_ENTRY) || evento.linea.contains(BETTEREND_WATER_COLOR)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
 
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
-		if (log.contains("Missing Palette entry") && log.contains("betterend$be_getWaterColor")) {
+		if (log.contains(MISSING_PALETTE_ENTRY) && log.contains(BETTEREND_WATER_COLOR)) {
 			analizarLineas = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
@@ -57,23 +85,20 @@ public class ErrorBetterEndPaletaChunkAgua implements Verificaciones {
 		if (!analizarLineas || linea == null || activado)
 			return;
 
-		if (linea.contains("net.minecraft.world.chunk.EntryMissingException: Missing Palette entry")
-				|| linea.contains("Missing Palette entry for index")) {
+		if (linea.contains(MISSING_PALETTE_ENTRY_FULL) || linea.contains(MISSING_PALETTE_ENTRY_INDEX)) {
 			vioPaletteEntry = true;
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 		}
 
-		if (linea.contains("Description: Encountered exception while building chunk meshes")
-				|| linea.contains("ChunkBuilderMeshingTask")) {
+		if (linea.contains(CHUNK_MESHES) || linea.contains(CHUNK_BUILDER_MESHING_TASK)) {
 			vioRenderChunkMeshes = true;
 		}
 
-		if (linea.contains("betterend$be_getWaterColor")) {
+		if (linea.contains(BETTEREND_WATER_COLOR)) {
 			vioBetterEndWaterColor = true;
 		}
 
-		if (linea.contains("FluidRendererImpl") || linea.contains("DefaultFluidRenderer")
-				|| linea.contains("net.caffeinemc.mods.sodium")) {
+		if (linea.contains(FLUID_RENDERER_IMPL) || linea.contains(DEFAULT_FLUID_RENDERER) || linea.contains(SODIUM)) {
 			vioSodiumFluido = true;
 		}
 

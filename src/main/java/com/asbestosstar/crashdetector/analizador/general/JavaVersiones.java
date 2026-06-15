@@ -12,6 +12,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -21,7 +23,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * clases compiladas con versiones más recientes que la JVM utilizada.
  * Optimizado: global barato + verificación por línea.
  */
-public class JavaVersiones implements Verificaciones {
+public class JavaVersiones implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posibleErrorJava = false;
@@ -42,6 +44,30 @@ public class JavaVersiones implements Verificaciones {
 	private static final String TEXTO_PROBLEMATIC_FRAME = "Problematic frame:";
 	private static final String TEXTO_LIBJVM_LINUX = "libjvm.so";
 	private static final String TEXTO_JVM_WINDOWS = "jvm.dll";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_UNSUPPORTED_CLASS, TEXTO_JAVA22, TEXTO_JAVA8, TEXTO_PROBLEMATIC_FRAME,
+				TEXTO_LIBJVM_LINUX, TEXTO_JVM_WINDOWS };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneErrorJava(evento.linea)) {
+			posibleErrorJava = true;
+		}
+
+		if (evento.linea.contains(TEXTO_PROBLEMATIC_FRAME) || evento.linea.contains(TEXTO_LIBJVM_LINUX)
+				|| evento.linea.contains(TEXTO_JVM_WINDOWS)) {
+			posibleFrameJavaProblematico = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	// =========================
 	// Verificación global barata
@@ -66,7 +92,6 @@ public class JavaVersiones implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-
 		return this.posibleErrorJava || this.posibleFrameJavaProblematico;
 	}
 
@@ -96,11 +121,10 @@ public class JavaVersiones implements Verificaciones {
 				// # Problematic frame:
 				// # C [libjvm.so+...]
 				// If we reach a new section before finding libjvm/jvm.dll, stop tracking.
-				String limpia = linea.trim();
-
-				if (limpia.startsWith("---------------") || limpia.startsWith("Stack:")
-						|| limpia.startsWith("Native frames:") || limpia.startsWith("Java frames:")
-						|| limpia.startsWith("siginfo:") || limpia.startsWith("Registers:")) {
+				if (empiezaConSinEspacios(linea, "---------------") || empiezaConSinEspacios(linea, "Stack:")
+						|| empiezaConSinEspacios(linea, "Native frames:")
+						|| empiezaConSinEspacios(linea, "Java frames:") || empiezaConSinEspacios(linea, "siginfo:")
+						|| empiezaConSinEspacios(linea, "Registers:")) {
 					dentroDeFrameProblematico = false;
 				}
 			}
@@ -137,6 +161,10 @@ public class JavaVersiones implements Verificaciones {
 		}
 	}
 
+	private boolean lineaContieneErrorJava(String linea) {
+		return linea.contains(TEXTO_UNSUPPORTED_CLASS) || linea.contains(TEXTO_JAVA22) || linea.contains(TEXTO_JAVA8);
+	}
+
 	private void buscarModsRelacionados() {
 		try {
 			Buscador.cargar();
@@ -150,12 +178,12 @@ public class JavaVersiones implements Verificaciones {
 	}
 
 	private void agregarResultados(String termino) {
-		if (termino == null || termino.trim().isEmpty()) {
+		if (termino == null || sinEspaciosLaterales(termino).isEmpty()) {
 			return;
 		}
 
 		try {
-			List<ArchivoDeMod> encontrados = Buscador.buscarModsConTermino(termino.trim());
+			List<ArchivoDeMod> encontrados = Buscador.buscarModsConTermino(sinEspaciosLaterales(termino));
 
 			if (encontrados != null) {
 				modsRelacionados.addAll(encontrados);
@@ -179,18 +207,24 @@ public class JavaVersiones implements Verificaciones {
 	private String extraerClase(String linea) {
 		if (linea == null)
 			return null;
+
 		int start = linea.indexOf(TEXTO_UNSUPPORTED_CLASS);
 		if (start < 0)
 			return null;
+
 		start += TEXTO_UNSUPPORTED_CLASS.length();
+
 		while (start < linea.length() && Character.isWhitespace(linea.charAt(start)))
 			start++;
+
 		if (start >= linea.length())
 			return null;
+
 		int fin = linea.indexOf(" has been compiled", start);
 		if (fin < 0)
 			fin = linea.length();
-		return linea.substring(start, fin).replace("/", ".").trim();
+
+		return sinEspaciosLaterales(linea.substring(start, fin).replace("/", "."));
 	}
 
 	private String determinarVersionJava(String linea) {
@@ -199,6 +233,7 @@ public class JavaVersiones implements Verificaciones {
 			return MonitorDePID.idioma.desconocida();
 
 		int start = idx + "class file version".length();
+
 		while (start < linea.length() && !Character.isDigit(linea.charAt(start)))
 			start++;
 
@@ -210,28 +245,67 @@ public class JavaVersiones implements Verificaciones {
 			end++;
 
 		String versionClase = linea.substring(start, end);
-		int versionNum = Integer.parseInt(versionClase);
 
-		// Control de versiones antiguas (Mapeo manual para el formato "1.x")
-		switch (versionNum) {
-		case 52:
-			return "1.8";
-		case 51:
-			return "1.7";
-		case 50:
-			return "1.6";
-		}
+		try {
+			int versionNum = Integer.parseInt(versionClase);
 
-		// Fórmula para Java 9 (versión de clase 53) en adelante.
-		// Restando 44 obtenemos el número de Java correcto de forma dinámica.
-		// Ejemplos:
-		// Versión 65 - 44 = Java 21
-		// Versión 74 - 44 = Java 30
-		if (versionNum >= 53) {
-			return String.valueOf(versionNum - 44);
+			// Control de versiones antiguas (Mapeo manual para el formato "1.x")
+			switch (versionNum) {
+			case 52:
+				return "1.8";
+			case 51:
+				return "1.7";
+			case 50:
+				return "1.6";
+			}
+
+			// Fórmula para Java 9 (versión de clase 53) en adelante.
+			// Restando 44 obtenemos el número de Java correcto de forma dinámica.
+			// Ejemplos:
+			// Versión 65 - 44 = Java 21
+			// Versión 74 - 44 = Java 30
+			if (versionNum >= 53) {
+				return String.valueOf(versionNum - 44);
+			}
+		} catch (NumberFormatException e) {
+			return MonitorDePID.idioma.desconocida() + " (" + versionClase + ")";
 		}
 
 		return MonitorDePID.idioma.desconocida() + " (" + versionClase + ")";
+	}
+
+	private boolean empiezaConSinEspacios(String texto, String prefijo) {
+		if (texto == null || prefijo == null)
+			return false;
+
+		int inicio = 0;
+
+		while (inicio < texto.length() && Character.isWhitespace(texto.charAt(inicio))) {
+			inicio++;
+		}
+
+		if (texto.length() - inicio < prefijo.length())
+			return false;
+
+		return texto.regionMatches(inicio, prefijo, 0, prefijo.length());
+	}
+
+	private String sinEspaciosLaterales(String texto) {
+		if (texto == null)
+			return "";
+
+		int inicio = 0;
+		int fin = texto.length();
+
+		while (inicio < fin && Character.isWhitespace(texto.charAt(inicio))) {
+			inicio++;
+		}
+
+		while (fin > inicio && Character.isWhitespace(texto.charAt(fin - 1))) {
+			fin--;
+		}
+
+		return texto.substring(inicio, fin);
 	}
 
 	// =========================

@@ -5,9 +5,11 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ForgeLanguageProviderNoCarga implements Verificaciones {
+public class ForgeLanguageProviderNoCarga implements VerificacionRapida {
 
 	// Indica si el log contiene indicios globales del error (optimización de
 	// rendimiento)
@@ -22,14 +24,39 @@ public class ForgeLanguageProviderNoCarga implements Verificaciones {
 	// Nombre del provider que no pudo cargarse
 	private String providerFallido = "";
 
+	private static final String SERVICE_CONFIGURATION_ERROR = "ServiceConfigurationError";
+	private static final String IMOD_LANGUAGE_PROVIDER = "IModLanguageProvider";
+	private static final String UNABLE_TO_LOAD = "Unable to load";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { SERVICE_CONFIGURATION_ERROR, IMOD_LANGUAGE_PROVIDER, UNABLE_TO_LOAD };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneFalloProvider(evento.linea)) {
+			posibleFalloProvider = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
 
 		// Detección global ligera:
 		// Solo se buscan subcadenas clave para evitar operaciones costosas.
 		if (consola.contenido_verificar.contains("java.util.ServiceConfigurationError")
 				&& consola.contenido_verificar.contains("net.minecraftforge.forgespi.language.IModLanguageProvider")
-				&& consola.contenido_verificar.contains("Unable to load")) {
+				&& consola.contenido_verificar.contains(UNABLE_TO_LOAD)) {
 
 			posibleFalloProvider = true;
 		}
@@ -37,28 +64,24 @@ public class ForgeLanguageProviderNoCarga implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleFalloProvider)
-			return false;
-
-		return true;
+		return posibleFalloProvider && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 
 		// Salir temprano si no hay indicios globales
-		if (!posibleFalloProvider) {
+		if (!posibleFalloProvider || activado || linea == null) {
 			return;
 		}
 
 		// Verificación precisa en la línea exacta
-		if (linea.contains("ServiceConfigurationError") && linea.contains("IModLanguageProvider")
-				&& linea.contains("Unable to load")) {
+		if (lineaContieneFalloProvider(linea)) {
 
 			// Extraer el nombre completo del provider que falló
-			int indice = linea.indexOf("Unable to load");
+			int indice = linea.indexOf(UNABLE_TO_LOAD);
 			if (indice != -1) {
-				String extraido = linea.substring(indice + "Unable to load".length()).trim();
+				String extraido = linea.substring(indice + UNABLE_TO_LOAD.length()).trim();
 				if (!extraido.isEmpty()) {
 					providerFallido = extraido;
 				}
@@ -67,6 +90,11 @@ public class ForgeLanguageProviderNoCarga implements Verificaciones {
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
 		}
+	}
+
+	private boolean lineaContieneFalloProvider(String linea) {
+		return linea.contains(SERVICE_CONFIGURATION_ERROR) && linea.contains(IMOD_LANGUAGE_PROVIDER)
+				&& linea.contains(UNABLE_TO_LOAD);
 	}
 
 	@Override

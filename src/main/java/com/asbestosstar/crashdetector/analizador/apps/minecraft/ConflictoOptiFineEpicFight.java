@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,7 +14,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * inyección crítica relacionado con LevelRenderer durante la inicialización del
  * juego.
  */
-public class ConflictoOptiFineEpicFight implements Verificaciones {
+public class ConflictoOptiFineEpicFight implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -20,35 +22,51 @@ public class ConflictoOptiFineEpicFight implements Verificaciones {
 	private boolean encontradoOptiFine = false;
 	public boolean analizarLineas = false;
 
-	/**
-	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
-	 */
+	private static final String OPTIFINE_MINUSCULA = "optifine";
+	private static final String OPTIFINE_MIXTA = "Optifine";
+	private static final String OPTIFINE_CORRECTA = "OptiFine";
+
+	private static final String CRITICAL_INJECTION = "Critical injection failure";
+	private static final String LEVEL_RENDERER = "net/minecraft/client/renderer/LevelRenderer";
+	private static final String EPICFIGHT_MIXINS = "mixins.epicfight.json";
+	private static final String MIXIN_LEVEL_RENDERER = "client.MixinLevelRenderer";
+	private static final String EPICFIGHT_RENDER_LEVEL = "epicfight$renderLevel";
+
 	@Override
-	public void verificar(Consola consola) {
+	public String[] patronesRapidos() {
+		return new String[] { OPTIFINE_MINUSCULA, OPTIFINE_MIXTA, OPTIFINE_CORRECTA, CRITICAL_INJECTION, LEVEL_RENDERER,
+				EPICFIGHT_MIXINS, MIXIN_LEVEL_RENDERER, EPICFIGHT_RENDER_LEVEL };
+	}
 
-		String log = consola.contenido_verificar;
-
-		if (log == null)
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
 			return;
+		}
 
-		if (log.contains("optifine") || log.contains("Optifine")) {
+		String linea = evento.linea;
+
+		if (contieneOptiFine(linea)) {
 			encontradoOptiFine = true;
 		}
 
-		if (log.contains("Critical injection failure") && log.contains("net/minecraft/client/renderer/LevelRenderer")
-				&& log.contains("mixins.epicfight.json") && log.contains("client.MixinLevelRenderer")
-				&& log.contains("epicfight$renderLevel")) {
+		if (lineaContieneErrorEpicFight(linea)) {
 			analizarLineas = true;
 		}
 
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
+
+	/**
+	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
+	 */
+	@Override
+	public void verificar(Consola consola) {
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	/**
@@ -61,29 +79,36 @@ public class ConflictoOptiFineEpicFight implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
+			return;
+		}
+
+		if (!analizarLineas || !encontradoOptiFine) {
 			return;
 		}
 
 		// Verificamos si la línea contiene el error de inyección crítica de Epic Fight
 		// con LevelRenderer
-		if (linea.contains("Critical injection failure")
-				&& linea.contains("net/minecraft/client/renderer/LevelRenderer")
-				&& linea.contains("mixins.epicfight.json") && linea.contains("client.MixinLevelRenderer")
-				&& linea.contains("epicfight$renderLevel")) {
+		if (lineaContieneErrorEpicFight(linea)) {
+			// Enlazar a la línea del error en el lector
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-			// Verificamos también que OptiFine esté presente en el registro
-			if (encontradoOptiFine) {
-				// Enlazar a la línea del error en el lector
-				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-
-				// Mensaje de error en HTML con referencia al conflicto entre OptiFine y Epic
-				// Fight
-				mensaje = MonitorDePID.idioma.errorConflictoOptiFineEpicFight() + Verificaciones.nl_html;
-				activado = true;
-			}
+			// Mensaje de error en HTML con referencia al conflicto entre OptiFine y Epic
+			// Fight
+			mensaje = MonitorDePID.idioma.errorConflictoOptiFineEpicFight() + Verificaciones.nl_html;
+			activado = true;
 		}
+	}
+
+	private boolean contieneOptiFine(String texto) {
+		return texto.contains(OPTIFINE_MINUSCULA) || texto.contains(OPTIFINE_MIXTA)
+				|| texto.contains(OPTIFINE_CORRECTA);
+	}
+
+	private boolean lineaContieneErrorEpicFight(String linea) {
+		return linea.contains(CRITICAL_INJECTION) && linea.contains(LEVEL_RENDERER) && linea.contains(EPICFIGHT_MIXINS)
+				&& linea.contains(MIXIN_LEVEL_RENDERER) && linea.contains(EPICFIGHT_RENDER_LEVEL);
 	}
 
 	@Override
@@ -135,11 +160,7 @@ public class ConflictoOptiFineEpicFight implements Verificaciones {
 			return false;
 		}
 
-		String t = trazo.trace;
-
-		return t.contains("Critical injection failure") && t.contains("net/minecraft/client/renderer/LevelRenderer")
-				&& t.contains("mixins.epicfight.json") && t.contains("client.MixinLevelRenderer")
-				&& t.contains("epicfight$renderLevel") && encontradoOptiFine;
+		return lineaContieneErrorEpicFight(trazo.trace) && encontradoOptiFine;
 	}
 
 	@Override

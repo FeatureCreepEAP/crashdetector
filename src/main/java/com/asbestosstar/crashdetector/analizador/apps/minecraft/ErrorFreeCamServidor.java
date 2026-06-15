@@ -3,33 +3,58 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta el uso de FreeCam en un servidor dedicado, lo cual provoca un error
  * porque FreeCam intenta cargar clases del cliente en un entorno de servidor.
  */
-public class ErrorFreeCamServidor implements Verificaciones {
+public class ErrorFreeCamServidor implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean encontradoErrorLocalPlayer = false;
 
+	private static final String LOCAL_PLAYER_SERVER_ERROR = "Attempted to load class net/minecraft/client/player/LocalPlayer for invalid dist DEDICATED_SERVER";
+	private static final String FAILED_TO_CREATE_MOD_INSTANCE = "Failed to create mod instance";
+	private static final String FREECAM_MOD_ID = "ModID: freecam";
+	private static final String FREECAM_CLASS = "net.xolt.freecam.Freecam";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { LOCAL_PLAYER_SERVER_ERROR, FAILED_TO_CREATE_MOD_INSTANCE, FREECAM_MOD_ID, FREECAM_CLASS };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		// Verificamos si el error de LocalPlayer para servidor dedicado está presente
+		// en la línea que disparó el patrón rápido.
+		if (evento.linea.contains(LOCAL_PLAYER_SERVER_ERROR)) {
+			encontradoErrorLocalPlayer = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	/**
-	 * Método de compatibilidad — busca el error específico en el contenido completo
-	 * del registro.
+	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// Verificamos si el error de LocalPlayer para servidor dedicado está presente
-		// en el contenido del registro
-		if (consola.contenido_verificar != null) {
-			encontradoErrorLocalPlayer = consola.contenido_verificar.contains(
-					"Attempted to load class net/minecraft/client/player/LocalPlayer for invalid dist DEDICATED_SERVER");
-		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return encontradoErrorLocalPlayer && !activado;
 	}
 
 	/**
@@ -41,14 +66,14 @@ public class ErrorFreeCamServidor implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (!encontradoErrorLocalPlayer || activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;
 		}
 
 		// Buscamos la línea que contiene ambos elementos clave en una sola línea
-		if (linea.contains("Failed to create mod instance") && linea.contains("ModID: freecam")
-				&& linea.contains("net.xolt.freecam.Freecam") && encontradoErrorLocalPlayer) {
+		if (linea.contains(FAILED_TO_CREATE_MOD_INSTANCE) && linea.contains(FREECAM_MOD_ID)
+				&& linea.contains(FREECAM_CLASS)) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -110,9 +135,8 @@ public class ErrorFreeCamServidor implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("Failed to create mod instance") && t.contains("ModID: freecam")
-				&& t.contains("net.xolt.freecam.Freecam") && t.contains(
-						"Attempted to load class net/minecraft/client/player/LocalPlayer for invalid dist DEDICATED_SERVER");
+		return t.contains(FAILED_TO_CREATE_MOD_INSTANCE) && t.contains(FREECAM_MOD_ID) && t.contains(FREECAM_CLASS)
+				&& t.contains(LOCAL_PLAYER_SERVER_ERROR);
 	}
 
 	@Override
@@ -120,5 +144,4 @@ public class ErrorFreeCamServidor implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

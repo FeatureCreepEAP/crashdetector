@@ -25,9 +25,61 @@ public class VerificacionDeStackTrace {
 		boolean deniega(String[] lineas, int inicio, int fin, String traceCompleto);
 	}
 
+	private final java.util.Map<Long, Boolean> cachePermitePorRango = new java.util.HashMap<>();
 	private static final List<String> denegadosContieneRapidos = new ArrayList<>();
 	private static final Set<String> denegadosContieneSet = new HashSet<>();
 	private static final List<ReglaDenegadoTrace> reglasDenegadoTrace = new ArrayList<>();
+
+	private static final Object LOCK_AUTOMATA_DENEGADOS = new Object();
+	private static NodoDenegado raizDenegados = new NodoDenegado();
+	private static boolean automataDenegadosSucio = true;
+
+	private static final List<ReglaDenegadoRapida> reglasDenegadoRapidas = new ArrayList<>();
+	private static final Map<String, List<Integer>> tokenAReglasDenegado = new HashMap<>();
+	private static final List<String> tokensDenegadoAho = new ArrayList<>();
+	private static final Set<String> tokensDenegadoSet = new HashSet<>();
+	private static final Set<String> reglasDenegadoRapidasSet = new HashSet<>();
+	private static boolean automataTokensDenegadoSucio = true;
+	private static NodoDenegado raizTokensDenegado = new NodoDenegado();
+
+	private static final List<String> tokensDenegado = new ArrayList<>();
+	private static final Map<String, Integer> tokenAId = new HashMap<>();
+	private static final List<int[]> tokenAReglas = new ArrayList<>();
+
+	private static final class NodoDenegado {
+		Map<Character, NodoDenegado> hijos = new HashMap<>();
+		NodoDenegado fallo;
+		int tokenId = -1;
+		List<Integer> salidas;
+	}
+
+	private static final class ReglaDenegadoRapida {
+		final int[] tokenIds;
+		final boolean requiereTodos;
+		final boolean unaLinea;
+
+		ReglaDenegadoRapida(boolean requiereTodos, boolean unaLinea, int[] tokenIds) {
+			this.requiereTodos = requiereTodos;
+			this.unaLinea = unaLinea;
+			this.tokenIds = tokenIds;
+		}
+	}
+
+	private static String[] ordenarTokensPorRareza(String[] tokens) {
+		if (tokens == null || tokens.length <= 1) {
+			return tokens;
+		}
+
+		String[] copia = Arrays.copyOf(tokens, tokens.length);
+
+		Arrays.sort(copia, (a, b) -> {
+			int la = a == null ? 0 : a.length();
+			int lb = b == null ? 0 : b.length();
+			return Integer.compare(lb, la); // más largo primero
+		});
+
+		return copia;
+	}
 
 	private static final java.util.Set<String> TOKENS_FALSOS_SM = new java.util.HashSet<>(Arrays.asList("app", "APP",
 			"a", "A", "b", "B", "mixin", "pl", "re", "accesstransformer", "runtimedistcleaner", "classloading"));
@@ -79,7 +131,7 @@ public class VerificacionDeStackTrace {
 		// Fast check for 'at ', '/FATAL]', 'Caused by:', 'Suppressed:', '...' or common
 		// exception headers before calling normalizarLineaStack
 		boolean esFatal = linea.contains("/FATAL]");
-		boolean containsAt = linea.contains("at ");
+		boolean containsAt = pareceLineaStackRapida(linea);
 		boolean containsException = linea.contains("Exception") || linea.contains("Error");
 		boolean isContinuation = linea.contains("Caused by:") || linea.contains("Suppressed:") || linea.contains("...");
 
@@ -117,6 +169,29 @@ public class VerificacionDeStackTrace {
 				finalizarBufferIncremental();
 			}
 		}
+	}
+
+	private static boolean pareceLineaStackRapida(String linea) {
+		int i = 0;
+		int n = linea.length();
+
+		while (i < n && Character.isWhitespace(linea.charAt(i))) {
+			i++;
+		}
+
+		if (i + 3 <= n && linea.charAt(i) == 'a' && linea.charAt(i + 1) == 't' && linea.charAt(i + 2) == ' ') {
+			return true;
+		}
+
+		if (i + 5 <= n && linea.charAt(i) == '/' && linea.charAt(i + 1) == '/') {
+			i += 2;
+			while (i < n && Character.isWhitespace(linea.charAt(i))) {
+				i++;
+			}
+			return i + 3 <= n && linea.charAt(i) == 'a' && linea.charAt(i + 1) == 't' && linea.charAt(i + 2) == ' ';
+		}
+
+		return false;
 	}
 
 	/**
@@ -171,13 +246,7 @@ public class VerificacionDeStackTrace {
 			// Optimization: use tracePermitePorRango directly which is now very fast
 			String[] arr = bufferLineas.toArray(new String[0]);
 			if (tracePermitePorRango(arr, 0, arr.length - 1)) {
-				StringBuilder sb = new StringBuilder();
-				for (String l : bufferLineas) {
-					sb.append(l).append(Verificaciones.nl);
-				}
-
-				TraceInfo base = new TraceInfo(sb.toString(), lineaInicioBuffer, -1, bufferEsFatal);
-				base.consolaLineaTerminar = lineaInicioBuffer + bufferLineas.size() - 1;
+				TraceInfo base = new TraceInfo(null, lineaInicioBuffer, -1, bufferEsFatal);
 
 				if (bufferEsFatal) {
 					bufferTracesFatal.add(base);
@@ -201,6 +270,9 @@ public class VerificacionDeStackTrace {
 		this.consola = cons;
 	}
 
+	int tracesEncontrados = 0;
+	int tracesDenegados = 0;
+
 	public void reiniciar() {
 
 		ConfigBoolean suprimir = ConfigBoolean.de("suprimir_verificacion_de_stacktrazos", false);
@@ -216,6 +288,7 @@ public class VerificacionDeStackTrace {
 		modid_malo.clear();
 		package_malo.clear();
 		brace_malo.clear();
+		cachePermitePorRango.clear();
 
 		nivel_trazo.clear();
 		trazos_completos.clear();
@@ -268,6 +341,8 @@ public class VerificacionDeStackTrace {
 
 			int fin = j - 1;
 
+			tracesEncontrados++;
+
 			if (tracePermitePorRango(lineas, inicio, fin)) {
 				TraceInfo base = new TraceInfo(null, inicio, -1, esFatal);
 				base.consolaLineaTerminar = fin;
@@ -277,10 +352,18 @@ public class VerificacionDeStackTrace {
 				} else {
 					tracesNormales.add(base);
 				}
+			} else {
+				tracesDenegados++;
 			}
 
 			i = Math.max(j, i + 1);
 		}
+
+		CrashDetectorLogger.log("[PERF_STACKTRACE] lineas=" + lineas.length + ", tracesEncontrados=" + tracesEncontrados
+				+ ", tracesPermitidos=" + (tracesFatal.size() + tracesNormales.size()) + ", tracesDenegados="
+				+ tracesDenegados + ", tracesFatalPermitidos=" + tracesFatal.size() + ", tracesNormalesPermitidos="
+				+ tracesNormales.size() + ", reglasRapidas=" + reglasDenegadoRapidas.size() + ", tokensDenegado="
+				+ tokensDenegado.size() + ", reglasLegacy=" + reglasDenegadoTrace.size());
 
 		int nivel_prioridad = 0;
 
@@ -311,32 +394,67 @@ public class VerificacionDeStackTrace {
 		}
 	}
 
-	private static boolean tracePermitePorRango(String[] lineas, int inicio, int fin) {
+	private static long claveRango(int inicio, int fin) {
+		return (((long) inicio) << 32) ^ (fin & 0xffffffffL);
+	}
+
+	public void reiniciarSoloEstado() {
+		ConfigBoolean suprimir = ConfigBoolean.de("suprimir_verificacion_de_stacktrazos", false);
+		if (suprimir.obtener()) {
+			return;
+		}
+
+		sm_config.clear();
+		clases_fatales_no_existentes.clear();
+
+		jar_malo.clear();
+		modid_malo.clear();
+		package_malo.clear();
+		brace_malo.clear();
+
+		nivel_trazo.clear();
+		trazos_completos.clear();
+
+		nivelPrioridadActual = 0;
+		lineaInicioBuffer = -1;
+		bufferLineas.clear();
+		bufferEsFatal = false;
+		bufferTracesFatal.clear();
+		bufferTracesNormales.clear();
+	}
+
+	private boolean tracePermitePorRango(String[] lineas, int inicio, int fin) {
+		long clave = claveRango(inicio, fin);
+
+		Boolean cached = cachePermitePorRango.get(clave);
+		if (cached != null) {
+			return cached.booleanValue();
+		}
+
+		boolean permite = calcularTracePermitePorRango(lineas, inicio, fin);
+		cachePermitePorRango.put(clave, permite);
+		return permite;
+	}
+
+	private static boolean calcularTracePermitePorRango(String[] lineas, int inicio, int fin) {
 		if (lineas == null || lineas.length == 0) {
 			return true;
 		}
 
-		if (denegadosContieneRapidos.isEmpty() && reglasDenegadoTrace.isEmpty()) {
+		if (reglasDenegadoRapidas.isEmpty() && reglasDenegadoTrace.isEmpty()) {
 			return true;
 		}
 
-		boolean necesitaTraceCompleto = !reglasDenegadoTrace.isEmpty();
-		StringBuilder sb = necesitaTraceCompleto ? new StringBuilder() : null;
+		int desde = Math.max(0, inicio);
+		int hasta = Math.min(fin, lineas.length - 1);
 
-		for (int i = inicio; i <= fin && i < lineas.length; i++) {
-			String linea = lineas[i];
-			if (linea == null || linea.isEmpty()) {
-				continue;
-			}
+		if (desde > hasta) {
+			return true;
+		}
 
-			for (String texto : denegadosContieneRapidos) {
-				if (linea.contains(texto)) {
-					return false;
-				}
-			}
-
-			if (sb != null) {
-				sb.append(linea).append(Verificaciones.nl);
+		if (!reglasDenegadoRapidas.isEmpty()) {
+			if (traceDenegadoAhoSinAlloc(lineas, desde, hasta)) {
+				return false;
 			}
 		}
 
@@ -344,10 +462,20 @@ public class VerificacionDeStackTrace {
 			return true;
 		}
 
+		StringBuilder sb = new StringBuilder(512);
+
+		for (int i = desde; i <= hasta; i++) {
+			String linea = lineas[i];
+
+			if (linea != null && !linea.isEmpty()) {
+				sb.append(linea).append(Verificaciones.nl);
+			}
+		}
+
 		String traceCompleto = sb.toString();
 
-		for (ReglaDenegadoTrace regla : reglasDenegadoTrace) {
-			if (regla.deniega(lineas, inicio, fin, traceCompleto)) {
+		for (int i = 0; i < reglasDenegadoTrace.size(); i++) {
+			if (reglasDenegadoTrace.get(i).deniega(lineas, desde, hasta, traceCompleto)) {
 				return false;
 			}
 		}
@@ -355,15 +483,245 @@ public class VerificacionDeStackTrace {
 		return true;
 	}
 
+	private static boolean traceDenegadoAhoSinAlloc(String[] lineas, int inicio, int fin) {
+		asegurarAutomataDenegados();
+
+		int reglasN = reglasDenegadoRapidas.size();
+
+		int[] vistosEpoch = new int[tokensDenegado.size()];
+		int[] conteos = new int[reglasN];
+		int epoch = 1;
+
+		NodoDenegado actual = raizDenegados;
+
+		for (int i = inicio; i <= fin; i++) {
+			String linea = lineas[i];
+
+			if (linea == null || linea.isEmpty()) {
+				continue;
+			}
+
+			for (int p = 0; p < linea.length(); p++) {
+				char c = linea.charAt(p);
+
+				while (actual != raizDenegados && !actual.hijos.containsKey(c)) {
+					actual = actual.fallo;
+				}
+
+				NodoDenegado sig = actual.hijos.get(c);
+				actual = sig != null ? sig : raizDenegados;
+
+				if (actual.salidas == null) {
+					continue;
+				}
+
+				for (int s = 0; s < actual.salidas.size(); s++) {
+					int tokenId = actual.salidas.get(s);
+
+					if (vistosEpoch[tokenId] == epoch) {
+						continue;
+					}
+
+					vistosEpoch[tokenId] = epoch;
+
+					int[] reglas = tokenAReglas.get(tokenId);
+
+					for (int r = 0; r < reglas.length; r++) {
+						int reglaId = reglas[r];
+						ReglaDenegadoRapida regla = reglasDenegadoRapidas.get(reglaId);
+
+						if (regla.unaLinea && inicio != fin) {
+							continue;
+						}
+
+						if (!regla.requiereTodos) {
+							return true;
+						}
+
+						conteos[reglaId]++;
+
+						if (conteos[reglaId] == regla.tokenIds.length) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+//private static boolean traceDenegadoPorReglasRapidas(String[] lineas, int inicio, int fin) {
+//	asegurarAutomataTokensDenegado();
+//
+//	boolean[][] vistos = new boolean[reglasDenegadoRapidas.size()][];
+//	int[] conteos = new int[reglasDenegadoRapidas.size()];
+//
+//	for (int r = 0; r < reglasDenegadoRapidas.size(); r++) {
+//		vistos[r] = new boolean[reglasDenegadoRapidas.get(r).tokens.length];
+//	}
+//
+//	for (int i = inicio; i <= fin; i++) {
+//		String linea = lineas[i];
+//
+//		if (linea == null || linea.isEmpty()) {
+//			continue;
+//		}
+//
+//		List<String> encontrados = buscarTokensDenegado(linea);
+//		if (encontrados.isEmpty()) {
+//			continue;
+//		}
+//
+//		for (String token : encontrados) {
+//			List<Integer> reglas = tokenAReglasDenegado.get(token);
+//			if (reglas == null) {
+//				continue;
+//			}
+//
+//			for (int indiceRegla : reglas) {
+//				ReglaDenegadoRapida regla = reglasDenegadoRapidas.get(indiceRegla);
+//
+//				if (!regla.requiereTodos) {
+//					return true;
+//				}
+//
+//				for (int t = 0; t < regla.tokens.length; t++) {
+//					if (!vistos[indiceRegla][t] && regla.tokens[t].equals(token)) {
+//						vistos[indiceRegla][t] = true;
+//						conteos[indiceRegla]++;
+//
+//						if (conteos[indiceRegla] == regla.tokens.length) {
+//							return true;
+//						}
+//
+//						break;
+//					}
+//				}
+//			}
+//		}
+//	}
+//
+//	return false;
+//}
+//
+//
+//
+//private static List<String> buscarTokensDenegado(String texto) {
+//	if (texto == null || texto.isEmpty()) {
+//		return Collections.emptyList();
+//	}
+//
+//	List<String> encontrados = new ArrayList<>();
+//	NodoDenegado actual = raizTokensDenegado;
+//
+//	for (int i = 0; i < texto.length(); i++) {
+//		char c = texto.charAt(i);
+//
+//		while (actual != raizTokensDenegado && !actual.hijos.containsKey(c)) {
+//			actual = actual.fallo;
+//		}
+//
+//		NodoDenegado sig = actual.hijos.get(c);
+//
+//		if (sig != null) {
+//			actual = sig;
+//		} else {
+//			actual = raizTokensDenegado;
+//		}
+//
+//		NodoDenegado revisar = actual;
+//
+//		while (revisar != raizTokensDenegado) {
+//			if (revisar.terminal && revisar.patron != null) {
+//				encontrados.add(revisar.patron);
+//			}
+//			revisar = revisar.fallo;
+//		}
+//	}
+//
+//	return encontrados;
+//}
+
 	public static void agregarDenegadoContiene(String texto) {
 		if (texto == null || texto.isEmpty()) {
 			return;
 		}
 
 		// Evita duplicados como net.minecraftforge.fml.VersionChecker
-		if (denegadosContieneSet.add(texto)) {
-			denegadosContieneRapidos.add(texto);
+		agregarDenegadoTodos(texto);
+	}
+
+	public static void agregarDenegadoTodos(String... tokens) {
+		agregarReglaDenegadoRapida(true, false, tokens);
+	}
+
+	public static void agregarDenegadoCualquiera(String... tokens) {
+		agregarReglaDenegadoRapida(false, false, tokens);
+	}
+
+	public static void agregarDenegadoUnaLinea(String token) {
+		agregarReglaDenegadoRapida(true, true, token);
+	}
+
+	private static void agregarReglaDenegadoRapida(boolean requiereTodos, boolean unaLinea, String... tokens) {
+		if (tokens == null || tokens.length == 0) {
+			return;
 		}
+
+		List<String> limpios = new ArrayList<>();
+
+		for (String token : tokens) {
+			if (token != null && !token.isEmpty()) {
+				limpios.add(token);
+			}
+		}
+
+		if (limpios.isEmpty()) {
+			return;
+		}
+
+		String clave = requiereTodos + "|" + unaLinea + "|" + String.join("\u0001", limpios);
+
+		if (!reglasDenegadoRapidasSet.add(clave)) {
+			return;
+		}
+
+		int indiceRegla = reglasDenegadoRapidas.size();
+		int[] ids = new int[limpios.size()];
+
+		for (int i = 0; i < limpios.size(); i++) {
+			ids[i] = obtenerIdTokenDenegado(limpios.get(i));
+		}
+
+		reglasDenegadoRapidas.add(new ReglaDenegadoRapida(requiereTodos, unaLinea, ids));
+
+		for (int id : ids) {
+			int[] anteriores = tokenAReglas.get(id);
+			int[] nuevo = Arrays.copyOf(anteriores, anteriores.length + 1);
+			nuevo[nuevo.length - 1] = indiceRegla;
+			tokenAReglas.set(id, nuevo);
+		}
+	}
+
+	private static int obtenerIdTokenDenegado(String token) {
+		Integer existente = tokenAId.get(token);
+		if (existente != null) {
+			return existente.intValue();
+		}
+
+		int id = tokensDenegado.size();
+
+		tokenAId.put(token, id);
+		tokensDenegado.add(token);
+		tokensDenegadoSet.add(token);
+		tokenAReglas.add(new int[0]);
+
+		synchronized (LOCK_AUTOMATA_DENEGADOS) {
+			automataDenegadosSucio = true;
+		}
+
+		return id;
 	}
 
 	public static void agregarDenegadoPredicado(ListaDenegadosTrace predicado) {
@@ -379,6 +737,129 @@ public class VerificacionDeStackTrace {
 			reglasDenegadoTrace.add(regla);
 		}
 	}
+
+	private static void asegurarAutomataDenegados() {
+		if (!automataDenegadosSucio) {
+			return;
+		}
+
+		synchronized (LOCK_AUTOMATA_DENEGADOS) {
+			if (!automataDenegadosSucio) {
+				return;
+			}
+
+			NodoDenegado nuevaRaiz = new NodoDenegado();
+			nuevaRaiz.fallo = nuevaRaiz;
+
+			for (int tokenId = 0; tokenId < tokensDenegado.size(); tokenId++) {
+				String token = tokensDenegado.get(tokenId);
+
+				if (token == null || token.isEmpty()) {
+					continue;
+				}
+
+				NodoDenegado actual = nuevaRaiz;
+
+				for (int i = 0; i < token.length(); i++) {
+					char c = token.charAt(i);
+					NodoDenegado sig = actual.hijos.get(c);
+
+					if (sig == null) {
+						sig = new NodoDenegado();
+						actual.hijos.put(c, sig);
+					}
+
+					actual = sig;
+				}
+
+				actual.tokenId = tokenId;
+			}
+
+			construirFallosDenegados(nuevaRaiz);
+
+			raizDenegados = nuevaRaiz;
+			automataDenegadosSucio = false;
+		}
+	}
+
+	private static void construirFallosDenegados(NodoDenegado raiz) {
+		java.util.ArrayDeque<NodoDenegado> cola = new java.util.ArrayDeque<>();
+
+		for (NodoDenegado hijo : raiz.hijos.values()) {
+			hijo.fallo = raiz;
+			cola.add(hijo);
+		}
+
+		while (!cola.isEmpty()) {
+			NodoDenegado actual = cola.poll();
+
+			if (actual.tokenId >= 0) {
+				if (actual.salidas == null) {
+					actual.salidas = new ArrayList<>(1);
+				}
+				actual.salidas.add(actual.tokenId);
+			}
+
+			if (actual.fallo != null && actual.fallo.salidas != null) {
+				if (actual.salidas == null) {
+					actual.salidas = new ArrayList<>(actual.fallo.salidas.size());
+				}
+				actual.salidas.addAll(actual.fallo.salidas);
+			}
+
+			for (Map.Entry<Character, NodoDenegado> entrada : actual.hijos.entrySet()) {
+				char c = entrada.getKey();
+				NodoDenegado hijo = entrada.getValue();
+
+				NodoDenegado f = actual.fallo;
+
+				while (f != raiz && !f.hijos.containsKey(c)) {
+					f = f.fallo;
+				}
+
+				NodoDenegado destino = f.hijos.get(c);
+
+				if (destino != null && destino != hijo) {
+					hijo.fallo = destino;
+				} else {
+					hijo.fallo = raiz;
+				}
+
+				cola.add(hijo);
+			}
+		}
+	}
+
+//private static boolean contieneDenegadoRapido(String texto) {
+//	if (texto == null || texto.isEmpty() || denegadosContieneRapidos.isEmpty()) {
+//		return false;
+//	}
+//
+//	asegurarAutomataDenegados();
+//
+//	NodoDenegado actual = raizDenegados;
+//
+//	for (int i = 0; i < texto.length(); i++) {
+//		char c = texto.charAt(i);
+//
+//		while (actual != raizDenegados && !actual.hijos.containsKey(c)) {
+//			actual = actual.fallo;
+//		}
+//
+//		NodoDenegado sig = actual.hijos.get(c);
+//		if (sig != null) {
+//			actual = sig;
+//		} else {
+//			actual = raizDenegados;
+//		}
+//
+//		if (actual.terminal) {
+//			return true;
+//		}
+//	}
+//
+//	return false;
+//}
 
 	private TraceInfo construirYProcesarTraceInfo(String[] lineas, int inicio, int fin, int nivel, boolean fatal) {
 
@@ -1825,7 +2306,10 @@ public class VerificacionDeStackTrace {
 		}
 
 		String[] lineas = dividirEnLineas(str);
-		return tracePermitePorRango(lineas, 0, lineas.length - 1);
+
+		// Static method cannot use the instance cache.
+		// This is only for old static callers.
+		return calcularTracePermitePorRango(lineas, 0, lineas.length - 1);
 	}
 
 	/**

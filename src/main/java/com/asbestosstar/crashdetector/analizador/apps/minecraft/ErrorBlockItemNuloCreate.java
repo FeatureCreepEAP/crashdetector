@@ -4,23 +4,44 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores NullPointerException relacionados con BlockItem nulo en
  * addons de Create, típicamente causados por conflictos con Amendments,
  * Moonshine o mala inicialización de bloques.
  */
-public class ErrorBlockItemNuloCreate implements Verificaciones {
+public class ErrorBlockItemNuloCreate implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 
 	private static final String PREFIJO_ERROR = "java.lang.NullPointerException: BlockItem ";
+	private static final String TRIGGER_BLOCKITEM = "NullPointerException: BlockItem";
 	private static final String SUFIJO_ERROR = " has a NULL block!";
 
 	private boolean analizarLineas = false;
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TRIGGER_BLOCKITEM, SUFIJO_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TRIGGER_BLOCKITEM) || evento.linea.contains(SUFIJO_ERROR)) {
+			this.analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
@@ -34,22 +55,19 @@ public class ErrorBlockItemNuloCreate implements Verificaciones {
 
 		String contenido = consola.contenido_verificar;
 
-		if (contenido.contains("NullPointerException: BlockItem") && contenido.contains("has a NULL block!")) {
+		if (contenido.contains(TRIGGER_BLOCKITEM) && contenido.contains(SUFIJO_ERROR)) {
 			this.analizarLineas = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!analizarLineas || this.activado) {
+		if (!analizarLineas || this.activado || linea == null) {
 			return;
 		}
 
@@ -131,5 +149,4 @@ public class ErrorBlockItemNuloCreate implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

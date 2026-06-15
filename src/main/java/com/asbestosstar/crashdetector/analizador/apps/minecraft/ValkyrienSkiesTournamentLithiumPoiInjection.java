@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -26,7 +28,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Tournament y una versión vieja de Lithium, o un fork basado en Lithium viejo
  * como Radium Reforged.
  */
-public class ValkyrienSkiesTournamentLithiumPoiInjection implements Verificaciones {
+public class ValkyrienSkiesTournamentLithiumPoiInjection implements VerificacionRapida {
 
 	// Indica si apareció la excepción de inyección inválida
 	private boolean indicioInvalidInjection = false;
@@ -43,24 +45,60 @@ public class ValkyrienSkiesTournamentLithiumPoiInjection implements Verificacion
 	// Enlace a la línea más representativa del error
 	private String enlace = "";
 
+	private static final String INVALID_INJECTION = "org.spongepowered.asm.mixin.injection.throwables.InvalidInjectionException";
+	private static final String LITHIUM_POI_MIXIN = "me.jellysquid.mods.lithium.mixin.ai.poi.PointOfInterestStorageMixin";
+	private static final String VS_POI_MIXIN = "valkyrienskies-common.mixins.json:feature.poi.MixinPOIManager";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { INVALID_INJECTION, LITHIUM_POI_MIXIN, VS_POI_MIXIN };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		String linea = evento.linea;
+
+		if (linea.contains(INVALID_INJECTION)) {
+			indicioInvalidInjection = true;
+		}
+
+		if (linea.contains(LITHIUM_POI_MIXIN)) {
+			indicioLithiumPoiMixin = true;
+		}
+
+		if (linea.contains(VS_POI_MIXIN)) {
+			indicioVSPoiMixin = true;
+		}
+
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		// Búsqueda global ligera para evitar trabajo innecesario por línea
 		String contenido = consola.contenido_verificar;
 
-		if (contenido.contains("org.spongepowered.asm.mixin.injection.throwables.InvalidInjectionException")) {
+		if (contenido.contains(INVALID_INJECTION)) {
 			indicioInvalidInjection = true;
 		} else {
 			return;
 		}
 
-		if (contenido.contains("me.jellysquid.mods.lithium.mixin.ai.poi.PointOfInterestStorageMixin")) {
+		if (contenido.contains(LITHIUM_POI_MIXIN)) {
 			indicioLithiumPoiMixin = true;
 		} else {
 			return;
 		}
 
-		if (contenido.contains("valkyrienskies-common.mixins.json:feature.poi.MixinPOIManager")) {
+		if (contenido.contains(VS_POI_MIXIN)) {
 			indicioVSPoiMixin = true;
 		} else {
 			return;
@@ -78,26 +116,25 @@ public class ValkyrienSkiesTournamentLithiumPoiInjection implements Verificacion
 		if (!indicioVSPoiMixin)
 			return false;
 
-		return true;
+		return !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Solo activar cuando ya están presentes los indicios globales
-		if (activado || !indicioInvalidInjection || !indicioLithiumPoiMixin || !indicioVSPoiMixin) {
+		if (activado || linea == null || !indicioInvalidInjection || !indicioLithiumPoiMixin || !indicioVSPoiMixin) {
 			return;
 		}
 
 		// Preferimos enlazar la línea de la InvalidInjectionException
-		if (linea.contains("org.spongepowered.asm.mixin.injection.throwables.InvalidInjectionException")) {
+		if (linea.contains(INVALID_INJECTION)) {
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
 			return;
 		}
 
 		// Respaldo si la línea útil es la del merge del mixin
-		if (linea.contains("me.jellysquid.mods.lithium.mixin.ai.poi.PointOfInterestStorageMixin")
-				|| linea.contains("valkyrienskies-common.mixins.json:feature.poi.MixinPOIManager")) {
+		if (linea.contains(LITHIUM_POI_MIXIN) || linea.contains(VS_POI_MIXIN)) {
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
 		}

@@ -4,8 +4,10 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Analiza errores críticos relacionados con plugins de JEI (Just Enough Items)
@@ -13,7 +15,7 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
  * mod plugin: class [clase] [modid]:[plugin_id]". Este error puede causar
  * crashes durante la inicialización del juego.
  */
-public class ErrorJEIPluginFallido implements Verificaciones {
+public class ErrorJEIPluginFallido implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posible = false;
@@ -26,6 +28,24 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 
 	private static final String TEXTO_ERROR = "Caught an error from mod plugin: class";
 
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_ERROR)) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	/**
 	 * Verificación global barata.
 	 * <p>
@@ -35,13 +55,12 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
+		// Método de compatibilidad — no hace nada en modo rápido/streaming.
+	}
 
-		if (consola.contenido_verificar.contains(TEXTO_ERROR)) {
-			posible = true;
-		}
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return posible && !activado;
 	}
 
 	/**
@@ -87,7 +106,7 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 			return;
 		}
 
-		nombreClase = linea.substring(inicio, finClase).trim();
+		nombreClase = linea.substring(inicio, finClase);
 
 		if (nombreClase.isEmpty()) {
 			return;
@@ -111,7 +130,7 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 		}
 
 		// El modId termina antes de los dos puntos.
-		modId = linea.substring(inicioMod, separador).trim();
+		modId = linea.substring(inicioMod, separador);
 
 		if (modId.isEmpty()) {
 			return;
@@ -128,7 +147,7 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 			finPlugin = linea.length();
 		}
 
-		pluginId = linea.substring(inicioPlugin, finPlugin).trim();
+		pluginId = linea.substring(inicioPlugin, finPlugin);
 
 		if (pluginId.isEmpty()) {
 			return;
@@ -215,5 +234,4 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

@@ -6,6 +6,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,7 +15,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * reciente de Minecraft. Gracias a Aternos porque esta es una implementacion de
  * su codex: https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaVersionDowngrade implements Verificaciones {
+public class ProblemaVersionDowngrade implements VerificacionRapida {
 
 	private boolean posibleVersionDowngrade = false;
 	private boolean activado = false;
@@ -22,6 +24,22 @@ public class ProblemaVersionDowngrade implements Verificaciones {
 	private String enlace = "";
 
 	private static final String TEXTO_ERROR = "java.lang.RuntimeException: Server attempted to load chunk saved with newer version of minecraft! ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		posibleVersionDowngrade = true;
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificacion global ligera.
@@ -42,10 +60,7 @@ public class ProblemaVersionDowngrade implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleVersionDowngrade)
-			return false;
-
-		return true;
+		return posibleVersionDowngrade && !activado;
 	}
 
 	/**

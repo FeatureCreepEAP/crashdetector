@@ -6,6 +6,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,12 +15,13 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * pero esta no está instalada, causando un NoClassDefFoundError. Patrón
  * moderno: global barato + per-línea.
  */
-public class ErrorImmersiveTooltipsSinDependencia implements Verificaciones {
+public class ErrorImmersiveTooltipsSinDependencia implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean posibleError = false;
+	private boolean encontradoMod = false;
 
 	private static final String TEXTO_IMMERSIVE_TOOLTIPS_1 = "immersivetips";
 	private static final String TEXTO_IMMERSIVE_TOOLTIPS_2 = "immersive tooltips";
@@ -26,20 +29,39 @@ public class ErrorImmersiveTooltipsSinDependencia implements Verificaciones {
 	private static final String TEXTO_CLASE_FALTANTE = "toni/immersivemessages/renderers/ITooltipRenderer";
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty())
-			return;
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_IMMERSIVE_TOOLTIPS_1, TEXTO_IMMERSIVE_TOOLTIPS_2, TEXTO_ERROR_CLASE,
+				TEXTO_CLASE_FALTANTE };
+	}
 
-		String contenido = consola.contenido_verificar;
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
 
 		// Activar flag solo si:
 		// 1) Aparece el error de clase o la clase faltante
 		// 2) Y además aparece Immersive Tooltips
-		boolean contieneClase = contenido.contains(TEXTO_ERROR_CLASE) || contenido.contains(TEXTO_CLASE_FALTANTE);
-		boolean contieneMod = contenido.contains(TEXTO_IMMERSIVE_TOOLTIPS_1)
-				|| contenido.contains(TEXTO_IMMERSIVE_TOOLTIPS_2);
+		if (lineaContieneMod(evento.linea)) {
+			encontradoMod = true;
+		}
 
-		posibleError = contieneClase && contieneMod;
+		if (lineaContieneClaseFaltante(evento.linea) && encontradoMod) {
+			posibleError = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public void verificar(Consola consola) {
+		// Método de compatibilidad — no hace nada en modo rápido/streaming.
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return posibleError && !activado;
 	}
 
 	@Override
@@ -47,12 +69,20 @@ public class ErrorImmersiveTooltipsSinDependencia implements Verificaciones {
 		if (!posibleError || linea == null || linea.isEmpty() || activado)
 			return;
 
-		if ((linea.contains(TEXTO_ERROR_CLASE) && linea.contains(TEXTO_CLASE_FALTANTE))) {
+		if (linea.contains(TEXTO_ERROR_CLASE) && linea.contains(TEXTO_CLASE_FALTANTE)) {
 
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			mensaje = MonitorDePID.idioma.errorImmersiveTooltipsSinDependencia() + Verificaciones.nl_html;
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneClaseFaltante(String linea) {
+		return linea.contains(TEXTO_ERROR_CLASE) || linea.contains(TEXTO_CLASE_FALTANTE);
+	}
+
+	private boolean lineaContieneMod(String linea) {
+		return linea.contains(TEXTO_IMMERSIVE_TOOLTIPS_1) || linea.contains(TEXTO_IMMERSIVE_TOOLTIPS_2);
 	}
 
 	@Override
@@ -105,5 +135,4 @@ public class ErrorImmersiveTooltipsSinDependencia implements Verificaciones {
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

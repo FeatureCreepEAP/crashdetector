@@ -5,36 +5,60 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class IrisSombrasTerreno implements Verificaciones {
+public class IrisSombrasTerreno implements VerificacionRapida {
 
 	private boolean posibleErrorIris = false;
 	private boolean activado = false;
 	private String enlace = "";
 
+	private static final String IRIS_RENDER_TERRAIN_SHADOWS = "$iris$renderTerrainShadows";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { IRIS_RENDER_TERRAIN_SHADOWS };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(IRIS_RENDER_TERRAIN_SHADOWS)) {
+			posibleErrorIris = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		// Detección global: el log contiene el método de Iris
-		if (consola.contenido_verificar.contains("$iris$renderTerrainShadows")) {
+		if (consola.contenido_verificar.contains(IRIS_RENDER_TERRAIN_SHADOWS)) {
 			posibleErrorIris = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleErrorIris)
-			return false;
-
-		return true;
+		return posibleErrorIris && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		if (!posibleErrorIris)
+		if (!posibleErrorIris || activado || linea == null) {
 			return;
+		}
 
-		if (linea.contains("$iris$renderTerrainShadows")) {
+		if (linea.contains(IRIS_RENDER_TERRAIN_SHADOWS)) {
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
 		}

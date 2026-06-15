@@ -5,13 +5,16 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta el error EarlyWindow común en Forge. MAIN_LINE solo activa si aparece
  * cerca del final del log. Los otros patrones se detectan globalmente.
  */
-public class EarlyWindow implements Verificaciones {
+public class EarlyWindow implements VerificacionRapida {
 
 	private static final String APPLE_METAL_OPENGL_RENDERER = "AppleMetalOpenGLRenderer";
 	private static final String EARLY_FRAMEBUFFER_DRAW = "net.minecraftforge.fml.earlydisplay.EarlyFramebuffer.draw";
@@ -26,6 +29,10 @@ public class EarlyWindow implements Verificaciones {
 	private boolean posibleEarlyWindow = false;
 	private boolean limitacionOpenGLMacOSDetectada = false;
 
+	private boolean appleMetalDetectado = false;
+	private boolean earlyFramebufferDetectado = false;
+	private int lineaMainLine = -1;
+
 	private String mensaje = "";
 	private String enlaceHtml = "";
 
@@ -33,35 +40,55 @@ public class EarlyWindow implements Verificaciones {
 	private static final int LOOKBACK_CHARS = 20000;
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty())
-			return;
+	public String[] patronesRapidos() {
+		return new String[] { APPLE_METAL_OPENGL_RENDERER, EARLY_FRAMEBUFFER_DRAW, MAIN_LINE, FALLBACK_1, FALLBACK_2,
+				wayland_26 };
+	}
 
-		String contenido = consola.contenido_verificar;
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		String linea = evento.linea;
 
 		// Detectar señales globales baratas
-		limitacionOpenGLMacOSDetectada = contenido.contains(APPLE_METAL_OPENGL_RENDERER)
-				&& contenido.contains(EARLY_FRAMEBUFFER_DRAW);
+		if (linea.contains(APPLE_METAL_OPENGL_RENDERER)) {
+			appleMetalDetectado = true;
+		}
+
+		if (linea.contains(EARLY_FRAMEBUFFER_DRAW)) {
+			earlyFramebufferDetectado = true;
+		}
+
+		limitacionOpenGLMacOSDetectada = appleMetalDetectado && earlyFramebufferDetectado;
 
 		// Buscar MAIN_LINE solo en el final del log
-		int start = Math.max(0, contenido.length() - LOOKBACK_CHARS);
-		String ultimasLineas = contenido.substring(start);
-		boolean mainLineFinal = ultimasLineas.contains(MAIN_LINE);
+		// En modo streaming no tenemos contenido completo; se guarda la última línea
+		// encontrada y se confirma al finalizar el archivo.
+		if (linea.contains(MAIN_LINE)) {
+			lineaMainLine = evento.numeroDeLinea;
+			posibleEarlyWindow = true;
+		}
 
-		// Otros patrones globales
-		boolean fallbackGlobal = contenido.contains(FALLBACK_1) || contenido.contains(FALLBACK_2)
-				|| contenido.contains(wayland_26);
+		if (lineaContieneFallback(linea) || limitacionOpenGLMacOSDetectada) {
+			posibleEarlyWindow = true;
+		}
 
-		// Activar detector si alguno se cumple
-		posibleEarlyWindow = mainLineFinal || limitacionOpenGLMacOSDetectada || fallbackGlobal;
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
+
+	/**
+	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
+	 */
+	@Override
+	public void verificar(Consola consola) {
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleEarlyWindow)
-			return false;
-
-		return true;
+		return posibleEarlyWindow && !activado;
 	}
 
 	@Override
@@ -71,10 +98,45 @@ public class EarlyWindow implements Verificaciones {
 
 		// Activar detector si línea contiene fallback (MAIN_LINE ya comprobado
 		// globalmente)
-		if (linea.contains(FALLBACK_1) || linea.contains(FALLBACK_2) || linea.contains(wayland_26)) {
-			mensaje = construirMensaje();
-			activado = true;
+		if (lineaContieneFallback(linea)) {
+			activar(consola, numero_de_linea);
+			return;
 		}
+
+		if (limitacionOpenGLMacOSDetectada) {
+			activar(consola, numero_de_linea);
+		}
+	}
+
+	@Override
+	public void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
+		if (activado || !posibleEarlyWindow) {
+			return;
+		}
+
+		// MAIN_LINE se confirma al final para conservar la intención original:
+		// solo interesa cuando aparece cerca del cierre del log.
+		if (lineaMainLine >= 0) {
+			activar(consola, lineaMainLine);
+		}
+	}
+
+	private boolean lineaContieneFallback(String linea) {
+		return linea.contains(FALLBACK_1) || linea.contains(FALLBACK_2) || linea.contains(wayland_26);
+	}
+
+	private void activar(Consola consola, int numero_de_linea) {
+		if (activado) {
+			return;
+		}
+
+		mensaje = construirMensaje();
+
+		if (consola != null && numero_de_linea >= 0) {
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		}
+
+		activado = true;
 	}
 
 	private String construirMensaje() {

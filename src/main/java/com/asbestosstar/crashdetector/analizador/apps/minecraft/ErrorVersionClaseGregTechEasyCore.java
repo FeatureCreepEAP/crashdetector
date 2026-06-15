@@ -3,8 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,12 +14,38 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * GregTechEasyCore donde AbstractFurnaceBlockEntity ha sido compilado con una
  * versión más reciente de Java que la que está usando el servidor.
  */
-public class ErrorVersionClaseGregTechEasyCore implements Verificaciones {
+public class ErrorVersionClaseGregTechEasyCore implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean encontradoGTECore = false;
+
+	private static final String GTECORE = "gtecore";
+	private static final String UNSUPPORTED_CLASS_VERSION_ERROR = "java.lang.UnsupportedClassVersionError";
+	private static final String ABSTRACT_FURNACE_BLOCK_ENTITY = "net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity";
+	private static final String JAVA_RUNTIME_RECIENTE = "has been compiled by a more recent version of the Java Runtime";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { GTECORE, UNSUPPORTED_CLASS_VERSION_ERROR, ABSTRACT_FURNACE_BLOCK_ENTITY,
+				JAVA_RUNTIME_RECIENTE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		String linea = evento.linea;
+
+		if (linea.contains(GTECORE)) {
+			encontradoGTECore = true;
+		}
+
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Método de compatibilidad — busca si GregTechEasyCore está presente en el
@@ -25,20 +53,19 @@ public class ErrorVersionClaseGregTechEasyCore implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		// Verificamos si GregTechEasyCore está presente en el contenido del registro
-		if (consola.contenido_verificar != null) {
-			if (consola.contenido_verificar.contains("gtecore")) {
-				encontradoGTECore = true;
-			}
+		if (consola.contenido_verificar.contains(GTECORE)) {
+			encontradoGTECore = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!encontradoGTECore)
-			return false;
-
-		return true;
+		return encontradoGTECore && !activado;
 	}
 
 	/**
@@ -50,17 +77,15 @@ public class ErrorVersionClaseGregTechEasyCore implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (activado || !encontradoGTECore || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;
 		}
 
 		// Buscamos la línea que contiene el error de versión de clase incompatible de
 		// GregTechEasyCore
-		if (linea.contains("java.lang.UnsupportedClassVersionError")
-				&& linea.contains("net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity")
-				&& linea.contains("has been compiled by a more recent version of the Java Runtime")
-				&& encontradoGTECore) {
+		if (linea.contains(UNSUPPORTED_CLASS_VERSION_ERROR) && linea.contains(ABSTRACT_FURNACE_BLOCK_ENTITY)
+				&& linea.contains(JAVA_RUNTIME_RECIENTE)) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -122,10 +147,8 @@ public class ErrorVersionClaseGregTechEasyCore implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("java.lang.UnsupportedClassVersionError")
-				&& t.contains("net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity")
-				&& t.contains("has been compiled by a more recent version of the Java Runtime")
-				&& t.toLowerCase().contains("gtecore");
+		return t.contains(UNSUPPORTED_CLASS_VERSION_ERROR) && t.contains(ABSTRACT_FURNACE_BLOCK_ENTITY)
+				&& t.contains(JAVA_RUNTIME_RECIENTE) && t.contains(GTECORE);
 	}
 
 	@Override

@@ -1,28 +1,20 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.ArrayList;
-
 import java.util.HashMap;
-
 import java.util.HashSet;
-
 import java.util.List;
-
 import java.util.Map;
-
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.CDStringBuilder;
-
 import com.asbestosstar.crashdetector.Consola;
-
 import com.asbestosstar.crashdetector.MonitorDePID;
-
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * 
@@ -83,21 +75,22 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 	private boolean posiblePorConsola = false;
 
-	/**
-	 * 
-	 * Método de verificación principal que se deja vacío intencionadamente.
-	 * 
-	 * Toda la lógica de análisis se ha centralizado en el método
-	 * 
-	 * {@link #verificarPorLinea(Consola, String, int)} para un procesamiento más
-	 * 
-	 * eficiente línea por línea.
-	 *
-	 * 
-	 * 
-	 * @param consola La consola a verificar.
-	 * 
-	 */
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { "Missing or unsupported mandatory dependencies:", "Failure message: Mod ",
+				"requires any version of", "which is missing", "only supports", "Currently,",
+				"wrong version is present", "Remove Iris/Oculus & GeckoLib Compat", "geckoanimfix" };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		posiblePorConsola = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
@@ -107,31 +100,18 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 		String contenido = consola.contenido_verificar;
 
-		boolean posible = contenido.contains("Missing or unsupported mandatory dependencies:")
-				|| (contenido.contains("requires any version of") && contenido.contains("which is missing"))
-				|| (contenido.contains("only supports") && contenido.contains("or above")
-						&& contenido.contains(".Remove "))
-				|| (contenido.contains("Failure message: Mod ")
-						&& (contenido.contains(" requires ") || contenido.contains(" only supports ")))
-				|| (contenido.contains("Remove Iris/Oculus & GeckoLib Compat") && contenido.contains("geckoanimfix"))
-				|| (contenido.contains("Currently,") && contenido.contains("not installed"))
-
-				|| (contenido.contains("requires any ") && contenido.contains(" version of ")
-						&& contenido.contains("wrong version is present"))
-
-		;
-
-		if (posible) {
+		if (contenido.contains("Missing or unsupported mandatory dependencies:")
+				|| contenido.contains("Failure message: Mod ") || contenido.contains("requires any version of")
+				|| contenido.contains("which is missing") || contenido.contains("only supports")
+				|| contenido.contains("wrong version is present")
+				|| contenido.contains("Remove Iris/Oculus & GeckoLib Compat") || contenido.contains("geckoanimfix")) {
 			posiblePorConsola = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posiblePorConsola)
-			return false;
-
-		return true;
+		return posiblePorConsola;
 	}
 
 	/**
@@ -957,9 +937,24 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 	 */
 
 	private String limpiarFormato(String texto) {
+		if (texto == null || texto.indexOf('§') == -1) {
+			return texto;
+		}
 
-		return texto.replaceAll("§[a-zA-Z0-9]", "");
+		StringBuilder sb = new StringBuilder(texto.length());
 
+		for (int i = 0; i < texto.length(); i++) {
+			char c = texto.charAt(i);
+
+			if (c == '§' && i + 1 < texto.length()) {
+				i++;
+				continue;
+			}
+
+			sb.append(c);
+		}
+
+		return sb.toString();
 	}
 
 	/**

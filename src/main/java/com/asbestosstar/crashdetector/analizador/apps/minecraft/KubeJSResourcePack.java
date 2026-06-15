@@ -8,16 +8,39 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class KubeJSResourcePack implements Verificaciones {
+public class KubeJSResourcePack implements VerificacionRapida {
 
 	private boolean activado = false;
 	private final Set<String> errores = new HashSet<>();
 	private final Map<String, String> enlacesPorError = new HashMap<>();
 	public boolean posible = false;
+
+	private static final String KUBEJS_RESOURCE_PACK = "from pack KubeJS Resource Pack [data]";
+	private static final String FAILED_TO_PARSE = "Failed to parse ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { KUBEJS_RESOURCE_PACK, FAILED_TO_PARSE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneKubeJSResourcePack(evento.linea)) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global no utilizada en este verificador.
@@ -35,7 +58,7 @@ public class KubeJSResourcePack implements Verificaciones {
 
 		// Global barato: solo contains, sin recorrer todas las líneas
 		String contenido = consola.contenido_verificar;
-		if (contenido.contains("from pack KubeJS Resource Pack [data]") || contenido.contains("Failed to parse ")) {
+		if (contenido.contains(KUBEJS_RESOURCE_PACK) || contenido.contains(FAILED_TO_PARSE)) {
 			posible = true;
 		}
 
@@ -43,10 +66,7 @@ public class KubeJSResourcePack implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible;
 	}
 
 	/**
@@ -63,25 +83,56 @@ public class KubeJSResourcePack implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!linea.contains("from pack KubeJS Resource Pack [data]") || !linea.contains("Failed to parse ")) {
+		if (linea == null || !lineaContieneKubeJSResourcePack(linea)) {
 			return;
 		}
 
-		try {
-			String modNombre = linea.split("Failed to parse ")[1].split(":")[0];
-			String mensaje = MonitorDePID.idioma.kubeJSResourcePack(modNombre);
+		String modNombre = extraerModNombre(linea);
+		String mensaje = MonitorDePID.idioma.kubeJSResourcePack(modNombre);
 
-			// Solo registrar si es un error nuevo
-			if (errores.add(mensaje)) {
-				String enlace = consola.agregarErrorALectador(numero_de_linea, this);
-				enlacesPorError.put(mensaje, enlace);
-			}
-			activado = true;
-		} catch (Exception e) {
-			// Ignora errores de parseo para evitar fallos críticos,
-			// pero aún así registra la línea como problemática.
-			consola.agregarErrorALectador(numero_de_linea, this);
+		// Solo registrar si es un error nuevo
+		if (errores.add(mensaje)) {
+			String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+			enlacesPorError.put(mensaje, enlace);
 		}
+
+		activado = true;
+	}
+
+	private boolean lineaContieneKubeJSResourcePack(String linea) {
+		return linea.contains(KUBEJS_RESOURCE_PACK) && linea.contains(FAILED_TO_PARSE);
+	}
+
+	private String extraerModNombre(String linea) {
+		int inicio = linea.indexOf(FAILED_TO_PARSE);
+		if (inicio < 0) {
+			return "";
+		}
+
+		inicio += FAILED_TO_PARSE.length();
+
+		int fin = linea.indexOf(':', inicio);
+		if (fin < 0 || fin <= inicio) {
+			return "";
+		}
+
+		return limpiarEspacios(linea, inicio, fin);
+	}
+
+	private String limpiarEspacios(String texto, int inicio, int fin) {
+		while (inicio < fin && texto.charAt(inicio) <= ' ') {
+			inicio++;
+		}
+
+		while (fin > inicio && texto.charAt(fin - 1) <= ' ') {
+			fin--;
+		}
+
+		if (inicio >= fin) {
+			return "";
+		}
+
+		return texto.substring(inicio, fin);
 	}
 
 	@Override
@@ -152,7 +203,7 @@ public class KubeJSResourcePack implements Verificaciones {
 		}
 
 		String t = trazo.trace;
-		return t.contains("from pack KubeJS Resource Pack [data]") && t.contains("Failed to parse ");
+		return t.contains(KUBEJS_RESOURCE_PACK) && t.contains(FAILED_TO_PARSE);
 	}
 
 	@Override

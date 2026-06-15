@@ -5,18 +5,46 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta problemas de compatibilidad entre Iris/Oculus y Distant Horizons
  * donde faltan métodos de API necesarios, requiriendo versiones específicas.
  */
-public class ErrorCompatibilidadIrisDH implements Verificaciones {
+public class ErrorCompatibilidadIrisDH implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean analizarLineas = false;
+
+	private static final String TEXTO_DH_MISSING_API = "java.lang.RuntimeException: DH found, but one or more API methods are missing.";
+	private static final String TEXTO_IRIS_REQUIRES_DH = "Iris requires DH";
+	private static final String TEXTO_DH_API_VERSION = "DH API version";
+	private static final String TEXTO_OR_NEWER = "or newer";
+	private static final String VERSION_204 = "[2.0.4]";
+	private static final String VERSION_110 = "[1.1.0]";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_DH_MISSING_API, TEXTO_IRIS_REQUIRES_DH, TEXTO_DH_API_VERSION };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_DH_MISSING_API) || evento.linea.contains(TEXTO_IRIS_REQUIRES_DH)
+				|| evento.linea.contains(TEXTO_DH_API_VERSION)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
@@ -30,20 +58,17 @@ public class ErrorCompatibilidadIrisDH implements Verificaciones {
 
 		String contenido = consola.contenido_verificar;
 
-		if (contenido.contains("java.lang.RuntimeException: DH found, but one or more API methods are missing.")
-				&& (contenido.contains("Iris requires DH") || contenido.contains("DH API version"))
-				&& (contenido.contains("or newer") || contenido.contains("[2.0.4]") || contenido.contains("[1.1.0]"))) {
+		if (contenido.contains(TEXTO_DH_MISSING_API)
+				&& (contenido.contains(TEXTO_IRIS_REQUIRES_DH) || contenido.contains(TEXTO_DH_API_VERSION))
+				&& (contenido.contains(TEXTO_OR_NEWER) || contenido.contains(VERSION_204)
+						|| contenido.contains(VERSION_110))) {
 			analizarLineas = true;
 		}
-
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	/**
@@ -55,16 +80,16 @@ public class ErrorCompatibilidadIrisDH implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (!analizarLineas || activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;
 		}
 
 		// Buscamos la línea que contiene el error de compatibilidad entre Iris y
 		// Distant Horizons
-		if (linea.contains("java.lang.RuntimeException: DH found, but one or more API methods are missing.")
-				&& (linea.contains("Iris requires DH") || linea.contains("DH API version"))
-				&& (linea.contains("or newer") || linea.contains("[2.0.4]") || linea.contains("[1.1.0]"))) {
+		if (linea.contains(TEXTO_DH_MISSING_API)
+				&& (linea.contains(TEXTO_IRIS_REQUIRES_DH) || linea.contains(TEXTO_DH_API_VERSION))
+				&& (linea.contains(TEXTO_OR_NEWER) || linea.contains(VERSION_204) || linea.contains(VERSION_110))) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -126,9 +151,9 @@ public class ErrorCompatibilidadIrisDH implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("java.lang.RuntimeException: DH found, but one or more API methods are missing.")
-				&& (t.contains("Iris requires DH") || t.contains("DH API version"))
-				&& (t.contains("or newer") || t.contains("[2.0.4]") || t.contains("[1.1.0]"));
+		return t.contains(TEXTO_DH_MISSING_API)
+				&& (t.contains(TEXTO_IRIS_REQUIRES_DH) || t.contains(TEXTO_DH_API_VERSION))
+				&& (t.contains(TEXTO_OR_NEWER) || t.contains(VERSION_204) || t.contains(VERSION_110));
 	}
 
 	@Override
@@ -136,5 +161,4 @@ public class ErrorCompatibilidadIrisDH implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

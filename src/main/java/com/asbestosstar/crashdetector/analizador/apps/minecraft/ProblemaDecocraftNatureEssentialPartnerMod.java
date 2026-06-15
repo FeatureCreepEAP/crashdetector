@@ -5,38 +5,57 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta el problema de Decocraft Nature con el mixin config
  * com/razz/essentialpartnermod/mixins.json.
  */
-public class ProblemaDecocraftNatureEssentialPartnerMod implements Verificaciones {
+public class ProblemaDecocraftNatureEssentialPartnerMod implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
 	private String enlace = "";
 
+	private static final String MIXIN_ERROR = "Error initialising mixin config com/razz/essentialpartnermod/mixins.json";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { MIXIN_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado) {
+			return;
+		}
+
+		if (evento.linea.contains(MIXIN_ERROR)) {
+			analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 
-		String log = consola.contenido_verificar;
-
-		if (log == null)
+		if (consola == null || consola.contenido_verificar == null)
 			return;
 
+		String log = consola.contenido_verificar;
+
 		// Pre-check global para rendimiento
-		if (log.contains("Error initialising mixin config com/razz/essentialpartnermod/mixins.json")) {
+		if (log.contains(MIXIN_ERROR)) {
 			analizarLineas = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	@Override
@@ -45,7 +64,7 @@ public class ProblemaDecocraftNatureEssentialPartnerMod implements Verificacione
 		if (!analizarLineas || linea == null || activado)
 			return;
 
-		if (linea.contains("Error initialising mixin config com/razz/essentialpartnermod/mixins.json")) {
+		if (linea.contains(MIXIN_ERROR)) {
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			this.activado = true;
 		}
@@ -94,12 +113,11 @@ public class ProblemaDecocraftNatureEssentialPartnerMod implements Verificacione
 		if (trazo == null || trazo.trace == null)
 			return false;
 
-		return trazo.trace.contains("Error initialising mixin config com/razz/essentialpartnermod/mixins.json");
+		return trazo.trace.contains(MIXIN_ERROR);
 	}
 
 	@Override
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

@@ -6,6 +6,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,7 +15,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Aternos porque esta es una implementacion de su codex:
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaExcepcionComandoPlugin implements Verificaciones {
+public class ProblemaExcepcionComandoPlugin implements VerificacionRapida {
 
 	private boolean posibleExcepcionComandoPlugin = false;
 	private boolean activado = false;
@@ -27,6 +29,22 @@ public class ProblemaExcepcionComandoPlugin implements Verificaciones {
 
 	private static final String TEXTO_ENTRE_COMANDO_Y_PLUGIN = "' in plugin ";
 
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_INICIO, TEXTO_ENTRE_COMANDO_Y_PLUGIN };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado) {
+			return;
+		}
+
+		posibleExcepcionComandoPlugin = true;
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	/**
 	 * Verificacion global ligera.
 	 *
@@ -35,23 +53,11 @@ public class ProblemaExcepcionComandoPlugin implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(TEXTO_INICIO) && contenido.contains(TEXTO_ENTRE_COMANDO_Y_PLUGIN)) {
-			posibleExcepcionComandoPlugin = true;
-		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleExcepcionComandoPlugin)
-			return false;
-
-		return true;
+		return posibleExcepcionComandoPlugin && !activado;
 	}
 
 	/**

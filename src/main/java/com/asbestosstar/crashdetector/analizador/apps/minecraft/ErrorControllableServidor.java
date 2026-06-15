@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,7 +14,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * error porque Controllable intenta cargar clases del cliente en un entorno de
  * servidor.
  */
-public class ErrorControllableServidor implements Verificaciones {
+public class ErrorControllableServidor implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -20,34 +22,62 @@ public class ErrorControllableServidor implements Verificaciones {
 	private boolean encontradoControllable = false;
 	public boolean posible = false;
 
+	private static final String CONTROLLABLE = "com.mrcrayfish.controllable";
+	private static final String BOOTSTRAP_METHOD_ERROR = "java.lang.BootstrapMethodError";
+	private static final String ATTEMPTED_TO_LOAD_CLASS = "Attempted to load class";
+	private static final String SCREEN_CLIENTE = "net/minecraft/client/gui/screens/Screen";
+	private static final String INVALID_DIST_SERVER = "for invalid dist DEDICATED_SERVER";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { CONTROLLABLE, BOOTSTRAP_METHOD_ERROR, ATTEMPTED_TO_LOAD_CLASS, SCREEN_CLIENTE,
+				INVALID_DIST_SERVER };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(CONTROLLABLE)) {
+			encontradoControllable = true;
+		}
+
+		if (evento.linea.contains(BOOTSTRAP_METHOD_ERROR) || evento.linea.contains(ATTEMPTED_TO_LOAD_CLASS)
+				|| evento.linea.contains(SCREEN_CLIENTE) || evento.linea.contains(INVALID_DIST_SERVER)) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	/**
 	 * Método de compatibilidad — busca si Controllable está presente en el
 	 * contenido completo del registro.
 	 */
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		// Verificamos si Controllable está presente en el contenido del registro
-		if (consola.contenido_verificar != null) {
-			if (consola.contenido_verificar.contains("com.mrcrayfish.controllable")) {
-				encontradoControllable = true;
-			}
+		if (consola.contenido_verificar.contains(CONTROLLABLE)) {
+			encontradoControllable = true;
+		}
 
-			if (encontradoControllable && consola.contenido_verificar.contains("java.lang.BootstrapMethodError")
-					&& consola.contenido_verificar.contains("Attempted to load class")
-					&& consola.contenido_verificar.contains("net/minecraft/client/gui/screens/Screen")
-					&& consola.contenido_verificar.contains("for invalid dist DEDICATED_SERVER")) {
-				posible = true;
-			}
-
+		if (encontradoControllable && consola.contenido_verificar.contains(BOOTSTRAP_METHOD_ERROR)
+				&& consola.contenido_verificar.contains(ATTEMPTED_TO_LOAD_CLASS)
+				&& consola.contenido_verificar.contains(SCREEN_CLIENTE)
+				&& consola.contenido_verificar.contains(INVALID_DIST_SERVER)) {
+			posible = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	/**
@@ -60,17 +90,19 @@ public class ErrorControllableServidor implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (!posible || activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;
 		}
 
+		if (linea.contains(CONTROLLABLE)) {
+			encontradoControllable = true;
+		}
+
 		// Buscamos la línea que contiene el error de carga de clase para servidor
 		// dedicado de Controllable
-		if (encontradoControllable && linea.contains("java.lang.BootstrapMethodError")
-				&& linea.contains("Attempted to load class")
-				&& linea.contains("net/minecraft/client/gui/screens/Screen")
-				&& linea.contains("for invalid dist DEDICATED_SERVER")) {
+		if (encontradoControllable && linea.contains(BOOTSTRAP_METHOD_ERROR) && linea.contains(ATTEMPTED_TO_LOAD_CLASS)
+				&& linea.contains(SCREEN_CLIENTE) && linea.contains(INVALID_DIST_SERVER)) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -132,9 +164,8 @@ public class ErrorControllableServidor implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("java.lang.BootstrapMethodError") && t.contains("Attempted to load class")
-				&& t.contains("net/minecraft/client/gui/screens/Screen")
-				&& t.contains("for invalid dist DEDICATED_SERVER") && t.contains("com.mrcrayfish.controllable");
+		return t.contains(BOOTSTRAP_METHOD_ERROR) && t.contains(ATTEMPTED_TO_LOAD_CLASS) && t.contains(SCREEN_CLIENTE)
+				&& t.contains(INVALID_DIST_SERVER) && t.contains(CONTROLLABLE);
 	}
 
 	@Override
@@ -142,5 +173,4 @@ public class ErrorControllableServidor implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

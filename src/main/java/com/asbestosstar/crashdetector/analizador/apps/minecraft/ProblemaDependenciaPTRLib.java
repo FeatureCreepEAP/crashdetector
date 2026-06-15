@@ -6,13 +6,15 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta que el mod PTRLib no está instalado. Modernizado: global barato +
  * verificación por línea, sin recorrer todo el log.
  */
-public class ProblemaDependenciaPTRLib implements Verificaciones {
+public class ProblemaDependenciaPTRLib implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -24,6 +26,24 @@ public class ProblemaDependenciaPTRLib implements Verificaciones {
 
 	private static final String TEXTO_EXCEPCION = "Encountered an unexpected exception";
 	private static final String TEXTO_CLASE_FALTANTE = "java.lang.NoClassDefFoundError: com/mia/craftstudio/IPackReaderCallback";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_EXCEPCION, TEXTO_CLASE_FALTANTE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_EXCEPCION) || evento.linea.contains(TEXTO_CLASE_FALTANTE)) {
+			posiblePTRLib = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global barata: activa flag si hay indicios de error en el log
@@ -43,10 +63,7 @@ public class ProblemaDependenciaPTRLib implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posiblePTRLib)
-			return false;
-
-		return true;
+		return posiblePTRLib && !activado;
 	}
 
 	/**
@@ -129,5 +146,4 @@ public class ProblemaDependenciaPTRLib implements Verificaciones {
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,13 +15,45 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * de módulos de Java. Recomienda usar C3ME en lugar de C2ME cuando se utilizan
  * mods de conexión.
  */
-public class SCOErrorCompatibilidadC2ME implements Verificaciones {
+public class SCOErrorCompatibilidadC2ME implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private boolean c2mePresente = false;
 	private boolean connectorPresente = false;
 	private String enlaceHtml = "";
+
+	private static final String C2ME = "com.ishland.c2me";
+	private static final String SINYTRA_CONNECTOR = "SINYTRA CONNECTOR IS PRESENT!";
+	private static final String SPECIAL_COMPATIBILITY_OPERATION = "specialcompatibilityoperation";
+	private static final String ILLEGAL_ACCESS_EXCEPTION = "java.lang.IllegalAccessException";
+	private static final String UNSAFE_ACCESS = "cannot access class jdk.internal.misc.Unsafe";
+	private static final String JAVA_BASE_EXPORT = "because module java.base does not export";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { C2ME, SINYTRA_CONNECTOR, SPECIAL_COMPATIBILITY_OPERATION, ILLEGAL_ACCESS_EXCEPTION,
+				UNSAFE_ACCESS, JAVA_BASE_EXPORT };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		String linea = evento.linea;
+
+		if (linea.contains(C2ME)) {
+			c2mePresente = true;
+		}
+
+		if (linea.contains(SINYTRA_CONNECTOR) || linea.contains(SPECIAL_COMPATIBILITY_OPERATION)) {
+			connectorPresente = true;
+		}
+
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global del contenido de la consola.
@@ -33,16 +67,20 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		String contenidoConsola = consola.contenido_verificar;
 
 		// Detecta la presencia de C2ME en los logs
-		if (contenidoConsola.contains("com.ishland.c2me")) {
+		if (contenidoConsola.contains(C2ME)) {
 			c2mePresente = true;
 		}
 
 		// Detecta la presencia de mods de conexión
-		if (contenidoConsola.contains("SINYTRA CONNECTOR IS PRESENT!")
-				|| contenidoConsola.contains("specialcompatibilityoperation")) {
+		if (contenidoConsola.contains(SINYTRA_CONNECTOR)
+				|| contenidoConsola.contains(SPECIAL_COMPATIBILITY_OPERATION)) {
 			connectorPresente = true;
 		}
 	}
@@ -54,7 +92,7 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 		if (!connectorPresente)
 			return false;
 
-		return true;
+		return !activado;
 	}
 
 	/**
@@ -75,9 +113,8 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 		}
 
 		// Detecta el error específico de acceso ilegal entre módulos de Java
-		if (linea.contains("java.lang.IllegalAccessException")
-				&& linea.contains("cannot access class jdk.internal.misc.Unsafe")
-				&& linea.contains("because module java.base does not export")) {
+		if (linea.contains(ILLEGAL_ACCESS_EXCEPTION) && linea.contains(UNSAFE_ACCESS)
+				&& linea.contains(JAVA_BASE_EXPORT)) {
 			mensaje = MonitorDePID.idioma.errorCompatibilidadC2ME() + Verificaciones.nl_html;
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;

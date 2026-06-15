@@ -6,13 +6,15 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta mundos duplicados que no pueden cargarse en Minecraft. Moderniza la
  * detección sin usar Pattern/Matcher.
  */
-public class ProblemaMundoDuplicado implements Verificaciones {
+public class ProblemaMundoDuplicado implements VerificacionRapida {
 
 	private boolean posibleMundoDuplicado = false;
 	private boolean activado = false;
@@ -23,6 +25,24 @@ public class ProblemaMundoDuplicado implements Verificaciones {
 	private static final String TEXTO_INICIO = "World ";
 	private static final String TEXTO_MEDIO = " is a duplicate of another world and has been prevented from loading";
 	private static final String TEXTO_FINAL = "uid.dat";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_MEDIO, TEXTO_FINAL };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneIndicioMundoDuplicado(evento.linea)) {
+			posibleMundoDuplicado = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	@Override
 	public void verificar(Consola consola) {
@@ -39,15 +59,12 @@ public class ProblemaMundoDuplicado implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleMundoDuplicado)
-			return false;
-
-		return true;
+		return posibleMundoDuplicado && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleMundoDuplicado || linea == null || linea.isEmpty()) {
+		if (!posibleMundoDuplicado || activado || linea == null || linea.isEmpty()) {
 			return;
 		}
 
@@ -60,6 +77,10 @@ public class ProblemaMundoDuplicado implements Verificaciones {
 		if (finMundo <= inicioMundo)
 			return;
 
+		if (!linea.contains(TEXTO_FINAL)) {
+			return;
+		}
+
 		String mundo = linea.substring(inicioMundo, finMundo).trim();
 		if (mundo.isEmpty())
 			return;
@@ -68,6 +89,10 @@ public class ProblemaMundoDuplicado implements Verificaciones {
 		enlace = consola.agregarErrorALectador(numero_de_linea, this);
 
 		activado = true;
+	}
+
+	private boolean lineaContieneIndicioMundoDuplicado(String linea) {
+		return linea.contains(TEXTO_MEDIO) || linea.contains(TEXTO_FINAL);
 	}
 
 	@Override

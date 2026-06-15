@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -28,10 +30,13 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * no está instalado, está en una versión incorrecta, o tiene incompatibilidades
  * / contenido removido.
  */
-public class ItemNoExiste implements Verificaciones {
+public class ItemNoExiste implements VerificacionRapida {
 
 	// Tipos aceptados en el mensaje original de la excepción
 	private static final String[] TIPOS_REGISTRO = { "Item:", "Block:", "Fluid:" };
+
+	private static final String PREFIJO_BASE = "java.lang.IllegalStateException: ";
+	private static final String SUFIJO = " does not exist";
 
 	// Indica si el log contiene el patrón general del problema
 	private boolean posibleError = false;
@@ -49,10 +54,31 @@ public class ItemNoExiste implements Verificaciones {
 	private String enlace = "";
 
 	@Override
+	public String[] patronesRapidos() {
+		return new String[] { PREFIJO_BASE, "Item:", "Block:", "Fluid:", SUFIJO };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneItemNoExiste(evento.linea)) {
+			posibleError = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		// Detección global ligera para evitar trabajo innecesario por línea
-		if (consola.contenido_verificar.contains("java.lang.IllegalStateException:")
-				&& consola.contenido_verificar.contains(" does not exist")) {
+		if (consola.contenido_verificar.contains(PREFIJO_BASE) && consola.contenido_verificar.contains(SUFIJO)) {
 			for (String tipo : TIPOS_REGISTRO) {
 				if (consola.contenido_verificar.contains(tipo)) {
 					posibleError = true;
@@ -64,42 +90,36 @@ public class ItemNoExiste implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleError)
-			return false;
-
-		return true;
+		return posibleError && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Salir temprano si no hay indicios globales o si ya fue activado
-		if (!posibleError || activado) {
+		if (!posibleError || activado || linea == null) {
 			return;
 		}
 
-		String prefijoBase = "java.lang.IllegalStateException: ";
-		String sufijo = " does not exist";
-
-		if (!linea.contains(prefijoBase) || !linea.contains(sufijo)) {
+		if (!linea.contains(PREFIJO_BASE) || !linea.contains(SUFIJO)) {
 			return;
 		}
 
 		for (String tipo : TIPOS_REGISTRO) {
-			String prefijoCompleto = prefijoBase + tipo;
+			String prefijoCompleto = PREFIJO_BASE + tipo;
 
 			if (linea.contains(prefijoCompleto)) {
 				int inicio = linea.indexOf(prefijoCompleto);
-				int fin = linea.indexOf(sufijo, inicio);
+				int fin = linea.indexOf(SUFIJO, inicio);
 
 				if (inicio >= 0 && fin > inicio) {
-					String valor = linea.substring(inicio + prefijoCompleto.length(), fin).trim();
+					String valor = limpiarEspacios(linea, inicio + prefijoCompleto.length(), fin);
 
 					if (!valor.isEmpty()) {
 						this.itemFaltante = valor;
 
 						int separadorNamespace = valor.indexOf(':');
 						if (separadorNamespace > 0) {
-							this.namespace = valor.substring(0, separadorNamespace).trim();
+							this.namespace = limpiarEspacios(valor, 0, separadorNamespace);
 						}
 
 						this.enlace = consola.agregarErrorALectador(num, this);
@@ -109,6 +129,36 @@ public class ItemNoExiste implements Verificaciones {
 				}
 			}
 		}
+	}
+
+	private boolean lineaContieneItemNoExiste(String linea) {
+		if (!linea.contains(PREFIJO_BASE) || !linea.contains(SUFIJO)) {
+			return false;
+		}
+
+		for (String tipo : TIPOS_REGISTRO) {
+			if (linea.contains(PREFIJO_BASE + tipo)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private String limpiarEspacios(String texto, int inicio, int fin) {
+		while (inicio < fin && texto.charAt(inicio) <= ' ') {
+			inicio++;
+		}
+
+		while (fin > inicio && texto.charAt(fin - 1) <= ' ') {
+			fin--;
+		}
+
+		if (inicio >= fin) {
+			return "";
+		}
+
+		return texto.substring(inicio, fin);
 	}
 
 	@Override

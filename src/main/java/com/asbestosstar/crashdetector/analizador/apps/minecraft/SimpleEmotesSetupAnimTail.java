@@ -5,9 +5,11 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class SimpleEmotesSetupAnimTail implements Verificaciones {
+public class SimpleEmotesSetupAnimTail implements VerificacionRapida {
 
 	// Indica si el log contiene indicios globales del error
 	private boolean posibleErrorSimpleEmotes = false;
@@ -18,10 +20,34 @@ public class SimpleEmotesSetupAnimTail implements Verificaciones {
 	// Enlace a la línea del log donde aparece la cadena
 	private String enlace = "";
 
+	private static final String TEXTO_ERROR = "$simpleemotes$setupAnimTAIL";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_ERROR)) {
+			posibleErrorSimpleEmotes = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
 		// Detección global ligera para evitar trabajo innecesario por línea
-		if (consola.contenido_verificar.contains("$simpleemotes$setupAnimTAIL")) {
+		if (consola.contenido_verificar.contains(TEXTO_ERROR)) {
 			posibleErrorSimpleEmotes = true;
 		}
 	}
@@ -31,18 +57,18 @@ public class SimpleEmotesSetupAnimTail implements Verificaciones {
 		if (!posibleErrorSimpleEmotes)
 			return false;
 
-		return true;
+		return !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Salir temprano si no hay indicios globales o si ya fue activado
-		if (!posibleErrorSimpleEmotes || activado) {
+		if (!posibleErrorSimpleEmotes || activado || linea == null) {
 			return;
 		}
 
 		// Confirmación precisa por línea
-		if (linea.contains("$simpleemotes$setupAnimTAIL")) {
+		if (linea.contains(TEXTO_ERROR)) {
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
 		}

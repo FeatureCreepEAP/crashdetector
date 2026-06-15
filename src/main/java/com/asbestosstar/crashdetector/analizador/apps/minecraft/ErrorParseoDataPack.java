@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,7 +15,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Requiere que existan: - "Failed to parse" - "Registry loading errors:"
  */
-public class ErrorParseoDataPack implements Verificaciones {
+public class ErrorParseoDataPack implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -24,43 +26,65 @@ public class ErrorParseoDataPack implements Verificaciones {
 	private String archivo = "";
 	private String pack = "";
 
+	private static final String FAILED_TO_PARSE = "Failed to parse";
+	private static final String REGISTRY_LOADING_ERRORS = "Registry loading errors:";
+	private static final String FROM_PACK = " from pack ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { FAILED_TO_PARSE, REGISTRY_LOADING_ERRORS };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		analizarLineas = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
 
 		String log = consola.contenido_verificar;
 
-		if (log == null)
-			return;
-
 		// Pre-check global: deben existir ambas cadenas
-		if (log.contains("Failed to parse") && log.contains("Registry loading errors:")) {
-
+		if (log.contains(FAILED_TO_PARSE) && log.contains(REGISTRY_LOADING_ERRORS)) {
 			analizarLineas = true;
 		}
 	}
 
 	@Override
+	public boolean quiereAnalizarLineas() {
+		return analizarLineas && !activado;
+	}
+
+	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!analizarLineas || linea == null || activado)
+		if (!analizarLineas || linea == null || activado) {
 			return;
+		}
 
-		if (linea.contains("Failed to parse")) {
-
+		if (linea.contains(FAILED_TO_PARSE)) {
 			vioParse = true;
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Extraer archivo y pack si es posible
-			int inicioArchivo = linea.indexOf("Failed to parse") + "Failed to parse".length();
-			int desdePack = linea.indexOf(" from pack ");
+			int inicioArchivo = linea.indexOf(FAILED_TO_PARSE) + FAILED_TO_PARSE.length();
+			int desdePack = linea.indexOf(FROM_PACK);
 
 			if (desdePack > -1) {
 				archivo = linea.substring(inicioArchivo, desdePack).trim();
-				pack = linea.substring(desdePack + " from pack ".length()).trim();
+				pack = linea.substring(desdePack + FROM_PACK.length()).trim();
 			}
 		}
 
-		if (linea.contains("Registry loading errors:")) {
+		if (linea.contains(REGISTRY_LOADING_ERRORS)) {
 			vioRegistry = true;
 		}
 

@@ -3,49 +3,58 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores de Every Compat (Etc) donde hay bloques de madera con nombres
  * inválidos que provocan un UnsupportedOperationException durante la carga.
  */
-public class ErrorEveryCompatNombreInvalido implements Verificaciones {
+public class ErrorEveryCompatNombreInvalido implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	public boolean posible = false;
 
+	private static final String UNSUPPORTED_OPERATION_EXCEPTION = "java.lang.UnsupportedOperationException";
+	private static final String INVALID_ITEM_NAME = "has an invalid item name";
+	private static final String EVERY_COMPAT_ID = "every_compat";
+	private static final String EVERY_COMPAT_NAME = "Every Compat";
+	private static final String SIMPLE_ENTRY_SET = "SimpleEntrySet";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { UNSUPPORTED_OPERATION_EXCEPTION, INVALID_ITEM_NAME, EVERY_COMPAT_ID, EVERY_COMPAT_NAME,
+				SIMPLE_ENTRY_SET };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneEveryCompatNombreInvalido(evento.linea)) {
+			posible = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	/**
 	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		// Buscamos la línea que contiene el error de nombre inválido de Every Compat
-		if (contenido.contains("java.lang.UnsupportedOperationException")
-				&& contenido.contains("has an invalid item name") && (contenido.contains("every_compat")
-						|| contenido.contains("Every Compat") || contenido.contains("SimpleEntrySet"))) {
-
-			posible = true;
-		}
-
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	/**
@@ -58,15 +67,13 @@ public class ErrorEveryCompatNombreInvalido implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (!posible || activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;
 		}
 
 		// Buscamos la línea que contiene el error de nombre inválido de Every Compat
-		if (linea.contains("java.lang.UnsupportedOperationException") && linea.contains("has an invalid item name")
-				&& (linea.contains("every_compat") || linea.contains("Every Compat")
-						|| linea.contains("SimpleEntrySet"))) {
+		if (lineaContieneEveryCompatNombreInvalido(linea)) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -75,6 +82,12 @@ public class ErrorEveryCompatNombreInvalido implements Verificaciones {
 			mensaje = MonitorDePID.idioma.errorEveryCompatNombreInvalido() + Verificaciones.nl_html;
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneEveryCompatNombreInvalido(String linea) {
+		return linea.contains(UNSUPPORTED_OPERATION_EXCEPTION) && linea.contains(INVALID_ITEM_NAME)
+				&& (linea.contains(EVERY_COMPAT_ID) || linea.contains(EVERY_COMPAT_NAME)
+						|| linea.contains(SIMPLE_ENTRY_SET));
 	}
 
 	@Override
@@ -128,8 +141,8 @@ public class ErrorEveryCompatNombreInvalido implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("java.lang.UnsupportedOperationException") && t.contains("has an invalid item name")
-				&& (t.contains("every_compat") || t.contains("Every Compat") || t.contains("SimpleEntrySet"));
+		return t.contains(UNSUPPORTED_OPERATION_EXCEPTION) && t.contains(INVALID_ITEM_NAME)
+				&& (t.contains(EVERY_COMPAT_ID) || t.contains(EVERY_COMPAT_NAME) || t.contains(SIMPLE_ENTRY_SET));
 	}
 
 	@Override
@@ -137,5 +150,4 @@ public class ErrorEveryCompatNombreInvalido implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

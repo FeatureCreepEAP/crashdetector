@@ -7,12 +7,14 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta instalaciones incompletas de Forge y excepciones relacionadas.
  */
-public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
+public class MCForgeInstallacionNoEstaCompleta implements VerificacionRapida {
 
 	private boolean posibleForgeIncompleto = false;
 	private boolean activado = false;
@@ -27,6 +29,31 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 	private static final String ERROR_CANNOT_FIND_TARGET = "Cannot find launch target fmlclient, unable to launch";
 
 	private static final String ERROR_MINECRAFT_CLASS_MISSING = "java.lang.IllegalStateException: Could not find net/minecraft/client/Minecraft.class in classloader SecureModuleClassLoader";
+
+	private static final String FORGE_PREFIX = "forge-";
+	private static final String FMLCORE_PREFIX = "fmlcore-";
+	private static final String CLIENT_JAR = "client.jar";
+	private static final String JAR = ".jar";
+	private static final String AT = " at ";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { ERROR_INVALID_PATHS, ERROR_FAILED_TO_FIND_VERSION, ERROR_CANNOT_FIND_TARGET,
+				ERROR_MINECRAFT_CLASS_MISSING };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (contieneProblemaForge(evento.linea)) {
+			posibleForgeIncompleto = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificacion global ligera.
@@ -50,10 +77,7 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleForgeIncompleto)
-			return false;
-
-		return true;
+		return posibleForgeIncompleto && !activado;
 	}
 
 	/**
@@ -148,7 +172,7 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 		}
 
 		int inicioVersion = inicio + ERROR_FAILED_TO_FIND_VERSION.length();
-		int indiceAt = texto.indexOf(" at ", inicioVersion);
+		int indiceAt = texto.indexOf(AT, inicioVersion);
 
 		if (indiceAt < 0) {
 			return null;
@@ -156,7 +180,7 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 
 		String version = texto.substring(inicioVersion, indiceAt).trim();
 
-		int inicioRuta = indiceAt + " at ".length();
+		int inicioRuta = indiceAt + AT.length();
 		int finRuta = buscarFinDeRutaJar(texto, inicioRuta);
 
 		if (finRuta <= inicioRuta) {
@@ -169,7 +193,7 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 			return null;
 		}
 
-		if (!ruta.contains("forge-") || !ruta.endsWith("-client.jar")) {
+		if (!ruta.contains(FORGE_PREFIX) || !ruta.endsWith("-client.jar")) {
 			return null;
 		}
 
@@ -180,13 +204,13 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 	 * Busca el final de una ruta .jar dentro del texto.
 	 */
 	private int buscarFinDeRutaJar(String texto, int inicio) {
-		int indiceJar = texto.indexOf(".jar", inicio);
+		int indiceJar = texto.indexOf(JAR, inicio);
 
 		if (indiceJar < 0) {
 			return -1;
 		}
 
-		return indiceJar + ".jar".length();
+		return indiceJar + JAR.length();
 	}
 
 	/**
@@ -198,37 +222,37 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 
 		int indiceForge = 0;
 		while (indiceForge >= 0 && indiceForge < texto.length()) {
-			indiceForge = texto.indexOf("forge-", indiceForge);
+			indiceForge = texto.indexOf(FORGE_PREFIX, indiceForge);
 
 			if (indiceForge < 0) {
 				break;
 			}
 
-			int fin = texto.indexOf("client.jar", indiceForge);
+			int fin = texto.indexOf(CLIENT_JAR, indiceForge);
 
 			if (fin >= 0) {
-				mejor = texto.substring(indiceForge, fin + "client.jar".length());
-				indiceForge = fin + "client.jar".length();
+				mejor = texto.substring(indiceForge, fin + CLIENT_JAR.length());
+				indiceForge = fin + CLIENT_JAR.length();
 			} else {
-				indiceForge += "forge-".length();
+				indiceForge += FORGE_PREFIX.length();
 			}
 		}
 
 		int indiceFmlcore = 0;
 		while (indiceFmlcore >= 0 && indiceFmlcore < texto.length()) {
-			indiceFmlcore = texto.indexOf("fmlcore-", indiceFmlcore);
+			indiceFmlcore = texto.indexOf(FMLCORE_PREFIX, indiceFmlcore);
 
 			if (indiceFmlcore < 0) {
 				break;
 			}
 
-			int fin = texto.indexOf(".jar", indiceFmlcore);
+			int fin = texto.indexOf(JAR, indiceFmlcore);
 
 			if (fin >= 0) {
-				mejor = texto.substring(indiceFmlcore, fin + ".jar".length());
-				indiceFmlcore = fin + ".jar".length();
+				mejor = texto.substring(indiceFmlcore, fin + JAR.length());
+				indiceFmlcore = fin + JAR.length();
 			} else {
-				indiceFmlcore += "fmlcore-".length();
+				indiceFmlcore += FMLCORE_PREFIX.length();
 			}
 		}
 

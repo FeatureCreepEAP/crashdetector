@@ -5,33 +5,71 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class OptifineObsoleta implements Verificaciones {
+public class OptifineObsoleta implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 
+	private boolean errorOptifine = false;
+	private boolean uriInvalida = false;
+	private boolean incompatibilidad = false;
+	private boolean servicioFallido = false;
+
+	private static final String ERROR_OPTIFINE = "Error loading OptiFine ZIP file";
+	private static final String URI_INVALIDA = "URI is not hierarchical";
+	private static final String INCOMPATIBILIDAD = "cpw.mods.modlauncher.api.IncompatibleEnvironmentException";
+	private static final String SERVICIO_FALLIDO = "Service failed to load OptiFine";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { ERROR_OPTIFINE, URI_INVALIDA, INCOMPATIBILIDAD, SERVICIO_FALLIDO };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		actualizarIndicios(evento.linea);
+		intentarActivar();
+	}
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
+
 		String contento_de_consola = consola.contenido_verificar;
+		actualizarIndicios(contento_de_consola);
+		intentarActivar();
+	}
 
-		boolean errorOptifine = contento_de_consola.contains("Error loading OptiFine ZIP file");
-		if (!errorOptifine) {
-			return;
+	private void actualizarIndicios(String texto) {
+		if (texto.contains(ERROR_OPTIFINE)) {
+			errorOptifine = true;
 		}
 
-		boolean uriInvalida = contento_de_consola.contains("URI is not hierarchical");
-		if (!uriInvalida) {
-			return;
+		if (texto.contains(URI_INVALIDA)) {
+			uriInvalida = true;
 		}
-		boolean incompatibilidad = contento_de_consola
-				.contains("cpw.mods.modlauncher.api.IncompatibleEnvironmentException");
-		if (!incompatibilidad) {
-			return;
+
+		if (texto.contains(INCOMPATIBILIDAD)) {
+			incompatibilidad = true;
 		}
-		boolean servicioFallido = contento_de_consola.contains("Service failed to load OptiFine");
-		if (!servicioFallido) {
+
+		if (texto.contains(SERVICIO_FALLIDO)) {
+			servicioFallido = true;
+		}
+	}
+
+	private void intentarActivar() {
+		if (activado) {
 			return;
 		}
 
@@ -43,7 +81,6 @@ public class OptifineObsoleta implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-
 		return false;
 	}
 

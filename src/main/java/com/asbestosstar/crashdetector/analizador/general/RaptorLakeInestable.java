@@ -9,11 +9,13 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.intel.ValidadorMicrocodigo;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class RaptorLakeInestable implements Verificaciones {
+public class RaptorLakeInestable implements VerificacionRapida {
 
 	// Configuración para desactivar la verificación desde la GUI
 	public static ConfigBoolean config = ConfigBoolean.de("ignorar_raptor_lake", false);
@@ -34,6 +36,21 @@ public class RaptorLakeInestable implements Verificaciones {
 	private static final String TEXTO_PROCESSOR_NAME = "Processor Name:";
 
 	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_PROCESSOR_NAME };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null || activado || config.obtener()) {
+			return;
+		}
+
+		posibleRaptorLake = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
 	public void verificar(Consola consola) {
 		if (config.obtener()) {
 			return; // El usuario desactivó esta verificación
@@ -51,15 +68,12 @@ public class RaptorLakeInestable implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleRaptorLake)
-			return false;
-
-		return true;
+		return posibleRaptorLake && !activado && !config.obtener();
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleRaptorLake || activado || linea == null || linea.isEmpty()) {
+		if (!posibleRaptorLake || activado || linea == null || linea.isEmpty() || config.obtener()) {
 			return;
 		}
 
@@ -88,7 +102,11 @@ public class RaptorLakeInestable implements Verificaciones {
 
 		if (versionActual < MICROCODE_FIX_VERSION) {
 			this.cpuName = cpuDetectado;
-			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
+
+			if (consola != null) {
+				this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
+			}
+
 			this.mensaje = construirMensaje(cpuName, microcodeRaw) + " " + enlace;
 			hayProblema = true;
 			this.activado = true;

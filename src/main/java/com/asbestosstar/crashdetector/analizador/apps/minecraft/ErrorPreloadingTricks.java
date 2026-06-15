@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -16,43 +18,73 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Se detecta por la presencia de "Preloading Tricks Installed" y el error de
  * casting en el log.
  */
-public class ErrorPreloadingTricks implements Verificaciones {
+public class ErrorPreloadingTricks implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
 	private String enlace = "";
 	private boolean tienePreLoading = false;
 
+	private static final String PRELOADING_TRICKS_INSTALLED = "Preloading Tricks Installed";
+	private static final String CLASS_CAST_EXCEPTION = "ClassCastException";
+	private static final String MODULE_DESCRIPTOR_CAST = "cannot be cast to class java.lang.module.ModuleDescriptor";
+
 	@Override
-	public void verificar(Consola consola) {
+	public String[] patronesRapidos() {
+		return new String[] { PRELOADING_TRICKS_INSTALLED, MODULE_DESCRIPTOR_CAST };
+	}
 
-		String log = consola.contenido_verificar;
-
-		if (log == null)
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
 			return;
+		}
 
-		// Pre-check global: Debemos encontrar tanto el error de casting como la mención
-		// del mod
-		if (log.contains("Preloading Tricks Installed")) {
+		String linea = evento.linea;
 
+		if (linea.contains(PRELOADING_TRICKS_INSTALLED)) {
 			tienePreLoading = true;
 		}
-		if (log.contains("cannot be cast to class java.lang.module.ModuleDescriptor")) {
+
+		if (linea.contains(MODULE_DESCRIPTOR_CAST)) {
 			analizarLineas = true;
 		}
 
+		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		String log = consola.contenido_verificar;
+
+		// Pre-check global: Debemos encontrar tanto el error de casting como la mención
+		// del mod
+		if (log.contains(PRELOADING_TRICKS_INSTALLED)) {
+			tienePreLoading = true;
+		}
+
+		if (log.contains(MODULE_DESCRIPTOR_CAST)) {
+			analizarLineas = true;
+		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return tienePreLoading && analizarLineas && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!tienePreLoading || !analizarLineas || linea == null || activado)
+		if (!tienePreLoading || !analizarLineas || linea == null || activado) {
 			return;
+		}
 
 		// Marcamos el error en la línea donde aparece el ClassCastException
-		if (linea.contains("ClassCastException")
-				&& linea.contains("cannot be cast to class java.lang.module.ModuleDescriptor")) {
-
+		if (linea.contains(CLASS_CAST_EXCEPTION) && linea.contains(MODULE_DESCRIPTOR_CAST)) {
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}

@@ -5,53 +5,69 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores causados por el mod En Garde! (mod ID: en_garde).
  */
-public class ErrorEnGarde implements Verificaciones {
+public class ErrorEnGarde implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean posible = false;
 
 	private String enlaceHtml = "";
 
-	@Override
-	public void verificar(Consola consola) {
+	private static final String HANDLER = "handler$";
+	private static final String EN_GARDE = "$en_garde$";
 
-		if (consola == null || consola.contenido_verificar == null) {
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { HANDLER, EN_GARDE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
 			return;
 		}
 
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains("handler$") && contenido.contains("$en_garde$")) {
+		if (lineaContieneEnGarde(evento.linea)) {
 			posible = true;
 		}
 
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	/**
+	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
+	 */
+	@Override
+	public void verificar(Consola consola) {
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
+		return posible && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado || linea == null) {
+		if (!posible || activado || linea == null) {
 			return;
 		}
 
 		// Buscar indicios claros de En Garde! en mixins
-		if (linea.contains("handler$") && linea.contains("$en_garde$")) {
+		if (lineaContieneEnGarde(linea)) {
 			this.activado = true;
 			this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 		}
+	}
+
+	private boolean lineaContieneEnGarde(String linea) {
+		return linea.contains(HANDLER) && linea.contains(EN_GARDE);
 	}
 
 	@Override
@@ -104,5 +120,4 @@ public class ErrorEnGarde implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

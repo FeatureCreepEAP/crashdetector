@@ -8,15 +8,17 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Clase que detecta plugins con nombres ambiguos en la carpeta
  * 'plugins'.Gracias a Aternos por que esta es una implementacion de su codex
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaNombrePluginAmbiguo implements Verificaciones {
+public class ProblemaNombrePluginAmbiguo implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -32,6 +34,25 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 	private static final String TEXTO_BASE = "Ambiguous plugin name ";
 	private static final String TEXTO_FILES = "files ";
 	private static final String TEXTO_AND = " and ";
+	private static final String TEXTO_PLUGINS = "plugins/";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_BASE, TEXTO_FILES, TEXTO_PLUGINS };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneIndicioPluginAmbiguo(evento.linea)) {
+			this.analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verifica si el log contiene errores de nombre ambiguo de plugins.
@@ -58,10 +79,7 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas;
 	}
 
 	@Override
@@ -75,7 +93,7 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 			return;
 		}
 
-		ResultadoAmbiguo resultado = extraerDatos(linea.trim());
+		ResultadoAmbiguo resultado = extraerDatos(linea);
 
 		if (resultado != null) {
 
@@ -93,6 +111,10 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 
 			activado = true;
 		}
+	}
+
+	private boolean lineaContieneIndicioPluginAmbiguo(String linea) {
+		return linea.contains(TEXTO_BASE) || linea.contains(TEXTO_FILES) || linea.contains(TEXTO_PLUGINS);
 	}
 
 	/**
@@ -139,7 +161,7 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 			return null;
 		}
 
-		int posPlugins = linea.indexOf("plugins/", posAnd);
+		int posPlugins = linea.indexOf(TEXTO_PLUGINS, posAnd);
 
 		if (posPlugins < 0) {
 			return null;

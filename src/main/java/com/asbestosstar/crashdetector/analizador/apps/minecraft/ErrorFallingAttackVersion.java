@@ -3,8 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,33 +14,47 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * marcado como compatible con 1.19.* pero en realidad es para 1.20.*, causando
  * un ClassMetadataNotFoundException para DamageSources.
  */
-public class ErrorFallingAttackVersion implements Verificaciones {
+public class ErrorFallingAttackVersion implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean encontradoFallingAttack = false;
 
+	private static final String FALLING_ATTACK = "falling-attack";
+	private static final String CLASS_METADATA_NOT_FOUND = "org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException";
+	private static final String DAMAGE_SOURCES = "net.minecraft.world.damagesource.DamageSources";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { FALLING_ATTACK, CLASS_METADATA_NOT_FOUND, DAMAGE_SOURCES };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		// Verificamos si Falling Attack está presente en la línea que disparó el
+		// patrón rápido.
+		if (evento.linea.contains(FALLING_ATTACK)) {
+			encontradoFallingAttack = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	/**
-	 * Método de compatibilidad — busca si Falling Attack está presente en el
-	 * contenido completo del registro.
+	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// Verificamos si Falling Attack está presente en el contenido del registro
-		if (consola.contenido_verificar != null) {
-			if (consola.contenido_verificar.contains("falling-attack")) {
-				encontradoFallingAttack = true;
-			}
-		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!encontradoFallingAttack)
-			return false;
-
-		return true;
+		return encontradoFallingAttack && !activado;
 	}
 
 	/**
@@ -50,15 +66,14 @@ public class ErrorFallingAttackVersion implements Verificaciones {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
+		if (!encontradoFallingAttack || activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
 			return;
 		}
 
 		// Buscamos la línea que contiene el error de clase no encontrada de Falling
 		// Attack
-		if (linea.contains("org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException")
-				&& linea.contains("net.minecraft.world.damagesource.DamageSources") && encontradoFallingAttack) {
+		if (linea.contains(CLASS_METADATA_NOT_FOUND) && linea.contains(DAMAGE_SOURCES)) {
 
 			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -121,9 +136,7 @@ public class ErrorFallingAttackVersion implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException")
-				&& t.contains("net.minecraft.world.damagesource.DamageSources")
-				&& t.toLowerCase().contains("falling-attack");
+		return t.contains(CLASS_METADATA_NOT_FOUND) && t.contains(DAMAGE_SOURCES) && t.contains(FALLING_ATTACK);
 	}
 
 	@Override
@@ -131,5 +144,4 @@ public class ErrorFallingAttackVersion implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

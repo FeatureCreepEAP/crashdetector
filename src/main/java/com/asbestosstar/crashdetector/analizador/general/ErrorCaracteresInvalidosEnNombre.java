@@ -3,8 +3,10 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,10 +15,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * a Java identifier". Incluye el nombre del módulo y la parte inválida en los
  * mensajes.
  */
-public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
+public class ErrorCaracteresInvalidosEnNombre implements VerificacionRapida {
 
 	private static final String PREFIJO_EXCEPCION = "IllegalArgumentException: ";
 	private static final String TEXTO_ERROR = ": Invalid module name: '";
+	private static final String TEXTO_ERROR_SIMPLE = "Invalid module name: '";
 	private static final String TEXTO_FINAL = "' is not a Java identifier";
 
 	private boolean activado = false;
@@ -28,22 +31,39 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 	private boolean posibleErrorNombreInvalido = false;
 
 	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR_SIMPLE, TEXTO_FINAL };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneNombreInvalido(evento.linea)) {
+			posibleErrorNombreInvalido = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		if (contenidoConsola == null) {
+		if (consola == null || consola.contenido_verificar == null) {
 			posibleErrorNombreInvalido = false;
 			return;
 		}
 
-		posibleErrorNombreInvalido = contenidoConsola.contains("Invalid module name: '")
-				&& contenidoConsola.contains("' is not a Java identifier");
+		String contenidoConsola = consola.contenido_verificar;
+
+		posibleErrorNombreInvalido = contenidoConsola.contains(TEXTO_ERROR_SIMPLE)
+				&& contenidoConsola.contains(TEXTO_FINAL);
 	}
 
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleErrorNombreInvalido)
-			return false;
-
-		return true;
+		return posibleErrorNombreInvalido && !activado;
 	}
 
 	@Override
@@ -52,7 +72,7 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 			return;
 		}
 
-		if (!linea.contains("Invalid module name: '") || !linea.contains("' is not a Java identifier")) {
+		if (!lineaContieneNombreInvalido(linea)) {
 			return;
 		}
 
@@ -70,6 +90,10 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 				+ Verificaciones.nl_html;
 
 		activado = true;
+	}
+
+	private boolean lineaContieneNombreInvalido(String linea) {
+		return linea.contains(TEXTO_ERROR_SIMPLE) && linea.contains(TEXTO_FINAL);
 	}
 
 	/**

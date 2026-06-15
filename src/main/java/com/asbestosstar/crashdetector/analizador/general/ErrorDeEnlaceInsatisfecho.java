@@ -5,9 +5,11 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ErrorDeEnlaceInsatisfecho implements Verificaciones {
+public class ErrorDeEnlaceInsatisfecho implements VerificacionRapida {
 
 	private boolean posibleErrorDeEnlaceInsatisfecho = false;
 	private boolean activado = false;
@@ -17,6 +19,27 @@ public class ErrorDeEnlaceInsatisfecho implements Verificaciones {
 	private String enlace = "";
 
 	private static final String TEXTO_ERROR = "java.lang.UnsatisfiedLinkError: Failed to locate library: ";
+	private static final String TEXTO_ERROR_SIMPLE = "Failed to locate library: ";
+	private static final String VULKAN = "Vulkan";
+	private static final String PROBE = "Probe";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_ERROR, TEXTO_ERROR_SIMPLE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_ERROR)) {
+			posibleErrorDeEnlaceInsatisfecho = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificacion global ligera.
@@ -35,11 +58,9 @@ public class ErrorDeEnlaceInsatisfecho implements Verificaciones {
 		}
 	}
 
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleErrorDeEnlaceInsatisfecho)
-			return false;
-
-		return true;
+		return posibleErrorDeEnlaceInsatisfecho && !activado;
 	}
 
 	/**
@@ -54,8 +75,12 @@ public class ErrorDeEnlaceInsatisfecho implements Verificaciones {
 			return;
 		}
 
+		if (!linea.contains(TEXTO_ERROR)) {
+			return;
+		}
+
 		// 🔹 Excluir explícitamente las líneas de Vulkan Probe
-		if (linea.contains("Vulkan") && linea.contains("Probe")) {
+		if (linea.contains(VULKAN) && linea.contains(PROBE)) {
 			return; // ignorar esta línea
 		}
 

@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -12,7 +14,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * errores porque OptiFine intenta cargar clases del cliente en un entorno de
  * servidor.
  */
-public class ErrorOptiFineServidor implements Verificaciones {
+public class ErrorOptiFineServidor implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -26,6 +28,24 @@ public class ErrorOptiFineServidor implements Verificaciones {
 	private static final String TEXTO_BASE_RESOURCE_NOT_FOUND_COMPLETO = "java.io.IOException: Base resource not found:";
 	private static final String TEXTO_LAYER_OPTIFINE = "LAYER SERVICE/optifine/optifine.Patcher.applyPatch";
 	private static final String TEXTO_OPTIFINE = "optifine";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_OPTIFINE_PATCHER, TEXTO_BASE_RESOURCE_NOT_FOUND };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_OPTIFINE_PATCHER)) {
+			posibleOptiFineServidor = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Método global ligero.
@@ -48,6 +68,11 @@ public class ErrorOptiFineServidor implements Verificaciones {
 		if (contenido.contains(TEXTO_OPTIFINE_PATCHER)) {
 			this.posibleOptiFineServidor = true;
 		}
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return posibleOptiFineServidor && !activado;
 	}
 
 	/**

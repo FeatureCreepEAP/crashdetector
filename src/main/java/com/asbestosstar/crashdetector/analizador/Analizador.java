@@ -6,11 +6,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 
 import javax.annotation.Nullable;
 
@@ -54,7 +50,6 @@ import com.asbestosstar.crashdetector.analizador.general.LanzerNoAnimado;
 import com.asbestosstar.crashdetector.analizador.general.ModIncompatibleConCargadorActivo;
 import com.asbestosstar.crashdetector.analizador.general.ModulesDuplicadosJavaModulePlatform;
 import com.asbestosstar.crashdetector.analizador.general.NoTieneMemoria;
-import com.asbestosstar.crashdetector.analizador.general.NoTieneMemoriaRapida;
 import com.asbestosstar.crashdetector.analizador.general.NullPointer;
 import com.asbestosstar.crashdetector.analizador.general.OpcionesJavaGCInvalidas;
 import com.asbestosstar.crashdetector.analizador.general.PreferIPV4Trace;
@@ -147,7 +142,7 @@ public class Analizador {
 		verificaciones.add(new FaltasDependenciasModLaunche());
 		verificaciones.add(new KubeJSResourcePack());
 		verificaciones.add(new Segundo60Tick());
-		verificaciones.add(new NoTieneMemoriaRapida());
+		verificaciones.add(new NoTieneMemoria());
 		verificaciones.add(new Theseus());
 		verificaciones.add(new CursedConsola());
 		verificaciones.add(new NullPointer());

@@ -10,6 +10,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -19,34 +21,52 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Este error suele indicar que un mod, resource pack o datapack tiene recursos
  * corruptos, faltantes, o incompatibles con la versión actual de Minecraft.
  */
-public class ErrorCreacionModeloFallida implements Verificaciones {
+public class ErrorCreacionModeloFallida implements VerificacionRapida {
 
 	private boolean posibleErrorCreacionModelo = false;
 
 	private final List<String> mensajes = new ArrayList<>();
 	private final Set<String> modelosReportados = new HashSet<>();
 
+	private static final String NO_MODEL_FOR_LAYER = "No model for layer";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { NO_MODEL_FOR_LAYER };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		this.posibleErrorCreacionModelo = true;
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 		// Solo activar el análisis por línea si algún log contiene el texto base.
 		// Importante: la misma instancia puede analizar varios logs, por eso nunca
 		// volvemos esto a false aquí.
-		if (consola.contenido_verificar.contains("No model for layer")) {
+		if (consola == null || consola.contenido_verificar == null) {
+			return;
+		}
+
+		if (consola.contenido_verificar.contains(NO_MODEL_FOR_LAYER)) {
 			this.posibleErrorCreacionModelo = true;
 		}
 	}
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleErrorCreacionModelo)
-			return false;
-
-		return true;
+		return posibleErrorCreacionModelo;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!this.posibleErrorCreacionModelo) {
+		if (!this.posibleErrorCreacionModelo || linea == null) {
 			return;
 		}
 
@@ -54,7 +74,7 @@ public class ErrorCreacionModeloFallida implements Verificaciones {
 			return;
 		}
 
-		if (!linea.contains("No model for layer")) {
+		if (!linea.contains(NO_MODEL_FOR_LAYER)) {
 			return;
 		}
 
@@ -88,14 +108,13 @@ public class ErrorCreacionModeloFallida implements Verificaciones {
 	}
 
 	private String extraerModelo(String linea) {
-		String marcador = "No model for layer";
-		int inicio = linea.indexOf(marcador);
+		int inicio = linea.indexOf(NO_MODEL_FOR_LAYER);
 
 		if (inicio < 0) {
 			return null;
 		}
 
-		inicio += marcador.length();
+		inicio += NO_MODEL_FOR_LAYER.length();
 
 		while (inicio < linea.length() && Character.isWhitespace(linea.charAt(inicio))) {
 			inicio++;
@@ -126,7 +145,7 @@ public class ErrorCreacionModeloFallida implements Verificaciones {
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		return trazo.trace.contains("No model for layer");
+		return trazo != null && trazo.trace != null && trazo.trace.contains(NO_MODEL_FOR_LAYER);
 	}
 
 	@Override
@@ -169,5 +188,4 @@ public class ErrorCreacionModeloFallida implements Verificaciones {
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

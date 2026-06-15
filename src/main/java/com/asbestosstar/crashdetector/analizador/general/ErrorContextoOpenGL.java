@@ -6,6 +6,8 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,7 +15,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * that is not available…". Si existe un stacktrace cerca, intenta obtener el
  * origen con vdst.
  */
-public class ErrorContextoOpenGL implements Verificaciones {
+public class ErrorContextoOpenGL implements VerificacionRapida {
 
 	private boolean posibleContextoOpenGL = false;
 	private boolean activado = false;
@@ -29,6 +31,24 @@ public class ErrorContextoOpenGL implements Verificaciones {
 
 	private static final String TEXTO_CABECERA = "FATAL ERROR in native method";
 	private static final String TEXTO_DETALLE = "No context is current or a function that is not available in the current context was called";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_CABECERA, TEXTO_DETALLE };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_CABECERA) || evento.linea.contains(TEXTO_DETALLE)) {
+			posibleContextoOpenGL = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificacion global ligera.
@@ -49,11 +69,9 @@ public class ErrorContextoOpenGL implements Verificaciones {
 		}
 	}
 
+	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posibleContextoOpenGL)
-			return false;
-
-		return true;
+		return posibleContextoOpenGL && !activado;
 	}
 
 	/**

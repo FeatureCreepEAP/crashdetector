@@ -5,39 +5,63 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores de IdleTweaks: "Tried to release unknown channel" +
  * stacktrace con idletweaks.
  */
-public class ErrorIdleTweaks implements Verificaciones {
+public class ErrorIdleTweaks implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String enlaceHtml = "";
 	private boolean logContieneErrorDeCanal = false;
 
+	private static final String UNKNOWN_CHANNEL = "Tried to release unknown channel";
+	private static final String IDLETWEAKS_CLASS = "io.armandukx.idletweaks.utils.GameSettingsModifier";
+
 	@Override
-	public void verificar(Consola consola) {
+	public String[] patronesRapidos() {
+		return new String[] { UNKNOWN_CHANNEL, IDLETWEAKS_CLASS };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
 		// Solo verificamos si el mensaje de error está en el log
-		boolean tiene = consola.contenido_verificar.contains("Tried to release unknown channel");
-		if (tiene) {
+		if (evento.linea.contains(UNKNOWN_CHANNEL)) {
 			this.logContieneErrorDeCanal = true;
 		}
 
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public boolean quiereAnalizarLineas() {
+		return logContieneErrorDeCanal && !activado;
+	}
+
+	@Override
+	public void verificar(Consola consola) {
+		// Método de compatibilidad — no hace nada en modo rápido/streaming.
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado)
+		if (!logContieneErrorDeCanal || activado)
 			return;
 		if (linea == null)
 			return;
 
 		// Si el log contiene el error de canal Y esta línea contiene el paquete de
 		// idletweaks → activar
-		if (logContieneErrorDeCanal && linea.contains("io.armandukx.idletweaks.utils.GameSettingsModifier")) {
+		if (linea.contains(IDLETWEAKS_CLASS)) {
 			this.activado = true;
 			this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 		}
@@ -93,5 +117,4 @@ public class ErrorIdleTweaks implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

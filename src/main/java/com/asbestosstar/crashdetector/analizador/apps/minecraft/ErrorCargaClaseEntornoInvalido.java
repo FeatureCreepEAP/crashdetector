@@ -5,6 +5,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -13,7 +15,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * [...] for invalid dist [CLIENT|SERVER]". Incluye sugerencias para usar
  * ModsTree (Arbol de Mods) para identificar el mod problemático.
  */
-public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
+public class ErrorCargaClaseEntornoInvalido implements VerificacionRapida {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -25,6 +27,24 @@ public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 
 	private static final String TEXTO_CLASE = "Attempted to load class";
 	private static final String TEXTO_DIST = "for invalid dist";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { TEXTO_CLASE, TEXTO_DIST };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (evento.linea.contains(TEXTO_CLASE) || evento.linea.contains(TEXTO_DIST)) {
+			this.analizarLineas = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verificación global barata.
@@ -49,10 +69,7 @@ public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
+		return analizarLineas && !activado;
 	}
 
 	/**
@@ -242,5 +259,4 @@ public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

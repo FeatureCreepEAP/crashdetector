@@ -9,11 +9,13 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class LenguajeProveedorCheck implements Verificaciones {
+public class LenguajeProveedorCheck implements VerificacionRapida {
 
 	private final Set<String> errores = new HashSet<>();
 	public boolean activado = false;
@@ -22,6 +24,32 @@ public class LenguajeProveedorCheck implements Verificaciones {
 	// Cache del contenido de la consola dividido por líneas para evitar hacer split
 	// repetidos.
 	private boolean posiblePorConsola = false;
+
+	private static final String MOD_FILE = "Mod File";
+	private static final String NEEDS_LANGUAGE_PROVIDER = "needs language provider";
+	private static final String LANGUAGE_PROVIDER = "language provider ";
+	private static final String WE_HAVE_FOUND = "We have found ";
+	private static final String FAILED_TO_LOAD_LANGUAGE_PROVIDER = "Failed to load language provider";
+	private static final String LOADING_LANGUAGE_PROVIDER = "Loading language provider";
+
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { MOD_FILE, NEEDS_LANGUAGE_PROVIDER, FAILED_TO_LOAD_LANGUAGE_PROVIDER,
+				LOADING_LANGUAGE_PROVIDER, WE_HAVE_FOUND };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		if (lineaContieneProblemaProveedor(evento.linea)) {
+			posiblePorConsola = true;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
 	/**
 	 * Verifica el contenido de la consola para detectar errores relacionados con
@@ -41,9 +69,9 @@ public class LenguajeProveedorCheck implements Verificaciones {
 
 		String contenido = consola.contenido_verificar;
 
-		boolean posible = contenido.contains("needs language provider")
-				|| contenido.contains("Failed to load language provider")
-				|| contenido.contains("Loading language provider");
+		boolean posible = contenido.contains(NEEDS_LANGUAGE_PROVIDER)
+				|| contenido.contains(FAILED_TO_LOAD_LANGUAGE_PROVIDER)
+				|| contenido.contains(LOADING_LANGUAGE_PROVIDER);
 
 		if (posible) {
 			posiblePorConsola = true;
@@ -52,10 +80,7 @@ public class LenguajeProveedorCheck implements Verificaciones {
 
 	@Override
 	public boolean quiereAnalizarLineas() {
-		if (!posiblePorConsola)
-			return false;
-
-		return true;
+		return posiblePorConsola && !activado;
 	}
 
 	/**
@@ -82,47 +107,159 @@ public class LenguajeProveedorCheck implements Verificaciones {
 			return;
 		}
 
-		String lineaActual = linea.trim();
-		String[] lineasConsola = consola.lineas_verificar;
+		if (!linea.contains(MOD_FILE) || !linea.contains(NEEDS_LANGUAGE_PROVIDER)) {
+			return;
+		}
 
-		if (lineaActual.contains("Mod File") && lineaActual.contains("needs language provider")) {
-			try {
-				// Extraer detalles del error
-				String archivoJar = lineaActual.split("Mod File ")[1].split(" needs")[0].trim();
-				String proveedor = lineaActual.split("language provider ")[1].split(" ")[0].trim();
-				String req = proveedor.split(":")[1];
-				String encontrado = "";
+		try {
+			// Extraer detalles del error
+			String archivoJar = extraerEntre(linea, "Mod File ", " needs", 0);
+			String proveedor = extraerDespuesHastaEspacio(linea, LANGUAGE_PROVIDER);
 
-				// Buscar versión disponible en líneas posteriores
+			if (archivoJar.isEmpty() || proveedor.isEmpty()) {
+				return;
+			}
+
+			int separadorProveedor = proveedor.indexOf(':');
+			if (separadorProveedor <= 0 || separadorProveedor + 1 >= proveedor.length()) {
+				return;
+			}
+
+			String proveedorNombre = proveedor.substring(0, separadorProveedor);
+			String req = proveedor.substring(separadorProveedor + 1);
+			String encontrado = "";
+
+			// Buscar versión disponible en líneas posteriores
+			String[] lineasConsola = consola.lineas_verificar;
+			if (lineasConsola != null) {
 				for (int j = numero_de_linea; j < lineasConsola.length; j++) {
-					if (lineasConsola[j].contains("We have found ")) {
-						encontrado = lineasConsola[j].split("We have found ")[1].split("§")[0].trim();
+					String lineaPosterior = lineasConsola[j];
+					if (lineaPosterior == null) {
+						continue;
+					}
+
+					int idxEncontrado = lineaPosterior.indexOf(WE_HAVE_FOUND);
+					if (idxEncontrado >= 0) {
+						int inicio = idxEncontrado + WE_HAVE_FOUND.length();
+						int fin = lineaPosterior.indexOf('§', inicio);
+						if (fin < 0) {
+							fin = lineaPosterior.length();
+						}
+						encontrado = limpiarEspacios(lineaPosterior, inicio, fin);
 						break;
 					}
 				}
+			}
 
-				// Construir mensaje base
-				String mensaje = MonitorDePID.idioma.errorProveedorVersion(archivoJar, proveedor.split(":")[0], req,
-						encontrado);
+			// Construir mensaje base
+			String mensaje = MonitorDePID.idioma.errorProveedorVersion(archivoJar, proveedorNombre, req, encontrado);
 
-				// Agregar mensaje especial para JavaFML/MCForge
-				if (proveedor.toLowerCase().contains("javafml")) {
-					mensaje += Verificaciones.nl_html + MonitorDePID.idioma.errorJavaFML_MCForge();
-				}
+			// Agregar mensaje especial para JavaFML/MCForge
+			if (contieneJavaFML(proveedor)) {
+				mensaje += Verificaciones.nl_html + MonitorDePID.idioma.errorJavaFML_MCForge();
+			}
 
-				// Solo registrar si es un error nuevo
-				if (errores.add(mensaje)) {
-					String enlace = consola.agregarErrorALectador(numero_de_linea, this);
-					enlacesPorError.put(mensaje, enlace);
-				}
-				activado = true;
+			// Solo registrar si es un error nuevo
+			if (errores.add(mensaje)) {
+				String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+				enlacesPorError.put(mensaje, enlace);
+			}
+			activado = true;
 
-			} catch (Exception e) {
-				CrashDetectorLogger.logException(e);
-				// Registrar la línea incluso si falla el parseo
-				consola.agregarErrorALectador(numero_de_linea, this);
+		} catch (Exception e) {
+			CrashDetectorLogger.logException(e);
+			// Registrar la línea incluso si falla el parseo
+			consola.agregarErrorALectador(numero_de_linea, this);
+		}
+	}
+
+	private boolean lineaContieneProblemaProveedor(String linea) {
+		return linea.contains(NEEDS_LANGUAGE_PROVIDER) || linea.contains(FAILED_TO_LOAD_LANGUAGE_PROVIDER)
+				|| linea.contains(LOADING_LANGUAGE_PROVIDER) || linea.contains(WE_HAVE_FOUND);
+	}
+
+	private String extraerEntre(String texto, String inicioTexto, String finTexto, int desde) {
+		int inicio = texto.indexOf(inicioTexto, desde);
+		if (inicio < 0) {
+			return "";
+		}
+
+		inicio += inicioTexto.length();
+
+		int fin = texto.indexOf(finTexto, inicio);
+		if (fin < 0 || fin <= inicio) {
+			return "";
+		}
+
+		return limpiarEspacios(texto, inicio, fin);
+	}
+
+	private String extraerDespuesHastaEspacio(String texto, String marcador) {
+		int inicio = texto.indexOf(marcador);
+		if (inicio < 0) {
+			return "";
+		}
+
+		inicio += marcador.length();
+
+		int fin = texto.indexOf(' ', inicio);
+		if (fin < 0) {
+			fin = texto.length();
+		}
+
+		return limpiarEspacios(texto, inicio, fin);
+	}
+
+	private boolean contieneJavaFML(String texto) {
+		for (int i = 0; i + 7 <= texto.length(); i++) {
+			char c0 = texto.charAt(i);
+			if ((c0 == 'j' || c0 == 'J') && equalsIgnoreCaseAscii(texto, i, "javafml")) {
+				return true;
 			}
 		}
+
+		return false;
+	}
+
+	private boolean equalsIgnoreCaseAscii(String texto, int offset, String buscado) {
+		if (offset + buscado.length() > texto.length()) {
+			return false;
+		}
+
+		for (int i = 0; i < buscado.length(); i++) {
+			char a = texto.charAt(offset + i);
+			char b = buscado.charAt(i);
+
+			if (a >= 'A' && a <= 'Z') {
+				a = (char) (a + 32);
+			}
+
+			if (b >= 'A' && b <= 'Z') {
+				b = (char) (b + 32);
+			}
+
+			if (a != b) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private String limpiarEspacios(String texto, int inicio, int fin) {
+		while (inicio < fin && texto.charAt(inicio) <= ' ') {
+			inicio++;
+		}
+
+		while (fin > inicio && texto.charAt(fin - 1) <= ' ') {
+			fin--;
+		}
+
+		if (inicio >= fin) {
+			return "";
+		}
+
+		return texto.substring(inicio, fin);
 	}
 
 	@Override
@@ -190,7 +327,7 @@ public class LenguajeProveedorCheck implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("Mod File") && t.contains("needs language provider");
+		return t.contains(MOD_FILE) && t.contains(NEEDS_LANGUAGE_PROVIDER);
 	}
 
 	@Override
