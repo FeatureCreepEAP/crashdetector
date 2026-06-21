@@ -24,7 +24,7 @@ import javax.swing.event.HyperlinkEvent;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
@@ -94,7 +94,7 @@ public class PrincipalGUIPrimitiva extends PrincipalGUI {
 	 * dentro del contenido se abren usando abrirURL(String url).
 	 */
 	public void crearPopups() {
-		for (VerificacionesLegacy ver : obtenerPopups()) {
+		for (Verificaciones ver : obtenerPopups()) {
 			if (ver == null)
 				continue;
 
@@ -201,7 +201,7 @@ public class PrincipalGUIPrimitiva extends PrincipalGUI {
 		crearPopups();
 	}
 
-	public Set<VerificacionesLegacy> obtenerPopups() {
+	public Set<Verificaciones> obtenerPopups() {
 		return MonitorDePID.analizador.obtenerActivados();
 	}
 

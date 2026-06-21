@@ -8,7 +8,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
@@ -90,7 +90,7 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 
 			mensaje = MonitorDePID.idioma.errorWaterMediaXenonIncompatible(
 					modNombre.isEmpty() ? "(desconocido)" : modNombre, modId.isEmpty() ? "(desconocido)" : modId,
-					modsUbicacion) + VerificacionesLegacy.nl_html;
+					modsUbicacion) + Verificaciones.nl_html;
 
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
@@ -102,7 +102,7 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new WaterMediaXenonIncompatible();
 	}
 

@@ -8,7 +8,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
@@ -131,7 +131,7 @@ public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 		}
 
 		mensaje = MonitorDePID.idioma.errorRegistroSuscriptoresAutomaticos(modId, nombreClase, modsUbicacion)
-				+ VerificacionesLegacy.nl_html;
+				+ Verificaciones.nl_html;
 
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
@@ -139,7 +139,7 @@ public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ErrorRegistroSuscriptoresAutomaticos();
 	}
 

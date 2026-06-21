@@ -12,7 +12,7 @@ import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
 import com.asbestosstar.crashdetector.analizador.firmas.TipoDeFiltrodeCodice;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
@@ -153,7 +153,7 @@ public class VerificacionFirmasV0 implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new VerificacionFirmasV0(id, new LinkedHashMap<String, String>(nombres_por_codigo),
 				new LinkedHashMap<String, String>(resultados_por_codigo), criticalidad, prioridad, para_buscar, filtro);
 	}

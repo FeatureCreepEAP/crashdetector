@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Khmer implements Idioma {
 	Config config = Config.obtenerInstancia();
@@ -4525,7 +4525,7 @@ public class Khmer implements Idioma {
 		// TODO Auto-generated method stub
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "ការជួសជុលផ្នែកខាងលើនៃ traces គឺជាអាទិភាពដំបូង។ " + "ទ្រង់ទ្រាយគឺ កម្រិត, បន្ទាត់។ "
-				+ "កំណត់ហេតុទាំងអស់មានប្រព័ន្ធលេខរៀង។ " + VerificacionesLegacy.nl_html
+				+ "កំណត់ហេតុទាំងអស់មានប្រព័ន្ធលេខរៀង។ " + Verificaciones.nl_html
 				+ "ជាទូទៅ អ្នកត្រូវស្វែងរកនៅកម្រិតទាបជាងក្នុងកំណត់ហេតុទាំងអស់; traces ដែលមានកម្រិតខ្ពស់ជាទូទៅជាលទ្ធផលវិជ្ជមានក្លែងក្លាយ។ "
 				+ "វាសំខាន់ណាស់ក្នុងការប្រើសមត្ថភាពរបស់អ្នកក្នុងការមើល console ព្រោះការវិភាគ traces មិនល្អឥតខ្ចោះទេ នៅពេលមាន traces ច្រើន។"
 				+ "</b>";

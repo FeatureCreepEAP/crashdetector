@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Japones implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -4012,7 +4012,7 @@ public class Japones implements Idioma {
 	@Override
 	public String infoDeTrazos() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "ログの上部を修正することが最優先事項です。 " + "形式は「レベル、行」です。 "
-				+ "すべてのログには番号体系があります。 " + VerificacionesLegacy.nl_html
+				+ "すべてのログには番号体系があります。 " + Verificaciones.nl_html
 				+ "一般的に、すべてのログで最も低いレベルを探る必要があります。高いレベルのトレースは、多くの場合誤検出です。 "
 				+ "トレースが多数ある場合、トレース分析は完璧ではないため、コンソールを直接読む能力を使うことが重要です。" + "</b>";
 	}

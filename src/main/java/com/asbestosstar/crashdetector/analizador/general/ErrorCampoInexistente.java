@@ -4,7 +4,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -245,7 +245,7 @@ public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.ana
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ErrorCampoInexistente();
 	}
 
@@ -273,13 +273,13 @@ public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.ana
 		sb.append(MonitorDePID.idioma.errorCampoInexistente(nombreCampoDetectado, lineaError));
 
 		if (!lineaStack.isEmpty()) {
-			sb.append(VerificacionesLegacy.nl_html);
+			sb.append(Verificaciones.nl_html);
 			sb.append("<span style='color:#888888; font-family:monospace;'>");
 			sb.append(escapeHtml(lineaStack));
 			sb.append("</span>");
 		}
 
-		sb.append(VerificacionesLegacy.nl_html);
+		sb.append(Verificaciones.nl_html);
 		sb.append(enlaceHtml);
 
 		if (create) {

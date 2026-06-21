@@ -17,13 +17,13 @@ import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
  * Detecta cuando el usuario NO está usando un launcher de la lista recomendada.
  * Este verificador ignora completamente el archivo de launchers desaconsejados.
  */
-public class LanzerNoAnimado implements VerificacionesLegacy {
+public class LanzerNoAnimado implements Verificaciones {
 
 	public static final Path ARCHIVO_ANIMADOS = Statics.carpeta.resolve("lanzeres_animados.json");
 
@@ -132,7 +132,7 @@ public class LanzerNoAnimado implements VerificacionesLegacy {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new LanzerNoAnimado();
 	}
 

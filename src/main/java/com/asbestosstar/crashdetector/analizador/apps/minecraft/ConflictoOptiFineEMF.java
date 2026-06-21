@@ -8,7 +8,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -95,12 +95,12 @@ public class ConflictoOptiFineEMF implements Verificaciones {
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 		// Mensaje de error en HTML con referencia al conflicto entre OptiFine y EMF
-		mensaje = MonitorDePID.idioma.errorConflictoOptiFineEMF() + VerificacionesLegacy.nl_html;
+		mensaje = MonitorDePID.idioma.errorConflictoOptiFineEMF() + Verificaciones.nl_html;
 		activado = true;
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ConflictoOptiFineEMF();
 	}
 

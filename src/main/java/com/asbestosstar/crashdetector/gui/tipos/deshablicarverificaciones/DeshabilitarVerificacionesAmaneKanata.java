@@ -29,7 +29,7 @@ import javax.swing.table.TableColumnModel;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
@@ -249,7 +249,7 @@ public class DeshabilitarVerificacionesAmaneKanata extends DeshablicarVerificaci
 				lbl.setHorizontalAlignment(SwingConstants.CENTER);
 
 				String id = table.getValueAt(row, 0).toString();
-				VerificacionesLegacy ver = obtenerVerificacionPorId(id);
+				Verificaciones ver = obtenerVerificacionPorId(id);
 
 				if (isSelected) {
 					lbl.setBackground(colorBoton.obtener());
@@ -278,7 +278,7 @@ public class DeshabilitarVerificacionesAmaneKanata extends DeshablicarVerificaci
 					return;
 
 				String id = tabla.getValueAt(fila, 0).toString();
-				VerificacionesLegacy ver = obtenerVerificacionPorId(id);
+				Verificaciones ver = obtenerVerificacionPorId(id);
 				if (ver == null)
 					return;
 
@@ -295,7 +295,7 @@ public class DeshabilitarVerificacionesAmaneKanata extends DeshablicarVerificaci
 	 */
 	private void cargarDatos() {
 		// Obtener todas las verificaciones
-		HashSet<VerificacionesLegacy> todasVerificaciones = verificaciones();
+		HashSet<Verificaciones> todasVerificaciones = verificaciones();
 		List<String> verificacionesDeshabilitadas = configValor();
 
 		// Limpiar modelos
@@ -303,7 +303,7 @@ public class DeshabilitarVerificacionesAmaneKanata extends DeshablicarVerificaci
 		modeloDeshabilitadas.setRowCount(0);
 
 		// Añadir verificaciones a los modelos correspondientes
-		for (VerificacionesLegacy ver : todasVerificaciones) {
+		for (Verificaciones ver : todasVerificaciones) {
 			Object[] rowData = new Object[] { id(ver), nombre(ver),
 					enlaceACodigo(ver) != null ? MonitorDePID.idioma.verCodigo() : "",
 					enlaceDocs(ver) != null ? MonitorDePID.idioma.verDocumentacion() : "" };
@@ -365,7 +365,7 @@ public class DeshabilitarVerificacionesAmaneKanata extends DeshablicarVerificaci
 			// Mover todas las verificaciones no corporativas a deshabilitadas
 			for (int i = modeloHabilitadas.getRowCount() - 1; i >= 0; i--) {
 				String id = (String) modeloHabilitadas.getValueAt(i, 0);
-				VerificacionesLegacy ver = obtenerVerificacionPorId(id);
+				Verificaciones ver = obtenerVerificacionPorId(id);
 
 				if (ver != null && !recomendadoParaCorperata(ver)) {
 					Object[] fila = new Object[4];
@@ -411,8 +411,8 @@ public class DeshabilitarVerificacionesAmaneKanata extends DeshablicarVerificaci
 	 * @param id ID de la verificación
 	 * @return Verificación correspondiente o null si no existe
 	 */
-	private VerificacionesLegacy obtenerVerificacionPorId(String id) {
-		for (VerificacionesLegacy ver : verificaciones()) {
+	private Verificaciones obtenerVerificacionPorId(String id) {
+		for (Verificaciones ver : verificaciones()) {
 			if (id(ver).equals(id)) {
 				return ver;
 			}

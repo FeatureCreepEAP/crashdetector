@@ -5,7 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -46,7 +46,7 @@ public class ErrorImmersiveTooltipsSinDependencia implements Verificaciones {
 		if (linea.contains(TEXTO_ERROR_CLASE) && linea.contains(TEXTO_CLASE_FALTANTE)) {
 
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-			mensaje = MonitorDePID.idioma.errorImmersiveTooltipsSinDependencia() + VerificacionesLegacy.nl_html;
+			mensaje = MonitorDePID.idioma.errorImmersiveTooltipsSinDependencia() + Verificaciones.nl_html;
 			activado = true;
 		}
 	}
@@ -60,7 +60,7 @@ public class ErrorImmersiveTooltipsSinDependencia implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ErrorImmersiveTooltipsSinDependencia();
 	}
 

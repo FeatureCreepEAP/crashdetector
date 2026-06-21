@@ -5,7 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.bajo.hw.gpu.HacerVerificacionGPU;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
@@ -93,10 +93,10 @@ public class VerificacionGPU implements Verificaciones {
 		this.prioridad = 1500.0f;
 		hayProblema = true;
 
-		this.mensaje = MonitorDePID.idioma.gpu_crash_posible() + VerificacionesLegacy.nl_html
-				+ MonitorDePID.idioma.gpu_crash_causas() + VerificacionesLegacy.nl_html
-				+ MonitorDePID.idioma.gpu_crash_recomendaciones() + VerificacionesLegacy.nl_html
-				+ MonitorDePID.idioma.gpu_nota_precision() + VerificacionesLegacy.nl_html
+		this.mensaje = MonitorDePID.idioma.gpu_crash_posible() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_crash_causas() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_crash_recomendaciones() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_nota_precision() + Verificaciones.nl_html
 				+ MonitorDePID.idioma.gpu_parche_info();
 	}
 
@@ -105,16 +105,16 @@ public class VerificacionGPU implements Verificaciones {
 		this.prioridad = -1000.0f; // No es tan importante
 		hayProblema = true;
 
-		this.mensaje = MonitorDePID.idioma.gpu_no_optima() + VerificacionesLegacy.nl_html
-				+ MonitorDePID.idioma.gpu_no_optima_detalles() + VerificacionesLegacy.nl_html
-				+ MonitorDePID.idioma.gpu_nota_precision() + VerificacionesLegacy.nl_html
-				+ MonitorDePID.idioma.gpu_consumo_energia() + VerificacionesLegacy.nl_html
-				+ MonitorDePID.idioma.gpu_recomendaciones_rendimiento() + VerificacionesLegacy.nl_html
+		this.mensaje = MonitorDePID.idioma.gpu_no_optima() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_no_optima_detalles() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_nota_precision() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_consumo_energia() + Verificaciones.nl_html
+				+ MonitorDePID.idioma.gpu_recomendaciones_rendimiento() + Verificaciones.nl_html
 				+ MonitorDePID.idioma.gpu_parche_info();
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new VerificacionGPU();
 	}
 

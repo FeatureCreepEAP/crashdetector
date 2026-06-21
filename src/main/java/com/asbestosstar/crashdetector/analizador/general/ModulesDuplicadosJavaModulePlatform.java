@@ -19,7 +19,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
@@ -222,7 +222,7 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 					mensajeFinal.append(" ").append(resultado);
 				}
 
-				mensajeFinal.append(VerificacionesLegacy.nl_html).append(enlace);
+				mensajeFinal.append(Verificaciones.nl_html).append(enlace);
 
 				mensajes.append(mensajeFinal.toString());
 				activado = true;
@@ -321,7 +321,7 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ModulesDuplicadosJavaModulePlatform();
 	}
 

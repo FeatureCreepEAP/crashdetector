@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Lao implements Idioma {
 	Config config = Config.obtenerInstancia();
@@ -4624,7 +4624,7 @@ public class Lao implements Idioma {
 	public String infoDeTrazos() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "ການແກ້ໄຂສ່ວນເບື້ອງຕົ້ນຂອງ stack traces ແມ່ນຄວາມສຳຄັນອັນດັບໜຶ່ງ. " + "ຮູບແບບແມ່ນ Level, Line. "
-				+ "ບັນທຶກທັງໝົດມີລະບົບການໃຫ້ເລກ. " + VerificacionesLegacy.nl_html
+				+ "ບັນທຶກທັງໝົດມີລະບົບການໃຫ້ເລກ. " + Verificaciones.nl_html
 				+ "ໂດຍທົ່ວໄປທ່ານຕ້ອງຊອກຫາໃນ levels ທີ່ຕ່ຳກວ່າໃນບັນທຶກທັງໝົດ; traces ທີ່ມີ levels ສູງມັກຈະເປັນ false positives. "
 				+ "ມັນສຳຄັນທີ່ຈະໃຊ້ທັກສະຂອງທ່ານໃນການເບິ່ງໃນ console, ເນື່ອງຈາກການວິເຄາະ traces ບໍ່ສົມບູນແບບເມື່ອມີ traces ຫຼາຍ."
 				+ "</b>";

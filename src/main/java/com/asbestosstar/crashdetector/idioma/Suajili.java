@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Suajili implements Idioma {
 	Config config = Config.obtenerInstancia();
@@ -4548,7 +4548,7 @@ public class Suajili implements Idioma {
 		// TODO Auto-generated method stub
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Kurekebisha sehemu za juu za traza (stack traces) ni kipaumbele cha kwanza. "
-				+ "Muundo ni Ngazi, Mstari. " + "Logi zote zina mfumo wa nambari. " + VerificacionesLegacy.nl_html
+				+ "Muundo ni Ngazi, Mstari. " + "Logi zote zina mfumo wa nambari. " + Verificaciones.nl_html
 				+ "Kwa kawaida unahitaji kutafuta katika ngazi za chini katika logi zote; traza zenye ngazi za juu mara nyingi ni chanya uwongo (false positives). "
 				+ "Ni muhimu kutumia uwezo wako wa kuangalia konsoli, kwani uchambuzi wa traza haukamili wakati kuna traza nyingi."
 				+ "</b>";

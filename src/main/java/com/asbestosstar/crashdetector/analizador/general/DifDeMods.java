@@ -18,9 +18,9 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
-public class DifDeMods implements VerificacionesLegacy {
+public class DifDeMods implements Verificaciones {
 	private boolean activado = false;
 	private String mensajeHTML = "";
 
@@ -241,7 +241,7 @@ public class DifDeMods implements VerificacionesLegacy {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new DifDeMods();
 	}
 

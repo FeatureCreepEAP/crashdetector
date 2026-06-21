@@ -4,7 +4,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -29,13 +29,13 @@ public class Segundo60Tick implements Verificaciones {
 		}
 
 		if (evento.linea.contains(PATRON)) {
-			this.mensaje = MonitorDePID.idioma.segundo60Tick() + VerificacionesLegacy.nl_html;
+			this.mensaje = MonitorDePID.idioma.segundo60Tick() + Verificaciones.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new Segundo60Tick();
 	}
 

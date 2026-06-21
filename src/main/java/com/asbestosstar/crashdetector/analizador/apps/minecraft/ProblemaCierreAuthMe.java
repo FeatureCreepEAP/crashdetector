@@ -6,7 +6,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -39,7 +39,7 @@ public class ProblemaCierreAuthMe implements Verificaciones {
 	}
 
 	private void activar() {
-		this.mensaje = MonitorDePID.idioma.mensajeCierreAuthMe() + VerificacionesLegacy.nl_html;
+		this.mensaje = MonitorDePID.idioma.mensajeCierreAuthMe() + Verificaciones.nl_html;
 		this.activado = true;
 	}
 
@@ -47,7 +47,7 @@ public class ProblemaCierreAuthMe implements Verificaciones {
 	 * Crea una nueva instancia de este verificador.
 	 */
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ProblemaCierreAuthMe();
 	}
 

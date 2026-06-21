@@ -14,7 +14,6 @@ import java.util.Map;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.motor.MotorBusquedaBytes;
 import com.asbestosstar.crashdetector.analizador.rapido.motor.MotoresBusqueda;
 
@@ -23,7 +22,8 @@ import com.asbestosstar.crashdetector.analizador.rapido.motor.MotoresBusqueda;
  */
 public final class MotorDeLecturaStreaming {
 
-	private static final int BUFFER_SIZE = 1024 * 1024; // 1 MiB inicial
+	private static final int BUFFER_SIZE = 1024 * 1024;
+
 	private final MotorBusquedaBytes motorBytes;
 	private AutomataDePatrones automata;
 	private final Map<String, List<Verificaciones>> patronesAVerificaciones = new HashMap<>();
@@ -32,16 +32,13 @@ public final class MotorDeLecturaStreaming {
 		this.motorBytes = MotoresBusqueda.crear();
 	}
 
-	public void procesar(Consola consola, List<Verificaciones> verificaciones, List<VerificacionesLegacy> legacy,
-			EstadoAnalisisArchivo estado) {
-
+	public void procesar(Consola consola, List<Verificaciones> verificaciones, EstadoAnalisisArchivo estado) {
 		inicializarAutomata(verificaciones);
 
-		List<VerificacionesLegacy> legacyLineales = obtenerLegacyLineales(consola, legacy);
-
 		Path path = consola.archivo;
-		if (path == null)
+		if (path == null) {
 			return;
+		}
 
 		try (RandomAccessFile raf = new RandomAccessFile(path.toFile(), "r"); FileChannel channel = raf.getChannel()) {
 
@@ -95,11 +92,11 @@ public final class MotorDeLecturaStreaming {
 							contenidoLinea = contenidoLinea.substring(0, contenidoLinea.length() - 1);
 						}
 
-						procesarLinea(consola, contenidoLinea, numeroLineaActual++, legacyLineales, estado);
+						procesarLinea(consola, contenidoLinea, numeroLineaActual++, verificaciones, estado);
+
 						inicioActual = finLinea + 1;
 					}
 
-					// If the position array filled, continue scanning the same block.
 					if (totalPosiciones < posicionesSaltoLinea.length) {
 						break;
 					}
@@ -129,8 +126,7 @@ public final class MotorDeLecturaStreaming {
 					ultimaLinea = ultimaLinea.substring(0, ultimaLinea.length() - 1);
 				}
 
-				procesarLinea(consola, ultimaLinea, numeroLineaActual++, legacyLineales, estado);
-
+				procesarLinea(consola, ultimaLinea, numeroLineaActual++, verificaciones, estado);
 			}
 
 		} catch (IOException e) {
@@ -138,29 +134,8 @@ public final class MotorDeLecturaStreaming {
 		}
 	}
 
-	private List<VerificacionesLegacy> obtenerLegacyLineales(Consola consola, List<VerificacionesLegacy> legacy) {
-		List<VerificacionesLegacy> resultado = new ArrayList<>();
-
-		if (legacy == null || legacy.isEmpty()) {
-			return resultado;
-		}
-
-		for (VerificacionesLegacy ver : legacy) {
-			try {
-				if (ver.verificar(consola)) {
-					resultado.add(ver);
-				}
-			} catch (Exception e) {
-				CrashDetectorLogger.logException(e);
-			}
-		}
-
-		return resultado;
-	}
-
-	public void procesarLinea(Consola consola, String linea, int numeroLinea, List<VerificacionesLegacy> legacyLineales,
+	public void procesarLinea(Consola consola, String linea, int numeroLinea, List<Verificaciones> verificaciones,
 			EstadoAnalisisArchivo estado) {
-
 		if (linea == null || linea.isEmpty()) {
 			return;
 		}
@@ -170,13 +145,13 @@ public final class MotorDeLecturaStreaming {
 
 			if (coincidenciasBase != null && !coincidenciasBase.isEmpty()) {
 				for (AutomataDePatrones.Coincidencia base : coincidenciasBase) {
-					List<Verificaciones> verificaciones = patronesAVerificaciones.get(base.patron);
+					List<Verificaciones> verificacionesDelPatron = patronesAVerificaciones.get(base.patron);
 
-					if (verificaciones == null || verificaciones.isEmpty()) {
+					if (verificacionesDelPatron == null || verificacionesDelPatron.isEmpty()) {
 						continue;
 					}
 
-					for (Verificaciones ver : verificaciones) {
+					for (Verificaciones ver : verificacionesDelPatron) {
 						try {
 							EventoDeCoincidencia evento = new EventoDeCoincidencia(consola, consola.archivo, ver,
 									base.patron, linea, numeroLinea, base.inicio, base.fin, estado);
@@ -190,11 +165,11 @@ public final class MotorDeLecturaStreaming {
 			}
 		}
 
-		if (legacyLineales == null || legacyLineales.isEmpty()) {
+		if (verificaciones == null || verificaciones.isEmpty()) {
 			return;
 		}
 
-		for (VerificacionesLegacy ver : legacyLineales) {
+		for (Verificaciones ver : verificaciones) {
 			try {
 				ver.verificarPorLinea(consola, linea, numeroLinea);
 			} catch (Exception e) {
@@ -204,18 +179,19 @@ public final class MotorDeLecturaStreaming {
 	}
 
 	private void inicializarAutomata(List<Verificaciones> verificaciones) {
-		if (automata != null) {
-			return;
-		}
-
 		patronesAVerificaciones.clear();
+		automata = null;
 
 		if (verificaciones == null || verificaciones.isEmpty()) {
-			CrashDetectorLogger.log("[DEBUG_LOG] No hay verificaciones rápidas para inicializar el autómata");
+			CrashDetectorLogger.log("[DEBUG_LOG] No hay verificaciones para inicializar el autómata");
 			return;
 		}
 
 		for (Verificaciones ver : verificaciones) {
+			if (ver == null) {
+				continue;
+			}
+
 			String[] patrones = ver.patronesRapidos();
 
 			if (patrones == null || patrones.length == 0) {
@@ -243,5 +219,4 @@ public final class MotorDeLecturaStreaming {
 
 		this.automata = new AutomataDePatrones(todosLosPatrones);
 	}
-
 }

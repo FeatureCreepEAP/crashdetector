@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Coreano implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -4008,7 +4008,7 @@ public class Coreano implements Idioma {
 	@Override
 	public String infoDeTrazos() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "나무 줄기의 상단 부분을 고치는 것이 최우선입니다. "
-				+ "형식은 레벨, 라인입니다. " + "모든 로그에는 번호 체계가 있습니다. " + VerificacionesLegacy.nl_html
+				+ "형식은 레벨, 라인입니다. " + "모든 로그에는 번호 체계가 있습니다. " + Verificaciones.nl_html
 				+ "일반적으로 모든 로그에서 가장 낮은 레벨을 찾아야 합니다. 높은 레벨의 트레이스는 일반적으로 잘못된 긍정입니다. "
 				+ "트레이스가 많을 때 분석이 완벽하지 않으므로 콘솔을 직접 보는 능력을 사용하는 것이 중요합니다." + "</b>";
 	}

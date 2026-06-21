@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Esperanto implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -4129,7 +4129,7 @@ public class Esperanto implements Idioma {
 	public String infoDeTrazos() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Rezolvi suprajn partojn de trunkoj estas unua prioritato. " + "La formato estas Nivelo, Linio. "
-				+ "Ĉiuj protokoloj havas nombran sistemon. " + VerificacionesLegacy.nl_html
+				+ "Ĉiuj protokoloj havas nombran sistemon. " + Verificaciones.nl_html
 				+ "Ĝenerale vi bezonas serĉi plej malsuprajn nivelojn en ĉiuj protokoloj; spuradoj kun altpoziciaj niveloj kutime estas malveraj pozitivoj. "
 				+ "Gravegas uzi vian kapablon rigardi en la konzolon, ĉar analizo de spuradoj ne estas perfekta kiam ekzistas multaj spuradoj."
 				+ "</b>";

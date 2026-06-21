@@ -5,7 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -59,7 +59,7 @@ public class ErrorEntityTextureFeaturesServidor implements Verificaciones {
 
 			// Mensaje de error en HTML con referencia al uso incorrecto de Entity Texture
 			// Features
-			mensaje = MonitorDePID.idioma.errorEntityTextureFeaturesServidor() + VerificacionesLegacy.nl_html;
+			mensaje = MonitorDePID.idioma.errorEntityTextureFeaturesServidor() + Verificaciones.nl_html;
 			activado = true;
 		}
 	}
@@ -73,7 +73,7 @@ public class ErrorEntityTextureFeaturesServidor implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ErrorEntityTextureFeaturesServidor();
 	}
 

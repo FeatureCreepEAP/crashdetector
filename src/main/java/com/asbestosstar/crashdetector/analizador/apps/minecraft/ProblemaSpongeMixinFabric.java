@@ -9,7 +9,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -118,7 +118,7 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ProblemaSpongeMixinFabric();
 	}
 
@@ -143,7 +143,7 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
 		for (Map.Entry<String, String> entry : modsConEnlace.entrySet()) {
 
 			sb.append(MonitorDePID.idioma.mensajeModFatal(entry.getKey())).append(entry.getValue())
-					.append(VerificacionesLegacy.nl_html);
+					.append(Verificaciones.nl_html);
 		}
 
 		return sb.toString();
@@ -160,7 +160,7 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
 		Builder builder = new Builder(nombre());
 
 		for (String mod : modsConEnlace.keySet()) {
-			builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarMod(mod) + VerificacionesLegacy.nl_html);
+			builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarMod(mod) + Verificaciones.nl_html);
 		}
 
 		return builder.construir();

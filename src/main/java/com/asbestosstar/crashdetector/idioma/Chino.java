@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Chino implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -3956,7 +3956,7 @@ public class Chino implements Idioma {
 	@Override
 	public String infoDeTrazos() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "修复原木顶部问题是第一优先级。" + "格式为：层级，行号。"
-				+ "所有日志都有编号系统。" + VerificacionesLegacy.nl_html + "通常你需要在所有日志中查找最底层的堆栈（低层级），高层数的堆栈通常是误报。"
+				+ "所有日志都有编号系统。" + Verificaciones.nl_html + "通常你需要在所有日志中查找最底层的堆栈（低层级），高层数的堆栈通常是误报。"
 				+ "使用你的控制台阅读能力很重要，因为当堆栈过多时，堆栈分析并不完美。" + "</b>";
 	}
 

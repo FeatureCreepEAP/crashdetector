@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
@@ -59,7 +59,7 @@ public class PrincipalGUICentroSoporte extends PrincipalGUIPrimitiva {
 	}
 
 	public void crearPopups() {
-		for (VerificacionesLegacy ver : obtenerPopups()) {
+		for (Verificaciones ver : obtenerPopups()) {
 			if (ver == null) {
 				continue;
 			}

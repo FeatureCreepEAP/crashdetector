@@ -5,7 +5,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -59,11 +59,11 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 			String mensajeMod = MonitorDePID.idioma.modlauncher_mods_duplicado(lineaActual);
 			String enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			// Añadir mensaje + enlace en la misma línea
-			mensaje.append(mensajeMod).append(" ").append(enlace).append(VerificacionesLegacy.nl_html);
+			mensaje.append(mensajeMod).append(" ").append(enlace).append(Verificaciones.nl_html);
 			activado = true;
 		} else if (lineaActual.contains(CRASH_ASSISTANT_DUPLICADO)) {
 			String enlace = consola.agregarErrorALectador(numero_de_linea, this);
-			mensaje.append("crash_assistant").append(" ").append(enlace).append(VerificacionesLegacy.nl_html);
+			mensaje.append("crash_assistant").append(" ").append(enlace).append(Verificaciones.nl_html);
 			activado = true;
 		}
 	}
@@ -75,7 +75,7 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ModsDuplicadosModLauncher();
 	}
 

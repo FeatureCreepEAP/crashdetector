@@ -10,7 +10,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -79,7 +79,7 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new FabricMCRuntimeErrorProvidedBy();
 	}
 
@@ -102,7 +102,7 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 		for (String modId : modIdsProblematicos) {
 			String enlace = enlacesPorModId.getOrDefault(modId, "");
 			html.append("<li>").append(MonitorDePID.idioma.modids_problematicos()).append(" <b>").append(modId)
-					.append("</b> ").append(enlace).append("</li>").append(VerificacionesLegacy.nl_html);
+					.append("</b> ").append(enlace).append("</li>").append(Verificaciones.nl_html);
 		}
 		html.append("</ul>");
 		return html.toString();

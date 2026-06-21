@@ -15,7 +15,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -80,7 +80,7 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new SpongeMixinConfigsProblematicos();
 	}
 
@@ -105,7 +105,7 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 		StringBuilder html = new StringBuilder();
 		html.append("<span style='color: #").append(Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas())
 				.append("; font-weight: bold;'>").append(MonitorDePID.idioma.config_spongemixin_problematico())
-				.append("</span>").append(VerificacionesLegacy.nl_html).append("<ul>");
+				.append("</span>").append(Verificaciones.nl_html).append("<ul>");
 
 		List<String> listItems = new ArrayList<>();
 		for (Map.Entry<String, Integer> entry : sm_config_con_linea.entrySet()) {

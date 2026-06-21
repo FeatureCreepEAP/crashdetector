@@ -15,7 +15,7 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.config.json.Json.Nodo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -24,7 +24,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * recomendados, a menos que exista y sea no vacío (en cuyo caso muestra la
  * lista al final).
  */
-public class LanzerDesAnimado implements VerificacionesLegacy {
+public class LanzerDesAnimado implements Verificaciones {
 
 	public static final Path ARCHIVO_DESANIMADOS = Statics.carpeta.resolve("lanzeres_desanimados.json");
 	public static final Path ARCHIVO_ANIMADOS = Statics.carpeta.resolve("lanzeres_animados.json");
@@ -204,7 +204,7 @@ public class LanzerDesAnimado implements VerificacionesLegacy {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new LanzerDesAnimado();
 	}
 

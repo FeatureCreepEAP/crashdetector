@@ -8,7 +8,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
@@ -107,8 +107,7 @@ public class ErrorSinListenersEnClase implements Verificaciones {
 			modsUbicacion.add(mod.ubicacion_para_publicar());
 		}
 
-		mensaje = MonitorDePID.idioma.errorSinListenersEnClase(nombreClase, modsUbicacion)
-				+ VerificacionesLegacy.nl_html;
+		mensaje = MonitorDePID.idioma.errorSinListenersEnClase(nombreClase, modsUbicacion) + Verificaciones.nl_html;
 
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
@@ -116,7 +115,7 @@ public class ErrorSinListenersEnClase implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ErrorSinListenersEnClase();
 	}
 

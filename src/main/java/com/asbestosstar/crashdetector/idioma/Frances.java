@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Frances implements Idioma {
 	Config config = Config.obtenerInstancia();
@@ -4651,7 +4651,7 @@ public class Frances implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Corriger les parties supérieures des traces est la première priorité. "
 				+ "Le format est Niveau, Ligne. " + "Tous les journaux ont un système de numérotation. "
-				+ VerificacionesLegacy.nl_html
+				+ Verificaciones.nl_html
 				+ "Généralement, vous devez rechercher dans les niveaux les plus bas de tous les journaux ; les traces avec des niveaux élevés sont souvent des faux positifs. "
 				+ "Il est important d'utiliser votre capacité à lire la console, car l'analyse des traces n'est pas parfaite lorsqu'il y a beaucoup de traces."
 				+ "</b>";

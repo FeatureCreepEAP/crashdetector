@@ -23,7 +23,7 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.LineaTrazo;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -130,7 +130,7 @@ public class ContenidoDeTrazos implements Verificaciones {
 		}
 
 		List<Map.Entry<Integer, TraceInfo>> entradas_nivel_trazo = new ArrayList<>(vdst.nivel_trazo.entrySet());
-		final List<VerificacionesLegacy> verificaciones_activadas = new ArrayList<>(
+		final List<Verificaciones> verificaciones_activadas = new ArrayList<>(
 				MonitorDePID.analizador.verificaciones_activados);
 
 		final int total = entradas_nivel_trazo.size();
@@ -145,7 +145,7 @@ public class ContenidoDeTrazos implements Verificaciones {
 			for (Map.Entry<Integer, TraceInfo> entrada : entradas_nivel_trazo) {
 				Integer nivel = entrada.getKey();
 				TraceInfo trazo = entrada.getValue();
-				for (VerificacionesLegacy verif : verificaciones_activadas) {
+				for (Verificaciones verif : verificaciones_activadas) {
 					try {
 						if (verif.ocupaTrazo(trazo)) {
 							niveles_ocupados.add(nivel);
@@ -174,7 +174,7 @@ public class ContenidoDeTrazos implements Verificaciones {
 					Map.Entry<Integer, TraceInfo> entrada = entradas_nivel_trazo.get(i);
 					Integer nivel = entrada.getKey();
 					TraceInfo trazo = entrada.getValue();
-					for (VerificacionesLegacy verif : verificaciones_activadas) {
+					for (Verificaciones verif : verificaciones_activadas) {
 						try {
 							if (verif.ocupaTrazo(trazo)) {
 								niveles_locales.add(nivel);
@@ -450,7 +450,7 @@ public class ContenidoDeTrazos implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ContenidoDeTrazos();
 	}
 

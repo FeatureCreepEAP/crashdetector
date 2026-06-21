@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Ingles implements Idioma {
 	private final Config config = Config.obtenerInstancia(); // Assuming this is how you get the Config instance, like
@@ -4173,7 +4173,7 @@ public class Ingles implements Idioma {
 	@Override
 	public String infoDeTrazos() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Fixing the tops of logs is the top priority. "
-				+ "The format is Level, Line. " + "All logs have a numbering system. " + VerificacionesLegacy.nl_html
+				+ "The format is Level, Line. " + "All logs have a numbering system. " + Verificaciones.nl_html
 				+ "Generally, you need to look at the lowest levels across all logs; traces with high levels are usually false positives. "
 				+ "It's important to use your ability to read the console, as stack trace analysis isn't perfect when there are many traces."
 				+ "</b>";

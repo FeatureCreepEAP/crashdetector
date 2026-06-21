@@ -8,9 +8,9 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
-public class Theseus implements VerificacionesLegacy {
+public class Theseus implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -44,7 +44,7 @@ public class Theseus implements VerificacionesLegacy {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new Theseus();
 	}
 

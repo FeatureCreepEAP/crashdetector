@@ -4,7 +4,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -74,7 +74,7 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 		// Extrae solo el nombre del archivo/directorio de la ruta completa.
 		nombreMod = extraerNombreArchivo(rutaMod);
 
-		mensaje = MonitorDePID.idioma.errorDiscrepanciaModID(nombreMod) + VerificacionesLegacy.nl_html;
+		mensaje = MonitorDePID.idioma.errorDiscrepanciaModID(nombreMod) + Verificaciones.nl_html;
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 		activado = true;
 	}
@@ -99,7 +99,7 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ErrorDiscrepanciaModID();
 	}
 

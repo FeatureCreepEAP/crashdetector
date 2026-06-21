@@ -4,7 +4,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -70,7 +70,7 @@ public class ConflictoOptiFineEpicFight implements Verificaciones {
 
 			// Mensaje de error en HTML con referencia al conflicto entre OptiFine y Epic
 			// Fight
-			mensaje = MonitorDePID.idioma.errorConflictoOptiFineEpicFight() + VerificacionesLegacy.nl_html;
+			mensaje = MonitorDePID.idioma.errorConflictoOptiFineEpicFight() + Verificaciones.nl_html;
 			activado = true;
 		}
 	}
@@ -86,7 +86,7 @@ public class ConflictoOptiFineEpicFight implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ConflictoOptiFineEpicFight();
 	}
 

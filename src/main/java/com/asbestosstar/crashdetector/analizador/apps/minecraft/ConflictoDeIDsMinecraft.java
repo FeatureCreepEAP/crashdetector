@@ -10,7 +10,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -103,7 +103,7 @@ public class ConflictoDeIDsMinecraft implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ConflictoDeIDsMinecraft();
 	}
 
@@ -140,21 +140,19 @@ public class ConflictoDeIDsMinecraft implements Verificaciones {
 		if ("maximo_rango".equals(tipoConflicto)) {
 			builder.agregarEtiqueta(MonitorDePID.idioma.solucion_maximo_rango())
 					.agregarBoton(MonitorDePID.idioma.instalar_justenoughids(), (bool) -> {
-						VerificacionesLegacy
-								.abrirEnNavegador("https://www.curseforge.com/minecraft/mc-mods/justenoughids");
+						Verificaciones.abrirEnNavegador("https://www.curseforge.com/minecraft/mc-mods/justenoughids");
 					}).agregarBoton(MonitorDePID.idioma.instalar_endlessids(), (bool) -> {
-						VerificacionesLegacy
-								.abrirEnNavegador("https://www.curseforge.com/minecraft/mc-mods/endless-ids");
+						Verificaciones.abrirEnNavegador("https://www.curseforge.com/minecraft/mc-mods/endless-ids");
 					});
 		} else if ("colision_id".equals(tipoConflicto)) {
 			builder.agregarEtiqueta(MonitorDePID.idioma.solucion_colision_id())
 					.agregarBoton(MonitorDePID.idioma.usar_idfix_minus(), (bool) -> {
-						VerificacionesLegacy.abrirEnNavegador(
+						Verificaciones.abrirEnNavegador(
 								"https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id");
 					}).agregarBoton(MonitorDePID.idioma.usar_minecraft_id_resolver(), (bool) -> {
-						VerificacionesLegacy.abrirEnNavegador("https://github.com/SS111/Minecraft-ID-Resolver");
+						Verificaciones.abrirEnNavegador("https://github.com/SS111/Minecraft-ID-Resolver");
 					}).agregarBoton(MonitorDePID.idioma.ver_documentacion_jp(), (bool) -> {
-						VerificacionesLegacy.abrirEnNavegador(
+						Verificaciones.abrirEnNavegador(
 								"https://minecraftjapan.miraheze.org/wiki/MOD%E8%A7%A3%E8%AA%AC/ID%E7%AB%B6%E5%90%88%E9%98%B2%E6%AD%A2%E6%94%AF%E6%8F%B4MOD");
 					});
 		}

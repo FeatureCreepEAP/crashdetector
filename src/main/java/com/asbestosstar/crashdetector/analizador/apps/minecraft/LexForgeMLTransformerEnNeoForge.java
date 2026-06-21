@@ -8,7 +8,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
@@ -107,7 +107,7 @@ public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
 			// Activar SIEMPRE tras detectar la línea, aunque no se encuentren mods
 			mensaje = MonitorDePID.idioma.errorLexForgeMLTransformerEnNeoForge(
 					claseReceptora.isEmpty() ? "(desconocida)" : claseReceptora, interfazObjetivo, firmaMetodoFaltante,
-					modsUbicacion) + VerificacionesLegacy.nl_html;
+					modsUbicacion) + Verificaciones.nl_html;
 
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
@@ -120,7 +120,7 @@ public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new LexForgeMLTransformerEnNeoForge();
 	}
 

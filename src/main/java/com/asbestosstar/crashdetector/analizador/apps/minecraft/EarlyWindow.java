@@ -5,7 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -125,7 +125,7 @@ public class EarlyWindow implements Verificaciones {
 	}
 
 	private String construirMensaje() {
-		String base = MonitorDePID.idioma.fmlEarlyWindow() + VerificacionesLegacy.nl_html;
+		String base = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
 		if (limitacionOpenGLMacOSDetectada) {
 			return base + MonitorDePID.idioma.fmlEarlyWindowMacOSOpenGL();
 		}
@@ -133,7 +133,7 @@ public class EarlyWindow implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new EarlyWindow();
 	}
 

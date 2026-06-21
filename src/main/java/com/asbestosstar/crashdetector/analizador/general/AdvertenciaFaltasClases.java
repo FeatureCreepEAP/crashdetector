@@ -19,7 +19,7 @@ import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.waifu.RespuestaWaifu;
@@ -59,7 +59,7 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 	 * <li>La guarda en el conjunto {@code clases} en formato path (reemplazando "."
 	 * por "/").</li>
 	 * <li>Registra un enlace HTML a la línea correspondiente mediante
-	 * {@link Consola#agregarErrorALectador(int, VerificacionesLegacy)}.</li>
+	 * {@link Consola#agregarErrorALectador(int, Verificaciones)}.</li>
 	 * </ul>
 	 * Al menos una clase detectada activará este verificador.
 	 * </p>
@@ -119,7 +119,7 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new AdvertenciaFaltasClases();
 	}
 

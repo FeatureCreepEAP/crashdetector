@@ -6,7 +6,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -39,7 +39,7 @@ public class ProblemaConfiguracionPermissionsEx implements Verificaciones {
 	}
 
 	private void activar() {
-		this.mensaje = MonitorDePID.idioma.mensajeConfiguracionPermissionsEx() + VerificacionesLegacy.nl_html;
+		this.mensaje = MonitorDePID.idioma.mensajeConfiguracionPermissionsEx() + Verificaciones.nl_html;
 		this.activado = true;
 	}
 
@@ -47,7 +47,7 @@ public class ProblemaConfiguracionPermissionsEx implements Verificaciones {
 	 * Crea una nueva instancia del verificador.
 	 */
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ProblemaConfiguracionPermissionsEx();
 	}
 

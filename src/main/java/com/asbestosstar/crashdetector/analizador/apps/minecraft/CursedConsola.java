@@ -11,7 +11,7 @@ import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.detectorlanzer.DetectorCurseForgeApp;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -33,7 +33,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * 
  * @author asbestosstar
  */
-public class CursedConsola implements VerificacionesLegacy {
+public class CursedConsola implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = MonitorDePID.idioma.noTieneConsolaDeLauncherCursedForge();
@@ -76,7 +76,7 @@ public class CursedConsola implements VerificacionesLegacy {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new CursedConsola();
 	}
 

@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Portuges implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -4146,7 +4146,7 @@ public class Portuges implements Idioma {
 	public String infoDeTrazos() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Corrigir as partes superiores dos troncos é a principal prioridade. " + "O formato é Nível, Linha. "
-				+ "Todos os registros têm um sistema de numeração. " + VerificacionesLegacy.nl_html
+				+ "Todos os registros têm um sistema de numeração. " + Verificaciones.nl_html
 				+ "Geralmente, você precisa procurar nos níveis mais baixos em todos os registros; rastros com níveis altos geralmente são falsos positivos. "
 				+ "É importante usar sua habilidade de ler na console, pois a análise de rastros não é perfeita quando há muitos rastros."
 				+ "</b>";

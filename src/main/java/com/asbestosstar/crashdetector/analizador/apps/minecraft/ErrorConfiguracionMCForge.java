@@ -10,7 +10,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -66,7 +66,7 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 			// Caso clásico Forge
 			if (linea.contains(PARSING_EXCEPTION)) {
 
-				mensaje = MonitorDePID.idioma.errorConfigMCForge() + VerificacionesLegacy.nl_html;
+				mensaje = MonitorDePID.idioma.errorConfigMCForge() + Verificaciones.nl_html;
 
 				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
@@ -78,7 +78,7 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 			// Caso alterno: excepciones de carga de config (Forge/Moonlight)
 			else if ((linea.contains(CFG_HANDLER) || linea.contains(CFG_WRAPPER)) && linea.contains(CFG_FAILED)) {
 
-				mensaje = MonitorDePID.idioma.errorConfigMCForge() + VerificacionesLegacy.nl_html;
+				mensaje = MonitorDePID.idioma.errorConfigMCForge() + Verificaciones.nl_html;
 
 				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
@@ -196,7 +196,7 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 
 			StringBuilder sb = new StringBuilder();
 
-			sb.append(VerificacionesLegacy.nl_html);
+			sb.append(Verificaciones.nl_html);
 
 			sb.append("<ul>");
 
@@ -255,7 +255,7 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ErrorConfiguracionMCForge();
 	}
 
@@ -283,13 +283,13 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 		sb.append(mensaje);
 
 		if (!listaArchivosVaciosHtml.isEmpty()) {
-			sb.append(listaArchivosVaciosHtml).append(VerificacionesLegacy.nl_html);
+			sb.append(listaArchivosVaciosHtml).append(Verificaciones.nl_html);
 		}
 
 		sb.append(enlaceHtml);
 
 		if (detalleArchivoHtml != null && !detalleArchivoHtml.isEmpty()) {
-			sb.append(VerificacionesLegacy.nl_html).append(detalleArchivoHtml);
+			sb.append(Verificaciones.nl_html).append(detalleArchivoHtml);
 		}
 
 		return sb.toString();

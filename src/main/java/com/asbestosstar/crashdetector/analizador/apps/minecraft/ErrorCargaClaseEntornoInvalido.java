@@ -4,7 +4,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -73,7 +73,7 @@ public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 				entornoInvalido = resultado.entornoInvalido;
 
 				mensaje = MonitorDePID.idioma.errorModEnPlataformaIncorrecta(nombreClase, entornoInvalido)
-						+ VerificacionesLegacy.nl_html;
+						+ Verificaciones.nl_html;
 
 				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 				activado = true;
@@ -148,7 +148,7 @@ public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ErrorCargaClaseEntornoInvalido();
 	}
 

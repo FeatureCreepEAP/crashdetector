@@ -5,7 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.cargador.Cargador;
@@ -24,7 +24,7 @@ import java.util.List;
  * https://discord.com/channels/1129059589325852724/1129069799545241703/1418708211636113498
  * ¡Verificación Numero 100!
  */
-public class ModIncompatibleConCargadorActivo implements VerificacionesLegacy {
+public class ModIncompatibleConCargadorActivo implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -44,7 +44,7 @@ public class ModIncompatibleConCargadorActivo implements VerificacionesLegacy {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ModIncompatibleConCargadorActivo();
 	}
 

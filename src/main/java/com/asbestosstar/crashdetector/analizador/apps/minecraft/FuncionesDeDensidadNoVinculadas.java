@@ -11,7 +11,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
@@ -125,7 +125,7 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 			mensaje = MonitorDePID.idioma.errorFuncionesDeDensidadNoVinculadas(clavesFaltantes);
 			if (!modsUbicacion.isEmpty()) {
 				StringBuilder sb = new StringBuilder();
-				sb.append(VerificacionesLegacy.nl_html).append("Posibles proveedores: <b>");
+				sb.append(Verificaciones.nl_html).append("Posibles proveedores: <b>");
 				for (int i = 0; i < modsUbicacion.size(); i++) {
 					if (i > 0)
 						sb.append(", ");
@@ -164,7 +164,7 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new FuncionesDeDensidadNoVinculadas();
 	}
 

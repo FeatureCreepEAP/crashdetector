@@ -5,7 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -54,7 +54,7 @@ public class ErrorEULANoAceptado implements Verificaciones {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Mensaje de error en HTML con referencia al EULA no aceptado
-			mensaje = MonitorDePID.idioma.errorEULANoAceptado() + VerificacionesLegacy.nl_html;
+			mensaje = MonitorDePID.idioma.errorEULANoAceptado() + Verificaciones.nl_html;
 			activado = true;
 		}
 	}
@@ -64,7 +64,7 @@ public class ErrorEULANoAceptado implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ErrorEULANoAceptado();
 	}
 

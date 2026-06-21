@@ -5,7 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -64,7 +64,7 @@ public class ErrorMetodoFinalSobrescrito implements Verificaciones {
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 		mensaje = MonitorDePID.idioma.errorMetodoFinalSobrescrito(claseQueSobrescribe, metodoFinal)
-				+ VerificacionesLegacy.nl_html + enlaceHtml;
+				+ Verificaciones.nl_html + enlaceHtml;
 
 		activado = true;
 	}
@@ -83,7 +83,7 @@ public class ErrorMetodoFinalSobrescrito implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ErrorMetodoFinalSobrescrito();
 	}
 

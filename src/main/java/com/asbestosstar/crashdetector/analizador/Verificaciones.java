@@ -20,7 +20,7 @@ public interface Verificaciones {
 	 * @param consola
 	 */
 	public default void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Por defecto hace nada, para muchos puede usar verificar(Consola)
+		// Por defecto hace nada, para muchos puede usar verificarCoincidencia
 	}
 
 	/**

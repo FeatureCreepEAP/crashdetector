@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 import javax.swing.JDialog;
 
 import com.asbestosstar.crashdetector.analizador.Analizador;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.config.ConfigStringArray;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
@@ -21,7 +21,7 @@ public abstract class DeshablicarVerificaciones extends JDialog
 		implements CrashDetectorGUI, BotonDeBarraLateralDerecha {
 	public static Map<String, Supplier<DeshablicarVerificaciones>> GUIS = new HashMap<String, Supplier<DeshablicarVerificaciones>>();
 
-	public static HashSet<VerificacionesLegacy> verificaciones() {
+	public static HashSet<Verificaciones> verificaciones() {
 		return Analizador.verificaciones;
 	}
 
@@ -43,7 +43,7 @@ public abstract class DeshablicarVerificaciones extends JDialog
 	 * @param ver
 	 * @return
 	 */
-	public static boolean recomendadoParaCorperata(VerificacionesLegacy ver) {
+	public static boolean recomendadoParaCorperata(Verificaciones ver) {
 		return ver.recomendadoParaCorperata();
 	}
 
@@ -53,7 +53,7 @@ public abstract class DeshablicarVerificaciones extends JDialog
 	 * @param ver
 	 * @return
 	 */
-	public static String nombre(VerificacionesLegacy ver) {
+	public static String nombre(Verificaciones ver) {
 		return ver.nombre();
 	}
 
@@ -63,7 +63,7 @@ public abstract class DeshablicarVerificaciones extends JDialog
 	 * @param ver
 	 * @return
 	 */
-	public static String enlaceACodigo(VerificacionesLegacy ver) {
+	public static String enlaceACodigo(Verificaciones ver) {
 		return ver.enlaceACodigo();
 	}
 
@@ -73,7 +73,7 @@ public abstract class DeshablicarVerificaciones extends JDialog
 	 * @param ver
 	 * @return
 	 */
-	public static String id(VerificacionesLegacy ver) {
+	public static String id(Verificaciones ver) {
 		return ver.id();
 	}
 
@@ -83,7 +83,7 @@ public abstract class DeshablicarVerificaciones extends JDialog
 	 * @param ver
 	 * @return
 	 */
-	public static String enlaceDocs(VerificacionesLegacy ver) {
+	public static String enlaceDocs(Verificaciones ver) {
 		Documento doc = ver.docs();
 		if (doc == null || doc.equals(Documento.NINGUN)) {
 			return null;

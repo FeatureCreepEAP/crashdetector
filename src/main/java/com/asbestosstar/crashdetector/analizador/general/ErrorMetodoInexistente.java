@@ -5,7 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
  * Detecta errores NoSuchMethodError que ocurren cuando un mod intenta llamar a
@@ -154,13 +154,13 @@ public class ErrorMetodoInexistente implements com.asbestosstar.crashdetector.an
 		sb.append(MonitorDePID.idioma.errorMetodoInexistente(firmaMetodo, firmaMetodo));
 
 		if (!lineaSiguiente.isEmpty()) {
-			sb.append(VerificacionesLegacy.nl_html);
+			sb.append(Verificaciones.nl_html);
 			sb.append("<span style='color:#888888; font-family:monospace;'>");
 			sb.append(escapeHtml(lineaSiguiente));
 			sb.append("</span>");
 		}
 
-		sb.append(VerificacionesLegacy.nl_html);
+		sb.append(Verificaciones.nl_html);
 		sb.append(enlaceHtml);
 
 		if (create) {
@@ -256,7 +256,7 @@ public class ErrorMetodoInexistente implements com.asbestosstar.crashdetector.an
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ErrorMetodoInexistente();
 	}
 

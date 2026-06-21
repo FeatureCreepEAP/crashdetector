@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Vietnamita implements Idioma {
 	Config config = Config.obtenerInstancia();
@@ -4428,7 +4428,7 @@ public class Vietnamita implements Idioma {
 		// TODO Auto-generated method stub
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Việc sửa các phần đầu của stack trace là ưu tiên hàng đầu. " + "Định dạng là Cấp độ, Dòng. "
-				+ "Tất cả các nhật ký đều có hệ thống đánh số. " + VerificacionesLegacy.nl_html
+				+ "Tất cả các nhật ký đều có hệ thống đánh số. " + Verificaciones.nl_html
 				+ "Thông thường bạn cần tìm ở các cấp thấp hơn trong tất cả các nhật ký; các trace ở cấp cao thường là dương tính giả. "
 				+ "Điều quan trọng là dùng khả năng quan sát của bạn trong bảng điều khiển, vì việc phân tích trace không hoàn hảo khi có quá nhiều trace."
 				+ "</b>";

@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Persa implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -4122,8 +4122,7 @@ public class Persa implements Idioma {
 	@Override
 	public String infoDeTrazos() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "رفع مشکل بالای تنه‌ها اولویت اول است. "
-				+ "فرمت به صورت سطح، خط است. " + "همه سیاهه‌ها یک سیستم شماره‌گذاری دارند. "
-				+ VerificacionesLegacy.nl_html
+				+ "فرمت به صورت سطح، خط است. " + "همه سیاهه‌ها یک سیستم شماره‌گذاری دارند. " + Verificaciones.nl_html
 				+ "به طور کلی باید در همه سیاهه‌ها به دنبال پایین‌ترین سطوح باشید؛ ردپاها با سطوح بالا معمولاً مثبت کاذب هستند. "
 				+ "استفاده از توانایی خود برای مشاهده کنسول مهم است، زیرا تحلیل ردپاها وقتی تعداد زیادی ردپا وجود داشته باشد کامل نیست."
 				+ "</b>";

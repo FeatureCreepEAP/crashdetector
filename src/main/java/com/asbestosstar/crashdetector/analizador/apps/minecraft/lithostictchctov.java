@@ -4,7 +4,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -70,7 +70,7 @@ public class lithostictchctov implements Verificaciones {
 
 		// Solo activamos cuando ambas condiciones se han cumplido
 		if (patronDetectado && firmaDetectada) {
-			this.mensaje = MonitorDePID.idioma.lithostichctov() + VerificacionesLegacy.nl_html;
+			this.mensaje = MonitorDePID.idioma.lithostichctov() + Verificaciones.nl_html;
 
 			// Enlazar la línea donde apareció el patrón principal, si la tenemos
 			if (lineaPatron >= 0) {
@@ -82,7 +82,7 @@ public class lithostictchctov implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new lithostictchctov();
 	}
 

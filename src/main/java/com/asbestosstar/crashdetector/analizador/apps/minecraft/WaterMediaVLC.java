@@ -9,7 +9,7 @@ import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -31,13 +31,13 @@ public class WaterMediaVLC implements Verificaciones {
 		}
 
 		if (evento.linea.contains(VLC_BINARIES_MISSING)) {
-			this.mensaje = MonitorDePID.idioma.noTienesVLCBin() + VerificacionesLegacy.nl_html;
+			this.mensaje = MonitorDePID.idioma.noTienesVLCBin() + Verificaciones.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new WaterMediaVLC();
 	}
 

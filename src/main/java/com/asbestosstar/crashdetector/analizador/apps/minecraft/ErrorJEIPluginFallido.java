@@ -5,7 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -122,14 +122,13 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 			return;
 		}
 
-		mensaje = MonitorDePID.idioma.errorJEIPluginFallido(nombreClase, modId, pluginId)
-				+ VerificacionesLegacy.nl_html;
+		mensaje = MonitorDePID.idioma.errorJEIPluginFallido(nombreClase, modId, pluginId) + Verificaciones.nl_html;
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 		activado = true;
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ErrorJEIPluginFallido();
 	}
 

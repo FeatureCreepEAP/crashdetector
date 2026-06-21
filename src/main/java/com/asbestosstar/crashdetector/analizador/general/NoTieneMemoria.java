@@ -6,7 +6,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -87,14 +87,14 @@ public class NoTieneMemoria implements Verificaciones {
 		// memoria)
 		if (esProblemaMemoriaInsuficiente(contenidoConsola)) {
 			esProblemaDeMemoriaInsuficiente = true;
-			mensajes.append(MonitorDePID.idioma.noTieneMemoria()).append(VerificacionesLegacy.nl_html)
+			mensajes.append(MonitorDePID.idioma.noTieneMemoria()).append(Verificaciones.nl_html)
 					.append(MonitorDePID.idioma.recomendacionMemoria());
 		}
 
 		// Verificar si es un problema de memoria excesiva (se asignó DEMASIADA memoria)
 		if (esProblemaMemoriaExcesiva(contenidoConsola)) {
 			esProblemaDeMemoriaExcesiva = true;
-			mensajes.append(MonitorDePID.idioma.memoriaExcesiva()).append(VerificacionesLegacy.nl_html)
+			mensajes.append(MonitorDePID.idioma.memoriaExcesiva()).append(Verificaciones.nl_html)
 					.append(MonitorDePID.idioma.recomendacionMemoriaExcesiva());
 		}
 
@@ -103,8 +103,8 @@ public class NoTieneMemoria implements Verificaciones {
 				|| contenidoConsola.contains(PERMGEN_SPACE)) {
 
 			esProblemaPermGen = true;
-			mensajes.append(VerificacionesLegacy.nl_html).append(MonitorDePID.idioma.permGenError());
-			mensajes.append(VerificacionesLegacy.nl_html).append(MonitorDePID.idioma.noTieneMemoria());
+			mensajes.append(Verificaciones.nl_html).append(MonitorDePID.idioma.permGenError());
+			mensajes.append(Verificaciones.nl_html).append(MonitorDePID.idioma.noTieneMemoria());
 		}
 
 		// Si se detectó algún problema de memoria, activamos el verificador
@@ -166,12 +166,12 @@ public class NoTieneMemoria implements Verificaciones {
 		}
 
 		if (esJVM32Bits) {
-			mensajes.append(VerificacionesLegacy.nl_html).append(MonitorDePID.idioma.error32BitMemoria());
+			mensajes.append(Verificaciones.nl_html).append(MonitorDePID.idioma.error32BitMemoria());
 		}
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new NoTieneMemoria();
 	}
 
@@ -201,22 +201,22 @@ public class NoTieneMemoria implements Verificaciones {
 
 		// Soluciones específicas para memoria insuficiente
 		if (esProblemaDeMemoriaInsuficiente) {
-			solucion.append(MonitorDePID.idioma.aumentarMemoriaHeap()).append(VerificacionesLegacy.nl_html);
+			solucion.append(MonitorDePID.idioma.aumentarMemoriaHeap()).append(Verificaciones.nl_html);
 		}
 
 		// Soluciones específicas para memoria excesiva
 		if (esProblemaDeMemoriaExcesiva) {
-			solucion.append(MonitorDePID.idioma.disminuirMemoriaHeap()).append(VerificacionesLegacy.nl_html);
+			solucion.append(MonitorDePID.idioma.disminuirMemoriaHeap()).append(Verificaciones.nl_html);
 		}
 
 		// Soluciones para PermGen
 		if (esProblemaPermGen) {
-			solucion.append(MonitorDePID.idioma.aumentarMemoriaPermgen()).append(VerificacionesLegacy.nl_html);
+			solucion.append(MonitorDePID.idioma.aumentarMemoriaPermgen()).append(Verificaciones.nl_html);
 		}
 
 		// Soluciones comunes
-		solucion.append(MonitorDePID.idioma.utilizarJVM64Bits()).append(VerificacionesLegacy.nl_html)
-				.append(MonitorDePID.idioma.optimizarCodigo()).append(VerificacionesLegacy.nl_html)
+		solucion.append(MonitorDePID.idioma.utilizarJVM64Bits()).append(Verificaciones.nl_html)
+				.append(MonitorDePID.idioma.optimizarCodigo()).append(Verificaciones.nl_html)
 				.append(MonitorDePID.idioma.utilizarRecolectorBasuraEficiente());
 
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(solucion.toString()).construir();

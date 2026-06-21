@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
 import com.asbestosstar.crashdetector.anon.AnonimizadordeRegistros;
 import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
@@ -137,7 +137,7 @@ public class Consola {
 		for (DivisorDeArchivos div : divisores) {
 			String contento_existe = MonitorDePID.leer_archivo(archivo);
 			if (div.predicado(archivo, contento_existe)) {
-				int ln = div.obtenerLineaOriginal(contento_existe.split(VerificacionesLegacy.nl));
+				int ln = div.obtenerLineaOriginal(contento_existe.split(Verificaciones.nl));
 				if (ln > 0) {
 					linea_original = ln;
 					break;
@@ -202,7 +202,7 @@ public class Consola {
 						String contenido = MonitorDePID.leer_archivo(f.toPath());
 						if (div.predicado(f.toPath(), contenido)) {
 							huboDivisor = true;
-							int ln = div.obtenerLineaOriginal(contenido.split(VerificacionesLegacy.nl));
+							int ln = div.obtenerLineaOriginal(contenido.split(Verificaciones.nl));
 							if (ln > 0) {
 								linea = ln;
 								break;
@@ -376,7 +376,7 @@ public class Consola {
 		for (LimpiadorDeRegistro limp : limpiadores) {
 			if (limp.predicado(archivo)) {
 				contenido_verificar = limp.limpiarConsola(contento);
-				lineas_verificar = contenido_verificar.split(VerificacionesLegacy.nl);
+				lineas_verificar = contenido_verificar.split(Verificaciones.nl);
 				limpiado = true;
 				this.limpiador = limp;
 			}
@@ -384,7 +384,7 @@ public class Consola {
 		if (!limpiado) {
 			this.limpiador = new LimpiadorNingun();
 			contenido_verificar = contento.toString();
-			lineas_verificar = contenido_verificar.split(VerificacionesLegacy.nl);
+			lineas_verificar = contenido_verificar.split(Verificaciones.nl);
 		}
 
 	}
@@ -694,7 +694,7 @@ public class Consola {
 			// La última traza en el log es la más reciente (está al final de la lista)
 			VerificacionDeStackTrace.TraceInfo ultimaTraceInfo = tracesInfo.get(tracesInfo.size() - 1);
 			String ultimaTrace = ultimaTraceInfo.trace;
-			String[] lineas = ultimaTrace.split(VerificacionesLegacy.nl);
+			String[] lineas = ultimaTrace.split(Verificaciones.nl);
 
 			// Buscar la primera línea con un mensaje real de error
 			for (String linea : lineas) {
@@ -728,7 +728,7 @@ public class Consola {
 			// lista)
 			VerificacionDeStackTrace.TraceInfo ultimaTraceInfo = tracesInfo.get(tracesInfo.size() - 1);
 			String ultimaTrace = ultimaTraceInfo.trace;
-			String[] lineas = ultimaTrace.split(VerificacionesLegacy.nl);
+			String[] lineas = ultimaTrace.split(Verificaciones.nl);
 
 			// Buscar el mensaje fatal en las líneas
 			for (String linea : lineas) {
@@ -764,7 +764,7 @@ public class Consola {
 	 * @param color           Color en la clase LectadorDeConsolas
 	 * @return la enlace del error
 	 */
-	public String agregarErrorALectador(int numero_de_linea, VerificacionesLegacy verificacion) {
+	public String agregarErrorALectador(int numero_de_linea, Verificaciones verificacion) {
 		ErrorDeLectador letc = new ErrorDeLectador(this, numero_de_linea, verificacion);
 		errores_de_lectadores.add(letc);
 

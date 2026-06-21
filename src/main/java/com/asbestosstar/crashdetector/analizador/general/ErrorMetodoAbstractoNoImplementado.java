@@ -6,7 +6,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -74,7 +74,7 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 		mensaje = MonitorDePID.idioma.errorMetodoAbstractoNoImplementadoDetallado(claseConcreta, firmaMetodo, interfaz,
-				origen) + VerificacionesLegacy.nl_html + enlaceHtml;
+				origen) + Verificaciones.nl_html + enlaceHtml;
 
 		activado = true;
 	}
@@ -150,7 +150,7 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 	}
 
 	@Override
-	public VerificacionesLegacy nueva() {
+	public Verificaciones nueva() {
 		return new ErrorMetodoAbstractoNoImplementado();
 	}
 

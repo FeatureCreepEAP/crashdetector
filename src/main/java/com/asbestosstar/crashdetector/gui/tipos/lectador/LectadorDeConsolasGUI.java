@@ -30,7 +30,7 @@ import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
@@ -985,9 +985,9 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 	public static class ErrorDeLectador {
 		public Consola consola;
 		public int numero_de_linea;
-		public VerificacionesLegacy verificacion;
+		public Verificaciones verificacion;
 
-		public ErrorDeLectador(Consola consola, int numero_de_linea, VerificacionesLegacy verificacion) {
+		public ErrorDeLectador(Consola consola, int numero_de_linea, Verificaciones verificacion) {
 			this.consola = consola;
 			this.numero_de_linea = numero_de_linea;
 			this.verificacion = verificacion;
