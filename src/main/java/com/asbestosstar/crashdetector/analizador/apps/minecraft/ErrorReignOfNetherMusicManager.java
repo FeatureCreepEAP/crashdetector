@@ -101,7 +101,6 @@ public class ErrorReignOfNetherMusicManager implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[] { MUSIC_MANAGER, REIGN_OF_NETHER_TICK };
 	}

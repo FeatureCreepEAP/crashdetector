@@ -82,7 +82,6 @@ public class CrashProvocadoPorComando implements Verificaciones {
 	}
 
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[] { TEXTO_CRASH_ASSISTANT };
 	}

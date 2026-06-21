@@ -87,7 +87,6 @@ public class OpcionesJavaGCInvalidas implements Verificaciones {
 	}
 
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[] { TEXTO_GC_INVALIDO };
 	}

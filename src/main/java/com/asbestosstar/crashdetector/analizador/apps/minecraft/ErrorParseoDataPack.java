@@ -103,7 +103,6 @@ public class ErrorParseoDataPack implements Verificaciones {
 	}
 
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[0];
 	}

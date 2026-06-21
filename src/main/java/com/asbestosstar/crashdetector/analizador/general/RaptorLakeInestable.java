@@ -289,8 +289,8 @@ public class RaptorLakeInestable implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		return false; // No depende de un stack trace específico
+	public String[] ocupaTrazo() {
+		return new String[0];
 	}
 
 	@Override

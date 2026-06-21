@@ -95,7 +95,7 @@ public class ErrorJarCorruptoConNombre implements Verificaciones {
 
 	@Override
 	public String[] ocupaTrazo() {
-		return new String[] { ERROR_READING_ZIP_FILE, ZIP_FILE_CLOSED };
+		return new String[] { SUFIJO, ZIP_END_HEADER_NOT_FOUND };
 	}
 
 	@Override

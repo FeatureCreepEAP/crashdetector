@@ -255,15 +255,8 @@ public class FallosEjecucionTareas implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		// Verificamos si el trazo contiene información relevante
-		if (trazo == null || trazo.trace == null || !activado) {
-			return false;
-		}
-
-		String contenido = trazo.trace;
-		return contenido.contains("failed to execute task") && contenido.contains("class")
-				&& contenido.contains("executionexception");
+	public String[] ocupaTrazo() {
+		return new String[] { "failed to execute task", "executionexception" };
 	}
 
 	@Override

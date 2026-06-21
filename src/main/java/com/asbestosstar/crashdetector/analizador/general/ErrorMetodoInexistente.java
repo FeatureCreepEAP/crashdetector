@@ -292,8 +292,8 @@ public class ErrorMetodoInexistente implements com.asbestosstar.crashdetector.an
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		return trazo != null && trazo.trace != null && trazo.trace.contains("NoSuchMethodError");
+	public String[] ocupaTrazo() {
+		return new String[] { "NoSuchMethodError" };
 	}
 
 	@Override

@@ -148,7 +148,6 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 	}
 
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[] { "Invalid module name:", "is not a Java identifier" };
 	}

@@ -178,9 +178,8 @@ public class PreferIPV4Trace implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+	public String[] ocupaTrazo() {
+		return new String[] { GML_MAPPINGS_PROVIDER };
 	}
 
 	@Override

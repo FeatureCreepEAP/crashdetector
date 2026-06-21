@@ -104,7 +104,6 @@ public class ErrorEULANoAceptado implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[] { TEXTO_EULA, EULA_TXT };
 	}

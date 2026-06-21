@@ -266,7 +266,6 @@ public class LenguajeProveedorCheck implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[] { MOD_FILE, NEEDS_LANGUAGE_PROVIDER };
 	}

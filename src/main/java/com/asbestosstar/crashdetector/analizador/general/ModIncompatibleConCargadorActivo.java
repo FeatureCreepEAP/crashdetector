@@ -36,8 +36,8 @@ public class ModIncompatibleConCargadorActivo implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		return false; // No requiere stack trace
+	public String[] ocupaTrazo() {
+		return new String[0];
 	}
 
 	@Override

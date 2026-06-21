@@ -116,7 +116,6 @@ public class ErrorVersionInvalidaModMaven implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[] { INVALID_VERSION_SPECIFICATION, SINGLE_VERSION_SURROUNDED };
 	}

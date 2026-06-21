@@ -133,7 +133,6 @@ public class lithostictchctov implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[] { REGISTRY_KEY, FIRMA_CTOV };
 	}

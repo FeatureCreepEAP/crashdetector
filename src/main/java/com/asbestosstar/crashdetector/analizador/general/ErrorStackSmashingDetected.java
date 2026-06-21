@@ -99,7 +99,6 @@ public class ErrorStackSmashingDetected implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[] { STACK_SMASHING };
 	}

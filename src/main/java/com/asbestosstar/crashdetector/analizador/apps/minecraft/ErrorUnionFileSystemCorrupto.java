@@ -235,7 +235,6 @@ public class ErrorUnionFileSystemCorrupto implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[] { TEXTO_UNION, TEXTO_ZIP };
 	}

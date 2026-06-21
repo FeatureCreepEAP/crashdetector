@@ -127,7 +127,6 @@ public class ValkyrienSkiesTournamentLithiumPoiInjection implements Verificacion
 	}
 
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[0];
 	}

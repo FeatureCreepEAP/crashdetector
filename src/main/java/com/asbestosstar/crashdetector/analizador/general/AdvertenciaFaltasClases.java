@@ -245,7 +245,6 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 		return "advertencia_faltas_clases";
 	}
 
-
 	@Override
 	public Documento docs() {
 		// TODO Auto-generated method stub

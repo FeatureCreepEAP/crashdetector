@@ -105,7 +105,6 @@ public class ErrorSistemaSonido implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[] { TEXTO_ERROR };
 	}

@@ -66,7 +66,6 @@ public class UraniumLag implements Verificaciones {
 		return QuickFix.NINGUN;// TODO
 	}
 
-
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub

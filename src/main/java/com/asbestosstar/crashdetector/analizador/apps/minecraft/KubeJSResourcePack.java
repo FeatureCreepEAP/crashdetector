@@ -163,7 +163,6 @@ public class KubeJSResourcePack implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[] { KUBEJS_RESOURCE_PACK, FAILED_TO_PARSE };
 	}

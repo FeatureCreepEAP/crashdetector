@@ -96,7 +96,6 @@ public class ProblemaSafeFetch32JDK17 implements Verificaciones {
 	}
 
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[] { TEXTO_SAFE_FETCH };
 	}

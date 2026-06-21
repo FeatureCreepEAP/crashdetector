@@ -246,7 +246,6 @@ public class ClassCastExceptionGeneral implements Verificaciones {
 	}
 
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[0];
 	}

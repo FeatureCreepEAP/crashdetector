@@ -176,19 +176,8 @@ public class FaltaModuleJPMS implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		// Para ser conservadores, solo marcamos el trazo como perteneciente a este
-		// verificador si:
-		// - Ya se ha activado (es decir, se detectó al menos un error JPMS en el log),
-		// y
-		// - El texto del trazo contiene claramente el patrón de FindException de
-		// módulos faltantes.
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-		return t.contains(FIND_EXCEPTION_MODULE) && t.contains(NOT_FOUND_REQUIRED_BY);
+	public String[] ocupaTrazo() {
+		return new String[] { FIND_EXCEPTION_MODULE, NOT_FOUND_REQUIRED_BY };
 	}
 
 	@Override

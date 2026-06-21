@@ -99,7 +99,6 @@ public class VulkanModGPUIncompatible implements Verificaciones {
 	}
 
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
 		return new String[0];
 	}
