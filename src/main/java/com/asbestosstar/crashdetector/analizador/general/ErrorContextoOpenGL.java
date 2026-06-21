@@ -102,11 +102,15 @@ public class ErrorContextoOpenGL implements Verificaciones {
 	 * (jar/modid/paquete) con los métodos utilitarios de VerificacionDeStackTrace.
 	 */
 	private String detectarOrigenConVDST(VerificacionDeStackTrace vdst, Consola log, int lineaInicio) {
+		if (log == null) {
+			return "";
+		}
+
 		VerificacionDeStackTrace.TraceInfo candidato = null;
 		int ventanaSuperior = lineaInicio + 60;
 
 		for (VerificacionDeStackTrace.TraceInfo ti : VerificacionDeStackTrace.obtenerTracesFatalConLinea(log)) {
-			if (ti.consolaLineaComenzar >= lineaInicio && ti.consolaLineaComenzar <= ventanaSuperior) {
+			if (ti != null && ti.consolaLineaComenzar >= lineaInicio && ti.consolaLineaComenzar <= ventanaSuperior) {
 				candidato = ti;
 				break;
 			}
@@ -114,7 +118,8 @@ public class ErrorContextoOpenGL implements Verificaciones {
 
 		if (candidato == null) {
 			for (VerificacionDeStackTrace.TraceInfo ti : VerificacionDeStackTrace.obtenerTracesConLinea(log)) {
-				if (ti.consolaLineaComenzar >= lineaInicio && ti.consolaLineaComenzar <= ventanaSuperior) {
+				if (ti != null && ti.consolaLineaComenzar >= lineaInicio
+						&& ti.consolaLineaComenzar <= ventanaSuperior) {
 					candidato = ti;
 					break;
 				}
@@ -125,7 +130,57 @@ public class ErrorContextoOpenGL implements Verificaciones {
 			return "";
 		}
 
-		return origenEnTextoMultilinea(candidato.trace);
+		// Nuevo sistema: TraceInfo.trace puede ser null.
+		// Primero usamos las LineaTrazo ya procesadas por VDST.
+		if (candidato.lineas != null && !candidato.lineas.isEmpty()) {
+			for (VerificacionDeStackTrace.LineaTrazo lt : candidato.lineas) {
+				if (lt == null) {
+					continue;
+				}
+
+				if (lt.origen != null && !lt.origen.isEmpty()) {
+					return lt.origen;
+				}
+			}
+		}
+
+		// Fallback viejo: si trace todavía existe, analizar texto multilinea.
+		if (candidato.trace != null && !candidato.trace.isEmpty()) {
+			String origenDesdeTexto = origenEnTextoMultilinea(candidato.trace);
+
+			if (!origenDesdeTexto.isEmpty()) {
+				return origenDesdeTexto;
+			}
+		}
+
+		// Fallback nuevo: reconstruir desde lineas_verificar sin split del trace.
+		return origenEnRangoDeLineas(log.lineas_verificar, candidato.consolaLineaComenzar,
+				candidato.consolaLineaTerminar);
+	}
+
+	private String origenEnRangoDeLineas(String[] lineas, int inicio, int fin) {
+		if (lineas == null || lineas.length == 0) {
+			return "";
+		}
+
+		int desde = Math.max(0, inicio);
+		int hasta = fin >= 0 ? Math.min(fin, lineas.length - 1) : Math.min(desde + 60, lineas.length - 1);
+
+		for (int i = desde; i <= hasta; i++) {
+			String linea = lineas[i];
+
+			if (linea == null || linea.isEmpty()) {
+				continue;
+			}
+
+			String posible = origenEnLinea(linea);
+
+			if (!posible.isEmpty()) {
+				return posible;
+			}
+		}
+
+		return "";
 	}
 
 	/**
@@ -241,12 +296,8 @@ public class ErrorContextoOpenGL implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		return trazo.trace.contains(TEXTO_DETALLE) || trazo.trace.contains(TEXTO_CABECERA);
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_CABECERA, TEXTO_DETALLE };
 	}
 
 	@Override

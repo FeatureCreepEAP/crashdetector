@@ -54,8 +54,21 @@ public interface Verificaciones {
 
 	public QuickFix solucion();
 
-	public boolean ocupaTrazo(TraceInfo trazo);
 
+
+	/**
+	 * Patrones literales que indican que esta verificación ocupa un stacktrace.
+	 *
+	 * Si TODOS estos patrones aparecen dentro del trace, el trace queda marcado
+	 * como ocupado antes de construir TraceInfo.
+	 *
+	 * Esto reemplaza al método antiguo boolean ocupaTrazo(TraceInfo).
+	 */
+	public default String[] ocupaTrazo() {
+		return new String[0];
+	}
+	
+	
 	public static void abrirEnNavegador(String url) {
 		try {
 			if (java.awt.Desktop.isDesktopSupported()) {

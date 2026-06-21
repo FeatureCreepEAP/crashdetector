@@ -1053,10 +1053,8 @@ public class FaltasClases implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		// De momento no reclamamos trazos concretos para evitar solaparnos con otros
-		// analizadores más específicos.
-		return false;
+	public String[] ocupaTrazo() {
+		return new String[0];
 	}
 
 	@Override

@@ -81,6 +81,8 @@ public final class MotorDeLecturaStreaming {
 			return;
 		}
 
+		boolean necesitaStringPorLinea = verificacionesLineales != null && !verificacionesLineales.isEmpty();
+
 		try (RandomAccessFile raf = new RandomAccessFile(path.toFile(), "r"); FileChannel channel = raf.getChannel()) {
 
 			ByteBuffer buffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
@@ -113,27 +115,22 @@ public final class MotorDeLecturaStreaming {
 					for (int i = 0; i < totalPosiciones; i++) {
 						int finLinea = posicionesSaltoLinea[i];
 
-						String contenidoLinea;
-
 						if (restoAnterior > 0) {
 							int lenLinea = finLinea - inicioActual;
+
 							byte[] lineaCompleta = new byte[restoAnterior + lenLinea];
 
 							System.arraycopy(bufferResto, 0, lineaCompleta, 0, restoAnterior);
 							System.arraycopy(heapBuffer, inicioActual, lineaCompleta, restoAnterior, lenLinea);
 
-							contenidoLinea = new String(lineaCompleta, StandardCharsets.UTF_8);
+							procesarLinea(consola, lineaCompleta, 0, lineaCompleta.length, numeroLineaActual,
+									verificacionesLineales, necesitaStringPorLinea, estado);
+
 							restoAnterior = 0;
 						} else {
-							contenidoLinea = new String(heapBuffer, inicioActual, finLinea - inicioActual,
-									StandardCharsets.UTF_8);
+							procesarLinea(consola, heapBuffer, inicioActual, finLinea, numeroLineaActual,
+									verificacionesLineales, necesitaStringPorLinea, estado);
 						}
-
-						if (!contenidoLinea.isEmpty() && contenidoLinea.charAt(contenidoLinea.length() - 1) == '\r') {
-							contenidoLinea = contenidoLinea.substring(0, contenidoLinea.length() - 1);
-						}
-
-						procesarLinea(consola, contenidoLinea, numeroLineaActual, verificacionesLineales, estado);
 
 						numeroLineaActual++;
 						inicioActual = finLinea + 1;
@@ -162,13 +159,8 @@ public final class MotorDeLecturaStreaming {
 			}
 
 			if (restoAnterior > 0) {
-				String ultimaLinea = new String(bufferResto, 0, restoAnterior, StandardCharsets.UTF_8);
-
-				if (!ultimaLinea.isEmpty() && ultimaLinea.charAt(ultimaLinea.length() - 1) == '\r') {
-					ultimaLinea = ultimaLinea.substring(0, ultimaLinea.length() - 1);
-				}
-
-				procesarLinea(consola, ultimaLinea, numeroLineaActual, verificacionesLineales, estado);
+				procesarLinea(consola, bufferResto, 0, restoAnterior, numeroLineaActual, verificacionesLineales,
+						necesitaStringPorLinea, estado);
 
 				estado.lineasLeidas = numeroLineaActual + 1;
 			}
@@ -178,27 +170,58 @@ public final class MotorDeLecturaStreaming {
 		}
 	}
 
+	public void procesarLinea(Consola consola, byte[] datos, int inicio, int fin, int numeroLinea,
+			List<Verificaciones> verificacionesLineales, boolean necesitaStringPorLinea, EstadoAnalisisArchivo estado) {
+		procesarLinea(consola, datos, inicio, fin, numeroLinea, verificacionesLineales, necesitaStringPorLinea, estado,
+				null);
+	}
+
 	public void procesarLinea(Consola consola, String linea, int numeroLinea,
 			List<Verificaciones> verificacionesLineales, EstadoAnalisisArchivo estado) {
 		if (linea == null || linea.isEmpty()) {
 			return;
 		}
 
-		if (automata != null) {
-			List<AutomataDePatrones.Coincidencia> coincidenciasBase = automata.buscar(linea);
+		byte[] bytes = linea.getBytes(StandardCharsets.UTF_8);
 
-			if (coincidenciasBase != null && !coincidenciasBase.isEmpty()) {
-				for (AutomataDePatrones.Coincidencia base : coincidenciasBase) {
+		procesarLinea(consola, bytes, 0, bytes.length, numeroLinea, verificacionesLineales, true, estado, linea);
+	}
+
+	private void procesarLinea(Consola consola, byte[] datos, int inicio, int fin, int numeroLinea,
+			List<Verificaciones> verificacionesLineales, boolean necesitaStringPorLinea, EstadoAnalisisArchivo estado,
+			String lineaYaDecodificada) {
+		if (datos == null || fin <= inicio) {
+			return;
+		}
+
+		if (fin > inicio && datos[fin - 1] == '\r') {
+			fin--;
+		}
+
+		String linea = lineaYaDecodificada;
+
+		if (automata != null) {
+			List<AutomataDePatrones.Coincidencia> coincidencias = automata.buscar(datos, inicio, fin);
+
+			if (coincidencias != null && !coincidencias.isEmpty()) {
+				if (linea == null) {
+					linea = new String(datos, inicio, fin - inicio, StandardCharsets.UTF_8);
+				}
+
+				for (AutomataDePatrones.Coincidencia base : coincidencias) {
 					List<Verificaciones> verificacionesDelPatron = patronesAVerificaciones.get(base.patron);
 
 					if (verificacionesDelPatron == null || verificacionesDelPatron.isEmpty()) {
 						continue;
 					}
 
+					int inicioEnLinea = base.inicio - inicio;
+					int finEnLinea = base.fin - inicio;
+
 					for (Verificaciones ver : verificacionesDelPatron) {
 						try {
 							EventoDeCoincidencia evento = new EventoDeCoincidencia(consola, consola.archivo, ver,
-									base.patron, linea, numeroLinea, base.inicio, base.fin, estado);
+									base.patron, linea, numeroLinea, inicioEnLinea, finEnLinea, estado);
 
 							ver.verificarCoincidencia(evento);
 						} catch (Exception e) {
@@ -209,15 +232,17 @@ public final class MotorDeLecturaStreaming {
 			}
 		}
 
-		if (verificacionesLineales == null || verificacionesLineales.isEmpty()) {
-			return;
-		}
+		if (necesitaStringPorLinea) {
+			if (linea == null) {
+				linea = new String(datos, inicio, fin - inicio, StandardCharsets.UTF_8);
+			}
 
-		for (Verificaciones ver : verificacionesLineales) {
-			try {
-				ver.verificarPorLinea(consola, linea, numeroLinea);
-			} catch (Exception e) {
-				CrashDetectorLogger.logException(e);
+			for (Verificaciones ver : verificacionesLineales) {
+				try {
+					ver.verificarPorLinea(consola, linea, numeroLinea);
+				} catch (Exception e) {
+					CrashDetectorLogger.logException(e);
+				}
 			}
 		}
 	}
@@ -259,7 +284,7 @@ public final class MotorDeLecturaStreaming {
 		String[] todosLosPatrones = patronesAVerificaciones.keySet().toArray(new String[0]);
 
 		CrashDetectorLogger
-				.log("[DEBUG_LOG] Inicializando autómata con " + todosLosPatrones.length + " patrones únicos");
+				.log("[DEBUG_LOG] Inicializando autómata BYTE con " + todosLosPatrones.length + " patrones únicos");
 
 		this.automata = new AutomataDePatrones(todosLosPatrones);
 	}

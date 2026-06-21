@@ -1,46 +1,71 @@
 package com.asbestosstar.crashdetector.analizador.rapido;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.LinkedList;
 
-/**
- * Implementación de un autómata tipo Aho-Corasick para búsqueda múltiple de
- * patrones. Optimiza la detección de disparadores rápidos en una sola pasada
- * por línea.
- */
 public final class AutomataDePatrones {
 
-	private static class Nodo {
-		Map<Character, Nodo> hijos = new HashMap<>();
-		Nodo fallo;
-		List<String> patronesTerminados = new ArrayList<>();
+	private static final class Nodo {
+		private final Map<Byte, Nodo> hijos = new HashMap<>();
+		private Nodo fallo;
+		private final List<PatronBytes> patronesTerminados = new ArrayList<>();
 	}
 
-	private final Nodo raiz;
+	public static final class PatronBytes {
+		public final String texto;
+		public final byte[] bytes;
+
+		private PatronBytes(String texto) {
+			this.texto = texto;
+			this.bytes = texto.getBytes(StandardCharsets.UTF_8);
+		}
+	}
+
+	public static final class Coincidencia {
+		public final String patron;
+		public final int inicio;
+		public final int fin;
+
+		public Coincidencia(String patron, int inicio, int fin) {
+			this.patron = patron;
+			this.inicio = inicio;
+			this.fin = fin;
+		}
+	}
+
+	private final Nodo raiz = new Nodo();
 
 	public AutomataDePatrones(String[] patrones) {
-		this.raiz = new Nodo();
-		for (String p : patrones) {
-			insertar(p);
+		if (patrones != null) {
+			for (String patron : patrones) {
+				if (patron != null && !patron.isEmpty()) {
+					insertar(new PatronBytes(patron));
+				}
+			}
 		}
-		construirEnlacesDeFallo();
+
+		construirFallos();
 	}
 
-	private void insertar(String patron) {
+	private void insertar(PatronBytes patron) {
 		Nodo actual = raiz;
-		for (char c : patron.toCharArray()) {
-			actual = actual.hijos.computeIfAbsent(c, k -> new Nodo());
+
+		for (byte b : patron.bytes) {
+			actual = actual.hijos.computeIfAbsent(b, k -> new Nodo());
 		}
+
 		actual.patronesTerminados.add(patron);
 	}
 
-	private void construirEnlacesDeFallo() {
+	private void construirFallos() {
 		Queue<Nodo> cola = new LinkedList<>();
-		raiz.fallo = null;
+
+		raiz.fallo = raiz;
 
 		for (Nodo hijo : raiz.hijos.values()) {
 			hijo.fallo = raiz;
@@ -50,63 +75,51 @@ public final class AutomataDePatrones {
 		while (!cola.isEmpty()) {
 			Nodo actual = cola.poll();
 
-			for (Map.Entry<Character, Nodo> entrada : actual.hijos.entrySet()) {
-				char c = entrada.getKey();
+			for (Map.Entry<Byte, Nodo> entrada : actual.hijos.entrySet()) {
+				byte b = entrada.getKey();
 				Nodo hijo = entrada.getValue();
+
 				Nodo f = actual.fallo;
 
-				while (f != null && !f.hijos.containsKey(c)) {
+				while (f != raiz && !f.hijos.containsKey(b)) {
 					f = f.fallo;
 				}
 
-				if (f == null) {
-					hijo.fallo = raiz;
-				} else {
-					hijo.fallo = f.hijos.get(c);
-					hijo.patronesTerminados.addAll(hijo.fallo.patronesTerminados);
-				}
+				Nodo destino = f.hijos.get(b);
+				hijo.fallo = destino != null ? destino : raiz;
+				hijo.patronesTerminados.addAll(hijo.fallo.patronesTerminados);
+
 				cola.add(hijo);
 			}
 		}
 	}
 
-	/**
-	 * Busca todos los patrones en la línea y devuelve las coincidencias
-	 * encontradas.
-	 */
-	public List<Coincidencia> buscar(String linea) {
-		List<Coincidencia> resultados = new ArrayList<>();
+	public List<Coincidencia> buscar(byte[] datos, int inicio, int fin) {
+		List<Coincidencia> resultados = null;
 		Nodo actual = raiz;
 
-		for (int i = 0; i < linea.length(); i++) {
-			char c = linea.charAt(i);
+		for (int i = inicio; i < fin; i++) {
+			byte b = datos[i];
 
-			while (actual != raiz && !actual.hijos.containsKey(c)) {
+			while (actual != raiz && !actual.hijos.containsKey(b)) {
 				actual = actual.fallo;
 			}
 
-			actual = actual.hijos.getOrDefault(c, raiz);
+			Nodo siguiente = actual.hijos.get(b);
+			actual = siguiente != null ? siguiente : raiz;
 
 			if (!actual.patronesTerminados.isEmpty()) {
-				for (String patron : actual.patronesTerminados) {
-					resultados.add(new Coincidencia(patron, i - patron.length() + 1));
+				if (resultados == null) {
+					resultados = new ArrayList<>();
+				}
+
+				for (PatronBytes patron : actual.patronesTerminados) {
+					int inicioCoincidencia = i - patron.bytes.length + 1;
+					resultados.add(new Coincidencia(patron.texto, inicioCoincidencia, i + 1));
 				}
 			}
 		}
 
 		return resultados;
 	}
-
-	public static final class Coincidencia {
-		public final String patron;
-		public final int inicio;
-		public final int fin;
-
-		public Coincidencia(String patron, int inicio) {
-			this.patron = patron;
-			this.inicio = inicio;
-			this.fin = inicio + patron.length();
-		}
-	}
-
 }

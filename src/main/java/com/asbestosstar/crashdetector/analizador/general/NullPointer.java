@@ -383,32 +383,80 @@ public class NullPointer implements Verificaciones {
 	}
 
 	/**
-	 * Busca un origen (mod, JAR o clase) DIRECTAMENTE en el trazo del error. Esto
-	 * evita asociar errores con mods que solo aparecen en otros trazos.
+	 * Busca un origen dentro del TraceInfo ya procesado por VDST.
+	 *
+	 * Prioridad:
+	 * 1. JAR permitido
+	 * 2. modid permitido
+	 * 3. paquete permitido más específico
+	 *
+	 * No usa trace.trace ni split().
 	 */
-	private String detectarOrigenEnTraza(String trazo, VerificacionDeStackTrace vdst, int lineaConsola) {
-		String[] lines = trazo.split(NL);
+	private String detectarOrigenEnTraza(TraceInfo trace, VerificacionDeStackTrace vdst) {
+		if (trace == null || trace.lineas == null || trace.lineas.isEmpty()) {
+			return "";
+		}
 
-		// Primero, buscar en las primeras líneas del stack trace (donde ocurre el
-		// error)
-		for (int i = 0; i < Math.min(lines.length, 5); i++) {
-			String linea = lines[i];
-			String origen = detectarOrigenEnLinea(linea, vdst, lineaConsola + i);
-			if (!origen.isEmpty()) {
+		String mejorModid = "";
+		String mejorPaquete = "";
+
+		for (VerificacionDeStackTrace.LineaTrazo lt : trace.lineas) {
+			if (lt == null || lt.origen == null || lt.origen.isEmpty()) {
+				continue;
+			}
+
+			String origen = lt.origen.trim();
+
+			if (origen.isEmpty()) {
+				continue;
+			}
+
+			// 1. JAR permitido: máxima prioridad.
+			if (origen.endsWith(".jar") && !VerificacionDeStackTrace.isJarNoPermite(origen)) {
 				return origen;
+			}
+
+			// 2. modid permitido.
+			if (origen.indexOf('/') < 0 && !origen.endsWith(".jar")
+					&& !VerificacionDeStackTrace.esModNoPermite(origen)) {
+				if (mejorModid.isEmpty()) {
+					mejorModid = origen;
+				}
+				continue;
+			}
+
+			// 3. paquete permitido.
+			if (origen.indexOf('/') >= 0) {
+				boolean permitido = true;
+
+				for (String prefijo : VerificacionDeStackTrace.package_no_permite) {
+					if (prefijo == null || prefijo.isEmpty()) {
+						continue;
+					}
+
+					String prefijoSlash = prefijo.replace('.', '/');
+
+					if (origen.startsWith(prefijo) || origen.startsWith(prefijoSlash)) {
+						permitido = false;
+						break;
+					}
+				}
+
+				if (permitido && origen.length() > mejorPaquete.length()) {
+					mejorPaquete = origen;
+				}
 			}
 		}
 
-		// Si no encontramos nada en las primeras líneas, buscar en el resto del trazo
-		for (int i = 5; i < lines.length; i++) {
-			String linea = lines[i];
-			String origen = detectarOrigenEnLinea(linea, vdst, lineaConsola + i);
-			if (!origen.isEmpty()) {
-				return origen;
-			}
+		if (!mejorModid.isEmpty()) {
+			return mejorModid;
 		}
 
-		return ""; // No se encontró origen en este trazo
+		if (!mejorPaquete.isEmpty()) {
+			return mejorPaquete;
+		}
+
+		return "";
 	}
 
 	/**
@@ -578,9 +626,8 @@ public class NullPointer implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+	public String[] ocupaTrazo() {
+		return new String[0];
 	}
 
 	@Override

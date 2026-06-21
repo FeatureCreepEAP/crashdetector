@@ -142,11 +142,11 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null)
-			return false;
-		return trazo.trace.contains(TEXTO_ABSTRACT) && trazo.trace.contains(TEXTO_NO_IMPLEMENTA)
-				&& contieneTipoObjetivo(trazo.trace);
+	public String[] ocupaTrazo() {
+		return new String[] {
+				TEXTO_ABSTRACT,
+				TEXTO_NO_IMPLEMENTA
+		};
 	}
 
 	@Override

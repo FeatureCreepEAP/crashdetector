@@ -8,6 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.analizador.Analizador;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public final class AnalizadorNuevo {
@@ -66,6 +67,12 @@ public final class AnalizadorNuevo {
 				verificaciones.add(verificacion);
 			}
 		}
+
+		// Registrar patrones de ocupación de stacktrace antes de llamar a
+		// VerificacionDeStackTrace.reiniciar().
+		// Así los filtros Aho de DENEGAR/OCUPAR ya están preparados cuando se
+		// detectan los rangos de stacktrace.
+		VerificacionDeStackTrace.registrarOcupacionDeVerificaciones(verificaciones);
 	}
 
 	private void analizarConsola(Consola consola) {
