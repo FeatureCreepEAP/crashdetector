@@ -66,11 +66,6 @@ public class UraniumLag implements Verificaciones {
 		return QuickFix.NINGUN;// TODO
 	}
 
-	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public String id() {

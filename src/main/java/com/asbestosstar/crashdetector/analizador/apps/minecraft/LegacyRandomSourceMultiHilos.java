@@ -76,9 +76,8 @@ public class LegacyRandomSourceMultiHilos implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+	public String[] ocupaTrazo() {
+		return new String[] { "Accessing LegacyRandomSource from multiple threads" };
 	}
 
 	@Override

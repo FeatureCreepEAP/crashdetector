@@ -87,9 +87,8 @@ public class ErrorOpenGLMemoriaInsuficiente implements Verificaciones {
 	}
 
 	@Override
-	@Override
 	public String[] ocupaTrazo() {
-		return new String[0];
+		return new String[] { GL_OUT_OF_MEMORY };
 	}
 
 	@Override

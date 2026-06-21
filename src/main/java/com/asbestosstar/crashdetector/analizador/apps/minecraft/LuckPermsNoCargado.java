@@ -79,9 +79,8 @@ public class LuckPermsNoCargado implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		// El análisis se basa en la línea directa, no en el stacktrace completo
-		return false;
+	public String[] ocupaTrazo() {
+		return new String[] { LUCKPERMS_NOT_LOADED_SIMPLE };
 	}
 
 	@Override

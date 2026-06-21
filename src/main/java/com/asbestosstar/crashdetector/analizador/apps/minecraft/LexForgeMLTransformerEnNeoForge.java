@@ -176,25 +176,8 @@ public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		boolean contieneBase = lineaContieneErrorTransformer(t);
-
-		if (!contieneBase) {
-			return false;
-		}
-
-		if (claseReceptora != null && !claseReceptora.isEmpty()) {
-			return t.contains(RECEIVER_CLASS + claseReceptora);
-		}
-
-		// Fallback muy estricto si no se pudo extraer la clase
-		return true;
+	public String[] ocupaTrazo() {
+		return new String[] { RECEIVER_CLASS, DOES_NOT_DEFINE, TARGET_TYPE_GET_TARGET_TYPE, I_TRANSFORMER };
 	}
 
 	@Override

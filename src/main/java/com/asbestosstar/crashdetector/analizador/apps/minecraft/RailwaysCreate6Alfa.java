@@ -129,25 +129,8 @@ public class RailwaysCreate6Alfa implements Verificaciones {
 	 * marcar un trazo que no pertenezca realmente a este error.
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		// Coincidencia fuerte: el propio mensaje de NPE de Registry
-		if (t.contains(TEXTO_NPE_REGISTRY)) {
-			return true;
-		}
-
-		// Afinar con la clave faltante y el frame de Registrate, si los tenemos
-		if (!claveFaltante.isEmpty() && t.contains("Registry entry not present:") && t.contains(claveFaltante)
-				&& t.contains(TEXTO_REGISTRATE)) {
-			return true;
-		}
-
-		return false;
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_NPE_REGISTRY, TEXTO_REGISTRATE, TEXTO_RAILWAYS };
 	}
 
 	@Override

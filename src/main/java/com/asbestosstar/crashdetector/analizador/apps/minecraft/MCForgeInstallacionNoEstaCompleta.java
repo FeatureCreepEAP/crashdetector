@@ -308,13 +308,8 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		// Verificar si el trazo contiene algun error de instalacion incompleta de Forge
-		return contieneProblemaForge(trazo.trace);
+	public String[] ocupaTrazo() {
+		return new String[] { "fmlcore-" };
 	}
 
 	@Override

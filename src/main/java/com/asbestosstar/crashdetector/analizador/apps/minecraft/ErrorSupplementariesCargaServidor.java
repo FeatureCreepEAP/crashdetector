@@ -111,16 +111,9 @@ public class ErrorSupplementariesCargaServidor implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		return t.contains(FAILED_TO_LOAD_DATAPACKS_COMPLETO) && t.contains(EXECUTION_EXCEPTION)
-				&& t.contains(NULL_POINTER_EXCEPTION) && t.contains(CANNOT_INVOKE)
-				&& t.contains(SUPPLEMENTARIES_FIRE_BEHAVIOR);
+	public String[] ocupaTrazo() {
+		return new String[] { FAILED_TO_LOAD_DATAPACKS_COMPLETO, EXECUTION_EXCEPTION, NULL_POINTER_EXCEPTION,
+				CANNOT_INVOKE, SUPPLEMENTARIES_FIRE_BEHAVIOR };
 	}
 
 	@Override

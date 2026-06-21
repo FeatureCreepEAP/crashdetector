@@ -103,14 +103,8 @@ public class ProblemaAzureLibAnimaciones implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-
-		if (trazo == null || trazo.trace == null)
-			return false;
-
-		String t = trazo.trace;
-
-		return t.contains(EXPECTED_POST_JSON_ARRAY) && t.contains(AZURELIB_BAKED_ANIMATIONS_ADAPTER);
+	public String[] ocupaTrazo() {
+		return new String[] { EXPECTED_POST_JSON_ARRAY, AZURELIB_BAKED_ANIMATIONS_ADAPTER };
 	}
 
 	@Override

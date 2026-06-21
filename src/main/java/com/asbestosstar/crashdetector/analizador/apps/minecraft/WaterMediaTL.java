@@ -72,9 +72,8 @@ public class WaterMediaTL implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+	public String[] ocupaTrazo() {
+		return new String[] { TLAUNCHER_WATERMEDIA };
 	}
 
 	@Override

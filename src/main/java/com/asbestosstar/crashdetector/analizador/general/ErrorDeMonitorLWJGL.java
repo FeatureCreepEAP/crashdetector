@@ -81,13 +81,8 @@ public class ErrorDeMonitorLWJGL implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		// Solo marcamos trazos si ya se detectó el problema y el texto del trazo
-		// contiene exactamente el error de LWJGL sobre el modo de pantalla.
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-		return trazo.trace.contains(TEXTO_ERROR);
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_ERROR };
 	}
 
 	@Override

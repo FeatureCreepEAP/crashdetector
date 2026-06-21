@@ -109,15 +109,9 @@ public class ErrorVersionClaseGregTechEasyCore implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		return t.contains(UNSUPPORTED_CLASS_VERSION_ERROR) && t.contains(ABSTRACT_FURNACE_BLOCK_ENTITY)
-				&& t.contains(JAVA_RUNTIME_RECIENTE) && t.contains(GTECORE);
+	public String[] ocupaTrazo() {
+		return new String[] { UNSUPPORTED_CLASS_VERSION_ERROR, ABSTRACT_FURNACE_BLOCK_ENTITY, JAVA_RUNTIME_RECIENTE,
+				GTECORE };
 	}
 
 	@Override

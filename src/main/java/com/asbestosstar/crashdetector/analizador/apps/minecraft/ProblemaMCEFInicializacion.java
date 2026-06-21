@@ -248,12 +248,8 @@ public class ProblemaMCEFInicializacion implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		return contienePatronMCEF(trazo.trace);
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_MCEF_1, TEXTO_MCEF_2 };
 	}
 
 	@Override

@@ -123,24 +123,8 @@ public class TaczDeflaterCerrado implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		// La NPE característica del problema
-		if (!t.contains(TEXTO_DEFLATER_CERRADO_CORTO)) {
-			return false;
-		}
-
-		// Afinar con la clase/método implicados
-		if (t.contains(CLASE_TACZ) && (t.contains(METODO_BACKUP_FILES) || t.contains(METODO_BACKUP_FILES_LAMBDA))) {
-			return true;
-		}
-
-		return false;
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_DEFLATER_CERRADO_CORTO, CLASE_TACZ, METODO_BACKUP_FILES };
 	}
 
 	@Override

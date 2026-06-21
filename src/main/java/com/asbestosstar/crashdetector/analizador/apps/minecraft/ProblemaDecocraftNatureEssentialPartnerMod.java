@@ -81,11 +81,8 @@ public class ProblemaDecocraftNatureEssentialPartnerMod implements Verificacione
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (trazo == null || trazo.trace == null)
-			return false;
-
-		return trazo.trace.contains(MIXIN_ERROR);
+	public String[] ocupaTrazo() {
+		return new String[] { MIXIN_ERROR };
 	}
 
 	@Override

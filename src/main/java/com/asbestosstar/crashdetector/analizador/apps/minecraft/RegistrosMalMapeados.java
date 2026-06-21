@@ -328,12 +328,8 @@ public class RegistrosMalMapeados implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		return trazo.trace.contains(TEXTO_MISSING_ID) || trazo.trace.contains(TEXTO_UNIDENTIFIED);
+	public String[] ocupaTrazo() {
+		return new String[0];
 	}
 
 	@Override

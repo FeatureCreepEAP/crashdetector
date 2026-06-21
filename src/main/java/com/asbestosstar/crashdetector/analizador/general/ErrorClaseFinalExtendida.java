@@ -203,12 +203,8 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		return trazo.trace.contains(TEXTO_ERROR) && trazo.trace.contains(TEXTO_SEPARADOR);
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_ERROR, TEXTO_SEPARADOR };
 	}
 
 	@Override

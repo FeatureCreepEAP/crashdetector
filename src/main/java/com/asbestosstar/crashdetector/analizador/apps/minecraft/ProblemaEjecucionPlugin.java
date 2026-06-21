@@ -160,10 +160,8 @@ public class ProblemaEjecucionPlugin implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null)
-			return false;
-		return trazo.trace.contains(TEXTO_PLUGINS) && trazo.trace.contains(TEXTO_EXCEPTION);
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_PLUGINS, TEXTO_EXCEPTION };
 	}
 
 	@Override

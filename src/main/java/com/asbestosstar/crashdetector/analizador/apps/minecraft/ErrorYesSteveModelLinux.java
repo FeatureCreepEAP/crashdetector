@@ -109,14 +109,8 @@ public class ErrorYesSteveModelLinux implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		return t.contains(YSM_LINUX_COMPLETO) || t.contains(YSM_LINUX);
+	public String[] ocupaTrazo() {
+		return new String[] { YSM_LINUX };
 	}
 
 	@Override

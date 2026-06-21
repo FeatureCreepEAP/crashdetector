@@ -112,9 +112,8 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+	public String[] ocupaTrazo() {
+		return new String[] { ILLEGAL_ACCESS_EXCEPTION, UNSAFE_ACCESS, JAVA_BASE_EXPORT };
 	}
 
 	@Override

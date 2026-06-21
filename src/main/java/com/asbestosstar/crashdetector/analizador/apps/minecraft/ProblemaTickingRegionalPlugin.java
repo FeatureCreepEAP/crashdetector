@@ -304,12 +304,8 @@ public class ProblemaTickingRegionalPlugin implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		return trazo.trace.contains(TEXTO_COULD_NOT_LOAD_PLUGIN) && trazo.trace.contains(TEXTO_TICKING_REGIONAL);
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_COULD_NOT_LOAD_PLUGIN, TEXTO_TICKING_REGIONAL };
 	}
 
 	@Override

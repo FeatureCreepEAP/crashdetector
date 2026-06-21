@@ -95,12 +95,8 @@ public class ProblemaAAAParticlesEffekseer implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-
-		if (trazo == null || trazo.trace == null)
-			return false;
-
-		return trazo.trace.contains(EFFEKSEER_NATIVE) && trazo.trace.contains(PROBLEMATIC_FRAME);
+	public String[] ocupaTrazo() {
+		return new String[] { EFFEKSEER_NATIVE, PROBLEMATIC_FRAME };
 	}
 
 	@Override

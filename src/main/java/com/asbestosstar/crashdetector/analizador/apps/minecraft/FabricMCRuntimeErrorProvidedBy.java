@@ -137,25 +137,8 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		if (!t.contains(ENTRYPOINT_STAGE) || !t.contains(PROVIDED_BY)) {
-			return false;
-		}
-
-		for (String modId : modIdsProblematicos) {
-			String fragmento = PROVIDED_BY_COMILLA + modId + "'";
-			if (t.contains(fragmento)) {
-				return true;
-			}
-		}
-
-		return false;
+	public String[] ocupaTrazo() {
+		return new String[] { ENTRYPOINT_STAGE, PROVIDED_BY };
 	}
 
 	@Override

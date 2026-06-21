@@ -111,14 +111,8 @@ public class ProblemaParanoiaC2ME implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-
-		if (trazo == null || trazo.trace == null)
-			return false;
-
-		String t = trazo.trace;
-
-		return t.contains(TEXTO_PARANOIA_CORTO) && t.contains(TEXTO_CHECKED_RANDOM);
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_PARANOIA_CORTO, TEXTO_CHECKED_RANDOM };
 	}
 
 	@Override

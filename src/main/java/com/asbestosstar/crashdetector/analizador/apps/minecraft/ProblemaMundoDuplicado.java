@@ -107,10 +107,8 @@ public class ProblemaMundoDuplicado implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null)
-			return false;
-		return trazo.trace.contains(TEXTO_MEDIO) && trazo.trace.contains(TEXTO_FINAL);
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_MEDIO, TEXTO_FINAL };
 	}
 
 	@Override

@@ -215,12 +215,8 @@ public class ProblemaModDuplicadoFabric implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		return trazo.trace.contains(TEXTO_DUPLICATE_VERSIONS) && trazo.trace.contains(TEXTO_MOD_RESOLUTION);
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_DUPLICATE_VERSIONS, TEXTO_MOD_RESOLUTION };
 	}
 
 	@Override

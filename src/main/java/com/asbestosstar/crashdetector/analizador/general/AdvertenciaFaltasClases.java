@@ -245,11 +245,6 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 		return "advertencia_faltas_clases";
 	}
 
-	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
-	}
 
 	@Override
 	public Documento docs() {

@@ -337,12 +337,8 @@ public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.ana
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		return trazo.trace.indexOf("NoSuchFieldError") >= 0;
+	public String[] ocupaTrazo() {
+		return new String[] { "NoSuchFieldError" };
 	}
 
 	@Override

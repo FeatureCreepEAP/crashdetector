@@ -149,11 +149,8 @@ public class ProblemaDependenciaPluginPocketMine implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-		return trazo.trace.contains(TEXTO_PLUGIN) && trazo.trace.contains(TEXTO_DEPENDENCIA);
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_PLUGIN, TEXTO_DEPENDENCIA };
 	}
 
 	@Override

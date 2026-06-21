@@ -70,9 +70,8 @@ public class Segundo60Tick implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+	public String[] ocupaTrazo() {
+		return new String[] { "A single server tick took 60.00 seconds" };
 	}
 
 	@Override

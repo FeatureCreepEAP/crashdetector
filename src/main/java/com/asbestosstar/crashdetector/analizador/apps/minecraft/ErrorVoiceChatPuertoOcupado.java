@@ -48,9 +48,8 @@ public class ErrorVoiceChatPuertoOcupado implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		return trazo != null && trazo.trace != null && trazo.trace.contains(VOICECHAT_FAILED)
-				&& trazo.trace.contains(ADDRESS_ALREADY_IN_USE);
+	public String[] ocupaTrazo() {
+		return new String[] { VOICECHAT_FAILED, ADDRESS_ALREADY_IN_USE };
 	}
 
 	@Override

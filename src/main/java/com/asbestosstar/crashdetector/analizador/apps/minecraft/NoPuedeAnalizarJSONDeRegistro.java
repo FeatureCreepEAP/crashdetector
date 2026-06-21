@@ -175,21 +175,8 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 	 * un trazo incorrecto.
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		if (!lineaContieneErrorJSON(t)) {
-			return false;
-		}
-
-		// Opcionalmente podríamos exigir también " from pack " para ser aún más
-		// estrictos,
-		// pero con ".json from pack" ya es bastante específico.
-		return true;
+	public String[] ocupaTrazo() {
+		return new String[] { FAILED_TO_PARSE, JSON_FROM_PACK };
 	}
 
 	@Override

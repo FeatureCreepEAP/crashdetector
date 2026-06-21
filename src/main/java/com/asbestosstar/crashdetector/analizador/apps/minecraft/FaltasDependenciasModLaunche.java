@@ -1156,80 +1156,15 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 	}
 
 	/**
-	 * 
-	 * Verifica si un "trazo" (trace) de la pila de errores contiene alguna de
-	 * 
-	 * las cadenas de error de dependencias que hemos encontrado.
 	 *
-	 * 
-	 * 
-	 * @param trazo El TraceInfo a verificar.
-	 * 
-	 * @return true si el trazo contiene un error de dependencia conocido.
-	 * 
+	 * Devuelve los patrones que identifican este error en un stacktrace.
+	 *
+	 * @return Array con los patrones de dependencia.
+	 *
 	 */
-
 	@Override
-
-	public boolean ocupaTrazo(TraceInfo trazo) {
-
-		if (!activado || trazo == null || trazo.trace == null) {
-
-			return false;
-
-		}
-
-		String contenido = trazo.trace;
-
-		// Comprueba si el contenido del trazo contiene alguno de los mensajes de error
-		// ya guardados.
-
-		for (String error : errores) {
-
-			if (error != null && !error.isEmpty()) {
-
-				String trim = error.trim();
-
-				if (!trim.isEmpty() && contenido.contains(trim)) {
-
-					return true;
-
-				}
-
-			}
-
-		}
-
-		// NUEVO: Añadir detección para los nuevos formatos directamente en el trazo.
-
-		// Esto ayuda a identificar la causa raíz incluso si el error no se procesó
-
-		// en la verificación inicial de la consola.
-
-		if (contenido.contains("Failure message: Mod ")
-
-				&& (contenido.contains(" requires ") || contenido.contains(" only supports "))
-
-				&& contenido.contains("Currently,")) {
-
-			return true;
-
-		}
-
-		if (contenido.contains("Missing or unsupported mandatory dependencies:")
-
-				|| (contenido.contains("only supports") && contenido.contains("or above"))
-
-				|| (contenido.contains("requires") && contenido.contains("or above")
-
-						&& contenido.contains("Currently,"))) {
-
-			return true;
-
-		}
-
-		return false;
-
+	public String[] ocupaTrazo() {
+		return new String[] { "Missing or unsupported mandatory dependencies:" };
 	}
 
 	@Override

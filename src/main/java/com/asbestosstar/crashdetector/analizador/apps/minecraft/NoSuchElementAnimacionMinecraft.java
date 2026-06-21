@@ -182,9 +182,8 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+	public String[] ocupaTrazo() {
+		return new String[] { "java.util.NoSuchElementException", "animation" };
 	}
 
 	@Override

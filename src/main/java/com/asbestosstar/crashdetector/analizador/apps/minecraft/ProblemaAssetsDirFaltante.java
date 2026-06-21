@@ -94,12 +94,8 @@ public class ProblemaAssetsDirFaltante implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-
-		if (trazo == null || trazo.trace == null)
-			return false;
-
-		return lineaContieneProblemaAssetsDir(trazo.trace);
+	public String[] ocupaTrazo() {
+		return new String[] { OPTION_ARGUMENT_CONVERSION_EXCEPTION, ASSETS_DIR };
 	}
 
 	@Override

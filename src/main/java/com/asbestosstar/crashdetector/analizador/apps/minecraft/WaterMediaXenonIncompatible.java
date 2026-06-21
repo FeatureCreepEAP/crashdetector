@@ -160,34 +160,8 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		// Patrón base del error
-		if (!t.contains(FAILED_WATERMEDIA_FORGE) || !t.contains(NOT_COMPATIBLE_WATERMEDIA)) {
-			return false;
-		}
-
-		// Si no tenemos nombre ni id, con el patrón base ya es suficientemente
-		// específico
-		if ((modNombre == null || modNombre.isEmpty()) && (modId == null || modId.isEmpty())) {
-			return true;
-		}
-
-		// Afinar si conocemos el nombre o id del mod
-		if (modNombre != null && !modNombre.isEmpty() && t.contains(modNombre)) {
-			return true;
-		}
-		if (modId != null && !modId.isEmpty() && t.contains(modId)) {
-			return true;
-		}
-
-		// Fallback: solo patrón base
-		return true;
+	public String[] ocupaTrazo() {
+		return new String[] { FAILED_WATERMEDIA_FORGE, NOT_COMPATIBLE_WATERMEDIA };
 	}
 
 	@Override

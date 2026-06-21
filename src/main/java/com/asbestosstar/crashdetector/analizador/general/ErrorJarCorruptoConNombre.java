@@ -94,12 +94,8 @@ public class ErrorJarCorruptoConNombre implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		return extraerRutaJar(trazo.trace) != null;
+	public String[] ocupaTrazo() {
+		return new String[] { ERROR_READING_ZIP_FILE, ZIP_FILE_CLOSED };
 	}
 
 	@Override

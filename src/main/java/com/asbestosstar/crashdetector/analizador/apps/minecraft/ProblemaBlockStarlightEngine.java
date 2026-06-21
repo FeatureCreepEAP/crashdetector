@@ -89,12 +89,8 @@ public class ProblemaBlockStarlightEngine implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-
-		if (trazo == null || trazo.trace == null)
-			return false;
-
-		return trazo.trace.contains(STARLIGHT) && trazo.trace.contains(INIT_NIBBLE);
+	public String[] ocupaTrazo() {
+		return new String[] { STARLIGHT, INIT_NIBBLE };
 	}
 
 	@Override

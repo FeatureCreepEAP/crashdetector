@@ -104,14 +104,8 @@ public class ProblemaCupboardVersion implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-
-		if (trazo == null || trazo.trace == null)
-			return false;
-
-		String t = trazo.trace;
-
-		return t.contains(CLIENT_CONFIG_COMPAT) && t.contains(MODLIST_GET);
+	public String[] ocupaTrazo() {
+		return new String[] { CLIENT_CONFIG_COMPAT, MODLIST_GET };
 	}
 
 	@Override

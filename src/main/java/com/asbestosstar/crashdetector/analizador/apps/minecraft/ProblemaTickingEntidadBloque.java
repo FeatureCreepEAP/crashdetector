@@ -346,42 +346,8 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-		String lower = t;
-
-		// Coincidencia genérica (entity o block entity)
-		if (lower.contains("description: ticking block entity") || lower.contains("description: ticking entity")) {
-			return true;
-		}
-
-		// Sección moderna (por si el stacktrace incluye el header)
-		if (lower.contains("-- entity being ticked --") || lower.contains("-- block entity being ticked --")) {
-			return true;
-		}
-
-		// Afinar por tipo/nombre
-		if (!tipoEntidad.isEmpty() && lower.contains(tipoEntidad)) {
-			return true;
-		}
-		if (!nombreEntidad.isEmpty() && lower.contains(nombreEntidad)) {
-			return true;
-		}
-
-		// Afinar por coordenadas (variante típica en reportes)
-		if (coordenadasValidas) {
-			String coords1 = "world: (" + coordenadas[0] + "," + coordenadas[1] + "," + coordenadas[2] + ")";
-			String coords2 = "world: (" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
-			if (lower.contains(coords1) || lower.contains(coords2)) {
-				return true;
-			}
-		}
-
-		return false;
+	public String[] ocupaTrazo() {
+		return new String[] { "Description: Ticking" };
 	}
 
 	@Override
