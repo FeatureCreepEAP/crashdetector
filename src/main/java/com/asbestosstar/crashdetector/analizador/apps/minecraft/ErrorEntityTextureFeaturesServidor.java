@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -116,16 +114,8 @@ public class ErrorEntityTextureFeaturesServidor implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		return t.contains(ATTEMPTED_TO_LOAD_CLASS) && t.contains(SCREEN) && t.contains(DEDICATED_SERVER)
-				&& (t.contains("entity texture features") || t.contains("etf")
-						|| t.contains("ResourceLocation.handler$zca000$etf$illegalPathOverride"));
+	public String[] ocupaTrazo() {
+		return new String[] { ATTEMPTED_TO_LOAD_CLASS, SCREEN, DEDICATED_SERVER };
 	}
 
 	@Override

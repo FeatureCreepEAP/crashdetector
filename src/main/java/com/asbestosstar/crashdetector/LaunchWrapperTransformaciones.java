@@ -1,10 +1,10 @@
 package com.asbestosstar.crashdetector;
 
-import net.minecraft.launchwrapper.IClassTransformer;
-
 import com.asbestosstar.crashdetector.parches.Parche;
 import com.asbestosstar.crashdetector.parches.ParcheClassNode;
 import com.asbestosstar.crashdetector.parches.TransASM;
+
+import net.minecraft.launchwrapper.IClassTransformer;
 
 /**
  * Transformer para entornos basados en LaunchWrapper, como Rift.

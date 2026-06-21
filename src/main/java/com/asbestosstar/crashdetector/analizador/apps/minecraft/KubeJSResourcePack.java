@@ -9,8 +9,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -165,13 +163,9 @@ public class KubeJSResourcePack implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-		return t.contains(KUBEJS_RESOURCE_PACK) && t.contains(FAILED_TO_PARSE);
+	@Override
+	public String[] ocupaTrazo() {
+		return new String[] { KUBEJS_RESOURCE_PACK, FAILED_TO_PARSE };
 	}
 
 	@Override

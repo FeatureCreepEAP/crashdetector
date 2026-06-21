@@ -11,10 +11,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
-import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
-import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirCentroSoporte;
-import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirPrimitiva;
 
 public class PrincipalGUICentroSoporte extends PrincipalGUIPrimitiva {
 

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.Yaml;
 
 /**
  * Motor YAML basado en SnakeYAML.

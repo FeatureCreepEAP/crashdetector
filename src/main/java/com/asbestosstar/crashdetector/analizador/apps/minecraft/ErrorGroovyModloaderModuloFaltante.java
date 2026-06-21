@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -121,15 +119,8 @@ public class ErrorGroovyModloaderModuloFaltante implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		return t.contains(FIND_EXCEPTION) && t.contains(JACKSON_CORE_NOT_FOUND) && t.contains(REQUIRED_BY_PARAMNAMES)
-				&& (t.contains(GROOVY_MODLOADER) || t.contains(VALKYRIEN) || t.contains(VALKERIAN) || t.contains(GML));
+	public String[] ocupaTrazo() {
+		return new String[] { FIND_EXCEPTION, JACKSON_CORE_NOT_FOUND, REQUIRED_BY_PARAMNAMES };
 	}
 
 	@Override

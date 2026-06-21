@@ -40,16 +40,12 @@ public class VerificacionDeStackTrace {
 	private static final List<String> tokensDenegado = new ArrayList<>();
 	private static final Map<String, Integer> tokenAId = new HashMap<>();
 	private static final List<int[]> tokenAReglas = new ArrayList<>();
-	
-	
-	
+
 	private static final List<ReglaTraceRapida> reglasTraceRapidas = new ArrayList<>();
 	private static final Set<String> reglasTraceRapidasSet = new HashSet<>();
 	private static final List<String> tokensTrace = new ArrayList<>();
 	private static final Map<String, Integer> tokenAIdTrace = new HashMap<>();
 	private static final List<int[]> tokenAReglasTrace = new ArrayList<>();
-	
-	
 
 	private static final class NodoDenegado {
 		Map<Character, NodoDenegado> hijos = new HashMap<>();
@@ -278,165 +274,153 @@ public class VerificacionDeStackTrace {
 	int tracesEncontrados = 0;
 	int tracesDenegados = 0;
 
-public void reiniciar() {
+	public void reiniciar() {
 
-	ConfigBoolean suprimir = ConfigBoolean.de("suprimir_verificacion_de_stacktrazos", false);
-	if (suprimir.obtener()) {
-		return;
-	}
-
-	// === Reset estado ===
-	sm_config.clear();
-	clases_fatales_no_existentes.clear();
-
-	jar_malo.clear();
-	modid_malo.clear();
-	package_malo.clear();
-	brace_malo.clear();
-
-	cachePermitePorRango.clear();
-
-	nivel_trazo.clear();
-	trazos_completos.clear();
-
-	// Reset contadores
-	tracesEncontrados = 0;
-	tracesDenegados = 0;
-
-	// Reset estado incremental
-	nivelPrioridadActual = 0;
-	lineaInicioBuffer = -1;
-	bufferLineas.clear();
-	bufferEsFatal = false;
-	bufferTracesFatal.clear();
-	bufferTracesNormales.clear();
-
-	String[] lineas = consola.lineas_verificar;
-
-	if (lineas == null || lineas.length == 0) {
-		return;
-	}
-
-	List<TraceInfo> tracesFatal = new ArrayList<>();
-	List<TraceInfo> tracesNormales = new ArrayList<>();
-
-	// =====================================================
-	// UNA SOLA PASADA:
-	// 1. encontrar rango del stacktrace
-	// 2. aplicar filtro Aho de denegado/ocupado
-	// 3. guardar solo trazos buenos
-	// =====================================================
-
-	int i = 0;
-
-	while (i < lineas.length) {
-
-		String header = lineas[i];
-
-		if (header == null || header.isEmpty()) {
-			i++;
-			continue;
+		ConfigBoolean suprimir = ConfigBoolean.de("suprimir_verificacion_de_stacktrazos", false);
+		if (suprimir.obtener()) {
+			return;
 		}
 
-		boolean esFatal = header.indexOf("/FATAL]") >= 0;
-		boolean esNormal = false;
+		// === Reset estado ===
+		sm_config.clear();
+		clases_fatales_no_existentes.clear();
 
-		if (!esFatal && i + 1 < lineas.length && !Character.isWhitespace(header.charAt(0))) {
-			String siguiente = normalizarLineaStack(lineas[i + 1]);
-			esNormal = siguiente != null && siguiente.trim().startsWith("at ");
+		jar_malo.clear();
+		modid_malo.clear();
+		package_malo.clear();
+		brace_malo.clear();
+
+		cachePermitePorRango.clear();
+
+		nivel_trazo.clear();
+		trazos_completos.clear();
+
+		// Reset contadores
+		tracesEncontrados = 0;
+		tracesDenegados = 0;
+
+		// Reset estado incremental
+		nivelPrioridadActual = 0;
+		lineaInicioBuffer = -1;
+		bufferLineas.clear();
+		bufferEsFatal = false;
+		bufferTracesFatal.clear();
+		bufferTracesNormales.clear();
+
+		String[] lineas = consola.lineas_verificar;
+
+		if (lineas == null || lineas.length == 0) {
+			return;
 		}
 
-		if (!esFatal && !esNormal) {
-			i++;
-			continue;
-		}
+		List<TraceInfo> tracesFatal = new ArrayList<>();
+		List<TraceInfo> tracesNormales = new ArrayList<>();
 
-		int inicio = i;
-		int j = i + 1;
+		// =====================================================
+		// UNA SOLA PASADA:
+		// 1. encontrar rango del stacktrace
+		// 2. aplicar filtro Aho de denegado/ocupado
+		// 3. guardar solo trazos buenos
+		// =====================================================
 
-		while (j < lineas.length && esParteDeStack(lineas[j])) {
-			j++;
-		}
+		int i = 0;
 
-		int fin = j - 1;
+		while (i < lineas.length) {
 
-		tracesEncontrados++;
+			String header = lineas[i];
 
-		ResultadoFiltroTrace filtro = filtrarTracePorRango(lineas, inicio, fin);
+			if (header == null || header.isEmpty()) {
+				i++;
+				continue;
+			}
 
-		if (filtro.denegado) {
-			tracesDenegados++;
+			boolean esFatal = header.indexOf("/FATAL]") >= 0;
+			boolean esNormal = false;
+
+			if (!esFatal && i + 1 < lineas.length && !Character.isWhitespace(header.charAt(0))) {
+				String siguiente = normalizarLineaStack(lineas[i + 1]);
+				esNormal = siguiente != null && siguiente.trim().startsWith("at ");
+			}
+
+			if (!esFatal && !esNormal) {
+				i++;
+				continue;
+			}
+
+			int inicio = i;
+			int j = i + 1;
+
+			while (j < lineas.length && esParteDeStack(lineas[j])) {
+				j++;
+			}
+
+			int fin = j - 1;
+
+			tracesEncontrados++;
+
+			ResultadoFiltroTrace filtro = filtrarTracePorRango(lineas, inicio, fin);
+
+			if (filtro.denegado) {
+				tracesDenegados++;
+				i = Math.max(j, i + 1);
+				continue;
+			}
+
+			// Si otro verificador ya ocupa este trace, no lo construimos para
+			// ContenidoDeTrazos. Esto evita construir TraceInfo innecesario.
+			if (filtro.ocupado) {
+				i = Math.max(j, i + 1);
+				continue;
+			}
+
+			TraceInfo base = new TraceInfo(null, inicio, -1, esFatal);
+			base.consolaLineaTerminar = fin;
+			base.ocupado = false;
+			base.ocupadoPor = null;
+
+			if (esFatal) {
+				tracesFatal.add(base);
+			} else {
+				tracesNormales.add(base);
+			}
+
 			i = Math.max(j, i + 1);
-			continue;
 		}
 
-		// Si otro verificador ya ocupa este trace, no lo construimos para
-		// ContenidoDeTrazos. Esto evita construir TraceInfo innecesario.
-		if (filtro.ocupado) {
-			i = Math.max(j, i + 1);
-			continue;
+		CrashDetectorLogger.log("[PERF_STACKTRACE] lineas=" + lineas.length + ", tracesEncontrados=" + tracesEncontrados
+				+ ", tracesPermitidos=" + (tracesFatal.size() + tracesNormales.size()) + ", tracesDenegados="
+				+ tracesDenegados + ", tracesFatalPermitidos=" + tracesFatal.size() + ", tracesNormalesPermitidos="
+				+ tracesNormales.size() + ", reglasTraceRapidas=" + reglasTraceRapidas.size() + ", tokensTrace="
+				+ tokensTrace.size() + ", reglasLegacy=" + reglasDenegadoTrace.size());
+
+		int nivel_prioridad = 0;
+
+		// === FATALES ===
+		Collections.reverse(tracesFatal);
+
+		for (TraceInfo base : tracesFatal) {
+			nivel_prioridad++;
+
+			TraceInfo info = construirYProcesarTraceInfo(lineas, base.consolaLineaComenzar, base.consolaLineaTerminar,
+					nivel_prioridad, true);
+
+			trazos_completos.add(info);
+			nivel_trazo.put(nivel_prioridad, info);
 		}
 
-		TraceInfo base = new TraceInfo(null, inicio, -1, esFatal);
-		base.consolaLineaTerminar = fin;
-		base.ocupado = false;
-		base.ocupadoPor = null;
+		// === NORMALES ===
+		Collections.reverse(tracesNormales);
 
-		if (esFatal) {
-			tracesFatal.add(base);
-		} else {
-			tracesNormales.add(base);
+		for (TraceInfo base : tracesNormales) {
+			nivel_prioridad++;
+
+			TraceInfo info = construirYProcesarTraceInfo(lineas, base.consolaLineaComenzar, base.consolaLineaTerminar,
+					nivel_prioridad, false);
+
+			trazos_completos.add(info);
+			nivel_trazo.put(nivel_prioridad, info);
 		}
-
-		i = Math.max(j, i + 1);
 	}
-
-	CrashDetectorLogger.log("[PERF_STACKTRACE] lineas=" + lineas.length
-			+ ", tracesEncontrados=" + tracesEncontrados
-			+ ", tracesPermitidos=" + (tracesFatal.size() + tracesNormales.size())
-			+ ", tracesDenegados=" + tracesDenegados
-			+ ", tracesFatalPermitidos=" + tracesFatal.size()
-			+ ", tracesNormalesPermitidos=" + tracesNormales.size()
-			+ ", reglasTraceRapidas=" + reglasTraceRapidas.size()
-			+ ", tokensTrace=" + tokensTrace.size()
-			+ ", reglasLegacy=" + reglasDenegadoTrace.size());
-
-	int nivel_prioridad = 0;
-
-	// === FATALES ===
-	Collections.reverse(tracesFatal);
-
-	for (TraceInfo base : tracesFatal) {
-		nivel_prioridad++;
-
-		TraceInfo info = construirYProcesarTraceInfo(
-				lineas,
-				base.consolaLineaComenzar,
-				base.consolaLineaTerminar,
-				nivel_prioridad,
-				true);
-
-		trazos_completos.add(info);
-		nivel_trazo.put(nivel_prioridad, info);
-	}
-
-	// === NORMALES ===
-	Collections.reverse(tracesNormales);
-
-	for (TraceInfo base : tracesNormales) {
-		nivel_prioridad++;
-
-		TraceInfo info = construirYProcesarTraceInfo(
-				lineas,
-				base.consolaLineaComenzar,
-				base.consolaLineaTerminar,
-				nivel_prioridad,
-				false);
-
-		trazos_completos.add(info);
-		nivel_trazo.put(nivel_prioridad, info);
-	}
-}
 
 	private static long claveRango(int inicio, int fin) {
 		return (((long) inicio) << 32) ^ (fin & 0xffffffffL);
@@ -707,15 +691,13 @@ public void reiniciar() {
 	public static void agregarDenegadoUnaLinea(String token) {
 		agregarReglaTraceRapida(AccionFiltroTrace.DENEGAR, null, true, true, token);
 	}
-	
-	
+
 	public static void agregarOcupadoTrazo(String idVerificacion, String... tokens) {
 		agregarReglaTraceRapida(AccionFiltroTrace.OCUPAR, idVerificacion, true, false, tokens);
 	}
-	
-	
-	private static void agregarReglaTraceRapida(AccionFiltroTrace accion, String idVerificacion,
-			boolean requiereTodos, boolean unaLinea, String... tokens) {
+
+	private static void agregarReglaTraceRapida(AccionFiltroTrace accion, String idVerificacion, boolean requiereTodos,
+			boolean unaLinea, String... tokens) {
 
 		if (accion == null || tokens == null || tokens.length == 0) {
 			return;
@@ -739,7 +721,8 @@ public void reiniciar() {
 			return;
 		}
 
-		// Ordenar por longitud mejora un poco la selectividad y mantiene claves estables.
+		// Ordenar por longitud mejora un poco la selectividad y mantiene claves
+		// estables.
 		String[] ordenados = ordenarTokensPorRareza(limpios.toArray(new String[0]));
 
 		String idSeguro = idVerificacion == null ? "" : idVerificacion;
@@ -766,7 +749,7 @@ public void reiniciar() {
 			tokenAReglasTrace.set(id, nuevo);
 		}
 	}
-	
+
 	private static int obtenerIdTokenTrace(String token) {
 		Integer existente = tokenAIdTrace.get(token);
 
@@ -807,231 +790,228 @@ public void reiniciar() {
 		}
 	}
 
-private ResultadoFiltroTrace filtrarTracePorRango(String[] lineas, int inicio, int fin) {
-	ResultadoFiltroTrace resultado = new ResultadoFiltroTrace();
+	private ResultadoFiltroTrace filtrarTracePorRango(String[] lineas, int inicio, int fin) {
+		ResultadoFiltroTrace resultado = new ResultadoFiltroTrace();
 
-	if (lineas == null || lineas.length == 0) {
+		if (lineas == null || lineas.length == 0) {
+			return resultado;
+		}
+
+		int desde = Math.max(0, inicio);
+		int hasta = Math.min(fin, lineas.length - 1);
+
+		if (desde > hasta) {
+			return resultado;
+		}
+
+		ResultadoFiltroTrace rapido = filtrarTraceAhoSinAlloc(lineas, desde, hasta);
+
+		if (rapido.denegado) {
+			return rapido;
+		}
+
+		resultado.ocupado = rapido.ocupado;
+		resultado.ocupadoPor = rapido.ocupadoPor;
+
+		// Solo usamos reglas legacy de predicado si todavía existen.
+		// Idealmente deben desaparecer también.
+		if (!reglasDenegadoTrace.isEmpty()) {
+			StringBuilder sb = new StringBuilder(512);
+
+			for (int i = desde; i <= hasta; i++) {
+				String linea = lineas[i];
+
+				if (linea != null && !linea.isEmpty()) {
+					sb.append(linea).append(Verificaciones.nl);
+				}
+			}
+
+			String traceCompleto = sb.toString();
+
+			for (int i = 0; i < reglasDenegadoTrace.size(); i++) {
+				if (reglasDenegadoTrace.get(i).deniega(lineas, desde, hasta, traceCompleto)) {
+					resultado.denegado = true;
+					return resultado;
+				}
+			}
+		}
+
 		return resultado;
 	}
 
-	int desde = Math.max(0, inicio);
-	int hasta = Math.min(fin, lineas.length - 1);
+	private static ResultadoFiltroTrace filtrarTraceAhoSinAlloc(String[] lineas, int inicio, int fin) {
+		ResultadoFiltroTrace resultado = new ResultadoFiltroTrace();
 
-	if (desde > hasta) {
-		return resultado;
-	}
+		if (lineas == null || lineas.length == 0 || reglasTraceRapidas.isEmpty()) {
+			return resultado;
+		}
 
-	ResultadoFiltroTrace rapido = filtrarTraceAhoSinAlloc(lineas, desde, hasta);
+		int desde = Math.max(0, inicio);
+		int hasta = Math.min(fin, lineas.length - 1);
 
-	if (rapido.denegado) {
-		return rapido;
-	}
+		if (desde > hasta) {
+			return resultado;
+		}
 
-	resultado.ocupado = rapido.ocupado;
-	resultado.ocupadoPor = rapido.ocupadoPor;
+		asegurarAutomataTrace();
 
-	// Solo usamos reglas legacy de predicado si todavía existen.
-	// Idealmente deben desaparecer también.
-	if (!reglasDenegadoTrace.isEmpty()) {
-		StringBuilder sb = new StringBuilder(512);
+		int reglasN = reglasTraceRapidas.size();
+		int tokensN = tokensTrace.size();
+
+		if (reglasN == 0 || tokensN == 0) {
+			return resultado;
+		}
+
+		// Marca cada token visto una sola vez por trace.
+		int[] vistosEpoch = new int[tokensN];
+
+		// Cuenta cuantos tokens distintos de cada regla aparecieron.
+		int[] conteos = new int[reglasN];
+
+		int epoch = 1;
+		NodoDenegado actual = raizDenegados;
 
 		for (int i = desde; i <= hasta; i++) {
 			String linea = lineas[i];
 
-			if (linea != null && !linea.isEmpty()) {
-				sb.append(linea).append(Verificaciones.nl);
-			}
-		}
-
-		String traceCompleto = sb.toString();
-
-		for (int i = 0; i < reglasDenegadoTrace.size(); i++) {
-			if (reglasDenegadoTrace.get(i).deniega(lineas, desde, hasta, traceCompleto)) {
-				resultado.denegado = true;
-				return resultado;
-			}
-		}
-	}
-
-	return resultado;
-}
-
-
-private static ResultadoFiltroTrace filtrarTraceAhoSinAlloc(String[] lineas, int inicio, int fin) {
-	ResultadoFiltroTrace resultado = new ResultadoFiltroTrace();
-
-	if (lineas == null || lineas.length == 0 || reglasTraceRapidas.isEmpty()) {
-		return resultado;
-	}
-
-	int desde = Math.max(0, inicio);
-	int hasta = Math.min(fin, lineas.length - 1);
-
-	if (desde > hasta) {
-		return resultado;
-	}
-
-	asegurarAutomataTrace();
-
-	int reglasN = reglasTraceRapidas.size();
-	int tokensN = tokensTrace.size();
-
-	if (reglasN == 0 || tokensN == 0) {
-		return resultado;
-	}
-
-	// Marca cada token visto una sola vez por trace.
-	int[] vistosEpoch = new int[tokensN];
-
-	// Cuenta cuantos tokens distintos de cada regla aparecieron.
-	int[] conteos = new int[reglasN];
-
-	int epoch = 1;
-	NodoDenegado actual = raizDenegados;
-
-	for (int i = desde; i <= hasta; i++) {
-		String linea = lineas[i];
-
-		if (linea == null || linea.isEmpty()) {
-			continue;
-		}
-
-		// Si luego quieres soportar reglas "unaLinea", este bloque permite
-		// reiniciar conteos por linea. Para traces completos normales no molesta.
-		boolean esTraceDeUnaLinea = desde == hasta;
-
-		for (int p = 0; p < linea.length(); p++) {
-			char c = linea.charAt(p);
-
-			while (actual != raizDenegados && !actual.hijos.containsKey(c)) {
-				actual = actual.fallo;
-			}
-
-			NodoDenegado sig = actual.hijos.get(c);
-			actual = sig != null ? sig : raizDenegados;
-
-			if (actual.salidas == null || actual.salidas.isEmpty()) {
+			if (linea == null || linea.isEmpty()) {
 				continue;
 			}
 
-			for (int s = 0; s < actual.salidas.size(); s++) {
-				int tokenId = actual.salidas.get(s);
+			// Si luego quieres soportar reglas "unaLinea", este bloque permite
+			// reiniciar conteos por linea. Para traces completos normales no molesta.
+			boolean esTraceDeUnaLinea = desde == hasta;
 
-				if (tokenId < 0 || tokenId >= tokensN) {
+			for (int p = 0; p < linea.length(); p++) {
+				char c = linea.charAt(p);
+
+				while (actual != raizDenegados && !actual.hijos.containsKey(c)) {
+					actual = actual.fallo;
+				}
+
+				NodoDenegado sig = actual.hijos.get(c);
+				actual = sig != null ? sig : raizDenegados;
+
+				if (actual.salidas == null || actual.salidas.isEmpty()) {
 					continue;
 				}
 
-				if (vistosEpoch[tokenId] == epoch) {
-					continue;
-				}
+				for (int s = 0; s < actual.salidas.size(); s++) {
+					int tokenId = actual.salidas.get(s);
 
-				vistosEpoch[tokenId] = epoch;
-
-				int[] reglas = tokenAReglasTrace.get(tokenId);
-
-				if (reglas == null || reglas.length == 0) {
-					continue;
-				}
-
-				for (int r = 0; r < reglas.length; r++) {
-					int reglaId = reglas[r];
-
-					if (reglaId < 0 || reglaId >= reglasN) {
+					if (tokenId < 0 || tokenId >= tokensN) {
 						continue;
 					}
 
-					ReglaTraceRapida regla = reglasTraceRapidas.get(reglaId);
-
-					if (regla == null) {
+					if (vistosEpoch[tokenId] == epoch) {
 						continue;
 					}
 
-					if (regla.unaLinea && !esTraceDeUnaLinea) {
+					vistosEpoch[tokenId] = epoch;
+
+					int[] reglas = tokenAReglasTrace.get(tokenId);
+
+					if (reglas == null || reglas.length == 0) {
 						continue;
 					}
 
-					boolean reglaCumplida;
+					for (int r = 0; r < reglas.length; r++) {
+						int reglaId = reglas[r];
 
-					if (!regla.requiereTodos) {
-						reglaCumplida = true;
-					} else {
-						conteos[reglaId]++;
-						reglaCumplida = conteos[reglaId] >= regla.tokenIds.length;
-					}
-
-					if (!reglaCumplida) {
-						continue;
-					}
-
-					if (regla.accion == AccionFiltroTrace.DENEGAR) {
-						resultado.denegado = true;
-						return resultado;
-					}
-
-					if (regla.accion == AccionFiltroTrace.OCUPAR) {
-						resultado.ocupado = true;
-
-						if (resultado.ocupadoPor == null || resultado.ocupadoPor.isEmpty()) {
-							resultado.ocupadoPor = regla.idVerificacion;
+						if (reglaId < 0 || reglaId >= reglasN) {
+							continue;
 						}
 
-						// No retornamos aquí porque una regla posterior puede DENEGAR.
-						// DENEGAR tiene prioridad sobre OCUPAR.
+						ReglaTraceRapida regla = reglasTraceRapidas.get(reglaId);
+
+						if (regla == null) {
+							continue;
+						}
+
+						if (regla.unaLinea && !esTraceDeUnaLinea) {
+							continue;
+						}
+
+						boolean reglaCumplida;
+
+						if (!regla.requiereTodos) {
+							reglaCumplida = true;
+						} else {
+							conteos[reglaId]++;
+							reglaCumplida = conteos[reglaId] >= regla.tokenIds.length;
+						}
+
+						if (!reglaCumplida) {
+							continue;
+						}
+
+						if (regla.accion == AccionFiltroTrace.DENEGAR) {
+							resultado.denegado = true;
+							return resultado;
+						}
+
+						if (regla.accion == AccionFiltroTrace.OCUPAR) {
+							resultado.ocupado = true;
+
+							if (resultado.ocupadoPor == null || resultado.ocupadoPor.isEmpty()) {
+								resultado.ocupadoPor = regla.idVerificacion;
+							}
+
+							// No retornamos aquí porque una regla posterior puede DENEGAR.
+							// DENEGAR tiene prioridad sobre OCUPAR.
+						}
 					}
 				}
 			}
 		}
+
+		return resultado;
 	}
 
-	return resultado;
-}
-
-private static void asegurarAutomataTrace() {
-	if (!automataDenegadosSucio) {
-		return;
-	}
-
-	synchronized (LOCK_AUTOMATA_DENEGADOS) {
+	private static void asegurarAutomataTrace() {
 		if (!automataDenegadosSucio) {
 			return;
 		}
 
-		NodoDenegado nuevaRaiz = new NodoDenegado();
-		nuevaRaiz.fallo = nuevaRaiz;
-
-		for (int tokenId = 0; tokenId < tokensTrace.size(); tokenId++) {
-			String token = tokensTrace.get(tokenId);
-
-			if (token == null || token.isEmpty()) {
-				continue;
+		synchronized (LOCK_AUTOMATA_DENEGADOS) {
+			if (!automataDenegadosSucio) {
+				return;
 			}
 
-			NodoDenegado actual = nuevaRaiz;
+			NodoDenegado nuevaRaiz = new NodoDenegado();
+			nuevaRaiz.fallo = nuevaRaiz;
 
-			for (int i = 0; i < token.length(); i++) {
-				char c = token.charAt(i);
+			for (int tokenId = 0; tokenId < tokensTrace.size(); tokenId++) {
+				String token = tokensTrace.get(tokenId);
 
-				NodoDenegado sig = actual.hijos.get(c);
-
-				if (sig == null) {
-					sig = new NodoDenegado();
-					actual.hijos.put(c, sig);
+				if (token == null || token.isEmpty()) {
+					continue;
 				}
 
-				actual = sig;
+				NodoDenegado actual = nuevaRaiz;
+
+				for (int i = 0; i < token.length(); i++) {
+					char c = token.charAt(i);
+
+					NodoDenegado sig = actual.hijos.get(c);
+
+					if (sig == null) {
+						sig = new NodoDenegado();
+						actual.hijos.put(c, sig);
+					}
+
+					actual = sig;
+				}
+
+				actual.tokenId = tokenId;
 			}
 
-			actual.tokenId = tokenId;
+			construirFallosDenegados(nuevaRaiz);
+
+			raizDenegados = nuevaRaiz;
+			automataDenegadosSucio = false;
 		}
-
-		construirFallosDenegados(nuevaRaiz);
-
-		raizDenegados = nuevaRaiz;
-		automataDenegadosSucio = false;
 	}
-}
-
-
 
 	private static int obtenerIdTokenDenegado(String token) {
 		Integer existente = tokenAId.get(token);
@@ -1190,110 +1170,102 @@ private static void asegurarAutomataTrace() {
 //	return false;
 //}
 
-private TraceInfo construirYProcesarTraceInfo(String[] lineas, int inicio, int fin,
-		int nivel, boolean fatal) {
+	private TraceInfo construirYProcesarTraceInfo(String[] lineas, int inicio, int fin, int nivel, boolean fatal) {
 
-	TraceInfo info = new TraceInfo(null, inicio, nivel, fatal);
-	info.consolaLineaTerminar = fin;
+		TraceInfo info = new TraceInfo(null, inicio, nivel, fatal);
+		info.consolaLineaTerminar = fin;
 
-	if (lineas == null || lineas.length == 0) {
-		return info;
-	}
-
-	int desde = Math.max(0, inicio);
-	int hasta = Math.min(fin, lineas.length - 1);
-
-	if (desde > hasta) {
-		return info;
-	}
-
-	String claseFaltantePendiente = null;
-	int lineaClaseFaltantePendiente = -1;
-
-	for (int i = desde; i <= hasta; i++) {
-
-		String lineaOriginal = lineas[i];
-
-		if (lineaOriginal == null || lineaOriginal.isEmpty()) {
-			continue;
+		if (lineas == null || lineas.length == 0) {
+			return info;
 		}
 
-		// Filtros baratos antes de normalizar.
-		boolean contieneAt = lineaOriginal.indexOf("at ") >= 0;
-		boolean contieneMixin = lineaOriginal.indexOf("mixin") >= 0
-				|| lineaOriginal.indexOf("Mixin") >= 0;
-		boolean contieneException = lineaOriginal.indexOf("Exception") >= 0
-				|| lineaOriginal.indexOf("Error") >= 0;
-		boolean contieneJson = lineaOriginal.indexOf(".json") >= 0;
-		boolean contieneClassMetadata = lineaOriginal.indexOf("ClassMetadataNotFoundException") >= 0;
+		int desde = Math.max(0, inicio);
+		int hasta = Math.min(fin, lineas.length - 1);
 
-		if (!contieneAt && !contieneMixin && !contieneException && !contieneJson && !contieneClassMetadata) {
-			continue;
+		if (desde > hasta) {
+			return info;
 		}
 
-		String normalizada = normalizarLineaStack(lineaOriginal);
+		String claseFaltantePendiente = null;
+		int lineaClaseFaltantePendiente = -1;
 
-		if (normalizada == null || normalizada.isEmpty()) {
-			continue;
-		}
+		for (int i = desde; i <= hasta; i++) {
 
-		// Detectar JSONs de Sponge/Mixin sin volver a escanear el trace completo.
-		if ((contieneMixin || contieneJson)
-				&& normalizada.indexOf("org.spongepowered.asm.mixin") >= 0
-				&& normalizada.indexOf(".json") >= 0) {
-			procesarJsonMixinEnLinea(normalizada, desde, fatal);
-		}
+			String lineaOriginal = lineas[i];
 
-		// Detectar clases faltantes y guardar el primer origen útil posterior.
-		if (contieneException
-				&& (normalizada.indexOf("ClassNotFoundException") >= 0
-						|| normalizada.indexOf("NoClassDefFoundError") >= 0)
-				&& !esLineaDeAdvertenciaEstandar(normalizada)) {
+			if (lineaOriginal == null || lineaOriginal.isEmpty()) {
+				continue;
+			}
 
-			claseFaltantePendiente = extraerClaseFaltanteDeLinea(normalizada);
-			lineaClaseFaltantePendiente = i;
-		}
+			// Filtros baratos antes de normalizar.
+			boolean contieneAt = lineaOriginal.indexOf("at ") >= 0;
+			boolean contieneMixin = lineaOriginal.indexOf("mixin") >= 0 || lineaOriginal.indexOf("Mixin") >= 0;
+			boolean contieneException = lineaOriginal.indexOf("Exception") >= 0 || lineaOriginal.indexOf("Error") >= 0;
+			boolean contieneJson = lineaOriginal.indexOf(".json") >= 0;
+			boolean contieneClassMetadata = lineaOriginal.indexOf("ClassMetadataNotFoundException") >= 0;
 
-		// Sponge Mixin ClassMetadataNotFoundException.
-		if (contieneClassMetadata
-				&& normalizada.indexOf("org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException:") >= 0) {
+			if (!contieneAt && !contieneMixin && !contieneException && !contieneJson && !contieneClassMetadata) {
+				continue;
+			}
 
-			String clase = extraerClaseDeMetadataNoEncontrada(normalizada);
+			String normalizada = normalizarLineaStack(lineaOriginal);
 
-			if (clase != null && !clase.isEmpty()) {
-				clases_fatales_no_existentes.put(clase, nivel, i, "");
+			if (normalizada == null || normalizada.isEmpty()) {
+				continue;
+			}
+
+			// Detectar JSONs de Sponge/Mixin sin volver a escanear el trace completo.
+			if ((contieneMixin || contieneJson) && normalizada.indexOf("org.spongepowered.asm.mixin") >= 0
+					&& normalizada.indexOf(".json") >= 0) {
+				procesarJsonMixinEnLinea(normalizada, desde, fatal);
+			}
+
+			// Detectar clases faltantes y guardar el primer origen útil posterior.
+			if (contieneException
+					&& (normalizada.indexOf("ClassNotFoundException") >= 0
+							|| normalizada.indexOf("NoClassDefFoundError") >= 0)
+					&& !esLineaDeAdvertenciaEstandar(normalizada)) {
+
+				claseFaltantePendiente = extraerClaseFaltanteDeLinea(normalizada);
+				lineaClaseFaltantePendiente = i;
+			}
+
+			// Sponge Mixin ClassMetadataNotFoundException.
+			if (contieneClassMetadata && normalizada
+					.indexOf("org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException:") >= 0) {
+
+				String clase = extraerClaseDeMetadataNoEncontrada(normalizada);
+
+				if (clase != null && !clase.isEmpty()) {
+					clases_fatales_no_existentes.put(clase, nivel, i, "");
+				}
+			}
+
+			// Solo las líneas "at ..." producen LineaTrazo.
+			if (!normalizada.startsWith("at ")) {
+				continue;
+			}
+
+			LineaTrazo lt = construirLineaTrazoDesdeLinea(normalizada, nivel, i, fatal);
+
+			if (lt == null) {
+				continue;
+			}
+
+			info.lineas.add(lt);
+
+			// Si antes vimos ClassNotFound/NoClassDef, el primer origen válido posterior
+			// suele ser el sospechoso real.
+			if (claseFaltantePendiente != null) {
+				clases_fatales_no_existentes.put(claseFaltantePendiente, nivel, lineaClaseFaltantePendiente, lt.origen);
+
+				claseFaltantePendiente = null;
+				lineaClaseFaltantePendiente = -1;
 			}
 		}
 
-		// Solo las líneas "at ..." producen LineaTrazo.
-		if (!normalizada.startsWith("at ")) {
-			continue;
-		}
-
-		LineaTrazo lt = construirLineaTrazoDesdeLinea(normalizada, nivel, i, fatal);
-
-		if (lt == null) {
-			continue;
-		}
-
-		info.lineas.add(lt);
-
-		// Si antes vimos ClassNotFound/NoClassDef, el primer origen válido posterior
-		// suele ser el sospechoso real.
-		if (claseFaltantePendiente != null) {
-			clases_fatales_no_existentes.put(
-					claseFaltantePendiente,
-					nivel,
-					lineaClaseFaltantePendiente,
-					lt.origen);
-
-			claseFaltantePendiente = null;
-			lineaClaseFaltantePendiente = -1;
-		}
+		return info;
 	}
-
-	return info;
-}
 
 	private static String extraerClaseFaltanteDeLinea(String linea) {
 
@@ -1689,10 +1661,9 @@ private TraceInfo construirYProcesarTraceInfo(String[] lineas, int inicio, int f
 		public final String trace;
 		public final int consolaLineaComenzar;
 
-		
 		public boolean ocupado = false;
 		public String ocupadoPor = null;
-		
+
 		public final int nivel;
 		public final boolean fatal;
 
@@ -1707,11 +1678,8 @@ private TraceInfo construirYProcesarTraceInfo(String[] lineas, int inicio, int f
 		}
 	}
 
-	
-	
 	private enum AccionFiltroTrace {
-		DENEGAR,
-		OCUPAR
+		DENEGAR, OCUPAR
 	}
 
 	private static final class ResultadoFiltroTrace {
@@ -1727,8 +1695,8 @@ private TraceInfo construirYProcesarTraceInfo(String[] lineas, int inicio, int f
 		final boolean unaLinea;
 		final int[] tokenIds;
 
-		ReglaTraceRapida(AccionFiltroTrace accion, String idVerificacion,
-				boolean requiereTodos, boolean unaLinea, int[] tokenIds) {
+		ReglaTraceRapida(AccionFiltroTrace accion, String idVerificacion, boolean requiereTodos, boolean unaLinea,
+				int[] tokenIds) {
 			this.accion = accion;
 			this.idVerificacion = idVerificacion;
 			this.requiereTodos = requiereTodos;
@@ -1736,9 +1704,7 @@ private TraceInfo construirYProcesarTraceInfo(String[] lineas, int inicio, int f
 			this.tokenIds = tokenIds;
 		}
 	}
-	
-	
-	
+
 	public static String extraerClaseDeLinea(String linea) {
 		if (linea == null || linea.isEmpty()) {
 			return "";

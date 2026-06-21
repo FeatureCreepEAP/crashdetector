@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -133,20 +131,8 @@ public class ErrorDependenciaModFaltante implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		if (!nombreJar.isEmpty()) {
-			String esperado = TEXTO_ERROR + " (" + nombreJar + ")";
-			return t.contains(esperado);
-		}
-
-		// Fallback muy estricto si por alguna razón no se capturó el nombre del JAR.
-		return t.contains(TEXTO_ERROR);
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_ERROR };
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package com.asbestosstar.crashdetector.bajo.vectorapi;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.function.IntPredicate;

@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -109,16 +107,8 @@ public class ErrorCompatibilidadIrisDH implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		return t.contains(TEXTO_DH_MISSING_API)
-				&& (t.contains(TEXTO_IRIS_REQUIRES_DH) || t.contains(TEXTO_DH_API_VERSION))
-				&& (t.contains(TEXTO_OR_NEWER) || t.contains(VERSION_204) || t.contains(VERSION_110));
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_DH_MISSING_API };
 	}
 
 	@Override

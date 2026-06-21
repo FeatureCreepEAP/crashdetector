@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -96,13 +94,8 @@ public class ErrorImmersiveTooltipsSinDependencia implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null)
-			return false;
-
-		String t = trazo.trace;
-		return (t.contains(TEXTO_ERROR_CLASE) || t.contains(TEXTO_CLASE_FALTANTE))
-				&& (t.contains(TEXTO_IMMERSIVE_TOOLTIPS_1) || t.contains(TEXTO_IMMERSIVE_TOOLTIPS_2));
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_CLASE_FALTANTE };
 	}
 
 	@Override

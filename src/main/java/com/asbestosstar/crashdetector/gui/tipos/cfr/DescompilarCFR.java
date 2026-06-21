@@ -10,9 +10,6 @@ import java.util.Map;
 import org.benf.cfr.reader.api.CfrDriver;
 import org.benf.cfr.reader.api.ClassFileSource;
 import org.benf.cfr.reader.api.OutputSinkFactory;
-import org.benf.cfr.reader.api.OutputSinkFactory.Sink;
-import org.benf.cfr.reader.api.OutputSinkFactory.SinkClass;
-import org.benf.cfr.reader.api.OutputSinkFactory.SinkType;
 import org.benf.cfr.reader.bytecode.analysis.parse.utils.Pair;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;

@@ -9,8 +9,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -119,8 +117,8 @@ public class ErrorCreacionModeloFallida implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		return trazo != null && trazo.trace != null && trazo.trace.contains(NO_MODEL_FOR_LAYER);
+	public String[] ocupaTrazo() {
+		return new String[] { NO_MODEL_FOR_LAYER };
 	}
 
 	@Override

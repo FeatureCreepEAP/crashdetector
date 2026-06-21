@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -133,20 +131,8 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 	 * positivos.
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		if (!nombreJar.isEmpty()) {
-			return t.contains(MARCADOR_INICIO) && t.contains(nombreJar);
-		}
-
-		// Caso de fallback si por alguna razón no se llegó a capturar el nombre del
-		// JAR.
-		return t.contains(MARCADOR_INICIO);
+	public String[] ocupaTrazo() {
+		return new String[] { MARCADOR_INICIO };
 	}
 
 	@Override

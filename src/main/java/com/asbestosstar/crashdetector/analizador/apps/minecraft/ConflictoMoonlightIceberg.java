@@ -8,8 +8,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -80,14 +78,8 @@ public class ConflictoMoonlightIceberg implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-		return t.contains(FATAL_ERROR) && t.contains(NO_CONTEXT_CORTO) && t.contains(MOONLIGHT_MINUSCULA)
-				&& t.contains(ICEBERG_MINUSCULA);
+	public String[] ocupaTrazo() {
+		return new String[] { FATAL_ERROR, NO_CONTEXT_CORTO, MOONLIGHT_MINUSCULA, ICEBERG_MINUSCULA };
 	}
 
 	@Override

@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -66,13 +64,8 @@ public class ErrorConfiguracionConnectorCorrupta implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-		return t.contains(CONNECTOR_CONFIG) && t.contains(NOT_JSON_OBJECT) && t.contains(U0000);
+	public String[] ocupaTrazo() {
+		return new String[] { CONNECTOR_CONFIG, NOT_JSON_OBJECT, U0000 };
 	}
 
 	@Override

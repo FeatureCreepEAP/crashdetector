@@ -3,8 +3,6 @@ package com.asbestosstar.crashdetector.config.hocon;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import com.asbestosstar.crashdetector.CrashDetectorLogger;
-
 /**
  * Punto de entrada para leer y escribir archivos HOCON (Typesafe Config).
  * Motor: configurate-hocon

@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -119,15 +117,8 @@ public class ErrorControllableServidor implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		return t.contains(BOOTSTRAP_METHOD_ERROR) && t.contains(ATTEMPTED_TO_LOAD_CLASS) && t.contains(SCREEN_CLIENTE)
-				&& t.contains(INVALID_DIST_SERVER) && t.contains(CONTROLLABLE);
+	public String[] ocupaTrazo() {
+		return new String[] { CONTROLLABLE, SCREEN_CLIENTE, INVALID_DIST_SERVER };
 	}
 
 	@Override

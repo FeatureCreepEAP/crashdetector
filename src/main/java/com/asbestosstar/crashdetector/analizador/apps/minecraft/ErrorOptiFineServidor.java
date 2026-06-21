@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -101,15 +99,8 @@ public class ErrorOptiFineServidor implements Verificaciones {
 	 * del stack trace son suficientemente estables.
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		return t.contains(TEXTO_BASE_RESOURCE_NOT_FOUND_COMPLETO) && t.contains(TEXTO_LAYER_OPTIFINE)
-				&& t.contains(TEXTO_OPTIFINE);
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_BASE_RESOURCE_NOT_FOUND_COMPLETO, TEXTO_LAYER_OPTIFINE };
 	}
 
 	@Override

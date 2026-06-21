@@ -8,8 +8,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -205,15 +203,8 @@ public class ConflictoFlywheelRubidium implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		return t.contains(FAILURE_FLYWHEEL_SODIUM) && t.contains(VERSION_MINIMA) && (t.contains(CURRENTLY_SODIUM)
-				|| contieneAsciiIgnoreCase(t, RUBIDIUM) || contieneAsciiIgnoreCase(t, EMBEDDIUM));
+	public String[] ocupaTrazo() {
+		return new String[] { FAILURE_FLYWHEEL_SODIUM, VERSION_MINIMA };
 	}
 
 	@Override

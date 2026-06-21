@@ -1,7 +1,5 @@
 package com.asbestosstar.crashdetector.cargador;
 
-import java.util.Locale;
-
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 
 public class CargadorNeoForge implements Cargador {

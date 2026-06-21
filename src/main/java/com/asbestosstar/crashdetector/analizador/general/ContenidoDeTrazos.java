@@ -8,19 +8,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
-import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.LineaTrazo;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
@@ -118,8 +111,6 @@ public class ContenidoDeTrazos implements Verificaciones {
 		});
 	}
 
-
-
 	private static boolean esTrazoOcupado(Set<Integer> niveles_ocupados, int nivel) {
 		return niveles_ocupados != null && !niveles_ocupados.isEmpty()
 				&& niveles_ocupados.contains(Integer.valueOf(nivel));
@@ -199,159 +190,150 @@ public class ContenidoDeTrazos implements Verificaciones {
 		// this.activado = true;
 	}
 
-@Override
-public void finalizarArchivo(Consola consola,
-		com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo estado) {
+	@Override
+	public void finalizarArchivo(Consola consola,
+			com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo estado) {
 
-	VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
+		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 
-	if (vdst == null) {
-		return;
-	}
-
-	List<TraceInfo> traces = vdst.trazos_completos;
-
-	if (traces == null || traces.isEmpty()) {
-		traces = new ArrayList<>();
-
-		if (vdst.nivel_trazo != null) {
-			traces.addAll(vdst.nivel_trazo.values());
-		}
-	}
-
-	if (traces.isEmpty()) {
-		return;
-	}
-
-	// =====================================================
-	// Ya no llamamos ocupaTrazo() aquí.
-	// Los trazos ocupados se filtraron antes en VerificacionDeStackTrace.
-	// Esta clase solo renderiza los trazos buenos restantes.
-	// =====================================================
-
-	Map<String, Problema> mejorPorOrigen = new HashMap<>();
-
-	for (TraceInfo info : traces) {
-
-		if (info == null) {
-			continue;
+		if (vdst == null) {
+			return;
 		}
 
-		// Seguridad extra por si algún trace ocupado llegó desde una ruta vieja.
-		if (info.ocupado) {
-			continue;
+		List<TraceInfo> traces = vdst.trazos_completos;
+
+		if (traces == null || traces.isEmpty()) {
+			traces = new ArrayList<>();
+
+			if (vdst.nivel_trazo != null) {
+				traces.addAll(vdst.nivel_trazo.values());
+			}
 		}
 
-		List<LineaTrazo> lineas = info.lineas == null
-				? Collections.<LineaTrazo>emptyList()
-				: info.lineas;
+		if (traces.isEmpty()) {
+			return;
+		}
 
-		for (LineaTrazo lt : lineas) {
+		// =====================================================
+		// Ya no llamamos ocupaTrazo() aquí.
+		// Los trazos ocupados se filtraron antes en VerificacionDeStackTrace.
+		// Esta clase solo renderiza los trazos buenos restantes.
+		// =====================================================
 
-			if (lt == null) {
+		Map<String, Problema> mejorPorOrigen = new HashMap<>();
+
+		for (TraceInfo info : traces) {
+
+			if (info == null) {
 				continue;
 			}
 
-			String claveLineaGlobal = claveGlobalLinea(lt);
-
-			if (!TRAZOS_GLOBALES_VISTOS.add(claveLineaGlobal)) {
+			// Seguridad extra por si algún trace ocupado llegó desde una ruta vieja.
+			if (info.ocupado) {
 				continue;
 			}
 
-			String origenNorm = normalizarOrigen(lt.origen);
+			List<LineaTrazo> lineas = info.lineas == null ? Collections.<LineaTrazo>emptyList() : info.lineas;
 
-			if (origenNorm.isEmpty()) {
-				origenNorm = lt.clase == null ? "" : lt.clase;
-			}
+			for (LineaTrazo lt : lineas) {
 
-			if (origenNorm.isEmpty()) {
-				continue;
-			}
+				if (lt == null) {
+					continue;
+				}
 
-			if (esModidFalsoGenerado(origenNorm)) {
-				continue;
-			}
+				String claveLineaGlobal = claveGlobalLinea(lt);
 
-			String textoNivel = MonitorDePID.idioma.nivel() + lt.nivel + "," + lt.lineaConsola;
+				if (!TRAZOS_GLOBALES_VISTOS.add(claveLineaGlobal)) {
+					continue;
+				}
 
-			String enlaceLinea = consola.agregarErrorALectador(lt.lineaConsola, this);
+				String origenNorm = normalizarOrigen(lt.origen);
 
-			String enlaceCfr = construirEnlaceCfr(lt.clase);
-			String enlace = enlaceLinea + (enlaceCfr.isEmpty() ? "" : " " + enlaceCfr);
+				if (origenNorm.isEmpty()) {
+					origenNorm = lt.clase == null ? "" : lt.clase;
+				}
 
-			Problema nuevo = new Problema(origenNorm, textoNivel, lt.fatal, enlace);
+				if (origenNorm.isEmpty()) {
+					continue;
+				}
 
-			Problema actual = mejorPorOrigen.get(origenNorm);
+				if (esModidFalsoGenerado(origenNorm)) {
+					continue;
+				}
 
-			if (actual == null) {
-				mejorPorOrigen.put(origenNorm, nuevo);
-				continue;
-			}
+				String textoNivel = MonitorDePID.idioma.nivel() + lt.nivel + "," + lt.lineaConsola;
 
-			List<Integer> nNuevo = extraerNumerosDeNivel(nuevo.nivel);
-			List<Integer> nActual = extraerNumerosDeNivel(actual.nivel);
+				String enlaceLinea = consola.agregarErrorALectador(lt.lineaConsola, this);
 
-			int nivelNuevo = nNuevo.isEmpty() ? Integer.MAX_VALUE : nNuevo.get(0);
-			int nivelActual = nActual.isEmpty() ? Integer.MAX_VALUE : nActual.get(0);
+				String enlaceCfr = construirEnlaceCfr(lt.clase);
+				String enlace = enlaceLinea + (enlaceCfr.isEmpty() ? "" : " " + enlaceCfr);
 
-			if (nivelNuevo < nivelActual) {
-				mejorPorOrigen.put(origenNorm, nuevo);
-				continue;
-			}
+				Problema nuevo = new Problema(origenNorm, textoNivel, lt.fatal, enlace);
 
-			if (nivelNuevo == nivelActual) {
-				int lineaNuevo = nNuevo.size() > 1 ? nNuevo.get(1) : Integer.MAX_VALUE;
-				int lineaActual = nActual.size() > 1 ? nActual.get(1) : Integer.MAX_VALUE;
+				Problema actual = mejorPorOrigen.get(origenNorm);
 
-				if (lineaNuevo < lineaActual) {
+				if (actual == null) {
 					mejorPorOrigen.put(origenNorm, nuevo);
+					continue;
+				}
+
+				List<Integer> nNuevo = extraerNumerosDeNivel(nuevo.nivel);
+				List<Integer> nActual = extraerNumerosDeNivel(actual.nivel);
+
+				int nivelNuevo = nNuevo.isEmpty() ? Integer.MAX_VALUE : nNuevo.get(0);
+				int nivelActual = nActual.isEmpty() ? Integer.MAX_VALUE : nActual.get(0);
+
+				if (nivelNuevo < nivelActual) {
+					mejorPorOrigen.put(origenNorm, nuevo);
+					continue;
+				}
+
+				if (nivelNuevo == nivelActual) {
+					int lineaNuevo = nNuevo.size() > 1 ? nNuevo.get(1) : Integer.MAX_VALUE;
+					int lineaActual = nActual.size() > 1 ? nActual.get(1) : Integer.MAX_VALUE;
+
+					if (lineaNuevo < lineaActual) {
+						mejorPorOrigen.put(origenNorm, nuevo);
+					}
 				}
 			}
 		}
-	}
 
-	if (mejorPorOrigen.isEmpty()) {
-		return;
-	}
-
-	activado = true;
-
-	List<Problema> problemas = new ArrayList<>(mejorPorOrigen.values());
-	problemas.sort(comparadorNumerico((Problema p) -> p.nivel));
-
-	StringBuilder sb = new StringBuilder();
-
-	sb.append(nl_html)
-			.append(MonitorDePID.idioma.problematico_jar())
-			.append(nl_html)
-			.append("<ul>");
-
-	for (Problema p : problemas) {
-		sb.append("<li>");
-
-		if (p.fatal) {
-			sb.append(MonitorDePID.idioma.posibilidad_fatal());
+		if (mejorPorOrigen.isEmpty()) {
+			return;
 		}
 
-		sb.append(p.nombre)
-				.append(" ")
-				.append(p.nivel);
+		activado = true;
 
-		if (p.enlace != null && !p.enlace.isEmpty()) {
-			sb.append(" ").append(p.enlace);
+		List<Problema> problemas = new ArrayList<>(mejorPorOrigen.values());
+		problemas.sort(comparadorNumerico((Problema p) -> p.nivel));
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(nl_html).append(MonitorDePID.idioma.problematico_jar()).append(nl_html).append("<ul>");
+
+		for (Problema p : problemas) {
+			sb.append("<li>");
+
+			if (p.fatal) {
+				sb.append(MonitorDePID.idioma.posibilidad_fatal());
+			}
+
+			sb.append(p.nombre).append(" ").append(p.nivel);
+
+			if (p.enlace != null && !p.enlace.isEmpty()) {
+				sb.append(" ").append(p.enlace);
+			}
+
+			sb.append("</li>");
 		}
 
-		sb.append("</li>");
+		sb.append("</ul>");
+
+		String nombreArchivo = consola.archivo != null ? consola.archivo.getFileName().toString() : "unknown";
+
+		contento.put(nombreArchivo, new StringBuilder(sb.toString().trim()));
 	}
-
-	sb.append("</ul>");
-
-	String nombreArchivo = consola.archivo != null
-			? consola.archivo.getFileName().toString()
-			: "unknown";
-
-	contento.put(nombreArchivo, new StringBuilder(sb.toString().trim()));
-}
 
 	public boolean quiereAnalizarLineas() {
 		return false;
@@ -419,8 +401,6 @@ public void finalizarArchivo(Consola consola,
 	public String id() {
 		return "contenido_de_trazos";
 	}
-
-
 
 	@Override
 	public Documento docs() {

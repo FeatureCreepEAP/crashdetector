@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -183,20 +181,8 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		if (!nombreClase.isEmpty() && !modId.isEmpty() && !pluginId.isEmpty()) {
-			String esperado = TEXTO_ERROR + " " + nombreClase + " " + modId + ":" + pluginId;
-			return t.contains(esperado);
-		}
-
-		// Fallback muy estricto si por alguna razón no se capturaron todos los datos.
-		return t.contains(TEXTO_ERROR) && t.contains("JEI");
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_ERROR };
 	}
 
 	@Override

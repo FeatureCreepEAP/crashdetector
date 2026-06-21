@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -53,9 +51,8 @@ public class ErrorRubidiumObsoletoConIris implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		return trazo != null && trazo.trace != null && trazo.trace.contains(SHADOW_DISTANCE_OPTION)
-				&& trazo.trace.contains(FINAL_OPTION_INSTANCE);
+	public String[] ocupaTrazo() {
+		return new String[] { SHADOW_DISTANCE_OPTION, FINAL_OPTION_INSTANCE };
 	}
 
 	@Override

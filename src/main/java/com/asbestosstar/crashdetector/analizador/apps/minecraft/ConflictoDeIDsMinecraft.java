@@ -7,9 +7,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -166,23 +164,8 @@ public class ConflictoDeIDsMinecraft implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		if ("maximo_rango".equals(tipoConflicto)) {
-			return t.contains(MAX_RANGO);
-		} else if ("colision_id".equals(tipoConflicto)) {
-			if (!idConflictivo.isEmpty() && !modOrigen.isEmpty() && !modDestino.isEmpty()) {
-				String esperado = SLOT_OCCUPIED + idConflictivo + ID_OCCUPIED_MID + modOrigen + ID_OCCUPIED_END
-						+ modDestino;
-				return t.contains(esperado);
-			}
-		}
-		return false;
+	public String[] ocupaTrazo() {
+		return new String[] { MAX_RANGO, SLOT_OCCUPIED };
 	}
 
 	@Override

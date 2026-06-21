@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -183,15 +181,8 @@ public class ErrorModLauncherTransformationService implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		return t.contains(SERVICE_CONFIGURATION_ERROR) && t.contains(ITRANSFORMATION_SERVICE) && t.contains(PROVIDER)
-				&& t.contains(COULD_NOT_BE_INSTANTIATED);
+	public String[] ocupaTrazo() {
+		return new String[] { SERVICE_CONFIGURATION_ERROR, ITRANSFORMATION_SERVICE, COULD_NOT_BE_INSTANTIATED };
 	}
 
 	@Override

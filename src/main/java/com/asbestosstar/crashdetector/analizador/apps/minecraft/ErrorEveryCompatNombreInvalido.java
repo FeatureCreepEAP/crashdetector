@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -113,15 +111,8 @@ public class ErrorEveryCompatNombreInvalido implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		return t.contains(UNSUPPORTED_OPERATION_EXCEPTION) && t.contains(INVALID_ITEM_NAME)
-				&& (t.contains(EVERY_COMPAT_ID) || t.contains(EVERY_COMPAT_NAME) || t.contains(SIMPLE_ENTRY_SET));
+	public String[] ocupaTrazo() {
+		return new String[] { UNSUPPORTED_OPERATION_EXCEPTION, INVALID_ITEM_NAME };
 	}
 
 	@Override

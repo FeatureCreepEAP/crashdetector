@@ -10,8 +10,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import com.asbestosstar.crashdetector.CrashDetectorLogger;
-
 /**
  * Implementacion de la API de forge para GitHub.
  *

@@ -5,7 +5,6 @@ import java.nio.file.Path;
 
 import com.enderzombi102.loadercomplex.api.Addon;
 import com.enderzombi102.loadercomplex.api.Loader;
-import com.asbestosstar.crashdetector.Statics;
 
 public class CrashDetectorLoaderComplex implements Addon {
 

@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -123,12 +121,8 @@ public class ErrorHealightINT implements Verificaciones {
 	 * se detecta por contenido del log general.
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		return lineaContieneErrorHealightINT(trazo.trace);
+	public String[] ocupaTrazo() {
+		return new String[] { NO_SUCH_FIELD_INT };
 	}
 
 	@Override

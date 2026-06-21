@@ -1,6 +1,10 @@
 package com.asbestosstar.crashdetector.mapas;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Una estructura de datos que mapea un valor a una combinación de cuatro

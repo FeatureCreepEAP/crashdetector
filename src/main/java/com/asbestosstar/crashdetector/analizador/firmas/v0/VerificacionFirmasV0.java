@@ -11,8 +11,6 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
 import com.asbestosstar.crashdetector.analizador.firmas.TipoDeFiltrodeCodice;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
@@ -254,8 +252,9 @@ public class VerificacionFirmasV0 implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		return false;
+	@Override
+	public String[] ocupaTrazo() {
+		return new String[0];
 	}
 
 	@Override

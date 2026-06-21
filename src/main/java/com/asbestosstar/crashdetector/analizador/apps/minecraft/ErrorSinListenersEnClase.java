@@ -7,8 +7,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
@@ -171,23 +169,8 @@ public class ErrorSinListenersEnClase implements Verificaciones {
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		if (nombreClase != null && !nombreClase.isEmpty()) {
-
-			String esperado = TEXTO_ERROR + nombreClase;
-
-			return t.contains(esperado);
-		}
-
-		// Fallback muy estricto.
-		return t.contains(TEXTO_ERROR);
+	public String[] ocupaTrazo() {
+		return new String[] { TEXTO_ERROR };
 	}
 
 	@Override

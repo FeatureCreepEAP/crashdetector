@@ -11,9 +11,9 @@ import java.util.function.Supplier;
 import javax.swing.JFrame;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.deps.DescargadorDependenciasMaven;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
-import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 

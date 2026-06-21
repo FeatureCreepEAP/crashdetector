@@ -6,17 +6,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
-import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -385,10 +381,8 @@ public class NullPointer implements Verificaciones {
 	/**
 	 * Busca un origen dentro del TraceInfo ya procesado por VDST.
 	 *
-	 * Prioridad:
-	 * 1. JAR permitido
-	 * 2. modid permitido
-	 * 3. paquete permitido más específico
+	 * Prioridad: 1. JAR permitido 2. modid permitido 3. paquete permitido más
+	 * específico
 	 *
 	 * No usa trace.trace ni split().
 	 */

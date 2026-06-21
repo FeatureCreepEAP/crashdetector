@@ -2,11 +2,9 @@ package com.asbestosstar.crashdetector.config.toml;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import com.electronwill.nightconfig.core.Config;
 import com.electronwill.nightconfig.core.CommentedConfig;
-import com.electronwill.nightconfig.core.UnmodifiableConfig;
+import com.electronwill.nightconfig.core.Config;
 import com.electronwill.nightconfig.toml.TomlParser;
 import com.electronwill.nightconfig.toml.TomlWriter;
 

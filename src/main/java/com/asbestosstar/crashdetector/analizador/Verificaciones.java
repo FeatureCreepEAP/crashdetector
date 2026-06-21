@@ -3,7 +3,6 @@ package com.asbestosstar.crashdetector.analizador;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -54,8 +53,6 @@ public interface Verificaciones {
 
 	public QuickFix solucion();
 
-
-
 	/**
 	 * Patrones literales que indican que esta verificación ocupa un stacktrace.
 	 *
@@ -67,8 +64,7 @@ public interface Verificaciones {
 	public default String[] ocupaTrazo() {
 		return new String[0];
 	}
-	
-	
+
 	public static void abrirEnNavegador(String url) {
 		try {
 			if (java.awt.Desktop.isDesktopSupported()) {

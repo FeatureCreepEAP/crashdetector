@@ -7,8 +7,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
@@ -158,20 +156,8 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 	 * </p>
 	 */
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
-			return false;
-		}
-
-		String t = trazo.trace;
-
-		if (claseProblematica != null && !claseProblematica.isEmpty()) {
-			return t.contains(SERVICE_CONFIGURATION_ERROR) && t.contains(IDEPENDENCY_LOCATOR)
-					&& t.contains(claseProblematica);
-		}
-
-		// Fallback muy estricto si por alguna razón no se guardó la clase.
-		return t.contains(SERVICE_CONFIGURATION_ERROR) && t.contains(IDEPENDENCY_LOCATOR) && t.contains(UNABLE_TO_LOAD);
+	public String[] ocupaTrazo() {
+		return new String[] { SERVICE_CONFIGURATION_ERROR, IDEPENDENCY_LOCATOR };
 	}
 
 	@Override

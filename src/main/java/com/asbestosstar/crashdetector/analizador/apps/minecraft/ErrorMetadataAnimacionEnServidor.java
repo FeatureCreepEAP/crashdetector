@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -93,9 +91,8 @@ public class ErrorMetadataAnimacionEnServidor implements Verificaciones {
 	}
 
 	@Override
-	public boolean ocupaTrazo(TraceInfo trazo) {
-		String t = trazo.trace;
-		return t.contains("ClassMetadataNotFoundException") && t.contains("AnimationMetadataSection");
+	public String[] ocupaTrazo() {
+		return new String[] { CLASS_METADATA_NOT_FOUND, ANIMATION_METADATA_SECTION };
 	}
 
 	@Override

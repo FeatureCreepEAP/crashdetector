@@ -5,8 +5,6 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -143,10 +141,7 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 
 	@Override
 	public String[] ocupaTrazo() {
-		return new String[] {
-				TEXTO_ABSTRACT,
-				TEXTO_NO_IMPLEMENTA
-		};
+		return new String[] { TEXTO_ABSTRACT, TEXTO_NO_IMPLEMENTA };
 	}
 
 	@Override
