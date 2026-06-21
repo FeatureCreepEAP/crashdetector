@@ -32,23 +32,23 @@ public final class MotorDeLecturaStreaming {
 		this.motorBytes = MotoresBusqueda.crear();
 	}
 
-	public void procesarLineas(Consola consola, String[] lineas, List<Verificaciones> verificaciones,
-			EstadoAnalisisArchivo estado) {
-		inicializarAutomata(verificaciones);
+	public void procesarLineas(Consola consola, String[] lineas, List<Verificaciones> verificacionesPatrones,
+			List<Verificaciones> verificacionesLineales, EstadoAnalisisArchivo estado) {
+		inicializarAutomata(verificacionesPatrones);
 
 		if (lineas == null) {
 			return;
 		}
 
 		for (int i = 0; i < lineas.length; i++) {
-			procesarLinea(consola, lineas[i], i, verificaciones, estado);
+			procesarLinea(consola, lineas[i], i, verificacionesLineales, estado);
 			estado.lineasLeidas = i + 1;
 		}
 	}
 
-	public void procesarEnVivo(Consola consola, InputStream inputStream, List<Verificaciones> verificaciones,
-			EstadoAnalisisArchivo estado) {
-		inicializarAutomata(verificaciones);
+	public void procesarEnVivo(Consola consola, InputStream inputStream, List<Verificaciones> verificacionesPatrones,
+			List<Verificaciones> verificacionesLineales, EstadoAnalisisArchivo estado) {
+		inicializarAutomata(verificacionesPatrones);
 
 		if (inputStream == null) {
 			return;
@@ -60,7 +60,7 @@ public final class MotorDeLecturaStreaming {
 			int numeroLinea = 0;
 
 			while ((linea = reader.readLine()) != null) {
-				procesarLinea(consola, linea, numeroLinea, verificaciones, estado);
+				procesarLinea(consola, linea, numeroLinea, verificacionesLineales, estado);
 
 				numeroLinea++;
 				estado.lineasLeidas = numeroLinea;
@@ -71,8 +71,9 @@ public final class MotorDeLecturaStreaming {
 		}
 	}
 
-	public void procesarArchivo(Consola consola, List<Verificaciones> verificaciones, EstadoAnalisisArchivo estado) {
-		inicializarAutomata(verificaciones);
+	public void procesarArchivo(Consola consola, List<Verificaciones> verificacionesPatrones,
+			List<Verificaciones> verificacionesLineales, EstadoAnalisisArchivo estado) {
+		inicializarAutomata(verificacionesPatrones);
 
 		Path path = consola.archivo;
 
@@ -116,7 +117,6 @@ public final class MotorDeLecturaStreaming {
 
 						if (restoAnterior > 0) {
 							int lenLinea = finLinea - inicioActual;
-
 							byte[] lineaCompleta = new byte[restoAnterior + lenLinea];
 
 							System.arraycopy(bufferResto, 0, lineaCompleta, 0, restoAnterior);
@@ -133,7 +133,7 @@ public final class MotorDeLecturaStreaming {
 							contenidoLinea = contenidoLinea.substring(0, contenidoLinea.length() - 1);
 						}
 
-						procesarLinea(consola, contenidoLinea, numeroLineaActual, verificaciones, estado);
+						procesarLinea(consola, contenidoLinea, numeroLineaActual, verificacionesLineales, estado);
 
 						numeroLineaActual++;
 						inicioActual = finLinea + 1;
@@ -168,7 +168,8 @@ public final class MotorDeLecturaStreaming {
 					ultimaLinea = ultimaLinea.substring(0, ultimaLinea.length() - 1);
 				}
 
-				procesarLinea(consola, ultimaLinea, numeroLineaActual, verificaciones, estado);
+				procesarLinea(consola, ultimaLinea, numeroLineaActual, verificacionesLineales, estado);
+
 				estado.lineasLeidas = numeroLineaActual + 1;
 			}
 
@@ -177,8 +178,8 @@ public final class MotorDeLecturaStreaming {
 		}
 	}
 
-	public void procesarLinea(Consola consola, String linea, int numeroLinea, List<Verificaciones> verificaciones,
-			EstadoAnalisisArchivo estado) {
+	public void procesarLinea(Consola consola, String linea, int numeroLinea,
+			List<Verificaciones> verificacionesLineales, EstadoAnalisisArchivo estado) {
 		if (linea == null || linea.isEmpty()) {
 			return;
 		}
@@ -208,11 +209,11 @@ public final class MotorDeLecturaStreaming {
 			}
 		}
 
-		if (verificaciones == null || verificaciones.isEmpty()) {
+		if (verificacionesLineales == null || verificacionesLineales.isEmpty()) {
 			return;
 		}
 
-		for (Verificaciones ver : verificaciones) {
+		for (Verificaciones ver : verificacionesLineales) {
 			try {
 				ver.verificarPorLinea(consola, linea, numeroLinea);
 			} catch (Exception e) {
@@ -221,16 +222,16 @@ public final class MotorDeLecturaStreaming {
 		}
 	}
 
-	private void inicializarAutomata(List<Verificaciones> verificaciones) {
+	private void inicializarAutomata(List<Verificaciones> verificacionesPatrones) {
 		patronesAVerificaciones.clear();
 		automata = null;
 
-		if (verificaciones == null || verificaciones.isEmpty()) {
+		if (verificacionesPatrones == null || verificacionesPatrones.isEmpty()) {
 			CrashDetectorLogger.log("[DEBUG_LOG] No hay verificaciones para inicializar el autómata");
 			return;
 		}
 
-		for (Verificaciones ver : verificaciones) {
+		for (Verificaciones ver : verificacionesPatrones) {
 			if (ver == null) {
 				continue;
 			}

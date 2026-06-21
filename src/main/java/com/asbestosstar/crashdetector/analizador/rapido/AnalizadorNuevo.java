@@ -40,9 +40,11 @@ public final class AnalizadorNuevo {
 				consola.verificacion_de_stacktrace.reiniciar();
 			}
 
+			List<Verificaciones> verificacionesLineales = obtenerVerificacionesLineales(consola);
+
 			CrashDetectorLogger.log("[DEBUG_LOG] Iniciando análisis en vivo");
 
-			motorStreaming.procesarEnVivo(consola, inputStream, verificaciones, estado);
+			motorStreaming.procesarEnVivo(consola, inputStream, verificaciones, verificacionesLineales, estado);
 
 			finalizarVerificaciones(consola, estado);
 
@@ -77,15 +79,14 @@ public final class AnalizadorNuevo {
 				consola.verificacion_de_stacktrace.reiniciar();
 			}
 
-			/*
-			 * Prioridad: 1. lineas_verificar 2. contenido_verificar 3. archivo en disco
-			 * solo como fallback
-			 */
+			List<Verificaciones> verificacionesLineales = obtenerVerificacionesLineales(consola);
+
 			if (consola.lineas_verificar != null) {
 				CrashDetectorLogger
 						.log("[DEBUG_LOG] Usando lineas_verificar existentes: " + consola.lineas_verificar.length);
 
-				motorStreaming.procesarLineas(consola, consola.lineas_verificar, verificaciones, estado);
+				motorStreaming.procesarLineas(consola, consola.lineas_verificar, verificaciones, verificacionesLineales,
+						estado);
 
 			} else if (consola.contenido_verificar != null) {
 				String[] lineas = consola.contenido_verificar.split("\\r?\\n", -1);
@@ -94,13 +95,13 @@ public final class AnalizadorNuevo {
 				CrashDetectorLogger
 						.log("[DEBUG_LOG] Usando contenido_verificar existente: " + lineas.length + " líneas");
 
-				motorStreaming.procesarLineas(consola, lineas, verificaciones, estado);
+				motorStreaming.procesarLineas(consola, lineas, verificaciones, verificacionesLineales, estado);
 
 			} else if (consola.archivo != null && consola.archivo.toFile().exists()) {
 				CrashDetectorLogger.log(
 						"[DEBUG_LOG] No hay contenido precargado; leyendo archivo como fallback: " + consola.archivo);
 
-				motorStreaming.procesarArchivo(consola, verificaciones, estado);
+				motorStreaming.procesarArchivo(consola, verificaciones, verificacionesLineales, estado);
 
 			} else {
 				CrashDetectorLogger.log("[DEBUG_LOG] Consola sin contenido, líneas ni archivo válido");
@@ -114,6 +115,22 @@ public final class AnalizadorNuevo {
 		} catch (Exception e) {
 			CrashDetectorLogger.logException(e);
 		}
+	}
+
+	private List<Verificaciones> obtenerVerificacionesLineales(Consola consola) {
+		List<Verificaciones> resultado = new ArrayList<>();
+
+		for (Verificaciones ver : verificaciones) {
+			try {
+				if (ver.verificar(consola)) {
+					resultado.add(ver);
+				}
+			} catch (Exception e) {
+				CrashDetectorLogger.logException(e);
+			}
+		}
+
+		return resultado;
 	}
 
 	private void finalizarVerificaciones(Consola consola, EstadoAnalisisArchivo estado) {
