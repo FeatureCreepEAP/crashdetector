@@ -3,17 +3,12 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-/**
- * Detecta el error EarlyWindow común en Forge. MAIN_LINE solo activa si aparece
- * cerca del final del log. Los otros patrones se detectan globalmente.
- */
 public class EarlyWindow implements Verificaciones {
 
 	private static final String APPLE_METAL_OPENGL_RENDERER = "AppleMetalOpenGLRenderer";
@@ -22,21 +17,19 @@ public class EarlyWindow implements Verificaciones {
 	private static final String MAIN_LINE = "Loading ImmediateWindowProvider fmlearlywindow";
 	private static final String FALLBACK_1 = "Failed to initialize the mod loading system and display.";
 	private static final String FALLBACK_2 = "Failed to initialize graphics window with current settings.";
-	public static final String wayland_26 = "The platform does not provide the window position";// Comun en Wayland en
-																								// versiones 26+
+	public static final String wayland_26 = "The platform does not provide the window position";
 
 	private boolean activado = false;
 	private boolean limitacionOpenGLMacOSDetectada = false;
 
 	private boolean appleMetalDetectado = false;
 	private boolean earlyFramebufferDetectado = false;
+
 	private int lineaMainLine = -1;
+	private int ultimaLineaSignificativa = -1;
 
 	private String mensaje = "";
 	private String enlaceHtml = "";
-
-	// Solo buscar MAIN_LINE en las últimas N líneas
-	private static final int LOOKBACK_CHARS = 20000;
 
 	@Override
 	public String[] patronesRapidos() {
@@ -50,9 +43,21 @@ public class EarlyWindow implements Verificaciones {
 			return;
 		}
 
-		String linea = evento.linea;
+		procesarLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
-		// Detectar señales globales baratas
+	@Override
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
+		procesarLinea(consola, linea, numero_de_linea);
+	}
+
+	private void procesarLinea(Consola consola, String linea, int numeroDeLinea) {
+		if (linea == null || linea.trim().isEmpty()) {
+			return;
+		}
+
+		ultimaLineaSignificativa = numeroDeLinea;
+
 		if (linea.contains(APPLE_METAL_OPENGL_RENDERER)) {
 			appleMetalDetectado = true;
 		}
@@ -63,33 +68,21 @@ public class EarlyWindow implements Verificaciones {
 
 		limitacionOpenGLMacOSDetectada = appleMetalDetectado && earlyFramebufferDetectado;
 
-		// Buscar MAIN_LINE solo en el final del log
-		// En modo streaming no tenemos contenido completo; se guarda la última línea
-		// encontrada y se confirma al finalizar el archivo.
 		if (linea.contains(MAIN_LINE)) {
-			lineaMainLine = evento.numeroDeLinea;
+			lineaMainLine = numeroDeLinea;
 		}
 
-		if (lineaContieneFallback(linea) || limitacionOpenGLMacOSDetectada) {
-		}
-
-		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (linea == null || linea.isEmpty() || activado)
+		if (activado) {
 			return;
+		}
 
-		// Activar detector si línea contiene fallback (MAIN_LINE ya comprobado
-		// globalmente)
 		if (lineaContieneFallback(linea)) {
-			activar(consola, numero_de_linea);
+			activar(consola, numeroDeLinea);
 			return;
 		}
 
 		if (limitacionOpenGLMacOSDetectada) {
-			activar(consola, numero_de_linea);
+			activar(consola, numeroDeLinea);
 		}
 	}
 
@@ -99,9 +92,7 @@ public class EarlyWindow implements Verificaciones {
 			return;
 		}
 
-		// MAIN_LINE se confirma al final para conservar la intención original:
-		// solo interesa cuando aparece cerca del cierre del log.
-		if (lineaMainLine >= 0) {
+		if (lineaMainLine >= 0 && lineaMainLine == ultimaLineaSignificativa) {
 			activar(consola, lineaMainLine);
 		}
 	}
@@ -110,15 +101,15 @@ public class EarlyWindow implements Verificaciones {
 		return linea.contains(FALLBACK_1) || linea.contains(FALLBACK_2) || linea.contains(wayland_26);
 	}
 
-	private void activar(Consola consola, int numero_de_linea) {
+	private void activar(Consola consola, int numeroDeLinea) {
 		if (activado) {
 			return;
 		}
 
 		mensaje = construirMensaje();
 
-		if (consola != null && numero_de_linea >= 0) {
-			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		if (consola != null && numeroDeLinea >= 0) {
+			enlaceHtml = consola.agregarErrorALectador(numeroDeLinea, this);
 		}
 
 		activado = true;
@@ -126,9 +117,11 @@ public class EarlyWindow implements Verificaciones {
 
 	private String construirMensaje() {
 		String base = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
+
 		if (limitacionOpenGLMacOSDetectada) {
 			return base + MonitorDePID.idioma.fmlEarlyWindowMacOSOpenGL();
 		}
+
 		return base;
 	}
 
@@ -174,9 +167,12 @@ public class EarlyWindow implements Verificaciones {
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null)
+		if (!activado || trazo == null || trazo.trace == null) {
 			return false;
+		}
+
 		String t = trazo.trace;
+
 		return t.contains(MAIN_LINE) || t.contains(FALLBACK_1) || t.contains(FALLBACK_2)
 				|| t.contains(APPLE_METAL_OPENGL_RENDERER) || t.contains(EARLY_FRAMEBUFFER_DRAW);
 	}
@@ -185,5 +181,4 @@ public class EarlyWindow implements Verificaciones {
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

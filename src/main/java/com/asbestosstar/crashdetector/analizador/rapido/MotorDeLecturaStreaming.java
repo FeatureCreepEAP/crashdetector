@@ -1,6 +1,9 @@
 package com.asbestosstar.crashdetector.analizador.rapido;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -17,9 +20,6 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.motor.MotorBusquedaBytes;
 import com.asbestosstar.crashdetector.analizador.rapido.motor.MotoresBusqueda;
 
-/**
- * Motor de lectura streaming que procesa el log por bloques.
- */
 public final class MotorDeLecturaStreaming {
 
 	private static final int BUFFER_SIZE = 1024 * 1024;
@@ -32,10 +32,50 @@ public final class MotorDeLecturaStreaming {
 		this.motorBytes = MotoresBusqueda.crear();
 	}
 
-	public void procesar(Consola consola, List<Verificaciones> verificaciones, EstadoAnalisisArchivo estado) {
+	public void procesarLineas(Consola consola, String[] lineas, List<Verificaciones> verificaciones,
+			EstadoAnalisisArchivo estado) {
+		inicializarAutomata(verificaciones);
+
+		if (lineas == null) {
+			return;
+		}
+
+		for (int i = 0; i < lineas.length; i++) {
+			procesarLinea(consola, lineas[i], i, verificaciones, estado);
+			estado.lineasLeidas = i + 1;
+		}
+	}
+
+	public void procesarEnVivo(Consola consola, InputStream inputStream, List<Verificaciones> verificaciones,
+			EstadoAnalisisArchivo estado) {
+		inicializarAutomata(verificaciones);
+
+		if (inputStream == null) {
+			return;
+		}
+
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+
+			String linea;
+			int numeroLinea = 0;
+
+			while ((linea = reader.readLine()) != null) {
+				procesarLinea(consola, linea, numeroLinea, verificaciones, estado);
+
+				numeroLinea++;
+				estado.lineasLeidas = numeroLinea;
+			}
+
+		} catch (IOException e) {
+			CrashDetectorLogger.logException(e);
+		}
+	}
+
+	public void procesarArchivo(Consola consola, List<Verificaciones> verificaciones, EstadoAnalisisArchivo estado) {
 		inicializarAutomata(verificaciones);
 
 		Path path = consola.archivo;
+
 		if (path == null) {
 			return;
 		}
@@ -78,6 +118,7 @@ public final class MotorDeLecturaStreaming {
 							int lenLinea = finLinea - inicioActual;
 
 							byte[] lineaCompleta = new byte[restoAnterior + lenLinea];
+
 							System.arraycopy(bufferResto, 0, lineaCompleta, 0, restoAnterior);
 							System.arraycopy(heapBuffer, inicioActual, lineaCompleta, restoAnterior, lenLinea);
 
@@ -92,8 +133,9 @@ public final class MotorDeLecturaStreaming {
 							contenidoLinea = contenidoLinea.substring(0, contenidoLinea.length() - 1);
 						}
 
-						procesarLinea(consola, contenidoLinea, numeroLineaActual++, verificaciones, estado);
+						procesarLinea(consola, contenidoLinea, numeroLineaActual, verificaciones, estado);
 
+						numeroLineaActual++;
 						inicioActual = finLinea + 1;
 					}
 
@@ -126,7 +168,8 @@ public final class MotorDeLecturaStreaming {
 					ultimaLinea = ultimaLinea.substring(0, ultimaLinea.length() - 1);
 				}
 
-				procesarLinea(consola, ultimaLinea, numeroLineaActual++, verificaciones, estado);
+				procesarLinea(consola, ultimaLinea, numeroLineaActual, verificaciones, estado);
+				estado.lineasLeidas = numeroLineaActual + 1;
 			}
 
 		} catch (IOException e) {
