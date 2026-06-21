@@ -3,16 +3,13 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class TetraDeserializadorModeloEstatico implements VerificacionRapida {
-
-	// Indica si el log contiene indicios globales del error
-	private boolean posibleErrorTetra = false;
+public class TetraDeserializadorModeloEstatico implements Verificaciones {
 
 	// Indica si ya se encontró la línea con el mensaje principal
 	private boolean encontroMensajePrincipal = false;
@@ -44,7 +41,6 @@ public class TetraDeserializadorModeloEstatico implements VerificacionRapida {
 
 		if (linea.contains(TEXTO_MENSAJE)) {
 			encontroMensajePrincipal = true;
-			posibleErrorTetra = true;
 
 			if (this.enlace.isEmpty() && evento.consola != null) {
 				this.enlace = evento.consola.agregarErrorALectador(evento.numeroDeLinea, this);
@@ -53,7 +49,6 @@ public class TetraDeserializadorModeloEstatico implements VerificacionRapida {
 
 		if (linea.contains(TEXTO_METODO)) {
 			encontroMetodoRelacionado = true;
-			posibleErrorTetra = true;
 
 			if (this.enlace.isEmpty() && evento.consola != null) {
 				this.enlace = evento.consola.agregarErrorALectador(evento.numeroDeLinea, this);
@@ -66,31 +61,7 @@ public class TetraDeserializadorModeloEstatico implements VerificacionRapida {
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Detección global ligera para evitar comprobaciones más costosas por línea
-		if (consola.contenido_verificar.contains(TEXTO_MENSAJE) && consola.contenido_verificar.contains(TEXTO_METODO)) {
-			posibleErrorTetra = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!posibleErrorTetra)
-			return false;
-
-		return !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		// Salir temprano si no existen ambos indicios globales
-		if (!posibleErrorTetra || activado || linea == null) {
-			return;
-		}
 
 		// Buscar la línea del mensaje principal
 		if (!encontroMensajePrincipal && linea.contains(TEXTO_MENSAJE)) {
@@ -120,7 +91,7 @@ public class TetraDeserializadorModeloEstatico implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new TetraDeserializadorModeloEstatico();
 	}
 

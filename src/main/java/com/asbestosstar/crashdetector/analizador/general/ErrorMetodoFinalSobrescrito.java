@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -17,10 +17,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * qouteall.imm_ptl.core.portal.Portal overrides final method
  * net.minecraft.world.entity.Entity.m20191()Lnet/minecraft/world/phys/AABB;
  */
-public class ErrorMetodoFinalSobrescrito implements VerificacionRapida {
+public class ErrorMetodoFinalSobrescrito implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean posibleError = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 
@@ -39,34 +38,11 @@ public class ErrorMetodoFinalSobrescrito implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneMetodoFinalSobrescrito(evento.linea)) {
-			posibleError = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Solo activa el análisis por línea si el log contiene los textos clave.
-		posibleError = consola.contenido_verificar.contains(TEXTO_ERROR)
-				&& consola.contenido_verificar.contains(TEXTO_OVERRIDES_FINAL);
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleError && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleError || activado || linea == null) {
-			return;
-		}
 
 		if (!lineaContieneMetodoFinalSobrescrito(linea)) {
 			return;
@@ -88,7 +64,7 @@ public class ErrorMetodoFinalSobrescrito implements VerificacionRapida {
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 		mensaje = MonitorDePID.idioma.errorMetodoFinalSobrescrito(claseQueSobrescribe, metodoFinal)
-				+ Verificaciones.nl_html + enlaceHtml;
+				+ VerificacionesLegacy.nl_html + enlaceHtml;
 
 		activado = true;
 	}
@@ -107,7 +83,7 @@ public class ErrorMetodoFinalSobrescrito implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorMetodoFinalSobrescrito();
 	}
 

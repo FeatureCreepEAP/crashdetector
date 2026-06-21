@@ -3,26 +3,24 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta que el mod PTRLib no está instalado. Modernizado: global barato +
  * verificación por línea, sin recorrer todo el log.
  */
-public class ProblemaDependenciaPTRLib implements VerificacionRapida {
+public class ProblemaDependenciaPTRLib implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 
 	private final String nombreMod = "PTRLib";
-
-	private boolean posiblePTRLib = false;
 
 	private static final String TEXTO_EXCEPCION = "Encountered an unexpected exception";
 	private static final String TEXTO_CLASE_FALTANTE = "java.lang.NoClassDefFoundError: com/mia/craftstudio/IPackReaderCallback";
@@ -38,32 +36,7 @@ public class ProblemaDependenciaPTRLib implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_EXCEPCION) || evento.linea.contains(TEXTO_CLASE_FALTANTE)) {
-			posiblePTRLib = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global barata: activa flag si hay indicios de error en el log
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty())
-			return;
-
-		String contenido = consola.contenido_verificar;
-
-		// Simplemente mirar si el log contiene alguna de las cadenas clave
-		if (contenido.contains(TEXTO_CLASE_FALTANTE) || contenido.contains(TEXTO_EXCEPCION)) {
-			posiblePTRLib = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posiblePTRLib && !activado;
 	}
 
 	/**
@@ -71,8 +44,6 @@ public class ProblemaDependenciaPTRLib implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posiblePTRLib || linea == null || linea.isEmpty() || activado)
-			return;
 
 		int idxExcepcion = linea.indexOf(TEXTO_EXCEPCION);
 		if (idxExcepcion < 0)
@@ -103,7 +74,7 @@ public class ProblemaDependenciaPTRLib implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaDependenciaPTRLib();
 	}
 

@@ -7,9 +7,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -20,15 +20,13 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * modlauncher esta corrupto, es de version incorrecta, o el mod no es
  * compatible con la version actual del cargador de mods.
  */
-public class ErrorConfiguracionServicioIDependencyLocator implements VerificacionRapida {
+public class ErrorConfiguracionServicioIDependencyLocator implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String claseProblematica = "";
 	private List<String> modsUbicacion = new ArrayList<>();
 	private String enlaceHtml = "";
-
-	public boolean posible = false;
 
 	private static final String SERVICE_CONFIGURATION_ERROR = "ServiceConfigurationError";
 	private static final String IDEPENDENCY_LOCATOR = "IDependencyLocator";
@@ -46,37 +44,7 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 			return;
 		}
 
-		if (evento.linea.contains(SERVICE_CONFIGURATION_ERROR) || evento.linea.contains(IDEPENDENCY_LOCATOR)) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global no utilizada en este verificador.
-	 * <p>
-	 * La detección real se hace por línea en
-	 * {@link #verificarPorLinea(Consola, String, int)}, que es llamado por el
-	 * sistema de análisis línea a línea.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String cont = consola.contenido_verificar;
-		if (cont.contains(SERVICE_CONFIGURATION_ERROR) && cont.contains(IDEPENDENCY_LOCATOR)) {
-			posible = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
 	}
 
 	/**
@@ -89,11 +57,6 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó o el chequeo global dijo que no es posible,
-		// no seguimos revisando más líneas.
-		if (activado || !posible || linea == null) {
-			return;
-		}
 
 		// Verificación rápida inicial.
 		if (!linea.contains(SERVICE_CONFIGURATION_ERROR) || !linea.contains(IDEPENDENCY_LOCATOR)) {
@@ -141,11 +104,11 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 
 		// Construir mensaje final.
 		mensaje = MonitorDePID.idioma.errorConfiguracionServicio(claseProblematica,
-				modsUbicacion.isEmpty() ? null : modsUbicacion) + Verificaciones.nl_html + enlaceHtml;
+				modsUbicacion.isEmpty() ? null : modsUbicacion) + VerificacionesLegacy.nl_html + enlaceHtml;
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorConfiguracionServicioIDependencyLocator();
 	}
 

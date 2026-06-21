@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,14 +14,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * errores porque OptiFine intenta cargar clases del cliente en un entorno de
  * servidor.
  */
-public class ErrorOptiFineServidor implements VerificacionRapida {
+public class ErrorOptiFineServidor implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-
-	// Indica si el log completo tiene señales de OptiFine.
-	private boolean posibleOptiFineServidor = false;
 
 	private static final String TEXTO_OPTIFINE_PATCHER = "optifine.Patcher.applyPatch";
 	private static final String TEXTO_BASE_RESOURCE_NOT_FOUND = "Base resource not found";
@@ -40,39 +37,7 @@ public class ErrorOptiFineServidor implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_OPTIFINE_PATCHER)) {
-			posibleOptiFineServidor = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método global ligero.
-	 *
-	 * No usa regex, no usa toLowerCase() y no usa regionMatches().
-	 *
-	 * En los logs reales de Forge/OptiFine, el nombre del paquete y clase suele
-	 * aparecer con esta forma exacta:
-	 *
-	 * optifine.Patcher.applyPatch
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(TEXTO_OPTIFINE_PATCHER)) {
-			this.posibleOptiFineServidor = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleOptiFineServidor && !activado;
 	}
 
 	/**
@@ -82,19 +47,19 @@ public class ErrorOptiFineServidor implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado || !posibleOptiFineServidor || linea == null || linea.isEmpty()) {
+		if (activado || linea == null || linea.isEmpty()) {
 			return;
 		}
 
 		if (linea.contains(TEXTO_BASE_RESOURCE_NOT_FOUND)) {
 			this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-			this.mensaje = MonitorDePID.idioma.errorOptiFineServidor() + Verificaciones.nl_html;
+			this.mensaje = MonitorDePID.idioma.errorOptiFineServidor() + VerificacionesLegacy.nl_html;
 			this.activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorOptiFineServidor();
 	}
 

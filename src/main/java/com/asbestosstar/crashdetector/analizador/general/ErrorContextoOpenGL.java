@@ -4,10 +4,10 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,9 +15,8 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * that is not available…". Si existe un stacktrace cerca, intenta obtener el
  * origen con vdst.
  */
-public class ErrorContextoOpenGL implements VerificacionRapida {
+public class ErrorContextoOpenGL implements Verificaciones {
 
-	private boolean posibleContextoOpenGL = false;
 	private boolean activado = false;
 
 	private String mensaje = "";
@@ -43,35 +42,7 @@ public class ErrorContextoOpenGL implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_CABECERA) || evento.linea.contains(TEXTO_DETALLE)) {
-			posibleContextoOpenGL = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificacion global ligera.
-	 *
-	 * Se ejecuta primero. No se limpian campos porque esta verificacion puede
-	 * ejecutarse sobre varios archivos de log con la misma instancia.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(TEXTO_DETALLE) && contenido.contains(TEXTO_CABECERA)) {
-			posibleContextoOpenGL = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleContextoOpenGL && !activado;
 	}
 
 	/**
@@ -81,9 +52,6 @@ public class ErrorContextoOpenGL implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleContextoOpenGL || activado || linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		boolean cabeceraAqui = linea.contains(TEXTO_CABECERA);
 		boolean detalleAqui = linea.contains(TEXTO_DETALLE);
@@ -233,7 +201,7 @@ public class ErrorContextoOpenGL implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorContextoOpenGL();
 	}
 

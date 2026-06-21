@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,12 +18,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * optimizaciones que exponen incompatibilidades de mods que no separan
  * correctamente lógica de cliente/servidor.
  */
-public class ErrorMetadataAnimacionEnServidor implements VerificacionRapida {
+public class ErrorMetadataAnimacionEnServidor implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 
-	private boolean posibleErrorMetadata = false;
 	private boolean modernFixPresente = false;
 	private boolean esServidor = false;
 
@@ -55,36 +54,7 @@ public class ErrorMetadataAnimacionEnServidor implements VerificacionRapida {
 			esServidor = true;
 		}
 
-		if (lineaContieneErrorMetadata(linea)) {
-			posibleErrorMetadata = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Este método no se usa; el análisis se hace por línea.
-	 * 
-	 * Método legacy seguro: si existe contenido completo, conserva compatibilidad
-	 * con el motor anterior.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String contenidoCompleto = consola.contenido_verificar;
-
-		this.modernFixPresente = contenidoCompleto.contains(MODERNFIX);
-		this.esServidor = contenidoCompleto.contains(FORGE_SERVER) || contenidoCompleto.contains(DEDICATED_SERVER);
-		this.posibleErrorMetadata = contenidoCompleto.contains(CLASS_METADATA_NOT_FOUND)
-				&& contenidoCompleto.contains(ANIMATION_METADATA_SECTION);
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleErrorMetadata && modernFixPresente && esServidor && !activado;
 	}
 
 	@Override
@@ -129,7 +99,7 @@ public class ErrorMetadataAnimacionEnServidor implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorMetadataAnimacionEnServidor();
 	}
 

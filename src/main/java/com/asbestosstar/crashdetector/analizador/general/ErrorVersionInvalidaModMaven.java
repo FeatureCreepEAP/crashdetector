@@ -4,9 +4,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,13 +14,12 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * versión no está correctamente rodeada por corchetes, causando un
  * InvalidVersionSpecificationException.
  */
-public class ErrorVersionInvalidaModMaven implements VerificacionRapida {
+public class ErrorVersionInvalidaModMaven implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private String versionDetectada = "";
-	public boolean posibleError = false;
 
 	private static final String INVALID_VERSION_SPECIFICATION = "org.apache.maven.artifact.versioning.InvalidVersionSpecificationException";
 	private static final String SINGLE_VERSION_SURROUNDED = "Single version must be surrounded by []:";
@@ -37,33 +36,7 @@ public class ErrorVersionInvalidaModMaven implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneVersionInvalida(evento.linea)) {
-			posibleError = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — mantiene el análisis legacy por contenido
-	 * completo.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null)
-			return;
-
-		String log = consola.contenido_verificar;
-
-		if (log.contains(INVALID_VERSION_SPECIFICATION) && log.contains(SINGLE_VERSION_SURROUNDED)) {
-			posibleError = true;
-		}
-
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleError && !activado;
 	}
 
 	/**
@@ -75,14 +48,6 @@ public class ErrorVersionInvalidaModMaven implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
-			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
-
-		if (!posibleError || linea == null) {
-			return;
-		}
 
 		// Buscamos la línea que contiene el error de especificación de versión inválida
 		if (lineaContieneVersionInvalida(linea)) {
@@ -100,7 +65,7 @@ public class ErrorVersionInvalidaModMaven implements VerificacionRapida {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Mensaje de error en HTML con referencia al problema de versión inválida
-			mensaje = MonitorDePID.idioma.errorVersionInvalidaMod(versionDetectada) + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorVersionInvalidaMod(versionDetectada) + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
@@ -110,7 +75,7 @@ public class ErrorVersionInvalidaModMaven implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorVersionInvalidaModMaven();
 	}
 

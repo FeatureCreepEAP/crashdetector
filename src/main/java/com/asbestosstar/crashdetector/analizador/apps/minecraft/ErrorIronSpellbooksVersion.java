@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,12 +15,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * causando un NoSuchMethodError al intentar usar
  * ResourceLocation.fromNamespaceAndPath.
  */
-public class ErrorIronSpellbooksVersion implements VerificacionRapida {
+public class ErrorIronSpellbooksVersion implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradaLinea1 = false;
 
 	private static final String IRONS_SPELLBOOKS_1201 = "irons_spellbooks@1.20.1";
 	private static final String SCHOOL_REGISTRY_CLINIT = "SchoolRegistry.<clinit>";
@@ -41,25 +40,7 @@ public class ErrorIronSpellbooksVersion implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(RESOURCE_LOCATION_METHOD)) {
-			encontradaLinea1 = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		// Se usa el método verificarCoincidencia(EventoDeCoincidencia) en lugar de
-		// este.
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return encontradaLinea1 && !activado;
 	}
 
 	/**
@@ -72,10 +53,6 @@ public class ErrorIronSpellbooksVersion implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!encontradaLinea1 || activado || linea == null) {
-			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
 
 		// Tercera línea: "at [.../irons_spellbooks@1.20.1-3.4.0.11/...]
 		// SchoolRegistry.<clinit>(SchoolRegistry.java:29)"
@@ -86,13 +63,13 @@ public class ErrorIronSpellbooksVersion implements VerificacionRapida {
 
 			// Mensaje de error en HTML con referencia al problema de versión de Iron's
 			// Spellbooks
-			mensaje = MonitorDePID.idioma.errorIronSpellbooksVersion() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorIronSpellbooksVersion() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorIronSpellbooksVersion();
 	}
 

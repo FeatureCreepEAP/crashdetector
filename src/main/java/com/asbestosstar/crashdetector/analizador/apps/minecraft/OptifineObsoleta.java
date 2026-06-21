@@ -4,12 +4,12 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class OptifineObsoleta implements VerificacionRapida {
+public class OptifineObsoleta implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -39,17 +39,6 @@ public class OptifineObsoleta implements VerificacionRapida {
 		intentarActivar();
 	}
 
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String contento_de_consola = consola.contenido_verificar;
-		actualizarIndicios(contento_de_consola);
-		intentarActivar();
-	}
-
 	private void actualizarIndicios(String texto) {
 		if (texto.contains(ERROR_OPTIFINE)) {
 			errorOptifine = true;
@@ -74,18 +63,13 @@ public class OptifineObsoleta implements VerificacionRapida {
 		}
 
 		if (errorOptifine && uriInvalida && incompatibilidad && servicioFallido) {
-			this.mensaje = MonitorDePID.idioma.optifineObsoleta() + Verificaciones.nl_html;
+			this.mensaje = MonitorDePID.idioma.optifineObsoleta() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public boolean quiereAnalizarLineas() {
-		return false;
-	}
-
-	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new OptifineObsoleta();
 	}
 

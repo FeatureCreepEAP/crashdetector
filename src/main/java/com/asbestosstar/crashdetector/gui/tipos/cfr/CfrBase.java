@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 /**
@@ -67,7 +67,7 @@ public abstract class CfrBase extends JFrame implements CrashDetectorGUI {
 	public static String descompilarClase(String nombreClase) {
 		if (!estaCfrInstalado()) {
 			CrashDetectorLogger.log("No Tienese CFR");
-			String mensajeHtml = MonitorDePID.idioma.necesitasInstalarCfr() + Verificaciones.nl_html
+			String mensajeHtml = MonitorDePID.idioma.necesitasInstalarCfr() + VerificacionesLegacy.nl_html
 					+ MonitorDePID.idioma.noticiaLegalCFR();
 
 			if (!java.awt.GraphicsEnvironment.isHeadless()) {

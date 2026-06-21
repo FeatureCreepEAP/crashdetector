@@ -3,20 +3,19 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Clase que detecta mods duplicados en Fabric. Gracias a Aternos porque esta es
  * una implementacion de su codex: https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaModDuplicadoFabric implements VerificacionRapida {
+public class ProblemaModDuplicadoFabric implements Verificaciones {
 
-	private boolean posibleModDuplicadoFabric = false;
 	private boolean activado = false;
 
 	private String mensaje = "";
@@ -44,35 +43,7 @@ public class ProblemaModDuplicadoFabric implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneIndicioFabricDuplicado(evento.linea)) {
-			posibleModDuplicadoFabric = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificacion global ligera.
-	 *
-	 * Se ejecuta primero. No se limpian campos porque esta verificacion puede
-	 * ejecutarse sobre varios archivos de log con la misma instancia.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(TEXTO_DUPLICATE_VERSIONS) && contenido.contains(TEXTO_MOD_RESOLUTION)) {
-			posibleModDuplicadoFabric = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleModDuplicadoFabric && !activado;
 	}
 
 	/**
@@ -82,9 +53,6 @@ public class ProblemaModDuplicadoFabric implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleModDuplicadoFabric || activado || linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		if (linea.contains(TEXTO_ERROR_CRITICO)) {
 			esperandoLineaDuplicado = true;
@@ -116,7 +84,7 @@ public class ProblemaModDuplicadoFabric implements VerificacionRapida {
 		this.rutaMod = datos.rutaMod;
 		this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 
-		this.mensaje = MonitorDePID.idioma.mensajeModDuplicadoFabric(nombreMod) + Verificaciones.nl_html + enlace;
+		this.mensaje = MonitorDePID.idioma.mensajeModDuplicadoFabric(nombreMod) + VerificacionesLegacy.nl_html + enlace;
 
 		this.activado = true;
 	}
@@ -197,7 +165,7 @@ public class ProblemaModDuplicadoFabric implements VerificacionRapida {
 	 * Crea una nueva instancia del verificador.
 	 */
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaModDuplicadoFabric();
 	}
 

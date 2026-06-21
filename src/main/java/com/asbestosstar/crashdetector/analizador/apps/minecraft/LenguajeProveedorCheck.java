@@ -9,21 +9,17 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class LenguajeProveedorCheck implements VerificacionRapida {
+public class LenguajeProveedorCheck implements Verificaciones {
 
 	private final Set<String> errores = new HashSet<>();
 	public boolean activado = false;
 	private final Map<String, String> enlacesPorError = new HashMap<>();
-
-	// Cache del contenido de la consola dividido por líneas para evitar hacer split
-	// repetidos.
-	private boolean posiblePorConsola = false;
 
 	private static final String MOD_FILE = "Mod File";
 	private static final String NEEDS_LANGUAGE_PROVIDER = "needs language provider";
@@ -44,43 +40,7 @@ public class LenguajeProveedorCheck implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneProblemaProveedor(evento.linea)) {
-			posiblePorConsola = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verifica el contenido de la consola para detectar errores relacionados con
-	 * proveedores de lenguaje. Este método procesa cada línea de la salida de la
-	 * consola para identificar problemas relacionados con proveedores de lenguaje
-	 * faltantes o incompatibles. Extrae detalles relevantes como el nombre del
-	 * archivo JAR, el proveedor requerido, su versión y la versión disponible.
-	 * Además, añade un mensaje detallado al {@code CDStringBuilder} proporcionado.
-	 *
-	 * @param consola La consola que contiene el texto a analizar.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		boolean posible = contenido.contains(NEEDS_LANGUAGE_PROVIDER)
-				|| contenido.contains(FAILED_TO_LOAD_LANGUAGE_PROVIDER)
-				|| contenido.contains(LOADING_LANGUAGE_PROVIDER);
-
-		if (posible) {
-			posiblePorConsola = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posiblePorConsola && !activado;
 	}
 
 	/**
@@ -94,18 +54,6 @@ public class LenguajeProveedorCheck implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó, no seguimos procesando más líneas.
-		if (activado) {
-			return;
-		}
-
-		if (consola == null || linea == null) {
-			return;
-		}
-
-		if (!posiblePorConsola) {
-			return;
-		}
 
 		if (!linea.contains(MOD_FILE) || !linea.contains(NEEDS_LANGUAGE_PROVIDER)) {
 			return;
@@ -156,7 +104,7 @@ public class LenguajeProveedorCheck implements VerificacionRapida {
 
 			// Agregar mensaje especial para JavaFML/MCForge
 			if (contieneJavaFML(proveedor)) {
-				mensaje += Verificaciones.nl_html + MonitorDePID.idioma.errorJavaFML_MCForge();
+				mensaje += VerificacionesLegacy.nl_html + MonitorDePID.idioma.errorJavaFML_MCForge();
 			}
 
 			// Solo registrar si es un error nuevo
@@ -263,7 +211,7 @@ public class LenguajeProveedorCheck implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new LenguajeProveedorCheck();
 	}
 

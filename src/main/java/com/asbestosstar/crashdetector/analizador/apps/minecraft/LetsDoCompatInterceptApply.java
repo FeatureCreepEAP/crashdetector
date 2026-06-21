@@ -3,17 +3,13 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class LetsDoCompatInterceptApply implements VerificacionRapida {
-
-	// Indica si el log contiene indicios globales del error (optimización de
-	// rendimiento)
-	private boolean posibleLetsDoCompat = false;
+public class LetsDoCompatInterceptApply implements Verificaciones {
 
 	// Indica si esta verificación fue activada
 	private boolean activado = false;
@@ -36,45 +32,11 @@ public class LetsDoCompatInterceptApply implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneLetsDoCompat(evento.linea)) {
-			posibleLetsDoCompat = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — maneja análisis legacy cuando existe el contenido
-	 * completo del log.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Detección global ligera:
-		// Solo se buscan fragmentos estables del método transformado
-		if (consola.contenido_verificar.contains(RECIPE_MANAGER)
-				&& consola.contenido_verificar.contains(INTERCEPT_APPLY)
-				&& consola.contenido_verificar.contains(LETS_DO_COMPAT)) {
-
-			posibleLetsDoCompat = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleLetsDoCompat && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-
-		// Salida temprana si no hay indicios globales
-		if (!posibleLetsDoCompat || activado || linea == null) {
-			return;
-		}
 
 		// Verificación precisa en la línea específica
 		if (lineaContieneLetsDoCompat(linea)) {
@@ -89,7 +51,7 @@ public class LetsDoCompatInterceptApply implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new LetsDoCompatInterceptApply();
 	}
 

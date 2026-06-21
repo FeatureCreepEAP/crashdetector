@@ -8,9 +8,9 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -28,7 +28,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Luego se extrae el nombre de la clase receptora, se buscan los JARs que
  * contienen esa clase y se construye el mensaje y el enlace.
  */
-public class LexForgeMLTransformerEnNeoForge implements VerificacionRapida {
+public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -38,7 +38,6 @@ public class LexForgeMLTransformerEnNeoForge implements VerificacionRapida {
 	private final String interfazObjetivo = "cpw.mods.modlauncher.api.ITransformer";
 	private final String firmaMetodoFaltante = "TargetType getTargetType()";
 	private final List<String> modsUbicacion = new ArrayList<>();
-	public boolean posible = false;
 
 	private static final String RECEIVER_CLASS = "Receiver class ";
 	private static final String DOES_NOT_DEFINE = "does not define or inherit an implementation";
@@ -57,39 +56,7 @@ public class LexForgeMLTransformerEnNeoForge implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneErrorTransformer(evento.linea)) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global no utilizada en este verificador.
-	 * <p>
-	 * La detección real se hace por línea en
-	 * {@link #verificarPorLinea(Consola, String, int)}, llamada por el analizador
-	 * línea a línea.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String l = consola.contenido_verificar;
-
-		if (lineaContieneErrorTransformer(l)) {
-			posible = true;
-		}
-
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
 	}
 
 	/**
@@ -108,10 +75,6 @@ public class LexForgeMLTransformerEnNeoForge implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó, no seguimos procesando más líneas.
-		if (activado || !posible || linea == null) {
-			return;
-		}
 
 		String l = linea;
 
@@ -144,7 +107,7 @@ public class LexForgeMLTransformerEnNeoForge implements VerificacionRapida {
 			// Activar SIEMPRE tras detectar la línea, aunque no se encuentren mods
 			mensaje = MonitorDePID.idioma.errorLexForgeMLTransformerEnNeoForge(
 					claseReceptora.isEmpty() ? "(desconocida)" : claseReceptora, interfazObjetivo, firmaMetodoFaltante,
-					modsUbicacion) + Verificaciones.nl_html;
+					modsUbicacion) + VerificacionesLegacy.nl_html;
 
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
@@ -157,7 +120,7 @@ public class LexForgeMLTransformerEnNeoForge implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new LexForgeMLTransformerEnNeoForge();
 	}
 

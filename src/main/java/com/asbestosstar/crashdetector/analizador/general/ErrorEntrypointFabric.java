@@ -3,23 +3,22 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores de Fabric al cargar entrypoints (ej: ModMenu). Estos errores
  * suelen indicar incompatibilidad del mod.
  */
-public class ErrorEntrypointFabric implements VerificacionRapida {
+public class ErrorEntrypointFabric implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String modNombre = "";
-	public boolean posibleError = false;
 
 	private static final String ENTRYPOINT_EXCEPTION = "net.fabricmc.loader.api.EntrypointException";
 	private static final String EXCEPTION_WHILE_LOADING = "Exception while loading entries for entrypoint";
@@ -37,38 +36,11 @@ public class ErrorEntrypointFabric implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneErrorEntrypoint(evento.linea)) {
-			posibleError = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(ENTRYPOINT_EXCEPTION) && contenido.contains(EXCEPTION_WHILE_LOADING)
-				&& contenido.contains(PROVIDED_BY)) {
-			posibleError = true;
-		}
-
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleError && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado || !posibleError || linea == null) {
-			return;
-		}
 
 		// Buscar el patrón base sin regex
 		if (lineaContieneErrorEntrypoint(linea)) {
@@ -100,7 +72,7 @@ public class ErrorEntrypointFabric implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorEntrypointFabric();
 	}
 

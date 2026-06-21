@@ -5,11 +5,11 @@ import java.util.Locale;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,17 +18,10 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Versión sin regex para evitar costo de Pattern/Matcher. Basado en Codex de
  * Aternos.
  */
-public class ProblemaCargaChunk implements VerificacionRapida {
+public class ProblemaCargaChunk implements Verificaciones {
 
 	private boolean activado = false;
 	private String enlace = "";
-
-	/**
-	 * Indica si vale la pena procesar línea por línea.
-	 * 
-	 * Se activa desde verificar(Consola consola) con un chequeo global barato.
-	 */
-	private boolean analizarLineas = false;
 
 	/**
 	 * Estado temporal:
@@ -65,38 +58,11 @@ public class ProblemaCargaChunk implements VerificacionRapida {
 			return;
 		}
 
-		this.analizarLineas = true;
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		// Chequeo global barato:
-		// si el log completo no contiene señales básicas de este error,
-		// no hace falta procesar línea por línea.
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contieneAlguna(contenido, CHUNK_REGION_LOADER, EXCEPTION_GENERATING_NEW_CHUNK, COULDNT_LOAD_CHUNK)) {
-			this.analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!analizarLineas || activado || linea == null) {
-			return;
-		}
 
 		String lower = linea.toLowerCase(Locale.ROOT);
 
@@ -176,7 +142,7 @@ public class ProblemaCargaChunk implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaCargaChunk();
 	}
 

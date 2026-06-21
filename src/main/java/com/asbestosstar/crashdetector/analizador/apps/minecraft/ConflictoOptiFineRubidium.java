@@ -4,9 +4,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,13 +14,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * inyección crítica relacionado con WorldRenderer durante la inicialización del
  * juego.
  */
-public class ConflictoOptiFineRubidium implements VerificacionRapida {
+public class ConflictoOptiFineRubidium implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoOptiFine = false;
-	public boolean analizarLineas = false;
 
 	private static final String OPTIFINE_MINUSCULA = "optifine";
 	private static final String OPTIFINE_MIXTA = "Optifine";
@@ -45,27 +43,7 @@ public class ConflictoOptiFineRubidium implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (contieneOptiFine(linea)) {
-			encontradoOptiFine = true;
-		}
-
-		if (lineaContieneErrorRubidium(linea)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	/**
@@ -82,10 +60,6 @@ public class ConflictoOptiFineRubidium implements VerificacionRapida {
 			return;
 		}
 
-		if (!analizarLineas || !encontradoOptiFine) {
-			return;
-		}
-
 		// Verificamos si la línea contiene el error de inyección crítica de Rubidium
 		// con WorldRenderer
 		if (lineaContieneErrorRubidium(linea)) {
@@ -94,7 +68,7 @@ public class ConflictoOptiFineRubidium implements VerificacionRapida {
 
 			// Mensaje de error en HTML con referencia al conflicto entre OptiFine y
 			// Rubidium
-			mensaje = MonitorDePID.idioma.errorConflictoOptiFineRubidium() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorConflictoOptiFineRubidium() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
@@ -110,7 +84,7 @@ public class ConflictoOptiFineRubidium implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ConflictoOptiFineRubidium();
 	}
 
@@ -158,7 +132,7 @@ public class ConflictoOptiFineRubidium implements VerificacionRapida {
 			return false;
 		}
 
-		return lineaContieneErrorRubidium(trazo.trace) && encontradoOptiFine;
+		return lineaContieneErrorRubidium(trazo.trace);
 	}
 
 	@Override

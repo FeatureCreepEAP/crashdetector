@@ -3,17 +3,14 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ErrorJvmDllC2Sodium implements VerificacionRapida {
+public class ErrorJvmDllC2Sodium implements Verificaciones {
 
-	private boolean posibleJvm = false;
-	private boolean posibleC2 = false;
-	private boolean posibleSodium = false;
 	private boolean activado = false;
 	private String enlace = "";
 
@@ -53,36 +50,11 @@ public class ErrorJvmDllC2Sodium implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (lineaContieneJvmFatal(linea)) {
-			posibleJvm = true;
-		}
-
-		if (lineaContieneC2(linea)) {
-			posibleC2 = true;
-		}
-
-		if (lineaContieneSodium(linea)) {
-			posibleSodium = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		// Método de compatibilidad — no hace nada en modo rápido/streaming.
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleJvm && posibleC2 && posibleSodium && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		if (!posibleJvm || !posibleC2 || !posibleSodium || activado || linea == null) {
-			return;
-		}
 
 		if (linea.contains(PROBLEMATIC_FRAME)) {
 			this.enlace = consola.agregarErrorALectador(num, this);
@@ -123,7 +95,7 @@ public class ErrorJvmDllC2Sodium implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorJvmDllC2Sodium();
 	}
 

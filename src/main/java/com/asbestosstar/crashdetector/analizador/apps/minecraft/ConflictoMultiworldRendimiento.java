@@ -8,9 +8,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,12 +18,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Rubidium) que provocan un error de clase incompatible durante la
  * inicialización del cliente.
  */
-public class ConflictoMultiworldRendimiento implements VerificacionRapida {
+public class ConflictoMultiworldRendimiento implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	public boolean analizarLineas = false;
 
 	private static final String INCOMPATIBLE_CLASS_CHANGE = "IncompatibleClassChangeError";
 	private static final String FABRIC_LOADER_GET_INSTANCE = "net.fabricmc.loader.api.FabricLoader.getInstance()";
@@ -46,33 +45,7 @@ public class ConflictoMultiworldRendimiento implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneErrorMultiworld(evento.linea)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		// Modo streaming puro: puede no existir contenido_verificar
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		if (lineaContieneErrorMultiworld(log)) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	/**
@@ -87,10 +60,6 @@ public class ConflictoMultiworldRendimiento implements VerificacionRapida {
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
-
-		if (!analizarLineas) {
 			return;
 		}
 
@@ -113,12 +82,12 @@ public class ConflictoMultiworldRendimiento implements VerificacionRapida {
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 		// Mensaje de error en HTML con referencia a mods de rendimiento
-		mensaje = MonitorDePID.idioma.errorConflictoMultiworldRendimiento() + Verificaciones.nl_html;
+		mensaje = MonitorDePID.idioma.errorConflictoMultiworldRendimiento() + VerificacionesLegacy.nl_html;
 		activado = true;
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ConflictoMultiworldRendimiento();
 	}
 

@@ -6,11 +6,11 @@ import java.util.Map;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,10 +18,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * por línea pero añade pre-check global para mejorar rendimiento en logs
  * grandes.
  */
-public class ProblemaSpongeMixinFabric implements VerificacionRapida {
+public class ProblemaSpongeMixinFabric implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean analizarLineas = false;
 
 	// mod -> enlace
 	private final Map<String, String> modsConEnlace = new LinkedHashMap<>();
@@ -47,40 +46,11 @@ public class ProblemaSpongeMixinFabric implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneIndicioMixinFatal(evento.linea)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		if (log.contains(TEXTO_MIXIN_TRANSFORMER) || log.contains(TEXTO_INVALID_MIXIN)
-				|| log.contains(TEXTO_MIXIN_APPLY) || log.contains(TEXTO_CRITICAL_INJECTION)
-				|| log.contains(TEXTO_MIXIN_INITIALISATION)) {
-
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!analizarLineas || linea == null || consola == null)
-			return;
 
 		boolean lineaEsErrorFatal = lineaEsErrorFatalMixin(linea);
 
@@ -148,7 +118,7 @@ public class ProblemaSpongeMixinFabric implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaSpongeMixinFabric();
 	}
 
@@ -173,7 +143,7 @@ public class ProblemaSpongeMixinFabric implements VerificacionRapida {
 		for (Map.Entry<String, String> entry : modsConEnlace.entrySet()) {
 
 			sb.append(MonitorDePID.idioma.mensajeModFatal(entry.getKey())).append(entry.getValue())
-					.append(Verificaciones.nl_html);
+					.append(VerificacionesLegacy.nl_html);
 		}
 
 		return sb.toString();
@@ -190,7 +160,7 @@ public class ProblemaSpongeMixinFabric implements VerificacionRapida {
 		Builder builder = new Builder(nombre());
 
 		for (String mod : modsConEnlace.keySet()) {
-			builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarMod(mod) + Verificaciones.nl_html);
+			builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarMod(mod) + VerificacionesLegacy.nl_html);
 		}
 
 		return builder.construir();

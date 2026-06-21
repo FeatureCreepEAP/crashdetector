@@ -4,7 +4,8 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.cargador.Cargador;
@@ -23,55 +24,13 @@ import java.util.List;
  * https://discord.com/channels/1129059589325852724/1129069799545241703/1418708211636113498
  * ¡Verificación Numero 100!
  */
-public class ModIncompatibleConCargadorActivo implements Verificaciones {
+public class ModIncompatibleConCargadorActivo implements VerificacionesLegacy {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private final List<String> modsIncompatibles = new ArrayList<>();
 
-	@Override
-	public void verificar(Consola consola) {
-		// Asegurarse de que los mods y cargadores estén cargados
-
-		if (Cargador.cargadores_activados == null || Cargador.cargadores_activados.isEmpty()) {
-			return;
-		}
-
-		Buscador.cargar();
-
-		modsIncompatibles.clear();
-
-		// Recorrer todos los mods detectados
-		for (ArchivoDeMod mod : Buscador.mods) {
-			boolean compatible = false;
-
-			// Verificar contra cada cargador activo
-			for (Cargador cargador : Cargador.cargadores_activados) {
-				if (cargador.modEsDeCargador(mod)) {
-					compatible = true;
-					break;
-				}
-			}
-
-			// Si no es compatible con ninguno, es sospechoso
-			if (!compatible) {
-
-				String nombreMod = mod.ubicacion_para_publicar();
-
-				modsIncompatibles.add(nombreMod);
-			}
-		}
-
-		if (!modsIncompatibles.isEmpty()) {
-			this.mensaje = MonitorDePID.idioma.modIncompatibleConCargadorActivo(modsIncompatibles);
-			this.activado = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-
-		return false;
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
 	}
 
 	@Override
@@ -85,7 +44,7 @@ public class ModIncompatibleConCargadorActivo implements Verificaciones {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ModIncompatibleConCargadorActivo();
 	}
 
@@ -124,6 +83,12 @@ public class ModIncompatibleConCargadorActivo implements Verificaciones {
 	public Documento docs() {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
+	}
+
+	@Override
+	public String[] patronesRapidos() {
+		// TODO Auto-generated method stub
+		return new String[0];
 	}
 
 }

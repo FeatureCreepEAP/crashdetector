@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -17,10 +17,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Estos errores son fallos propios del cliente Lunar.
  */
-public class ProblemaLunarClient implements VerificacionRapida {
+public class ProblemaLunarClient implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean analizarLineas = false;
 	private String enlace = "";
 
 	private static final String LUNAR_PACKAGE = "com.moonsworth.lunar";
@@ -37,39 +36,11 @@ public class ProblemaLunarClient implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneProblemaLunar(evento.linea)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		// Pre-check global rápido: cualquiera de las dos cadenas activa el análisis
-		if (log.contains(LUNAR_PACKAGE) || log.contains(LUNAR_LAUNCH_ERROR)) {
-
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!analizarLineas || linea == null || activado)
-			return;
 
 		if (lineaContieneProblemaLunar(linea)) {
 
@@ -83,7 +54,7 @@ public class ProblemaLunarClient implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaLunarClient();
 	}
 

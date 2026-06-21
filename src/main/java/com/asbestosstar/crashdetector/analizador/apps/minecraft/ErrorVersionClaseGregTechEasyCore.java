@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,12 +14,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * GregTechEasyCore donde AbstractFurnaceBlockEntity ha sido compilado con una
  * versión más reciente de Java que la que está usando el servidor.
  */
-public class ErrorVersionClaseGregTechEasyCore implements VerificacionRapida {
+public class ErrorVersionClaseGregTechEasyCore implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoGTECore = false;
 
 	private static final String GTECORE = "gtecore";
 	private static final String UNSUPPORTED_CLASS_VERSION_ERROR = "java.lang.UnsupportedClassVersionError";
@@ -40,32 +39,7 @@ public class ErrorVersionClaseGregTechEasyCore implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (linea.contains(GTECORE)) {
-			encontradoGTECore = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — busca si GregTechEasyCore está presente en el
-	 * contenido completo del registro.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Verificamos si GregTechEasyCore está presente en el contenido del registro
-		if (consola.contenido_verificar.contains(GTECORE)) {
-			encontradoGTECore = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return encontradoGTECore && !activado;
 	}
 
 	/**
@@ -77,10 +51,6 @@ public class ErrorVersionClaseGregTechEasyCore implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado || !encontradoGTECore || linea == null) {
-			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
 
 		// Buscamos la línea que contiene el error de versión de clase incompatible de
 		// GregTechEasyCore
@@ -91,13 +61,13 @@ public class ErrorVersionClaseGregTechEasyCore implements VerificacionRapida {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Mensaje de error en HTML con referencia al problema de GregTechEasyCore
-			mensaje = MonitorDePID.idioma.errorVersionClaseGregTechEasyCore() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorVersionClaseGregTechEasyCore() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorVersionClaseGregTechEasyCore();
 	}
 

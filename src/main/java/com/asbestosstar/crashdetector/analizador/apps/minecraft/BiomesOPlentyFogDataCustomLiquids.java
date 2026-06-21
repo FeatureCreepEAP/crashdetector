@@ -7,14 +7,14 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class BiomesOPlentyFogDataCustomLiquids implements VerificacionRapida {
+public class BiomesOPlentyFogDataCustomLiquids implements Verificaciones {
 
 	private static final Set<String> REPORTADOS_GLOBAL = Collections.synchronizedSet(new HashSet<>());
 
@@ -46,31 +46,6 @@ public class BiomesOPlentyFogDataCustomLiquids implements VerificacionRapida {
 			return;
 
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null)
-			return;
-
-		// Detección global ligera: el ClassCastException junto con Biomes O' Plenty
-		// puede indicar un problema relacionado con líquidos personalizados o niebla.
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.indexOf(ERROR_FOGDATA) >= 0) {
-			posibleFogData = true;
-		}
-
-		if (contenido.indexOf("biomesoplenty") >= 0) {
-			posibleProblemaBOP = true;
-		}
-
-		activarSiCompleto(consola, 0);
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return false;
 	}
 
 	@Override
@@ -118,7 +93,7 @@ public class BiomesOPlentyFogDataCustomLiquids implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new BiomesOPlentyFogDataCustomLiquids();
 	}
 

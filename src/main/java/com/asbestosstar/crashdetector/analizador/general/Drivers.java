@@ -9,13 +9,13 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class Drivers implements VerificacionRapida {
+public class Drivers implements Verificaciones {
 
 	private static final java.util.Set<String> MENSAJES_GLOBALES_VISTOS = java.util.Collections
 			.synchronizedSet(new java.util.HashSet<>());
@@ -122,22 +122,6 @@ public class Drivers implements VerificacionRapida {
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		hayAccessViolation = log.contains("EXCEPTION_ACCESS_VIOLATION");
-		posibleSodium = log.contains("Sodium") || log.contains("sodium") || log.contains("caffeinemc.net")
-				|| log.contains("link.caffeinemc.net");
-		posibleOpenAL = log.contains("[libopenal.so+");
-
-		verificarUltimaLinea(consola, log);
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (linea == null || linea.isEmpty())
 			return;
@@ -219,7 +203,7 @@ public class Drivers implements VerificacionRapida {
 
 	@Override
 	public String mensaje() {
-		return mensajes.toString().replace("\n", Verificaciones.nl_html) + enlaceUnico;
+		return mensajes.toString().replace("\n", VerificacionesLegacy.nl_html) + enlaceUnico;
 	}
 
 	private boolean esLineaAMD(String linea) {
@@ -598,7 +582,7 @@ public class Drivers implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new Drivers();
 	}
 

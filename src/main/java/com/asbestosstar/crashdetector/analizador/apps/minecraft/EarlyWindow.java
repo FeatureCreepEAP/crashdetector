@@ -3,18 +3,18 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta el error EarlyWindow común en Forge. MAIN_LINE solo activa si aparece
  * cerca del final del log. Los otros patrones se detectan globalmente.
  */
-public class EarlyWindow implements VerificacionRapida {
+public class EarlyWindow implements Verificaciones {
 
 	private static final String APPLE_METAL_OPENGL_RENDERER = "AppleMetalOpenGLRenderer";
 	private static final String EARLY_FRAMEBUFFER_DRAW = "net.minecraftforge.fml.earlydisplay.EarlyFramebuffer.draw";
@@ -26,7 +26,6 @@ public class EarlyWindow implements VerificacionRapida {
 																								// versiones 26+
 
 	private boolean activado = false;
-	private boolean posibleEarlyWindow = false;
 	private boolean limitacionOpenGLMacOSDetectada = false;
 
 	private boolean appleMetalDetectado = false;
@@ -69,31 +68,17 @@ public class EarlyWindow implements VerificacionRapida {
 		// encontrada y se confirma al finalizar el archivo.
 		if (linea.contains(MAIN_LINE)) {
 			lineaMainLine = evento.numeroDeLinea;
-			posibleEarlyWindow = true;
 		}
 
 		if (lineaContieneFallback(linea) || limitacionOpenGLMacOSDetectada) {
-			posibleEarlyWindow = true;
 		}
 
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
 	}
 
-	/**
-	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleEarlyWindow && !activado;
-	}
-
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleEarlyWindow || linea == null || linea.isEmpty() || activado)
+		if (linea == null || linea.isEmpty() || activado)
 			return;
 
 		// Activar detector si línea contiene fallback (MAIN_LINE ya comprobado
@@ -110,7 +95,7 @@ public class EarlyWindow implements VerificacionRapida {
 
 	@Override
 	public void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
-		if (activado || !posibleEarlyWindow) {
+		if (activado) {
 			return;
 		}
 
@@ -140,7 +125,7 @@ public class EarlyWindow implements VerificacionRapida {
 	}
 
 	private String construirMensaje() {
-		String base = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
+		String base = MonitorDePID.idioma.fmlEarlyWindow() + VerificacionesLegacy.nl_html;
 		if (limitacionOpenGLMacOSDetectada) {
 			return base + MonitorDePID.idioma.fmlEarlyWindowMacOSOpenGL();
 		}
@@ -148,7 +133,7 @@ public class EarlyWindow implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new EarlyWindow();
 	}
 

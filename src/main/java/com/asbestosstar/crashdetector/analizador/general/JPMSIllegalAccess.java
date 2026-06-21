@@ -7,17 +7,16 @@ import java.util.stream.Collectors;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class JPMSIllegalAccess implements VerificacionRapida {
+public class JPMSIllegalAccess implements Verificaciones {
 
-	private boolean posibleJPMS = false;
 	private boolean activado = false;
 	private String enlace = "";
 
@@ -57,38 +56,11 @@ public class JPMSIllegalAccess implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneJPMSIllegalAccess(evento.linea)) {
-			posibleJPMS = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		if (consola.contenido_verificar.contains(ILLEGAL_ACCESS_EXCEPTION)
-				&& consola.contenido_verificar.contains(IN_MODULE)
-				&& consola.contenido_verificar.contains(CANNOT_ACCESS)) {
-
-			posibleJPMS = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleJPMS && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-
-		if (!posibleJPMS || activado || linea == null)
-			return;
 
 		if (lineaContieneJPMSIllegalAccess(linea)) {
 
@@ -252,7 +224,7 @@ public class JPMSIllegalAccess implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new JPMSIllegalAccess();
 	}
 

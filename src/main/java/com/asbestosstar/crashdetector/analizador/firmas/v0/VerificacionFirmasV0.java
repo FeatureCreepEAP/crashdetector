@@ -10,15 +10,15 @@ import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
 import com.asbestosstar.crashdetector.analizador.firmas.TipoDeFiltrodeCodice;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class VerificacionFirmasV0 implements VerificacionRapida {
+public class VerificacionFirmasV0 implements Verificaciones {
 
 	public String id;
 	public Criticalidad criticalidad;
@@ -127,27 +127,13 @@ public class VerificacionFirmasV0 implements VerificacionRapida {
 	}
 
 	@Override
-	public boolean quiereAnalizarLineas() {
+	public boolean verificar(Consola cons) {
 		// Los contains_linea son manejados por verificarCoincidencia().
 		// Solo regex_linea necesita seguir escaneando línea por línea.
 		if (filtro != null && filtro == FiltrodeCodice.REGEX_LINEA) {
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		if (activado || consola == null || consola.contenido_verificar == null || filtro == null) {
-			return;
-		}
-
-		// Compatibilidad legacy y soporte para regex_todos.
-		if (filtro.tipo.equals(TipoDeFiltrodeCodice.DE_TODOS)) {
-			if (filtro.activar(consola.contenido_verificar, para_buscar)) {
-				this.activado = true;
-			}
-		}
 	}
 
 	@Override
@@ -167,7 +153,7 @@ public class VerificacionFirmasV0 implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new VerificacionFirmasV0(id, new LinkedHashMap<String, String>(nombres_por_codigo),
 				new LinkedHashMap<String, String>(resultados_por_codigo), criticalidad, prioridad, para_buscar, filtro);
 	}

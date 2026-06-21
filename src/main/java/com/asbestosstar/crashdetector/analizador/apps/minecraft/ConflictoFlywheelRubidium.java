@@ -8,9 +8,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,7 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Sodium o sus forks que no cumplen con el requisito mínimo de versión
  * 0.6.0-beta.2.
  */
-public class ConflictoFlywheelRubidium implements VerificacionRapida {
+public class ConflictoFlywheelRubidium implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -52,22 +52,6 @@ public class ConflictoFlywheelRubidium implements VerificacionRapida {
 		return new String[] { FAILURE_FLYWHEEL_SODIUM, VERSION_MINIMA, CURRENTLY_SODIUM, RUBIDIUM, EMBEDDIUM, SODIUM };
 	}
 
-	/**
-	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		// Modo streaming puro: puede no existir contenido_verificar
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String cont = consola.contenido_verificar;
-		if (cont.contains(FAILURE_FLYWHEEL_SODIUM) && cont.contains(VERSION_MINIMA)) {
-			posibleConflicto = true;
-		}
-	}
-
 	@Override
 	public void verificarCoincidencia(EventoDeCoincidencia evento) {
 		if (evento == null || evento.linea == null) {
@@ -82,11 +66,6 @@ public class ConflictoFlywheelRubidium implements VerificacionRapida {
 		}
 
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleConflicto && !activado;
 	}
 
 	/**
@@ -178,12 +157,12 @@ public class ConflictoFlywheelRubidium implements VerificacionRapida {
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 		// Mensaje de error en HTML con referencia a la incompatibilidad
-		mensaje = MonitorDePID.idioma.errorConflictoFlywheelSodium() + Verificaciones.nl_html;
+		mensaje = MonitorDePID.idioma.errorConflictoFlywheelSodium() + VerificacionesLegacy.nl_html;
 		activado = true;
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ConflictoFlywheelRubidium();
 	}
 

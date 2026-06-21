@@ -10,7 +10,8 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.detectorlanzer.DetectorCurseForgeApp;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -32,7 +33,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * 
  * @author asbestosstar
  */
-public class CursedConsola implements Verificaciones {
+public class CursedConsola implements VerificacionesLegacy {
 
 	private boolean activado = false;
 	private String mensaje = MonitorDePID.idioma.noTieneConsolaDeLauncherCursedForge();
@@ -41,7 +42,14 @@ public class CursedConsola implements Verificaciones {
 	private static final String LAUNCHER_LOG = "launcher_log";
 
 	@Override
-	public void verificar(Consola consolaog) {
+	public String[] patronesRapidos() {
+		// No necesita activar por línea.
+		// Usa vdst.trazos_completos en finalizarArchivo().
+		verificar();
+		return new String[0];
+	}
+
+	public void verificar() {
 //		try {
 //			// Validar entorno básico
 //			if (!esEntornoCurseForge())
@@ -64,14 +72,11 @@ public class CursedConsola implements Verificaciones {
 
 	}
 
-	@Override
-	public boolean quiereAnalizarLineas() {
-
-		return false;
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new CursedConsola();
 	}
 

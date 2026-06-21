@@ -1,7 +1,7 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 
 public class StackTracesDenegadosDeMinecraftPorDefecto {
 

@@ -3,15 +3,14 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class DivineRPGDimensionalInventoryNPE implements VerificacionRapida {
+public class DivineRPGDimensionalInventoryNPE implements Verificaciones {
 
-	private boolean posibleError = false;
 	private boolean activado = false;
 	private String enlace = "";
 
@@ -31,28 +30,12 @@ public class DivineRPGDimensionalInventoryNPE implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneError(evento.linea)) {
-			posibleError = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleError && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		if (!posibleError || activado || linea == null) {
+		if (activado || linea == null) {
 			return;
 		}
 
@@ -68,7 +51,7 @@ public class DivineRPGDimensionalInventoryNPE implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new DivineRPGDimensionalInventoryNPE();
 	}
 

@@ -3,20 +3,19 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta crashes provocados manualmente usando comandos como: /crash_assistant
  * crash /crash_assistant *
  */
-public class CrashProvocadoPorComando implements VerificacionRapida {
+public class CrashProvocadoPorComando implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean posibleCrashPorComando = false;
 	private String mensaje = "";
 
 	private static final String TEXTO_REPORTED_EXCEPTION = "net.minecraft.ReportedException";
@@ -36,28 +35,12 @@ public class CrashProvocadoPorComando implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (linea.contains(TEXTO_REPORTED_EXCEPTION) || linea.contains(TEXTO_CRASH_ASSISTANT)) {
-			posibleCrashPorComando = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleCrashPorComando && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleCrashPorComando || activado || linea == null) {
+		if (activado || linea == null) {
 			return;
 		}
 
@@ -73,7 +56,7 @@ public class CrashProvocadoPorComando implements VerificacionRapida {
 
 		String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-		mensaje = MonitorDePID.idioma.errorCrashProvocadoPorComando(comandoDetectado) + Verificaciones.nl_html
+		mensaje = MonitorDePID.idioma.errorCrashProvocadoPorComando(comandoDetectado) + VerificacionesLegacy.nl_html
 				+ enlaceHtml;
 
 		activado = true;
@@ -110,7 +93,7 @@ public class CrashProvocadoPorComando implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new CrashProvocadoPorComando();
 	}
 

@@ -468,7 +468,7 @@ public class VerificacionDeStackTrace {
 			String linea = lineas[i];
 
 			if (linea != null && !linea.isEmpty()) {
-				sb.append(linea).append(Verificaciones.nl);
+				sb.append(linea).append(VerificacionesLegacy.nl);
 			}
 		}
 
@@ -1141,7 +1141,7 @@ public class VerificacionDeStackTrace {
 
 		TraceInfo info = new TraceInfo(trace, consolaLineaInicio, nivel, fatal);
 
-		String[] lineas = dividirPorCadena(trace, Verificaciones.nl);
+		String[] lineas = dividirPorCadena(trace, VerificacionesLegacy.nl);
 
 		for (int i = 0; i < lineas.length; i++) {
 
@@ -1257,7 +1257,7 @@ public class VerificacionDeStackTrace {
 			TraceInfo info = entrada.getValue();
 
 			boolean fatal = info.trace.contains("/FATAL]");
-			String[] lineas = dividirPorCadena(info.trace, Verificaciones.nl);
+			String[] lineas = dividirPorCadena(info.trace, VerificacionesLegacy.nl);
 
 			for (int i = 0; i < lineas.length; i++) {
 
@@ -1539,7 +1539,7 @@ public class VerificacionDeStackTrace {
 			int j = i + 1;
 
 			while (j < lineas.length && esParteDeStack(lineas[j])) {
-				traza.append(Verificaciones.nl).append(lineas[j]);
+				traza.append(VerificacionesLegacy.nl).append(lineas[j]);
 				j++;
 			}
 
@@ -1589,7 +1589,7 @@ public class VerificacionDeStackTrace {
 			int j = i + 1;
 
 			while (j < lineas.length && esParteDeStack(lineas[j])) {
-				traza.append(Verificaciones.nl).append(lineas[j]);
+				traza.append(VerificacionesLegacy.nl).append(lineas[j]);
 				j++;
 			}
 
@@ -1616,7 +1616,7 @@ public class VerificacionDeStackTrace {
 		}
 
 		// === ClassNotFound / NoClassDef ===
-		String[] arr = dividirPorCadena(trace, Verificaciones.nl);
+		String[] arr = dividirPorCadena(trace, VerificacionesLegacy.nl);
 
 		for (int i = 0; i < arr.length; i++) {
 

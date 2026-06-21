@@ -6,11 +6,11 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,9 +18,8 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * es una implementacion de su codex:
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaModFaltanteEnDatapack implements VerificacionRapida {
+public class ProblemaModFaltanteEnDatapack implements Verificaciones {
 
-	private boolean posibleModFaltanteEnDatapack = false;
 	private boolean activado = false;
 
 	private String mensaje = "";
@@ -41,33 +40,7 @@ public class ProblemaModFaltanteEnDatapack implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_MOD_FALTANTE)) {
-			posibleModFaltanteEnDatapack = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global ligera.
-	 *
-	 * Se ejecuta primero. No se limpian listas aquí porque esta verificación puede
-	 * ejecutarse sobre varios archivos de log con la misma instancia.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		if (consola.contenido_verificar.contains(TEXTO_MOD_FALTANTE)) {
-			posibleModFaltanteEnDatapack = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleModFaltanteEnDatapack;
 	}
 
 	/**
@@ -77,9 +50,6 @@ public class ProblemaModFaltanteEnDatapack implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleModFaltanteEnDatapack || linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		int indiceBusqueda = 0;
 
@@ -202,7 +172,7 @@ public class ProblemaModFaltanteEnDatapack implements VerificacionRapida {
 	 * Crea una nueva instancia del verificador.
 	 */
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaModFaltanteEnDatapack();
 	}
 

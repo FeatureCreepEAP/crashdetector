@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,12 +14,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * marcado como compatible con 1.19.* pero en realidad es para 1.20.*, causando
  * un ClassMetadataNotFoundException para DamageSources.
  */
-public class ErrorFallingAttackVersion implements VerificacionRapida {
+public class ErrorFallingAttackVersion implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoFallingAttack = false;
 
 	private static final String FALLING_ATTACK = "falling-attack";
 	private static final String CLASS_METADATA_NOT_FOUND = "org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException";
@@ -36,25 +35,7 @@ public class ErrorFallingAttackVersion implements VerificacionRapida {
 			return;
 		}
 
-		// Verificamos si Falling Attack está presente en la línea que disparó el
-		// patrón rápido.
-		if (evento.linea.contains(FALLING_ATTACK)) {
-			encontradoFallingAttack = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return encontradoFallingAttack && !activado;
 	}
 
 	/**
@@ -66,10 +47,6 @@ public class ErrorFallingAttackVersion implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!encontradoFallingAttack || activado || linea == null) {
-			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
 
 		// Buscamos la línea que contiene el error de clase no encontrada de Falling
 		// Attack
@@ -80,13 +57,13 @@ public class ErrorFallingAttackVersion implements VerificacionRapida {
 
 			// Mensaje de error en HTML con referencia al problema de versión de Falling
 			// Attack
-			mensaje = MonitorDePID.idioma.errorFallingAttackVersion() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorFallingAttackVersion() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorFallingAttackVersion();
 	}
 

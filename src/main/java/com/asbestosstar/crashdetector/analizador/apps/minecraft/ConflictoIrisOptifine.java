@@ -7,11 +7,11 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -20,7 +20,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * de mixins. Requiere que aparezca "mixins.iris.json" o "mixins.oculus.json" y
  * "OptiFine" en el log.
  */
-public class ConflictoIrisOptifine implements VerificacionRapida {
+public class ConflictoIrisOptifine implements Verificaciones {
 
 	private boolean activado = false;
 	private String enlaceHtml = "";
@@ -54,7 +54,7 @@ public class ConflictoIrisOptifine implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (!encontroOptifine && contieneOptifine(linea) && Buscador.existeClaseEnAlgunMod(OPTIFINE_CLASE)) {
+		if (!encontroOptifine && Buscador.existeClaseEnAlgunMod(OPTIFINE_CLASE)) {
 			encontroOptifine = true;
 		}
 
@@ -63,17 +63,6 @@ public class ConflictoIrisOptifine implements VerificacionRapida {
 		}
 
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		// Ignorado en el motor rápido.
-		// Se mantiene para compatibilidad legacy y modo streaming puro.
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	@Override
@@ -114,7 +103,7 @@ public class ConflictoIrisOptifine implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ConflictoIrisOptifine();
 	}
 

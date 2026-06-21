@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -22,10 +22,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Ejemplo: java.lang.IllegalAccessError: class X tried to access private method
  * Y
  */
-public class AccesoIlegalMod implements VerificacionRapida {
+public class AccesoIlegalMod implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean analizarLineas = false;
 	private String enlace = "";
 
 	private String claseOrigen = "";
@@ -51,36 +50,11 @@ public class AccesoIlegalMod implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneAccesoIlegal(evento.linea)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null)
-			return;
-
-		String log = consola.contenido_verificar;
-
-		if (log.contains(ILLEGAL_ACCESS_ERROR) && log.contains(TRIED_TO_ACCESS)) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!analizarLineas || linea == null || activado)
-			return;
 
 		if (lineaContieneAccesoIlegal(linea)) {
 
@@ -220,7 +194,7 @@ public class AccesoIlegalMod implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new AccesoIlegalMod();
 	}
 

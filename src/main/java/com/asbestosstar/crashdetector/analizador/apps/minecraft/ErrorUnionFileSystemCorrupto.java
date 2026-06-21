@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -17,21 +17,15 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Este error es común en modpacks debido a problemas con archivos JAR
  * corruptos, descargas incompletas o problemas del lanzador.
  */
-public class ErrorUnionFileSystemCorrupto implements VerificacionRapida {
+public class ErrorUnionFileSystemCorrupto implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean posible = false;
 
 	private String mensaje = "";
 
 	private String nombreArchivo = "un archivo de mod";
 
-	private boolean esModpack = false;
-
 	private String enlaceHtml = "";
-
-	private boolean vioUnion = false;
-	private boolean vioZip = false;
 
 	private static final String TEXTO_UNION = "cpw.mods.niofs.union.UnionFileSystem$UncheckedIOException";
 	private static final String TEXTO_ZIP = "java.util.zip.ZipException: zip END header not found";
@@ -50,53 +44,7 @@ public class ErrorUnionFileSystemCorrupto implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (linea.contains(TEXTO_UNION)) {
-			vioUnion = true;
-		}
-
-		if (linea.contains(TEXTO_ZIP)) {
-			vioZip = true;
-		}
-
-		if (vioUnion && vioZip) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global barata.
-	 * <p>
-	 * Solo revisa si el log completo contiene ambas partes del error. Así evitamos
-	 * revisar línea por línea cuando este error claramente no existe.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(TEXTO_UNION)) {
-			vioUnion = true;
-		}
-
-		if (contenido.contains(TEXTO_ZIP)) {
-			vioZip = true;
-		}
-
-		if (vioUnion && vioZip) {
-			posible = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
 	}
 
 	/**
@@ -118,12 +66,6 @@ public class ErrorUnionFileSystemCorrupto implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		// Si ya se activó o el chequeo global dijo que no es posible,
-		// no seguimos revisando líneas.
-		if (activado || !posible) {
-			return;
-		}
 
 		if (linea == null) {
 			return;
@@ -152,7 +94,7 @@ public class ErrorUnionFileSystemCorrupto implements VerificacionRapida {
 			}
 		}
 
-		mensaje = MonitorDePID.idioma.errorUnionFileSystemCorrupto(nombreArchivo) + Verificaciones.nl_html;
+		mensaje = MonitorDePID.idioma.errorUnionFileSystemCorrupto(nombreArchivo) + VerificacionesLegacy.nl_html;
 
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
@@ -244,7 +186,7 @@ public class ErrorUnionFileSystemCorrupto implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorUnionFileSystemCorrupto();
 	}
 

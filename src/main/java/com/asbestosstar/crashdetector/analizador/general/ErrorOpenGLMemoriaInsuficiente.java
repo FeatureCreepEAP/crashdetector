@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,7 +15,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Ejemplo: Error has been generated. GL error GL_OUT_OF_MEMORY in (null): (ID:
  * 173538523) Generic error
  */
-public class ErrorOpenGLMemoriaInsuficiente implements VerificacionRapida {
+public class ErrorOpenGLMemoriaInsuficiente implements Verificaciones {
 
 	private boolean activado = false;
 	private String enlace = "";
@@ -40,27 +40,6 @@ public class ErrorOpenGLMemoriaInsuficiente implements VerificacionRapida {
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null)
-			return;
-
-		String log = consola.contenido_verificar;
-
-		// Detección global ligera
-		if (log.contains(GL_OUT_OF_MEMORY)
-				&& (log.contains(GL_ERROR) || log.contains(OPENGL) || log.contains(ERROR_GENERATED))) {
-
-			activado = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return !activado || enlace.length() == 0;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 
 		// Evitar trabajo innecesario
@@ -80,7 +59,7 @@ public class ErrorOpenGLMemoriaInsuficiente implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorOpenGLMemoriaInsuficiente();
 	}
 

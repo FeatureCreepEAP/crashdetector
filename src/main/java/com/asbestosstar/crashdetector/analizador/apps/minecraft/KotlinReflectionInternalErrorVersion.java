@@ -3,17 +3,13 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class KotlinReflectionInternalErrorVersion implements VerificacionRapida {
-
-	// Indica si el log contiene indicios globales del error.
-	// Este error suele estar relacionado con versiones problemáticas de Kotlin.
-	private boolean posibleProblemaKotlin = false;
+public class KotlinReflectionInternalErrorVersion implements Verificaciones {
 
 	// Indica si esta verificación fue activada
 	private boolean activado = false;
@@ -37,40 +33,11 @@ public class KotlinReflectionInternalErrorVersion implements VerificacionRapida 
 			return;
 		}
 
-		if (lineaContieneProblemaKotlin(evento.linea)) {
-			posibleProblemaKotlin = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Detección global ligera: esta combinación identifica un error común de
-		// reflexión interna de Kotlin, frecuentemente visto con Inventory Profiles
-		// Next.
-		if (consola.contenido_verificar.contains(KOTLIN_REFLECTION_ERROR)
-				&& consola.contenido_verificar.contains(PROPERTY_NONE)
-				&& consola.contenido_verificar.contains(NOT_RESOLVED)) {
-			posibleProblemaKotlin = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleProblemaKotlin && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		// Salir temprano si no hay indicios globales
-		if (!posibleProblemaKotlin || activado || linea == null) {
-			return;
-		}
 
 		// Verificación precisa en la línea principal del error.
 		if (linea.contains(KOTLIN_REFLECTION_ERROR) && linea.contains(PROPERTY_NONE) && linea.contains(NOT_RESOLVED)) {
@@ -94,7 +61,7 @@ public class KotlinReflectionInternalErrorVersion implements VerificacionRapida 
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new KotlinReflectionInternalErrorVersion();
 	}
 

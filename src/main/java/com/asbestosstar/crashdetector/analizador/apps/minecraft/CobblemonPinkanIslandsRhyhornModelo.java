@@ -7,10 +7,10 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -26,7 +26,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * el origen más probable es el addon/mod <b>Cobblemon: Pinkan Islands</b>, que
  * es de donde proviene ese Rhyhorn.
  */
-public class CobblemonPinkanIslandsRhyhornModelo implements VerificacionRapida {
+public class CobblemonPinkanIslandsRhyhornModelo implements Verificaciones {
 
 	private static final String ERROR_RHYHORN_MODELO = "Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn";
 
@@ -59,24 +59,6 @@ public class CobblemonPinkanIslandsRhyhornModelo implements VerificacionRapida {
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		// Modo streaming puro: puede no existir contenido_verificar
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Detección global ligera para evitar trabajo innecesario por línea
-		if (consola.contenido_verificar.contains(ERROR_RHYHORN_MODELO)) {
-			posibleError = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleError;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Salir temprano si no hay indicios globales o si ya fue activado
 		if (!posibleError || activado || linea == null) {
@@ -94,7 +76,7 @@ public class CobblemonPinkanIslandsRhyhornModelo implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new CobblemonPinkanIslandsRhyhornModelo();
 	}
 

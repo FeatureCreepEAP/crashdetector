@@ -3,11 +3,11 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,9 +15,8 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * 17.0.9 en macOS. Este problema se resuelve actualizando a JDK 17.0.10 o
  * superior.
  */
-public class ProblemaSafeFetch32JDK17 implements VerificacionRapida {
+public class ProblemaSafeFetch32JDK17 implements Verificaciones {
 
-	private boolean posibleSafeFetch32 = false;
 	private boolean activado = false;
 
 	private String mensaje = "";
@@ -36,33 +35,7 @@ public class ProblemaSafeFetch32JDK17 implements VerificacionRapida {
 			return;
 		}
 
-		posibleSafeFetch32 = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificacion global ligera.
-	 *
-	 * Se ejecuta primero. No se limpian campos porque esta verificacion puede
-	 * ejecutarse sobre varios archivos de log con la misma instancia.
-	 *
-	 * No usa regex, toLowerCase ni regionMatches. El simbolo del JVM aparece con
-	 * capitalizacion estable.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		if (consola.contenido_verificar.contains(TEXTO_SAFE_FETCH)) {
-			posibleSafeFetch32 = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleSafeFetch32 && !activado;
 	}
 
 	/**
@@ -72,9 +45,6 @@ public class ProblemaSafeFetch32JDK17 implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleSafeFetch32 || activado || linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		if (!linea.contains(TEXTO_SAFE_FETCH)) {
 			return;
@@ -89,7 +59,7 @@ public class ProblemaSafeFetch32JDK17 implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaSafeFetch32JDK17();
 	}
 

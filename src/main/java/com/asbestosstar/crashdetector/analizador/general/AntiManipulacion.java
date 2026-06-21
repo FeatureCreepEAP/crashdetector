@@ -19,9 +19,10 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.config.json.Json.Nodo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -34,7 +35,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * nodo "fantasma". Por eso aquí se valida la existencia real de claves con
  * claves().contains(...) antes de confiar en obtener(...).
  */
-public class AntiManipulacion implements Verificaciones {
+public class AntiManipulacion implements VerificacionesLegacy {
 
 	public static final Path ARCHIVO_ANTIMANIPULACION = Statics.carpeta.resolve("antimanipulacion.json");
 
@@ -43,10 +44,17 @@ public class AntiManipulacion implements Verificaciones {
 	boolean completa = false;
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null) {
-			return;
-		}
+	public String[] patronesRapidos() {
+		// No necesita activar por línea.
+		// Usa vdst.trazos_completos en finalizarArchivo().
+		verificar();
+		return new String[0];
+	}
+
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+	}
+
+	public void verificar() {
 
 		List<String> errores = new ArrayList<>();
 
@@ -313,7 +321,7 @@ public class AntiManipulacion implements Verificaciones {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new AntiManipulacion();
 	}
 

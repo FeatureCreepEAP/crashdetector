@@ -3,20 +3,16 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class JEIItemGroupCrash implements VerificacionRapida {
-
-	// Indica si el log contiene indicios globales del error (optimización de
-	// rendimiento)
-	private boolean posibleJEIPlugin = false;
+public class JEIItemGroupCrash implements Verificaciones {
 
 	// Indica si esta verificación fue activada
 	private boolean activado = false;
@@ -41,40 +37,11 @@ public class JEIItemGroupCrash implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneCrashJEI(evento.linea)) {
-			posibleJEIPlugin = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Detección global ligera:
-		// Se buscan subcadenas clave sin usar regex
-		if (consola.contenido_verificar.contains(ITEM_GROUP_CRASHED)
-				&& consola.contenido_verificar.contains(JEI_INGREDIENT_LIST)) {
-
-			posibleJEIPlugin = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleJEIPlugin && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-
-		// Salida temprana si no hay indicios globales
-		if (!posibleJEIPlugin || activado || linea == null) {
-			return;
-		}
 
 		// Verificación precisa de la línea
 		if (lineaContieneCrashJEI(linea)) {
@@ -120,7 +87,7 @@ public class JEIItemGroupCrash implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new JEIItemGroupCrash();
 	}
 

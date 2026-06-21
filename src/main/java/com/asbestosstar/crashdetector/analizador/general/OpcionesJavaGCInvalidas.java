@@ -3,21 +3,20 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta la opción de GC inválida "Conflicting collector combinations in
  * option list" en Java. Esto genera errores de arranque en la JVM.
  */
-public class OpcionesJavaGCInvalidas implements VerificacionRapida {
+public class OpcionesJavaGCInvalidas implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean posibleGCInvalido = false;
 
 	private String mensaje = "";
 	private String enlace = "";
@@ -35,27 +34,7 @@ public class OpcionesJavaGCInvalidas implements VerificacionRapida {
 			return;
 		}
 
-		posibleGCInvalido = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global ligera. Marca si el log contiene la cadena GC inválida.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		if (consola.contenido_verificar.contains(TEXTO_GC_INVALIDO)) {
-			posibleGCInvalido = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleGCInvalido && !activado;
 	}
 
 	/**
@@ -63,9 +42,6 @@ public class OpcionesJavaGCInvalidas implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleGCInvalido || activado || linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		if (linea.contains(TEXTO_GC_INVALIDO)) {
 			if (consola != null) {
@@ -78,7 +54,7 @@ public class OpcionesJavaGCInvalidas implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new OpcionesJavaGCInvalidas();
 	}
 

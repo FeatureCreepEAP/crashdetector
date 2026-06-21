@@ -7,10 +7,10 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -21,14 +21,10 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * de forma incompatible, especialmente en entornos Forge con mods de Fabric
  * adaptados.
  */
-public class ConflictoMoonlightIceberg implements VerificacionRapida {
+public class ConflictoMoonlightIceberg implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
-	public boolean analizarLineas = false;
-
-	private boolean tieneMoonlight = false;
-	private boolean tieneIceberg = false;
 
 	private static final String FATAL_ERROR = "FATAL ERROR in native method";
 	private static final String NO_CONTEXT = "No context is current or a function that is not available in the current context";
@@ -59,55 +55,12 @@ public class ConflictoMoonlightIceberg implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (linea.contains(MOONLIGHT_MINUSCULA) || linea.contains(MOONLIGHT_MAYUSCULA)) {
-			tieneMoonlight = true;
-		}
-
-		if (linea.contains(ICEBERG_MINUSCULA) || linea.contains(ICEBERG_MAYUSCULA)) {
-			tieneIceberg = true;
-		}
-
-		if (linea.contains(FATAL_ERROR) || linea.contains(NO_CONTEXT_CORTO)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		// Modo streaming puro: puede no existir contenido_verificar
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		if (log.contains(MOONLIGHT_MINUSCULA) || log.contains(MOONLIGHT_MAYUSCULA)) {
-			tieneMoonlight = true;
-		}
-
-		if (log.contains(ICEBERG_MINUSCULA) || log.contains(ICEBERG_MAYUSCULA)) {
-			tieneIceberg = true;
-		}
-
-		if (log.contains(FATAL_ERROR) && log.contains(NO_CONTEXT)) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (this.activado || linea == null) {
-			return;
-		}
-
-		if (!analizarLineas || !tieneMoonlight || !tieneIceberg) {
 			return;
 		}
 
@@ -138,7 +91,7 @@ public class ConflictoMoonlightIceberg implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ConflictoMoonlightIceberg();
 	}
 

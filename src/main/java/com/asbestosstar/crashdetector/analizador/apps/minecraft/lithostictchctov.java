@@ -4,12 +4,12 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class lithostictchctov implements VerificacionRapida {
+public class lithostictchctov implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -21,7 +21,6 @@ public class lithostictchctov implements VerificacionRapida {
 	private boolean patronDetectado = false;
 	private boolean firmaDetectada = false;
 	private int lineaPatron = -1;
-	public boolean posible = false;
 
 	private static final String PATRON = "Caused by: java.lang.RuntimeException: "
 			+ "Unknown registry key in ResourceKey[minecraft:root / minecraft:worldgen/structure_type]: lithostitched:jigsaw";
@@ -39,38 +38,7 @@ public class lithostictchctov implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(PATRON) || evento.linea.contains(FIRMA_CTOV)) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global no utilizada en este verificador.
-	 * <p>
-	 * La detección real se hace por línea en
-	 * {@link #verificarPorLinea(Consola, String, int)}, llamada por el analizador
-	 * línea a línea.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Detectar la línea que contiene el patrón principal del error
-		if (consola.contenido_verificar.contains(PATRON)) {
-			posible = true;
-		}
-
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
 	}
 
 	/**
@@ -88,9 +56,6 @@ public class lithostictchctov implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado || !posible || linea == null) {
-			return;
-		}
 
 		// Detectar la línea que contiene el patrón principal del error
 		if (!patronDetectado && linea.contains(PATRON)) {
@@ -105,7 +70,7 @@ public class lithostictchctov implements VerificacionRapida {
 
 		// Solo activamos cuando ambas condiciones se han cumplido
 		if (patronDetectado && firmaDetectada) {
-			this.mensaje = MonitorDePID.idioma.lithostichctov() + Verificaciones.nl_html;
+			this.mensaje = MonitorDePID.idioma.lithostichctov() + VerificacionesLegacy.nl_html;
 
 			// Enlazar la línea donde apareció el patrón principal, si la tenemos
 			if (lineaPatron >= 0) {
@@ -117,7 +82,7 @@ public class lithostictchctov implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new lithostictchctov();
 	}
 

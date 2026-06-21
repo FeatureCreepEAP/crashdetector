@@ -16,15 +16,26 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 
-public class DifDeMods implements Verificaciones {
+public class DifDeMods implements VerificacionesLegacy {
 	private boolean activado = false;
 	private String mensajeHTML = "";
 
 	@Override
-	public void verificar(Consola consola) {
+	public String[] patronesRapidos() {
+		// No necesita activar por línea.
+		// Usa vdst.trazos_completos en finalizarArchivo().
+		verificar();
+		return new String[0];
+	}
+
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+	}
+
+	public void verificar() {
 		try {
 			// Obtener lista actual de mods
 			Set<String> modsActual = obtenerMods(MonitorDePID.ultimo_mods);
@@ -230,7 +241,7 @@ public class DifDeMods implements Verificaciones {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new DifDeMods();
 	}
 

@@ -6,10 +6,10 @@ import java.util.Map;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -22,7 +22,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * mensaje principal - La salida es un bloque HTML con información detallada
  * para la UI
  */
-public class ErrorRutaModLauncher implements VerificacionRapida {
+public class ErrorRutaModLauncher implements Verificaciones {
 
 	private static final String BAD_ESCAPE = "java.lang.IllegalArgumentException: Bad escape";
 	private static final String UNIX_URI_UTILS = "sun.nio.fs.UnixUriUtils.fromUri";
@@ -42,9 +42,6 @@ public class ErrorRutaModLauncher implements VerificacionRapida {
 	 */
 	private final Map<String, String> enlacesPorLinea = new HashMap<>();
 
-	private boolean vioBadEscape = false;
-	private boolean vioUnixUriUtils = false;
-
 	@Override
 	public String[] patronesRapidos() {
 		return new String[] { BAD_ESCAPE, UNIX_URI_UTILS };
@@ -58,45 +55,7 @@ public class ErrorRutaModLauncher implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (linea.contains(BAD_ESCAPE)) {
-			vioBadEscape = true;
-		}
-
-		if (linea.contains(UNIX_URI_UTILS)) {
-			vioUnixUriUtils = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global no utilizada en este verificador.
-	 * <p>
-	 * La detección real se hace por línea en
-	 * {@link #verificarPorLinea(Consola, String, int)}, llamada por el analizador
-	 * línea a línea.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(BAD_ESCAPE)) {
-			vioBadEscape = true;
-		}
-
-		if (contenido.contains(UNIX_URI_UTILS)) {
-			vioUnixUriUtils = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return vioBadEscape && vioUnixUriUtils && !activado;
 	}
 
 	/**
@@ -110,9 +69,6 @@ public class ErrorRutaModLauncher implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!vioBadEscape || !vioUnixUriUtils || linea == null) {
-			return;
-		}
 
 		// Analizar solo líneas que contengan el mensaje concreto
 		if (!linea.contains(BAD_ESCAPE)) {
@@ -133,7 +89,7 @@ public class ErrorRutaModLauncher implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorRutaModLauncher();
 	}
 

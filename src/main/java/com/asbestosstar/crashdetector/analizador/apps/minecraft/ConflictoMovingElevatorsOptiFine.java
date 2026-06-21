@@ -8,9 +8,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,13 +18,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * inyección crítica relacionado con LevelRenderer durante la inicialización del
  * juego.
  */
-public class ConflictoMovingElevatorsOptiFine implements VerificacionRapida {
+public class ConflictoMovingElevatorsOptiFine implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoOptiFine = false;
-	public boolean analizarLineas = false;
 
 	private static final String OPTIFINE_MINUSCULA = "optifine";
 	private static final String OPTIFINE_MIXTA = "Optifine";
@@ -55,43 +53,7 @@ public class ConflictoMovingElevatorsOptiFine implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (contieneOptiFine(linea)) {
-			encontradoOptiFine = true;
-		}
-
-		if (lineaContieneErrorMovingElevators(linea)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — busca si OptiFine está presente en el contenido
-	 * completo del registro.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		// Modo streaming puro: puede no existir contenido_verificar
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Verificamos si OptiFine está presente en el contenido del registro
-		String log = consola.contenido_verificar;
-
-		if (contieneOptiFine(log)) {
-			encontradoOptiFine = true;
-		}
-
-		if (encontradoOptiFine && lineaContieneErrorMovingElevators(log)) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	/**
@@ -106,10 +68,6 @@ public class ConflictoMovingElevatorsOptiFine implements VerificacionRapida {
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
-
-		if (!analizarLineas || !encontradoOptiFine) {
 			return;
 		}
 
@@ -140,12 +98,12 @@ public class ConflictoMovingElevatorsOptiFine implements VerificacionRapida {
 
 		// Mensaje de error en HTML con referencia al conflicto entre Moving Elevators y
 		// OptiFine
-		mensaje = MonitorDePID.idioma.errorConflictoMovingElevatorsOptiFine() + Verificaciones.nl_html;
+		mensaje = MonitorDePID.idioma.errorConflictoMovingElevatorsOptiFine() + VerificacionesLegacy.nl_html;
 		activado = true;
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ConflictoMovingElevatorsOptiFine();
 	}
 
@@ -195,7 +153,7 @@ public class ConflictoMovingElevatorsOptiFine implements VerificacionRapida {
 
 		String t = trazo.trace;
 
-		return lineaContieneErrorMovingElevators(t) && encontradoOptiFine;
+		return lineaContieneErrorMovingElevators(t);
 	}
 
 	@Override

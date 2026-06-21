@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -19,11 +19,10 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * versiones recientes de Minecraft (1.20+), lo que provoca un fallo al
  * inicializar entidades.
  */
-public class ErrorHealightINT implements VerificacionRapida {
+public class ErrorHealightINT implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
-	private boolean encontradoHealight = false;
 
 	private static final String HEALIGHT = "healight";
 	private static final String NO_SUCH_FIELD_INT = "java.lang.NoSuchFieldError: INT";
@@ -42,31 +41,11 @@ public class ErrorHealightINT implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(HEALIGHT)) {
-			encontradoHealight = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Analiza el contenido del log en busca del patrón de error específico
-	 * relacionado con 'healight' y el campo faltante 'INT'.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return encontradoHealight && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!encontradoHealight || activado || linea == null) {
-			return;
-		}
 
 		// Patrón que detecta la cadena de errores típica:
 		// Caused by: java.lang.NoSuchFieldError: INT
@@ -88,7 +67,7 @@ public class ErrorHealightINT implements VerificacionRapida {
 	 * Devuelve una nueva instancia de esta verificación.
 	 */
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorHealightINT();
 	}
 

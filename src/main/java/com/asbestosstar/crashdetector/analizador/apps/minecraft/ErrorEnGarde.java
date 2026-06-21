@@ -3,20 +3,19 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores causados por el mod En Garde! (mod ID: en_garde).
  */
-public class ErrorEnGarde implements VerificacionRapida {
+public class ErrorEnGarde implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean posible = false;
 
 	private String enlaceHtml = "";
 
@@ -34,30 +33,11 @@ public class ErrorEnGarde implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneEnGarde(evento.linea)) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posible || activado || linea == null) {
-			return;
-		}
 
 		// Buscar indicios claros de En Garde! en mixins
 		if (lineaContieneEnGarde(linea)) {
@@ -71,7 +51,7 @@ public class ErrorEnGarde implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorEnGarde();
 	}
 

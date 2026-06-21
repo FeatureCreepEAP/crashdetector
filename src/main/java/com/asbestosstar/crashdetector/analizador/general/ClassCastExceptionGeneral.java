@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -18,7 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 /**
  * Detecta errores generales de ClassCastException en logs de Minecraft.
  */
-public class ClassCastExceptionGeneral implements VerificacionRapida {
+public class ClassCastExceptionGeneral implements Verificaciones {
 
 	/**
 	 * Conjunto global de ClassCastExceptions detectadas para evitar duplicados
@@ -55,15 +55,6 @@ public class ClassCastExceptionGeneral implements VerificacionRapida {
 	public void verificarCoincidencia(EventoDeCoincidencia evento) {
 		posibleError = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-
-		if (consola.contenido_verificar.contains("java.lang.ClassCastException:")
-				&& consola.contenido_verificar.contains(" cannot be cast to ")) {
-			posibleError = true;
-		}
 	}
 
 	public boolean quiereAnalizarLineas() {
@@ -205,7 +196,7 @@ public class ClassCastExceptionGeneral implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ClassCastExceptionGeneral();
 	}
 

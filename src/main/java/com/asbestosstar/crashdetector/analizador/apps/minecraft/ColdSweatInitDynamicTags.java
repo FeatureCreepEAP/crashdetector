@@ -7,10 +7,10 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -32,7 +32,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * registros o tags dinámicos, normalmente por incompatibilidad, error del mod o
  * combinación conflictiva con otro contenido.
  */
-public class ColdSweatInitDynamicTags implements VerificacionRapida {
+public class ColdSweatInitDynamicTags implements Verificaciones {
 
 	private static final String INDICIO_BUILD_START = "$cold_sweat$onBuildStart";
 	private static final String INDICIO_FILL_TAG = "com.momosoftworks.coldsweat.api.event.core.init.InitDynamicTagsEvent.fillTag";
@@ -88,34 +88,6 @@ public class ColdSweatInitDynamicTags implements VerificacionRapida {
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		// Modo streaming puro: puede no existir contenido_verificar
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Búsqueda global ligera para evitar trabajo innecesario por línea
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(INDICIO_BUILD_START)) {
-			indicioBuildStart = true;
-		}
-
-		if (contenido.contains(INDICIO_FILL_TAG)) {
-			indicioFillTag = true;
-		}
-
-		if (contenido.contains(INDICIO_REGISTRY_NULO)) {
-			indicioRegistryNulo = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return !activado && indicioBuildStart && indicioFillTag && indicioRegistryNulo;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Solo activar cuando ya están presentes los indicios globales
 		if (activado || linea == null || !indicioBuildStart || !indicioFillTag || !indicioRegistryNulo) {
@@ -144,7 +116,7 @@ public class ColdSweatInitDynamicTags implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ColdSweatInitDynamicTags();
 	}
 

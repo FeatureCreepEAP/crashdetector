@@ -4,9 +4,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,14 +14,12 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * transformer. Detecta específicamente el error "Invalid access transformer
  * line in [nombre.jar]".
  */
-public class ErrorAccessTransformerInvalido implements VerificacionRapida {
+public class ErrorAccessTransformerInvalido implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String nombreJar = "";
 	private String enlaceHtml = "";
-
-	public boolean posible = false;
 
 	private static final String MARCADOR_INICIO = "Invalid access transformer line in ";
 	private static final String MARCADOR_FIN = ":";
@@ -37,32 +35,7 @@ public class ErrorAccessTransformerInvalido implements VerificacionRapida {
 			return;
 		}
 
-		posible = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global no utilizada en este verificador.
-	 * <p>
-	 * La detección real se hace por línea en
-	 * {@link #verificarPorLinea(Consola, String, int)}, que es llamado por el
-	 * sistema de análisis línea a línea.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		if (consola.contenido_verificar.contains(MARCADOR_INICIO)) {
-			posible = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
 	}
 
 	/**
@@ -76,7 +49,7 @@ public class ErrorAccessTransformerInvalido implements VerificacionRapida {
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó o el chequeo global dijo que no es posible,
 		// no seguimos revisando líneas.
-		if (activado || !posible || linea == null) {
+		if (activado || linea == null) {
 			return;
 		}
 
@@ -102,13 +75,13 @@ public class ErrorAccessTransformerInvalido implements VerificacionRapida {
 			return;
 		}
 
-		mensaje = MonitorDePID.idioma.errorAccessTransformerInvalido(nombreJar) + Verificaciones.nl_html;
+		mensaje = MonitorDePID.idioma.errorAccessTransformerInvalido(nombreJar) + VerificacionesLegacy.nl_html;
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 		activado = true;
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorAccessTransformerInvalido();
 	}
 

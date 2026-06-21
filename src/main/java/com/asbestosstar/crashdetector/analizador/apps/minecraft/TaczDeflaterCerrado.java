@@ -7,9 +7,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -19,15 +19,12 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * stack en GetJarResources.backupFiles y la NPE "Deflater has been closed".
  * Muestra el/los JAR(es) que contienen la clase afectada y enlaza al log.
  */
-public class TaczDeflaterCerrado implements VerificacionRapida {
+public class TaczDeflaterCerrado implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private final List<String> modsUbicacion = new ArrayList<>();
-
-	// Flag global para saber si en algún lugar del log aparece la NPE concreta
-	private boolean tieneDeflaterCerradoEnLog = false;
 
 	private static final String TEXTO_DEFLATER_CERRADO = "Caused by: java.lang.NullPointerException: Deflater has been closed";
 	private static final String TEXTO_DEFLATER_CERRADO_CORTO = "NullPointerException: Deflater has been closed";
@@ -49,53 +46,11 @@ public class TaczDeflaterCerrado implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_DEFLATER_CERRADO) || evento.linea.contains(TEXTO_DEFLATER_CERRADO_CORTO)) {
-			tieneDeflaterCerradoEnLog = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global sobre el contenido completo de la consola.
-	 * <p>
-	 * Aquí solo se comprueba si aparece la NPE "Caused by:
-	 * java.lang.NullPointerException: Deflater has been closed" en el texto
-	 * completo del log. La detección de la línea concreta del stack de
-	 * {@code GetJarResources.backupFiles} se hace en
-	 * {@link #verificarPorLinea(Consola, String, int)}.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-		if (contenido.contains(TEXTO_DEFLATER_CERRADO)) {
-			tieneDeflaterCerradoEnLog = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!tieneDeflaterCerradoEnLog)
-			return false;
-
-		return !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado || linea == null || consola == null) {
-			return;
-		}
-
-		// Si globalmente no hemos visto la NPE de Deflater, no seguimos
-		if (!tieneDeflaterCerradoEnLog) {
-			return;
-		}
 
 		// Buscar el frame específico del stack de TACZ
 		if (linea.contains(TEXTO_STACK_TACZ)) {
@@ -106,14 +61,14 @@ public class TaczDeflaterCerrado implements VerificacionRapida {
 			}
 
 			// Mensaje y enlace
-			mensaje = MonitorDePID.idioma.errorTaczDeflaterCerrado(modsUbicacion) + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorTaczDeflaterCerrado(modsUbicacion) + VerificacionesLegacy.nl_html;
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new TaczDeflaterCerrado();
 	}
 

@@ -17,16 +17,16 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.EliminadorDeMod;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ModulesDuplicadosJavaModulePlatform implements VerificacionRapida {
+public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 
 	private static final Set<String> REPORTADOS_GLOBALMENTE = Collections.synchronizedSet(new HashSet<>());
 
@@ -39,7 +39,6 @@ public class ModulesDuplicadosJavaModulePlatform implements VerificacionRapida {
 	private StringBuilder mensajeBuilder = null;
 	private int indiceUltimaNoStack = -1;
 	boolean mixinextras = false;
-	private boolean posible = false;
 
 	private static final String RESOLUTION_EXCEPTION = "java.lang.module.ResolutionException";
 	private static final String CONTAINS_PACKAGE = "contains package";
@@ -59,10 +58,6 @@ public class ModulesDuplicadosJavaModulePlatform implements VerificacionRapida {
 			return;
 		}
 
-		if (esCabecera(evento.linea)) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
@@ -74,27 +69,6 @@ public class ModulesDuplicadosJavaModulePlatform implements VerificacionRapida {
 			int indice = indiceUltimaNoStack >= 0 ? indiceUltimaNoStack : 0;
 			finalizarBloque(consola, indice);
 		}
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null)
-			return;
-
-		String cont = consola.contenido_verificar;
-
-		boolean esCabecera = cont.contains(RESOLUTION_EXCEPTION) || cont.contains(CONTAINS_PACKAGE)
-				|| cont.contains(EXPORT_PACKAGE) || cont.contains(EXPORTS_PACKAGE)
-				|| (cont.startsWith(EXCEPTION_IN_THREAD) && cont.contains("ResolutionException"));
-
-		if (esCabecera) {
-			posible = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible;
 	}
 
 	@Override
@@ -248,7 +222,7 @@ public class ModulesDuplicadosJavaModulePlatform implements VerificacionRapida {
 					mensajeFinal.append(" ").append(resultado);
 				}
 
-				mensajeFinal.append(Verificaciones.nl_html).append(enlace);
+				mensajeFinal.append(VerificacionesLegacy.nl_html).append(enlace);
 
 				mensajes.append(mensajeFinal.toString());
 				activado = true;
@@ -347,7 +321,7 @@ public class ModulesDuplicadosJavaModulePlatform implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ModulesDuplicadosJavaModulePlatform();
 	}
 

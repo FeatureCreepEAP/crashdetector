@@ -13,26 +13,45 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.buscar.Buscador;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class PirataMC implements Verificaciones {
+public class PirataMC implements VerificacionesLegacy {
 
 	public static ConfigBoolean config = ConfigBoolean.de("condenar_pirateria", false);
 	public static Path archivo_derechos_piratas = Statics.carpeta.resolve("derechos_piratas.json");
 	boolean activado = false;
 	String mensaje = "";
+	String err = "Caused by: com.mojang.authlib.exceptions.MinecraftClientHttpException: Status: 401";
 
 	@Override
-	public void verificar(Consola consola) {
+	public String[] patronesRapidos() {
+		return new String[] { err };
+	}
+
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
+
+		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
+
+	@Override
+	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// TODO Auto-generated method stub
+		if (activado || linea == null) {
+			return;
+		}
 
 		if (config.obtener()) {
-			if (consola.contenido_verificar
-					.contains("Caused by: com.mojang.authlib.exceptions.MinecraftClientHttpException: Status: 401")) {
+			if (linea.contains(err)) {
 				activado = true;
 				StringBuilder mensaj = new StringBuilder(MonitorDePID.idioma.mensagjePirataMC());
 				String derechos = obtenerDerechosMiranda();
@@ -43,12 +62,7 @@ public class PirataMC implements Verificaciones {
 				mensaje = mensaj.toString();
 			}
 		}
-	}
 
-	@Override
-	public boolean quiereAnalizarLineas() {
-
-		return false;
 	}
 
 	public static String obtenerDerechosMiranda() {
@@ -115,7 +129,7 @@ public class PirataMC implements Verificaciones {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		// TODO Auto-generated method stub
 		return new PirataMC();
 	}

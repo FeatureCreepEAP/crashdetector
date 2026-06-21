@@ -70,21 +70,21 @@ public class Analizador {
 	/*
 	 * Registro de TODAS las verificaciones disponibles.
 	 */
-	public static HashSet<Verificaciones> verificaciones = new HashSet<>();
+	public static HashSet<VerificacionesLegacy> verificaciones = new HashSet<>();
 
 	/**
 	 * Conjuntos separados de verificaciones activadas: - normales: se ejecutan
 	 * primero en paralelo (multinúcleo) - tardías: se ejecutan después, en un solo
 	 * hilo
 	 */
-	public HashSet<Verificaciones> verificaciones_normales_activadas = new LinkedHashSet<>();
-	public HashSet<Verificaciones> verificaciones_tardias_activadas = new LinkedHashSet<>();
+	public HashSet<VerificacionesLegacy> verificaciones_normales_activadas = new LinkedHashSet<>();
+	public HashSet<VerificacionesLegacy> verificaciones_tardias_activadas = new LinkedHashSet<>();
 
 	/**
 	 * Conservamos este conjunto como unión de ambas para compatibilidad con
 	 * toString() y obtenerSoluciones().
 	 */
-	public HashSet<Verificaciones> verificaciones_activados = new LinkedHashSet<>();
+	public HashSet<VerificacionesLegacy> verificaciones_activados = new LinkedHashSet<>();
 
 	/**
 	 * Clave de configuración para la lista de denegación de verificaciones.
@@ -103,7 +103,7 @@ public class Analizador {
 	 * código. No hay configuración externa; otros módulos deben llamar a los
 	 * métodos registrar*.
 	 */
-	private static final Set<Class<? extends Verificaciones>> CLASES_TARDIAS_REGISTRADAS = Collections
+	private static final Set<Class<? extends VerificacionesLegacy>> CLASES_TARDIAS_REGISTRADAS = Collections
 			.newSetFromMap(new ConcurrentHashMap<>());
 	private static final Set<String> IDS_TARDIAS_REGISTRADAS = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
@@ -362,15 +362,15 @@ public class Analizador {
 	 * API pública para que terceros registren verificaciones como "tardías" (sólo
 	 * código). Se puede registrar por clase o por ID/nombre de clase.
 	 */
-	public static void registrarVerificacionTardia(Class<? extends Verificaciones> clase) {
+	public static void registrarVerificacionTardia(Class<? extends VerificacionesLegacy> clase) {
 		if (clase != null) {
 			CLASES_TARDIAS_REGISTRADAS.add(clase);
 		}
 	}
 
-	public static void registrarVerificacionesTardias(List<Class<? extends Verificaciones>> clases) {
+	public static void registrarVerificacionesTardias(List<Class<? extends VerificacionesLegacy>> clases) {
 		if (clases != null) {
-			for (Class<? extends Verificaciones> c : clases) {
+			for (Class<? extends VerificacionesLegacy> c : clases) {
 				if (c != null) {
 					CLASES_TARDIAS_REGISTRADAS.add(c);
 				}
@@ -389,13 +389,13 @@ public class Analizador {
 		List<String> denegadas = CONFIG_LISTA_DENEGACION.obtener();
 
 		// 2) construir conjuntos activados clasificando por "tardía" o "normal"
-		for (Verificaciones ver : verificaciones) {
+		for (VerificacionesLegacy ver : verificaciones) {
 			String id = ver.id();
 			if (denegadas.contains(id)) {
 				CrashDetectorLogger.log("Verificación '" + id + "' está en la lista de denegación; se desactiva.");
 				continue;
 			}
-			Verificaciones instancia = ver.nueva();
+			VerificacionesLegacy instancia = ver.nueva();
 
 			// Criterios de "tardía": clase registrada o ID/nombre registrado por código
 			boolean esTardia = CLASES_TARDIAS_REGISTRADAS.contains(instancia.getClass())
@@ -415,7 +415,7 @@ public class Analizador {
 		verificaciones_activados.addAll(verificaciones_tardias_activadas);
 	}
 
-	public void analizar(List<Consola> consolas, Set<Verificaciones> todasLasVerificaciones) {
+	public void analizar(List<Consola> consolas, Set<VerificacionesLegacy> todasLasVerificaciones) {
 		Buscador.cargar();
 
 		// Reiniciar estados globales de deduplicación antes de comenzar
@@ -452,8 +452,8 @@ public class Analizador {
 		analizar(consolas, obtenerVerificacionesUnion());
 	}
 
-	public Set<Verificaciones> organizar(Set<Verificaciones> vers) {
-		List<Verificaciones> ret = new ArrayList<>(vers);
+	public Set<VerificacionesLegacy> organizar(Set<VerificacionesLegacy> vers) {
+		List<VerificacionesLegacy> ret = new ArrayList<>(vers);
 		ret.sort((v1, v2) -> Float.compare(v2.prioridad(), v1.prioridad()));
 		return new LinkedHashSet<>(ret);
 	}
@@ -463,9 +463,9 @@ public class Analizador {
 	 * 
 	 * @return
 	 */
-	public Set<Verificaciones> obtenerVerificacionesUnion() {
+	public Set<VerificacionesLegacy> obtenerVerificacionesUnion() {
 		// Unir ambas listas y ordenar por prioridad
-		HashSet<Verificaciones> union = new LinkedHashSet<>();
+		HashSet<VerificacionesLegacy> union = new LinkedHashSet<>();
 		union.addAll(this.verificaciones_normales_activadas);
 		union.addAll(this.verificaciones_tardias_activadas);
 		return organizar(union);
@@ -476,9 +476,9 @@ public class Analizador {
 	 * 
 	 * @return
 	 */
-	public Set<Verificaciones> obtenerActivados() {
-		HashSet<Verificaciones> act = new LinkedHashSet<>();
-		for (Verificaciones ver : obtenerVerificacionesUnion()) {
+	public Set<VerificacionesLegacy> obtenerActivados() {
+		HashSet<VerificacionesLegacy> act = new LinkedHashSet<>();
+		for (VerificacionesLegacy ver : obtenerVerificacionesUnion()) {
 			if (ver.activado()) {
 				act.add(ver);
 			}
@@ -491,7 +491,7 @@ public class Analizador {
 		StringBuilder constructor = new StringBuilder();
 		constructor.append("<ol>");
 
-		for (Verificaciones ver : obtenerActivados()) {
+		for (VerificacionesLegacy ver : obtenerActivados()) {
 			String str = ver.comoString();
 			if (!str.isEmpty()) {
 				constructor.append("<li>").append(str)
@@ -511,7 +511,7 @@ public class Analizador {
 	public List<QuickFix> obtenerSoluciones() {
 		List<QuickFix> soluciones = new ArrayList<>();
 
-		for (Verificaciones ver : obtenerActivados()) {
+		for (VerificacionesLegacy ver : obtenerActivados()) {
 
 			if (ver.solucion() != null && !ver.solucion().equals(QuickFix.NINGUN)) {
 				soluciones.add(ver.solucion());

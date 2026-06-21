@@ -3,15 +3,14 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class TickLargoServidorMinecraft implements VerificacionRapida {
+public class TickLargoServidorMinecraft implements Verificaciones {
 
-	private boolean posibleTickLargo = false;
 	private boolean activado = false;
 	private String enlace = "";
 
@@ -29,38 +28,11 @@ public class TickLargoServidorMinecraft implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_WATCHDOG)) {
-			posibleTickLargo = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Detección global: watchdog de ModernFix
-		if (consola.contenido_verificar.contains(TEXTO_WATCHDOG)) {
-			posibleTickLargo = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!posibleTickLargo)
-			return false;
-
-		return !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		if (!posibleTickLargo || activado || linea == null) {
-			return;
-		}
 
 		if (linea.contains(TEXTO_TICK_LARGO)) {
 			this.enlace = consola.agregarErrorALectador(num, this);
@@ -69,7 +41,7 @@ public class TickLargoServidorMinecraft implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new TickLargoServidorMinecraft();
 	}
 

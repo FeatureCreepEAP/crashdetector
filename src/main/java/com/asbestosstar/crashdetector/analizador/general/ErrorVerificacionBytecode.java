@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -16,9 +16,8 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Ejemplo: java.lang.VerifyError: Bad type on operand stack
  */
-public class ErrorVerificacionBytecode implements VerificacionRapida {
+public class ErrorVerificacionBytecode implements Verificaciones {
 
-	private boolean posibleError = false;
 	private boolean activado = false;
 	private String enlace = "";
 
@@ -51,40 +50,11 @@ public class ErrorVerificacionBytecode implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(VERIFY_ERROR)) {
-			posibleError = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null)
-			return;
-
-		String log = consola.contenido_verificar;
-
-		// Detección global ligera
-		if (log.contains(VERIFY_ERROR) && (log.contains(BAD_TYPE) || log.contains(BAD_LOCAL_VARIABLE_TYPE)
-				|| log.contains(INCONSISTENT_STACKMAP) || log.contains(EXPECTING_STACKMAP)
-				|| log.contains(OPERAND_STACK_OVERFLOW) || log.contains(REGISTER_FINALIZER))) {
-
-			posibleError = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleError;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-
-		if (!posibleError || linea == null)
-			return;
 
 		if (!activado && linea.contains(VERIFY_ERROR)) {
 
@@ -347,7 +317,7 @@ public class ErrorVerificacionBytecode implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorVerificacionBytecode();
 	}
 

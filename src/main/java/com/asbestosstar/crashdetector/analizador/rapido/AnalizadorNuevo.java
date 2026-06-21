@@ -7,6 +7,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 
 /**
  * Nueva implementación del Analizador optimizada para streaming y escaneo
@@ -14,8 +15,8 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
  */
 public final class AnalizadorNuevo {
 
-	private final List<Verificaciones> verificacionesLegacy = new ArrayList<>();
-	private final List<VerificacionRapida> verificacionesRapidas = new ArrayList<>();
+	private final List<VerificacionesLegacy> verificacionesLegacy = new ArrayList<>();
+	private final List<Verificaciones> verificacionesRapidas = new ArrayList<>();
 	private final MotorDeLecturaStreaming motorStreaming;
 
 	public AnalizadorNuevo(Analizador analizadorBase) {
@@ -25,20 +26,21 @@ public final class AnalizadorNuevo {
 	/**
 	 * Ejecuta el análisis.
 	 */
-	public void analizar(List<Consola> consolas, java.util.Set<Verificaciones> todasLasVerificaciones) {
+	public void analizar(List<Consola> consolas, java.util.Set<VerificacionesLegacy> todasLasVerificaciones) {
 		verificacionesRapidas.clear();
 		verificacionesLegacy.clear();
-		for (Verificaciones verificacion : todasLasVerificaciones) {
-			if (verificacion instanceof VerificacionRapida) {
-				verificacionesRapidas.add((VerificacionRapida) verificacion);
+		for (VerificacionesLegacy verificacion : todasLasVerificaciones) {
+			if (verificacion instanceof Verificaciones) {
+				verificacionesRapidas.add((Verificaciones) verificacion);
 			} else {
+				CrashDetectorLogger.log("Legacy Verificaciones " + verificacion.id());
 				verificacionesLegacy.add(verificacion);
 			}
 		}
 
 		CrashDetectorLogger.log("Iniciando AnalizadorNuevo con " + consolas.size() + " registros");
 		CrashDetectorLogger.log("[DEBUG_LOG] Verificaciones rápidas cargadas: " + verificacionesRapidas.size());
-		for (VerificacionRapida v : verificacionesRapidas) {
+		for (Verificaciones v : verificacionesRapidas) {
 			String[] patrones = v.patronesRapidos();
 			int cantidad = patrones == null ? 0 : patrones.length;
 			CrashDetectorLogger.log("[DEBUG_LOG] - " + v.id() + " (patrones: " + cantidad + ")");
@@ -74,13 +76,11 @@ public final class AnalizadorNuevo {
 				consola.verificacion_de_stacktrace.reiniciar();
 			}
 
-			ejecutarGlobalesLegacy(consola);
-
 			if (consola.archivo != null && consola.archivo.toFile().exists()) {
 				CrashDetectorLogger.log("[DEBUG_LOG] Iniciando motor streaming para: " + consola.archivo);
 				motorStreaming.procesar(consola, verificacionesRapidas, verificacionesLegacy, estado);
 			} else {
-				List<Verificaciones> legacyLineales = obtenerLegacyLineales(consola);
+				List<VerificacionesLegacy> legacyLineales = obtenerLegacyLineales(consola);
 
 				if (consola.lineas_verificar != null) {
 					CrashDetectorLogger.log("[DEBUG_LOG] Procesando líneas inyectadas ("
@@ -106,7 +106,7 @@ public final class AnalizadorNuevo {
 				}
 			}
 
-			for (VerificacionRapida verificacion : verificacionesRapidas) {
+			for (Verificaciones verificacion : verificacionesRapidas) {
 				try {
 					verificacion.finalizarArchivo(consola, estado);
 				} catch (Exception e) {
@@ -122,12 +122,12 @@ public final class AnalizadorNuevo {
 		}
 	}
 
-	private List<Verificaciones> obtenerLegacyLineales(Consola consola) {
-		List<Verificaciones> resultado = new ArrayList<>();
+	private List<VerificacionesLegacy> obtenerLegacyLineales(Consola consola) {
+		List<VerificacionesLegacy> resultado = new ArrayList<>();
 
-		for (Verificaciones ver : verificacionesLegacy) {
+		for (VerificacionesLegacy ver : verificacionesLegacy) {
 			try {
-				if (ver.quiereAnalizarLineas() || ver.activarEscaneoPorLinea(consola)) {
+				if (ver.verificar(consola)) {
 					resultado.add(ver);
 				}
 			} catch (Exception e) {
@@ -138,29 +138,4 @@ public final class AnalizadorNuevo {
 		return resultado;
 	}
 
-	private void ejecutarGlobalesLegacy(Consola consola) {
-		for (Verificaciones ver : verificacionesLegacy) {
-			try {
-				ver.verificar(consola);
-			} catch (Exception e) {
-				CrashDetectorLogger.logException(e);
-			}
-		}
-	}
-
-	private void ejecutarPorLineaLegacy(Consola consola) {
-		if (consola.lineas_verificar != null) {
-			for (Verificaciones ver : verificacionesLegacy) {
-				if (ver.quiereAnalizarLineas() || ver.activarEscaneoPorLinea(consola)) {
-					for (int i = 0; i < consola.lineas_verificar.length; i++) {
-						try {
-							ver.verificarPorLinea(consola, consola.lineas_verificar[i], i);
-						} catch (Exception e) {
-							CrashDetectorLogger.logException(e);
-						}
-					}
-				}
-			}
-		}
-	}
 }

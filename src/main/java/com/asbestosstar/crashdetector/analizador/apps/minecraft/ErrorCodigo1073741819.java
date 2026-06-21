@@ -4,9 +4,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,12 +14,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * por overlays de software como GameCaster de Razer, Discord, OBS Studio o
  * problemas con drivers de NVIDIA.
  */
-public class ErrorCodigo1073741819 implements VerificacionRapida {
+public class ErrorCodigo1073741819 implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean analizarLineas = false;
 
 	private static final String CODIGO_ERROR = "-1073741819";
 	private static final String TEXTO_EXIT = "exit";
@@ -36,30 +35,7 @@ public class ErrorCodigo1073741819 implements VerificacionRapida {
 			return;
 		}
 
-		analizarLineas = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(CODIGO_ERROR)) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	/**
@@ -71,10 +47,6 @@ public class ErrorCodigo1073741819 implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!analizarLineas || activado || linea == null) {
-			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
 
 		// Buscamos la línea que contiene el código de error específico
 		if (linea.contains(CODIGO_ERROR) && contieneIgnoreCase(linea, TEXTO_EXIT)) {
@@ -93,7 +65,7 @@ public class ErrorCodigo1073741819 implements VerificacionRapida {
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 		// Mensaje de error en HTML con referencia al problema de overlays o drivers
-		mensaje = MonitorDePID.idioma.errorCodigo1073741819() + Verificaciones.nl_html;
+		mensaje = MonitorDePID.idioma.errorCodigo1073741819() + VerificacionesLegacy.nl_html;
 		activado = true;
 	}
 
@@ -122,7 +94,7 @@ public class ErrorCodigo1073741819 implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorCodigo1073741819();
 	}
 

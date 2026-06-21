@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 
 public class Tailandes implements Idioma {
 	Config config = Config.obtenerInstancia();
@@ -4494,7 +4494,7 @@ public class Tailandes implements Idioma {
 	@Override
 	public String infoDeTrazos() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "ให้ความสำคัญกับส่วนต้นของ stack trace ก่อน "
-				+ "รูปแบบคือ ระดับ, บรรทัด " + "บันทึกทั้งหมดมีระบบเลขลำดับ " + Verificaciones.nl_html
+				+ "รูปแบบคือ ระดับ, บรรทัด " + "บันทึกทั้งหมดมีระบบเลขลำดับ " + VerificacionesLegacy.nl_html
 				+ "โดยทั่วไปควรตรวจสอบระดับล่างสุดก่อน เพราะระดับสูงมักเป็น false positive "
 				+ "ควรใช้การอ่าน console ร่วมด้วย เนื่องจากการวิเคราะห์ stack trace อาจไม่แม่นยำเมื่อมีจำนวนมาก"
 				+ "</b>";

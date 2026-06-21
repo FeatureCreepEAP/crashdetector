@@ -3,20 +3,20 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
  * Clase que detecta plugins de PocketMine-MP que no son compatibles con la
  * versión actual del servidor.Gracias a Aternos por que esta es una
  * implementacion de su codex https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaPluginIncompatible implements Verificaciones {
+public class ProblemaPluginIncompatible implements VerificacionesLegacy {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -26,43 +26,46 @@ public class ProblemaPluginIncompatible implements Verificaciones {
 	private static final String SUFIJO_API = "': Incompatible API version";
 	private static final String SUFIJO_PROTOCOLO = "': Incompatible network protocol version";
 
-	/**
-	 * Verifica si el log contiene plugins incompatibles con PocketMine-MP.
-	 */
+//	/**
+//	 * Verifica si el log contiene plugins incompatibles con PocketMine-MP.
+//	 */
+//	@Override
+//	public void verificar(Consola consola) {
+//
+//		if (consola == null || consola.contenido_verificar == null) {
+//			return;
+//		}
+//
+//		String contenido = consola.contenido_verificar;
+//
+//		// Chequeo global barato:
+//		// si el log no contiene la frase base ni ningún motivo incompatible,
+//		// no hace falta escanear buscando nombres de plugins.
+//		if (!contenido.contains(PREFIJO)
+//				|| (!contenido.contains(SUFIJO_API) && !contenido.contains(SUFIJO_PROTOCOLO))) {
+//			return;
+//		}
+//
+//		extraerPluginsIncompatibles(contenido, SUFIJO_API);
+//		extraerPluginsIncompatibles(contenido, SUFIJO_PROTOCOLO);
+//
+//		if (!nombresPlugins.isEmpty()) {
+//			if (nombresPlugins.size() > 1) {
+//				this.mensaje = MonitorDePID.idioma.mensajePluginIncompatiblePlural(nombresPlugins);
+//			} else {
+//				this.mensaje = MonitorDePID.idioma.mensajePluginIncompatibleSingular(nombresPlugins.get(0));
+//			}
+//			activado = true;
+//		}
+//	}
+
 	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		// Chequeo global barato:
-		// si el log no contiene la frase base ni ningún motivo incompatible,
-		// no hace falta escanear buscando nombres de plugins.
-		if (!contenido.contains(PREFIJO)
-				|| (!contenido.contains(SUFIJO_API) && !contenido.contains(SUFIJO_PROTOCOLO))) {
-			return;
-		}
-
-		extraerPluginsIncompatibles(contenido, SUFIJO_API);
-		extraerPluginsIncompatibles(contenido, SUFIJO_PROTOCOLO);
-
-		if (!nombresPlugins.isEmpty()) {
-			if (nombresPlugins.size() > 1) {
-				this.mensaje = MonitorDePID.idioma.mensajePluginIncompatiblePlural(nombresPlugins);
-			} else {
-				this.mensaje = MonitorDePID.idioma.mensajePluginIncompatibleSingular(nombresPlugins.get(0));
-			}
-			activado = true;
-		}
+	public String[] patronesRapidos() {
+		// TODO Auto-generated method stub
+		return new String[0];// TODO
 	}
 
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return false;
-
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
 	}
 
 	private void extraerPluginsIncompatibles(String contenido, String sufijo) {
@@ -95,7 +98,7 @@ public class ProblemaPluginIncompatible implements Verificaciones {
 	 * Crea una nueva instancia del verificador.
 	 */
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaPluginIncompatible();
 	}
 

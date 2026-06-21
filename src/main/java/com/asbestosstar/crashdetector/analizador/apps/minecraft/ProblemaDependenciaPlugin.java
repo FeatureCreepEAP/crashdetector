@@ -8,11 +8,11 @@ import java.util.Map;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -20,16 +20,13 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Aternos por que esta es una implementacion de su codex
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaDependenciaPlugin implements VerificacionRapida {
+public class ProblemaDependenciaPlugin implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private final Map<String, List<String>> plugins = new HashMap<>();
 	private final Map<String, String> enlacesPorPlugin = new HashMap<>();
 	private String nombrePluginActual = "";
-	public boolean posibleProblemaDependencia = false;
-	public boolean posibleProblemaDependencia0 = false;
-	public boolean posibleProblemaDependencia1 = false;
 
 	private static final String COULD_NOT_LOAD_PLUGIN = "Could not load 'plugins/";
 	private static final String UNKNOWN_MISSING_DEPENDENCY_PLUGINS = "Unknown/missing dependency plugins:";
@@ -48,32 +45,7 @@ public class ProblemaDependenciaPlugin implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (linea.contains(COULD_NOT_LOAD_PLUGIN)) {
-			posibleProblemaDependencia = true;
-		} else if (linea.contains(UNKNOWN_MISSING_DEPENDENCY_PLUGINS)) {
-			posibleProblemaDependencia0 = true;
-		} else if (linea.contains(UNKNOWN_DEPENDENCY)) {
-			posibleProblemaDependencia1 = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verifica si el log contiene errores de dependencias faltantes.
-	 * 
-	 * En esta implementación, el análisis real se realiza línea a línea en
-	 * {@link #verificarPorLinea(Consola, String, int)}, aprovechando el estado
-	 * interno para relacionar la línea de carga del plugin con las líneas de
-	 * dependencias.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleProblemaDependencia || posibleProblemaDependencia0 || posibleProblemaDependencia1;
 	}
 
 	@Override
@@ -83,20 +55,20 @@ public class ProblemaDependenciaPlugin implements VerificacionRapida {
 		}
 
 		// 1. Detecta carga fallida de plugin
-		if (posibleProblemaDependencia && linea.contains(COULD_NOT_LOAD_PLUGIN)) {
+		if (linea.contains(COULD_NOT_LOAD_PLUGIN)) {
 			extraerNombrePluginDesdeRuta(linea, numero_de_linea, consola);
 			return;
 		}
 
 		// 2. Detecta dependencias múltiples
-		if (posibleProblemaDependencia0 && linea.contains(UNKNOWN_MISSING_DEPENDENCY_PLUGINS)) {
+		if (linea.contains(UNKNOWN_MISSING_DEPENDENCY_PLUGINS)) {
 			procesarLineaDependenciaMultiple(linea);
 			reconstruirMensaje();
 			return;
 		}
 
 		// 3. Detecta dependencia única
-		if (posibleProblemaDependencia1 && linea.contains(UNKNOWN_DEPENDENCY)) {
+		if (linea.contains(UNKNOWN_DEPENDENCY)) {
 			procesarLineaDependenciaUnica(linea);
 			reconstruirMensaje();
 		}
@@ -216,7 +188,7 @@ public class ProblemaDependenciaPlugin implements VerificacionRapida {
 	 * Crea una nueva instancia del verificador.
 	 */
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaDependenciaPlugin();
 	}
 

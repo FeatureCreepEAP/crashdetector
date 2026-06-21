@@ -9,7 +9,7 @@ import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 
 public class Espanol implements Idioma {
 	Config config = Config.obtenerInstancia();
@@ -4819,7 +4819,7 @@ public class Espanol implements Idioma {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Arreglar las partes superiores de los troncos es la primera prioridad. "
 				+ "El formato es Nivel, Línea. " + "Todos los registros tienen un sistema de numeración. "
-				+ Verificaciones.nl_html
+				+ VerificacionesLegacy.nl_html
 				+ "Generalmente necesitas buscar en los niveles más bajos en todos los registros; trazos con niveles altos generalmente son falsos positivos. "
 				+ "Es importante usar tu habilidad para ver en la consola, ya que el análisis de trazos no es perfecto cuando hay muchos trazos."
 				+ "</b>";

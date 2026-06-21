@@ -4,21 +4,20 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta problemas de compatibilidad entre Iris/Oculus y Distant Horizons
  * donde faltan métodos de API necesarios, requiriendo versiones específicas.
  */
-public class ErrorCompatibilidadIrisDH implements VerificacionRapida {
+public class ErrorCompatibilidadIrisDH implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean analizarLineas = false;
 
 	private static final String TEXTO_DH_MISSING_API = "java.lang.RuntimeException: DH found, but one or more API methods are missing.";
 	private static final String TEXTO_IRIS_REQUIRES_DH = "Iris requires DH";
@@ -38,37 +37,7 @@ public class ErrorCompatibilidadIrisDH implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_DH_MISSING_API) || evento.linea.contains(TEXTO_IRIS_REQUIRES_DH)
-				|| evento.linea.contains(TEXTO_DH_API_VERSION)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(TEXTO_DH_MISSING_API)
-				&& (contenido.contains(TEXTO_IRIS_REQUIRES_DH) || contenido.contains(TEXTO_DH_API_VERSION))
-				&& (contenido.contains(TEXTO_OR_NEWER) || contenido.contains(VERSION_204)
-						|| contenido.contains(VERSION_110))) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	/**
@@ -80,10 +49,6 @@ public class ErrorCompatibilidadIrisDH implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!analizarLineas || activado || linea == null) {
-			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
 
 		// Buscamos la línea que contiene el error de compatibilidad entre Iris y
 		// Distant Horizons
@@ -95,13 +60,13 @@ public class ErrorCompatibilidadIrisDH implements VerificacionRapida {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Mensaje de error en HTML con referencia al problema de compatibilidad
-			mensaje = MonitorDePID.idioma.errorCompatibilidadIrisDH() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorCompatibilidadIrisDH() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorCompatibilidadIrisDH();
 	}
 

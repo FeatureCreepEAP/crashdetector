@@ -3,11 +3,11 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,7 +15,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Aternos por que esta es una implementacion de su codex
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaConfiguracionPermissionsEx implements VerificacionRapida {
+public class ProblemaConfiguracionPermissionsEx implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -38,36 +38,16 @@ public class ProblemaConfiguracionPermissionsEx implements VerificacionRapida {
 		}
 	}
 
-	/**
-	 * Verifica si el log contiene el error de configuración de PermissionsEx.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || activado) {
-			return;
-		}
-
-		if (consola.contenido_verificar.contains(MENSAJE_ERROR)) {
-			activar();
-		}
-	}
-
 	private void activar() {
-		this.mensaje = MonitorDePID.idioma.mensajeConfiguracionPermissionsEx() + Verificaciones.nl_html;
+		this.mensaje = MonitorDePID.idioma.mensajeConfiguracionPermissionsEx() + VerificacionesLegacy.nl_html;
 		this.activado = true;
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return false;
-
 	}
 
 	/**
 	 * Crea una nueva instancia del verificador.
 	 */
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaConfiguracionPermissionsEx();
 	}
 

@@ -3,15 +3,14 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ErrorDeEnlaceInsatisfecho implements VerificacionRapida {
+public class ErrorDeEnlaceInsatisfecho implements Verificaciones {
 
-	private boolean posibleErrorDeEnlaceInsatisfecho = false;
 	private boolean activado = false;
 
 	private String nombreBiblioteca = "";
@@ -34,33 +33,7 @@ public class ErrorDeEnlaceInsatisfecho implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_ERROR)) {
-			posibleErrorDeEnlaceInsatisfecho = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificacion global ligera.
-	 *
-	 * Se ejecuta primero. No se limpian campos porque esta verificacion puede
-	 * ejecutarse sobre varios archivos de log con la misma instancia.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		if (consola.contenido_verificar.contains(TEXTO_ERROR)) {
-			posibleErrorDeEnlaceInsatisfecho = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleErrorDeEnlaceInsatisfecho && !activado;
 	}
 
 	/**
@@ -71,9 +44,6 @@ public class ErrorDeEnlaceInsatisfecho implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleErrorDeEnlaceInsatisfecho || activado || linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		if (!linea.contains(TEXTO_ERROR)) {
 			return;
@@ -175,7 +145,7 @@ public class ErrorDeEnlaceInsatisfecho implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorDeEnlaceInsatisfecho();
 	}
 

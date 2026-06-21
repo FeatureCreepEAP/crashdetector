@@ -9,17 +9,17 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta mods sospechosos y excepciones relacionadas con Forge.
  */
-public class MCForgeModsSuspechoso implements VerificacionRapida {
+public class MCForgeModsSuspechoso implements Verificaciones {
 
 	private boolean activado = false;
 
@@ -50,42 +50,9 @@ public class MCForgeModsSuspechoso implements VerificacionRapida {
 	}
 
 	@Override
-	public boolean activarEscaneoPorLinea(Consola consola) {
+	public boolean verificar(Consola consola) {
 		EstadoConsola estado = estadosPorConsola.get(consola);
 		return estado != null && estado.posibleForgeModSospechoso;
-	}
-
-	@Override
-	public boolean necesitaTodasLasLineas() {
-		// No necesitamos todas las líneas por defecto, se activará vía
-		// quiereAnalizarLineas
-		// cuando detectemos que es un posible reporte de Forge.
-		return false;
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		// Esta se llama tanto en el motor streaming como en el legacy.
-		// Queremos analizar líneas si ya detectamos que es un posible problema de
-		// Forge.
-		return true; // MCForgeModsSuspechoso gestiona su propio estado interno en verificarPorLinea
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		EstadoConsola estado = obtenerEstado(consola);
-		if (consola == null || consola.contenido_verificar == null) {
-			estado.posibleForgeModSospechoso = true; // Por defecto asumimos que sí en modo streaming
-			return;
-		}
-
-		String c = consola.contenido_verificar;
-
-		estado.posibleForgeModSospechoso = c.contains("Suspected Mod:") || c.contains("Suspected Mods:")
-				|| c.contains("-- MOD ") || c.contains("Failed to create mod instance. ModID:")
-				|| c.contains("for modid ") || c.contains("Mod ID:") || c.contains("ModID:") || c.contains("modid=")
-				|| (c.contains("dispatch") && (c.contains("encountered an error")
-						|| c.contains("encountered an exception") || c.contains("caught exception")));
 	}
 
 	@Override
@@ -584,7 +551,7 @@ public class MCForgeModsSuspechoso implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new MCForgeModsSuspechoso();
 	}
 

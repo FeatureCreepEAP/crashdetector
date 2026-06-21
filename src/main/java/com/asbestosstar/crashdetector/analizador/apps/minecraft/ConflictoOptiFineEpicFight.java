@@ -4,9 +4,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,13 +14,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * inyección crítica relacionado con LevelRenderer durante la inicialización del
  * juego.
  */
-public class ConflictoOptiFineEpicFight implements VerificacionRapida {
+public class ConflictoOptiFineEpicFight implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoOptiFine = false;
-	public boolean analizarLineas = false;
 
 	private static final String OPTIFINE_MINUSCULA = "optifine";
 	private static final String OPTIFINE_MIXTA = "Optifine";
@@ -46,27 +44,7 @@ public class ConflictoOptiFineEpicFight implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (contieneOptiFine(linea)) {
-			encontradoOptiFine = true;
-		}
-
-		if (lineaContieneErrorEpicFight(linea)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	/**
@@ -84,10 +62,6 @@ public class ConflictoOptiFineEpicFight implements VerificacionRapida {
 			return;
 		}
 
-		if (!analizarLineas || !encontradoOptiFine) {
-			return;
-		}
-
 		// Verificamos si la línea contiene el error de inyección crítica de Epic Fight
 		// con LevelRenderer
 		if (lineaContieneErrorEpicFight(linea)) {
@@ -96,7 +70,7 @@ public class ConflictoOptiFineEpicFight implements VerificacionRapida {
 
 			// Mensaje de error en HTML con referencia al conflicto entre OptiFine y Epic
 			// Fight
-			mensaje = MonitorDePID.idioma.errorConflictoOptiFineEpicFight() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorConflictoOptiFineEpicFight() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
@@ -112,7 +86,7 @@ public class ConflictoOptiFineEpicFight implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ConflictoOptiFineEpicFight();
 	}
 
@@ -160,7 +134,7 @@ public class ConflictoOptiFineEpicFight implements VerificacionRapida {
 			return false;
 		}
 
-		return lineaContieneErrorEpicFight(trazo.trace) && encontradoOptiFine;
+		return lineaContieneErrorEpicFight(trazo.trace);
 	}
 
 	@Override

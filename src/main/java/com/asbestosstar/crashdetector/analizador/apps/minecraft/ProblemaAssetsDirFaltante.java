@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -19,10 +19,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Este problema suele ocurrir cuando el launcher no instala correctamente los
  * assets del juego.
  */
-public class ProblemaAssetsDirFaltante implements VerificacionRapida {
+public class ProblemaAssetsDirFaltante implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean analizarLineas = false;
 	private String enlace = "";
 
 	private static final String OPTION_ARGUMENT_CONVERSION_EXCEPTION = "OptionArgumentConversionException";
@@ -39,37 +38,11 @@ public class ProblemaAssetsDirFaltante implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneProblemaAssetsDir(evento.linea)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		// Pre-check global para rendimiento
-		if (log.contains(OPTION_ARGUMENT_CONVERSION_EXCEPTION) && log.contains(ASSETS_DIR)) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!analizarLineas || linea == null || activado)
-			return;
 
 		if (lineaContieneProblemaAssetsDir(linea)) {
 
@@ -83,7 +56,7 @@ public class ProblemaAssetsDirFaltante implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaAssetsDirFaltante();
 	}
 

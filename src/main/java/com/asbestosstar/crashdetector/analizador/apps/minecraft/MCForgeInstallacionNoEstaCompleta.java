@@ -5,18 +5,17 @@ import javax.swing.JOptionPane;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta instalaciones incompletas de Forge y excepciones relacionadas.
  */
-public class MCForgeInstallacionNoEstaCompleta implements VerificacionRapida {
+public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 
-	private boolean posibleForgeIncompleto = false;
 	private boolean activado = false;
 
 	private String mensaje = "";
@@ -48,36 +47,7 @@ public class MCForgeInstallacionNoEstaCompleta implements VerificacionRapida {
 			return;
 		}
 
-		if (contieneProblemaForge(evento.linea)) {
-			posibleForgeIncompleto = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificacion global ligera.
-	 *
-	 * Se ejecuta primero. No se limpian campos porque esta verificacion puede
-	 * ejecutarse sobre varios archivos de log con la misma instancia.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(ERROR_INVALID_PATHS) || contenido.contains(ERROR_FAILED_TO_FIND_VERSION)
-				|| contenido.contains(ERROR_CANNOT_FIND_TARGET) || contenido.contains(ERROR_MINECRAFT_CLASS_MISSING)) {
-			posibleForgeIncompleto = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleForgeIncompleto && !activado;
 	}
 
 	/**
@@ -88,9 +58,6 @@ public class MCForgeInstallacionNoEstaCompleta implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleForgeIncompleto || activado || linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		// 1) Detectar archivos faltantes en rutas de Forge/FML
 		String archivoFaltante = extraerArchivoForgeFaltante(linea);
@@ -279,7 +246,7 @@ public class MCForgeInstallacionNoEstaCompleta implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new MCForgeInstallacionNoEstaCompleta();
 	}
 

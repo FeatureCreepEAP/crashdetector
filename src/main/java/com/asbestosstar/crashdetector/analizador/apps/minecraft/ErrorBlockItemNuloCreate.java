@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,7 +14,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * addons de Create, típicamente causados por conflictos con Amendments,
  * Moonshine o mala inicialización de bloques.
  */
-public class ErrorBlockItemNuloCreate implements VerificacionRapida {
+public class ErrorBlockItemNuloCreate implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -22,8 +22,6 @@ public class ErrorBlockItemNuloCreate implements VerificacionRapida {
 	private static final String PREFIJO_ERROR = "java.lang.NullPointerException: BlockItem ";
 	private static final String TRIGGER_BLOCKITEM = "NullPointerException: BlockItem";
 	private static final String SUFIJO_ERROR = " has a NULL block!";
-
-	private boolean analizarLineas = false;
 
 	@Override
 	public String[] patronesRapidos() {
@@ -36,38 +34,12 @@ public class ErrorBlockItemNuloCreate implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TRIGGER_BLOCKITEM) || evento.linea.contains(SUFIJO_ERROR)) {
-			this.analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		// Chequeo global barato:
-		// si el log completo no contiene las dos señales principales,
-		// no hace falta procesar línea por línea.
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(TRIGGER_BLOCKITEM) && contenido.contains(SUFIJO_ERROR)) {
-			this.analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!analizarLineas || this.activado || linea == null) {
+		if (this.activado || linea == null) {
 			return;
 		}
 
@@ -109,7 +81,7 @@ public class ErrorBlockItemNuloCreate implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorBlockItemNuloCreate();
 	}
 

@@ -8,22 +8,20 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta conflictos entre OptiFine y Entity Model Features (EMF) que provocan
  * un error de inyección crítica durante la inicialización del juego.
  */
-public class ConflictoOptiFineEMF implements VerificacionRapida {
+public class ConflictoOptiFineEMF implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoOptiFine = false;
-	public boolean analizarLineas = false;
 
 	private static final String OPTIFINE_MINUSCULA = "optifine";
 	private static final String OPTIFINE_MIXTA = "Optifine";
@@ -55,42 +53,7 @@ public class ConflictoOptiFineEMF implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (contieneOptiFine(linea)) {
-			encontradoOptiFine = true;
-		}
-
-		if (lineaContieneErrorEMF(linea)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		// Modo streaming puro: puede no existir contenido_verificar
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Verificamos si OptiFine está presente en el contenido del registro
-		String log = consola.contenido_verificar;
-
-		if (contieneOptiFine(log)) {
-			encontradoOptiFine = true;
-		}
-
-		if (encontradoOptiFine && lineaContieneErrorEMF(log)) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	/**
@@ -104,10 +67,6 @@ public class ConflictoOptiFineEMF implements VerificacionRapida {
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
-
-		if (!analizarLineas || !encontradoOptiFine) {
 			return;
 		}
 
@@ -136,12 +95,12 @@ public class ConflictoOptiFineEMF implements VerificacionRapida {
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 		// Mensaje de error en HTML con referencia al conflicto entre OptiFine y EMF
-		mensaje = MonitorDePID.idioma.errorConflictoOptiFineEMF() + Verificaciones.nl_html;
+		mensaje = MonitorDePID.idioma.errorConflictoOptiFineEMF() + VerificacionesLegacy.nl_html;
 		activado = true;
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ConflictoOptiFineEMF();
 	}
 
@@ -189,7 +148,7 @@ public class ConflictoOptiFineEMF implements VerificacionRapida {
 			return false;
 		}
 
-		return lineaContieneErrorEMF(trazo.trace) && encontradoOptiFine;
+		return lineaContieneErrorEMF(trazo.trace);
 	}
 
 	@Override

@@ -5,15 +5,13 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 
 /**
  * Detecta errores NoSuchMethodError que ocurren cuando un mod intenta llamar a
  * un metodo que ya no existe en la version actual del juego o de otro mod.
  */
-public class ErrorMetodoInexistente implements com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida {
-
-	private boolean posibleNoSuchMethod = false;
+public class ErrorMetodoInexistente implements com.asbestosstar.crashdetector.analizador.Verificaciones {
 
 	@Override
 	public String[] patronesRapidos() {
@@ -22,13 +20,7 @@ public class ErrorMetodoInexistente implements com.asbestosstar.crashdetector.an
 
 	@Override
 	public void verificarCoincidencia(com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia evento) {
-		this.posibleNoSuchMethod = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public boolean activarEscaneoPorLinea(Consola consola) {
-		return posibleNoSuchMethod;
 	}
 
 	private static final String PREFIJO_ERROR = "java.lang.NoSuchMethodError:";
@@ -60,37 +52,9 @@ public class ErrorMetodoInexistente implements com.asbestosstar.crashdetector.an
 	private boolean pillowmc = false;
 
 	@Override
-	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
-
-		if (contenido == null) {
-			return;
-		}
-
-		if (contenido.contains(PREFIJO_ERROR)) {
-			posibleNoSuchMethod = true;
-		}
-	}
-
-	public boolean quiereAnalizarLineas() {
-		if (!posibleNoSuchMethod)
-			return false;
-
-		return true;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numLinea) {
 		if (activado || linea == null) {
 			return;
-		}
-
-		if (!posibleNoSuchMethod) {
-			if (linea.contains(PREFIJO_ERROR)) {
-				posibleNoSuchMethod = true;
-			} else {
-				return;
-			}
 		}
 
 		if (linea.contains(PREFIJO_ERROR)) {
@@ -190,13 +154,13 @@ public class ErrorMetodoInexistente implements com.asbestosstar.crashdetector.an
 		sb.append(MonitorDePID.idioma.errorMetodoInexistente(firmaMetodo, firmaMetodo));
 
 		if (!lineaSiguiente.isEmpty()) {
-			sb.append(Verificaciones.nl_html);
+			sb.append(VerificacionesLegacy.nl_html);
 			sb.append("<span style='color:#888888; font-family:monospace;'>");
 			sb.append(escapeHtml(lineaSiguiente));
 			sb.append("</span>");
 		}
 
-		sb.append(Verificaciones.nl_html);
+		sb.append(VerificacionesLegacy.nl_html);
 		sb.append(enlaceHtml);
 
 		if (create) {
@@ -292,7 +256,7 @@ public class ErrorMetodoInexistente implements com.asbestosstar.crashdetector.an
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorMetodoInexistente();
 	}
 

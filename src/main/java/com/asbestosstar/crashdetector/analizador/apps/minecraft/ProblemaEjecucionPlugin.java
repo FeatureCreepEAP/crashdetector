@@ -6,19 +6,18 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores de ejecución en plugins de PocketMine-MP sin usar regex.
  */
-public class ProblemaEjecucionPlugin implements VerificacionRapida {
+public class ProblemaEjecucionPlugin implements Verificaciones {
 
-	private boolean posibleEjecucion = false;
 	private boolean activado = false;
 
 	private String mensaje = "";
@@ -36,33 +35,17 @@ public class ProblemaEjecucionPlugin implements VerificacionRapida {
 	}
 
 	@Override
-	public boolean activarEscaneoPorLinea(Consola consola) {
-		return posibleEjecucion;
-	}
-
-	@Override
 	public void verificarCoincidencia(EventoDeCoincidencia evento) {
 		if (evento == null || evento.linea == null) {
 			return;
 		}
 
-		posibleEjecucion = true;
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleEjecucion;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleEjecucion || linea == null || linea.isEmpty()) {
+		if (linea == null || linea.isEmpty()) {
 			return;
 		}
 
@@ -138,7 +121,7 @@ public class ProblemaEjecucionPlugin implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaEjecucionPlugin();
 	}
 

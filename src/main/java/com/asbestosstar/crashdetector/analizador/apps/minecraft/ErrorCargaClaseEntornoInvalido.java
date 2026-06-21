@@ -4,9 +4,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,10 +15,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * [...] for invalid dist [CLIENT|SERVER]". Incluye sugerencias para usar
  * ModsTree (Arbol de Mods) para identificar el mod problemático.
  */
-public class ErrorCargaClaseEntornoInvalido implements VerificacionRapida {
+public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean analizarLineas = false;
 
 	private String mensaje = "";
 	private String nombreClase = "";
@@ -39,37 +38,7 @@ public class ErrorCargaClaseEntornoInvalido implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_CLASE) || evento.linea.contains(TEXTO_DIST)) {
-			this.analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global barata.
-	 * <p>
-	 * Si el log completo no contiene las dos señales principales, se desactiva el
-	 * análisis por línea para evitar trabajo innecesario.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(TEXTO_CLASE) && contenido.contains(TEXTO_DIST)) {
-			this.analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	/**
@@ -82,11 +51,6 @@ public class ErrorCargaClaseEntornoInvalido implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Si el chequeo global no encontró las señales principales, no analizamos
-		// línea por línea.
-		if (!analizarLineas) {
-			return;
-		}
 
 		// Si ya se activó, no seguimos procesando más líneas.
 		if (activado) {
@@ -109,7 +73,7 @@ public class ErrorCargaClaseEntornoInvalido implements VerificacionRapida {
 				entornoInvalido = resultado.entornoInvalido;
 
 				mensaje = MonitorDePID.idioma.errorModEnPlataformaIncorrecta(nombreClase, entornoInvalido)
-						+ Verificaciones.nl_html;
+						+ VerificacionesLegacy.nl_html;
 
 				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 				activado = true;
@@ -184,7 +148,7 @@ public class ErrorCargaClaseEntornoInvalido implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorCargaClaseEntornoInvalido();
 	}
 

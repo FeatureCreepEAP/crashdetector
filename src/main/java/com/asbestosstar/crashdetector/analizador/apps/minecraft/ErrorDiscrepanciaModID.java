@@ -4,9 +4,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,10 +15,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Mod File [...] has mods that were not found" que ocurre durante el
  * desarrollo.
  */
-public class ErrorDiscrepanciaModID implements VerificacionRapida {
+public class ErrorDiscrepanciaModID implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean posible = false;
 
 	private String mensaje = "";
 	private String rutaMod = "";
@@ -39,36 +38,7 @@ public class ErrorDiscrepanciaModID implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_INICIO) || evento.linea.contains(TEXTO_FIN)) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global barata.
-	 * <p>
-	 * Solo revisa si el log completo contiene las dos partes fijas del error. Así
-	 * evitamos revisar línea por línea cuando este error claramente no aparece.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(TEXTO_INICIO) && contenido.contains(TEXTO_FIN)) {
-			posible = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
 	}
 
 	/**
@@ -81,11 +51,6 @@ public class ErrorDiscrepanciaModID implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó o el chequeo global dijo que no es posible,
-		// no seguimos revisando líneas.
-		if (activado || !posible || linea == null) {
-			return;
-		}
 
 		int inicio = linea.indexOf(TEXTO_INICIO);
 		if (inicio < 0) {
@@ -109,7 +74,7 @@ public class ErrorDiscrepanciaModID implements VerificacionRapida {
 		// Extrae solo el nombre del archivo/directorio de la ruta completa.
 		nombreMod = extraerNombreArchivo(rutaMod);
 
-		mensaje = MonitorDePID.idioma.errorDiscrepanciaModID(nombreMod) + Verificaciones.nl_html;
+		mensaje = MonitorDePID.idioma.errorDiscrepanciaModID(nombreMod) + VerificacionesLegacy.nl_html;
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 		activado = true;
 	}
@@ -134,7 +99,7 @@ public class ErrorDiscrepanciaModID implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorDiscrepanciaModID();
 	}
 

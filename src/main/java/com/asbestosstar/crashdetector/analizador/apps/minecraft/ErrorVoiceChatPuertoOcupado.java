@@ -3,23 +3,19 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta cuando el mod Simple Voice Chat no puede enlazarse al puerto UDP
  * porque ya está en uso o la dirección IP especificada no es válida.
  */
-public class ErrorVoiceChatPuertoOcupado implements VerificacionRapida {
+public class ErrorVoiceChatPuertoOcupado implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean posible = false;
-
-	private boolean vioVoiceChat = false;
-	private boolean vioBindException = false;
 
 	private String mensaje = "";
 
@@ -39,52 +35,11 @@ public class ErrorVoiceChatPuertoOcupado implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (linea.contains(VOICECHAT_FAILED)) {
-			vioVoiceChat = true;
-		}
-
-		if (linea.contains(ADDRESS_ALREADY_IN_USE)) {
-			vioBindException = true;
-		}
-
-		if (vioVoiceChat && vioBindException) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(VOICECHAT_FAILED)) {
-			vioVoiceChat = true;
-		}
-
-		if (contenido.contains(ADDRESS_ALREADY_IN_USE)) {
-			vioBindException = true;
-		}
-
-		if (vioVoiceChat && vioBindException) {
-			posible = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posible || this.activado || linea == null) {
-			return;
-		}
 
 		if (linea.contains(VOICECHAT_FAILED)) {
 			String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -100,7 +55,7 @@ public class ErrorVoiceChatPuertoOcupado implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorVoiceChatPuertoOcupado();
 	}
 

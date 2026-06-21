@@ -5,16 +5,16 @@ import javax.swing.JOptionPane;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.parches.ConfigDeParches;
 import com.asbestosstar.crashdetector.parches.minecraft.PreferIPv4StackParch;
 
-public class PreferIPV4Trace implements VerificacionRapida {
+public class PreferIPV4Trace implements Verificaciones {
 
 	private boolean activado = false;
 	private String enlaceHtml = "";
@@ -50,34 +50,6 @@ public class PreferIPV4Trace implements VerificacionRapida {
 		}
 
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Verificar errores de conexión relacionados con IPv6
-		// Buscar argumento JVM en el contenido del reporte
-		// Si no se encontraron flags JVM, verificar propiedad del sistema actual
-		String propiedadIpv4 = System.getProperty(PROP_PREFER_IPV4);
-		if ("true".equalsIgnoreCase(propiedadIpv4)) {
-			argIpv4Encontrado = true;
-		}
-
-		if (consola.contenido_verificar.contains(ARG_PREFER_IPV4)) {
-			argIpv4Encontrado = true;
-		}
-
-		if (consola.contenido_verificar.contains(GML)) {
-			gml = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return !activado;
 	}
 
 	@Override
@@ -153,7 +125,7 @@ public class PreferIPV4Trace implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new PreferIPV4Trace();
 	}
 

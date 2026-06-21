@@ -5,17 +5,16 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class VersionInvalidaSemver implements VerificacionRapida {
+public class VersionInvalidaSemver implements Verificaciones {
 
-	private boolean posibleErrorVersion = false;
 	private boolean activado = false;
 	private String enlace = "";
 	private String ubicacionMod = "";
@@ -35,37 +34,11 @@ public class VersionInvalidaSemver implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneVersionInvalida(evento.linea)) {
-			posibleErrorVersion = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Detección global ligera
-		if (consola.contenido_verificar.contains(TEXTO_ILLEGAL_ARGUMENT)
-				&& consola.contenido_verificar.contains(TEXTO_EMPTY_PRE_RELEASE)) {
-
-			posibleErrorVersion = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleErrorVersion && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		if (!posibleErrorVersion || activado || linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		if (lineaContieneVersionInvalida(linea)) {
 
@@ -110,7 +83,7 @@ public class VersionInvalidaSemver implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new VersionInvalidaSemver();
 	}
 

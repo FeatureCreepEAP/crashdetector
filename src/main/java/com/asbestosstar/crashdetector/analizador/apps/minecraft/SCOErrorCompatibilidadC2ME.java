@@ -4,9 +4,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,11 +15,10 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * de módulos de Java. Recomienda usar C3ME en lugar de C2ME cuando se utilizan
  * mods de conexión.
  */
-public class SCOErrorCompatibilidadC2ME implements VerificacionRapida {
+public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
-	private boolean c2mePresente = false;
 	private boolean connectorPresente = false;
 	private String enlaceHtml = "";
 
@@ -44,55 +43,11 @@ public class SCOErrorCompatibilidadC2ME implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (linea.contains(C2ME)) {
-			c2mePresente = true;
-		}
-
 		if (linea.contains(SINYTRA_CONNECTOR) || linea.contains(SPECIAL_COMPATIBILITY_OPERATION)) {
 			connectorPresente = true;
 		}
 
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global del contenido de la consola.
-	 * <p>
-	 * Aquí solo se detecta la presencia de C2ME y de los mods de conexión en el
-	 * texto completo del log. La detección de la línea concreta con el
-	 * IllegalAccessException se realiza en
-	 * {@link #verificarPorLinea(Consola, String, int)}, que es llamado para cada
-	 * línea.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenidoConsola = consola.contenido_verificar;
-
-		// Detecta la presencia de C2ME en los logs
-		if (contenidoConsola.contains(C2ME)) {
-			c2mePresente = true;
-		}
-
-		// Detecta la presencia de mods de conexión
-		if (contenidoConsola.contains(SINYTRA_CONNECTOR)
-				|| contenidoConsola.contains(SPECIAL_COMPATIBILITY_OPERATION)) {
-			connectorPresente = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!c2mePresente)
-			return false;
-		if (!connectorPresente)
-			return false;
-
-		return !activado;
 	}
 
 	/**
@@ -107,22 +62,18 @@ public class SCOErrorCompatibilidadC2ME implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó, o no tenemos el contexto necesario, no seguimos
-		if (activado || linea == null || !c2mePresente || !connectorPresente) {
-			return;
-		}
 
 		// Detecta el error específico de acceso ilegal entre módulos de Java
 		if (linea.contains(ILLEGAL_ACCESS_EXCEPTION) && linea.contains(UNSAFE_ACCESS)
 				&& linea.contains(JAVA_BASE_EXPORT)) {
-			mensaje = MonitorDePID.idioma.errorCompatibilidadC2ME() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorCompatibilidadC2ME() + VerificacionesLegacy.nl_html;
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new SCOErrorCompatibilidadC2ME();
 	}
 

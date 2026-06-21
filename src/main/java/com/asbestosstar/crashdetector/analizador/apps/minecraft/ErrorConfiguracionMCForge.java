@@ -10,15 +10,14 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ErrorConfiguracionMCForge implements VerificacionRapida {
+public class ErrorConfiguracionMCForge implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean analizarLineas = false;
 
 	private String mensaje = "";
 	private String enlaceHtml = "";
@@ -41,37 +40,7 @@ public class ErrorConfiguracionMCForge implements VerificacionRapida {
 			return;
 		}
 
-		analizarLineas = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global barata.
-	 * <p>
-	 * Si el log completo no contiene señales relacionadas con errores de carga de
-	 * configuración, no se analiza línea por línea.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(PARSING_EXCEPTION)
-				|| ((contenido.contains(CFG_HANDLER) || contenido.contains(CFG_WRAPPER))
-						&& contenido.contains(CFG_FAILED))) {
-
-			this.analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	/**
@@ -91,17 +60,13 @@ public class ErrorConfiguracionMCForge implements VerificacionRapida {
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 
-		if (!analizarLineas || linea == null) {
-			return;
-		}
-
 		// 1) Detección base del error (si aún no se ha activado).
 		if (!activado) {
 
 			// Caso clásico Forge
 			if (linea.contains(PARSING_EXCEPTION)) {
 
-				mensaje = MonitorDePID.idioma.errorConfigMCForge() + Verificaciones.nl_html;
+				mensaje = MonitorDePID.idioma.errorConfigMCForge() + VerificacionesLegacy.nl_html;
 
 				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
@@ -113,7 +78,7 @@ public class ErrorConfiguracionMCForge implements VerificacionRapida {
 			// Caso alterno: excepciones de carga de config (Forge/Moonlight)
 			else if ((linea.contains(CFG_HANDLER) || linea.contains(CFG_WRAPPER)) && linea.contains(CFG_FAILED)) {
 
-				mensaje = MonitorDePID.idioma.errorConfigMCForge() + Verificaciones.nl_html;
+				mensaje = MonitorDePID.idioma.errorConfigMCForge() + VerificacionesLegacy.nl_html;
 
 				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
@@ -231,7 +196,7 @@ public class ErrorConfiguracionMCForge implements VerificacionRapida {
 
 			StringBuilder sb = new StringBuilder();
 
-			sb.append(Verificaciones.nl_html);
+			sb.append(VerificacionesLegacy.nl_html);
 
 			sb.append("<ul>");
 
@@ -290,7 +255,7 @@ public class ErrorConfiguracionMCForge implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorConfiguracionMCForge();
 	}
 
@@ -318,13 +283,13 @@ public class ErrorConfiguracionMCForge implements VerificacionRapida {
 		sb.append(mensaje);
 
 		if (!listaArchivosVaciosHtml.isEmpty()) {
-			sb.append(listaArchivosVaciosHtml).append(Verificaciones.nl_html);
+			sb.append(listaArchivosVaciosHtml).append(VerificacionesLegacy.nl_html);
 		}
 
 		sb.append(enlaceHtml);
 
 		if (detalleArchivoHtml != null && !detalleArchivoHtml.isEmpty()) {
-			sb.append(Verificaciones.nl_html).append(detalleArchivoHtml);
+			sb.append(VerificacionesLegacy.nl_html).append(detalleArchivoHtml);
 		}
 
 		return sb.toString();

@@ -11,15 +11,15 @@ import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class FallosEjecucionTareas implements VerificacionRapida {
+public class FallosEjecucionTareas implements Verificaciones {
 
 	// Mapa para almacenar clases con problemas y sus números de línea
 	private final Map<String, String> clasesConProblema = new HashMap<>();
@@ -27,8 +27,6 @@ public class FallosEjecucionTareas implements VerificacionRapida {
 	private final Set<String> mensajesHtml = new HashSet<>();
 	// Bandera para indicar si se detectó algún problema
 	private boolean activado = false;
-
-	public boolean posibleError = false;
 
 	private static final String FAILED_TO_EXECUTE_TASK = "Failed to execute task";
 	private static final String CLASS_EXTENSION = ".class";
@@ -44,30 +42,11 @@ public class FallosEjecucionTareas implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneFalloEjecucion(evento.linea)) {
-			posibleError = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null)
-			return;
-
-		String log = consola.contenido_verificar;
-
-		if (log.contains(FAILED_TO_EXECUTE_TASK) && log.contains(CLASS_EXTENSION)) {
-			posibleError = true;
-		}
-
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleError || linea == null)
-			return;
 
 		// Verificación rápida por línea para mejor rendimiento
 		// Buscamos el patrón de error de ejecución de tarea
@@ -79,11 +58,6 @@ public class FallosEjecucionTareas implements VerificacionRapida {
 				activado = true;
 			}
 		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleError;
 	}
 
 	private boolean lineaContieneFalloEjecucion(String linea) {
@@ -217,7 +191,7 @@ public class FallosEjecucionTareas implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new FallosEjecucionTareas();
 	}
 

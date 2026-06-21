@@ -21,16 +21,16 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.mapas.TriMap;
 import com.asbestosstar.crashdetector.waifu.RespuestaWaifu;
 import com.asbestosstar.crashdetector.waifu.WaifuAPI;
 
-public class FaltasClases implements VerificacionRapida {
+public class FaltasClases implements Verificaciones {
 
 	private boolean activado = false;
 	public boolean create = false;
@@ -142,8 +142,6 @@ public class FaltasClases implements VerificacionRapida {
 	 */
 	private boolean postProcesado = false;
 
-	public boolean posible = false;
-
 	/**
 	 * Limpia el conjunto de clases vistas globalmente.
 	 */
@@ -175,102 +173,11 @@ public class FaltasClases implements VerificacionRapida {
 
 	@Override
 	public void verificarCoincidencia(EventoDeCoincidencia evento) {
-		posible = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		this.vdst = consola.verificacion_de_stacktrace;
-		String cont = consola.contenido_verificar;
-
-		if (cont != null) {
-			if (cont.contains("ClassMetadataNotFoundException") && !cont.contains("ClassNotFoundException")
-					&& !cont.contains("NoClassDefFoundError")
-					&& (vdst == null || vdst.clases_fatales_no_existentes.isEmpty())
-
-			) {
-				return;
-			}
-		} else if (vdst == null || vdst.clases_fatales_no_existentes.isEmpty()) {
-			return;
-		}
-		posible = true;
-
-		// Agregar clases faltantes desde stacktraces fatales
-		if (vdst != null && vdst.clases_fatales_no_existentes != null) {
-			for (TriMap.TripleKey<String, Integer, Integer> llave : vdst.clases_fatales_no_existentes.keySet()) {
-				String claseCruda = llave.key1; // nombre de la clase tal cual viene
-				int nivel_prioridad = llave.key2; // nivel de prioridad (no lo usamos aquí)
-				int numero_linea_consola = llave.key3; // número de línea en la consola
-				String sospechoso = vdst.clases_fatales_no_existentes.get(claseCruda, nivel_prioridad,
-						numero_linea_consola);
-
-				if (numero_linea_consola > 0 && consola.lineas_verificar != null
-						&& numero_linea_consola < consola.lineas_verificar.length) {
-					String linea_menos1 = consola.lineas_verificar[numero_linea_consola - 1];
-					if (linea_menos1.contains("catching") || linea_menos1.contains("Catching") ||
-
-							linea_menos1.contains("rhino.CachedClassInfo")) {
-						continue; // Skip catching errors
-					}
-				}
-
-				String claseFormateada = formatearClase(claseCruda);
-				if (!esNombreClaseValido(claseFormateada)) {
-					continue;
-				}
-
-				if (ignorarClaseOLinea(claseFormateada)) {
-					continue;
-				}
-
-				// Ignorar clases no relevantes (kotlin, gg/essential, etc.)
-				if (esClaseNoRelevante(claseFormateada)) {
-					continue;
-				}
-
-				// Deduplicación global entre logs
-				if (!CLASES_GLOBALES_VISTAS.add(claseFormateada)) {
-					continue;
-				}
-
-				String origenLimpio = limpiarOrigen(sospechoso);
-
-				// Si ya vimos esta clase antes, SOLO actualizamos si falta origen
-				if (!todos.add(claseFormateada)) {
-					String actual = clases.getOrDefault(claseFormateada, "");
-					if ((actual == null || actual.isEmpty()) && origenLimpio != null && !origenLimpio.isEmpty()) {
-						clases.put(claseFormateada, origenLimpio);
-					}
-					continue;
-				}
-
-				// Primera vez que aparece
-				clases.put(claseFormateada, origenLimpio);
-
-				String enlace = consola.agregarErrorALectador(numero_linea_consola, this);
-				enlacesPorClase.put(claseFormateada, enlace);
-			}
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (linea == null || linea.isEmpty()) {
-			return;
-		}
-		if (!posible) {
-			return;
-		}
 
 		// Optimization: Quick check for interesting patterns before doing more
 		// expensive checks
@@ -740,7 +647,7 @@ public class FaltasClases implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new FaltasClases();
 	}
 

@@ -11,17 +11,16 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class AuditorTransformer implements VerificacionRapida {
+public class AuditorTransformer implements Verificaciones {
 
-	private boolean posibleAuditoriaTransformer = false;
 	private boolean activado = false;
 
 	private int auditIndex = 0;
@@ -46,35 +45,12 @@ public class AuditorTransformer implements VerificacionRapida {
 		if (evento == null || evento.linea == null)
 			return;
 
-		posibleAuditoriaTransformer = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Detección global ligera.
-		// No se limpian listas aquí porque esta verificación puede ejecutarse sobre
-		// varios archivos de log con la misma instancia.
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.indexOf("Transformer Audit:") >= 0 || contenido.indexOf("TRANSFORMER:") >= 0
-				|| contenido.indexOf("PLUGIN:") >= 0 || contenido.indexOf("REASON:") >= 0) {
-			posibleAuditoriaTransformer = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return false;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleAuditoriaTransformer || linea == null) {
+		if (linea == null) {
 			return;
 		}
 
@@ -344,7 +320,7 @@ public class AuditorTransformer implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new AuditorTransformer();
 	}
 

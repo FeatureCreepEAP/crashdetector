@@ -3,23 +3,17 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ErrorDeMonitorLWJGL implements VerificacionRapida {
+public class ErrorDeMonitorLWJGL implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-
-	/**
-	 * Bandera ligera para saber si el log contiene el texto base del error. Sirve
-	 * como filtro rápido antes del análisis por línea.
-	 */
-	private boolean posibleErrorMonitor = false;
 
 	private static final String TEXTO_ERROR = "org.lwjgl.LWJGLException: Failed to set display mode";
 
@@ -34,50 +28,22 @@ public class ErrorDeMonitorLWJGL implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_ERROR)) {
-			posibleErrorMonitor = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			posibleErrorMonitor = false;
-			return;
-		}
-
-		String contenidoConsola = consola.contenido_verificar;
-
-		// Trabajo global mínimo: solo comprobamos si aparece el texto del error.
-		// Si no está, la verificación por línea se saltará completamente.
-		posibleErrorMonitor = contenidoConsola.contains(TEXTO_ERROR);
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleErrorMonitor && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó o sabemos que no hay rastro del error en el log, no hacemos
-		// nada.
-		if (activado || !posibleErrorMonitor || linea == null) {
-			return;
-		}
 
 		// Verifica cada línea buscando el error específico
 		if (linea.contains(TEXTO_ERROR)) {
-			mensaje = MonitorDePID.idioma.errorMonitorLWJGL() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorMonitorLWJGL() + VerificacionesLegacy.nl_html;
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorDeMonitorLWJGL();
 	}
 

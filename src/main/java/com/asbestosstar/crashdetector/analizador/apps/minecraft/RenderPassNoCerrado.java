@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,10 +15,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Generalmente causado por conflictos en mods de renderizado.
  */
-public class RenderPassNoCerrado implements VerificacionRapida {
+public class RenderPassNoCerrado implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean analizarLineas = false;
 	private String enlace = "";
 
 	private static final String TEXTO_ERROR = "Close the existing render pass before performing additional commands";
@@ -34,41 +33,11 @@ public class RenderPassNoCerrado implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_ERROR)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		// Pre-check global para rendimiento
-		if (log.contains(TEXTO_ERROR)) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!analizarLineas || linea == null || activado)
-			return;
 
 		if (linea.contains(TEXTO_ERROR)) {
 
@@ -78,7 +47,7 @@ public class RenderPassNoCerrado implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new RenderPassNoCerrado();
 	}
 

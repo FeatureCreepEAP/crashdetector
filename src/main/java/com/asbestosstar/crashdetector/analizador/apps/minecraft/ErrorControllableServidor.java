@@ -4,9 +4,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,13 +14,12 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * error porque Controllable intenta cargar clases del cliente en un entorno de
  * servidor.
  */
-public class ErrorControllableServidor implements VerificacionRapida {
+public class ErrorControllableServidor implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
 	private boolean encontradoControllable = false;
-	public boolean posible = false;
 
 	private static final String CONTROLLABLE = "com.mrcrayfish.controllable";
 	private static final String BOOTSTRAP_METHOD_ERROR = "java.lang.BootstrapMethodError";
@@ -44,40 +43,7 @@ public class ErrorControllableServidor implements VerificacionRapida {
 			encontradoControllable = true;
 		}
 
-		if (evento.linea.contains(BOOTSTRAP_METHOD_ERROR) || evento.linea.contains(ATTEMPTED_TO_LOAD_CLASS)
-				|| evento.linea.contains(SCREEN_CLIENTE) || evento.linea.contains(INVALID_DIST_SERVER)) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — busca si Controllable está presente en el
-	 * contenido completo del registro.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Verificamos si Controllable está presente en el contenido del registro
-		if (consola.contenido_verificar.contains(CONTROLLABLE)) {
-			encontradoControllable = true;
-		}
-
-		if (encontradoControllable && consola.contenido_verificar.contains(BOOTSTRAP_METHOD_ERROR)
-				&& consola.contenido_verificar.contains(ATTEMPTED_TO_LOAD_CLASS)
-				&& consola.contenido_verificar.contains(SCREEN_CLIENTE)
-				&& consola.contenido_verificar.contains(INVALID_DIST_SERVER)) {
-			posible = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
 	}
 
 	/**
@@ -90,10 +56,6 @@ public class ErrorControllableServidor implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posible || activado || linea == null) {
-			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
 
 		if (linea.contains(CONTROLLABLE)) {
 			encontradoControllable = true;
@@ -108,13 +70,13 @@ public class ErrorControllableServidor implements VerificacionRapida {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Mensaje de error en HTML con referencia al uso incorrecto de Controllable
-			mensaje = MonitorDePID.idioma.errorControllableServidor() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorControllableServidor() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorControllableServidor();
 	}
 

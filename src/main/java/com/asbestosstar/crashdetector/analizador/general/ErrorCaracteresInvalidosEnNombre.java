@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,7 +15,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * a Java identifier". Incluye el nombre del módulo y la parte inválida en los
  * mensajes.
  */
-public class ErrorCaracteresInvalidosEnNombre implements VerificacionRapida {
+public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 
 	private static final String PREFIJO_EXCEPCION = "IllegalArgumentException: ";
 	private static final String TEXTO_ERROR = ": Invalid module name: '";
@@ -28,8 +28,6 @@ public class ErrorCaracteresInvalidosEnNombre implements VerificacionRapida {
 	private String parteInvalida = "";
 	private String enlaceHtml = "";
 
-	private boolean posibleErrorNombreInvalido = false;
-
 	@Override
 	public String[] patronesRapidos() {
 		return new String[] { TEXTO_ERROR_SIMPLE, TEXTO_FINAL };
@@ -41,36 +39,11 @@ public class ErrorCaracteresInvalidosEnNombre implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneNombreInvalido(evento.linea)) {
-			posibleErrorNombreInvalido = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			posibleErrorNombreInvalido = false;
-			return;
-		}
-
-		String contenidoConsola = consola.contenido_verificar;
-
-		posibleErrorNombreInvalido = contenidoConsola.contains(TEXTO_ERROR_SIMPLE)
-				&& contenidoConsola.contains(TEXTO_FINAL);
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleErrorNombreInvalido && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado || !posibleErrorNombreInvalido || linea == null) {
-			return;
-		}
 
 		if (!lineaContieneNombreInvalido(linea)) {
 			return;
@@ -87,7 +60,7 @@ public class ErrorCaracteresInvalidosEnNombre implements VerificacionRapida {
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 		mensaje = MonitorDePID.idioma.errorCaracteresInvalidosEnNombre(nombreModulo, parteInvalida)
-				+ Verificaciones.nl_html;
+				+ VerificacionesLegacy.nl_html;
 
 		activado = true;
 	}
@@ -136,7 +109,7 @@ public class ErrorCaracteresInvalidosEnNombre implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorCaracteresInvalidosEnNombre();
 	}
 

@@ -7,13 +7,13 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class WaterMediaVLC implements VerificacionRapida {
+public class WaterMediaVLC implements Verificaciones {
 	private boolean activado = false;
 	private String mensaje = "";
 
@@ -31,34 +31,13 @@ public class WaterMediaVLC implements VerificacionRapida {
 		}
 
 		if (evento.linea.contains(VLC_BINARIES_MISSING)) {
-			this.mensaje = MonitorDePID.idioma.noTienesVLCBin() + Verificaciones.nl_html;
+			this.mensaje = MonitorDePID.idioma.noTienesVLCBin() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		// Compatibilidad legacy: en modo streaming puro contenido_verificar puede ser
-		// nulo
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-		if (contenido.contains(VLC_BINARIES_MISSING)) {
-			this.mensaje = MonitorDePID.idioma.noTienesVLCBin() + Verificaciones.nl_html;
-			activado = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return false;
-
-	}
-
-	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new WaterMediaVLC();
 	}
 

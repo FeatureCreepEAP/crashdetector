@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -19,10 +19,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Causado generalmente por tener una versión de Simple Radio incompatible con
  * la versión instalada de Lexiconfig.
  */
-public class ErrorSimpleRadioLexiconfig implements VerificacionRapida {
+public class ErrorSimpleRadioLexiconfig implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean analizarLineas = false;
 	private boolean vioSimpleRadio = false;
 	private boolean vioLexiconfig = false;
 	private String enlace = "";
@@ -52,39 +51,11 @@ public class ErrorSimpleRadioLexiconfig implements VerificacionRapida {
 			vioLexiconfig = true;
 		}
 
-		if (vioSimpleRadio && vioLexiconfig) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		// Pre-check global: Verificamos que ambas clases aparezcan en el log
-		if (log.contains(SIMPLE_RADIO_LIBRARY) && log.contains(LEXICONFIG_API)) {
-			analizarLineas = true;
-			vioSimpleRadio = true;
-			vioLexiconfig = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!analizarLineas || linea == null || activado) {
-			return;
-		}
 
 		// Buscamos la línea específica del crash en SimpleRadioLibrary
 		if (linea.contains(SIMPLE_RADIO_SHELVE_LEXICONS)) {
@@ -94,7 +65,7 @@ public class ErrorSimpleRadioLexiconfig implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorSimpleRadioLexiconfig();
 	}
 

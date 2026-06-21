@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -30,16 +30,13 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * no está instalado, está en una versión incorrecta, o tiene incompatibilidades
  * / contenido removido.
  */
-public class ItemNoExiste implements VerificacionRapida {
+public class ItemNoExiste implements Verificaciones {
 
 	// Tipos aceptados en el mensaje original de la excepción
 	private static final String[] TIPOS_REGISTRO = { "Item:", "Block:", "Fluid:" };
 
 	private static final String PREFIJO_BASE = "java.lang.IllegalStateException: ";
 	private static final String SUFIJO = " does not exist";
-
-	// Indica si el log contiene el patrón general del problema
-	private boolean posibleError = false;
 
 	// Indica si esta verificación ya fue activada
 	private boolean activado = false;
@@ -64,41 +61,11 @@ public class ItemNoExiste implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneItemNoExiste(evento.linea)) {
-			posibleError = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Detección global ligera para evitar trabajo innecesario por línea
-		if (consola.contenido_verificar.contains(PREFIJO_BASE) && consola.contenido_verificar.contains(SUFIJO)) {
-			for (String tipo : TIPOS_REGISTRO) {
-				if (consola.contenido_verificar.contains(tipo)) {
-					posibleError = true;
-					return;
-				}
-			}
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleError && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		// Salir temprano si no hay indicios globales o si ya fue activado
-		if (!posibleError || activado || linea == null) {
-			return;
-		}
 
 		if (!linea.contains(PREFIJO_BASE) || !linea.contains(SUFIJO)) {
 			return;
@@ -162,7 +129,7 @@ public class ItemNoExiste implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ItemNoExiste();
 	}
 

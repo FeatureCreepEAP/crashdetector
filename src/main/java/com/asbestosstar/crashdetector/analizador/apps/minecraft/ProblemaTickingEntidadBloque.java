@@ -3,11 +3,11 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -19,7 +19,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * "Description: Ticking entity" - "-- Entity being ticked --" + "Entity Type:"
  * + "Entity Name:" + "Entity's Block location: World: (x,y,z)"
  */
-public class ProblemaTickingEntidadBloque implements VerificacionRapida {
+public class ProblemaTickingEntidadBloque implements Verificaciones {
 
 	// Estado final
 	private boolean activado = false;
@@ -29,9 +29,6 @@ public class ProblemaTickingEntidadBloque implements VerificacionRapida {
 	private int[] coordenadas = new int[] { 0, 0, 0 }; // [x,y,z]
 	private boolean coordenadasValidas = false;
 	private String enlaceHtml = "";
-
-	// Flags globales
-	private boolean hayTickingEnLog = false;
 
 	// Control de activación al ver "Description"
 	private int lineaDescription = -1;
@@ -43,7 +40,6 @@ public class ProblemaTickingEntidadBloque implements VerificacionRapida {
 
 	private boolean seccionEntidadBloqueTickeadaActiva = false;
 	private int lineaInicioSeccionBloque = -1;
-	private boolean posibleTicking = false;
 
 	// Ventanas de parseo (conservadoras pero amplias)
 	private static final int VENTANA_DESDE_DESCRIPTION = 600; // para cubrir casos donde los detalles están lejos
@@ -65,36 +61,11 @@ public class ProblemaTickingEntidadBloque implements VerificacionRapida {
 			return;
 		}
 
-		posibleTicking = true;
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
-		if (contenido == null) {
-			hayTickingEnLog = false;
-			return;
-		}
-		String lower = contenido;
-		hayTickingEnLog = lower.contains("Description: Ticking block entity")
-				|| lower.contains("Description: Ticking entity");// TODO eliminar lower
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!hayTickingEnLog)
-			return false;
-
-		return true;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!hayTickingEnLog || linea == null) {
-			return;
-		}
 
 		String l = linea.trim();
 		String lower = l;
@@ -336,7 +307,7 @@ public class ProblemaTickingEntidadBloque implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaTickingEntidadBloque();
 	}
 

@@ -3,22 +3,21 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta el uso de FreeCam en un servidor dedicado, lo cual provoca un error
  * porque FreeCam intenta cargar clases del cliente en un entorno de servidor.
  */
-public class ErrorFreeCamServidor implements VerificacionRapida {
+public class ErrorFreeCamServidor implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoErrorLocalPlayer = false;
 
 	private static final String LOCAL_PLAYER_SERVER_ERROR = "Attempted to load class net/minecraft/client/player/LocalPlayer for invalid dist DEDICATED_SERVER";
 	private static final String FAILED_TO_CREATE_MOD_INSTANCE = "Failed to create mod instance";
@@ -36,25 +35,7 @@ public class ErrorFreeCamServidor implements VerificacionRapida {
 			return;
 		}
 
-		// Verificamos si el error de LocalPlayer para servidor dedicado está presente
-		// en la línea que disparó el patrón rápido.
-		if (evento.linea.contains(LOCAL_PLAYER_SERVER_ERROR)) {
-			encontradoErrorLocalPlayer = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return encontradoErrorLocalPlayer && !activado;
 	}
 
 	/**
@@ -66,10 +47,6 @@ public class ErrorFreeCamServidor implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!encontradoErrorLocalPlayer || activado || linea == null) {
-			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
 
 		// Buscamos la línea que contiene ambos elementos clave en una sola línea
 		if (linea.contains(FAILED_TO_CREATE_MOD_INSTANCE) && linea.contains(FREECAM_MOD_ID)
@@ -79,13 +56,13 @@ public class ErrorFreeCamServidor implements VerificacionRapida {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Mensaje de error en HTML con referencia al uso incorrecto de FreeCam
-			mensaje = MonitorDePID.idioma.errorFreeCamServidor() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorFreeCamServidor() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorFreeCamServidor();
 	}
 

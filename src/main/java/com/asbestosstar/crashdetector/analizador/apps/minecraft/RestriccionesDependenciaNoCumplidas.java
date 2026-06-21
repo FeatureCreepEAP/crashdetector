@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 import java.util.ArrayList;
@@ -23,12 +23,11 @@ import java.util.Map;
  * Ejemplo: net.minecraftforge.fml.loading.EarlyLoadingException: 3 Dependency
  * restrictions were not met.
  */
-public class RestriccionesDependenciaNoCumplidas implements VerificacionRapida {
+public class RestriccionesDependenciaNoCumplidas implements Verificaciones {
 
 	private boolean activado = false;
 	private String enlace = "";
 	private String cantidad = "varias";
-	public boolean analizarLineas;
 
 	// Mapa: Nombre del Archivo -> Lista de dependencias solicitadas
 	private Map<String, List<String>> conflictosPorMod = new HashMap<>();
@@ -55,42 +54,11 @@ public class RestriccionesDependenciaNoCumplidas implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (linea.contains(EARLY_LOADING_EXCEPTION) || linea.contains(DEPENDENCY_RESTRICTIONS)
-				|| linea.contains(FAILED_TO_SELECT_JARS) || linea.contains(RESOLUTION_FAILURE)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		// Global check barato: solo activa si están las piezas necesarias.
-		if (log.contains(EARLY_LOADING_EXCEPTION) && log.contains(DEPENDENCY_RESTRICTIONS)
-				&& (log.contains(FAILED_TO_SELECT_JARS) || log.contains(RESOLUTION_FAILURE))) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!analizarLineas)
-			return false;
-
-		return true;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!analizarLineas || consola == null || linea == null) {
-			return;
-		}
 
 		// Línea principal con la cantidad.
 		if (linea.contains(EARLY_LOADING_EXCEPTION) && linea.contains(DEPENDENCY_RESTRICTIONS)) {
@@ -242,7 +210,7 @@ public class RestriccionesDependenciaNoCumplidas implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new RestriccionesDependenciaNoCumplidas();
 	}
 

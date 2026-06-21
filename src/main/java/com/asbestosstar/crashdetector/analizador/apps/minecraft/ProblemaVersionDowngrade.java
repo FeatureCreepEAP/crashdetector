@@ -3,11 +3,11 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,9 +15,8 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * reciente de Minecraft. Gracias a Aternos porque esta es una implementacion de
  * su codex: https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaVersionDowngrade implements VerificacionRapida {
+public class ProblemaVersionDowngrade implements Verificaciones {
 
-	private boolean posibleVersionDowngrade = false;
 	private boolean activado = false;
 
 	private String mensaje = "";
@@ -36,31 +35,7 @@ public class ProblemaVersionDowngrade implements VerificacionRapida {
 			return;
 		}
 
-		posibleVersionDowngrade = true;
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificacion global ligera.
-	 *
-	 * Se ejecuta primero. No se limpian campos porque esta verificacion puede
-	 * ejecutarse sobre varios archivos de log con la misma instancia.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		if (consola.contenido_verificar.contains(TEXTO_ERROR)) {
-			posibleVersionDowngrade = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleVersionDowngrade && !activado;
 	}
 
 	/**
@@ -70,9 +45,6 @@ public class ProblemaVersionDowngrade implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleVersionDowngrade || activado || linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		if (!esLineaVersionDowngrade(linea)) {
 			return;
@@ -144,7 +116,7 @@ public class ProblemaVersionDowngrade implements VerificacionRapida {
 	 * Crea una nueva instancia del verificador.
 	 */
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaVersionDowngrade();
 	}
 

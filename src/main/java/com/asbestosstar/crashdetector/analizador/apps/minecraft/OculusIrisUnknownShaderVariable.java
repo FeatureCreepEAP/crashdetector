@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -26,13 +26,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * pack de shaders incompatible, o una combinación conflictiva entre shaders y
  * otros mods gráficos.
  */
-public class OculusIrisUnknownShaderVariable implements VerificacionRapida {
-
-	// Indica si apareció la traza típica del resolvedor de expresiones
-	private boolean indicioResolver = false;
-
-	// Indica si apareció el error de variable desconocida
-	private boolean indicioVariableDesconocida = false;
+public class OculusIrisUnknownShaderVariable implements Verificaciones {
 
 	// Indica si esta verificación ya quedó activada
 	private boolean activado = false;
@@ -54,46 +48,11 @@ public class OculusIrisUnknownShaderVariable implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(EXPRESSION_RESOLVER)) {
-			indicioResolver = true;
-		}
-
-		if (evento.linea.contains(UNKNOWN_VARIABLE)) {
-			indicioVariableDesconocida = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Búsqueda global ligera para evitar trabajo innecesario por línea
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(EXPRESSION_RESOLVER)) {
-			indicioResolver = true;
-		}
-
-		if (contenido.contains(UNKNOWN_VARIABLE)) {
-			indicioVariableDesconocida = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return indicioResolver && indicioVariableDesconocida && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		// Si no están ambos indicios globales, esta verificación no aplica
-		if (activado || !indicioResolver || !indicioVariableDesconocida || linea == null) {
-			return;
-		}
 
 		// Guardamos como enlace la línea más útil para el usuario
 		if (linea.contains(UNKNOWN_VARIABLE)) {
@@ -111,7 +70,7 @@ public class OculusIrisUnknownShaderVariable implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new OculusIrisUnknownShaderVariable();
 	}
 

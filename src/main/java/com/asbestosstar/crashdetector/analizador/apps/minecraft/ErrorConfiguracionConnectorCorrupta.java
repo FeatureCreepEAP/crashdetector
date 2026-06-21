@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,11 +14,10 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * corrupto, típicamente lleno de caracteres nulos (\u0000), lo que impide que
  * el mod inicie.
  */
-public class ErrorConfiguracionConnectorCorrupta implements VerificacionRapida {
+public class ErrorConfiguracionConnectorCorrupta implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
-	private boolean analizarLineas = false;
 
 	private boolean vioConnectorConfig = false;
 	private boolean vioErrorConfig = false;
@@ -41,34 +40,11 @@ public class ErrorConfiguracionConnectorCorrupta implements VerificacionRapida {
 			return;
 		}
 
-		analizarLineas = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		if (log.contains(CONNECTOR_CONFIG) && log.contains(ERROR_LOADING_CONFIG) && log.contains(NOT_JSON_NUL)) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!analizarLineas || this.activado || linea == null) {
-			return;
-		}
 
 		if (linea.contains(CONNECTOR_CONFIG)) {
 			vioConnectorConfig = true;
@@ -100,7 +76,7 @@ public class ErrorConfiguracionConnectorCorrupta implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorConfiguracionConnectorCorrupta();
 	}
 

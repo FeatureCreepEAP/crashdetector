@@ -6,11 +6,11 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,7 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * 'plugins'.Gracias a Aternos por que esta es una implementacion de su codex
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaNombrePluginAmbiguo implements VerificacionRapida {
+public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -47,51 +47,11 @@ public class ProblemaNombrePluginAmbiguo implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneIndicioPluginAmbiguo(evento.linea)) {
-			this.analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verifica si el log contiene errores de nombre ambiguo de plugins.
-	 * 
-	 * Se hace un chequeo global barato para decidir si vale la pena analizar línea
-	 * por línea.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		// Chequeo global barato:
-		// si el log no contiene la señal principal, no analizamos línea por línea.
-		if (contenido.contains(TEXTO_BASE) && contenido.contains(TEXTO_FILES) && contenido.contains(TEXTO_AND)) {
-
-			this.analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!analizarLineas) {
-			return;
-		}
-
-		if (linea == null) {
-			return;
-		}
 
 		ResultadoAmbiguo resultado = extraerDatos(linea);
 
@@ -271,7 +231,7 @@ public class ProblemaNombrePluginAmbiguo implements VerificacionRapida {
 	 * Crea una nueva instancia del verificador.
 	 */
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaNombrePluginAmbiguo();
 	}
 

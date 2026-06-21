@@ -15,7 +15,8 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.config.json.Json;
@@ -27,7 +28,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * que sí están instalados. Usa los 3 métodos disponibles para encontrar mods
  * instalados y elimina duplicados.
  */
-public class TienesModDesAnimado implements Verificaciones {
+public class TienesModDesAnimado implements VerificacionesLegacy {
 
 	public static final Path ARCHIVO_DESANIMADOS = Statics.carpeta.resolve("mods_desanimados.json");
 	private boolean activado = false;
@@ -36,7 +37,17 @@ public class TienesModDesAnimado implements Verificaciones {
 	boolean completa = false;
 
 	@Override
-	public void verificar(Consola consola) {
+	public String[] patronesRapidos() {
+		// No necesita activar por línea.
+		// Usa vdst.trazos_completos en finalizarArchivo().
+		verificar();
+		return new String[0];
+	}
+
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+	}
+
+	public void verificar() {
 
 		if (completa) {
 			return;
@@ -208,19 +219,13 @@ public class TienesModDesAnimado implements Verificaciones {
 		}
 	}
 
-	@Override
-	public boolean quiereAnalizarLineas() {
-
-		return false;
-	}
-
 	private static Set<String> obtenerMods(Path archivo) throws IOException {
 		return Files.readAllLines(archivo).stream().filter(line -> !line.trim().isEmpty())
 				.map(line -> line.replace(MonitorDePID.ultimo_mods.toString(), ".")).collect(Collectors.toSet());
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new TienesModDesAnimado();
 	}
 

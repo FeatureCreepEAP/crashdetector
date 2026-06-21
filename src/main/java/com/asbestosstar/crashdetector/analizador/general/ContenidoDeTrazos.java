@@ -20,11 +20,11 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.LineaTrazo;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -36,7 +36,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * (global). - No duplicar items dentro del mismo log. - CFR siempre basado en
  * la clase de la linea.
  */
-public class ContenidoDeTrazos implements VerificacionRapida {
+public class ContenidoDeTrazos implements Verificaciones {
 
 	public boolean activado = false;
 
@@ -130,7 +130,7 @@ public class ContenidoDeTrazos implements VerificacionRapida {
 		}
 
 		List<Map.Entry<Integer, TraceInfo>> entradas_nivel_trazo = new ArrayList<>(vdst.nivel_trazo.entrySet());
-		final List<Verificaciones> verificaciones_activadas = new ArrayList<>(
+		final List<VerificacionesLegacy> verificaciones_activadas = new ArrayList<>(
 				MonitorDePID.analizador.verificaciones_activados);
 
 		final int total = entradas_nivel_trazo.size();
@@ -145,7 +145,7 @@ public class ContenidoDeTrazos implements VerificacionRapida {
 			for (Map.Entry<Integer, TraceInfo> entrada : entradas_nivel_trazo) {
 				Integer nivel = entrada.getKey();
 				TraceInfo trazo = entrada.getValue();
-				for (Verificaciones verif : verificaciones_activadas) {
+				for (VerificacionesLegacy verif : verificaciones_activadas) {
 					try {
 						if (verif.ocupaTrazo(trazo)) {
 							niveles_ocupados.add(nivel);
@@ -174,7 +174,7 @@ public class ContenidoDeTrazos implements VerificacionRapida {
 					Map.Entry<Integer, TraceInfo> entrada = entradas_nivel_trazo.get(i);
 					Integer nivel = entrada.getKey();
 					TraceInfo trazo = entrada.getValue();
-					for (Verificaciones verif : verificaciones_activadas) {
+					for (VerificacionesLegacy verif : verificaciones_activadas) {
 						try {
 							if (verif.ocupaTrazo(trazo)) {
 								niveles_locales.add(nivel);
@@ -287,11 +287,6 @@ public class ContenidoDeTrazos implements VerificacionRapida {
 	@Override
 	public void finalizarArchivo(Consola consola,
 			com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo estado) {
-		verificar(consola);
-	}
-
-	@Override
-	public void verificar(Consola consola) {
 
 		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 		if (vdst == null)
@@ -427,6 +422,7 @@ public class ContenidoDeTrazos implements VerificacionRapida {
 		sb.append("</ul>");
 
 		contento.put(consola.archivo.getFileName().toString(), new StringBuilder(sb.toString().trim()));
+
 	}
 
 	public boolean quiereAnalizarLineas() {
@@ -454,7 +450,7 @@ public class ContenidoDeTrazos implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ContenidoDeTrazos();
 	}
 

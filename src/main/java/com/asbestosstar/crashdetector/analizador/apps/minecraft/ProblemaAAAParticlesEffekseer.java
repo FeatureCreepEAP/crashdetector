@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,11 +18,10 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Problematic frame: C [EffekseerNativeForJava.dll+...]
  */
-public class ProblemaAAAParticlesEffekseer implements VerificacionRapida {
+public class ProblemaAAAParticlesEffekseer implements Verificaciones {
 
 	private boolean activado = false;
 	private String enlace = "";
-	public boolean posible = false;
 
 	private static final String PROBLEMATIC_FRAME = "Problematic frame:";
 	private static final String EFFEKSEER_SO = "[libEffekseerNativeForJava.so";
@@ -40,40 +39,11 @@ public class ProblemaAAAParticlesEffekseer implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneEffekseer(evento.linea)) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		// Pre-check global rápido
-		if (!log.contains(PROBLEMATIC_FRAME))
-			return;
-
-		if (log.contains(EFFEKSEER_SO) || log.contains(EFFEKSEER_DLL)) {
-			posible = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (activado || linea == null || !posible)
-			return;
 
 		if (linea.contains(EFFEKSEER_SO) || linea.contains(EFFEKSEER_DLL)) {
 
@@ -87,7 +57,7 @@ public class ProblemaAAAParticlesEffekseer implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaAAAParticlesEffekseer();
 	}
 

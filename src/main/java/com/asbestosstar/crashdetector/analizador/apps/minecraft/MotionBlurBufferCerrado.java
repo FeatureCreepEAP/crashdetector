@@ -3,17 +3,13 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class MotionBlurBufferCerrado implements VerificacionRapida {
-
-	// Indica si el log contiene indicios globales del error.
-	// Se usan dos líneas separadas para reducir falsos positivos.
-	private boolean posibleProblemaMotionBlur = false;
+public class MotionBlurBufferCerrado implements Verificaciones {
 
 	// Indica si esta verificación fue activada
 	private boolean activado = false;
@@ -35,38 +31,11 @@ public class MotionBlurBufferCerrado implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneMotionBlur(evento.linea)) {
-			posibleProblemaMotionBlur = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Detección global ligera: la clase de Motion Blur junto con el mensaje
-		// "Buffer already closed" suele indicar un problema del mod Motion Blur.
-		if (consola.contenido_verificar.contains(MOTION_BLUR_STACK)
-				&& consola.contenido_verificar.contains(BUFFER_ALREADY_CLOSED)) {
-			posibleProblemaMotionBlur = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleProblemaMotionBlur && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		// Salir temprano si no hay indicios globales
-		if (!posibleProblemaMotionBlur || activado || linea == null) {
-			return;
-		}
 
 		// Verificación precisa en la línea del error principal.
 		if (linea.contains(BUFFER_ALREADY_CLOSED)) {
@@ -88,7 +57,7 @@ public class MotionBlurBufferCerrado implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new MotionBlurBufferCerrado();
 	}
 

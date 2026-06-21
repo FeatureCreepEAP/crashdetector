@@ -7,10 +7,10 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -21,7 +21,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Iris Flywheel 2.0 para Create 6 solo es compatible oficialmente con NeoForge.
  */
-public class ConflictoIrisFlywheelCreate implements VerificacionRapida {
+public class ConflictoIrisFlywheelCreate implements Verificaciones {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -55,26 +55,6 @@ public class ConflictoIrisFlywheelCreate implements VerificacionRapida {
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		// Modo streaming puro: puede no existir contenido_verificar
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		// Pre-check global: deben existir ambas cadenas
-		if (log.contains(TESSELATION_SHADERS) && log.contains(IRISFLW)) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (!analizarLineas || linea == null || activado) {
 			return;
@@ -103,7 +83,7 @@ public class ConflictoIrisFlywheelCreate implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ConflictoIrisFlywheelCreate();
 	}
 

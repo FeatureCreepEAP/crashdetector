@@ -3,22 +3,21 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta problemas con Reign of Nether que causan un error de Registry Object
  * no presente en MusicManager, relacionado con el mixin de MusicManager.
  */
-public class ErrorReignOfNetherMusicManager implements VerificacionRapida {
+public class ErrorReignOfNetherMusicManager implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoReignOfNether = false;
 
 	private static final String MIXIN_MUSIC_MANAGER = "Mixin class: com.solegendary.reignofnether.mixin.MusicManagerMixin";
 	private static final String MUSIC_MANAGER = "at net.minecraft.client.sounds.MusicManager";
@@ -35,32 +34,7 @@ public class ErrorReignOfNetherMusicManager implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(MIXIN_MUSIC_MANAGER)) {
-			encontradoReignOfNether = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — busca si Reign of Nether está presente en el
-	 * contenido completo del registro.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Verificamos si Reign of Nether está presente en el contenido del registro
-		if (consola.contenido_verificar.contains(MIXIN_MUSIC_MANAGER)) {
-			encontradoReignOfNether = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return encontradoReignOfNether && !activado;
 	}
 
 	/**
@@ -72,10 +46,6 @@ public class ErrorReignOfNetherMusicManager implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado || !encontradoReignOfNether || linea == null) {
-			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
 
 		// Buscamos la línea específica con el handler de mixin de MusicManager
 		if (linea.contains(MUSIC_MANAGER) && linea.contains(REIGN_OF_NETHER_TICK)) {
@@ -84,13 +54,13 @@ public class ErrorReignOfNetherMusicManager implements VerificacionRapida {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Mensaje de error en HTML con referencia al problema de Reign of Nether
-			mensaje = MonitorDePID.idioma.errorReignOfNetherMusicManager() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorReignOfNetherMusicManager() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorReignOfNetherMusicManager();
 	}
 

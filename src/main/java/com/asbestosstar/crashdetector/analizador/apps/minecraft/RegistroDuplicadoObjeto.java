@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -20,10 +20,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * mismo nombre. - Conflictos de IDs entre mods. - Error interno de un mod al no
  * verificar si el nombre ya está en uso.
  */
-public class RegistroDuplicadoObjeto implements VerificacionRapida {
+public class RegistroDuplicadoObjeto implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean analizarLineas = false;
 	private String enlace = "";
 	private String mod1 = "";
 	private String mod2 = "";
@@ -45,38 +44,11 @@ public class RegistroDuplicadoObjeto implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_ILLEGAL_ARGUMENT) || evento.linea.contains(TEXTO_REGISTERED_TWICE)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null)
-			return;
-
-		String log = consola.contenido_verificar;
-
-		// Pre-check global para activar el análisis línea por línea
-		if (log.contains(TEXTO_ILLEGAL_ARGUMENT) && log.contains(TEXTO_REGISTERED_TWICE)) {
-
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!analizarLineas || linea == null || activado)
-			return;
 
 		if (linea.contains(TEXTO_ILLEGAL_ARGUMENT) && linea.contains(TEXTO_REGISTERED_TWICE)) {
 
@@ -145,7 +117,7 @@ public class RegistroDuplicadoObjeto implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new RegistroDuplicadoObjeto();
 	}
 

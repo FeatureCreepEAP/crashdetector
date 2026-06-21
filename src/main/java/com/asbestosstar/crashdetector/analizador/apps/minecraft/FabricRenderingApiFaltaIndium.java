@@ -3,16 +3,13 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class FabricRenderingApiFaltaIndium implements VerificacionRapida {
-
-	// Indica si el log contiene indicios globales del error
-	private boolean posibleFaltaRenderingApi = false;
+public class FabricRenderingApiFaltaIndium implements Verificaciones {
 
 	// Indica si esta verificación fue activada
 	private boolean activado = false;
@@ -37,40 +34,11 @@ public class FabricRenderingApiFaltaIndium implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneErrorRenderingApi(evento.linea)) {
-			posibleFaltaRenderingApi = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Detección global ligera: este error aparece cuando RendererAccess no puede
-		// obtener un renderer válido. Suele estar relacionado con Fabric Rendering API,
-		// Sodium e Indium.
-		if (consola.contenido_verificar.contains(MATERIAL_FINDER_COMPLETO)
-				&& consola.contenido_verificar.contains(RENDERER_ACCESS)
-				&& consola.contenido_verificar.contains(IS_NULL)) {
-			posibleFaltaRenderingApi = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleFaltaRenderingApi && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		// Salir temprano si no hay indicios globales
-		if (!posibleFaltaRenderingApi || activado || linea == null) {
-			return;
-		}
 
 		// Verificación precisa en la línea principal del error
 		if (lineaContieneErrorRenderingApi(linea)) {
@@ -85,7 +53,7 @@ public class FabricRenderingApiFaltaIndium implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new FabricRenderingApiFaltaIndium();
 	}
 

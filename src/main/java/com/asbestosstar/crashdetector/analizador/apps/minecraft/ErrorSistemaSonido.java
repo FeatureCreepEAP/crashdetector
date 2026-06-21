@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,10 +14,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * error "Error starting SoundSystem. Turning off sounds & music" asociado con
  * SoundPhysicsMod.
  */
-public class ErrorSistemaSonido implements VerificacionRapida {
+public class ErrorSistemaSonido implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean posible = false;
 
 	private String mensaje = "";
 	private String enlaceHtml = "";
@@ -35,34 +34,7 @@ public class ErrorSistemaSonido implements VerificacionRapida {
 			return;
 		}
 
-		posible = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global no utilizada en este verificador.
-	 * <p>
-	 * La detección real se hace por línea en
-	 * {@link #verificarPorLinea(Consola, String, int)}, llamada por el analizador
-	 * línea a línea.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		if (log.contains(TEXTO_ERROR)) {
-			posible = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
 	}
 
 	/**
@@ -74,20 +46,16 @@ public class ErrorSistemaSonido implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó, no seguimos procesando más líneas.
-		if (activado || !posible || linea == null) {
-			return;
-		}
 
 		if (linea.contains(TEXTO_ERROR)) {
-			mensaje = MonitorDePID.idioma.errorSistemaSonido() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorSistemaSonido() + VerificacionesLegacy.nl_html;
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorSistemaSonido();
 	}
 

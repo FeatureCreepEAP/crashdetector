@@ -4,12 +4,12 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class Segundo60Tick implements VerificacionRapida {
+public class Segundo60Tick implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -29,34 +29,13 @@ public class Segundo60Tick implements VerificacionRapida {
 		}
 
 		if (evento.linea.contains(PATRON)) {
-			this.mensaje = MonitorDePID.idioma.segundo60Tick() + Verificaciones.nl_html;
+			this.mensaje = MonitorDePID.idioma.segundo60Tick() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contento_de_consola = consola.contenido_verificar;
-
-		// Verifica la presencia del error de tick crítico
-		if (contento_de_consola.contains(PATRON)) {
-			this.mensaje = MonitorDePID.idioma.segundo60Tick() + Verificaciones.nl_html;
-			activado = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-
-		return false;
-	}
-
-	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new Segundo60Tick();
 	}
 

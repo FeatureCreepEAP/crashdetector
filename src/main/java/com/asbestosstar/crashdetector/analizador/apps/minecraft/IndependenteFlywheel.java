@@ -6,16 +6,15 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class IndependenteFlywheel implements VerificacionRapida {
+public class IndependenteFlywheel implements Verificaciones {
 
-	boolean tiene_uno = false;
 	public Set<String> mods = new HashSet<>();
 	boolean activado = false;
 	String enlace = "";
@@ -36,7 +35,6 @@ public class IndependenteFlywheel implements VerificacionRapida {
 		}
 
 		if (evento.linea.contains(FLYWHEEL_IS_1)) {
-			tiene_uno = true;
 			mods.addAll(Buscador.obtenerModsConNombre("flywheel"));
 		}
 
@@ -44,26 +42,8 @@ public class IndependenteFlywheel implements VerificacionRapida {
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		// TODO Auto-generated method stub
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		if (consola.contenido_verificar.contains(FLYWHEEL_IS_1)) {
-			tiene_uno = true;
-
-			mods.addAll(Buscador.obtenerModsConNombre("flywheel"));
-		}
-
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// TODO Auto-generated method stub
-		if (!tiene_uno || activado || linea == null) {
-			return;
-		}
 
 		if (linea.contains(REQUIRES_FLYWHEEL) && linea.contains(AND_BELOW_0)) {
 			this.enlace = consola.agregarErrorALectador(num, this);
@@ -72,12 +52,7 @@ public class IndependenteFlywheel implements VerificacionRapida {
 	}
 
 	@Override
-	public boolean quiereAnalizarLineas() {
-		return tiene_uno && !activado;
-	}
-
-	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		// TODO Auto-generated method stub
 		return new IndependenteFlywheel();
 	}

@@ -4,9 +4,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,13 +14,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * crítica relacionado con EntityRenderDispatcher durante la inicialización del
  * juego.
  */
-public class ConflictoOptiFineFusion implements VerificacionRapida {
+public class ConflictoOptiFineFusion implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoOptiFine = false;
-	public boolean analizarLineas = false;
 
 	private static final String OPTIFINE_MINUSCULA = "optifine";
 	private static final String OPTIFINE_MIXTA = "Optifine";
@@ -46,27 +44,7 @@ public class ConflictoOptiFineFusion implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (contieneOptiFine(linea)) {
-			encontradoOptiFine = true;
-		}
-
-		if (lineaContieneErrorFusion(linea)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	/**
@@ -83,10 +61,6 @@ public class ConflictoOptiFineFusion implements VerificacionRapida {
 			return;
 		}
 
-		if (!analizarLineas || !encontradoOptiFine) {
-			return;
-		}
-
 		// Verificamos si la línea contiene el error de inyección crítica de Fusion con
 		// EntityRenderDispatcher
 		if (lineaContieneErrorFusion(linea)) {
@@ -94,7 +68,7 @@ public class ConflictoOptiFineFusion implements VerificacionRapida {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Mensaje de error en HTML con referencia al conflicto entre OptiFine y Fusion
-			mensaje = MonitorDePID.idioma.errorConflictoOptiFineFusion() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorConflictoOptiFineFusion() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
@@ -111,7 +85,7 @@ public class ConflictoOptiFineFusion implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ConflictoOptiFineFusion();
 	}
 
@@ -159,7 +133,7 @@ public class ConflictoOptiFineFusion implements VerificacionRapida {
 			return false;
 		}
 
-		return lineaContieneErrorFusion(trazo.trace) && encontradoOptiFine;
+		return lineaContieneErrorFusion(trazo.trace);
 	}
 
 	@Override

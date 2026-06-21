@@ -3,11 +3,11 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,9 +15,8 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Aternos porque esta es una implementacion de su codex:
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaExcepcionComandoPlugin implements VerificacionRapida {
+public class ProblemaExcepcionComandoPlugin implements Verificaciones {
 
-	private boolean posibleExcepcionComandoPlugin = false;
 	private boolean activado = false;
 
 	private String mensaje = "";
@@ -40,24 +39,7 @@ public class ProblemaExcepcionComandoPlugin implements VerificacionRapida {
 			return;
 		}
 
-		posibleExcepcionComandoPlugin = true;
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificacion global ligera.
-	 *
-	 * Se ejecuta primero. No se limpian campos porque esta verificacion puede
-	 * ejecutarse sobre varios archivos de log con la misma instancia.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleExcepcionComandoPlugin && !activado;
 	}
 
 	/**
@@ -68,9 +50,6 @@ public class ProblemaExcepcionComandoPlugin implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleExcepcionComandoPlugin || activado || linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		DatosComandoPlugin datos = extraerDatosComandoPlugin(linea);
 
@@ -82,8 +61,8 @@ public class ProblemaExcepcionComandoPlugin implements VerificacionRapida {
 		this.nombrePlugin = datos.nombrePlugin;
 		this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 
-		this.mensaje = MonitorDePID.idioma.mensajeExcepcionComandoPlugin(nombrePlugin, comando) + Verificaciones.nl_html
-				+ enlace;
+		this.mensaje = MonitorDePID.idioma.mensajeExcepcionComandoPlugin(nombrePlugin, comando)
+				+ VerificacionesLegacy.nl_html + enlace;
 
 		activado = true;
 	}
@@ -162,7 +141,7 @@ public class ProblemaExcepcionComandoPlugin implements VerificacionRapida {
 	 * Crea una nueva instancia del verificador.
 	 */
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaExcepcionComandoPlugin();
 	}
 

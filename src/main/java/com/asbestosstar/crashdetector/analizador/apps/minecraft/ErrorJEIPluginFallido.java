@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,10 +15,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * mod plugin: class [clase] [modid]:[plugin_id]". Este error puede causar
  * crashes durante la inicialización del juego.
  */
-public class ErrorJEIPluginFallido implements VerificacionRapida {
+public class ErrorJEIPluginFallido implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean posible = false;
 
 	private String mensaje = "";
 	private String nombreClase = "";
@@ -39,28 +38,7 @@ public class ErrorJEIPluginFallido implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_ERROR)) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global barata.
-	 * <p>
-	 * Solo revisa si el texto base aparece en el log completo. Así evitamos hacer
-	 * trabajo línea por línea cuando este error claramente no aparece.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		// Método de compatibilidad — no hace nada en modo rápido/streaming.
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
 	}
 
 	/**
@@ -73,15 +51,6 @@ public class ErrorJEIPluginFallido implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó o el chequeo global dijo que no es posible,
-		// no seguimos revisando líneas.
-		if (activado || !posible) {
-			return;
-		}
-
-		if (linea == null) {
-			return;
-		}
 
 		int inicio = linea.indexOf(TEXTO_ERROR);
 		if (inicio < 0) {
@@ -153,13 +122,14 @@ public class ErrorJEIPluginFallido implements VerificacionRapida {
 			return;
 		}
 
-		mensaje = MonitorDePID.idioma.errorJEIPluginFallido(nombreClase, modId, pluginId) + Verificaciones.nl_html;
+		mensaje = MonitorDePID.idioma.errorJEIPluginFallido(nombreClase, modId, pluginId)
+				+ VerificacionesLegacy.nl_html;
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 		activado = true;
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorJEIPluginFallido();
 	}
 

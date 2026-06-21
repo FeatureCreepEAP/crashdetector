@@ -3,11 +3,11 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,9 +15,8 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * es una implementacion de su codex:
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaModIncompatibleFabric implements VerificacionRapida {
+public class ProblemaModIncompatibleFabric implements Verificaciones {
 
-	private boolean posibleModIncompatibleFabric = false;
 	private boolean activado = false;
 
 	private String mensaje = "";
@@ -43,37 +42,7 @@ public class ProblemaModIncompatibleFabric implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneIndicioIncompatibilidadFabric(evento.linea)) {
-			posibleModIncompatibleFabric = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificacion global ligera.
-	 *
-	 * Se ejecuta primero. No se limpian campos porque esta verificacion puede
-	 * ejecutarse sobre varios archivos de log con la misma instancia.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains("- Mod ")
-				&& (contenido.contains(TEXTO_INCOMPATIBLE) || contenido.contains(TEXTO_CONFLICTS))
-				&& contenido.contains(TEXTO_WITH) && contenido.contains(TEXTO_OF)) {
-			posibleModIncompatibleFabric = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleModIncompatibleFabric && !activado;
 	}
 
 	/**
@@ -83,9 +52,6 @@ public class ProblemaModIncompatibleFabric implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleModIncompatibleFabric || activado || linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		DatosModsIncompatibles datos = extraerModsIncompatiblesDeLinea(linea);
 
@@ -94,8 +60,8 @@ public class ProblemaModIncompatibleFabric implements VerificacionRapida {
 			this.segundoMod = datos.segundoMod;
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 
-			this.mensaje = MonitorDePID.idioma.mensajeModIncompatible(primerMod, segundoMod) + Verificaciones.nl_html
-					+ enlace;
+			this.mensaje = MonitorDePID.idioma.mensajeModIncompatible(primerMod, segundoMod)
+					+ VerificacionesLegacy.nl_html + enlace;
 
 			activado = true;
 		}
@@ -364,7 +330,7 @@ public class ProblemaModIncompatibleFabric implements VerificacionRapida {
 	 * Crea una nueva instancia del verificador.
 	 */
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaModIncompatibleFabric();
 	}
 

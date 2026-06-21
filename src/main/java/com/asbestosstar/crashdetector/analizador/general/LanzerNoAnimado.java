@@ -13,16 +13,17 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 
 /**
  * Detecta cuando el usuario NO está usando un launcher de la lista recomendada.
  * Este verificador ignora completamente el archivo de launchers desaconsejados.
  */
-public class LanzerNoAnimado implements Verificaciones {
+public class LanzerNoAnimado implements VerificacionesLegacy {
 
 	public static final Path ARCHIVO_ANIMADOS = Statics.carpeta.resolve("lanzeres_animados.json");
 
@@ -31,7 +32,14 @@ public class LanzerNoAnimado implements Verificaciones {
 	boolean completa = false;
 
 	@Override
-	public void verificar(Consola consola) {
+	public String[] patronesRapidos() {
+		// No necesita activar por línea.
+		// Usa vdst.trazos_completos en finalizarArchivo().
+		verificar();
+		return new String[0];
+	}
+
+	public void verificar() {
 		if (completa) {
 			return;
 		}
@@ -120,14 +128,11 @@ public class LanzerNoAnimado implements Verificaciones {
 		}
 	}
 
-	@Override
-	public boolean quiereAnalizarLineas() {
-
-		return false;
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new LanzerNoAnimado();
 	}
 

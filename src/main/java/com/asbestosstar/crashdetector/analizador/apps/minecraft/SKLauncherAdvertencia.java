@@ -6,7 +6,8 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.detectorlanzer.DetectorSKLauncher;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -27,27 +28,31 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * 
  * @author asbestosstar
  */
-public class SKLauncherAdvertencia implements Verificaciones {
+public class SKLauncherAdvertencia implements VerificacionesLegacy {
 
 	private boolean activado = false;
 	private String mensaje = MonitorDePID.idioma.mensajeAdvertenciaSKLauncher();
 
 	@Override
-	public void verificar(Consola consolaog) {
+	public String[] patronesRapidos() {
+		// No necesita activar por línea.
+		// Usa vdst.trazos_completos en finalizarArchivo().
+		verificar();
+		return new String[0];
+	}
+
+	public void verificar() {
 		// Activar únicamente cuando el launcher detectado sea SKLauncher
 		if (Statics.lanzer_del_app != null && Statics.lanzer_del_app.equals(DetectorSKLauncher.ID)) {
 			activado = true;
 		}
 	}
 
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return false;
-
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new SKLauncherAdvertencia();
 	}
 

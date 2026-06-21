@@ -6,10 +6,10 @@ import java.util.Map;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -20,7 +20,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * verificación por línea para agregar enlace exacto. - También analiza trazos
  * completos mediante VerificacionDeStackTrace.
  */
-public class ErrorResolucionDeTextura implements VerificacionRapida {
+public class ErrorResolucionDeTextura implements Verificaciones {
 
 	private static final String TEXTO_STITCHER = "net.minecraft.client.renderer.texture.StitcherException:";
 	private static final String TEXTO_UNABLE = "Unable to fit:";
@@ -37,7 +37,6 @@ public class ErrorResolucionDeTextura implements VerificacionRapida {
 	 */
 	private final Map<String, String> enlacesPorLinea = new HashMap<>();
 
-	private boolean posibleErrorResolucion = false;
 	private boolean vioUnable = false;
 	private boolean vioResourcePack = false;
 	private boolean activado = false;
@@ -63,39 +62,7 @@ public class ErrorResolucionDeTextura implements VerificacionRapida {
 			vioResourcePack = true;
 		}
 
-		if (vioUnable && vioResourcePack) {
-			posibleErrorResolucion = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global ligera.
-	 *
-	 * No se limpian mapas aquí porque esta verificación puede ejecutarse sobre
-	 * varios archivos de log con la misma instancia.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (!contenido.contains(TEXTO_UNABLE) || !contenido.contains(TEXTO_RESOURCEPACK)) {
-			return;
-		}
-
-		posibleErrorResolucion = true;
-		vioUnable = true;
-		vioResourcePack = true;
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleErrorResolucion;
 	}
 
 	/**
@@ -104,9 +71,6 @@ public class ErrorResolucionDeTextura implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleErrorResolucion || linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		// Solo consideramos líneas que parecen mensaje, no frames de stack.
 		if (!linea.contains(TEXTO_UNABLE) || !linea.contains(TEXTO_RESOURCEPACK) || linea.contains("at ")) {
@@ -276,7 +240,7 @@ public class ErrorResolucionDeTextura implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorResolucionDeTextura();
 	}
 

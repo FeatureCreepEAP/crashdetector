@@ -10,17 +10,16 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class NoPuedeAnalizarJSONDeRegistro implements VerificacionRapida {
+public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 
 	boolean activado = false;
 	private final List<String> erroresJSON = new ArrayList<>(); // Almacena múltiples errores
 	private final Map<String, String> enlacesPorError = new HashMap<>();
-	boolean posibleError = false;
 
 	private static final String FAILED_TO_PARSE = "Failed to parse";
 	private static final String JSON_FROM_PACK = ".json from pack";
@@ -39,37 +38,7 @@ public class NoPuedeAnalizarJSONDeRegistro implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneErrorJSON(evento.linea)) {
-			posibleError = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global no utilizada en este verificador.
-	 * <p>
-	 * La detección real se hace por línea en
-	 * {@link #verificarPorLinea(Consola, String, int)}, llamada por el analizador
-	 * línea a línea.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		if (log.contains(FAILED_TO_PARSE) || log.contains(JSON_FROM_PACK)) {
-			posibleError = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleError;
 	}
 
 	/**
@@ -84,7 +53,7 @@ public class NoPuedeAnalizarJSONDeRegistro implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleError || linea == null || !lineaContieneErrorJSON(linea)) {
+		if (!lineaContieneErrorJSON(linea)) {
 			return;
 		}
 
@@ -152,7 +121,7 @@ public class NoPuedeAnalizarJSONDeRegistro implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new NoPuedeAnalizarJSONDeRegistro();
 	}
 

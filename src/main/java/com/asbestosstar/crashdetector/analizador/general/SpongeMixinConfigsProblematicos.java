@@ -13,21 +13,20 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.EliminadorDeMod;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 
-public class SpongeMixinConfigsProblematicos implements VerificacionRapida {
+public class SpongeMixinConfigsProblematicos implements Verificaciones {
 
 	private boolean activado = false;
 	private final Map<String, Integer> sm_config_con_linea = new HashMap<>();
 	private final Map<String, Boolean> sm_config_es_fatal = new HashMap<>();
 	private final Map<String, String> enlacesPorConfig = new HashMap<>();
-	public boolean posibleErrorMixinPorLinea = false;
 
 	private static final String TEXTO_RESOURCE = "The specified resource '";
 	private static final String TEXTO_INVALID_OR_UNREADABLE = "' was invalid or could not be read";
@@ -45,69 +44,15 @@ public class SpongeMixinConfigsProblematicos implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneMixinConfigProblematico(evento.linea)) {
-			posibleErrorMixinPorLinea = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-//		sm_config_con_linea.clear();
-//		sm_config_es_fatal.clear();
-//		enlacesPorConfig.clear();
-
-		if (consola == null) {
-			return;
-		}
-
-		// Origen existente: parser de stacktrace
-		if (consola.verificacion_de_stacktrace != null && consola.verificacion_de_stacktrace.sm_config != null) {
-			BiMap<String, Integer, Boolean> configs = consola.verificacion_de_stacktrace.sm_config;
-
-			for (BiMap.DoubleKey<String, Integer> clave : configs.keySet()) {
-				String nombreArchivo = clave.key0;
-				int linea = clave.key1;
-				boolean esFatal = configs.get(nombreArchivo, linea);
-
-				CrashDetectorLogger.log("JSON in SM Problematico " + nombreArchivo);
-
-				sm_config_con_linea.put(nombreArchivo, linea);
-				sm_config_es_fatal.put(nombreArchivo, esFatal);
-				enlacesPorConfig.put(nombreArchivo, consola.agregarErrorALectador(linea, this));
-				this.activado = true;
-			}
-		}
-
-		String cont = consola.contenido_verificar;
-		if (cont == null || cont.isEmpty()) {
-			return;
-		}
-
-		if (cont.contains(TEXTO_RESOURCE) && cont.contains(TEXTO_INVALID_OR_UNREADABLE)) {
-			posibleErrorMixinPorLinea = true;
-		}
-
-		// activado = !sm_config_con_linea.isEmpty();
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleErrorMixinPorLinea;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int i) {
-		if (linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		if (!lineaContieneMixinConfigProblematico(linea)) {
 			return;
 		}
-
-		posibleErrorMixinPorLinea = true;
 
 		int ini = linea.indexOf(TEXTO_RESOURCE) + TEXTO_RESOURCE.length();
 		int fin = linea.indexOf("'", ini);
@@ -135,7 +80,7 @@ public class SpongeMixinConfigsProblematicos implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new SpongeMixinConfigsProblematicos();
 	}
 
@@ -160,7 +105,7 @@ public class SpongeMixinConfigsProblematicos implements VerificacionRapida {
 		StringBuilder html = new StringBuilder();
 		html.append("<span style='color: #").append(Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas())
 				.append("; font-weight: bold;'>").append(MonitorDePID.idioma.config_spongemixin_problematico())
-				.append("</span>").append(Verificaciones.nl_html).append("<ul>");
+				.append("</span>").append(VerificacionesLegacy.nl_html).append("<ul>");
 
 		List<String> listItems = new ArrayList<>();
 		for (Map.Entry<String, Integer> entry : sm_config_con_linea.entrySet()) {

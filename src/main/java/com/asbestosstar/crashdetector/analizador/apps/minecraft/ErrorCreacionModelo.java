@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,10 +18,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * También detecta si aparece "$cooleranims$" en el log, lo cual puede indicar
  * interferencia del mod Cooler Animations.
  */
-public class ErrorCreacionModelo implements VerificacionRapida {
+public class ErrorCreacionModelo implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean analizarLineas = false;
 
 	private boolean posibleCoolerAnims = false;
 
@@ -46,43 +45,11 @@ public class ErrorCreacionModelo implements VerificacionRapida {
 			posibleCoolerAnims = true;
 		}
 
-		if (evento.linea.contains(FAILED_TO_CREATE_MODEL)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		// Pre-check global para rendimiento
-		if (log.contains(FAILED_TO_CREATE_MODEL)) {
-			analizarLineas = true;
-		}
-
-		// Detectar posible interferencia de Cooler Animations
-		if (log.contains(COOLER_ANIMS)) {
-			posibleCoolerAnims = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!analizarLineas || linea == null || activado)
-			return;
 
 		if (linea.contains(COOLER_ANIMS)) {
 			posibleCoolerAnims = true;
@@ -103,7 +70,7 @@ public class ErrorCreacionModelo implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorCreacionModelo();
 	}
 
@@ -130,7 +97,7 @@ public class ErrorCreacionModelo implements VerificacionRapida {
 		// Mensaje adicional si se detectó Cooler Animations
 		if (posibleCoolerAnims) {
 
-			mensaje.append(Verificaciones.nl_html).append(MonitorDePID.idioma.posibleConflictoCoolerAnimations());
+			mensaje.append(VerificacionesLegacy.nl_html).append(MonitorDePID.idioma.posibleConflictoCoolerAnimations());
 		}
 
 		return mensaje.toString();

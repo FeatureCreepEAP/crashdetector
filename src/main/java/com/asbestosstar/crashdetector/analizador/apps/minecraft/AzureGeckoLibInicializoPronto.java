@@ -8,10 +8,10 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -20,7 +20,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * "GeckoLib was initialized too early!". Identifica la presencia de mods de
  * conexión como Sinytra Connector o specialcompatibilityoperation.
  */
-public class AzureGeckoLibInicializoPronto implements VerificacionRapida {
+public class AzureGeckoLibInicializoPronto implements Verificaciones {
 
 	private static final Set<String> REPORTADOS_GLOBAL = Collections.synchronizedSet(new HashSet<>());
 
@@ -50,46 +50,6 @@ public class AzureGeckoLibInicializoPronto implements VerificacionRapida {
 			return;
 
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de verificación "antiguo" que trabaja con todo el contenido de la
-	 * consola. Ahora simplemente delega en la versión por línea para mantener
-	 * compatibilidad sin duplicar lógica.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null)
-			return;
-
-		String log = consola.contenido_verificar;
-
-		if (!connectorPresente && log.indexOf("SINYTRA CONNECTOR IS PRESENT!") >= 0
-
-		// || log.contains("specialcompatibilityoperation")TODO
-
-		) {
-			connectorPresente = true;
-		}
-
-		if (log.indexOf("Lib was initialized too early!") < 0) {
-			return;
-		}
-
-		int posAzure = log.indexOf(azure);
-		if (posAzure >= 0) {
-			verificarPorLinea(consola, extraerLinea(log, posAzure), 0);
-		}
-
-		int posGeck = log.indexOf(geck);
-		if (posGeck >= 0) {
-			verificarPorLinea(consola, extraerLinea(log, posGeck), 0);
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return false;
 	}
 
 	/**
@@ -150,7 +110,7 @@ public class AzureGeckoLibInicializoPronto implements VerificacionRapida {
 			return;
 
 		mensaje = MonitorDePID.idioma.errorAzureGeckoLibInicializoPronto(azureLibError, geckoLibError,
-				connectorPresente) + Verificaciones.nl_html + enlaceHtml;
+				connectorPresente) + VerificacionesLegacy.nl_html + enlaceHtml;
 	}
 
 	private String extraerLinea(String log, int pos) {
@@ -178,7 +138,7 @@ public class AzureGeckoLibInicializoPronto implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new AzureGeckoLibInicializoPronto();
 	}
 

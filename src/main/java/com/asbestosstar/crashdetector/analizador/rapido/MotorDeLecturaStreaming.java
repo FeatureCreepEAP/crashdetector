@@ -14,6 +14,7 @@ import java.util.Map;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.motor.MotorBusquedaBytes;
 import com.asbestosstar.crashdetector.analizador.rapido.motor.MotoresBusqueda;
 
@@ -25,18 +26,18 @@ public final class MotorDeLecturaStreaming {
 	private static final int BUFFER_SIZE = 1024 * 1024; // 1 MiB inicial
 	private final MotorBusquedaBytes motorBytes;
 	private AutomataDePatrones automata;
-	private final Map<String, List<VerificacionRapida>> patronesAVerificaciones = new HashMap<>();
+	private final Map<String, List<Verificaciones>> patronesAVerificaciones = new HashMap<>();
 
 	public MotorDeLecturaStreaming() {
 		this.motorBytes = MotoresBusqueda.crear();
 	}
 
-	public void procesar(Consola consola, List<VerificacionRapida> verificaciones, List<Verificaciones> legacy,
+	public void procesar(Consola consola, List<Verificaciones> verificaciones, List<VerificacionesLegacy> legacy,
 			EstadoAnalisisArchivo estado) {
 
 		inicializarAutomata(verificaciones);
 
-		List<Verificaciones> legacyLineales = obtenerLegacyLineales(consola, legacy);
+		List<VerificacionesLegacy> legacyLineales = obtenerLegacyLineales(consola, legacy);
 
 		Path path = consola.archivo;
 		if (path == null)
@@ -137,16 +138,16 @@ public final class MotorDeLecturaStreaming {
 		}
 	}
 
-	private List<Verificaciones> obtenerLegacyLineales(Consola consola, List<Verificaciones> legacy) {
-		List<Verificaciones> resultado = new ArrayList<>();
+	private List<VerificacionesLegacy> obtenerLegacyLineales(Consola consola, List<VerificacionesLegacy> legacy) {
+		List<VerificacionesLegacy> resultado = new ArrayList<>();
 
 		if (legacy == null || legacy.isEmpty()) {
 			return resultado;
 		}
 
-		for (Verificaciones ver : legacy) {
+		for (VerificacionesLegacy ver : legacy) {
 			try {
-				if (ver.quiereAnalizarLineas() || ver.activarEscaneoPorLinea(consola)) {
+				if (ver.verificar(consola)) {
 					resultado.add(ver);
 				}
 			} catch (Exception e) {
@@ -157,7 +158,7 @@ public final class MotorDeLecturaStreaming {
 		return resultado;
 	}
 
-	public void procesarLinea(Consola consola, String linea, int numeroLinea, List<Verificaciones> legacyLineales,
+	public void procesarLinea(Consola consola, String linea, int numeroLinea, List<VerificacionesLegacy> legacyLineales,
 			EstadoAnalisisArchivo estado) {
 
 		if (linea == null || linea.isEmpty()) {
@@ -169,13 +170,13 @@ public final class MotorDeLecturaStreaming {
 
 			if (coincidenciasBase != null && !coincidenciasBase.isEmpty()) {
 				for (AutomataDePatrones.Coincidencia base : coincidenciasBase) {
-					List<VerificacionRapida> verificaciones = patronesAVerificaciones.get(base.patron);
+					List<Verificaciones> verificaciones = patronesAVerificaciones.get(base.patron);
 
 					if (verificaciones == null || verificaciones.isEmpty()) {
 						continue;
 					}
 
-					for (VerificacionRapida ver : verificaciones) {
+					for (Verificaciones ver : verificaciones) {
 						try {
 							EventoDeCoincidencia evento = new EventoDeCoincidencia(consola, consola.archivo, ver,
 									base.patron, linea, numeroLinea, base.inicio, base.fin, estado);
@@ -193,7 +194,7 @@ public final class MotorDeLecturaStreaming {
 			return;
 		}
 
-		for (Verificaciones ver : legacyLineales) {
+		for (VerificacionesLegacy ver : legacyLineales) {
 			try {
 				ver.verificarPorLinea(consola, linea, numeroLinea);
 			} catch (Exception e) {
@@ -202,7 +203,7 @@ public final class MotorDeLecturaStreaming {
 		}
 	}
 
-	private void inicializarAutomata(List<VerificacionRapida> verificaciones) {
+	private void inicializarAutomata(List<Verificaciones> verificaciones) {
 		if (automata != null) {
 			return;
 		}
@@ -214,7 +215,7 @@ public final class MotorDeLecturaStreaming {
 			return;
 		}
 
-		for (VerificacionRapida ver : verificaciones) {
+		for (Verificaciones ver : verificaciones) {
 			String[] patrones = ver.patronesRapidos();
 
 			if (patrones == null || patrones.length == 0) {

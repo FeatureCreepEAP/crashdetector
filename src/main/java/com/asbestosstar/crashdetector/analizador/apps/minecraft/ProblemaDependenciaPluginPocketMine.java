@@ -6,19 +6,18 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta plugins con dependencias faltantes en PocketMine-MP sin usar regex.
  */
-public class ProblemaDependenciaPluginPocketMine implements VerificacionRapida {
+public class ProblemaDependenciaPluginPocketMine implements Verificaciones {
 
-	private boolean posibleDependenciaFaltante = false;
 	private boolean activado = false;
 
 	private String mensaje = "";
@@ -41,25 +40,11 @@ public class ProblemaDependenciaPluginPocketMine implements VerificacionRapida {
 			return;
 		}
 
-		posibleDependenciaFaltante = true;
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleDependenciaFaltante;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleDependenciaFaltante || linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		int idxPlugin = linea.indexOf(TEXTO_PLUGIN);
 		if (idxPlugin < 0) {
@@ -125,7 +110,7 @@ public class ProblemaDependenciaPluginPocketMine implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaDependenciaPluginPocketMine();
 	}
 

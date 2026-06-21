@@ -4,13 +4,13 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.parches.ConfigDeParches;
 
-public class WaterMediaTL implements VerificacionRapida {
+public class WaterMediaTL implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -29,33 +29,13 @@ public class WaterMediaTL implements VerificacionRapida {
 		}
 
 		if (evento.linea.contains(TLAUNCHER_WATERMEDIA)) {
-			this.mensaje = MonitorDePID.idioma.waterMediaTL() + Verificaciones.nl_html;
+			this.mensaje = MonitorDePID.idioma.waterMediaTL() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		// Compatibilidad legacy: en modo streaming puro contenido_verificar puede ser
-		// nulo
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contento_de_consola = consola.contenido_verificar;
-		if (contento_de_consola.contains(TLAUNCHER_WATERMEDIA)) {
-			this.mensaje = MonitorDePID.idioma.waterMediaTL() + Verificaciones.nl_html;
-			activado = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return false;
-	}
-
-	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new WaterMediaTL();
 	}
 

@@ -3,13 +3,13 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class VulkanModGPUIncompatible implements VerificacionRapida {
+public class VulkanModGPUIncompatible implements Verificaciones {
 
 	// Indica si el log contiene indicios globales del error (optimización de
 	// rendimiento)
@@ -57,27 +57,6 @@ public class VulkanModGPUIncompatible implements VerificacionRapida {
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		// Compatibilidad legacy: en modo streaming puro contenido_verificar puede ser
-		// nulo
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Detección global ligera: buscar ambas pistas estables
-		if (consola.contenido_verificar.contains(FAILED_GPU) && consola.contenido_verificar.contains(VULKANMOD)) {
-			posibleVulkanGPU = true;
-			indicioGPU = true;
-			indicioVulkanMod = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleVulkanGPU && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Salida temprana si no hay indicios globales
 		if (!posibleVulkanGPU || activado || linea == null) {
@@ -92,7 +71,7 @@ public class VulkanModGPUIncompatible implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new VulkanModGPUIncompatible();
 	}
 

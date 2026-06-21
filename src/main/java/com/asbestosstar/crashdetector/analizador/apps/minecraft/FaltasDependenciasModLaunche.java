@@ -11,8 +11,9 @@ import com.asbestosstar.crashdetector.CDStringBuilder;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -65,16 +66,6 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 	private final Map<String, String> enlacesPorError = new HashMap<>();
 
-	/**
-	 * 
-	 * Almacena las líneas de la consola para poder acceder a líneas posteriores
-	 * 
-	 * a la actual durante el análisis.
-	 * 
-	 */
-
-	private boolean posiblePorConsola = false;
-
 	@Override
 	public String[] patronesRapidos() {
 		return new String[] { "Missing or unsupported mandatory dependencies:", "Failure message: Mod ",
@@ -88,30 +79,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 			return;
 		}
 
-		posiblePorConsola = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains("Missing or unsupported mandatory dependencies:")
-				|| contenido.contains("Failure message: Mod ") || contenido.contains("requires any version of")
-				|| contenido.contains("which is missing") || contenido.contains("only supports")
-				|| contenido.contains("wrong version is present")
-				|| contenido.contains("Remove Iris/Oculus & GeckoLib Compat") || contenido.contains("geckoanimfix")) {
-			posiblePorConsola = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posiblePorConsola;
 	}
 
 	/**
@@ -133,16 +101,6 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 	@Override
 
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		// Si el array de líneas no ha sido inicializado, se divide el contenido total.
-
-		if (consola == null || linea == null) {
-			return;
-		}
-
-		if (!posiblePorConsola) {
-			return;
-		}
 
 		String lineaActual = linea.trim();
 
@@ -1046,7 +1004,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 	@Override
 
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 
 		return new FaltasDependenciasModLaunche();
 

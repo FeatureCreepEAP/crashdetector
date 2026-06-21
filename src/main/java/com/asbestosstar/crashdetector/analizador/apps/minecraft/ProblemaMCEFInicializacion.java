@@ -3,26 +3,25 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta cuando el mod MCEF se inicializa al final del log, lo que indica
  * probablemente un cuelgue silencioso durante la carga.
  */
-public class ProblemaMCEFInicializacion implements VerificacionRapida {
+public class ProblemaMCEFInicializacion implements Verificaciones {
 
 	private boolean activado = false;
 
 	private String enlace = "";
 	private int totalLineasDelLog = -1;
 	private int lineaMCEF = -1;
-	public boolean analizarLineas = false;
 
 	private static final String TEXTO_MCEF_1 = "Initializing CEF on ";
 	private static final String TEXTO_MCEF_2 = "[org.cef.CefApp:initialize:";
@@ -39,38 +38,10 @@ public class ProblemaMCEFInicializacion implements VerificacionRapida {
 		}
 
 		if (contienePatronMCEF(evento.linea)) {
-			analizarLineas = true;
 			lineaMCEF = evento.numeroDeLinea;
 		}
 
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificacion global ligera.
-	 *
-	 * No usa split(). No usa regex. No usa regionMatches(). No busca MCEF en todo
-	 * el log porque este verificador solo importa si MCEF está en las ultimas 5
-	 * lineas.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		if (consola.contenido_verificar.contains(TEXTO_MCEF_1) && consola.contenido_verificar.contains(TEXTO_MCEF_2)) {
-			analizarLineas = true;
-		} else {
-			return;
-		}
-
-		totalLineasDelLog = contarLineas(consola.contenido_verificar);
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	/**
@@ -92,7 +63,6 @@ public class ProblemaMCEFInicializacion implements VerificacionRapida {
 			return;
 		}
 
-		analizarLineas = true;
 		lineaMCEF = numero_de_linea;
 
 		if (totalLineasDelLog <= 0) {
@@ -111,7 +81,7 @@ public class ProblemaMCEFInicializacion implements VerificacionRapida {
 
 	@Override
 	public void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
-		if (activado || !analizarLineas || consola == null || lineaMCEF < 0) {
+		if (activado || consola == null || lineaMCEF < 0) {
 			return;
 		}
 
@@ -231,7 +201,7 @@ public class ProblemaMCEFInicializacion implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaMCEFInicializacion();
 	}
 

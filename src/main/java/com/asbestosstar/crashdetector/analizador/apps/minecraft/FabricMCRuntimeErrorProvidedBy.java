@@ -8,18 +8,17 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class FabricMCRuntimeErrorProvidedBy implements VerificacionRapida {
+public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 
 	private boolean activado = false;
 	private final Set<String> modIdsProblematicos = new HashSet<>();
 	private final Map<String, String> enlacesPorModId = new HashMap<>();
-	private boolean posible = false;
 
 	private static final String ENTRYPOINT_STAGE = "Could not execute entrypoint stage";
 	private static final String PROVIDED_BY = "provided by";
@@ -36,38 +35,7 @@ public class FabricMCRuntimeErrorProvidedBy implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(ENTRYPOINT_STAGE) || evento.linea.contains(PROVIDED_BY)) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global no utilizada en este verificador.
-	 * <p>
-	 * La detección real se hace por línea en
-	 * {@link #verificarPorLinea(Consola, String, int)}, llamada por el analizador
-	 * línea a línea.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(ENTRYPOINT_STAGE) || contenido.contains(PROVIDED_BY)) {
-			posible = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible;
 	}
 
 	/**
@@ -83,9 +51,6 @@ public class FabricMCRuntimeErrorProvidedBy implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posible || linea == null) {
-			return;
-		}
 
 		if (!linea.contains(ENTRYPOINT_STAGE) || !linea.contains(PROVIDED_BY)) {
 			return;
@@ -114,7 +79,7 @@ public class FabricMCRuntimeErrorProvidedBy implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new FabricMCRuntimeErrorProvidedBy();
 	}
 
@@ -137,7 +102,7 @@ public class FabricMCRuntimeErrorProvidedBy implements VerificacionRapida {
 		for (String modId : modIdsProblematicos) {
 			String enlace = enlacesPorModId.getOrDefault(modId, "");
 			html.append("<li>").append(MonitorDePID.idioma.modids_problematicos()).append(" <b>").append(modId)
-					.append("</b> ").append(enlace).append("</li>").append(Verificaciones.nl_html);
+					.append("</b> ").append(enlace).append("</li>").append(VerificacionesLegacy.nl_html);
 		}
 		html.append("</ul>");
 		return html.toString();

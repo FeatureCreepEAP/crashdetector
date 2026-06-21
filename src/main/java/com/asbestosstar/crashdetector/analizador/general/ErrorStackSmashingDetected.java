@@ -4,9 +4,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,12 +14,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * problemas con Early Window en Forge/NeoForge/PillowMC o con LWJGL 3.2.2 y más
  * nuevos.
  */
-public class ErrorStackSmashingDetected implements VerificacionRapida {
+public class ErrorStackSmashingDetected implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	public boolean posibleError = false;
 
 	private static final String STACK_SMASHING = "*** stack smashing detected ***: terminated";
 
@@ -34,30 +33,7 @@ public class ErrorStackSmashingDetected implements VerificacionRapida {
 			return;
 		}
 
-		posibleError = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — mantiene el análisis legacy por contenido
-	 * completo.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null)
-			return;
-
-		String log = consola.contenido_verificar;
-
-		if (log.contains(STACK_SMASHING)) {
-			posibleError = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleError && !activado;
 	}
 
 	/**
@@ -68,14 +44,6 @@ public class ErrorStackSmashingDetected implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
-			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
-
-		if (!posibleError || linea == null) {
-			return;
-		}
 
 		// Buscamos la línea que contiene el error de stack smashing
 		if (linea.contains(STACK_SMASHING)) {
@@ -84,13 +52,13 @@ public class ErrorStackSmashingDetected implements VerificacionRapida {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Mensaje de error en HTML con referencia al problema de stack smashing
-			mensaje = MonitorDePID.idioma.errorStackSmashingDetected() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorStackSmashingDetected() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorStackSmashingDetected();
 	}
 

@@ -4,17 +4,16 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores NoSuchFieldError que ocurren cuando un mod intenta acceder a
  * un campo que ya no existe en la versión actual del juego u otro mod.
  */
-public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida {
+public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.analizador.Verificaciones {
 
 	private boolean activado = false;
-	private boolean posibleNoSuchField = false;
 
 	private String mensaje = "";
 	private String enlaceHtml = "";
@@ -42,42 +41,13 @@ public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.ana
 
 	@Override
 	public void verificarCoincidencia(com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia evento) {
-		this.posibleNoSuchField = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public boolean activarEscaneoPorLinea(Consola consola) {
-		return posibleNoSuchField;
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
-		if (contenido.contains("java.lang.NoSuchFieldError:")) {
-			this.posibleNoSuchField = true;
-		}
-	}
-
-	public boolean quiereAnalizarLineas() {
-		if (!posibleNoSuchField)
-			return false;
-
-		return true;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (linea == null || activado) {
 			return;
-		}
-
-		if (!posibleNoSuchField) {
-			if (linea.contains("java.lang.NoSuchFieldError:")) {
-				posibleNoSuchField = true;
-			} else {
-				return;
-			}
 		}
 
 		if (linea.contains("java.lang.NoSuchFieldError:")) {
@@ -275,7 +245,7 @@ public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.ana
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorCampoInexistente();
 	}
 
@@ -303,13 +273,13 @@ public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.ana
 		sb.append(MonitorDePID.idioma.errorCampoInexistente(nombreCampoDetectado, lineaError));
 
 		if (!lineaStack.isEmpty()) {
-			sb.append(Verificaciones.nl_html);
+			sb.append(VerificacionesLegacy.nl_html);
 			sb.append("<span style='color:#888888; font-family:monospace;'>");
 			sb.append(escapeHtml(lineaStack));
 			sb.append("</span>");
 		}
 
-		sb.append(Verificaciones.nl_html);
+		sb.append(VerificacionesLegacy.nl_html);
 		sb.append(enlaceHtml);
 
 		if (create) {

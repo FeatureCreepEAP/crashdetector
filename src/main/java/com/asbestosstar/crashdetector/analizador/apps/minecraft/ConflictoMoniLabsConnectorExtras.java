@@ -8,23 +8,20 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta conflictos entre MoniLabs y Connector Extras relacionados con
  * modificaciones de KubeJS, específicamente con el handler de KubeJSPlugins.
  */
-public class ConflictoMoniLabsConnectorExtras implements VerificacionRapida {
+public class ConflictoMoniLabsConnectorExtras implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoMoniLabs = false;
-	private boolean encontradoConnectorExtras = false;
-	public boolean analizarLineas = false;
 
 	private static final String MONILABS = "monilabs";
 	private static final String CONNECTOR_EXTRAS = "connectorextras";
@@ -50,47 +47,7 @@ public class ConflictoMoniLabsConnectorExtras implements VerificacionRapida {
 
 		String linea = evento.linea;
 
-		if (linea.contains(MONILABS)) {
-			encontradoMoniLabs = true;
-		}
-
-		if (linea.contains(CONNECTOR_EXTRAS)) {
-			encontradoConnectorExtras = true;
-		}
-
-		if (linea.contains(KUBEJS_HANDLER) && linea.contains(MONILABS_INJECT)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — busca si MoniLabs y Connector Extras están
-	 * presentes en el contenido completo del registro.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		// Modo streaming puro: puede no existir contenido_verificar
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Verificamos si MoniLabs y Connector Extras están presentes en el contenido
-		// del registro
-		String contenido = consola.contenido_verificar;
-		encontradoMoniLabs = contenido.contains(MONILABS);
-		encontradoConnectorExtras = contenido.contains(CONNECTOR_EXTRAS);
-
-		if (contenido.contains(KUBEJS_HANDLER) && contenido.contains(MONILABS_INJECT) && encontradoMoniLabs
-				&& encontradoConnectorExtras) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	/**
@@ -104,10 +61,6 @@ public class ConflictoMoniLabsConnectorExtras implements VerificacionRapida {
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		if (activado || linea == null) {
 			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
-
-		if (!analizarLineas || !encontradoMoniLabs || !encontradoConnectorExtras) {
 			return;
 		}
 
@@ -128,12 +81,12 @@ public class ConflictoMoniLabsConnectorExtras implements VerificacionRapida {
 
 		// Mensaje de error en HTML con referencia al conflicto entre MoniLabs y
 		// Connector Extras
-		mensaje = MonitorDePID.idioma.errorConflictoMoniLabsConnectorExtras() + Verificaciones.nl_html;
+		mensaje = MonitorDePID.idioma.errorConflictoMoniLabsConnectorExtras() + VerificacionesLegacy.nl_html;
 		activado = true;
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ConflictoMoniLabsConnectorExtras();
 	}
 

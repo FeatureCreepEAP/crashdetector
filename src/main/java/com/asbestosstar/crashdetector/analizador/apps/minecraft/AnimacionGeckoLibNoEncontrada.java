@@ -7,14 +7,14 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class AnimacionGeckoLibNoEncontrada implements VerificacionRapida {
+public class AnimacionGeckoLibNoEncontrada implements Verificaciones {
 
 	private static final Set<String> REPORTADOS_GLOBAL = Collections.synchronizedSet(new HashSet<>());
 
@@ -33,45 +33,6 @@ public class AnimacionGeckoLibNoEncontrada implements VerificacionRapida {
 			return;
 
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null)
-			return;
-
-		String log = consola.contenido_verificar;
-
-		if (log.indexOf("Error loading animation file") < 0 || log.indexOf("GeckoLibException") < 0)
-			return;
-
-		int desde = 0;
-		while (!activado) {
-			int pos = log.indexOf("Error loading animation file", desde);
-			if (pos < 0)
-				break;
-
-			int inicioLinea = log.lastIndexOf('\n', pos);
-			int finLinea = log.indexOf('\n', pos);
-
-			if (inicioLinea < 0)
-				inicioLinea = 0;
-			else
-				inicioLinea++;
-
-			if (finLinea < 0)
-				finLinea = log.length();
-
-			String linea = log.substring(inicioLinea, finLinea);
-			verificarPorLinea(consola, linea, 0);
-
-			desde = finLinea + 1;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return false;
 	}
 
 	@Override
@@ -132,7 +93,7 @@ public class AnimacionGeckoLibNoEncontrada implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new AnimacionGeckoLibNoEncontrada();
 	}
 

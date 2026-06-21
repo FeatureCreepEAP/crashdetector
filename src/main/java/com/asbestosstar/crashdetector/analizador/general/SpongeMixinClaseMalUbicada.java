@@ -7,17 +7,16 @@ import java.util.stream.Collectors;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class SpongeMixinClaseMalUbicada implements VerificacionRapida {
+public class SpongeMixinClaseMalUbicada implements Verificaciones {
 
-	private boolean posibleErrorMixin = false;
 	private boolean activado = false;
 
 	private String enlace = "";
@@ -43,37 +42,11 @@ public class SpongeMixinClaseMalUbicada implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneErrorMixin(evento.linea)) {
-			posibleErrorMixin = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		if (consola.contenido_verificar.contains(TEXTO_ILLEGAL_CLASS_LOAD)
-				&& consola.contenido_verificar.contains(TEXTO_DEFINED_MIXIN_PACKAGE)
-				&& consola.contenido_verificar.contains(TEXTO_CANNOT_BE_REFERENCED)) {
-
-			posibleErrorMixin = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleErrorMixin && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numeroLinea) {
-		if (!posibleErrorMixin || activado || linea == null) {
-			return;
-		}
 
 		if (lineaContieneErrorMixin(linea)) {
 			extraerDatos(linea);
@@ -178,7 +151,7 @@ public class SpongeMixinClaseMalUbicada implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new SpongeMixinClaseMalUbicada();
 	}
 

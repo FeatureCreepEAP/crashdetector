@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,10 +18,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Generalmente causado por: - Archivo faltante - Ruta mal configurada - Error
  * en resources del mod
  */
-public class ModeloGeckoLibNoEncontrado implements VerificacionRapida {
+public class ModeloGeckoLibNoEncontrado implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean analizarLineas = false;
 	private String enlace = "";
 	private String modelo = "";
 
@@ -40,37 +39,11 @@ public class ModeloGeckoLibNoEncontrado implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneModeloGeckoNoEncontrado(evento.linea)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		// Pre-check global ligero
-		if (log.contains(UNABLE_TO_FIND_MODEL) && log.contains(GEO_JSON)) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!analizarLineas || linea == null || activado)
-			return;
 
 		if (lineaContieneModeloGeckoNoEncontrado(linea)) {
 
@@ -91,7 +64,7 @@ public class ModeloGeckoLibNoEncontrado implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ModeloGeckoLibNoEncontrado();
 	}
 

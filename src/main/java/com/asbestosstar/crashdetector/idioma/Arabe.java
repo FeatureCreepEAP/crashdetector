@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 
 public class Arabe implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -4098,7 +4098,7 @@ public class Arabe implements Idioma {
 	@Override
 	public String infoDeTrazos() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>" + "إصلاح أجزاء قمم الجذوع هي الأولوية القصوى. "
-				+ "التنسيق هو المستوى، السطر. " + "جميع السجلات لها نظام ترقيم. " + Verificaciones.nl_html
+				+ "التنسيق هو المستوى، السطر. " + "جميع السجلات لها نظام ترقيم. " + VerificacionesLegacy.nl_html
 				+ "بشكل عام، تحتاج إلى البحث في المستويات الأدنى في جميع السجلات؛ فالمسارات ذات المستويات العالية تكون غالبًا إيجابيات زائفة. "
 				+ "من المهم استخدام مهارتك في فهم وحدة التحكم، لأن تحليل المسارات ليس دقيقًا تمامًا عند وجود العديد من المسارات."
 				+ "</b>";

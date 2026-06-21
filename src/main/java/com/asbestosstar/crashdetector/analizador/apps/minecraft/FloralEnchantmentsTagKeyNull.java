@@ -3,15 +3,14 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class FloralEnchantmentsTagKeyNull implements VerificacionRapida {
+public class FloralEnchantmentsTagKeyNull implements Verificaciones {
 
-	private boolean encontradoFloral = false;
 	private boolean activado = false;
 	private String enlace = "";
 
@@ -31,30 +30,11 @@ public class FloralEnchantmentsTagKeyNull implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(FLORALENCH)) {
-			encontradoFloral = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Buscar referencia global al mod
-		if (consola.contenido_verificar.contains(FLORALENCH)) {
-			encontradoFloral = true;
-		}
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		if (!encontradoFloral || activado || linea == null) {
-			return;
-		}
 
 		if (linea.contains(NULL_POINTER_EXCEPTION) && linea.contains(TAGKEY_LOCATION)
 				&& linea.contains(MAP_ENTRY_GET_KEY)) {
@@ -65,12 +45,7 @@ public class FloralEnchantmentsTagKeyNull implements VerificacionRapida {
 	}
 
 	@Override
-	public boolean quiereAnalizarLineas() {
-		return encontradoFloral && !activado;
-	}
-
-	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new FloralEnchantmentsTagKeyNull();
 	}
 

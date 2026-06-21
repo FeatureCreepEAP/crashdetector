@@ -3,13 +3,13 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class RailwaysCreate6Alfa implements VerificacionRapida {
+public class RailwaysCreate6Alfa implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -55,45 +55,6 @@ public class RailwaysCreate6Alfa implements VerificacionRapida {
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String texto = consola.contenido_verificar;
-
-		// Contexto típico del rastro de Create/Registrate
-		if (texto.contains(TEXTO_OBJECTS)) {
-			tieneObjects = true;
-		} else {
-			return;
-		}
-
-		if (texto.contains(TEXTO_REGISTRATE)) {
-			tieneRegistrate = true;
-		} else {
-			return;
-		}
-
-		// Nueva condición para asegurar que el error provenga de Railways
-		if (texto.contains(TEXTO_RAILWAYS)) {
-			tieneRailways = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!tieneObjects)
-			return false;
-		if (!tieneRegistrate)
-			return false;
-		if (!tieneRailways)
-			return false;
-
-		return !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 		// Si ya se activó o el contexto global no coincide, no hacemos nada
 		if (activado || !tieneObjects || !tieneRegistrate || !tieneRailways || linea == null) {
@@ -118,7 +79,7 @@ public class RailwaysCreate6Alfa implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new RailwaysCreate6Alfa();
 	}
 

@@ -16,7 +16,8 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.config.json.Json;
@@ -28,7 +29,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * no están instalados. Usa los 3 métodos disponibles para encontrar mods
  * instalados y elimina duplicados.
  */
-public class FaltaModAnimado implements Verificaciones {
+public class FaltaModAnimado implements VerificacionesLegacy {
 
 	public static final Path ARCHIVO_ANIMADOS = Statics.carpeta.resolve("mods_animados.json");
 	private boolean activado = false;
@@ -37,7 +38,17 @@ public class FaltaModAnimado implements Verificaciones {
 	boolean completa = false;
 
 	@Override
-	public void verificar(Consola consola) {
+	public String[] patronesRapidos() {
+		// No necesita activar por línea.
+		// Usa vdst.trazos_completos en finalizarArchivo().
+		verificar();
+		return new String[0];
+	}
+
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+	}
+
+	public void verificar() {
 		if (completa) {
 			return;
 		}
@@ -190,12 +201,6 @@ public class FaltaModAnimado implements Verificaciones {
 		}
 	}
 
-	@Override
-	public boolean quiereAnalizarLineas() {
-
-		return false;
-	}
-
 	public boolean esPresentePorRuta(String ruta, Set<String> rutasInstaladas) {
 		if (ruta == null) {
 			return false;
@@ -215,7 +220,7 @@ public class FaltaModAnimado implements Verificaciones {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new FaltaModAnimado();
 	}
 

@@ -5,18 +5,16 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ModsDuplicadosModLauncher implements VerificacionRapida {
+public class ModsDuplicadosModLauncher implements Verificaciones {
 
 	private boolean activado = false;
 	private final CDStringBuilder mensaje = new CDStringBuilder();
 
-	// Indicador de que el log contiene mensajes de mods duplicados.
-	private boolean hayDuplicados = false;
 	// Para no repetir la cabecera explicativa varias veces.
 	private boolean cabeceraAñadida = false;
 
@@ -39,32 +37,10 @@ public class ModsDuplicadosModLauncher implements VerificacionRapida {
 		}
 
 		if (lineaContieneDuplicados(evento.linea)) {
-			hayDuplicados = true;
 			asegurarCabecera();
 		}
 
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String contenidoConsola = consola.contenido_verificar;
-
-		// Detectar de forma global si en el log hay mensajes de mods duplicados.
-		hayDuplicados = contenidoConsola.contains(FOUND_DUPLICATE_MODS)
-				|| contenidoConsola.contains(FOUND_MORE_THAN_ONE_MOD_WITH_MODID);
-
-		// Si no hay duplicados, no hacemos nada más.
-		if (!hayDuplicados) {
-			return;
-		}
-
-		// Añadir la cabecera una sola vez antes de procesar líneas individuales.
-		asegurarCabecera();
 	}
 
 	private void asegurarCabecera() {
@@ -75,16 +51,7 @@ public class ModsDuplicadosModLauncher implements VerificacionRapida {
 	}
 
 	@Override
-	public boolean quiereAnalizarLineas() {
-		return hayDuplicados;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Si globalmente no se detectaron duplicados, no hay nada que hacer por línea.
-		if (!hayDuplicados || linea == null) {
-			return;
-		}
 
 		String lineaActual = linea;
 
@@ -92,11 +59,11 @@ public class ModsDuplicadosModLauncher implements VerificacionRapida {
 			String mensajeMod = MonitorDePID.idioma.modlauncher_mods_duplicado(lineaActual);
 			String enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			// Añadir mensaje + enlace en la misma línea
-			mensaje.append(mensajeMod).append(" ").append(enlace).append(Verificaciones.nl_html);
+			mensaje.append(mensajeMod).append(" ").append(enlace).append(VerificacionesLegacy.nl_html);
 			activado = true;
 		} else if (lineaActual.contains(CRASH_ASSISTANT_DUPLICADO)) {
 			String enlace = consola.agregarErrorALectador(numero_de_linea, this);
-			mensaje.append("crash_assistant").append(" ").append(enlace).append(Verificaciones.nl_html);
+			mensaje.append("crash_assistant").append(" ").append(enlace).append(VerificacionesLegacy.nl_html);
 			activado = true;
 		}
 	}
@@ -108,7 +75,7 @@ public class ModsDuplicadosModLauncher implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ModsDuplicadosModLauncher();
 	}
 

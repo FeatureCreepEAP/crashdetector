@@ -8,10 +8,10 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -21,9 +21,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Este error suele indicar que un mod, resource pack o datapack tiene recursos
  * corruptos, faltantes, o incompatibles con la versión actual de Minecraft.
  */
-public class ErrorCreacionModeloFallida implements VerificacionRapida {
-
-	private boolean posibleErrorCreacionModelo = false;
+public class ErrorCreacionModeloFallida implements Verificaciones {
 
 	private final List<String> mensajes = new ArrayList<>();
 	private final Set<String> modelosReportados = new HashSet<>();
@@ -41,34 +39,11 @@ public class ErrorCreacionModeloFallida implements VerificacionRapida {
 			return;
 		}
 
-		this.posibleErrorCreacionModelo = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		// Solo activar el análisis por línea si algún log contiene el texto base.
-		// Importante: la misma instancia puede analizar varios logs, por eso nunca
-		// volvemos esto a false aquí.
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		if (consola.contenido_verificar.contains(NO_MODEL_FOR_LAYER)) {
-			this.posibleErrorCreacionModelo = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleErrorCreacionModelo;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!this.posibleErrorCreacionModelo || linea == null) {
-			return;
-		}
 
 		if (linea.contains("WARN") || linea.contains("Warn")) {
 			return;
@@ -149,7 +124,7 @@ public class ErrorCreacionModeloFallida implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorCreacionModeloFallida();
 	}
 

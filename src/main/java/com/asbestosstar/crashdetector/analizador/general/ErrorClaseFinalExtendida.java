@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -22,7 +22,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Ejemplo: java.lang.IncompatibleClassChangeError: class A cannot inherit from
  * final class B
  */
-public class ErrorClaseFinalExtendida implements VerificacionRapida {
+public class ErrorClaseFinalExtendida implements Verificaciones {
 
 	private static final String TEXTO_ERROR = "IncompatibleClassChangeError: class";
 	private static final String TEXTO_INICIO = "IncompatibleClassChangeError: class ";
@@ -31,7 +31,6 @@ public class ErrorClaseFinalExtendida implements VerificacionRapida {
 	private static final String INTERFACE_PREFIX = "interface ";
 
 	private boolean activado = false;
-	private boolean posibleErrorClaseFinal = false;
 
 	private String mensaje = "";
 	private String claseHija = "";
@@ -51,34 +50,11 @@ public class ErrorClaseFinalExtendida implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneClaseFinal(evento.linea)) {
-			posibleErrorClaseFinal = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		posibleErrorClaseFinal = contenido.contains(TEXTO_ERROR) && contenido.contains(TEXTO_SEPARADOR);
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleErrorClaseFinal && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (this.activado || !posibleErrorClaseFinal || linea == null) {
-			return;
-		}
 
 		if (!lineaContieneClaseFinal(linea)) {
 			return;
@@ -237,7 +213,7 @@ public class ErrorClaseFinalExtendida implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorClaseFinalExtendida();
 	}
 

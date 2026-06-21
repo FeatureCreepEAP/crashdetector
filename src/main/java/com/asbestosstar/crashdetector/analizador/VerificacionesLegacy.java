@@ -4,7 +4,6 @@ import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
@@ -12,6 +11,13 @@ public interface Verificaciones {
 
 	public static String nl = System.lineSeparator();
 	public static String nl_html = "<br>";
+
+	/**
+	 * Aqui es donde verificar. Se ejecuta una vez por consola.
+	 * 
+	 * @param consola
+	 */
+	public void verificar(Consola consola);
 
 	/**
 	 * Aqui es donde verificar contenido en una linea specific. Se ejecuta para
@@ -165,31 +171,39 @@ public interface Verificaciones {
 	}
 
 	/**
+	 * Se ejecuta cuando el motor rápido encuentra uno de los patrones declarados.
+	 */
+	public default void verificarCoincidencia(EventoDeCoincidencia evento) {
+	}
+
+	public default boolean quiereAnalizarLineas() {
+		return true;
+	}
+
+	/**
 	 * Devuelve patrones literales que sirven como disparadores rápidos.
 	 *
 	 * El motor usa estos textos en un escáner rápido. Cuando uno aparece, la
 	 * verificación recibe un EventoDeCoincidencia con archivo, línea y contexto.
 	 */
-	public String[] patronesRapidos();
-
-	/**
-	 * Indica si la verificación quiere activarse para el escaneo línea a línea para
-	 * una consola específica.
-	 */
-	public default boolean verificar(Consola consola) {
-		return false;// Es mala, solo usar si nesacitas absoluamente
+	public default String[] patronesRapidos() {
+		return new String[0];
 	}
 
 	/**
-	 * Se ejecuta cuando el motor rápido encuentra uno de los patrones declarados.
+	 * Indica si esta verificación necesita ver todas las líneas aunque no haya
+	 * coincidencia rápida.
 	 */
-	public void verificarCoincidencia(EventoDeCoincidencia evento);
+	public default boolean necesitaTodasLasLineas() {
+		return false;
+	}
 
 	/**
-	 * Se ejecuta al terminar un archivo. Sirve para verificaciones que dependen del
-	 * estado acumulado del archivo.
+	 * Indica si la verificación quiere activarse para el escaneo línea a línea a
+	 * partir de este momento (por ejemplo, tras encontrar un patrón global).
 	 */
-	public default void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
+	public default boolean activarEscaneoPorLinea(Consola consola) {
+		return false;
 	}
 
 }

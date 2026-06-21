@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -23,7 +23,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * clases compiladas con versiones más recientes que la JVM utilizada.
  * Optimizado: global barato + verificación por línea.
  */
-public class JavaVersiones implements VerificacionRapida {
+public class JavaVersiones implements Verificaciones {
 
 	private boolean activado = false;
 	private boolean posibleErrorJava = false;
@@ -67,32 +67,6 @@ public class JavaVersiones implements VerificacionRapida {
 		}
 
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	// =========================
-	// Verificación global barata
-	// =========================
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty())
-			return;
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(TEXTO_UNSUPPORTED_CLASS) || contenido.contains(TEXTO_JAVA22)
-				|| contenido.contains(TEXTO_JAVA8)) {
-			posibleErrorJava = true;
-		}
-
-		if (contenido.contains(TEXTO_PROBLEMATIC_FRAME)
-				&& (contenido.contains(TEXTO_LIBJVM_LINUX) || contenido.contains(TEXTO_JVM_WINDOWS))) {
-			posibleFrameJavaProblematico = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return this.posibleErrorJava || this.posibleFrameJavaProblematico;
 	}
 
 	// =========================
@@ -312,7 +286,7 @@ public class JavaVersiones implements VerificacionRapida {
 	// Métodos estándar de Verificaciones
 	// =========================
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new JavaVersiones();
 	}
 

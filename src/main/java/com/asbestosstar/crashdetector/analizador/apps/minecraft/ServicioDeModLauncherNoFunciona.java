@@ -10,12 +10,12 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ServicioDeModLauncherNoFunciona implements VerificacionRapida {
+public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 
 	private boolean activado = false;
 	private final Set<String> serviciosFallidos = new HashSet<>();
@@ -23,7 +23,6 @@ public class ServicioDeModLauncherNoFunciona implements VerificacionRapida {
 
 	// Texto base que indica fallo de carga de un servicio de ModLauncher
 	private static final String CARGA_FALLIDA = "Service failed to load";
-	public boolean posible = false;
 
 	@Override
 	public String[] patronesRapidos() {
@@ -36,48 +35,11 @@ public class ServicioDeModLauncherNoFunciona implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(CARGA_FALLIDA)) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global del contenido de la consola.
-	 * <p>
-	 * En este verificador no es necesario hacer un análisis global pesado: la
-	 * detección real se hace por línea en
-	 * {@link #verificarPorLinea(Consola, String, int)}, que es llamado para cada
-	 * línea del log. Este método existe para mantener el contrato de la interfaz.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contento_de_consola = consola.contenido_verificar;
-		if (contento_de_consola.contains(CARGA_FALLIDA)) {
-			posible = true;
-		}
-
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!posible)
-			return false;
-
-		return true;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posible || linea == null || consola == null) {
-			return;
-		}
 
 		// Buscar el patrón "Service failed to load" en la línea actual
 		if (linea.contains(CARGA_FALLIDA)) {
@@ -110,7 +72,7 @@ public class ServicioDeModLauncherNoFunciona implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ServicioDeModLauncherNoFunciona();
 	}
 

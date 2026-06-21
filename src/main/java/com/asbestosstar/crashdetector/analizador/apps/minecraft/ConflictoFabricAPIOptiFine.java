@@ -8,9 +8,9 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -19,7 +19,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * crítica relacionado con ReloadableResourceManager durante la inicialización
  * del juego.
  */
-public class ConflictoFabricAPIOptiFine implements VerificacionRapida {
+public class ConflictoFabricAPIOptiFine implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -70,36 +70,6 @@ public class ConflictoFabricAPIOptiFine implements VerificacionRapida {
 	}
 
 	/**
-	 * Método de compatibilidad — busca si OptiFine está presente en el contenido
-	 * completo del registro.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		// Modo streaming puro: puede no existir contenido_verificar
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Verificamos si OptiFine está presente en el contenido del registro
-		String cont = consola.contenido_verificar;
-		if (cont.contains(OPTIFINE_MINUSCULA) || cont.contains(OPTIFINE_MIXTA)) {
-			encontradoOptiFine = true;
-
-			// fabric-resource-loader-v0
-			if (cont.contains(MIXIN_FAILED) && cont.contains(MIXINS_JSON) && cont.contains(RESOURCE_MANAGER_MIXIN)
-					&& cont.contains(INVALID_INJECTION) && cont.contains(CRITICAL_INJECTION)
-					&& cont.contains(NO_TARGETS) && cont.contains(RESOURCE_MANAGER)) {
-				posibleConflicto = true;
-			}
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleConflicto && !activado;
-	}
-
-	/**
 	 * Análisis por línea del registro.
 	 * <p>
 	 * Se busca el patrón característico del error de inyección crítica de
@@ -141,12 +111,12 @@ public class ConflictoFabricAPIOptiFine implements VerificacionRapida {
 
 		// Mensaje de error en HTML con referencia al conflicto entre Fabric API y
 		// OptiFine
-		mensaje = MonitorDePID.idioma.errorConflictoFabricAPIOptiFine() + Verificaciones.nl_html;
+		mensaje = MonitorDePID.idioma.errorConflictoFabricAPIOptiFine() + VerificacionesLegacy.nl_html;
 		activado = true;
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ConflictoFabricAPIOptiFine();
 	}
 

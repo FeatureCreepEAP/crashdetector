@@ -24,7 +24,7 @@ import javax.swing.UIManager;
 
 import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.sparc.DaxInit;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.sparc.UmemInit;
 import com.asbestosstar.crashdetector.bajo.vectorapi.VectorAPIInit;
@@ -1274,7 +1274,7 @@ public class MonitorDePID {
 			if (cons.archivo.toString().contains("crash-reports")) {
 				return true;
 			}
-			for (Verificaciones ver : analizador.verificaciones) {
+			for (VerificacionesLegacy ver : analizador.verificaciones) {
 				if (ver.activado() && ver.anularNormal()) {
 					return true;
 				}

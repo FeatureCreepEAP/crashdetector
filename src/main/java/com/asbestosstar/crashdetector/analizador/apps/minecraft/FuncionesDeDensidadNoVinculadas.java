@@ -8,11 +8,11 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -21,10 +21,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Detecta funciones de densidad no vinculadas en mods de Minecraft. Patrón
  * moderno: verificación global barata (contains) + per-línea.
  */
-public class FuncionesDeDensidadNoVinculadas implements VerificacionRapida {
+public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean posibleError = false;
 
 	private String mensaje = "";
 	private String enlaceHtml = "";
@@ -46,34 +45,11 @@ public class FuncionesDeDensidadNoVinculadas implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneError(evento.linea)) {
-			posibleError = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty())
-			return;
-
-		// Global barato: solo contains, sin recorrer todas las líneas
-		String contenido = consola.contenido_verificar;
-		if (contenido.contains(TEXTO_GLOBAL_1) || contenido.contains(TEXTO_GLOBAL_2)) {
-			posibleError = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleError && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleError || linea == null || linea.isEmpty() || activado)
-			return;
 
 		// Formato lista: "unbound values in registry ...: [namespace:key,...]"
 		if (linea.contains(TEXTO_GLOBAL_1)) {
@@ -149,7 +125,7 @@ public class FuncionesDeDensidadNoVinculadas implements VerificacionRapida {
 			mensaje = MonitorDePID.idioma.errorFuncionesDeDensidadNoVinculadas(clavesFaltantes);
 			if (!modsUbicacion.isEmpty()) {
 				StringBuilder sb = new StringBuilder();
-				sb.append(Verificaciones.nl_html).append("Posibles proveedores: <b>");
+				sb.append(VerificacionesLegacy.nl_html).append("Posibles proveedores: <b>");
 				for (int i = 0; i < modsUbicacion.size(); i++) {
 					if (i > 0)
 						sb.append(", ");
@@ -188,7 +164,7 @@ public class FuncionesDeDensidadNoVinculadas implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new FuncionesDeDensidadNoVinculadas();
 	}
 

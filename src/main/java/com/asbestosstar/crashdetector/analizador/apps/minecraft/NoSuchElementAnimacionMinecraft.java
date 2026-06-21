@@ -11,16 +11,15 @@ import com.asbestosstar.crashdetector.EliminadorDeMod;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class NoSuchElementAnimacionMinecraft implements VerificacionRapida {
+public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean analizarLineas = false;
 
 	private String namespaceEncontrado = null;
 	private String enlaceHtml = "";
@@ -38,39 +37,11 @@ public class NoSuchElementAnimacionMinecraft implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(PREFIJO_ERROR)) {
-			this.analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		// Chequeo global barato:
-		// si el log completo no contiene la señal principal,
-		// no hace falta procesar línea por línea.
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		if (consola.contenido_verificar.contains(PREFIJO_ERROR)) {
-			this.analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Si el chequeo global no encontró la señal principal, no analizamos líneas.
-		if (!analizarLineas || activado || linea == null) {
-			return;
-		}
 
 		String namespace = extraerNamespace(linea);
 		if (namespace != null) {
@@ -123,7 +94,7 @@ public class NoSuchElementAnimacionMinecraft implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new NoSuchElementAnimacionMinecraft();
 	}
 
@@ -149,7 +120,7 @@ public class NoSuchElementAnimacionMinecraft implements VerificacionRapida {
 		StringBuilder html = new StringBuilder();
 		html.append("<span style='color: #").append(Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas())
 				.append("; font-weight: bold;'>").append(MonitorDePID.idioma.error_animacion_no_encontrada())
-				.append("</span>").append(Verificaciones.nl_html).append("<ul>");
+				.append("</span>").append(VerificacionesLegacy.nl_html).append("<ul>");
 
 		html.append("<li>").append(": <strong>").append(namespaceEncontrado).append("</strong> (")
 				.append(String.join(",", ubicaciones)).append(") ").append(enlaceHtml).append("</li>");

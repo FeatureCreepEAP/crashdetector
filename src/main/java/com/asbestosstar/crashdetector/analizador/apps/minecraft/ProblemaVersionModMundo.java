@@ -6,11 +6,11 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,10 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * guardado. Gracias a Aternos por que esta es una implementacion de su codex
  * https://github.com/aternosorg/codex-minecraft
  */
-public class ProblemaVersionModMundo implements VerificacionRapida {
-
-	// Indica si el log contiene indicios globales del error
-	private boolean posibleVersionModMundo = false;
+public class ProblemaVersionModMundo implements Verificaciones {
 
 	// Indica si esta verificación fue activada
 	private boolean activado = false;
@@ -50,35 +47,7 @@ public class ProblemaVersionModMundo implements VerificacionRapida {
 			return;
 		}
 
-		posibleVersionModMundo = true;
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global ligera.
-	 *
-	 * No usa regex. Solo busca fragmentos muy específicos para decidir si vale la
-	 * pena hacer la verificación precisa por línea.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(INICIO) && contenido.contains(MARCADOR_VERSION_ACTUAL)
-				&& contenido.contains("things may not work well")) {
-
-			this.posibleVersionModMundo = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleVersionModMundo;
 	}
 
 	/**
@@ -89,9 +58,6 @@ public class ProblemaVersionModMundo implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		if (!posibleVersionModMundo || linea == null || linea.isEmpty()) {
-			return;
-		}
 
 		int indiceInicio = linea.indexOf(INICIO);
 		if (indiceInicio < 0) {
@@ -155,7 +121,7 @@ public class ProblemaVersionModMundo implements VerificacionRapida {
 	 * Crea una nueva instancia del verificador.
 	 */
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaVersionModMundo();
 	}
 

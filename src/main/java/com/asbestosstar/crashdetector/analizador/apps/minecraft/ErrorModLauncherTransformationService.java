@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,10 +14,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * ITransformationService de ModLauncher, donde un proveedor no puede ser
  * instanciado, lo que indica un mod con una implementación defectuosa.
  */
-public class ErrorModLauncherTransformationService implements VerificacionRapida {
+public class ErrorModLauncherTransformationService implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean posible = false;
 
 	private String mensaje = "";
 	private String enlaceHtml = "";
@@ -41,33 +40,7 @@ public class ErrorModLauncherTransformationService implements VerificacionRapida
 			return;
 		}
 
-		posible = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
-	 * 
-	 * Método legacy seguro: si existe contenido completo, conserva compatibilidad
-	 * con el motor anterior.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		if (log.contains(SERVICE_CONFIGURATION_ERROR) && log.contains(ITRANSFORMATION_SERVICE)
-				&& log.contains(COULD_NOT_BE_INSTANTIATED)) {
-			posible = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
 	}
 
 	/**
@@ -79,10 +52,6 @@ public class ErrorModLauncherTransformationService implements VerificacionRapida
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado || !posible || linea == null) {
-			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
 
 		// Buscamos la línea que contiene el error de ServiceConfigurationError con
 		// ITransformationService
@@ -111,7 +80,7 @@ public class ErrorModLauncherTransformationService implements VerificacionRapida
 
 			// Mensaje de error en HTML con referencia al problema de ITransformationService
 			mensaje = MonitorDePID.idioma.errorModLauncherTransformationService(claseProveedor)
-					+ Verificaciones.nl_html;
+					+ VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
@@ -170,7 +139,7 @@ public class ErrorModLauncherTransformationService implements VerificacionRapida
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorModLauncherTransformationService();
 	}
 

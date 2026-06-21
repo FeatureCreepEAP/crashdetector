@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -18,11 +18,10 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Este tipo de error suele aparecer cuando Starlight falla durante la
  * inicialización del sistema de iluminación del mundo.
  */
-public class ProblemaBlockStarlightEngine implements VerificacionRapida {
+public class ProblemaBlockStarlightEngine implements Verificaciones {
 
 	private boolean activado = false;
 	private String enlace = "";
-	public boolean analizarLineas = false;
 
 	private static final String STARLIGHT = "ca.spottedleaf.starlight";
 	private static final String INIT_NIBBLE = "BlockStarLightEngine.initNibble";
@@ -38,41 +37,11 @@ public class ProblemaBlockStarlightEngine implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(STARLIGHT) || evento.linea.contains(INIT_NIBBLE)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null)
-			return;
-
-		String log = consola.contenido_verificar;
-
-		// Pre-check global rápido para evitar análisis innecesario
-		if (!log.contains(STARLIGHT))
-			return;
-
-		// Si el método problemático aparece en el log, activamos el detector
-		if (log.contains(INIT_NIBBLE)) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!analizarLineas || activado || linea == null)
-			return;
 
 		if (linea.contains(INIT_NIBBLE)) {
 
@@ -82,7 +51,7 @@ public class ProblemaBlockStarlightEngine implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaBlockStarlightEngine();
 	}
 

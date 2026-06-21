@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -28,7 +28,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Tournament y una versión vieja de Lithium, o un fork basado en Lithium viejo
  * como Radium Reforged.
  */
-public class ValkyrienSkiesTournamentLithiumPoiInjection implements VerificacionRapida {
+public class ValkyrienSkiesTournamentLithiumPoiInjection implements Verificaciones {
 
 	// Indica si apareció la excepción de inyección inválida
 	private boolean indicioInvalidInjection = false;
@@ -78,48 +78,6 @@ public class ValkyrienSkiesTournamentLithiumPoiInjection implements Verificacion
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Búsqueda global ligera para evitar trabajo innecesario por línea
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(INVALID_INJECTION)) {
-			indicioInvalidInjection = true;
-		} else {
-			return;
-		}
-
-		if (contenido.contains(LITHIUM_POI_MIXIN)) {
-			indicioLithiumPoiMixin = true;
-		} else {
-			return;
-		}
-
-		if (contenido.contains(VS_POI_MIXIN)) {
-			indicioVSPoiMixin = true;
-		} else {
-			return;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!indicioInvalidInjection)
-			return false;
-
-		if (!indicioLithiumPoiMixin)
-			return false;
-
-		if (!indicioVSPoiMixin)
-			return false;
-
-		return !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Solo activar cuando ya están presentes los indicios globales
 		if (activado || linea == null || !indicioInvalidInjection || !indicioLithiumPoiMixin || !indicioVSPoiMixin) {
@@ -141,7 +99,7 @@ public class ValkyrienSkiesTournamentLithiumPoiInjection implements Verificacion
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ValkyrienSkiesTournamentLithiumPoiInjection();
 	}
 

@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,7 +14,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * archivo JAR corrupto. Extrae y muestra el nombre del archivo afectado para
  * facilitar la identificación.
  */
-public class ErrorJarCorruptoConNombre implements VerificacionRapida {
+public class ErrorJarCorruptoConNombre implements Verificaciones {
 
 	private static final String PREFIJO = "Error analyzing [";
 	private static final String SUFIJO = "]: java.util.zip.ZipException: zip END header not found";
@@ -23,8 +23,6 @@ public class ErrorJarCorruptoConNombre implements VerificacionRapida {
 
 	private boolean activado = false;
 	private String mensaje = "";
-
-	private boolean posibleJarCorruptoConNombre = false;
 
 	@Override
 	public String[] patronesRapidos() {
@@ -37,37 +35,11 @@ public class ErrorJarCorruptoConNombre implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneJarCorruptoConNombre(evento.linea)) {
-			posibleJarCorruptoConNombre = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			posibleJarCorruptoConNombre = false;
-			return;
-		}
-
-		// Chequeo global barato: solo busca frases fijas.
-		String contenidoConsola = consola.contenido_verificar;
-
-		posibleJarCorruptoConNombre = contenidoConsola.contains(PREFIJO) && contenidoConsola.contains(EXTENSION_JAR)
-				&& contenidoConsola.contains(SUFIJO);
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleJarCorruptoConNombre && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (this.activado || !posibleJarCorruptoConNombre || linea == null) {
-			return;
-		}
 
 		if (!lineaContieneJarCorruptoConNombre(linea)) {
 			return;
@@ -132,7 +104,7 @@ public class ErrorJarCorruptoConNombre implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorJarCorruptoConNombre();
 	}
 

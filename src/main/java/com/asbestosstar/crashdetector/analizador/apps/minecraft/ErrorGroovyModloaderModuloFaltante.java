@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,12 +14,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * específicamente cuando Jackson core no se encuentra pero es requerido por
  * Jackson module paramnames, común en mods como Valkyrien Skies.
  */
-public class ErrorGroovyModloaderModuloFaltante implements VerificacionRapida {
+public class ErrorGroovyModloaderModuloFaltante implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoGML = false;
 
 	private static final String FIND_EXCEPTION = "java.lang.module.FindException";
 	private static final String JACKSON_CORE_NOT_FOUND = "Module com.fasterxml.jackson.core not found";
@@ -43,25 +42,7 @@ public class ErrorGroovyModloaderModuloFaltante implements VerificacionRapida {
 			return;
 		}
 
-		// Verificamos si Groovy Modloader o mods relacionados están presentes en la
-		// línea que disparó el patrón rápido.
-		if (lineaContieneGML(evento.linea)) {
-			encontradoGML = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return encontradoGML && !activado;
 	}
 
 	/**
@@ -74,10 +55,6 @@ public class ErrorGroovyModloaderModuloFaltante implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!encontradoGML || activado || linea == null) {
-			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
 
 		// Buscamos la línea que contiene el error de módulo faltante de Jackson
 		if (lineaContieneModuloJacksonFaltante(linea)) {
@@ -86,7 +63,7 @@ public class ErrorGroovyModloaderModuloFaltante implements VerificacionRapida {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Mensaje de error en HTML con referencia al problema de módulos de GML
-			mensaje = MonitorDePID.idioma.errorGroovyModloaderModuloFaltante() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorGroovyModloaderModuloFaltante() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
@@ -101,7 +78,7 @@ public class ErrorGroovyModloaderModuloFaltante implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorGroovyModloaderModuloFaltante();
 	}
 

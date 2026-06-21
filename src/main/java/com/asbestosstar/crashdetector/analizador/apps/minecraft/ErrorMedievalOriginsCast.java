@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,12 +14,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * puede ser casteado a EntityLinkedItemStack, común en versiones superiores a
  * 6.6.0.
  */
-public class ErrorMedievalOriginsCast implements VerificacionRapida {
+public class ErrorMedievalOriginsCast implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoMedievalOrigins = false;
 
 	private static final String MEDIEVAL_ORIGINS = "medievalorigins";
 	private static final String ITEMSTACK_CAST = "class net.minecraft.world.item.ItemStack cannot be cast to class";
@@ -36,25 +35,7 @@ public class ErrorMedievalOriginsCast implements VerificacionRapida {
 			return;
 		}
 
-		// Verificamos si Medieval Origins está presente en la línea que disparó el
-		// patrón rápido.
-		if (evento.linea.contains(MEDIEVAL_ORIGINS)) {
-			encontradoMedievalOrigins = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Método de compatibilidad — no hace nada en modo rápido/streaming.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return encontradoMedievalOrigins && !activado;
 	}
 
 	/**
@@ -67,10 +48,6 @@ public class ErrorMedievalOriginsCast implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!encontradoMedievalOrigins || activado || linea == null) {
-			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
 
 		// Buscamos la línea que contiene el error de casteo de ItemStack a
 		// EntityLinkedItemStack
@@ -80,13 +57,13 @@ public class ErrorMedievalOriginsCast implements VerificacionRapida {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Mensaje de error en HTML con referencia al problema de Medieval Origins
-			mensaje = MonitorDePID.idioma.errorMedievalOriginsCast() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorMedievalOriginsCast() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorMedievalOriginsCast();
 	}
 

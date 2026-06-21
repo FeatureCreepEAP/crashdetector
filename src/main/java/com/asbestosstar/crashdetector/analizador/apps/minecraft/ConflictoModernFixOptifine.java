@@ -7,22 +7,21 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta incompatibilidad entre ModernFix y OptiFine. ModernFix emite un
  * mensaje explícito cuando detecta OptiFine.
  */
-public class ConflictoModernFixOptifine implements VerificacionRapida {
+public class ConflictoModernFixOptifine implements Verificaciones {
 
 	private boolean activado = false;
 	private String enlaceHtml = "";
-	public boolean analizarLineas = false;
 
 	private static final String MENSAJE_MODERNFIX_OPTIFINE = "OptiFine detected. Use of ModernFix with OptiFine is not supported";
 
@@ -43,27 +42,7 @@ public class ConflictoModernFixOptifine implements VerificacionRapida {
 			return;
 		}
 
-		analizarLineas = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		// Modo streaming puro: puede no existir contenido_verificar
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String log = consola.contenido_verificar;
-
-		if (log.contains(MENSAJE_MODERNFIX_OPTIFINE)) {
-			analizarLineas = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
 	}
 
 	@Override
@@ -88,7 +67,7 @@ public class ConflictoModernFixOptifine implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ConflictoModernFixOptifine();
 	}
 

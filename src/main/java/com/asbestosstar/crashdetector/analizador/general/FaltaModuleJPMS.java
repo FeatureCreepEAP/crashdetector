@@ -10,23 +10,16 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class FaltaModuleJPMS implements VerificacionRapida {
+public class FaltaModuleJPMS implements Verificaciones {
 
 	private boolean activado = false;
 	private final Set<String> errores = new HashSet<>();
 	private final List<String> enlaces = new ArrayList<>();
-
-	/**
-	 * Bandera ligera para indicar si el log contiene, en general, el patrón de
-	 * módulos JPMS faltantes. Esto permite que el verificador por línea se salte
-	 * todo el trabajo si no hay ninguna coincidencia global.
-	 */
-	private boolean posibleFaltaModulo = false;
 
 	private static final String FIND_EXCEPTION_MODULE = "java.lang.module.FindException: Module ";
 	private static final String NOT_FOUND_REQUIRED_BY = " not found, required by ";
@@ -45,39 +38,11 @@ public class FaltaModuleJPMS implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneFaltaModulo(evento.linea)) {
-			posibleFaltaModulo = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			posibleFaltaModulo = false;
-			return;
-		}
-
-		String contenidoConsola = consola.contenido_verificar;
-
-		// Verificación global mínima: solo comprobamos si aparecen los fragmentos
-		// clave del error JPMS. El análisis real se hace en el método por línea.
-		posibleFaltaModulo = contenidoConsola.contains(FIND_EXCEPTION_MODULE)
-				&& contenidoConsola.contains(NOT_FOUND_REQUIRED_BY);
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleFaltaModulo;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Si el log no parece contener el error, evitamos trabajo extra por cada línea.
-		if (!posibleFaltaModulo || linea == null) {
-			return;
-		}
 
 		if (lineaContieneFaltaModulo(linea)) {
 
@@ -162,7 +127,7 @@ public class FaltaModuleJPMS implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new FaltaModuleJPMS();
 	}
 

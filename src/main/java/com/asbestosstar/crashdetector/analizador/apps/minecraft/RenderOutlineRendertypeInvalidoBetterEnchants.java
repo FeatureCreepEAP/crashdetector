@@ -3,15 +3,14 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class RenderOutlineRendertypeInvalidoBetterEnchants implements VerificacionRapida {
+public class RenderOutlineRendertypeInvalidoBetterEnchants implements Verificaciones {
 
-	private boolean posibleError = false;
 	private boolean modEnchantOutlineDetectado = false;
 	private boolean activado = false;
 	private String enlace = "";
@@ -32,10 +31,6 @@ public class RenderOutlineRendertypeInvalidoBetterEnchants implements Verificaci
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_ERROR)) {
-			posibleError = true;
-		}
-
 		if (contieneModSospechoso(evento.linea)) {
 			modEnchantOutlineDetectado = true;
 		}
@@ -44,40 +39,7 @@ public class RenderOutlineRendertypeInvalidoBetterEnchants implements Verificaci
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Error base
-		if (consola.contenido_verificar.contains(TEXTO_ERROR)) {
-			posibleError = true;
-		}
-
-		// Buscar mod sospechoso
-		if (consola.contenido_verificar.contains(MOD_ENCHANT_OUTLINE)
-				|| consola.contenido_verificar.contains(MOD_BETTER_ENCHANTS)
-				|| consola.contenido_verificar.contains(MOD_ENCHANT_OUTLINE_ALT)) {
-
-			modEnchantOutlineDetectado = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!posibleError)
-			return false;
-
-		return !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-
-		if (!posibleError || activado || linea == null) {
-			return;
-		}
 
 		if (linea.contains(TEXTO_ERROR)) {
 
@@ -95,7 +57,7 @@ public class RenderOutlineRendertypeInvalidoBetterEnchants implements Verificaci
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new RenderOutlineRendertypeInvalidoBetterEnchants();
 	}
 

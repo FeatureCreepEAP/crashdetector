@@ -3,17 +3,13 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ForgeLanguageProviderNoCarga implements VerificacionRapida {
-
-	// Indica si el log contiene indicios globales del error (optimización de
-	// rendimiento)
-	private boolean posibleFalloProvider = false;
+public class ForgeLanguageProviderNoCarga implements Verificaciones {
 
 	// Indica si esta verificación fue activada
 	private boolean activado = false;
@@ -39,41 +35,11 @@ public class ForgeLanguageProviderNoCarga implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneFalloProvider(evento.linea)) {
-			posibleFalloProvider = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Detección global ligera:
-		// Solo se buscan subcadenas clave para evitar operaciones costosas.
-		if (consola.contenido_verificar.contains("java.util.ServiceConfigurationError")
-				&& consola.contenido_verificar.contains("net.minecraftforge.forgespi.language.IModLanguageProvider")
-				&& consola.contenido_verificar.contains(UNABLE_TO_LOAD)) {
-
-			posibleFalloProvider = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleFalloProvider && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-
-		// Salir temprano si no hay indicios globales
-		if (!posibleFalloProvider || activado || linea == null) {
-			return;
-		}
 
 		// Verificación precisa en la línea exacta
 		if (lineaContieneFalloProvider(linea)) {
@@ -98,7 +64,7 @@ public class ForgeLanguageProviderNoCarga implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ForgeLanguageProviderNoCarga();
 	}
 

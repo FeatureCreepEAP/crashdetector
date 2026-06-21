@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,11 +14,10 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Iris/Oculus en versiones recientes de Minecraft donde OptionInstance es
  * final.
  */
-public class ErrorRubidiumObsoletoConIris implements VerificacionRapida {
+public class ErrorRubidiumObsoletoConIris implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
-	public boolean posible = false;
 
 	private static final String INCOMPATIBLE_CLASS_CHANGE_ERROR = "java.lang.IncompatibleClassChangeError";
 	private static final String SHADOW_DISTANCE_OPTION = "ShadowDistanceOption";
@@ -35,37 +34,11 @@ public class ErrorRubidiumObsoletoConIris implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneErrorRubidium(evento.linea)) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(INCOMPATIBLE_CLASS_CHANGE_ERROR) && contenido.contains(SHADOW_DISTANCE_OPTION)
-				&& contenido.contains(FINAL_OPTION_INSTANCE)) {
-			posible = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posible || this.activado || linea == null) {
-			return;
-		}
 
 		if (lineaContieneErrorRubidium(linea)) {
 			String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -86,7 +59,7 @@ public class ErrorRubidiumObsoletoConIris implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorRubidiumObsoletoConIris();
 	}
 

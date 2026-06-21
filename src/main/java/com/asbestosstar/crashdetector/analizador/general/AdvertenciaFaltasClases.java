@@ -17,20 +17,19 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.waifu.RespuestaWaifu;
 import com.asbestosstar.crashdetector.waifu.WaifuAPI;
 
-public class AdvertenciaFaltasClases implements VerificacionRapida {
+public class AdvertenciaFaltasClases implements Verificaciones {
 
 	private boolean activado = false;
 	private final Set<String> clases = new LinkedHashSet<>();
 	private final Map<String, String> enlacesPorClase = new HashMap<>(); // Clase -> enlace HTML
-	private boolean analizarLineas = false;
 
 	private static final String ERROR_LOADING_CLASS = "Error loading class:";
 	private static final String ERROR_LOADING_CLASS_CON_ESPACIO = "Error loading class: ";
@@ -47,33 +46,7 @@ public class AdvertenciaFaltasClases implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneAdvertenciaClase(evento.linea)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		// La detección real se hace por línea en verificar(Consola, String, int).
-		// Este método se mantiene vacío para cumplir con la interfaz y permitir
-		// realizar pre-cálculos globales en el futuro si fuera necesario.
-
-		if (consola == null || consola.contenido_verificar == null)
-			return;
-
-		String log = consola.contenido_verificar;
-
-		if (log.contains(ERROR_LOADING_CLASS) && log.contains(WARN)) {
-			analizarLineas = true;
-		}
-
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas;
 	}
 
 	/**
@@ -86,16 +59,13 @@ public class AdvertenciaFaltasClases implements VerificacionRapida {
 	 * <li>La guarda en el conjunto {@code clases} en formato path (reemplazando "."
 	 * por "/").</li>
 	 * <li>Registra un enlace HTML a la línea correspondiente mediante
-	 * {@link Consola#agregarErrorALectador(int, Verificaciones)}.</li>
+	 * {@link Consola#agregarErrorALectador(int, VerificacionesLegacy)}.</li>
 	 * </ul>
 	 * Al menos una clase detectada activará este verificador.
 	 * </p>
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!analizarLineas || linea == null) {
-			return;
-		}
 
 		if (lineaContieneAdvertenciaClase(linea)) {
 			try {
@@ -149,7 +119,7 @@ public class AdvertenciaFaltasClases implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new AdvertenciaFaltasClases();
 	}
 

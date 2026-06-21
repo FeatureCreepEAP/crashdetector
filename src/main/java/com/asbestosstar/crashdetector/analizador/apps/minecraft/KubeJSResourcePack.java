@@ -8,18 +8,17 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class KubeJSResourcePack implements VerificacionRapida {
+public class KubeJSResourcePack implements Verificaciones {
 
 	private boolean activado = false;
 	private final Set<String> errores = new HashSet<>();
 	private final Map<String, String> enlacesPorError = new HashMap<>();
-	public boolean posible = false;
 
 	private static final String KUBEJS_RESOURCE_PACK = "from pack KubeJS Resource Pack [data]";
 	private static final String FAILED_TO_PARSE = "Failed to parse ";
@@ -35,38 +34,7 @@ public class KubeJSResourcePack implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneKubeJSResourcePack(evento.linea)) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global no utilizada en este verificador.
-	 * <p>
-	 * La detección real se hace por línea en
-	 * {@link #verificarPorLinea(Consola, String, int)}, llamada por el analizador
-	 * línea a línea.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty())
-			return;
-
-		// Global barato: solo contains, sin recorrer todas las líneas
-		String contenido = consola.contenido_verificar;
-		if (contenido.contains(KUBEJS_RESOURCE_PACK) || contenido.contains(FAILED_TO_PARSE)) {
-			posible = true;
-		}
-
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible;
 	}
 
 	/**
@@ -136,7 +104,7 @@ public class KubeJSResourcePack implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new KubeJSResourcePack();
 	}
 

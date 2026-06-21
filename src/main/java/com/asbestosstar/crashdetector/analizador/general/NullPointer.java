@@ -15,16 +15,16 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Verificación especializada para detectar y resumir todas las
  * {@code NullPointerException} (NPE) que aparecen en la consola.
  */
-public class NullPointer implements VerificacionRapida {
+public class NullPointer implements Verificaciones {
 
 	/**
 	 * Conjunto global de NPEs detectadas para evitar duplicados entre logs. Clave:
@@ -43,7 +43,7 @@ public class NullPointer implements VerificacionRapida {
 	/**
 	 * Separador de líneas, definido en la interfaz base
 	 */
-	private static final String NL = Verificaciones.nl;
+	private static final String NL = VerificacionesLegacy.nl;
 
 	/**
 	 * Almacena los mensajes de error únicos detectados, agrupados por tipo de error
@@ -62,8 +62,6 @@ public class NullPointer implements VerificacionRapida {
 	private final Map<String, String> enlacesPorLinea = new HashMap<>();
 
 	public static List<String> lineas_ignorar = new ArrayList<>();
-
-	public boolean posiblePorLinea = false;
 
 	static {
 		// Ejemplo de línea a ignorar (puedes añadir más patrones específicos aquí)
@@ -97,81 +95,11 @@ public class NullPointer implements VerificacionRapida {
 
 	@Override
 	public void verificarCoincidencia(EventoDeCoincidencia evento) {
-		posiblePorLinea = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
-		if (vdst == null || vdst.trazos_completos == null) {
-			return;
-		}
-
-		if (!consola.contenido_verificar.contains("NullPointerException")) {
-			return;
-		}
-		posiblePorLinea = true;
-
-		for (TraceInfo trace : vdst.trazos_completos) {
-
-			if (trace == null || trace.trace == null) {
-				continue;
-			}
-
-			if (!trace.trace.contains("NullPointerException")) {
-				continue;
-			}
-
-			// === Extraer mensaje NPE ===
-			String metodo = "método desconocido";
-			String objeto = "objeto";
-
-			DatosNPE datos = extraerDatosNPE(trace.trace, true);
-
-			if (datos == null) {
-				continue;
-			}
-
-			metodo = datos.metodo;
-			objeto = datos.objeto;
-
-			// === Inferir origen SOLO desde este TraceInfo ===
-			String origen = inferirOrigenDesdeTrace(trace);
-
-			String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
-
-			// Deduplicación global entre logs
-			if (!ERRORES_GLOBALES_VISTOS.add(mensajeBase)) {
-				continue;
-			}
-
-			enlacesPorLinea.putIfAbsent(mensajeBase, consola.agregarErrorALectador(trace.consolaLineaComenzar, this));
-
-			errores.computeIfAbsent(mensajeBase, k -> new HashSet<>());
-			if (!origen.isEmpty()) {
-				errores.get(mensajeBase).add(origen);
-			}
-
-			activado = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!posiblePorLinea)
-			return false;
-
-		return true;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int i) {
-
-		if (!posiblePorLinea) {
-			return;
-		}
 
 		if (linea.contains("NullPointerException") && !linea.contains("at ")
 				&& VerificacionDeStackTrace.tracePermite(linea)) {
@@ -578,7 +506,7 @@ public class NullPointer implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new NullPointer();
 	}
 

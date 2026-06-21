@@ -8,17 +8,16 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class ProblemaDependenciaModFabric implements VerificacionRapida {
+public class ProblemaDependenciaModFabric implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean posibleProblemaDependenciaFabric = false;
 
 	private final Set<String> problemasDetectados = new LinkedHashSet<String>();
 	private final Set<String> problemasSalida = new LinkedHashSet<String>();
@@ -41,29 +40,11 @@ public class ProblemaDependenciaModFabric implements VerificacionRapida {
 			return;
 		}
 
-		posibleProblemaDependenciaFabric = true;
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!posibleProblemaDependenciaFabric)
-			return false;
-
-		return true;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleProblemaDependenciaFabric || linea == null) {
-			return;
-		}
 
 		if (!lineaContienePistaRapida(linea)) {
 			return;
@@ -489,7 +470,7 @@ public class ProblemaDependenciaModFabric implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaDependenciaModFabric();
 	}
 
@@ -513,7 +494,7 @@ public class ProblemaDependenciaModFabric implements VerificacionRapida {
 		StringBuilder sb = new StringBuilder();
 
 		for (String p : problemasSalida) {
-			sb.append(" - ").append(p).append(Verificaciones.nl_html);
+			sb.append(" - ").append(p).append(VerificacionesLegacy.nl_html);
 		}
 
 		return sb.toString().trim();

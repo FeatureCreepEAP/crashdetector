@@ -7,18 +7,18 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta conflictos de IDs de Minecraft (colisión de ID o rango máximo) sin
  * regex. Modernized with global flag and per-line detection for speed.
  */
-public class ConflictoDeIDsMinecraft implements VerificacionRapida {
+public class ConflictoDeIDsMinecraft implements Verificaciones {
 
 	private boolean activado = false;
 	private boolean posibleConflicto = false;
@@ -53,24 +53,6 @@ public class ConflictoDeIDsMinecraft implements VerificacionRapida {
 
 		this.posibleConflicto = true;
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(MAX_RANGO) || contenido.contains(SLOT_OCCUPIED)) {
-			posibleConflicto = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleConflicto && !activado;
 	}
 
 	@Override
@@ -121,7 +103,7 @@ public class ConflictoDeIDsMinecraft implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ConflictoDeIDsMinecraft();
 	}
 
@@ -158,19 +140,21 @@ public class ConflictoDeIDsMinecraft implements VerificacionRapida {
 		if ("maximo_rango".equals(tipoConflicto)) {
 			builder.agregarEtiqueta(MonitorDePID.idioma.solucion_maximo_rango())
 					.agregarBoton(MonitorDePID.idioma.instalar_justenoughids(), (bool) -> {
-						Verificaciones.abrirEnNavegador("https://www.curseforge.com/minecraft/mc-mods/justenoughids");
+						VerificacionesLegacy
+								.abrirEnNavegador("https://www.curseforge.com/minecraft/mc-mods/justenoughids");
 					}).agregarBoton(MonitorDePID.idioma.instalar_endlessids(), (bool) -> {
-						Verificaciones.abrirEnNavegador("https://www.curseforge.com/minecraft/mc-mods/endless-ids");
+						VerificacionesLegacy
+								.abrirEnNavegador("https://www.curseforge.com/minecraft/mc-mods/endless-ids");
 					});
 		} else if ("colision_id".equals(tipoConflicto)) {
 			builder.agregarEtiqueta(MonitorDePID.idioma.solucion_colision_id())
 					.agregarBoton(MonitorDePID.idioma.usar_idfix_minus(), (bool) -> {
-						Verificaciones.abrirEnNavegador(
+						VerificacionesLegacy.abrirEnNavegador(
 								"https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id");
 					}).agregarBoton(MonitorDePID.idioma.usar_minecraft_id_resolver(), (bool) -> {
-						Verificaciones.abrirEnNavegador("https://github.com/SS111/Minecraft-ID-Resolver");
+						VerificacionesLegacy.abrirEnNavegador("https://github.com/SS111/Minecraft-ID-Resolver");
 					}).agregarBoton(MonitorDePID.idioma.ver_documentacion_jp(), (bool) -> {
-						Verificaciones.abrirEnNavegador(
+						VerificacionesLegacy.abrirEnNavegador(
 								"https://minecraftjapan.miraheze.org/wiki/MOD%E8%A7%A3%E8%AA%AC/ID%E7%AB%B6%E5%90%88%E9%98%B2%E6%AD%A2%E6%94%AF%E6%8F%B4MOD");
 					});
 		}

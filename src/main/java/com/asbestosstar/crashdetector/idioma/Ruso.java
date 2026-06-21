@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 
 public class Ruso implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -4144,7 +4144,7 @@ public class Ruso implements Idioma {
 	public String infoDeTrazos() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Исправление верхних частей брёвен — главный приоритет. " + "Формат: Уровень, Строка. "
-				+ "Все логи имеют систему нумерации. " + Verificaciones.nl_html
+				+ "Все логи имеют систему нумерации. " + VerificacionesLegacy.nl_html
 				+ "Как правило, нужно искать на самых нижних уровнях во всех логах; трассировки с высоким уровнем обычно являются ложноположительными. "
 				+ "Важно использовать вашу способность читать консоль, так как анализ трассировок не является идеальным при большом их количестве."
 				+ "</b>";

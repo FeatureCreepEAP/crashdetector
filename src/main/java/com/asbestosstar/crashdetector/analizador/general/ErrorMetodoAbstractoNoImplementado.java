@@ -4,10 +4,10 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,12 +15,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * un método de una interfaz. Extrae los nombres concretos y el origen desde el
  * trace, sin usar regex ni mantener todas las líneas en memoria.
  */
-public class ErrorMetodoAbstractoNoImplementado implements VerificacionRapida {
+public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean posibleError = false;
 
 	private static final String TEXTO_ABSTRACT = "java.lang.AbstractMethodError";
 	private static final String TEXTO_NO_IMPLEMENTA = "does not define or inherit an implementation";
@@ -38,34 +37,11 @@ public class ErrorMetodoAbstractoNoImplementado implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneMetodoAbstracto(evento.linea)) {
-			posibleError = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
-
-		// Marcar posible error si los textos clave están presentes
-		posibleError = consola.contenido_verificar.contains(TEXTO_ABSTRACT)
-				&& consola.contenido_verificar.contains(TEXTO_NO_IMPLEMENTA)
-				&& contieneTipoObjetivo(consola.contenido_verificar);
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleError && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleError || activado || linea == null)
-			return;
 
 		if (!lineaContieneMetodoAbstracto(linea)) {
 			return;
@@ -98,7 +74,7 @@ public class ErrorMetodoAbstractoNoImplementado implements VerificacionRapida {
 		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 		mensaje = MonitorDePID.idioma.errorMetodoAbstractoNoImplementadoDetallado(claseConcreta, firmaMetodo, interfaz,
-				origen) + Verificaciones.nl_html + enlaceHtml;
+				origen) + VerificacionesLegacy.nl_html + enlaceHtml;
 
 		activado = true;
 	}
@@ -174,7 +150,7 @@ public class ErrorMetodoAbstractoNoImplementado implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorMetodoAbstractoNoImplementado();
 	}
 

@@ -3,15 +3,14 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class IrisSombrasTerreno implements VerificacionRapida {
+public class IrisSombrasTerreno implements Verificaciones {
 
-	private boolean posibleErrorIris = false;
 	private boolean activado = false;
 	private String enlace = "";
 
@@ -28,35 +27,11 @@ public class IrisSombrasTerreno implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(IRIS_RENDER_TERRAIN_SHADOWS)) {
-			posibleErrorIris = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Detección global: el log contiene el método de Iris
-		if (consola.contenido_verificar.contains(IRIS_RENDER_TERRAIN_SHADOWS)) {
-			posibleErrorIris = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posibleErrorIris && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-		if (!posibleErrorIris || activado || linea == null) {
-			return;
-		}
 
 		if (linea.contains(IRIS_RENDER_TERRAIN_SHADOWS)) {
 			this.enlace = consola.agregarErrorALectador(num, this);
@@ -65,7 +40,7 @@ public class IrisSombrasTerreno implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new IrisSombrasTerreno();
 	}
 

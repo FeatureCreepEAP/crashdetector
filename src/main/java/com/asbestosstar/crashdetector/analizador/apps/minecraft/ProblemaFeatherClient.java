@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -15,10 +15,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Requiere que también esté presente el paquete net.digitalingot.feather
  */
-public class ProblemaFeatherClient implements VerificacionRapida {
+public class ProblemaFeatherClient implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean analizarLineas = false;
 	private boolean vioNoClassDef = false;
 	private boolean vioPaqueteFeather = false;
 	private String enlace = "";
@@ -38,27 +37,11 @@ public class ProblemaFeatherClient implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(SENTRY) || evento.linea.contains(PAQUETE_FEATHER)) {
-			analizarLineas = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return analizarLineas && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-
-		if (!analizarLineas || linea == null || activado)
-			return;
 
 		if (linea.contains(NO_CLASS_DEF)) {
 			vioNoClassDef = true;
@@ -75,7 +58,7 @@ public class ProblemaFeatherClient implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ProblemaFeatherClient();
 	}
 

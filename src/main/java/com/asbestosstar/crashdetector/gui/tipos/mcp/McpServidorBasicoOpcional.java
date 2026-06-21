@@ -17,7 +17,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.config.json.Json;
@@ -328,7 +328,7 @@ public class McpServidorBasicoOpcional {
 		StringBuilder sb = new StringBuilder();
 		int total = 0;
 
-		for (Verificaciones ver : analizador.obtenerActivados()) {
+		for (VerificacionesLegacy ver : analizador.obtenerActivados()) {
 			String clase = ver.getClass().getSimpleName().toLowerCase();
 			String id = ver.id() == null ? "" : ver.id().toLowerCase();
 			String nombre = ver.nombre() == null ? "" : ver.nombre().toLowerCase();
@@ -574,7 +574,7 @@ public class McpServidorBasicoOpcional {
 	public static String herramientaListarVerificacionesActivas() {
 		Analizador analizador = obtenerAnalizadorActual();
 
-		Set<Verificaciones> activas = analizador.obtenerActivados();
+		Set<VerificacionesLegacy> activas = analizador.obtenerActivados();
 		if (activas.isEmpty()) {
 			return "No hay verificaciones activas.";
 		}
@@ -582,7 +582,7 @@ public class McpServidorBasicoOpcional {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Verificaciones activas: ").append(activas.size()).append("\n");
 
-		for (Verificaciones ver : activas) {
+		for (VerificacionesLegacy ver : activas) {
 			sb.append("- ").append(ver.id()).append(" | ").append(ver.nombre()).append(" | prioridad=")
 					.append(ver.prioridad()).append("\n");
 		}
@@ -598,7 +598,7 @@ public class McpServidorBasicoOpcional {
 		String buscado = id.trim();
 		Analizador analizador = obtenerAnalizadorActual();
 
-		for (Verificaciones ver : analizador.obtenerActivados()) {
+		for (VerificacionesLegacy ver : analizador.obtenerActivados()) {
 			if (coincideVerificacion(ver, buscado)) {
 				StringBuilder sb = new StringBuilder();
 
@@ -621,7 +621,7 @@ public class McpServidorBasicoOpcional {
 		return "No se encontro verificacion activa con id/nombre/clase: " + buscado;
 	}
 
-	public static boolean coincideVerificacion(Verificaciones ver, String buscado) {
+	public static boolean coincideVerificacion(VerificacionesLegacy ver, String buscado) {
 		if (ver == null || buscado == null) {
 			return false;
 		}

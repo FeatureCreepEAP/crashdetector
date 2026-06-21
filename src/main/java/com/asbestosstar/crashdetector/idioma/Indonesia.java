@@ -8,7 +8,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 
 public class Indonesia implements Idioma {
 	Config config = Config.obtenerInstancia();
@@ -4623,7 +4623,7 @@ public class Indonesia implements Idioma {
 		// TODO: metode dihasilkan secara otomatis
 		return "<b style='color:#" + config.obtenerColorError() + "'>"
 				+ "Memperbaiki bagian atas log adalah prioritas pertama. " + "Format adalah Level, Baris. "
-				+ "Semua log memiliki sistem penomoran. " + Verificaciones.nl_html
+				+ "Semua log memiliki sistem penomoran. " + VerificacionesLegacy.nl_html
 				+ "Umumnya Anda perlu mencari di level yang lebih rendah di semua log; trace dengan level tinggi biasanya positif palsu. "
 				+ "Penting untuk menggunakan kemampuan Anda untuk melihat di konsol, karena analisis trace tidak sempurna ketika ada banyak trace."
 				+ "</b>";

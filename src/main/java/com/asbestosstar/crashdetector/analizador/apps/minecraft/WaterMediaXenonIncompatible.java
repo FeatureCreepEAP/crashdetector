@@ -8,9 +8,9 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -24,7 +24,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Forge: Xenon(xenon) is NOT compatible with WaterMedia. Please replace it with
  * Embeddium (embeddium) or Sodium (sodium)
  */
-public class WaterMediaXenonIncompatible implements VerificacionRapida {
+public class WaterMediaXenonIncompatible implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
@@ -33,7 +33,6 @@ public class WaterMediaXenonIncompatible implements VerificacionRapida {
 	private String modNombre = "";
 	private String modId = "";
 	private final List<String> modsUbicacion = new ArrayList<>();
-	public boolean posible = false;
 
 	private static final String FAILED_WATERMEDIA_FORGE = "Failed starting WATERMeDIA for Forge";
 	private static final String NOT_COMPATIBLE_WATERMEDIA = "is NOT compatible with WaterMedia";
@@ -51,49 +50,11 @@ public class WaterMediaXenonIncompatible implements VerificacionRapida {
 			return;
 		}
 
-		if (lineaContieneError(evento.linea)) {
-			posible = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	/**
-	 * Verificación global.
-	 * <p>
-	 * En este verificador no es necesario un análisis global costoso; toda la
-	 * detección se hace por línea en
-	 * {@link #verificarPorLinea(Consola, String, int)}, que es llamado para cada
-	 * línea del log. Este método se mantiene para cumplir con la interfaz.
-	 * </p>
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		// Compatibilidad legacy: en modo streaming puro contenido_verificar puede ser
-		// nulo
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(FAILED_WATERMEDIA_FORGE) && contenido.contains(NOT_COMPATIBLE_WATERMEDIA)) {
-			posible = true;
-		}
-
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return posible && !activado;
 	}
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó o la línea es nula, no seguimos
-		if (activado || !posible || linea == null) {
-			return;
-		}
 
 		// Condiciones mínimas para considerar este error
 		if (lineaContieneError(linea)) {
@@ -129,7 +90,7 @@ public class WaterMediaXenonIncompatible implements VerificacionRapida {
 
 			mensaje = MonitorDePID.idioma.errorWaterMediaXenonIncompatible(
 					modNombre.isEmpty() ? "(desconocido)" : modNombre, modId.isEmpty() ? "(desconocido)" : modId,
-					modsUbicacion) + Verificaciones.nl_html;
+					modsUbicacion) + VerificacionesLegacy.nl_html;
 
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
@@ -141,7 +102,7 @@ public class WaterMediaXenonIncompatible implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new WaterMediaXenonIncompatible();
 	}
 

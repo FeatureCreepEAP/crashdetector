@@ -3,17 +3,13 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class TwilightForestIntelShaders implements VerificacionRapida {
-
-	// Indica si el log contiene indicios globales del error (optimización de
-	// rendimiento)
-	private boolean posibleFalloIntelShaders = false;
+public class TwilightForestIntelShaders implements Verificaciones {
 
 	// Indica si esta verificación fue activada
 	private boolean activado = false;
@@ -38,45 +34,11 @@ public class TwilightForestIntelShaders implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(TEXTO_PROBLEMATIC_FRAME) || evento.linea.contains(TEXTO_INTEL_DRIVER)
-				|| evento.linea.contains(TEXTO_TF_SHADER_COMPLETO)) {
-			posibleFalloIntelShaders = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Detección global ligera:
-		// Se comprueba que existan las tres pistas clave del error
-		if (consola.contenido_verificar.contains(TEXTO_PROBLEMATIC_FRAME)
-				&& consola.contenido_verificar.contains(TEXTO_INTEL_DRIVER)
-				&& consola.contenido_verificar.contains(TEXTO_TF_SHADER_COMPLETO)) {
-
-			posibleFalloIntelShaders = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		if (!posibleFalloIntelShaders)
-			return false;
-
-		return !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
-
-		// Salir temprano si no hay indicios globales
-		if (!posibleFalloIntelShaders || activado || linea == null) {
-			return;
-		}
 
 		// Verificación precisa en línea
 		if (linea.contains(TEXTO_TF_SHADER_CORTO)) {
@@ -87,7 +49,7 @@ public class TwilightForestIntelShaders implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new TwilightForestIntelShaders();
 	}
 

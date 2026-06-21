@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -14,12 +14,11 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * servidor debido a errores en el registro de comportamientos de fuego,
  * causando un NullPointerException durante la carga de datapacks.
  */
-public class ErrorSupplementariesCargaServidor implements VerificacionRapida {
+public class ErrorSupplementariesCargaServidor implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoSupplementaries = false;
 
 	private static final String SUPPLEMENTARIES_FIRE_BEHAVIOR = "net.mehvahdjukaar.supplementaries.common.block.fire_behaviors.FireBehaviorsManager.registerBehaviors";
 	private static final String FAILED_TO_LOAD_DATAPACKS = "Failed to load datapacks";
@@ -43,27 +42,7 @@ public class ErrorSupplementariesCargaServidor implements VerificacionRapida {
 			return;
 		}
 
-		if (evento.linea.contains(SUPPLEMENTARIES_FIRE_BEHAVIOR)) {
-			encontradoSupplementaries = true;
-		}
-
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-	}
-
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		if (consola.contenido_verificar.contains(SUPPLEMENTARIES_FIRE_BEHAVIOR)) {
-			encontradoSupplementaries = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return encontradoSupplementaries && !activado;
 	}
 
 	/**
@@ -75,10 +54,6 @@ public class ErrorSupplementariesCargaServidor implements VerificacionRapida {
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (activado || !encontradoSupplementaries || linea == null) {
-			// Si ya se activó, no seguimos verificando más líneas.
-			return;
-		}
 
 		// Buscamos la combinación de mensajes que indican el problema de
 		// Supplementaries
@@ -88,13 +63,13 @@ public class ErrorSupplementariesCargaServidor implements VerificacionRapida {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
 			// Mensaje de error en HTML con referencia al problema de Supplementaries
-			mensaje = MonitorDePID.idioma.errorSupplementariesCargaServidor() + Verificaciones.nl_html;
+			mensaje = MonitorDePID.idioma.errorSupplementariesCargaServidor() + VerificacionesLegacy.nl_html;
 			activado = true;
 		}
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new ErrorSupplementariesCargaServidor();
 	}
 

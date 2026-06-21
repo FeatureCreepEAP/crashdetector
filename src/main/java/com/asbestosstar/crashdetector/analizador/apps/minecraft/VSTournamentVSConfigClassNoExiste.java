@@ -3,10 +3,10 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.VerificacionesLegacy;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
-import com.asbestosstar.crashdetector.analizador.rapido.VerificacionRapida;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -26,7 +26,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * tiene una versión vieja de VS Tournament que no funciona con Valkyrien Skies
  * moderno.
  */
-public class VSTournamentVSConfigClassNoExiste implements VerificacionRapida {
+public class VSTournamentVSConfigClassNoExiste implements Verificaciones {
 
 	// Indica si apareció la clase faltante de Valkyrien Skies
 	private boolean indicioClaseFaltante = false;
@@ -66,31 +66,6 @@ public class VSTournamentVSConfigClassNoExiste implements VerificacionRapida {
 	}
 
 	@Override
-	public void verificar(Consola consola) {
-		// Compatibilidad legacy: en modo streaming puro contenido_verificar puede ser
-		// nulo
-		if (consola == null || consola.contenido_verificar == null) {
-			return;
-		}
-
-		// Detección global ligera para evitar trabajo innecesario por línea
-		String contenido = consola.contenido_verificar;
-
-		if (contenido.contains(NO_CLASS_DEF)) {
-			indicioClaseFaltante = true;
-		}
-
-		if (contenido.contains(TOURNAMENT_INIT)) {
-			indicioTournamentInit = true;
-		}
-	}
-
-	@Override
-	public boolean quiereAnalizarLineas() {
-		return indicioClaseFaltante && indicioTournamentInit && !activado;
-	}
-
-	@Override
 	public void verificarPorLinea(Consola consola, String linea, int num) {
 		// Solo activar cuando ya están presentes ambos indicios globales
 		if (activado || !indicioClaseFaltante || !indicioTournamentInit || linea == null) {
@@ -112,7 +87,7 @@ public class VSTournamentVSConfigClassNoExiste implements VerificacionRapida {
 	}
 
 	@Override
-	public Verificaciones nueva() {
+	public VerificacionesLegacy nueva() {
 		return new VSTournamentVSConfigClassNoExiste();
 	}
 
