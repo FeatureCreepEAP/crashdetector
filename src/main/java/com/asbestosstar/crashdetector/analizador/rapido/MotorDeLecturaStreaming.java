@@ -33,7 +33,8 @@ public final class MotorDeLecturaStreaming {
 	}
 
 	public void procesarLineas(Consola consola, String[] lineas, List<Verificaciones> verificacionesPatrones,
-			List<Verificaciones> verificacionesLineales, EstadoAnalisisArchivo estado) {
+			List<Verificaciones> verificacionesLineales, EstadoAnalisisArchivo estado, ProcesadorVDSTAsync vdstAsync) {
+
 		inicializarAutomata(verificacionesPatrones);
 
 		if (lineas == null) {
@@ -41,13 +42,14 @@ public final class MotorDeLecturaStreaming {
 		}
 
 		for (int i = 0; i < lineas.length; i++) {
-			procesarLinea(consola, lineas[i], i, verificacionesLineales, estado);
+			procesarLinea(consola, lineas[i], i, verificacionesLineales, estado, vdstAsync);
 			estado.lineasLeidas = i + 1;
 		}
 	}
 
 	public void procesarEnVivo(Consola consola, InputStream inputStream, List<Verificaciones> verificacionesPatrones,
-			List<Verificaciones> verificacionesLineales, EstadoAnalisisArchivo estado) {
+			List<Verificaciones> verificacionesLineales, EstadoAnalisisArchivo estado, ProcesadorVDSTAsync vdstAsync) {
+
 		inicializarAutomata(verificacionesPatrones);
 
 		if (inputStream == null) {
@@ -60,7 +62,7 @@ public final class MotorDeLecturaStreaming {
 			int numeroLinea = 0;
 
 			while ((linea = reader.readLine()) != null) {
-				procesarLinea(consola, linea, numeroLinea, verificacionesLineales, estado);
+				procesarLinea(consola, linea, numeroLinea, verificacionesLineales, estado, vdstAsync);
 
 				numeroLinea++;
 				estado.lineasLeidas = numeroLinea;
@@ -72,7 +74,8 @@ public final class MotorDeLecturaStreaming {
 	}
 
 	public void procesarArchivo(Consola consola, List<Verificaciones> verificacionesPatrones,
-			List<Verificaciones> verificacionesLineales, EstadoAnalisisArchivo estado) {
+			List<Verificaciones> verificacionesLineales, EstadoAnalisisArchivo estado, ProcesadorVDSTAsync vdstAsync) {
+
 		inicializarAutomata(verificacionesPatrones);
 
 		Path path = consola.archivo;
@@ -82,6 +85,13 @@ public final class MotorDeLecturaStreaming {
 		}
 
 		boolean necesitaStringPorLinea = verificacionesLineales != null && !verificacionesLineales.isEmpty();
+
+		boolean debeGuardarContenidoStreaming = consola != null
+				&& ((consola.contenido_verificar == null || consola.contenido_verificar.isEmpty())
+						|| (consola.lineas_verificar == null || consola.lineas_verificar.length == 0));
+
+		StringBuilder contenidoStreaming = debeGuardarContenidoStreaming ? new StringBuilder() : null;
+		List<String> lineasStreaming = debeGuardarContenidoStreaming ? new ArrayList<String>() : null;
 
 		try (RandomAccessFile raf = new RandomAccessFile(path.toFile(), "r"); FileChannel channel = raf.getChannel()) {
 
@@ -123,13 +133,23 @@ public final class MotorDeLecturaStreaming {
 							System.arraycopy(bufferResto, 0, lineaCompleta, 0, restoAnterior);
 							System.arraycopy(heapBuffer, inicioActual, lineaCompleta, restoAnterior, lenLinea);
 
+							if (debeGuardarContenidoStreaming) {
+								guardarLineaStreaming(lineaCompleta, 0, lineaCompleta.length, contenidoStreaming,
+										lineasStreaming);
+							}
+
 							procesarLinea(consola, lineaCompleta, 0, lineaCompleta.length, numeroLineaActual,
-									verificacionesLineales, necesitaStringPorLinea, estado);
+									verificacionesLineales, necesitaStringPorLinea, estado, null, vdstAsync);
 
 							restoAnterior = 0;
 						} else {
+							if (debeGuardarContenidoStreaming) {
+								guardarLineaStreaming(heapBuffer, inicioActual, finLinea, contenidoStreaming,
+										lineasStreaming);
+							}
+
 							procesarLinea(consola, heapBuffer, inicioActual, finLinea, numeroLineaActual,
-									verificacionesLineales, necesitaStringPorLinea, estado);
+									verificacionesLineales, necesitaStringPorLinea, estado, null, vdstAsync);
 						}
 
 						numeroLineaActual++;
@@ -159,10 +179,19 @@ public final class MotorDeLecturaStreaming {
 			}
 
 			if (restoAnterior > 0) {
+				if (debeGuardarContenidoStreaming) {
+					guardarLineaStreaming(bufferResto, 0, restoAnterior, contenidoStreaming, lineasStreaming);
+				}
+
 				procesarLinea(consola, bufferResto, 0, restoAnterior, numeroLineaActual, verificacionesLineales,
-						necesitaStringPorLinea, estado);
+						necesitaStringPorLinea, estado, null, vdstAsync);
 
 				estado.lineasLeidas = numeroLineaActual + 1;
+			}
+
+			if (debeGuardarContenidoStreaming) {
+				consola.contenido_verificar = contenidoStreaming.toString();
+				consola.lineas_verificar = lineasStreaming.toArray(new String[0]);
 			}
 
 		} catch (IOException e) {
@@ -170,26 +199,53 @@ public final class MotorDeLecturaStreaming {
 		}
 	}
 
+	private void guardarLineaStreaming(byte[] datos, int inicio, int fin, StringBuilder contenidoStreaming,
+			List<String> lineasStreaming) {
+
+		if (datos == null || contenidoStreaming == null || lineasStreaming == null || fin < inicio) {
+			return;
+		}
+
+		if (fin > inicio && datos[fin - 1] == '\r') {
+			fin--;
+		}
+
+		String lineaTexto = new String(datos, inicio, fin - inicio, StandardCharsets.UTF_8);
+
+		lineasStreaming.add(lineaTexto);
+
+		if (contenidoStreaming.length() > 0) {
+			contenidoStreaming.append('\n');
+		}
+
+		contenidoStreaming.append(lineaTexto);
+	}
+
 	public void procesarLinea(Consola consola, byte[] datos, int inicio, int fin, int numeroLinea,
-			List<Verificaciones> verificacionesLineales, boolean necesitaStringPorLinea, EstadoAnalisisArchivo estado) {
+			List<Verificaciones> verificacionesLineales, boolean necesitaStringPorLinea, EstadoAnalisisArchivo estado,
+			ProcesadorVDSTAsync vdstAsync) {
+
 		procesarLinea(consola, datos, inicio, fin, numeroLinea, verificacionesLineales, necesitaStringPorLinea, estado,
-				null);
+				null, vdstAsync);
 	}
 
 	public void procesarLinea(Consola consola, String linea, int numeroLinea,
-			List<Verificaciones> verificacionesLineales, EstadoAnalisisArchivo estado) {
+			List<Verificaciones> verificacionesLineales, EstadoAnalisisArchivo estado, ProcesadorVDSTAsync vdstAsync) {
+
 		if (linea == null || linea.isEmpty()) {
 			return;
 		}
 
 		byte[] bytes = linea.getBytes(StandardCharsets.UTF_8);
 
-		procesarLinea(consola, bytes, 0, bytes.length, numeroLinea, verificacionesLineales, true, estado, linea);
+		procesarLinea(consola, bytes, 0, bytes.length, numeroLinea, verificacionesLineales, true, estado, linea,
+				vdstAsync);
 	}
 
 	private void procesarLinea(Consola consola, byte[] datos, int inicio, int fin, int numeroLinea,
 			List<Verificaciones> verificacionesLineales, boolean necesitaStringPorLinea, EstadoAnalisisArchivo estado,
-			String lineaYaDecodificada) {
+			String lineaYaDecodificada, ProcesadorVDSTAsync vdstAsync) {
+
 		if (datos == null || fin <= inicio) {
 			return;
 		}
@@ -199,6 +255,14 @@ public final class MotorDeLecturaStreaming {
 		}
 
 		String linea = lineaYaDecodificada;
+
+		if (vdstAsync != null) {
+			if (linea == null) {
+				linea = new String(datos, inicio, fin - inicio, StandardCharsets.UTF_8);
+			}
+
+			vdstAsync.aceptarLinea(linea, numeroLinea);
+		}
 
 		if (automata != null) {
 			List<AutomataDePatrones.Coincidencia> coincidencias = automata.buscar(datos, inicio, fin);
@@ -272,7 +336,7 @@ public final class MotorDeLecturaStreaming {
 					continue;
 				}
 
-				patronesAVerificaciones.computeIfAbsent(patron, k -> new ArrayList<>()).add(ver);
+				patronesAVerificaciones.computeIfAbsent(patron, k -> new ArrayList<Verificaciones>()).add(ver);
 			}
 		}
 

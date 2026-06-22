@@ -122,21 +122,33 @@ public class VerificacionDeStackTrace {
 	private int lineaInicioBuffer = -1;
 	private List<String> bufferLineas = new ArrayList<>();
 	private boolean bufferEsFatal = false;
-	private List<TraceInfo> bufferTracesFatal = new ArrayList<>();
-	private List<TraceInfo> bufferTracesNormales = new ArrayList<>();
+	private List<TracePendiente> bufferTracesFatal = new ArrayList<>();
+	private List<TracePendiente> bufferTracesNormales = new ArrayList<>();
+
+	private static final class TracePendiente {
+		final String[] lineas;
+		final int lineaInicioGlobal;
+		final boolean fatal;
+
+		TracePendiente(String[] lineas, int lineaInicioGlobal, boolean fatal) {
+			this.lineas = lineas;
+			this.lineaInicioGlobal = lineaInicioGlobal;
+			this.fatal = fatal;
+		}
+	}
 
 	public void procesarLineaIncremental(String linea, int numeroLinea) {
-		if (linea == null || linea.isEmpty())
+		if (linea == null || linea.isEmpty()) {
 			return;
+		}
 
-		// Fast check for 'at ', '/FATAL]', 'Caused by:', 'Suppressed:', '...' or common
-		// exception headers before calling normalizarLineaStack
-		boolean esFatal = linea.contains("/FATAL]");
-		boolean containsAt = pareceLineaStackRapida(linea);
-		boolean containsException = linea.contains("Exception") || linea.contains("Error");
-		boolean isContinuation = linea.contains("Caused by:") || linea.contains("Suppressed:") || linea.contains("...");
+		boolean esFatal = linea.indexOf("/FATAL]") >= 0;
+		boolean contieneAt = pareceLineaStackRapida(linea);
+		boolean contieneException = linea.indexOf("Exception") >= 0 || linea.indexOf("Error") >= 0;
+		boolean esContinuacionRapida = linea.indexOf("Caused by:") >= 0 || linea.indexOf("Suppressed:") >= 0
+				|| linea.indexOf("...") >= 0;
 
-		if (!esFatal && !containsAt && !containsException && !isContinuation) {
+		if (!esFatal && !contieneAt && !contieneException && !esContinuacionRapida) {
 			if (lineaInicioBuffer != -1) {
 				finalizarBufferIncremental();
 			}
@@ -144,32 +156,36 @@ public class VerificacionDeStackTrace {
 		}
 
 		String normalizada = normalizarLineaStack(linea);
+
 		boolean esAt = normalizada != null && normalizada.startsWith("at ");
 		boolean esEncabezado = !esAt && normalizada != null && pareceEncabezadoExcepcion(normalizada);
 		boolean esContinuacion = !esAt && !esEncabezado && normalizada != null && (normalizada.startsWith("Caused by:")
 				|| normalizada.startsWith("Suppressed:") || normalizada.startsWith("..."));
 
 		if (lineaInicioBuffer == -1) {
-			// No estamos en un trazo, ver si esta linea empieza uno
 			if (esFatal || esAt || esEncabezado) {
 				lineaInicioBuffer = numeroLinea;
 				bufferEsFatal = esFatal;
 				bufferLineas.add(linea);
 			}
-		} else {
-			// Ya estamos en un trazo
-			if (esAt || esEncabezado || esContinuacion) {
-				bufferLineas.add(linea);
-			} else if (esFatal) {
-				finalizarBufferIncremental();
-				lineaInicioBuffer = numeroLinea;
-				bufferEsFatal = true;
-				bufferLineas.add(linea);
-			} else {
-				// La linea no es parte de un stack ni es fatal, fin del trazo
-				finalizarBufferIncremental();
-			}
+			return;
 		}
+
+		if (esAt || esEncabezado || esContinuacion) {
+			bufferLineas.add(linea);
+			return;
+		}
+
+		if (esFatal) {
+			finalizarBufferIncremental();
+
+			lineaInicioBuffer = numeroLinea;
+			bufferEsFatal = true;
+			bufferLineas.add(linea);
+			return;
+		}
+
+		finalizarBufferIncremental();
 	}
 
 	private static boolean pareceLineaStackRapida(String linea) {
@@ -205,59 +221,148 @@ public class VerificacionDeStackTrace {
 			return;
 		}
 
-		// Pre-calculate lineas to avoid re-splitting or re-scanning the whole file
-		// but since we already have the traces in bufferTraces*, we use them.
+		int nivel = nivelPrioridadActual;
 
-		// Optimization: If we have many lines, we should ensure the lineas array is
-		// available
-		String[] lineas = consola.lineas_verificar;
-		if (lineas == null) {
-			// fallback if somehow null
-			return;
-		}
+		Collections.reverse(bufferTracesFatal);
 
-		// FATALES (en el orden original de descubrimiento)
-		for (TraceInfo base : bufferTracesFatal) {
-			nivelPrioridadActual++;
-			TraceInfo info = construirYProcesarTraceInfo(lineas, base.consolaLineaComenzar, base.consolaLineaTerminar,
-					nivelPrioridadActual, true);
+		for (TracePendiente pendiente : bufferTracesFatal) {
+			nivel++;
+
+			TraceInfo info = construirYProcesarTraceInfoDesdeBuffer(pendiente.lineas, pendiente.lineaInicioGlobal,
+					nivel, true);
+
 			trazos_completos.add(info);
-			nivel_trazo.put(nivelPrioridadActual, info);
+			nivel_trazo.put(nivel, info);
 		}
 
-		// NORMALES (en el orden original de descubrimiento)
-		for (TraceInfo base : bufferTracesNormales) {
-			nivelPrioridadActual++;
-			TraceInfo info = construirYProcesarTraceInfo(lineas, base.consolaLineaComenzar, base.consolaLineaTerminar,
-					nivelPrioridadActual, false);
+		Collections.reverse(bufferTracesNormales);
+
+		for (TracePendiente pendiente : bufferTracesNormales) {
+			nivel++;
+
+			TraceInfo info = construirYProcesarTraceInfoDesdeBuffer(pendiente.lineas, pendiente.lineaInicioGlobal,
+					nivel, false);
+
 			trazos_completos.add(info);
-			nivel_trazo.put(nivelPrioridadActual, info);
+			nivel_trazo.put(nivel, info);
 		}
 
-		// Reset buffers for next file/run
+		nivelPrioridadActual = nivel;
+
 		bufferTracesFatal.clear();
 		bufferTracesNormales.clear();
 	}
 
-	private void finalizarBufferIncremental() {
-		if (lineaInicioBuffer == -1)
-			return;
+	private TraceInfo construirYProcesarTraceInfoDesdeBuffer(String[] lineas, int lineaInicioGlobal, int nivel,
+			boolean fatal) {
 
-		if (!bufferLineas.isEmpty()) {
-			// Optimization: use tracePermitePorRango directly which is now very fast
-			String[] arr = bufferLineas.toArray(new String[0]);
-			if (tracePermitePorRango(arr, 0, arr.length - 1)) {
-				TraceInfo base = new TraceInfo(null, lineaInicioBuffer, -1, bufferEsFatal);
+		TraceInfo info = new TraceInfo(null, lineaInicioGlobal, nivel, fatal);
 
-				if (bufferEsFatal) {
-					bufferTracesFatal.add(base);
-				} else {
-					bufferTracesNormales.add(base);
+		if (lineas == null || lineas.length == 0) {
+			info.consolaLineaTerminar = lineaInicioGlobal;
+			return info;
+		}
+
+		info.consolaLineaTerminar = lineaInicioGlobal + lineas.length - 1;
+
+		String claseFaltantePendiente = null;
+		int lineaClaseFaltantePendiente = -1;
+
+		for (int i = 0; i < lineas.length; i++) {
+			String lineaOriginal = lineas[i];
+
+			if (lineaOriginal == null || lineaOriginal.isEmpty()) {
+				continue;
+			}
+
+			int numeroLineaGlobal = lineaInicioGlobal + i;
+
+			boolean contieneAt = lineaOriginal.indexOf("at ") >= 0;
+			boolean contieneMixin = lineaOriginal.indexOf("mixin") >= 0 || lineaOriginal.indexOf("Mixin") >= 0;
+			boolean contieneException = lineaOriginal.indexOf("Exception") >= 0 || lineaOriginal.indexOf("Error") >= 0;
+			boolean contieneJson = lineaOriginal.indexOf(".json") >= 0;
+			boolean contieneClassMetadata = lineaOriginal.indexOf("ClassMetadataNotFoundException") >= 0;
+
+			if (!contieneAt && !contieneMixin && !contieneException && !contieneJson && !contieneClassMetadata) {
+				continue;
+			}
+
+			String normalizada = normalizarLineaStack(lineaOriginal);
+
+			if (normalizada == null || normalizada.isEmpty()) {
+				continue;
+			}
+
+			if ((contieneMixin || contieneJson) && normalizada.indexOf("org.spongepowered.asm.mixin") >= 0
+					&& normalizada.indexOf(".json") >= 0) {
+				procesarJsonMixinEnLinea(normalizada, numeroLineaGlobal, fatal);
+			}
+
+			if (contieneException
+					&& (normalizada.indexOf("ClassNotFoundException") >= 0
+							|| normalizada.indexOf("NoClassDefFoundError") >= 0)
+					&& !esLineaDeAdvertenciaEstandar(normalizada)) {
+
+				claseFaltantePendiente = extraerClaseFaltanteDeLinea(normalizada);
+				lineaClaseFaltantePendiente = numeroLineaGlobal;
+			}
+
+			if (contieneClassMetadata && normalizada
+					.indexOf("org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException:") >= 0) {
+
+				String clase = extraerClaseDeMetadataNoEncontrada(normalizada);
+
+				if (clase != null && !clase.isEmpty()) {
+					clases_fatales_no_existentes.put(clase, nivel, numeroLineaGlobal, "");
 				}
+			}
+
+			if (!normalizada.startsWith("at ")) {
+				continue;
+			}
+
+			LineaTrazo lt = construirLineaTrazoDesdeLinea(normalizada, nivel, numeroLineaGlobal, fatal);
+
+			if (lt == null) {
+				continue;
+			}
+
+			info.lineas.add(lt);
+
+			if (claseFaltantePendiente != null) {
+				clases_fatales_no_existentes.put(claseFaltantePendiente, nivel, lineaClaseFaltantePendiente, lt.origen);
+
+				claseFaltantePendiente = null;
+				lineaClaseFaltantePendiente = -1;
 			}
 		}
 
-		// Reset buffer
+		return info;
+	}
+
+	private void finalizarBufferIncremental() {
+		if (lineaInicioBuffer == -1) {
+			return;
+		}
+
+		if (!bufferLineas.isEmpty()) {
+			String[] arr = bufferLineas.toArray(new String[0]);
+
+			ResultadoFiltroTrace filtro = filtrarTracePorRango(arr, 0, arr.length - 1);
+
+			if (!filtro.denegado && !filtro.ocupado) {
+				TracePendiente pendiente = new TracePendiente(arr, lineaInicioBuffer, bufferEsFatal);
+
+				if (bufferEsFatal) {
+					bufferTracesFatal.add(pendiente);
+				} else {
+					bufferTracesNormales.add(pendiente);
+				}
+			} else {
+				tracesDenegados++;
+			}
+		}
+
 		lineaInicioBuffer = -1;
 		bufferLineas.clear();
 		bufferEsFatal = false;
@@ -440,8 +545,13 @@ public class VerificacionDeStackTrace {
 		package_malo.clear();
 		brace_malo.clear();
 
+		cachePermitePorRango.clear();
+
 		nivel_trazo.clear();
 		trazos_completos.clear();
+
+		tracesEncontrados = 0;
+		tracesDenegados = 0;
 
 		nivelPrioridadActual = 0;
 		lineaInicioBuffer = -1;
@@ -1339,75 +1449,23 @@ public class VerificacionDeStackTrace {
 		}
 
 		String t = normalizada.trim();
+
 		if (!t.startsWith("at ")) {
 			return null;
 		}
 
-		// 1. JAR primero porque tiene prioridad y evita extraer modid/paquete si ya hay
-		// origen bueno.
-		String jar = extraerPrimerJarDeLinea(t);
-		if (jar != null) {
-			if (isJarNoPermite(jar)) {
-				return null;
-			}
-
-			String clase = extraerClaseDeLinea(t);
-			if (clase == null || clase.isEmpty()) {
-				return null;
-			}
-
-			LineaTrazo lt = new LineaTrazo();
-			lt.origen = jar;
-			lt.clase = clase;
-			lt.nivel = nivel;
-			lt.lineaConsola = lineaConsola;
-			lt.fatal = fatal;
-			lt.llaves = t.indexOf('{') >= 0 ? extraerLlavesDeLinea(t) : Collections.<String>emptyList();
-
-			return lt;
-		}
-
 		String clase = extraerClaseDeLinea(t);
+
 		if (clase == null || clase.isEmpty()) {
 			return null;
 		}
 
-		String origen = null;
-
-		// 2. ModID
-		String modid = extraerModidDeLinea(t);
-		if (modid != null) {
-			if (esModNoPermite(modid)) {
-				return null;
-			}
-			origen = modid;
-		}
-
-		// 3. Paquete
-		if (origen == null) {
-			String paquete = extraerPaqueteDeLinea(t);
-			if (paquete != null) {
-				String dec = nivel + "," + lineaConsola;
-
-				if (packNoEsPermite(paquete, dec, fatal)) {
-					return null;
-				}
-
-				origen = paquete;
-			}
-		}
-
-		// 4. Clase fallback
-		if (origen == null) {
-			if (claseNoEsPermitida(clase)) {
-				return null;
-			}
-
-			origen = clase;
+		if (claseNoEsPermitida(clase)) {
+			return null;
 		}
 
 		LineaTrazo lt = new LineaTrazo();
-		lt.origen = origen;
+		lt.origen = clase;
 		lt.clase = clase;
 		lt.nivel = nivel;
 		lt.lineaConsola = lineaConsola;
@@ -1415,6 +1473,20 @@ public class VerificacionDeStackTrace {
 		lt.llaves = t.indexOf('{') >= 0 ? extraerLlavesDeLinea(t) : Collections.<String>emptyList();
 
 		return lt;
+	}
+
+	private static String extraerOrigenDesdeClase(String clase) {
+		if (clase == null || clase.isEmpty()) {
+			return "";
+		}
+
+		int slash = clase.lastIndexOf('/');
+
+		if (slash > 0) {
+			return clase.substring(0, slash);
+		}
+
+		return clase;
 	}
 
 	private static String extraerPrimerJarDeLinea(String linea) {

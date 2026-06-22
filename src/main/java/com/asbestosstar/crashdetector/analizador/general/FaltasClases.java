@@ -47,6 +47,9 @@ public class FaltasClases implements Verificaciones {
 	public boolean fabricloader = false;
 	public boolean pillowmc = false;
 
+	private final Map<String, Integer> lineaPorClase = new HashMap<>();
+	private final Map<String, Consola> consolaPorClase = new HashMap<>();
+
 	/**
 	 * Mapa de clase formateada (com/x/Y -> com/x/Y) -> origen (modid/jar/paquete).
 	 * Contiene TODAS las clases detectadas (antes de filtrar kotlin/essential).
@@ -176,8 +179,10 @@ public class FaltasClases implements Verificaciones {
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
 
-		// Optimization: Quick check for interesting patterns before doing more
-		// expensive checks
+		if (linea == null || linea.isEmpty()) {
+			return;
+		}
+
 		if (!linea.contains("java.lang.ClassNotFoundException:") && !linea.contains("java.lang.NoClassDefFoundError:")
 				&& !linea.contains("Error loading class:")) {
 			return;
@@ -185,10 +190,8 @@ public class FaltasClases implements Verificaciones {
 
 		String claseCruda = null;
 
-		// Procesar errores de clase faltante
 		if (linea.contains("java.lang.ClassNotFoundException:") || linea.contains("java.lang.NoClassDefFoundError:")) {
 
-			// Saltar líneas con WARN (sin excepciones)
 			if (linea.contains("/WARN]") || linea.contains("Warn")
 					|| VerificacionDeStackTrace.esLineaDeAdvertenciaEstandar(linea)) {
 				return;
@@ -198,13 +201,9 @@ public class FaltasClases implements Verificaciones {
 				return;
 			}
 
-			// Eliminar prefijo de log tipo "[hh:mm:ss] [Server thread/INFO]: ..."
 			int indiceDosPuntos = linea.indexOf(':');
-			if (indiceDosPuntos != -1 && linea.charAt(0) == '[') {
-				// Safety check: is it a real timestamp format? [00:00:00]
-				if (indiceDosPuntos < 20) {
-					linea = linea.substring(indiceDosPuntos + 1).trim();
-				}
+			if (indiceDosPuntos != -1 && linea.charAt(0) == '[' && indiceDosPuntos < 20) {
+				linea = linea.substring(indiceDosPuntos + 1).trim();
 			}
 
 			if (linea.contains("java.lang.ClassNotFoundException:")) {
@@ -222,7 +221,6 @@ public class FaltasClases implements Verificaciones {
 			}
 
 		} else if (linea.contains("Error loading class:")) {
-			// Caso antiguo, se deja por seguridad
 			int index = linea.indexOf("Error loading class:");
 			String candidato = linea.substring(index + 20).trim();
 			if (!candidato.isEmpty()) {
@@ -234,68 +232,35 @@ public class FaltasClases implements Verificaciones {
 			return;
 		}
 
-		if (numero_de_linea > 0 && consola.lineas_verificar != null
-				&& numero_de_linea < consola.lineas_verificar.length) {
-			String linea_menos1 = consola.lineas_verificar[numero_de_linea - 1];
-			if (linea_menos1.toLowerCase().contains("catching") || linea_menos1.contains("rhino.CachedClassInfo")) {
-				return;
-			}
-		}
-
 		if (linea.contains("Valkyrian skies compatibility disabled")) {
 			return;
 		}
 
-		// [28Dec2025 00:14:05.843] [modloading-worker-0/INFO] [STDERR/]:
-		// [dev.latvian.mods.rhino.CachedClassInfo:getDeclaredMethods:194]: [Rhino]
-		// Failed to get declared methods for
-		// com.momosoftworks.coldsweat.compat.kubejs.KubeBindings:
-		// java.lang.NoClassDefFoundError:
-		// dev/latvian/mods/kubejs/level/BlockContainerJS
 		String claseFormateada = formatearClase(claseCruda);
+
 		if (!esNombreClaseValido(claseFormateada)) {
 			return;
 		}
-		// Ignorar clases no relevantes (kotlin, gg/essential, etc.)
+
 		if (esClaseNoRelevante(claseFormateada)) {
 			return;
 		}
 
-		// Deduplicación global entre logs
 		if (!CLASES_GLOBALES_VISTAS.add(claseFormateada)) {
 			return;
 		}
 
-		// Buscar el origen en la misma línea o líneas cercanas
-		String origen = encontrarOrigenEnLinea(linea, numero_de_linea, consola);
-		String origenLimpio = limpiarOrigen(origen);
-
-		// Si no encontramos origen en el stacktrace cercano,
-		// intentamos usar la línea anterior tipo "Failed to create mod instance..."
-		if (origenLimpio == null || origenLimpio.isEmpty()) {
-			String origenPrevio = buscarOrigenEnLineaAnterior(numero_de_linea, consola);
-			if (origenPrevio != null && !origenPrevio.isEmpty()) {
-				origenLimpio = origenPrevio;
-			}
-		}
-
-		// Si ya existe la clase, solo rellenamos si le falta origen
 		if (!todos.add(claseFormateada)) {
-			String actual = clases.get(claseFormateada);
-			if ((actual == null || actual.isEmpty()) && (origenLimpio != null && !origenLimpio.isEmpty())) {
-				clases.put(claseFormateada, origenLimpio);
-			}
 			return;
 		}
 
-		// Primera vez que aparece
-		clases.put(claseFormateada, origenLimpio);
+		// No buscamos origen aquí. Solo guardamos datos baratos.
+		clases.put(claseFormateada, "");
+		lineaPorClase.put(claseFormateada, numero_de_linea);
+		consolaPorClase.put(claseFormateada, consola);
+		enlacesPorClase.put(claseFormateada, consola.agregarErrorALectador(numero_de_linea, this));
 
-		// CrashDetectorLogger.log("Fatals clases clase no advertencia " +
-		// claseFormateada);
-
-		String enlace = consola.agregarErrorALectador(numero_de_linea, this);
-		enlacesPorClase.put(claseFormateada, enlace);
+		postProcesado = false;
 	}
 
 	/**
@@ -374,23 +339,98 @@ public class FaltasClases implements Verificaciones {
 		if (postProcesado) {
 			return;
 		}
+
 		postProcesado = true;
 
-		// Completar orígenes si tenemos referencia al analizador de stacktrace
-		if (vdst != null && !clases.isEmpty()) {
-			completarOrigenesSiFaltan(vdst);
-		}
+		completarOrigenesSiFaltan();
 
-		// Filtrar clases no relevantes EN ESTA FASE (redundante si ya se filtró antes,
-		// pero seguro por si se coló alguna).
 		clasesFiltradas = new LinkedHashMap<>();
+
 		for (Map.Entry<String, String> e : clases.entrySet()) {
 			String clase = e.getKey();
+
 			if (esClaseNoRelevante(clase)) {
 				continue;
 			}
+
 			clasesFiltradas.put(clase, e.getValue());
 		}
+	}
+
+	private void completarOrigenesSiFaltan() {
+		if (clases.isEmpty()) {
+			return;
+		}
+
+		for (Map.Entry<String, String> e : clases.entrySet()) {
+			String clase = e.getKey();
+
+			if (esClaseNoRelevante(clase)) {
+				continue;
+			}
+
+			String actual = e.getValue();
+			if (actual != null && !actual.isEmpty()) {
+				continue;
+			}
+
+			Integer linea = lineaPorClase.get(clase);
+			Consola consola = consolaPorClase.get(clase);
+
+			if (linea == null || consola == null || consola.verificacion_de_stacktrace == null) {
+				continue;
+			}
+
+			String origen = buscarOrigenDesdeVDST(consola.verificacion_de_stacktrace, linea.intValue());
+
+			if (origen != null && !origen.isEmpty()) {
+				e.setValue(origen);
+			}
+		}
+	}
+
+	private String buscarOrigenDesdeVDST(VerificacionDeStackTrace vdst, int lineaError) {
+		if (vdst == null || vdst.trazos_completos == null || vdst.trazos_completos.isEmpty()) {
+			return "";
+		}
+
+		int ventanaSuperior = lineaError + 50;
+
+		for (TraceInfo trace : vdst.trazos_completos) {
+			if (trace == null) {
+				continue;
+			}
+
+			boolean dentroDelTrace = trace.consolaLineaComenzar <= lineaError
+					&& trace.consolaLineaTerminar >= lineaError;
+
+			boolean cercanoDespues = trace.consolaLineaComenzar >= lineaError
+					&& trace.consolaLineaComenzar <= ventanaSuperior;
+
+			if (!dentroDelTrace && !cercanoDespues) {
+				continue;
+			}
+
+			if (trace.lineas == null || trace.lineas.isEmpty()) {
+				continue;
+			}
+
+			for (VerificacionDeStackTrace.LineaTrazo lt : trace.lineas) {
+				if (lt == null) {
+					continue;
+				}
+
+				if (lt.clase != null && !lt.clase.isEmpty()) {
+					return lt.clase;
+				}
+
+				if (lt.origen != null && !lt.origen.isEmpty()) {
+					return lt.origen;
+				}
+			}
+		}
+
+		return "";
 	}
 
 	/**

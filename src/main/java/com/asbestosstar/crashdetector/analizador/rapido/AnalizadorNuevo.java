@@ -23,6 +23,11 @@ public final class AnalizadorNuevo {
 	public void analizar(List<Consola> consolas, Set<Verificaciones> todasLasVerificaciones) {
 		cargarVerificaciones(todasLasVerificaciones);
 
+		if (consolas == null) {
+			CrashDetectorLogger.log("Iniciando AnalizadorNuevo con 0 registros");
+			return;
+		}
+
 		CrashDetectorLogger.log("Iniciando AnalizadorNuevo con " + consolas.size() + " registros");
 		CrashDetectorLogger.log("[DEBUG_LOG] Verificaciones cargadas: " + verificaciones.size());
 
@@ -32,26 +37,33 @@ public final class AnalizadorNuevo {
 	}
 
 	public void analizarEnVivo(Consola consola, InputStream inputStream, Set<Verificaciones> todasLasVerificaciones) {
+
 		cargarVerificaciones(todasLasVerificaciones);
+
+		ProcesadorVDSTAsync vdstAsync = null;
 
 		try {
 			EstadoAnalisisArchivo estado = new EstadoAnalisisArchivo(consola);
 
-			if (consola.verificacion_de_stacktrace != null) {
-				consola.verificacion_de_stacktrace.reiniciar();
-			}
+			vdstAsync = crearProcesadorVDSTAsync(consola);
 
 			List<Verificaciones> verificacionesLineales = obtenerVerificacionesLineales(consola);
 
 			CrashDetectorLogger.log("[DEBUG_LOG] Iniciando análisis en vivo");
 
-			motorStreaming.procesarEnVivo(consola, inputStream, verificaciones, verificacionesLineales, estado);
+			motorStreaming.procesarEnVivo(consola, inputStream, verificaciones, verificacionesLineales, estado,
+					vdstAsync);
+
+			finalizarVDST(vdstAsync);
 
 			finalizarVerificaciones(consola, estado);
 
 			CrashDetectorLogger.log("[DEBUG_LOG] Finalizado análisis en vivo");
+
 		} catch (Exception e) {
 			CrashDetectorLogger.logException(e);
+		} finally {
+			finalizarVDST(vdstAsync);
 		}
 	}
 
@@ -68,57 +80,91 @@ public final class AnalizadorNuevo {
 			}
 		}
 
-		// Registrar patrones de ocupación de stacktrace antes de llamar a
-		// VerificacionDeStackTrace.reiniciar().
-		// Así los filtros Aho de DENEGAR/OCUPAR ya están preparados cuando se
-		// detectan los rangos de stacktrace.
 		VerificacionDeStackTrace.registrarOcupacionDeVerificaciones(verificaciones);
 	}
 
 	private void analizarConsola(Consola consola) {
+		if (consola == null) {
+			CrashDetectorLogger.log("[DEBUG_LOG] Consola null; se omite");
+			return;
+		}
+
+		ProcesadorVDSTAsync vdstAsync = null;
+
 		try {
 			EstadoAnalisisArchivo estado = new EstadoAnalisisArchivo(consola);
 
 			CrashDetectorLogger.log("[DEBUG_LOG] Analizando registro: "
 					+ (consola.archivo != null ? consola.archivo.getFileName() : "unknown"));
 
-			if (consola.verificacion_de_stacktrace != null) {
-				consola.verificacion_de_stacktrace.reiniciar();
-			}
+			vdstAsync = crearProcesadorVDSTAsync(consola);
 
 			List<Verificaciones> verificacionesLineales = obtenerVerificacionesLineales(consola);
 
-			if (consola.lineas_verificar != null) {
+			if (tieneLineasVerificar(consola)) {
 				CrashDetectorLogger
 						.log("[DEBUG_LOG] Usando lineas_verificar existentes: " + consola.lineas_verificar.length);
 
 				motorStreaming.procesarLineas(consola, consola.lineas_verificar, verificaciones, verificacionesLineales,
-						estado);
+						estado, vdstAsync);
 
-			} else if (consola.contenido_verificar != null) {
+			} else if (tieneContenidoVerificar(consola)) {
 				String[] lineas = consola.contenido_verificar.split("\\r?\\n", -1);
 				consola.lineas_verificar = lineas;
 
 				CrashDetectorLogger
 						.log("[DEBUG_LOG] Usando contenido_verificar existente: " + lineas.length + " líneas");
 
-				motorStreaming.procesarLineas(consola, lineas, verificaciones, verificacionesLineales, estado);
+				motorStreaming.procesarLineas(consola, lineas, verificaciones, verificacionesLineales, estado,
+						vdstAsync);
 
 			} else if (consola.archivo != null && consola.archivo.toFile().exists()) {
-				CrashDetectorLogger.log(
-						"[DEBUG_LOG] No hay contenido precargado; leyendo archivo como fallback: " + consola.archivo);
+				CrashDetectorLogger.log("[DEBUG_LOG] No hay contenido precargado útil; leyendo archivo como streaming: "
+						+ consola.archivo);
 
-				motorStreaming.procesarArchivo(consola, verificaciones, verificacionesLineales, estado);
+				motorStreaming.procesarArchivo(consola, verificaciones, verificacionesLineales, estado, vdstAsync);
 
 			} else {
-				CrashDetectorLogger.log("[DEBUG_LOG] Consola sin contenido, líneas ni archivo válido");
+				CrashDetectorLogger.log("[DEBUG_LOG] Consola sin contenido útil, líneas útiles ni archivo válido");
 			}
+
+			finalizarVDST(vdstAsync);
 
 			finalizarVerificaciones(consola, estado);
 
 			CrashDetectorLogger.log("[DEBUG_LOG] Finalizado análisis de consola: "
 					+ (consola.archivo != null ? consola.archivo.getFileName() : "unknown"));
 
+		} catch (Exception e) {
+			CrashDetectorLogger.logException(e);
+		} finally {
+			finalizarVDST(vdstAsync);
+		}
+	}
+
+	private boolean tieneLineasVerificar(Consola consola) {
+		return consola != null && consola.lineas_verificar != null && consola.lineas_verificar.length > 0;
+	}
+
+	private boolean tieneContenidoVerificar(Consola consola) {
+		return consola != null && consola.contenido_verificar != null && !consola.contenido_verificar.isEmpty();
+	}
+
+	private ProcesadorVDSTAsync crearProcesadorVDSTAsync(Consola consola) {
+		if (consola == null || consola.verificacion_de_stacktrace == null) {
+			return null;
+		}
+
+		return new ProcesadorVDSTAsync(consola.verificacion_de_stacktrace);
+	}
+
+	private void finalizarVDST(ProcesadorVDSTAsync vdstAsync) {
+		if (vdstAsync == null) {
+			return;
+		}
+
+		try {
+			vdstAsync.finalizarYEsperar();
 		} catch (Exception e) {
 			CrashDetectorLogger.logException(e);
 		}

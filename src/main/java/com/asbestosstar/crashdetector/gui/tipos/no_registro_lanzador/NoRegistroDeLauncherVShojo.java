@@ -139,8 +139,8 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 		JPanel filaControles = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
 		filaControles.setBackground(colorFondoVentana.obtener());
 
-		selector = new JComboBox<>(
-				new String[] { GEN, CURSE, PRISM, HMCL, FENIX, ATL, GD, BATTLY, NIGHTWORLD, MCSERVER, ENLACE_MD });
+		selector = new JComboBox<>(new String[] { GEN, CURSE, PRISM, HMCL, FENIX, ATL, GD, BATTLY, NIGHTWORLD, MCSERVER,
+				ENLACE_MD, MEGABYTES_DE_GALIMATIAS });
 		estilizarCombo(selector);
 		selector.setPreferredSize(new Dimension(360, 34));
 		selector.addActionListener(new java.awt.event.ActionListener() {

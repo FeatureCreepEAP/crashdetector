@@ -10,14 +10,25 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores AbstractMethodError específicos donde una clase no implementa
- * un método de una interfaz. Extrae los nombres concretos y el origen desde el
- * trace, sin usar regex ni mantener todas las líneas en memoria.
+ * un método de una interfaz o clase abstracta.
+ *
+ * La detección se hace por línea. La resolución del origen se hace tarde, en
+ * mensaje(), para no depender de VDST antes de finalizarArchivo().
  */
 public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 
 	private boolean activado = false;
-	private String mensaje = "";
+
+	private Consola consolaDetectada = null;
+	private int lineaDetectada = -1;
+
+	private String claseConcreta = "";
+	private String firmaMetodo = "";
+	private String interfaz = "";
 	private String enlaceHtml = "";
+
+	private String origen = "";
+	private boolean origenResuelto = false;
 
 	private static final String TEXTO_ABSTRACT = "java.lang.AbstractMethodError";
 	private static final String TEXTO_NO_IMPLEMENTA = "does not define or inherit an implementation";
@@ -40,6 +51,9 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
+		if (linea == null || linea.isEmpty()) {
+			return;
+		}
 
 		if (!lineaContieneMetodoAbstracto(linea)) {
 			return;
@@ -52,74 +66,85 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 			return;
 		}
 
-		// Extraer clase, método e interfaz
 		int idxClaseStart = recorte.indexOf(':') + 1;
 		int idxMetodoStart = recorte.indexOf('\'', idxClaseStart);
 		int idxMetodoEnd = recorte.indexOf('\'', idxMetodoStart + 1);
 		int idxInterfaz = recorte.lastIndexOf(textoTipoObjetivo);
 
-		if (idxClaseStart <= 0 || idxMetodoStart < 0 || idxMetodoEnd < 0 || idxInterfaz < 0)
+		if (idxClaseStart <= 0 || idxMetodoStart < 0 || idxMetodoEnd < 0 || idxInterfaz < 0) {
 			return;
+		}
 
-		String claseConcreta = recorte.substring(idxClaseStart, idxMetodoStart).trim();
-		String firmaMetodo = recorte.substring(idxMetodoStart + 1, idxMetodoEnd).trim();
-		String interfaz = recorte.substring(idxInterfaz + textoTipoObjetivo.length()).trim();
+		this.claseConcreta = recorte.substring(idxClaseStart, idxMetodoStart).trim();
+		this.firmaMetodo = recorte.substring(idxMetodoStart + 1, idxMetodoEnd).trim();
+		this.interfaz = recorte.substring(idxInterfaz + textoTipoObjetivo.length()).trim();
 
-		// Buscar origen dinámicamente en las siguientes 10 líneas
-		String origen = buscarOrigenCercano(consola, numero_de_linea);
+		this.consolaDetectada = consola;
+		this.lineaDetectada = numero_de_linea;
+		this.enlaceHtml = consola != null ? consola.agregarErrorALectador(numero_de_linea, this) : "";
 
-		// Registrar el enlace a la línea concreta
-		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-
-		mensaje = MonitorDePID.idioma.errorMetodoAbstractoNoImplementadoDetallado(claseConcreta, firmaMetodo, interfaz,
-				origen) + Verificaciones.nl_html + enlaceHtml;
-
-		activado = true;
+		this.origen = "";
+		this.origenResuelto = false;
+		this.activado = true;
 	}
 
 	private boolean lineaContieneMetodoAbstracto(String linea) {
-		return linea.contains(TEXTO_ABSTRACT) && linea.contains(TEXTO_NO_IMPLEMENTA) && contieneTipoObjetivo(linea);
+		return linea != null && linea.contains(TEXTO_ABSTRACT) && linea.contains(TEXTO_NO_IMPLEMENTA)
+				&& contieneTipoObjetivo(linea);
 	}
 
-	private String buscarOrigenCercano(Consola consola, int numero_de_linea) {
-		if (consola == null || consola.lineas_verificar == null) {
-			return "";
+	private void resolverOrigenSiNecesario() {
+		if (origenResuelto) {
+			return;
 		}
 
-		String[] lineas = consola.lineas_verificar;
-		int inicio = numero_de_linea + 1;
-		int fin = Math.min(numero_de_linea + 11, lineas.length);
+		origenResuelto = true;
+		origen = "";
 
-		for (int j = inicio; j < fin; j++) {
-			String l = lineas[j];
+		if (consolaDetectada == null || consolaDetectada.verificacion_de_stacktrace == null || lineaDetectada < 0) {
+			return;
+		}
 
-			if (l == null) {
+		VerificacionDeStackTrace vdst = consolaDetectada.verificacion_de_stacktrace;
+
+		if (vdst.trazos_completos == null || vdst.trazos_completos.isEmpty()) {
+			return;
+		}
+
+		int ventanaSuperior = lineaDetectada + 30;
+
+		VerificacionDeStackTrace.TraceInfo mejor = null;
+
+		for (VerificacionDeStackTrace.TraceInfo ti : vdst.trazos_completos) {
+			if (ti == null) {
 				continue;
 			}
 
-			l = l.trim();
-
-			if (l.startsWith("at ")) {
-				String posibleOrigen = VerificacionDeStackTrace.extraerModidDeLinea(l);
-
-				if (posibleOrigen == null || VerificacionDeStackTrace.esModNoPermite(posibleOrigen)) {
-					java.util.List<String> jars = VerificacionDeStackTrace.extraerJarsDeLinea(l);
-					if (!jars.isEmpty())
-						posibleOrigen = jars.get(0);
-					else
-						posibleOrigen = VerificacionDeStackTrace.extraerPaqueteDeLinea(l);
-				}
-
-				if (posibleOrigen != null && !posibleOrigen.isEmpty()
-						&& !VerificacionDeStackTrace.esModNoPermite(posibleOrigen)) {
-					return posibleOrigen;
-				}
-			} else if (!l.isEmpty() && !l.startsWith("Caused by") && !l.startsWith("...")) {
+			if (ti.consolaLineaComenzar >= lineaDetectada && ti.consolaLineaComenzar <= ventanaSuperior) {
+				mejor = ti;
 				break;
 			}
 		}
 
-		return "";
+		if (mejor == null || mejor.lineas == null || mejor.lineas.isEmpty()) {
+			return;
+		}
+
+		for (VerificacionDeStackTrace.LineaTrazo lt : mejor.lineas) {
+			if (lt == null) {
+				continue;
+			}
+
+			if (lt.clase != null && !lt.clase.isEmpty()) {
+				origen = lt.clase;
+				return;
+			}
+
+			if (lt.origen != null && !lt.origen.isEmpty()) {
+				origen = lt.origen;
+				return;
+			}
+		}
 	}
 
 	private boolean contieneTipoObjetivo(String texto) {
@@ -156,7 +181,14 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado) {
+			return "";
+		}
+
+		resolverOrigenSiNecesario();
+
+		return MonitorDePID.idioma.errorMetodoAbstractoNoImplementadoDetallado(claseConcreta, firmaMetodo, interfaz,
+				origen) + Verificaciones.nl_html + enlaceHtml;
 	}
 
 	@Override
@@ -184,5 +216,4 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 	public Documento docs() {
 		return Documento.NINGUN;
 	}
-
 }

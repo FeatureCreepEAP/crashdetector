@@ -69,7 +69,7 @@ public class GeneradorDeInformacion {
 			return "";
 		}
 
-		int mes = java.time.ZonedDateTime.ofInstant(instant, java.time.ZoneId.systemDefault()).getMonthValue();
+		int mes = instant.atZone(java.time.ZoneOffset.UTC).getMonthValue();
 
 		// Junio es el mes del orgullo.
 		if (mes != 6) {

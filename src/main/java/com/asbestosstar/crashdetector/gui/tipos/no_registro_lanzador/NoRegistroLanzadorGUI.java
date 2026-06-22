@@ -67,6 +67,7 @@ public abstract class NoRegistroLanzadorGUI extends JFrame implements CrashDetec
 	public static final String NIGHTWORLD = "Nightworld";
 	public static final String MCSERVER = "Servidor de Minecraft";
 	public static final String ENLACE_MD = "Enlace MD";
+	public static final String MEGABYTES_DE_GALIMATIAS = "megabytes_de_galimatías";
 
 	// Escalado imagen de ayuda (técnico)
 	public static final int MAX_ANCHO_IMAGEN = 500;
@@ -170,6 +171,10 @@ public abstract class NoRegistroLanzadorGUI extends JFrame implements CrashDetec
 		} else if (MCSERVER.equals(tipo)) {
 			desc = MonitorDePID.idioma.noRegistroDeMCServidor();
 			icono = cargarIconoAyudaFlexible("/imagenes/minecraftserver.png");
+			mostrarArea = true;
+		} else if (MEGABYTES_DE_GALIMATIAS.equals(tipo)) {
+			desc = "Escribe un número de megabytes. CrashDetector generará un registro falso de prueba de aproximadamente ese tamaño.";
+			icono = null;
 			mostrarArea = true;
 		} else {
 			icono = cargarIconoAyudaFlexible("/imagenes/registros_de_lanzar.png");
@@ -292,6 +297,9 @@ public abstract class NoRegistroLanzadorGUI extends JFrame implements CrashDetec
 				}
 			}, overlayMensaje());
 			return;
+		} else if (MEGABYTES_DE_GALIMATIAS.equals(tipo)) {
+			generarMegabytesDeGalimatias();
+			return;
 		}
 
 		if (areaTexto == null) {
@@ -316,12 +324,15 @@ public abstract class NoRegistroLanzadorGUI extends JFrame implements CrashDetec
 		Thread writerThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				try (FileOutputStream fos = new FileOutputStream(cd_launcherlog); FileChannel ch = fos.getChannel()) {
+				try (FileOutputStream fos = new FileOutputStream(cd_launcherlog)) {
 					fos.write(data);
 					CrashDetectorLogger.log("Archivo cd_launcherlog guardado");
 
 					Consola cons = new Consola(cd_launcherlog.toPath());
-					cons.finalizarContenidoInyectado(new String(data, StandardCharsets.UTF_8));
+
+					// IMPORTANTE:
+					// No llamar finalizarContenidoInyectado().
+					// Así AnalizadorNuevo usará procesarArchivo() y leerá por streaming.
 					MonitorDePID.consolas.add(cons);
 					MonitorDePID.consola_de_launcher_inyectado = true;
 
@@ -339,6 +350,65 @@ public abstract class NoRegistroLanzadorGUI extends JFrame implements CrashDetec
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
+		dispose();
+	}
+
+	public void generarMegabytesDeGalimatias() {
+		if (areaTexto == null) {
+			dispose();
+			return;
+		}
+
+		final int megabytes;
+		try {
+			megabytes = Integer.parseInt(areaTexto.getText().trim());
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Escribe solo un número de megabytes.", MonitorDePID.idioma.error(),
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		if (megabytes <= 0) {
+			JOptionPane.showMessageDialog(this, "El número debe ser mayor que 0.", MonitorDePID.idioma.error(),
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		final long objetivoBytes = megabytes * 1024L * 1024L;
+		final File destino = new File("cd_galimatias_" + megabytes + "mb.log");
+
+		Thread writerThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					GeneradorLogGalimatias.generar(destino, objetivoBytes);
+
+					CrashDetectorLogger.log("Generado log de galimatías realista: " + destino.getAbsolutePath());
+
+					Consola cons = new Consola(destino.toPath());
+
+					// No cargar contenido en memoria.
+					// Esto fuerza análisis streaming por archivo.
+					MonitorDePID.consolas.add(cons);
+					MonitorDePID.consola_de_launcher_inyectado = true;
+
+				} catch (Exception ex) {
+					CrashDetectorLogger.logException(ex);
+					JOptionPane.showMessageDialog(NoRegistroLanzadorGUI.this,
+							MonitorDePID.idioma.errorDosPuntos() + " " + ex.getMessage(), MonitorDePID.idioma.error(),
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+
+		writerThread.start();
+
+		try {
+			writerThread.join();
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+
 		dispose();
 	}
 
@@ -557,17 +627,21 @@ public abstract class NoRegistroLanzadorGUI extends JFrame implements CrashDetec
 			return;
 		}
 
+		Consola cons = null;
 		try {
-			Consola cons = new Consola(archivoLogSeleccionado.toPath());
-			cons.finalizarContenido(instant, true);
+			cons = new Consola(archivoLogSeleccionado.toPath());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// No finalizarContenido().
+		// Mantiene el archivo como fuente streaming real.
+		if (cons != null) {
 			MonitorDePID.consolas.add(cons);
 			MonitorDePID.consola_de_launcher_inyectado = true;
-			dispose();
-		} catch (IOException ex) {
-			CrashDetectorLogger.logException(ex);
-			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.errorAlAbrirArchivo() + ": " + ex.getMessage(),
-					MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 		}
+		dispose();
 	}
 
 }

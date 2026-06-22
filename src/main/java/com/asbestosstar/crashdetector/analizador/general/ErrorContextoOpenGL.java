@@ -10,16 +10,21 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta "FATAL ERROR in native method … No context is current or a function
- * that is not available…". Si existe un stacktrace cerca, intenta obtener el
- * origen con vdst.
+ * that is not available…".
+ *
+ * La resolución del origen se hace tarde, en mensaje(), para no depender de
+ * VDST antes de finalizarArchivo().
  */
 public class ErrorContextoOpenGL implements Verificaciones {
 
 	private boolean activado = false;
 
-	private String mensaje = "";
+	private Consola consolaDetectada = null;
+	private int lineaDetectada = -1;
+
 	private String enlaceHtml = "";
 	private String origen = "";
+	private boolean origenResuelto = false;
 
 	// Estado para detectar el caso donde la cabecera está en una línea y el detalle
 	// en la siguiente.
@@ -44,12 +49,16 @@ public class ErrorContextoOpenGL implements Verificaciones {
 	}
 
 	/**
-	 * Verificacion por linea.
+	 * Verificación por línea.
 	 *
-	 * Detecta la línea exacta del error y agrega el enlace al lector.
+	 * Solo detecta el error y guarda la línea. No consulta VDST aquí porque VDST
+	 * puede estar trabajando en modo streaming y todavía no ha finalizado.
 	 */
 	@Override
 	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
+		if (linea == null || linea.isEmpty()) {
+			return;
+		}
 
 		boolean cabeceraAqui = linea.contains(TEXTO_CABECERA);
 		boolean detalleAqui = linea.contains(TEXTO_DETALLE);
@@ -83,174 +92,75 @@ public class ErrorContextoOpenGL implements Verificaciones {
 	}
 
 	private void activar(Consola consola, int numero_de_linea) {
-		mensaje = MonitorDePID.idioma.errorContextoOpenGL();
-
-		origen = detectarOrigenConVDST(consola.verificacion_de_stacktrace, consola, numero_de_linea);
-
-		if (!origen.isEmpty()) {
-			mensaje = mensaje + " <b>(" + origen + ")</b>";
+		if (activado) {
+			return;
 		}
 
-		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		consolaDetectada = consola;
+		lineaDetectada = numero_de_linea;
+		enlaceHtml = consola != null ? consola.agregarErrorALectador(numero_de_linea, this) : "";
 		activado = true;
 	}
 
 	/**
-	 * Busca un trace cercano usando vdst y extrae el primer origen plausible
-	 * (jar/modid/paquete) con los métodos utilitarios de VerificacionDeStackTrace.
+	 * Resuelve el origen usando los resultados ya terminados de VDST.
+	 *
+	 * En el nuevo sistema LineaTrazo.origen puede ser simplemente la clase. Eso es
+	 * suficiente aquí: este verificador solo necesita dar una pista de dónde salió
+	 * el trace, no resolver jar/modid durante el paso caliente.
 	 */
-	private String detectarOrigenConVDST(VerificacionDeStackTrace vdst, Consola log, int lineaInicio) {
-		if (log == null) {
-			return "";
+	private void resolverOrigenSiNecesario() {
+		if (origenResuelto) {
+			return;
 		}
 
-		VerificacionDeStackTrace.TraceInfo candidato = null;
-		int ventanaSuperior = lineaInicio + 60;
+		origenResuelto = true;
+		origen = "";
 
-		for (VerificacionDeStackTrace.TraceInfo ti : VerificacionDeStackTrace.obtenerTracesFatalConLinea(log)) {
-			if (ti != null && ti.consolaLineaComenzar >= lineaInicio && ti.consolaLineaComenzar <= ventanaSuperior) {
-				candidato = ti;
+		if (consolaDetectada == null || consolaDetectada.verificacion_de_stacktrace == null || lineaDetectada < 0) {
+			return;
+		}
+
+		VerificacionDeStackTrace vdst = consolaDetectada.verificacion_de_stacktrace;
+
+		if (vdst.trazos_completos == null || vdst.trazos_completos.isEmpty()) {
+			return;
+		}
+
+		int ventanaSuperior = lineaDetectada + 60;
+
+		VerificacionDeStackTrace.TraceInfo mejor = null;
+
+		for (VerificacionDeStackTrace.TraceInfo ti : vdst.trazos_completos) {
+			if (ti == null) {
+				continue;
+			}
+
+			if (ti.consolaLineaComenzar >= lineaDetectada && ti.consolaLineaComenzar <= ventanaSuperior) {
+				mejor = ti;
 				break;
 			}
 		}
 
-		if (candidato == null) {
-			for (VerificacionDeStackTrace.TraceInfo ti : VerificacionDeStackTrace.obtenerTracesConLinea(log)) {
-				if (ti != null && ti.consolaLineaComenzar >= lineaInicio
-						&& ti.consolaLineaComenzar <= ventanaSuperior) {
-					candidato = ti;
-					break;
-				}
-			}
+		if (mejor == null || mejor.lineas == null || mejor.lineas.isEmpty()) {
+			return;
 		}
 
-		if (candidato == null) {
-			return "";
-		}
-
-		// Nuevo sistema: TraceInfo.trace puede ser null.
-		// Primero usamos las LineaTrazo ya procesadas por VDST.
-		if (candidato.lineas != null && !candidato.lineas.isEmpty()) {
-			for (VerificacionDeStackTrace.LineaTrazo lt : candidato.lineas) {
-				if (lt == null) {
-					continue;
-				}
-
-				if (lt.origen != null && !lt.origen.isEmpty()) {
-					return lt.origen;
-				}
-			}
-		}
-
-		// Fallback viejo: si trace todavía existe, analizar texto multilinea.
-		if (candidato.trace != null && !candidato.trace.isEmpty()) {
-			String origenDesdeTexto = origenEnTextoMultilinea(candidato.trace);
-
-			if (!origenDesdeTexto.isEmpty()) {
-				return origenDesdeTexto;
-			}
-		}
-
-		// Fallback nuevo: reconstruir desde lineas_verificar sin split del trace.
-		return origenEnRangoDeLineas(log.lineas_verificar, candidato.consolaLineaComenzar,
-				candidato.consolaLineaTerminar);
-	}
-
-	private String origenEnRangoDeLineas(String[] lineas, int inicio, int fin) {
-		if (lineas == null || lineas.length == 0) {
-			return "";
-		}
-
-		int desde = Math.max(0, inicio);
-		int hasta = fin >= 0 ? Math.min(fin, lineas.length - 1) : Math.min(desde + 60, lineas.length - 1);
-
-		for (int i = desde; i <= hasta; i++) {
-			String linea = lineas[i];
-
-			if (linea == null || linea.isEmpty()) {
+		for (VerificacionDeStackTrace.LineaTrazo lt : mejor.lineas) {
+			if (lt == null) {
 				continue;
 			}
 
-			String posible = origenEnLinea(linea);
-
-			if (!posible.isEmpty()) {
-				return posible;
-			}
-		}
-
-		return "";
-	}
-
-	/**
-	 * Analiza texto multilinea sin split().
-	 */
-	private String origenEnTextoMultilinea(String texto) {
-		if (texto == null || texto.isEmpty()) {
-			return "";
-		}
-
-		int inicio = 0;
-
-		while (inicio < texto.length()) {
-			int fin = texto.indexOf('\n', inicio);
-
-			if (fin < 0) {
-				fin = texto.length();
+			if (lt.clase != null && !lt.clase.isEmpty()) {
+				origen = lt.clase;
+				return;
 			}
 
-			int finReal = fin;
-
-			if (finReal > inicio && texto.charAt(finReal - 1) == '\r') {
-				finReal--;
-			}
-
-			if (finReal > inicio) {
-				String linea = texto.substring(inicio, finReal);
-				String posible = origenEnLinea(linea);
-
-				if (!posible.isEmpty()) {
-					return posible;
-				}
-			}
-
-			inicio = fin + 1;
-		}
-
-		return "";
-	}
-
-	/**
-	 * Extrae origen de una línea con los utilitarios vdst: - jar primero - luego
-	 * modid - luego paquete, evitando prefijos comunes
-	 */
-	private String origenEnLinea(String linea) {
-		for (String jar : VerificacionDeStackTrace.extraerJarsDeLinea(linea)) {
-			if (jar.contains(".jar") && !VerificacionDeStackTrace.isJarNoPermite(jar)) {
-				return jar;
+			if (lt.origen != null && !lt.origen.isEmpty()) {
+				origen = lt.origen;
+				return;
 			}
 		}
-
-		String modid = VerificacionDeStackTrace.extraerModidDeLinea(linea);
-		if (modid != null && !VerificacionDeStackTrace.esModNoPermite(modid)) {
-			return modid;
-		}
-
-		String pack = VerificacionDeStackTrace.extraerPaqueteDeLinea(linea);
-		if (pack != null && !empiezaConPrefijoNoPermitido(pack)) {
-			return pack;
-		}
-
-		return "";
-	}
-
-	private boolean empiezaConPrefijoNoPermitido(String pack) {
-		for (String p : VerificacionDeStackTrace.package_no_permite) {
-			if (pack.startsWith(p)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	@Override
@@ -272,6 +182,14 @@ public class ErrorContextoOpenGL implements Verificaciones {
 	public String mensaje() {
 		if (!activado) {
 			return "";
+		}
+
+		resolverOrigenSiNecesario();
+
+		String mensaje = MonitorDePID.idioma.errorContextoOpenGL();
+
+		if (!origen.isEmpty()) {
+			mensaje = mensaje + " <b>(" + origen + ")</b>";
 		}
 
 		return mensaje + enlaceHtml;

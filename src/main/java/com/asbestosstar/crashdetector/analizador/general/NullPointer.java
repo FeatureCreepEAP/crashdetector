@@ -11,77 +11,38 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-/**
- * Verificación especializada para detectar y resumir todas las
- * {@code NullPointerException} (NPE) que aparecen en la consola.
- */
 public class NullPointer implements Verificaciones {
 
-	/**
-	 * Conjunto global de NPEs detectadas para evitar duplicados entre logs. Clave:
-	 * mensajeBase (idioma-específico)
-	 */
 	private static final java.util.Set<String> ERRORES_GLOBALES_VISTOS = java.util.Collections
 			.synchronizedSet(new java.util.HashSet<>());
 
-	/**
-	 * Limpia el conjunto de errores vistos globalmente.
-	 */
 	public static void reiniciarGlobal() {
 		ERRORES_GLOBALES_VISTOS.clear();
 	}
 
-	/**
-	 * Separador de líneas, definido en la interfaz base
-	 */
-	private static final String NL = Verificaciones.nl;
-
-	/**
-	 * Almacena los mensajes de error únicos detectados, agrupados por tipo de error
-	 */
 	private final Map<String, Set<String>> errores = new HashMap<>();
-
-	/**
-	 * Indica si se encontró al menos una NPE
-	 */
-	private boolean activado = false;
-
-	/**
-	 * Almacena el enlace HTML por mensaje base (tanto para líneas sueltas como para
-	 * trazos). NOTA: la clave SIEMPRE es el mensaje base SIN orígenes añadidos.
-	 */
 	private final Map<String, String> enlacesPorLinea = new HashMap<>();
+	private final Map<String, Integer> lineaPorMensaje = new HashMap<>();
+
+	private Consola consolaDetectada = null;
+	private boolean origenesResueltos = false;
+	private boolean activado = false;
 
 	public static List<String> lineas_ignorar = new ArrayList<>();
 
 	static {
-		// Ejemplo de línea a ignorar (puedes añadir más patrones específicos aquí)
-		lineas_ignorar.add("Cannot invoke \"java.util.Map.get(Object)\" because \"promos\" is null");// MCForge
-																										// VersionChecker,
-																										// no es fatal
-		lineas_ignorar.add("com.github.alexthe666.citadel.web.WebHelper:getURLContent");// Comun con citadel pero no es
-																						// malo
-
+		lineas_ignorar.add("Cannot invoke \"java.util.Map.get(Object)\" because \"promos\" is null");
+		lineas_ignorar.add("com.github.alexthe666.citadel.web.WebHelper:getURLContent");
 		lineas_ignorar.add(
-				"Cannot invoke \"org.spongepowered.asm.mixin.transformer.ClassInfo.isMixin()\" because \"superClass\" is null");// Generalmente
-																																// esta
-																																// bien
-
-		// Mixin/EMI/JEI: ClassInfo.forType devuelve null durante análisis de
-		// superclases
+				"Cannot invoke \"org.spongepowered.asm.mixin.transformer.ClassInfo.isMixin()\" because \"superClass\" is null");
 		lineas_ignorar.add(
 				"Cannot invoke \"org.spongepowered.asm.mixin.transformer.ClassInfo.hasSuperClass(org.spongepowered.asm.mixin.transformer.ClassInfo)\" because the return value of \"org.spongepowered.asm.mixin.transformer.ClassInfo.forType(org.objectweb.asm.Type, org.spongepowered.asm.mixin.transformer.ClassInfo$TypeLookup)\" is null");
-
-		// PFM/cliente: TextureManager todavía es null durante generación/carga de
-		// recursos
 		lineas_ignorar.add(
 				"Cannot invoke \"net.minecraft.client.renderer.texture.TextureManager.m_118495_(net.minecraft.resources.ResourceLocation, net.minecraft.client.renderer.texture.AbstractTexture)\" because the return value of \"net.minecraft.client.Minecraft.m_91097_()\" is null");
-
 	}
 
 	@Override
@@ -91,29 +52,30 @@ public class NullPointer implements Verificaciones {
 
 	@Override
 	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificarPorLinea(Consola consola, String linea, int i) {
+	public void verificarPorLinea(Consola consola, String linea, int numeroLinea) {
+		if (linea == null || linea.isEmpty()) {
+			return;
+		}
 
 		if (linea.contains("NullPointerException") && !linea.contains("at ")
 				&& VerificacionDeStackTrace.tracePermite(linea)) {
-			procesarLineaSinTraza(linea, consola.verificacion_de_stacktrace, i, consola);
+			procesarLineaSinTraza(linea, numeroLinea, consola);
 		}
 	}
 
-	/**
-	 * Procesa una línea con NPE que no tiene stack trace completo
-	 */
-	private void procesarLineaSinTraza(String linea, VerificacionDeStackTrace vdst, int numeroLinea, Consola consola) {
-
-		if (lineas_ignorar.stream().anyMatch(patron -> linea.contains(patron))) {
-			return; // Ignorar esta línea específica
+	private void procesarLineaSinTraza(String linea, int numeroLinea, Consola consola) {
+		for (String patron : lineas_ignorar) {
+			if (patron != null && linea.contains(patron)) {
+				return;
+			}
 		}
-
-		String metodo = "desconocido";
-		String objeto = "desconocido";
 
 		DatosNPE datos = extraerDatosNPE(linea, false);
 
@@ -121,28 +83,83 @@ public class NullPointer implements Verificaciones {
 			return;
 		}
 
-		metodo = datos.metodo;
-		objeto = datos.objeto;
+		String mensajeBase = MonitorDePID.idioma.null_pointer_error(datos.metodo, datos.objeto);
 
-		// Buscar origen SOLO en esta línea
-		String origen = detectarOrigenEnLinea(linea, vdst, numeroLinea);
-		String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
-
-		// Deduplicación global entre logs
 		if (!ERRORES_GLOBALES_VISTOS.add(mensajeBase)) {
 			return;
 		}
 
-		// Registrar el error en el sistema de lectura (enlace para la línea suelta)
-		enlacesPorLinea.put(mensajeBase, consola.agregarErrorALectador(numeroLinea, this));
+		consolaDetectada = consola;
+		origenesResueltos = false;
 
-		// Agregar el error al mapa, agrupando por mensaje base
+		enlacesPorLinea.put(mensajeBase, consola != null ? consola.agregarErrorALectador(numeroLinea, this) : "");
+		lineaPorMensaje.put(mensajeBase, numeroLinea);
 		errores.computeIfAbsent(mensajeBase, k -> new HashSet<>());
-		if (!origen.isEmpty()) {
-			errores.get(mensajeBase).add(origen);
-		}
 
 		activado = true;
+	}
+
+	private void resolverOrigenesSiNecesario() {
+		if (origenesResueltos) {
+			return;
+		}
+
+		origenesResueltos = true;
+
+		if (consolaDetectada == null || consolaDetectada.verificacion_de_stacktrace == null) {
+			return;
+		}
+
+		VerificacionDeStackTrace vdst = consolaDetectada.verificacion_de_stacktrace;
+
+		if (vdst.trazos_completos == null || vdst.trazos_completos.isEmpty()) {
+			return;
+		}
+
+		for (Map.Entry<String, Integer> entry : lineaPorMensaje.entrySet()) {
+			String mensajeBase = entry.getKey();
+			int lineaError = entry.getValue();
+
+			String origen = buscarOrigenDesdeVDST(vdst, lineaError);
+
+			if (origen != null && !origen.isEmpty()) {
+				errores.computeIfAbsent(mensajeBase, k -> new HashSet<>()).add(origen);
+			}
+		}
+	}
+
+	private String buscarOrigenDesdeVDST(VerificacionDeStackTrace vdst, int lineaError) {
+		int ventanaSuperior = lineaError + 30;
+
+		for (VerificacionDeStackTrace.TraceInfo ti : vdst.trazos_completos) {
+			if (ti == null) {
+				continue;
+			}
+
+			if (ti.consolaLineaComenzar < lineaError || ti.consolaLineaComenzar > ventanaSuperior) {
+				continue;
+			}
+
+			if (ti.lineas == null || ti.lineas.isEmpty()) {
+				continue;
+			}
+
+			for (VerificacionDeStackTrace.LineaTrazo lt : ti.lineas) {
+				if (lt == null) {
+					continue;
+				}
+
+				if (lt.clase != null && !lt.clase.isEmpty()) {
+					return lt.clase;
+				}
+
+				if (lt.origen != null && !lt.origen.isEmpty()) {
+					return lt.origen;
+				}
+			}
+		}
+
+		return "";
 	}
 
 	private static class DatosNPE {
@@ -155,11 +172,6 @@ public class NullPointer implements Verificaciones {
 		}
 	}
 
-	/**
-	 * Extrae datos de una NPE sin regex. Cubre: 1) Cannot invoke/read/assign
-	 * "...metodo..." because "...objeto..." 2) JsonObject.algo() ... "...objeto..."
-	 * is null 3) java.lang.NullPointerException: detalle
-	 */
 	private static DatosNPE extraerDatosNPE(String texto, boolean permitirCabecera) {
 		if (texto == null) {
 			return null;
@@ -185,10 +197,6 @@ public class NullPointer implements Verificaciones {
 		return null;
 	}
 
-	/**
-	 * Equivalente aproximado de:
-	 * Cannot\s+(invoke|read|assign)[^\"]*\"([^\"]+)\"[^\"]*\"([^\"]+)\"
-	 */
 	private static DatosNPE extraerFormatoCannot(String texto) {
 		int pos = indexOfIgnoreCase(texto, "Cannot");
 		if (pos < 0) {
@@ -227,7 +235,6 @@ public class NullPointer implements Verificaciones {
 
 			String entreComillas = texto.substring(q2 + 1, q3);
 			if (!contieneIgnoreCase(entreComillas, "because")) {
-				// Avanzamos al cierre del primer par para evitar desalineaciones simétricas
 				busqueda = q2 + 1;
 				continue;
 			}
@@ -235,20 +242,14 @@ public class NullPointer implements Verificaciones {
 			String metodo = texto.substring(q1 + 1, q2).trim();
 			String objeto = texto.substring(q3 + 1, q4).trim();
 
-			// Si la estructura es un match real ("because"), obligamos a romper o avanzar
 			if (!metodo.isEmpty() && !objeto.isEmpty()) {
 				return new DatosNPE(metodo, objeto);
 			}
 
-			// Si cayó aquí (p.ej. método vacío), avanzamos pasando TODO el bloque evaluado
-			// para evitar procesar q3 y q4 como si fueran un nuevo q1 y q2.
 			busqueda = q4 + 1;
 		}
 	}
 
-	/**
-	 * Equivalente aproximado de: JsonObject\.[a-zA-Z]+\(\).*\"([^\"]+)\" is null
-	 */
 	private static DatosNPE extraerFormatoJson(String texto) {
 		int pos = texto.indexOf("JsonObject.");
 		if (pos < 0) {
@@ -296,44 +297,6 @@ public class NullPointer implements Verificaciones {
 		}
 	}
 
-	private static int indexOfDesde(String texto, String buscar, int desde) {
-		if (texto == null || buscar == null || desde < 0) {
-			return -1;
-		}
-
-		int max = texto.length() - buscar.length();
-		for (int i = desde; i <= max; i++) {
-			if (texto.regionMatches(false, i, buscar, 0, buscar.length())) {
-				return i;
-			}
-		}
-
-		return -1;
-	}
-
-	private static boolean empiezaConFrase(String texto, int pos, String frase) {
-		return pos >= 0 && pos + frase.length() <= texto.length()
-				&& texto.regionMatches(false, pos, frase, 0, frase.length());
-	}
-
-	private static int saltarEspacios(String texto, int pos) {
-		while (pos < texto.length() && Character.isWhitespace(texto.charAt(pos))) {
-			pos++;
-		}
-		return pos;
-	}
-
-	private static boolean contieneIgnoreCase(String texto, String buscar) {
-		return indexOfIgnoreCase(texto, buscar) >= 0;
-	}
-
-	private static boolean esLetraAscii(char c) {
-		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
-	}
-
-	/**
-	 * Equivalente aproximado de: java\.lang\.NullPointerException(?::\s*)?(.*)
-	 */
 	private static String extraerDetalleCabeceraNPE(String texto) {
 		int pos = indexOfIgnoreCase(texto, "java.lang.NullPointerException");
 		if (pos < 0) {
@@ -341,7 +304,6 @@ public class NullPointer implements Verificaciones {
 		}
 
 		int fin = pos + "java.lang.NullPointerException".length();
-
 		fin = saltarEspacios(texto, fin);
 
 		if (fin >= texto.length()) {
@@ -356,6 +318,10 @@ public class NullPointer implements Verificaciones {
 	}
 
 	private static int indexOfIgnoreCase(String texto, String buscar) {
+		if (texto == null || buscar == null) {
+			return -1;
+		}
+
 		int max = texto.length() - buscar.length();
 		for (int i = 0; i <= max; i++) {
 			if (texto.regionMatches(true, i, buscar, 0, buscar.length())) {
@@ -363,6 +329,10 @@ public class NullPointer implements Verificaciones {
 			}
 		}
 		return -1;
+	}
+
+	private static boolean contieneIgnoreCase(String texto, String buscar) {
+		return indexOfIgnoreCase(texto, buscar) >= 0;
 	}
 
 	private static boolean empiezaConPalabra(String texto, int pos, String palabra) {
@@ -378,173 +348,20 @@ public class NullPointer implements Verificaciones {
 		return fin >= texto.length() || !Character.isLetterOrDigit(texto.charAt(fin));
 	}
 
-	/**
-	 * Busca un origen dentro del TraceInfo ya procesado por VDST.
-	 *
-	 * Prioridad: 1. JAR permitido 2. modid permitido 3. paquete permitido más
-	 * específico
-	 *
-	 * No usa trace.trace ni split().
-	 */
-	private String detectarOrigenEnTraza(TraceInfo trace, VerificacionDeStackTrace vdst) {
-		if (trace == null || trace.lineas == null || trace.lineas.isEmpty()) {
-			return "";
-		}
-
-		String mejorModid = "";
-		String mejorPaquete = "";
-
-		for (VerificacionDeStackTrace.LineaTrazo lt : trace.lineas) {
-			if (lt == null || lt.origen == null || lt.origen.isEmpty()) {
-				continue;
-			}
-
-			String origen = lt.origen.trim();
-
-			if (origen.isEmpty()) {
-				continue;
-			}
-
-			// 1. JAR permitido: máxima prioridad.
-			if (origen.endsWith(".jar") && !VerificacionDeStackTrace.isJarNoPermite(origen)) {
-				return origen;
-			}
-
-			// 2. modid permitido.
-			if (origen.indexOf('/') < 0 && !origen.endsWith(".jar")
-					&& !VerificacionDeStackTrace.esModNoPermite(origen)) {
-				if (mejorModid.isEmpty()) {
-					mejorModid = origen;
-				}
-				continue;
-			}
-
-			// 3. paquete permitido.
-			if (origen.indexOf('/') >= 0) {
-				boolean permitido = true;
-
-				for (String prefijo : VerificacionDeStackTrace.package_no_permite) {
-					if (prefijo == null || prefijo.isEmpty()) {
-						continue;
-					}
-
-					String prefijoSlash = prefijo.replace('.', '/');
-
-					if (origen.startsWith(prefijo) || origen.startsWith(prefijoSlash)) {
-						permitido = false;
-						break;
-					}
-				}
-
-				if (permitido && origen.length() > mejorPaquete.length()) {
-					mejorPaquete = origen;
-				}
-			}
-		}
-
-		if (!mejorModid.isEmpty()) {
-			return mejorModid;
-		}
-
-		if (!mejorPaquete.isEmpty()) {
-			return mejorPaquete;
-		}
-
-		return "";
+	private static boolean empiezaConFrase(String texto, int pos, String frase) {
+		return pos >= 0 && pos + frase.length() <= texto.length()
+				&& texto.regionMatches(false, pos, frase, 0, frase.length());
 	}
 
-	/**
-	 * Busca un origen (JAR, modid o clase) DIRECTAMENTE en una línea específica.
-	 * Normaliza los nombres para evitar problemas con codificación y sufijos.
-	 */
-	private String detectarOrigenEnLinea(String linea, VerificacionDeStackTrace vdst, int numeroLineaConsola) {
-		// 1. Buscar JAR en la línea
-		List<String> jarsEncontrados = VerificacionDeStackTrace.extraerJarsDeLinea(linea);
-		for (String jar : jarsEncontrados) {
-			if (jar.contains(".jar") && !VerificacionDeStackTrace.isJarNoPermite(jar)) {
-				return jar;
-			}
+	private static int saltarEspacios(String texto, int pos) {
+		while (pos < texto.length() && Character.isWhitespace(texto.charAt(pos))) {
+			pos++;
 		}
-
-		// 2. Buscar modid
-		String modid = VerificacionDeStackTrace.extraerModidDeLinea(linea);
-		if (modid != null && !VerificacionDeStackTrace.esModNoPermite(modid)) {
-			return modid;
-		}
-
-		// 3. Buscar paquete/clase
-		String pack = VerificacionDeStackTrace.extraerPaqueteDeLinea(linea);
-		if (pack != null) {
-			// Crear una representación adecuada para el método packNoEsPermitido
-			String representacion = "0," + numeroLineaConsola; // nivel 0, número de línea real
-			if (!vdst.packNoEsPermite(pack, representacion, false)) {
-				return pack;
-			}
-		}
-
-		return ""; // No se encontró origen en esta línea
+		return pos;
 	}
 
-	/**
-	 * Infiere el origen de una NPE usando EXCLUSIVAMENTE las líneas del TraceInfo
-	 * actual. No usa datos globales ni otros trazos.
-	 */
-	private String inferirOrigenDesdeTrace(TraceInfo trace) {
-
-		if (trace == null || trace.lineas == null) {
-			return "";
-		}
-
-		String mejorJar = "";
-		String mejorModid = "";
-		String mejorPaquete = "";
-
-		for (VerificacionDeStackTrace.LineaTrazo lt : trace.lineas) {
-
-			if (lt == null || lt.origen == null || lt.origen.isEmpty()) {
-				continue;
-			}
-
-			String origen = lt.origen;
-
-			// 1) JAR permitido (máxima prioridad)
-			if (origen.endsWith(".jar") && !VerificacionDeStackTrace.isJarNoPermite(origen)) {
-				return origen;
-			}
-
-			// 2) Modid permitido
-			if (!origen.contains("/") && !origen.endsWith(".jar") && !VerificacionDeStackTrace.esModNoPermite(origen)) {
-
-				if (mejorModid.isEmpty()) {
-					mejorModid = origen;
-				}
-			}
-
-			// 3) Paquete permitido
-			if (origen.contains("/")) {
-
-				boolean permitido = true;
-				for (String prefijo : VerificacionDeStackTrace.package_no_permite) {
-					if (origen.startsWith(prefijo)) {
-						permitido = false;
-						break;
-					}
-				}
-
-				if (permitido && origen.length() > mejorPaquete.length()) {
-					mejorPaquete = origen;
-				}
-			}
-		}
-
-		if (!mejorModid.isEmpty()) {
-			return mejorModid;
-		}
-		if (!mejorPaquete.isEmpty()) {
-			return mejorPaquete;
-		}
-
-		return "";
+	private static boolean esLetraAscii(char c) {
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
 	}
 
 	@Override
@@ -559,26 +376,24 @@ public class NullPointer implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 50f; // Alta prioridad: NPE suele ser crítico
+		return 50f;
 	}
 
 	@Override
 	public String mensaje() {
-		if (errores.isEmpty())
+		if (errores.isEmpty()) {
 			return "";
+		}
+
+		resolverOrigenesSiNecesario();
 
 		StringBuilder sb = new StringBuilder("<ul>");
 
-		// Para cada tipo de error
 		for (Map.Entry<String, Set<String>> entry : errores.entrySet()) {
-			// Usar SIEMPRE la clave base (sin orígenes) para buscar el enlace
-			final String claveBase = entry.getKey();
-
-			// Construimos el texto que se mostrará (al que sí añadiremos orígenes, si hay)
+			String claveBase = entry.getKey();
 			String mensajeMostrado = claveBase;
 			Set<String> origenes = entry.getValue();
 
-			// Si hay orígenes, añadirlos al mensaje mostrado (no a la clave)
 			if (!origenes.isEmpty()) {
 				StringBuilder origenesStr = new StringBuilder();
 				for (String origen : origenes) {
@@ -587,10 +402,9 @@ public class NullPointer implements Verificaciones {
 					}
 					origenesStr.append(origen);
 				}
-				mensajeMostrado += " (" + origenesStr.toString() + ")";
+				mensajeMostrado += " (" + origenesStr + ")";
 			}
 
-			// Recuperar el enlace con la CLAVE BASE (sin orígenes añadidos)
 			String enlace = enlacesPorLinea.getOrDefault(claveBase, "");
 			if (!enlace.isEmpty()) {
 				mensajeMostrado += " " + enlace;
@@ -615,7 +429,6 @@ public class NullPointer implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "nullpointer";
 	}
 
@@ -626,8 +439,6 @@ public class NullPointer implements Verificaciones {
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-
 }

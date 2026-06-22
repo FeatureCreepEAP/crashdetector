@@ -276,9 +276,7 @@ public class EnlanceMD {
 			Files.write(destino.toPath(), combinado.toString().getBytes(StandardCharsets.UTF_8));
 		}
 
-		Consola consola = new Consola(destino.toPath());
-		consola.finalizarContenidoInyectado(MonitorDePID.leer_archivo(destino.toPath()));
-		return consola;
+		return new Consola(destino.toPath());
 	}
 
 	/**
