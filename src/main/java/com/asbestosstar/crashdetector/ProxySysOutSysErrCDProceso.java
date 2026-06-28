@@ -26,10 +26,6 @@ public class ProxySysOutSysErrCDProceso {
 
 	public static void init() {
 
-		if (!Config.obtenerInstancia().obtenerProxySysOutSysErr()) {
-			return;
-		}
-
 		File archivoLog = new File(CrashDetectorLogger.LOG_FILE_PATH);
 
 		try {

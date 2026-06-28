@@ -21,12 +21,17 @@ import com.asbestosstar.crashdetector.cargador.Cargador;
  * ProxySysOutSysErr.init().
  *
  * Esta implementación evita depender de clases y firmas inestables entre
- * versiones viejas de Log4j2.
+ * versiones viejas de Log4j2 e incluye un vigilante para recuperar el appender
+ * si algún mod lo elimina.
  */
 public final class ProxyLog4j2 {
 
 	private static final String NOMBRE_APPENDER = "CrashDetectorFileAppender";
 	private static final String PATRON_LOG = "[%d{HH:mm:ss}] [%t/%level]: %msg%n";
+
+	// Variables para el vigilante
+	private static volatile boolean vigilando = false;
+	private static Thread hiloVigilante;
 
 	private ProxyLog4j2() {
 		// Clase utilitaria
@@ -41,19 +46,37 @@ public final class ProxyLog4j2 {
 		try {
 			esperarProxyListo();
 
+			if (inyectarAppender()) {
+				iniciarVigilante();
+			}
+
+		} catch (Throwable t) {
+			System.err.println("[ProxyLog4j2] Falló inicialización: " + t);
+			t.printStackTrace();
+		}
+	}
+
+	/**
+	 * Separamos la inyección en su propio método para poder llamarlo repetidas
+	 * veces desde el vigilante.
+	 */
+	private static synchronized boolean inyectarAppender() {
+		try {
 			LoggerContext contexto = (LoggerContext) LogManager.getContext(false);
 			Configuration configuracion = contexto.getConfiguration();
 
 			Map<String, Appender> appenders = configuracion.getAppenders();
 			if (appenders != null && appenders.containsKey(NOMBRE_APPENDER)) {
-				System.err.println("[ProxyLog4j2] Ya estaba inicializado: " + NOMBRE_APPENDER);
-				return;
+				// Ya existe, no hacemos nada
+				return true;
 			}
+
+			System.err.println("[ProxyLog4j2] Appender no encontrado. Inyectando...");
 
 			Layout<?> layout = crearPatternLayoutCompatible(configuracion, PATRON_LOG);
 			if (layout == null) {
 				System.err.println("[ProxyLog4j2] No se pudo crear un PatternLayout compatible");
-				return;
+				return false;
 			}
 
 			Appender appender = new AppenderFlujoCompatible(NOMBRE_APPENDER, layout, null, false,
@@ -64,19 +87,70 @@ public final class ProxyLog4j2 {
 			LoggerConfig loggerRaiz = configuracion.getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
 			if (loggerRaiz == null) {
 				System.err.println("[ProxyLog4j2] No se encontró el logger raíz");
-				return;
+				return false;
 			}
 
 			loggerRaiz.addAppender(appender, Level.ALL, null);
 			contexto.updateLoggers();
 
-			System.err.println(
-					"[ProxyLog4j2] Integrado con archivo de log: " + ProxySysOutSysErr.archivoLog.getAbsolutePath());
+			System.err.println("[ProxyLog4j2] Integrado con ProxySysOutSysErr exitosamente.");
+			return true;
 
 		} catch (Throwable t) {
-			System.err.println("[ProxyLog4j2] Falló inicialización: " + t);
-			t.printStackTrace();
+			System.err.println("[ProxyLog4j2] Error al inyectar Appender: " + t.getMessage());
+			return false;
 		}
+	}
+
+	/**
+	 * Hilo de fondo que verifica cada 5 segundos si el appender sigue vivo. Si un
+	 * mod lo eliminó, lo vuelve a crear.
+	 */
+	private static void iniciarVigilante() {
+		if (vigilando) {
+			return;
+		}
+		vigilando = true;
+
+		hiloVigilante = new Thread(() -> {
+			while (vigilando) {
+				try {
+					// Esperar 5 segundos (5000 ms)
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+					break;
+				}
+
+				try {
+					if (ProxySysOutSysErr.flujoSincronizadoSeguro == null) {
+						continue;
+					}
+
+					LoggerContext contexto = (LoggerContext) LogManager.getContext(false);
+					if (contexto == null)
+						continue;
+
+					Configuration configuracion = contexto.getConfiguration();
+					if (configuracion == null)
+						continue;
+
+					Map<String, Appender> appenders = configuracion.getAppenders();
+
+					// Si fue borrado por un mod, appenders será null o no contendrá la clave
+					if (appenders == null || !appenders.containsKey(NOMBRE_APPENDER)) {
+						System.err.println(
+								"[ProxyLog4j2] ¡ALERTA! Un mod eliminó el Appender de CrashDetector. Restaurando...");
+						inyectarAppender();
+					}
+				} catch (Throwable t) {
+					// Evitar que el vigilante muera por un error raro de reflexión o concurrencia
+				}
+			}
+		}, "ProxyLog4j2-Vigilante");
+
+		hiloVigilante.setDaemon(true); // No impedirá que el juego se cierre
+		hiloVigilante.start();
 	}
 
 	private static void esperarProxyListo() throws InterruptedException {

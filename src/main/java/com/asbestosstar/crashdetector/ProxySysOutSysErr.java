@@ -1,106 +1,77 @@
 package com.asbestosstar.crashdetector;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
-import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncherVShojo;
+import com.asbestosstar.crashdetector.config.ConfigBoolean;
 
-/**
- * Proxy para System.out y System.err cuando el Launcher no tiene registros.
- * Soluciona problemas de escritura interrumpida y garantiza que TODOS los
- * mensajes.
- */
 public class ProxySysOutSysErr {
 
-	public static File archivoLog = NoRegistroDeLauncherVShojo.cd_launcherlog;
-	public static FileOutputStream flujoArchivo;
-	// FLUJO SINCRONIZADO Y SEGURO QUE SE COMPARTIRÁ CON LOG4J2
 	public static OutputStream flujoSincronizadoSeguro;
 
-	static {
-		try {
-			archivoLog.delete();
-			archivoLog.createNewFile();
-			flujoArchivo = new FileOutputStream(archivoLog, false);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	public static final ConfigBoolean ENVIAR_EN_VIVO = ConfigBoolean.de("livestream_analisis", true);
+	public static final ConfigBoolean ENVIAR_A_CONSOLA_DEV = ConfigBoolean.de("livestream_consola_dev", true);
+
+	private static volatile boolean streamingHabilitado = false;
+	private static volatile boolean consolaDevHabilitada = false;
+
+	private static final BlockingQueue<String> colaLineas = new LinkedBlockingQueue<>(8192);
+	private static Thread hiloEscritor;
+
+	private static final Object cerrojoBuffer = new Object();
+	private static ByteArrayOutputStream bufferParcial = new ByteArrayOutputStream(512);
 
 	public static void init() {
-		Config config = Config.obtenerInstancia();
-
-		// Depuración: Mostrar condición de inicialización
-		boolean condicion = config.obtenerProxySysOutSysErr() || !config.propiedadesConfig.containsKey("0351");
-		System.err.println("[ProxySysOutSysErr] Condición de init: " + condicion + " (proxyHabilitado="
-				+ config.obtenerProxySysOutSysErr() + ", tiene0351=" + config.propiedadesConfig.containsKey("0351")
-				+ ")");
-
 		try {
-			// 1. Crear FLUJO SINCRONIZADO que será compartido con Log4j2
 			flujoSincronizadoSeguro = new OutputStream() {
-				private final Object cerrojo = new Object();
-
 				@Override
 				public void write(int b) throws IOException {
-					synchronized (cerrojo) {
-						try {
-							flujoArchivo.write(b);
-						} catch (IOException e) {
-							manejarErrorRegistro(e, "archivo");
-							throw e;
-						}
+					if (streamingHabilitado) {
+						byte[] tmp = new byte[] { (byte) b };
+						emitirLineas(tmp, 0, 1);
 					}
 				}
 
 				@Override
 				public void write(byte[] b, int off, int len) throws IOException {
-					synchronized (cerrojo) {
-						try {
-							flujoArchivo.write(b, off, len);
-						} catch (IOException e) {
-							manejarErrorRegistro(e, "archivo");
-							throw e;
-						}
+					if (streamingHabilitado) {
+						emitirLineas(b, off, len);
 					}
 				}
 
 				@Override
 				public void flush() throws IOException {
-					synchronized (cerrojo) {
-						flujoArchivo.flush();
-					}
 				}
 
 				@Override
 				public void close() {
-					// NUNCA CERRAR - mantener el flujo abierto durante toda la ejecución
 				}
 			};
 
-			// 2. Guardar REFERENCIAS a los flujos originales de consola
 			PrintStream salidaOriginal = System.out;
 			PrintStream errorOriginal = System.err;
 
-			// 3. Crear FLUJOS COMBINADOS con manejo de errores
-			OutputStream flujoSalidaCombinado = crearFlujoCombinado(flujoSincronizadoSeguro, salidaOriginal, "salida");
-			OutputStream flujoErrorCombinado = crearFlujoCombinado(flujoSincronizadoSeguro, errorOriginal, "error");
+			OutputStream flujoSalidaCombinado = crearFlujoCombinado(salidaOriginal, "salida");
+			OutputStream flujoErrorCombinado = crearFlujoCombinado(errorOriginal, "error");
 
-			// 4. CONFIGURAR LOS NUEVOS FLUJOS con auto-vaciado
 			System.setOut(new PrintStream(flujoSalidaCombinado, true));
 			System.setErr(new PrintStream(flujoErrorCombinado, true));
 
-			// 5. Actualizar configuración DESPUÉS de inicialización exitosa
-			config.guardarProxySysOutSysErr(true);
-			if (!config.propiedadesConfig.containsKey("0351")) {
-				config.propiedadesConfig.put("0351", "true"); // Marcar migración completada
-			}
+			System.err.println("[ProxySysOutSysErr] Proxy inicializado (solo en memoria).");
 
-			System.err
-					.println("[ProxySysOutSysErr] Proxy inicializado. Escribiendo en: " + archivoLog.getAbsolutePath());
+			streamingHabilitado = ENVIAR_EN_VIVO.obtener();
+			consolaDevHabilitada = ENVIAR_A_CONSOLA_DEV.obtener();
+
+			// Iniciamos el hilo de inmediato. Intentará conectar el pipe más adelante.
+			if (streamingHabilitado || consolaDevHabilitada) {
+				iniciarHiloEscritor();
+			}
 
 		} catch (Throwable t) {
 			System.err.println("[CRÍTICO] Falló inicialización de ProxySysOutSysErr: " + t.getMessage());
@@ -108,25 +79,121 @@ public class ProxySysOutSysErr {
 		}
 	}
 
-	private static OutputStream crearFlujoCombinado(OutputStream flujoArchivo, PrintStream flujoConsola,
-			String tipoFlujo) {
+	private static void iniciarHiloEscritor() {
+		hiloEscritor = new Thread(ProxySysOutSysErr::runEscritor, "ProxySysOutSysErr-Escritor");
+		hiloEscritor.setDaemon(true);
+		hiloEscritor.start();
+		System.err.println("[ProxySysOutSysErr] Hilo de escritura iniciado.");
+	}
+
+	private static void runEscritor() {
+		OutputStream flujoLocal = null;
+		boolean avisoImpreso = false;
+
+		while (true) {
+			String linea;
+			try {
+				linea = colaLineas.poll(500, TimeUnit.MILLISECONDS);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+				return;
+			}
+			if (linea == null) {
+				continue;
+			}
+
+			// SOLUCIÓN: Revisar MonitorDePID en CADA ciclo para reconectar automáticamente
+			if (streamingHabilitado && flujoLocal == null) {
+				OutputStream posibleFlujo = MonitorDePID.flujoHaciaMonitor;
+				if (posibleFlujo != null) {
+					flujoLocal = posibleFlujo;
+					if (!avisoImpreso) {
+						System.err.println("[ProxySysOutSysErr] ¡Pipe hacia el monitor conectado con éxito!");
+						avisoImpreso = true;
+					}
+				} else if (!avisoImpreso) {
+					// Solo imprimir el aviso una vez para no llenar la consola
+					System.err.println("[ProxySysOutSysErr] Esperando a que el proceso monitor esté listo...");
+					avisoImpreso = true;
+				}
+			}
+
+			// Si hay pipe, lo mandamos al proceso monitor
+			if (flujoLocal != null) {
+				try {
+					flujoLocal.write(linea.getBytes(StandardCharsets.UTF_8));
+					flujoLocal.flush();
+				} catch (IOException e) {
+					flujoLocal = null; // Se cayó el pipe, lo ponemos nulo para que reintente
+					System.err.println("[ProxySysOutSysErr] Pipe en vivo cerrado: " + e.getMessage());
+				}
+			}
+
+			// Siempre enviamos a la consola de desarrollador si está habilitada
+			if (consolaDevHabilitada) {
+				try {
+					String limpia = linea;
+					if (limpia.endsWith("\n"))
+						limpia = limpia.substring(0, limpia.length() - 1);
+					if (limpia.endsWith("\r"))
+						limpia = limpia.substring(0, limpia.length() - 1);
+					if (!limpia.isEmpty()) {
+						CrashDetectorLogger.enviarALaConsola(limpia);
+					}
+				} catch (Throwable ignorado) {
+				}
+			}
+		}
+	}
+
+	private static void emitirLineas(byte[] b, int off, int len) {
+		if (len <= 0)
+			return;
+		synchronized (cerrojoBuffer) {
+			int start = off;
+			int end = off + len;
+			for (int i = off; i < end; i++) {
+				if (b[i] == (byte) '\n') {
+					if (bufferParcial.size() > 0) {
+						bufferParcial.write(b, start, i - start);
+						byte[] datos = bufferParcial.toByteArray();
+						bufferParcial.reset();
+						emitirLineaCompleta(datos, 0, datos.length);
+					} else {
+						emitirLineaCompleta(b, start, i - start);
+					}
+					start = i + 1;
+				}
+			}
+			if (start < end) {
+				bufferParcial.write(b, start, end - start);
+			}
+		}
+	}
+
+	private static void emitirLineaCompleta(byte[] datos, int off, int len) {
+		if (len > 0 && datos[off + len - 1] == (byte) '\r') {
+			len--;
+		}
+		String texto = new String(datos, off, len, StandardCharsets.UTF_8);
+		colaLineas.offer(texto + "\n");
+	}
+
+	private static OutputStream crearFlujoCombinado(PrintStream flujoConsola, String tipoFlujo) {
 		return new OutputStream() {
 			@Override
 			public void write(int b) {
-				try {
-					flujoArchivo.write(b);
-				} catch (IOException e) {
-					manejarErrorRegistro(e, tipoFlujo + "-archivo");
+				if (streamingHabilitado) {
+					byte[] tmp = new byte[] { (byte) b };
+					emitirLineas(tmp, 0, 1);
 				}
 				escribirEnConsolaSeguro(flujoConsola, b);
 			}
 
 			@Override
 			public void write(byte[] b, int off, int len) {
-				try {
-					flujoArchivo.write(b, off, len);
-				} catch (IOException e) {
-					manejarErrorRegistro(e, tipoFlujo + "-archivo");
+				if (streamingHabilitado) {
+					emitirLineas(b, off, len);
 				}
 				try {
 					flujoConsola.write(b, off, len);
@@ -136,10 +203,6 @@ public class ProxySysOutSysErr {
 
 			@Override
 			public void flush() {
-				try {
-					flujoArchivo.flush();
-				} catch (IOException ignorado) {
-				}
 				flujoConsola.flush();
 			}
 		};
@@ -149,18 +212,6 @@ public class ProxySysOutSysErr {
 		try {
 			flujo.write(b);
 		} catch (Throwable ignorado) {
-			// Fallo silencioso - no romper el registro por errores de consola
 		}
 	}
-
-	private static void manejarErrorRegistro(IOException e, String origen) {
-		try {
-			String mensaje = String.format("[REGISTRO FALLIDO][%s] %s: %s", Thread.currentThread().getName(), origen,
-					e.getMessage());
-			System.err.println(mensaje);
-		} catch (Throwable ignorado) {
-			// Manejo de excepciones de error al intentar registrar el error
-		}
-	}
-
 }

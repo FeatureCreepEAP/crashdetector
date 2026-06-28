@@ -49,6 +49,7 @@ public class Consola {
 	public Path archivo;
 	public List<String> enlaces = new ArrayList<String>();
 	public int linea_original;
+	public boolean analizadaEnVivo = false;
 	public boolean nueva = false;
 	public String contenido_verificar;
 	public String[] lineas_verificar;

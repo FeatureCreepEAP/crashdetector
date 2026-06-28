@@ -212,10 +212,12 @@ public class ModCarpeta implements ArchivoDeMod {
 	 * Procesa archivos anidados (JAR, ZIP, etc.) creando instancias de ModPKZip.
 	 */
 	private void procesarArchivoAnidado(Path entrada, String nombre) {
-		try (InputStream inputStream = new FileInputStream(entrada.toFile())) {
+		try {
 			String nuevaUbicacion = ubicacion + "/" + nombre;
-			mods_en_mod.add(new ModPKZip(nuevaUbicacion, this, inputStream));
-		} catch (IOException e) {
+			// Usar el constructor de File en lugar de InputStream para máxima eficiencia de
+			// RAM
+			mods_en_mod.add(new ModPKZip(entrada.toFile(), this));
+		} catch (Exception e) {
 			CrashDetectorLogger.logException(e);
 		}
 	}

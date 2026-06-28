@@ -264,30 +264,11 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 		botonesPanel.setMinimumSize(new Dimension(10, filaAltura));
 		botonesPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, filaAltura));
 
-		botonProxy = new JButton("ProxySysOutSysErr");
 		botonGuardar = new JButton(MonitorDePID.idioma.guardarYCerrar());
 		botonOmitir = new JButton(MonitorDePID.idioma.omitirYCerrar());
 
-		estilizarBoton(botonProxy, 4);
 		estilizarBoton(botonGuardar, 4);
 		estilizarBoton(botonOmitir, 4);
-
-		botonProxy.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent ev) {
-				String msg = MonitorDePID.idioma.habilitarProxySysOutSysErrMensaje();
-				int r = JOptionPane.showConfirmDialog(NoRegistroDeLauncherVShojo.this, msg,
-						MonitorDePID.idioma.confirmacionTitulo(), JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE);
-
-				if (r == JOptionPane.YES_OPTION) {
-					Config.obtenerInstancia().guardarProxySysOutSysErr(true);
-					JOptionPane.showMessageDialog(NoRegistroDeLauncherVShojo.this,
-							MonitorDePID.idioma.proxyHabilitadoMensaje(), MonitorDePID.idioma.informacionTitulo(),
-							JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-		});
 
 		botonGuardar.addActionListener(new java.awt.event.ActionListener() {
 			@Override
@@ -305,7 +286,6 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 
 		botonesPanel.add(botonGuardar);
 		botonesPanel.add(botonOmitir);
-		botonesPanel.add(botonProxy);
 
 		GridBagConstraints g0 = new GridBagConstraints();
 		g0.gridx = 0;
@@ -392,8 +372,6 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 			estilizarBoton(botonGuardar, 4);
 		if (botonOmitir != null)
 			estilizarBoton(botonOmitir, 4);
-		if (botonProxy != null)
-			estilizarBoton(botonProxy, 4);
 
 		// Combos
 		if (comboBoxIdioma != null)

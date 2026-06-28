@@ -84,8 +84,8 @@ public final class AnalizadorNuevo {
 	}
 
 	private void analizarConsola(Consola consola) {
-		if (consola == null) {
-			CrashDetectorLogger.log("[DEBUG_LOG] Consola null; se omite");
+		if (consola == null || consola.analizadaEnVivo) {
+			CrashDetectorLogger.log("[DEBUG_LOG] Consola null o ya analizada en vivo; se omite");
 			return;
 		}
 

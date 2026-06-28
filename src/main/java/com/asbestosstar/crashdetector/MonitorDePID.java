@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.management.ManagementFactory;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -25,6 +26,7 @@ import javax.swing.UIManager;
 import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.AnalizadorNuevo;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.sparc.DaxInit;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.sparc.UmemInit;
 import com.asbestosstar.crashdetector.bajo.vectorapi.VectorAPIInit;
@@ -110,7 +112,10 @@ public class MonitorDePID {
 	public static Path ultimo_mods = Statics.carpeta.resolve("ultima_mods");
 	// public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
 	public static List<Consola> consolas = new ArrayList<Consola>();
+	public static OutputStream flujoHaciaMonitor;
+	public static boolean enStreamingMode = false;
 
+	public static final ConfigBoolean ANALISIS_EN_VIVO = ConfigBoolean.de("analisis_en_vivo", true);
 	public static String nl = System.lineSeparator();
 
 	/**
@@ -568,7 +573,6 @@ public class MonitorDePID {
 			System.out.println("JVM " + javaBinary);
 		}
 
-		// Launch the child monitor process
 		try {
 			String cp = obtenerClassPath(jar);
 
@@ -584,7 +588,6 @@ public class MonitorDePID {
 				comando.add(VectorAPIInit.obtenerArgEspecialVectorAPI());
 			}
 
-			// comando.add("-XX:MaxJavaStackTraceDepth=1000000");
 			comando.add("-cp");
 			comando.add(cp);
 			comando.add("com.asbestosstar.crashdetector.MonitorDePID");
@@ -592,13 +595,12 @@ public class MonitorDePID {
 			comando.add(String.valueOf(pid));
 
 			ProcessBuilder pb = new ProcessBuilder(comando);
-			// pb.inheritIO();
+			// pb.inheritIO(); // ASEGÚRATE DE QUE ESTÉ COMENTADO
 			UmemInit.aplicarA(pb);
-			// System.out.println("classpath" + cp);
-			// pb.redirectError(new File(CrashDetectorLogger.LOG_ERR_FILE_PATH));
-			// pb.redirectOutput(new File(CrashDetectorLogger.LOG_FILE_PATH));
 
-			pb.start();
+			Process monitorProcess = pb.start();
+			flujoHaciaMonitor = monitorProcess.getOutputStream();
+
 		} catch (Exception e) {
 			System.out.println("error con comenzando el proceso CD");
 			e.printStackTrace();
@@ -848,7 +850,7 @@ public class MonitorDePID {
 		return recalcularIdioma();
 	}
 
-	private static void monitor_proceso(long pid) {
+	public static void monitor_proceso(long pid) {
 		// List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
 		abrirConsola();
 		ProxySysOutSysErrCDProceso.init();
@@ -862,6 +864,11 @@ public class MonitorDePID {
 		if (ultimo_mods.toFile().exists()) {
 			CargadorExtensiones.cargarExtensionesProcesoMonitor(ultimo_mods.toFile());
 			recalcularIdiomaDespuesDeExtensiones();
+		}
+
+		// Si la config lo permite, leemos el stream que nos envía el juego.
+		if (ANALISIS_EN_VIVO.obtener()) {
+			iniciarAnalisisEnVivo(System.in);
 		}
 
 		System.out.println(idioma.buscando_para_pid(pid));
@@ -905,6 +912,17 @@ public class MonitorDePID {
 				// } else {
 
 				List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
+
+				if (enStreamingMode) {
+					consolas_sin_processando.removeIf(c -> {
+						try {
+							return c.archivo != null && c.archivo.toFile().getCanonicalPath()
+									.equals(NoRegistroDeLauncherVShojo.cd_launcherlog.getCanonicalPath());
+						} catch (IOException e) {
+							return false;
+						}
+					});
+				}
 
 				if (!ArchivoDeCodigoError0.exists() && !Consola.tiene_registro_de_launcher(consolas_sin_processando)) {
 					try {// Cuando tiene una informe de crash esta codio 0 y tiene tiempo para esperar
@@ -986,6 +1004,90 @@ public class MonitorDePID {
 //				break;
 //			}
 		}
+	}
+
+	private static void iniciarAnalisisEnVivo(InputStream inputStream) {
+		Thread hilo = new Thread(() -> {
+			try {
+				File archivoLog = NoRegistroDeLauncherVShojo.cd_launcherlog;
+				archivoLog.delete();
+				archivoLog.createNewFile();
+
+				Consola consolaViva = new Consola(archivoLog.toPath());
+				consolaViva.nueva = true;
+				consolaViva.analizadaEnVivo = true; // Evita que se reanalice en el recargar post-crash
+				consolaViva.verificacion_de_stacktrace = new VerificacionDeStackTrace(consolaViva);
+
+				// La añadimos a la lista global para que sus errores se muestren en la GUI
+				MonitorDePID.consolas.add(consolaViva);
+
+				// Usar el analizador EXISTENTE (MonitorDePID.analizador)
+				AnalizadorNuevo nuevo = new AnalizadorNuevo(analizador);
+
+				// Buffer temporal para armar las líneas que se enviarán a la consola
+				StringBuilder bufferConsola = new StringBuilder();
+
+				// Bifurcamos el InputStream: uno escribe al archivo, otro alimenta al
+				// analizador
+				try (FileOutputStream fos = new FileOutputStream(archivoLog, true)) {
+					InputStream teeStream = new InputStream() {
+						@Override
+						public int read() throws IOException {
+							int b = inputStream.read();
+							if (b != -1) {
+								fos.write(b);
+
+								// ---> INICIO: ENVÍO A LA CONSOLA DEV <---
+								if (b == '\n') {
+									String linea = bufferConsola.toString();
+									bufferConsola.setLength(0);
+									if (!linea.trim().isEmpty()) {
+										CrashDetectorLogger.enviarALaConsola(linea);
+									}
+								} else if (b != '\r') {
+									bufferConsola.append((char) b);
+								}
+								// ---> FIN: ENVÍO A LA CONSOLA DEV <---
+							}
+							return b;
+						}
+
+						@Override
+						public int read(byte[] b, int off, int len) throws IOException {
+							int read = inputStream.read(b, off, len);
+							if (read > 0) {
+								fos.write(b, off, read);
+
+								// ---> INICIO: ENVÍO A LA CONSOLA DEV (Para bloques grandes) <---
+								String trozo = new String(b, off, read, java.nio.charset.StandardCharsets.UTF_8);
+								for (String parte : trozo.split("\n")) {
+									if (parte.endsWith("\r")) {
+										parte = parte.substring(0, parte.length() - 1);
+									}
+									if (!parte.trim().isEmpty()) {
+										CrashDetectorLogger.enviarALaConsola(parte);
+									}
+								}
+								// ---> FIN: ENVÍO A LA CONSOLA DEV <---
+							}
+							return read;
+						}
+					};
+
+					nuevo.analizarEnVivo(consolaViva, teeStream, analizador.obtenerVerificacionesUnion());
+					fos.flush();
+				}
+
+				CrashDetectorLogger.log("[EnVivo] Stream cerrado. Análisis en vivo finalizado.");
+
+			} catch (Exception e) {
+				CrashDetectorLogger.logException(e);
+			}
+		}, "CD-AnalisisEnVivo");
+		hilo.setDaemon(true);
+		hilo.start();
+
+		enStreamingMode = true; // Activamos el modo streaming
 	}
 
 	public static void establecerLookAndFeel() {
@@ -1259,7 +1361,19 @@ public class MonitorDePID {
 	}
 
 	public static String analizar(List<Consola> consolas) {
-		analizador = new Analizador();
+		// Si no estábamos en streaming, creamos un nuevo analizador limpio
+		if (analizador == null || !enStreamingMode) {
+			analizador = new Analizador();
+			// Al crear uno nuevo, permitimos que todo se reanalice desde cero
+			for (Consola c : consolas) {
+				c.analizadaEnVivo = false;
+			}
+		}
+
+		// Se desactiva el streaming para esta instancia (si era true, ya aprovechamos
+		// el analizador existente)
+		enStreamingMode = false;
+
 		analizador.analizar(consolas);
 		return analizador.toString();
 	}

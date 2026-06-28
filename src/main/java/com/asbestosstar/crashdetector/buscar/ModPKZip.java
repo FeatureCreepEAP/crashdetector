@@ -2,10 +2,12 @@ package com.asbestosstar.crashdetector.buscar;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,12 +31,6 @@ import com.asbestosstar.crashdetector.cargador.CargadorRift;
 import com.asbestosstar.crashdetector.cargador.CargadorSponge;
 import com.asbestosstar.crashdetector.cargador.ml.AnalizadorModsTomlForge;
 
-/**
- * Clase que procesa archivos ZIP/JAR para buscar mods y clases dentro de ellos.
- * Evita precargar bytes de cada entrada. Lee el ZIP completo en memoria una vez
- * y luego realiza carga perezosa (con caché) de las entradas cuando se
- * solicitan.
- */
 public class ModPKZip implements ArchivoDeMod {
 
 	public ArchivoDeMod desde;
@@ -44,14 +40,10 @@ public class ModPKZip implements ArchivoDeMod {
 	public List<String> clases = new ArrayList<>();
 	public List<String> archivos = new ArrayList<>();
 
-	// Bytes crudos del ZIP para poder reabrirlo y leer entradas bajo demanda
+	// Único estado mutable necesario: Los bytes crudos de ESTE archivo específico
 	private final byte[] bytesZip;
 
-	// Mapa de nombre de clase interno ("pkg/Clase") -> nombre de entrada en el ZIP
-	// ("pkg/Clase.class")
 	private final Map<String, String> mapaEntradaPorClase = new HashMap<>();
-
-	// Cachés de bytes de entradas ya leídas
 	private final Map<String, byte[]> cacheBytesEntrada = new java.util.concurrent.ConcurrentHashMap<>();
 	private final Map<String, byte[]> cacheBytesClase = new java.util.concurrent.ConcurrentHashMap<>();
 
@@ -60,17 +52,17 @@ public class ModPKZip implements ArchivoDeMod {
 	public String version = "";
 
 	/**
-	 * Constructor principal que procesa un archivo ZIP/JAR. Indexa nombres y clases
-	 * sin cargar bytes de todas las entradas. Sólo se leen bytes de metadatos
-	 * necesarios para extraer IDs (mods.toml, fabric.mod.json, modules.xml, .mod).
+	 * CONSTRUCTOR PRINCIPAL (Para el archivo raíz en disco). Lee el archivo una
+	 * sola vez. Si tiene hijos anidados, se pasan directamente al constructor de
+	 * InputStream sin volver a tocar el disco.
 	 */
-	public ModPKZip(String ubicacion, ArchivoDeMod desde, InputStream inputStream) {
-		CrashDetectorLogger.log("en mod pkzip " + ubicacion);
-		this.ubicacion = ubicacion;
+	public ModPKZip(File archivo, ArchivoDeMod desde) {
+		CrashDetectorLogger.log("en mod pkzip (disco) " + archivo.getAbsolutePath());
+		this.ubicacion = archivo.getAbsolutePath();
 		this.desde = desde;
 
-		try {
-			this.bytesZip = leerTodo(inputStream);
+		try (InputStream fis = new java.io.FileInputStream(archivo)) {
+			this.bytesZip = leerTodo(fis);
 			indexarYProcesarMetadatos();
 			descubrirCargadores();
 		} catch (IOException e) {
@@ -80,30 +72,33 @@ public class ModPKZip implements ArchivoDeMod {
 	}
 
 	/**
-	 * Lee completamente un InputStream a un arreglo de bytes.
+	 * CONSTRUCTOR PARA ANIDADOS (Hijos dentro de otros JARs). Recibe los bytes ya
+	 * extraídos del padre. Cero accesos a disco.
 	 */
-	private static byte[] leerTodo(InputStream in) throws IOException {
-		ByteArrayOutputStream buf = new ByteArrayOutputStream(Math.max(32 * 1024, in.available()));
-		byte[] tmp = new byte[64 * 1024];
-		int n;
-		while ((n = in.read(tmp)) != -1) {
-			buf.write(tmp, 0, n);
+	public ModPKZip(String ubicacion, ArchivoDeMod desde, byte[] bytesHijo) {
+		CrashDetectorLogger.log("en mod pkzip (anidado) " + ubicacion);
+		this.ubicacion = ubicacion;
+		this.desde = desde;
+		this.bytesZip = bytesHijo;
+
+		try {
+			indexarYProcesarMetadatos();
+			descubrirCargadores();
+		} catch (IOException e) {
+			CrashDetectorLogger.logException(e);
+			throw new RuntimeException(e);
 		}
-		return buf.toByteArray();
 	}
 
 	/**
-	 * Recorre el ZIP para: - Llenar 'archivos' - Mapear clases - Detectar y leer
-	 * SOLO metadatos necesarios - Construir mods anidados
+	 * ÍNDICE DE UNA SOLA PASADA: Recorre el ZIP, extrae metadata puntual, y procesa
+	 * hijos recursivamente al instante sin volver a leer el stream padre.
 	 */
 	private void indexarYProcesarMetadatos() throws IOException {
 		try (JarInputStream zip = new JarInputStream(new ByteArrayInputStream(bytesZip))) {
 			Manifest man = zip.getManifest();
-			if (man != null) {
-
+			if (man != null)
 				procesarManifest(man);
-
-			}
 
 			ZipEntry e;
 			while ((e = zip.getNextEntry()) != null) {
@@ -111,300 +106,171 @@ public class ModPKZip implements ArchivoDeMod {
 				archivos.add(nombreArchivo);
 
 				if (esArchivoAnidado(nombreArchivo)) {
-					// Para anidados: crear ModPKZip hijo con bytes del anidado
-					byte[] bytesAnidado = leerEntrada(nombreArchivo);
-					if (bytesAnidado != null) {
-						InputStream nested = new ByteArrayInputStream(bytesAnidado);
+					// EXTRAER HIJO INMEDIATAMENTE Y RECURSAR
+					byte[] bytesHijo = leer(zip);
+					if (bytesHijo != null) {
 						String nuevaUbicacion = ubicacion + "!/" + nombreArchivo;
-						mods_en_mod.add(new ModPKZip(nuevaUbicacion, this, nested));
+						// Llamada recursiva directa usando el constructor de bytes
+						mods_en_mod.add(new ModPKZip(nuevaUbicacion, this, bytesHijo));
 					}
 				} else if (nombreArchivo.endsWith(".class")) {
-					// Registrar clase sin leer bytes
 					String nombreClaseJava = nombreArchivo.replace('/', '.').replace(".class", "");
 					clases.add(nombreClaseJava);
-
 					String nombreInterno = nombreArchivo.substring(0, nombreArchivo.length() - 6);
 					mapaEntradaPorClase.put(nombreInterno, nombreArchivo);
 
 					if (nombreClaseJava.endsWith("module-info")) {
-						byte[] bytes = this.obtenerBytesClase(nombreClaseJava);
-						if (bytes != null) {
+						byte[] bytes = obtenerBytesClase(nombreClaseJava);
+						if (bytes != null)
 							nombres.addAll(this.obtenerNombresDeModuleInfo(bytes));
-						}
 					}
-				} else if (nombreArchivo.endsWith("modules.xml")) {
-					byte[] content = leerEntrada(nombreArchivo);
-					if (content != null) {
-						agregarNombresSinDuplicados(CargadorFeatureCreep.parsearNombreModuloJBoss(content));
-
-						if (this.version.isEmpty()) {
-							this.version = CargadorFeatureCreep.parsearVersionModuloJBoss(content);
-						}
-					}
-				} else if (nombreArchivo.endsWith(".mod")) {
-					byte[] content = leerEntrada(nombreArchivo);
-					if (content != null) {
-						agregarNombresSinDuplicados(CargadorFeatureCreep.parsearNombreModHOI4(content));
-
-						if (this.version.isEmpty()) {
-							this.version = CargadorFeatureCreep.parsearVersionModHOI4(content);
-						}
-					}
-				} else if (nombreArchivo.equals("fabric.mod.json")) {
-					byte[] content = leerEntrada(nombreArchivo);
-					if (content != null) {
-						String texto = new String(content, StandardCharsets.UTF_8);
-
-						agregarNombresSinDuplicados(CargadorFabric.parsearIdModFabric(texto));
-
-						if (this.version.isEmpty()) {
-							this.version = CargadorFabric.parsearVersionModFabric(texto);
-						}
-
-						if (texto.toLowerCase().contains("mcreator")) {
-							meta_tiene_referencia_de_mcreator = true;
-						}
-					}
+				} else {
+					procesarMetadataSiAplica(nombreArchivo);
 				}
-
-				else if (nombreArchivo.equals("quilt.mod.json")) {
-					byte[] content = leerEntrada(nombreArchivo);
-					if (content != null) {
-						String texto = new String(content, StandardCharsets.UTF_8);
-
-						agregarNombresSinDuplicados(CargadorFabric.parsearIdModQuilt(texto));
-
-						if (this.version.isEmpty()) {
-							this.version = CargadorFabric.parsearVersionModQuilt(texto);
-						}
-
-						if (texto.toLowerCase().contains("mcreator")) {
-							meta_tiene_referencia_de_mcreator = true;
-						}
-					}
-				}
-
-				else if (nombreArchivo.equals("riftmod.json")) {
-					byte[] content = leerEntrada(nombreArchivo);
-					if (content != null) {
-						String texto = new String(content, StandardCharsets.UTF_8);
-
-						agregarNombresSinDuplicados(CargadorRift.parsearIdModRift(texto));
-
-						if (this.version.isEmpty()) {
-							this.version = CargadorRift.parsearVersionModRift(texto);
-						}
-
-						if (texto.toLowerCase().contains("mcreator")) {
-							meta_tiene_referencia_de_mcreator = true;
-						}
-					}
-				} else if (nombreArchivo.equals("litemod.json")) {
-					byte[] content = leerEntrada(nombreArchivo);
-					if (content != null) {
-						String texto = new String(content, StandardCharsets.UTF_8);
-
-						agregarNombresSinDuplicados(CargadorLiteLoader.parsearIdModLiteLoader(texto));
-
-						if (this.version.isEmpty()) {
-							this.version = CargadorLiteLoader.parsearVersionModLiteLoader(texto);
-						}
-
-						if (texto.toLowerCase().contains("mcreator")) {
-							meta_tiene_referencia_de_mcreator = true;
-						}
-					}
-				} else if (nombreArchivo.equals("mcmod.info") || nombreArchivo.equals("META-INF/mcmod.info")) {
-					byte[] content = leerEntrada(nombreArchivo);
-					if (content != null) {
-						String texto = new String(content, StandardCharsets.UTF_8);
-
-						agregarNombresSinDuplicados(CargadorMCForge.parsearIdModMcmodInfo(texto));
-
-						if (this.version.isEmpty()) {
-							this.version = CargadorMCForge.parsearVersionModMcmodInfo(texto);
-						}
-
-						if (texto.toLowerCase().contains("mcreator")) {
-							meta_tiene_referencia_de_mcreator = true;
-						}
-					}
-				} else if (nombreArchivo.equals("fcflat.properties")) {
-					byte[] content = leerEntrada(nombreArchivo);
-					if (content != null) {
-						agregarNombresSinDuplicados(CargadorFeatureCreep.parsearIdModFlat(content));
-
-						if (this.version.isEmpty()) {
-							this.version = CargadorFeatureCreep.parsearVersionModFlat(content);
-						}
-					}
-				}
-
-				else if (nombreArchivo.equals("plugin.yml") || nombreArchivo.equals("paper-plugin.yml")) {
-					byte[] content = leerEntrada(nombreArchivo);
-					if (content != null) {
-						String texto = new String(content, StandardCharsets.UTF_8);
-
-						agregarNombresSinDuplicados(CargadorBukkit.parsearIdModBukkit(texto));
-
-						if (this.version.isEmpty()) {
-							this.version = CargadorBukkit.parsearVersionModBukkit(texto);
-						}
-
-						if (texto.toLowerCase().contains("mcreator")) {
-							meta_tiene_referencia_de_mcreator = true;
-						}
-					}
-				}
-
-				else if (nombreArchivo.toLowerCase(java.util.Locale.ROOT).endsWith(".nilmod.css")) {
-					byte[] content = leerEntrada(nombreArchivo);
-					if (content != null) {
-						String texto = new String(content, StandardCharsets.UTF_8);
-
-						agregarNombresSinDuplicados(
-								CargadorNilLoader.parsearIdModNilLoaderDesdeNombreArchivo(nombreArchivo));
-
-						if (this.version.isEmpty()) {
-							this.version = CargadorNilLoader.parsearVersionModNilLoader(texto);
-						}
-
-						if (texto.toLowerCase().contains("mcreator")) {
-							meta_tiene_referencia_de_mcreator = true;
-						}
-					}
-				}
-
-				else if (nombreArchivo.endsWith("mods.toml")) {
-					byte[] content = leerEntrada(nombreArchivo);
-					if (content != null) {
-						String toml = new String(content, StandardCharsets.UTF_8);
-
-						agregarNombresSinDuplicados(CargadorMCForge.parsearIdModMCForge(toml));
-
-						if (this.version.isEmpty()) {
-							this.version = AnalizadorModsTomlForge.extraerVersionPrincipal(toml);
-						}
-
-						if (toml.toLowerCase().contains("mcreator")) {
-							meta_tiene_referencia_de_mcreator = true;
-						}
-					}
-				} else if (nombreArchivo.toLowerCase(java.util.Locale.ROOT).endsWith(".inf")) {
-					byte[] content = leerEntrada(nombreArchivo);
-
-					if (content != null) {
-						String texto = new String(content, StandardCharsets.UTF_8);
-
-						agregarNombresSinDuplicados(CargadorCanary.parsearIdModCanary(texto));
-
-						if (this.version.isEmpty()) {
-							this.version = CargadorCanary.parsearVersionModCanary(texto);
-						}
-					}
-				}
-
-				else if (nombreArchivo.equals("flintmodule.json")) {
-					byte[] content = leerEntrada(nombreArchivo);
-
-					if (content != null) {
-						String texto = new String(content, StandardCharsets.UTF_8);
-
-						agregarNombresSinDuplicados(CargadorFlint.parsearIdModFlint(texto));
-
-						if (this.version.isEmpty()) {
-							this.version = CargadorFlint.parsearVersionModFlint(texto);
-						}
-
-						if (texto.toLowerCase().contains("mcreator")) {
-							meta_tiene_referencia_de_mcreator = true;
-						}
-					}
-				}
-
-				else if (nombreArchivo.equals("META-INF/sponge_plugins.json")
-						|| nombreArchivo.equals("meta-inf/sponge_plugins.json")) {
-					byte[] content = leerEntrada(nombreArchivo);
-
-					if (content != null) {
-						String texto = new String(content, StandardCharsets.UTF_8);
-
-						agregarNombresSinDuplicados(CargadorSponge.parsearIdPluginSponge(texto));
-
-						if (this.version.isEmpty()) {
-							this.version = CargadorSponge.parsearVersionPluginSponge(texto);
-						}
-
-						if (texto.toLowerCase().contains("mcreator")) {
-							meta_tiene_referencia_de_mcreator = true;
-						}
-					}
-				}
-
 				zip.closeEntry();
 			}
 		}
 	}
 
 	/**
-	 * Procesa metadata obtenida desde el Manifest del JAR.
-	 *
-	 * Importante: META-INF/MANIFEST.MF no siempre aparece como una entrada normal
-	 * del ZIP, por eso esta logica va separada y usa JarInputStream.getManifest().
+	 * Lee solo los bytes de los archivos de metadata crítica.
 	 */
-	private void procesarManifest(Manifest man) {
-		if (man == null) {
+	private void procesarMetadataSiAplica(String nombreArchivo) {
+		try {
+			if (nombreArchivo.equals("fabric.mod.json") || nombreArchivo.equals("quilt.mod.json")
+					|| nombreArchivo.equals("riftmod.json") || nombreArchivo.equals("litemod.json")
+					|| nombreArchivo.equals("mcmod.info") || nombreArchivo.equals("META-INF/mcmod.info")
+					|| nombreArchivo.equals("plugin.yml") || nombreArchivo.equals("paper-plugin.yml")
+					|| nombreArchivo.equals("flintmodule.json") || nombreArchivo.equals("META-INF/sponge_plugins.json")
+					|| nombreArchivo.equals("meta-inf/sponge_plugins.json") || nombreArchivo.endsWith("mods.toml")
+					|| nombreArchivo.toLowerCase(java.util.Locale.ROOT).endsWith(".inf")
+					|| nombreArchivo.equals("fcflat.properties")
+					|| nombreArchivo.toLowerCase(java.util.Locale.ROOT).endsWith(".nilmod.css")) {
+
+				byte[] content = leerEntrada(nombreArchivo);
+				if (content != null) {
+					String texto = new String(content, StandardCharsets.UTF_8);
+					parsearTextoMetadata(nombreArchivo, texto, content);
+				}
+			} else if (nombreArchivo.endsWith("modules.xml") || nombreArchivo.endsWith(".mod")) {
+				byte[] content = leerEntrada(nombreArchivo);
+				if (content != null)
+					parsearBytesMetadata(nombreArchivo, content);
+			}
+		} catch (Exception e) {
+			CrashDetectorLogger.logException(e);
+		}
+	}
+
+	private void parsearTextoMetadata(String nombreArchivo, String texto, byte[] bytes) throws IOException {
+		if (texto == null || texto.isEmpty())
 			return;
+
+		if (nombreArchivo.equals("fabric.mod.json")) {
+			agregarNombresSinDuplicados(CargadorFabric.parsearIdModFabric(texto));
+			if (this.version.isEmpty())
+				this.version = CargadorFabric.parsearVersionModFabric(texto);
+		} else if (nombreArchivo.equals("quilt.mod.json")) {
+			agregarNombresSinDuplicados(CargadorFabric.parsearIdModQuilt(texto));
+			if (this.version.isEmpty())
+				this.version = CargadorFabric.parsearVersionModQuilt(texto);
+		} else if (nombreArchivo.equals("riftmod.json")) {
+			agregarNombresSinDuplicados(CargadorRift.parsearIdModRift(texto));
+			if (this.version.isEmpty())
+				this.version = CargadorRift.parsearVersionModRift(texto);
+		} else if (nombreArchivo.equals("litemod.json")) {
+			agregarNombresSinDuplicados(CargadorLiteLoader.parsearIdModLiteLoader(texto));
+			if (this.version.isEmpty())
+				this.version = CargadorLiteLoader.parsearVersionModLiteLoader(texto);
+		} else if (nombreArchivo.equals("mcmod.info") || nombreArchivo.equals("META-INF/mcmod.info")) {
+			agregarNombresSinDuplicados(CargadorMCForge.parsearIdModMcmodInfo(texto));
+			if (this.version.isEmpty())
+				this.version = CargadorMCForge.parsearVersionModMcmodInfo(texto);
+		} else if (nombreArchivo.equals("plugin.yml") || nombreArchivo.equals("paper-plugin.yml")) {
+			agregarNombresSinDuplicados(CargadorBukkit.parsearIdModBukkit(texto));
+			if (this.version.isEmpty())
+				this.version = CargadorBukkit.parsearVersionModBukkit(texto);
+		} else if (nombreArchivo.endsWith("mods.toml")) {
+			agregarNombresSinDuplicados(CargadorMCForge.parsearIdModMCForge(texto));
+			if (this.version.isEmpty())
+				this.version = AnalizadorModsTomlForge.extraerVersionPrincipal(texto);
+		} else if (nombreArchivo.toLowerCase(java.util.Locale.ROOT).endsWith(".inf")) {
+			agregarNombresSinDuplicados(CargadorCanary.parsearIdModCanary(texto));
+			if (this.version.isEmpty())
+				this.version = CargadorCanary.parsearVersionModCanary(texto);
+		} else if (nombreArchivo.equals("flintmodule.json")) {
+			agregarNombresSinDuplicados(CargadorFlint.parsearIdModFlint(texto));
+			if (this.version.isEmpty())
+				this.version = CargadorFlint.parsearVersionModFlint(texto);
+		} else if (nombreArchivo.equals("META-INF/sponge_plugins.json")
+				|| nombreArchivo.equals("meta-inf/sponge_plugins.json")) {
+			agregarNombresSinDuplicados(CargadorSponge.parsearIdPluginSponge(texto));
+			if (this.version.isEmpty())
+				this.version = CargadorSponge.parsearVersionPluginSponge(texto);
+		} else if (nombreArchivo.toLowerCase(java.util.Locale.ROOT).endsWith(".nilmod.css")) {
+			agregarNombresSinDuplicados(CargadorNilLoader.parsearIdModNilLoaderDesdeNombreArchivo(nombreArchivo));
+			if (this.version.isEmpty())
+				this.version = CargadorNilLoader.parsearVersionModNilLoader(texto);
+		} else if (nombreArchivo.equals("fcflat.properties")) {
+			agregarNombresSinDuplicados(CargadorFeatureCreep.parsearIdModFlat(bytes));
+			if (this.version.isEmpty())
+				this.version = CargadorFeatureCreep.parsearVersionModFlat(bytes);
 		}
 
+		if (texto.toLowerCase().contains("mcreator")) {
+			meta_tiene_referencia_de_mcreator = true;
+		}
+	}
+
+	private void parsearBytesMetadata(String nombreArchivo, byte[] content) throws IOException {
+		if (content == null)
+			return;
+		if (nombreArchivo.endsWith("modules.xml")) {
+			agregarNombresSinDuplicados(CargadorFeatureCreep.parsearNombreModuloJBoss(content));
+			if (this.version.isEmpty())
+				this.version = CargadorFeatureCreep.parsearVersionModuloJBoss(content);
+		} else if (nombreArchivo.endsWith(".mod")) {
+			agregarNombresSinDuplicados(CargadorFeatureCreep.parsearNombreModHOI4(content));
+			if (this.version.isEmpty())
+				this.version = CargadorFeatureCreep.parsearVersionModHOI4(content);
+		}
+	}
+
+	private void procesarManifest(Manifest man) {
+		if (man == null)
+			return;
 		try {
-			// Mantener la logica general ya existente
 			agregarNombresSinDuplicados(ProcesadorManifiesto.obtenerNombresDeModulo(man));
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
 		}
-
 		try {
-			// Delegar el parseo especifico de Meddle al propio cargador
 			if (CargadorMeddle.manifestEsDeMeddle(man)) {
 				agregarNombresSinDuplicados(CargadorMeddle.parsearNombresManifestMeddle(man));
-
 				if (this.version.isEmpty()) {
-					String versionMeddle = CargadorMeddle.parsearVersionManifestMeddle(man);
-					if (versionMeddle != null && !versionMeddle.trim().isEmpty()) {
-						this.version = versionMeddle.trim();
-					}
+					String v = CargadorMeddle.parsearVersionManifestMeddle(man);
+					if (v != null && !v.trim().isEmpty())
+						this.version = v.trim();
 				}
 			}
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
 		}
-
 		try {
-			// Version generica de manifest si existe, sin pisar otras ya detectadas
 			if (this.version.isEmpty()) {
 				java.util.jar.Attributes attr = man.getMainAttributes();
-
 				if (attr != null) {
-					String implementationVersion = attr.getValue("Implementation-Version");
-
-					if (implementationVersion != null) {
-						implementationVersion = implementationVersion.trim();
-						if (!implementationVersion.isEmpty()) {
-							this.version = implementationVersion;
-						}
-					}
+					String iv = attr.getValue("Implementation-Version");
+					if (iv != null && !iv.trim().isEmpty())
+						this.version = iv.trim();
 				}
 			}
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
 		}
-
 		try {
-			String textoManifest = man.toString();
-			if (textoManifest != null && textoManifest.toLowerCase().contains("mcreator")) {
+			if (man.toString() != null && man.toString().toLowerCase().contains("mcreator"))
 				meta_tiene_referencia_de_mcreator = true;
-			}
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
 		}
@@ -413,24 +279,20 @@ public class ModPKZip implements ArchivoDeMod {
 	private void descubrirCargadores() {
 		for (Cargador cargador : Cargador.cargadores) {
 			try {
-				if (cargador.modEsDeCargador(this)) {
+				if (cargador.modEsDeCargador(this))
 					cargadores_de_mod.add(cargador);
-				}
 			} catch (Throwable t) {
 				CrashDetectorLogger.logException(t);
 			}
 		}
 	}
 
-	/**
-	 * Lee y devuelve los bytes de una entrada específica por nombre. Usa un caché
-	 * simple para evitar reescaneos repetidos.
-	 */
+	// --- LECTURA DE BYTES ---
+
 	private byte[] leerEntrada(String nombreEntrada) throws IOException {
 		byte[] cache = cacheBytesEntrada.get(nombreEntrada);
 		if (cache != null)
 			return cache;
-
 		try (ZipInputStream zip = new ZipInputStream(new ByteArrayInputStream(bytesZip))) {
 			ZipEntry e;
 			while ((e = zip.getNextEntry()) != null) {
@@ -446,29 +308,31 @@ public class ModPKZip implements ArchivoDeMod {
 		return null;
 	}
 
-	/**
-	 * Lee el contenido de un flujo de entrada en un arreglo de bytes.
-	 */
+	private static byte[] leerTodo(InputStream in) throws IOException {
+		ByteArrayOutputStream buf = new ByteArrayOutputStream(Math.max(32 * 1024, in.available()));
+		byte[] tmp = new byte[64 * 1024];
+		int n;
+		while ((n = in.read(tmp)) != -1)
+			buf.write(tmp, 0, n);
+		return buf.toByteArray();
+	}
+
 	private static byte[] leer(InputStream input) throws IOException {
 		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 		byte[] data = new byte[64 * 1024];
 		int bytesRead;
-		while ((bytesRead = input.read(data)) != -1) {
+		while ((bytesRead = input.read(data)) != -1)
 			buffer.write(data, 0, bytesRead);
-		}
 		return buffer.toByteArray();
 	}
 
-	/**
-	 * Devuelve true si el archivo es un contenedor anidado (como .jar, .zip, etc.)
-	 */
 	private boolean esArchivoAnidado(String nombreArchivo) {
 		return nombreArchivo.endsWith(".jar") || nombreArchivo.endsWith(".zip") || nombreArchivo.endsWith(".fpm")
 				|| nombreArchivo.endsWith(".litemod") || nombreArchivo.endsWith(".war")
 				|| nombreArchivo.endsWith(".ear") || nombreArchivo.endsWith(".rar");
 	}
 
-	// Métodos de búsqueda recursiva
+	// --- INTERFAZ ARCHIVODEMOD ---
 
 	@Override
 	public ArchivoDeMod obtenerDesde() {
@@ -496,6 +360,63 @@ public class ModPKZip implements ArchivoDeMod {
 	}
 
 	@Override
+	public List<String> archivos() {
+		return archivos;
+	}
+
+	@Override
+	public List<Cargador> cargadores() {
+		return cargadores_de_mod;
+	}
+
+	@Override
+	public boolean MetaDataTieneReferenciaDeMCReator() {
+		return meta_tiene_referencia_de_mcreator;
+	}
+
+	@Override
+	public String version() {
+		return version;
+	}
+
+	@Override
+	public boolean existeClase(String nombreClase) {
+		if (nombreClase == null || nombreClase.isEmpty())
+			return false;
+		String interno = normalizarNombreInterno(nombreClase);
+		return mapaEntradaPorClase.containsKey(interno) || clases.contains(interno.replace('/', '.'));
+	}
+
+	@Override
+	public byte[] obtenerBytesClase(String nombreClase) {
+		if (nombreClase == null || nombreClase.isEmpty())
+			return null;
+		String interno = normalizarNombreInterno(nombreClase);
+		byte[] cached = cacheBytesClase.get(interno);
+		if (cached != null)
+			return cached;
+
+		String nombreEntrada = mapaEntradaPorClase.get(interno);
+		if (nombreEntrada == null)
+			return null;
+
+		try {
+			byte[] data = leerEntrada(nombreEntrada);
+			if (data != null)
+				cacheBytesClase.put(interno, data);
+			return data;
+		} catch (IOException e) {
+			CrashDetectorLogger.logException(e);
+			return null;
+		}
+	}
+
+	@Override
+	public List<String> obtenerTodosLosNombresDeClases() {
+		return new ArrayList<>(mapaEntradaPorClase.keySet());
+	}
+
+	@Override
 	public boolean tieneNombreRecursivo(String nombre) {
 		if (this.nombres.contains(nombre))
 			return true;
@@ -512,9 +433,9 @@ public class ModPKZip implements ArchivoDeMod {
 			if (this.nombres.contains(nombre))
 				return this.ubicacion();
 			for (ArchivoDeMod mod : mods_en_mods()) {
-				String resultado = mod.obtenerNombreRecursivo(nombre);
-				if (resultado != null)
-					return resultado;
+				String r = mod.obtenerNombreRecursivo(nombre);
+				if (r != null)
+					return r;
 			}
 		}
 		return null;
@@ -537,17 +458,12 @@ public class ModPKZip implements ArchivoDeMod {
 			if (this.archivos.contains(archivo))
 				return this.ubicacion() + "!/" + archivo;
 			for (ArchivoDeMod mod : mods_en_mods()) {
-				String resultado = mod.obtenerArchivoRecursivo(archivo);
-				if (resultado != null)
-					return resultado;
+				String r = mod.obtenerArchivoRecursivo(archivo);
+				if (r != null)
+					return r;
 			}
 		}
 		return null;
-	}
-
-	@Override
-	public List<String> archivos() {
-		return archivos;
 	}
 
 	@Override
@@ -555,112 +471,28 @@ public class ModPKZip implements ArchivoDeMod {
 		List<ArchivoDeMod> resultados = new ArrayList<>();
 		if (termino == null || termino.isEmpty())
 			return resultados;
-
 		String t = termino;
 		if (t.endsWith(".class"))
 			t = t.substring(0, t.length() - 6);
-
-		String tDots = t.replace('/', '.'); // com.foo.Bar
-		String tSlashes = t.replace('.', '/'); // com/foo/Bar
+		String tDots = t.replace('/', '.');
+		String tSlashes = t.replace('.', '/');
 
 		boolean tieneArchivo = archivos.contains(termino) || archivos.contains(tSlashes + ".class")
 				|| archivos.contains(tDots);
+		boolean tieneClaseExacta = clases.contains(tDots) || mapaEntradaPorClase.containsKey(tSlashes)
+				|| mapaEntradaPorClase.containsKey(normalizarNombreInterno(t));
+		boolean tienePaquete = mapaEntradaPorClase.keySet().stream().anyMatch(c -> c.startsWith(tSlashes))
+				|| clases.stream().anyMatch(c -> c.startsWith(tDots));
 
-		boolean tieneClaseExacta = clases.contains(tDots) || mapaEntradaPorClase.containsKey(tSlashes) || // internal
-																											// index
-				mapaEntradaPorClase.containsKey(normalizarNombreInterno(t));
-
-		boolean tienePaquete = mapaEntradaPorClase.keySet().stream().anyMatch(c -> c.startsWith(tSlashes)) // internal
-				|| clases.stream().anyMatch(c -> c.startsWith(tDots)); // dots
-
-		if (tieneArchivo || tieneClaseExacta || tienePaquete) {
+		if (tieneArchivo || tieneClaseExacta || tienePaquete)
 			resultados.add(this);
-		}
-
-		for (ArchivoDeMod mod : mods_en_mod) {
+		for (ArchivoDeMod mod : mods_en_mod)
 			resultados.addAll(mod.buscarModsCon(termino));
-		}
 		return resultados;
 	}
 
-	@Override
-	public boolean existeClase(String nombreClase) {
-		if (nombreClase == null || nombreClase.isEmpty())
-			return false;
+	// --- PRECACHE RECURSIVO ---
 
-		String interno = normalizarNombreInterno(nombreClase);
-		if (mapaEntradaPorClase.containsKey(interno))
-			return true;
-
-		String dots = interno.replace('/', '.');
-		return clases.contains(dots);
-	}
-
-	/**
-	 * Devuelve los bytes de la clase solicitada. Acepta nombre interno "pkg/Clase"
-	 * o con puntos "pkg.Clase"; ignora ".class". Carga perezosa y cachea el
-	 * resultado.
-	 */
-	@Override
-	public byte[] obtenerBytesClase(String nombreClase) {
-		if (nombreClase == null || nombreClase.isEmpty())
-			return null;
-
-		// Normalizar a nombre interno ASM (pkg/Clase)
-		String interno = normalizarNombreInterno(nombreClase);
-
-		// 1) caché de clases
-		byte[] cached = cacheBytesClase.get(interno);
-		if (cached != null)
-			return cached;
-
-		// 2) buscar la entrada real "pkg/Clase.class"
-		String nombreEntrada = mapaEntradaPorClase.get(interno);
-		if (nombreEntrada == null)
-			return null;
-
-		try {
-			byte[] data = leerEntrada(nombreEntrada);
-			if (data != null) {
-				cacheBytesClase.put(interno, data);
-			}
-			return data;
-		} catch (IOException e) {
-			CrashDetectorLogger.logException(e);
-			return null;
-		}
-	}
-
-	@Override
-	public List<String> obtenerTodosLosNombresDeClases() {
-		// Devolver los nombres internos (pkg/Clase) conocidos
-		return new ArrayList<>(mapaEntradaPorClase.keySet());
-	}
-
-	@Override
-	public List<Cargador> cargadores() {
-		return cargadores_de_mod;
-	}
-
-	@Override
-	public boolean MetaDataTieneReferenciaDeMCReator() {
-		return meta_tiene_referencia_de_mcreator;
-	}
-
-	// --- Métodos utilitarios nuevos ---
-
-	/**
-	 * Precarga los bytes de TODAS las clases de este ZIP en el caché interno. Útil
-	 * si se desea evitar lecturas repetidas del ZIP durante un análisis intensivo.
-	 *
-	 * @return número de clases cargadas en caché en esta instancia
-	 */
-	/**
-	 * Precarga los bytes de TODAS las clases de este ZIP en el caché interno. Útil
-	 * si se desea evitar lecturas repetidas del ZIP durante un análisis intensivo.
-	 *
-	 * @return número de clases cargadas en caché en esta instancia
-	 */
 	public int precargarTodasLasClases() {
 		int cargadas = 0;
 		try (ZipInputStream zip = new ZipInputStream(new ByteArrayInputStream(bytesZip))) {
@@ -668,10 +500,7 @@ public class ModPKZip implements ArchivoDeMod {
 			while ((entrada = zip.getNextEntry()) != null) {
 				String nombreEntrada = entrada.getName();
 				if (nombreEntrada.endsWith(".class")) {
-					String nombreInterno = nombreEntrada.substring(0, nombreEntrada.length() - 6); // sin ".class"
-
-					// Solo procesar si es una clase indexada (evita redundancias con clases no
-					// mapeadas)
+					String nombreInterno = nombreEntrada.substring(0, nombreEntrada.length() - 6);
 					if (mapaEntradaPorClase.containsKey(nombreInterno) && !cacheBytesClase.containsKey(nombreInterno)) {
 						byte[] data = leer(zip);
 						if (data != null) {
@@ -688,36 +517,19 @@ public class ModPKZip implements ArchivoDeMod {
 		return cargadas;
 	}
 
-	/**
-	 * Precarga de forma RECURSIVA todas las clases de este ZIP y de sus archivos
-	 * anidados que también sean ModPKZip.
-	 *
-	 * @return número total de clases cargadas (esta instancia + anidados ModPKZip)
-	 */
 	public int precargarTodasLasClasesRecursivo() {
 		int total = precargarTodasLasClases();
 		for (ArchivoDeMod hijo : mods_en_mod) {
-			if (hijo instanceof ModPKZip) {
+			if (hijo instanceof ModPKZip)
 				total += ((ModPKZip) hijo).precargarTodasLasClasesRecursivo();
-			}
 		}
 		return total;
 	}
-
-	// --- util ---
 
 	private static String normalizarNombreInterno(String nombre) {
 		String n = nombre;
 		if (n.endsWith(".class"))
 			n = n.substring(0, n.length() - 6);
-		// si viene con puntos, convertir a slashes
-		n = n.replace('.', '/');
-		return n;
-	}
-
-	@Override
-	public String version() {
-		// TODO Auto-generated method stub
-		return version;
+		return n.replace('.', '/');
 	}
 }

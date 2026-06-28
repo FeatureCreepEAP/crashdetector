@@ -27,7 +27,6 @@ public class Config {
 	// Valores predeterminados para las nuevas propiedades
 	public static final String VALOR_POR_DEFECTO_API_DE_REGISTROS_SELECCIONADA = "SecureLogger";
 	public static final String VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO = "https://securelogger.net/save/log?";
-	private static final boolean PROXY_SYSOUT_SYSERR = true;
 
 	// Ruta al archivo de configuración
 	private static final String RUTA_ARCHIVO_CONFIG = Statics.carpeta.resolve("crashdetector_config.properties")
@@ -76,7 +75,6 @@ public class Config {
 					VALOR_POR_DEFECTO_API_DE_REGISTROS_SELECCIONADA);
 			propiedadesConfig.setProperty("sitio_de_registros_seleccionado",
 					VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO);
-			propiedadesConfig.setProperty("proxy_sysout_syserr", String.valueOf(PROXY_SYSOUT_SYSERR));
 
 			guardar();
 		}
@@ -355,17 +353,6 @@ public class Config {
 	public String guardarCarpetaHMCL(String string) {
 		// TODO Auto-generated method stub
 		return propiedadesConfig.getProperty("hmcl_carpeta", string);
-	}
-
-	public boolean obtenerProxySysOutSysErr() {
-		// TODO Auto-generated method stub
-		return Boolean.parseBoolean(
-				propiedadesConfig.getProperty("proxy_sysout_syserr", String.valueOf(PROXY_SYSOUT_SYSERR)));
-	}
-
-	public void guardarProxySysOutSysErr(boolean valor) {
-		// TODO Auto-generated method stub
-		propiedadesConfig.setProperty("proxy_sysout_syserr", String.valueOf(valor));
 	}
 
 	/**

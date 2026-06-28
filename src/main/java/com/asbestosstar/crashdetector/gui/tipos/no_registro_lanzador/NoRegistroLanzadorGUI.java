@@ -92,7 +92,6 @@ public abstract class NoRegistroLanzadorGUI extends JFrame implements CrashDetec
 
 	public JButton botonGuardar;
 	public JButton botonOmitir;
-	public JButton botonProxy;
 
 	public JPanel panelAreaTexto;
 	public JPanel panelBajoImagen;

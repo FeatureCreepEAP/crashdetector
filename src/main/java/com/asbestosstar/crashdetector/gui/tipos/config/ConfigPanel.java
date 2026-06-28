@@ -439,17 +439,17 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 			}
 		}
 
-		// Proxy SysOut/SysErr
-		JLabel labelProxy = new JLabel("proxySysOutSysErr");
-		labelProxy.setForeground(colorDeTextoDeGui);
-		panel.add(labelProxy);
+		// Reemplazado por Análisis en vivo (Live Streaming)
+		JLabel labelLiveStream = new JLabel("Análisis en vivo (Live Streaming)");
+		labelLiveStream.setForeground(colorDeTextoDeGui);
+		panel.add(labelLiveStream);
 
-		JCheckBox proxySysOutSysErrCheckBox = new JCheckBox();
-		proxySysOutSysErrCheckBox.setBackground(colorFondo.obtener());
-		proxySysOutSysErrCheckBox.setSelected(config.obtenerProxySysOutSysErr());
-		proxySysOutSysErrCheckBox
-				.addItemListener(e -> config.guardarProxySysOutSysErr(proxySysOutSysErrCheckBox.isSelected()));
-		panel.add(proxySysOutSysErrCheckBox);
+		JCheckBox liveStreamCheckBox = new JCheckBox();
+		liveStreamCheckBox.setBackground(colorFondo.obtener());
+		liveStreamCheckBox.setSelected(MonitorDePID.ANALISIS_EN_VIVO.obtener());
+		liveStreamCheckBox
+				.addItemListener(e -> MonitorDePID.ANALISIS_EN_VIVO.escribir(liveStreamCheckBox.isSelected()));
+		panel.add(liveStreamCheckBox);
 
 		// Auto-backup: activado
 		JLabel labelAutoBackupActivado = new JLabel(MonitorDePID.idioma.autoBackupActivado());

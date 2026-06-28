@@ -236,19 +236,14 @@ public class Buscador {
 								&& !archivoActual.getName().endsWith("rpm")) {
 
 							CrashDetectorLogger.log("prearchivo mod " + archivoActual.getName());
-							try (FileInputStream fis = new FileInputStream(archivoActual)) {
-								CrashDetectorLogger
-										.log("En Stream " + archivoActual.getName() + " cargado correctamente");
-								ArchivoDeMod modObj = new ModPKZip(rutaActual, ArchivoDeMod.origin, fis);
-								CrashDetectorLogger.log("crear " + archivoActual.getName() + " cargado correctamente");
-								mods.add(modObj);
-								CrashDetectorLogger
-										.log("archivo mod " + archivoActual.getName() + " cargado correctamente");
-							} catch (IOException e) {
-								CrashDetectorLogger.log(
-										"Error al cargar mod ZIP " + archivoActual.getName() + ": " + e.getMessage());
-								CrashDetectorLogger.logException(e);
-							}
+
+							// --- CAMBIO PRINCIPAL AQUÍ ---
+							// Pasar el File directamente para usar el nuevo sistema rápido (JarFile)
+							// en lugar de FileInputStream que cargaba todo en RAM.
+							ArchivoDeMod modObj = new ModPKZip(archivoActual, ArchivoDeMod.origin);
+
+							CrashDetectorLogger.log("archivo mod " + archivoActual.getName() + " indexado rápidamente");
+							mods.add(modObj);
 						}
 					} else {
 						CrashDetectorLogger.log("precarpeta mod " + archivoActual.getName());
