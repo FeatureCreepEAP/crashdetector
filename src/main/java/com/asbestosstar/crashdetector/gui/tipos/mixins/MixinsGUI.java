@@ -293,7 +293,7 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 	public List<ArchivoDeMod> obtenerModsConMixins() {
 		List<ArchivoDeMod> modsConMixins = new ArrayList<>();
 
-		for (ArchivoDeMod mod : Buscador.mods) {
+		for (ArchivoDeMod mod : Buscador.obtenerModsPrimerNivel()) {
 			recolectarModsConMixinsRecursivo(mod, modsConMixins);
 		}
 

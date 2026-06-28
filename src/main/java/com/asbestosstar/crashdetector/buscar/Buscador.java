@@ -1,14 +1,15 @@
 package com.asbestosstar.crashdetector.buscar;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadFactory;
@@ -44,8 +45,7 @@ import com.asbestosstar.crashdetector.config.ConfigBoolean;
 
 public class Buscador {
 
-	public static Set<ArchivoDeMod> mods = java.util.Collections
-			.newSetFromMap(new java.util.concurrent.ConcurrentHashMap<>());
+	private static Set<ArchivoDeMod> mods = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	public static ConfigBoolean hablicar = ConfigBoolean.de("hablicar_buscardor", true);
 
@@ -54,8 +54,32 @@ public class Buscador {
 	/** Evita precargar varias veces todas las clases en todos los mods. */
 	public static volatile boolean cargadotodos = false;
 
+	/**
+	 * Obtiene una lista de los mods del primer nivel (raíz). Garantiza que la carga
+	 * inicial se haya ejecutado antes de devolverlos.
+	 * 
+	 * @return Lista inmutable de los mods raíz.
+	 */
+	public static List<ArchivoDeMod> obtenerModsPrimerNivel() {
+		cargar();
+		return Collections.unmodifiableList(new ArrayList<>(mods));
+	}
+
 	public static void cargar() {
-		if (!cargado && hablicar.obtener()) {
+		// PRIMER CHEQUEO RÁPIDO (Sin bloqueo).
+		// Si ya cargó, los hilos siguientes salen al instante sin gastar recursos.
+		if (cargado) {
+			return;
+		}
+
+		// SINCRONIZACIÓN. Solo el primer hilo en llegar pasa, el resto se duerme aquí.
+		synchronized (Buscador.class) {
+			// SEGUNDO CHEQUEO DENTRO DEL BLOQUEO.
+			// Cuando el hilo #2 se despierte, verifica si el hilo #1 ya terminó.
+			if (cargado) {
+				return;
+			}
+
 			try {
 				String[] rutasMods = MonitorDePID.leer_archivo(MonitorDePID.ultimo_mods).split(MonitorDePID.nl);
 
@@ -79,11 +103,20 @@ public class Buscador {
 
 				leerMixerLogger();
 
+				// Marcar como terminado. El campo 'cargado' es volatile,
+				// lo que garantiza que este cambio se vea instantáneamente por todos los hilos.
 				cargado = true;
+
 			} catch (IOException e) {
 				CrashDetectorLogger.logException(e);
 			}
 		}
+	}
+
+	public static void recargar() {
+		Buscador.mods.clear();
+		Buscador.cargado = false;
+		Buscador.cargadotodos = false;
 	}
 
 	private static void leerMixerLogger() {
@@ -126,7 +159,7 @@ public class Buscador {
 		ThreadPoolExecutor ejecutor = crearThreadPoolExecutor(numeroHilos);
 		AtomicInteger totalPrecargadas = new AtomicInteger(0);
 
-		for (ArchivoDeMod mod : mods) {
+		for (ArchivoDeMod mod : obtenerTodosLosModsYSubmodsRecursivos()) {
 			ejecutor.submit(() -> {
 				try {
 					int count = precargarClasesDeUnMod(mod);
@@ -291,11 +324,20 @@ public class Buscador {
 		}
 	}
 
+	/**
+	 * Obtiene todos los mods cargados y sus submods de forma recursiva.
+	 * <p>
+	 * NOTA: Este método llama a {@link #cargar()} automáticamente. Esto garantiza
+	 * que los métodos de análisis y búsqueda funcionen correctamente incluso si no
+	 * se ha llamado a {@link #cargarYPrecargarClasesEnCache()} previamente.
+	 *
+	 * @return Lista con todos los mods y submods
+	 */
 	public static List<ArchivoDeMod> obtenerTodosLosModsYSubmodsRecursivos() {
 		List<ArchivoDeMod> modsYSubmods = new ArrayList<>();
 
 		// Recorrer todos los mods cargados
-		for (ArchivoDeMod mod : mods) {
+		for (ArchivoDeMod mod : obtenerModsPrimerNivel()) {
 			// Añadir el mod principal
 			modsYSubmods.add(mod);
 

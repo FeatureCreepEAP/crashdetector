@@ -147,7 +147,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 	 */
 	public void construirIndice() {
 		indiceBusqueda.clear();
-		int totalMods = Buscador.mods.size();
+		int totalMods = Buscador.obtenerModsPrimerNivel().size();
 		if (totalMods == 0) {
 			com.asbestosstar.crashdetector.CrashDetectorLogger.log("✅ No hay mods para indexar.");
 			return;
@@ -163,7 +163,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		List<Future<Map<String, List<PathDescriptor>>>> futuros = new ArrayList<>(totalMods);
 		final AtomicInteger completados = new AtomicInteger(0);
 
-		for (ArchivoDeMod mod : Buscador.mods) {
+		for (ArchivoDeMod mod : Buscador.obtenerModsPrimerNivel()) {
 			futuros.add(executor.submit(() -> {
 				try {
 					Map<String, List<PathDescriptor>> mapaLocal = new HashMap<>();
@@ -977,7 +977,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 			detalles.append(MonitorDePID.idioma.paquete()).append(" ").append(paquete).append("\n");
 
 			List<ArchivoDeMod> modsConPaquete = new ArrayList<>();
-			for (ArchivoDeMod mod : Buscador.mods) {
+			for (ArchivoDeMod mod : Buscador.obtenerModsPrimerNivel()) {
 				for (String clase : mod.clases()) {
 					String paqueteClase = "";
 					int indiceUltimoPunto = clase.lastIndexOf('.');
@@ -1770,7 +1770,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 
 	public Map<String, ArchivoDeMod> obtenerMapaModsPorUbicacion() {
 		Map<String, ArchivoDeMod> mapa = new HashMap<>();
-		for (ArchivoDeMod m : Buscador.mods) {
+		for (ArchivoDeMod m : Buscador.obtenerModsPrimerNivel()) {
 			rellenarMapaModsRecursivo(m, mapa);
 		}
 		return mapa;
@@ -2205,7 +2205,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 
 	public void construirArbolInicial() {
 		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(MonitorDePID.idioma.modsCargados());
-		for (ArchivoDeMod mod : Buscador.mods) {
+		for (ArchivoDeMod mod : Buscador.obtenerModsPrimerNivel()) {
 			agregarModuloARaiz(raiz, mod);
 		}
 		modeloArbol = new ModeloArbolConExpandibleMods(raiz);
@@ -2359,7 +2359,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 
 	public List<ArchivoDeMod> obtenerTodosLosMods() {
 		List<ArchivoDeMod> out = new ArrayList<>();
-		for (ArchivoDeMod m : Buscador.mods) {
+		for (ArchivoDeMod m : Buscador.obtenerModsPrimerNivel()) {
 			recolectarModsRec(out, m);
 		}
 		return out;
@@ -2401,7 +2401,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 			@Override
 			protected Void doInBackground() {
 				List<DefaultMutableTreeNode> mods = new ArrayList<>();
-				for (ArchivoDeMod mod : Buscador.mods) {
+				for (ArchivoDeMod mod : Buscador.obtenerModsPrimerNivel()) {
 					mods.add(new DefaultMutableTreeNode(new NodoConTexto(mod.ubicacion_para_publicar(), mod)));
 				}
 				return null;
@@ -2415,7 +2415,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 						raizActual.removeAllChildren();
 						raizActual.setUserObject(MonitorDePID.idioma.modsCargados());
 
-						for (ArchivoDeMod mod : Buscador.mods) {
+						for (ArchivoDeMod mod : Buscador.obtenerModsPrimerNivel()) {
 							DefaultMutableTreeNode nodoMod = new DefaultMutableTreeNode(
 									new NodoConTexto(mod.ubicacion_para_publicar(), mod));
 							modeloArbol.insertNodeInto(nodoMod, raizActual, raizActual.getChildCount());
@@ -2850,7 +2850,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 
 		String claseObjetivoInterna = normalizarNombreClaseInterno(claseObjetivo);
 
-		for (ArchivoDeMod mod : Buscador.mods) {
+		for (ArchivoDeMod mod : Buscador.obtenerModsPrimerNivel()) {
 			for (String nombreClase : mod.obtenerTodosLosNombresDeClases()) {
 				String claseOrigenInterna = normalizarNombreClaseInterno(nombreClase);
 
@@ -2975,7 +2975,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 
 		String claseObjetivoInterna = normalizarNombreClaseInterno(nombreClase);
 
-		for (ArchivoDeMod mod : Buscador.mods) {
+		for (ArchivoDeMod mod : Buscador.obtenerModsPrimerNivel()) {
 			for (String nombreClaseActual : mod.obtenerTodosLosNombresDeClases()) {
 				String claseActualInterna = normalizarNombreClaseInterno(nombreClaseActual);
 				if (claseActualInterna.equals(claseObjetivoInterna))

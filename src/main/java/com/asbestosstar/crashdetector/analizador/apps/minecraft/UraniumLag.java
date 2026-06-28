@@ -1,10 +1,16 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -15,60 +21,72 @@ public class UraniumLag implements Verificaciones {
 
 	@Override
 	public String[] patronesRapidos() {
-		// No necesita activar por línea.
-		// Usa vdst.trazos_completos en finalizarArchivo().
-		verificar();
 		return new String[0];
 	}
 
 	public void verificar() {
-		// TODO Auto-generated method stub
+		Path archivoMods = MonitorDePID.ultimo_mods;
 
-		activado = Buscador.existeClaseEnAlgunMod("net.yosa.uranium.Uranium");
+		if (archivoMods != null && Files.exists(archivoMods)) {
+			try {
+				// 1. Filtrado rápido: leemos todo el archivo a memoria y buscamos el texto
+				String contenido = new String(Files.readAllBytes(archivoMods));
 
+				if (contenido.contains("uranium")) {
+					// 2. Solo si existe el texto, ejecutamos la búsqueda pesada en las clases
+					activado = Buscador.existeClaseEnAlgunMod("net.yosa.uranium.Uranium");
+				} else {
+					activado = false;
+				}
+			} catch (IOException e) {
+				CrashDetectorLogger.logException(e);
+				activado = false;
+			}
+		} else {
+			activado = false;
+		}
 	}
 
 	public void verificarCoincidencia(EventoDeCoincidencia evento) {
 	}
 
 	@Override
+	public void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
+		verificar();
+	}
+
+	@Override
 	public Verificaciones nueva() {
-		// TODO Auto-generated method stub
 		return new UraniumLag();
 	}
 
 	@Override
 	public boolean activado() {
-		// TODO Auto-generated method stub
 		return activado;
 	}
 
 	@Override
 	public float prioridad() {
-		// TODO Auto-generated method stub
 		return 1400;
 	}
 
 	@Override
 	public String mensaje() {
-		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.uraniumLag();
 	}
 
 	@Override
 	public String nombre() {
-		// TODO Auto-generated method stub
 		return "UraniumLag";
 	}
 
 	@Override
 	public QuickFix solucion() {
-		return QuickFix.NINGUN;// TODO
+		return QuickFix.NINGUN;
 	}
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "uraniumlag";
 	}
 
@@ -84,7 +102,6 @@ public class UraniumLag implements Verificaciones {
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 

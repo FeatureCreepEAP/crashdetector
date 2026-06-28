@@ -107,7 +107,7 @@ public final class MotorDeLecturaStreaming {
 			int numeroLineaActual = 0;
 
 			while (channel.read(buffer) != -1) {
-				buffer.flip();
+				((java.nio.Buffer) buffer).flip();
 
 				int bytesLeidos = buffer.remaining();
 				buffer.get(heapBuffer, 0, bytesLeidos);
@@ -175,7 +175,7 @@ public final class MotorDeLecturaStreaming {
 				estado.bytesLeidos = posicionGlobal;
 				estado.lineasLeidas = numeroLineaActual;
 
-				buffer.clear();
+				((java.nio.Buffer) buffer).clear();
 			}
 
 			if (restoAnterior > 0) {

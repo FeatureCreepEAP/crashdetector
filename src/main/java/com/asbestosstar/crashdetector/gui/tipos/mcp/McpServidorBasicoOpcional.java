@@ -866,7 +866,7 @@ public class McpServidorBasicoOpcional {
 
 	public static String herramientaEstado() {
 		return "CrashDetector MCP activo\n" + "Dependencias: " + diagnosticoDependencias() + "\n" + "Mods cargados: "
-				+ Buscador.mods.size() + "\n" + "Puede analizar bytecode: "
+				+ Buscador.obtenerModsPrimerNivel().size() + "\n" + "Puede analizar bytecode: "
 				+ Buscador.puedeAnalizarElContentidoDeClase();
 	}
 

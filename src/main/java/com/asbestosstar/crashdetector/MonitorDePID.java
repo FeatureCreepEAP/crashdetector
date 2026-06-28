@@ -1692,9 +1692,7 @@ public class MonitorDePID {
 	 */
 	public static void recargar(boolean finalizar_contento, Instant luego) {
 		StringBuilder constructor = new StringBuilder();
-		Buscador.mods.clear();
-		Buscador.cargado = false;
-		Buscador.cargadotodos = false;
+		Buscador.recargar();
 		if (finalizar_contento) {
 			finalizarConsolasLentas(luego);
 		}

@@ -1251,7 +1251,7 @@ public abstract class MapaDeDependenciasGUI extends JFrame implements BotonDeBar
 
 	public List<ArchivoDeMod> obtenerTodosLosModsYSubmodsRecursivos() {
 		List<ArchivoDeMod> resultado = new ArrayList<>();
-		for (ArchivoDeMod mod : Buscador.mods) {
+		for (ArchivoDeMod mod : Buscador.obtenerModsPrimerNivel()) {
 			agregarModRecursivo(mod, resultado);
 		}
 		return resultado;

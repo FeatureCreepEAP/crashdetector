@@ -416,7 +416,7 @@ public class Analizador {
 	}
 
 	public void analizar(List<Consola> consolas, Set<Verificaciones> todasLasVerificaciones) {
-		Buscador.cargar();
+		// Buscador.cargar();
 
 		// Reiniciar estados globales de deduplicación antes de comenzar
 		FaltasClases.reiniciarGlobal();
