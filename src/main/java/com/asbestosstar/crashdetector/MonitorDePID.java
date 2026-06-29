@@ -115,33 +115,38 @@ public class MonitorDePID {
 	public static OutputStream flujoHaciaMonitor;
 	public static boolean enStreamingMode = false;
 
-	
 	/**
-	 * Referencia al hilo que ejecuta el análisis en vivo (streaming).
-	 * Puede ser null si el análisis en vivo nunca arrancó.
+	 * Referencia al hilo que ejecuta el análisis en vivo (streaming). Puede ser
+	 * null si el análisis en vivo nunca arrancó.
 	 */
 	public static volatile Thread hiloAnalisisEnVivo = null;
 
 	/**
-	 * Latch que se libera cuando el hilo de análisis en vivo termina
-	 * (ya sea por EOF del stream o por excepción).
+	 * Latch que se libera cuando el hilo de análisis en vivo termina (ya sea por
+	 * EOF del stream o por excepción).
 	 */
 	public static volatile CountDownLatch latchAnalisisEnVivo = null;
 
 	/**
-	 * Bandera volátil que indica si el análisis en vivo ya terminó.
-	 * Útil para inspección rápida sin bloquearse en el latch.
+	 * Bandera volátil que indica si el análisis en vivo ya terminó. Útil para
+	 * inspección rápida sin bloquearse en el latch.
 	 */
 	public static volatile boolean analisisEnVivoFinalizado = true;
-	
-	
+
 	/**
-	 * Si está activado, el monitor NO escribirá el archivo cd_launcherlog en el disco.
-	 * Útil para entornos de desarrollo (IDE) donde no queremos modificar el sistema
-	 * de archivos pero sí queremos ver la salida en la consola de desarrollo.
+	 * Si está activado, el monitor NO escribirá el archivo cd_launcherlog en el
+	 * disco. Útil para entornos de desarrollo (IDE) donde no queremos modificar el
+	 * sistema de archivos pero sí queremos ver la salida en la consola de
+	 * desarrollo.
 	 */
 	public static final ConfigBoolean IDE_MODE = ConfigBoolean.de("ide_mode", false);
-	
+
+	/**
+	 * Bandera estática activada por el argumento --idemode en CLI. Sobreescribe la
+	 * configuración para evitar la escritura de cd_launcherlog.
+	 */
+	public static boolean forzarIdeMode = false;
+
 	public static final ConfigBoolean ANALISIS_EN_VIVO = ConfigBoolean.de("analisis_en_vivo", true);
 	public static String nl = System.lineSeparator();
 
@@ -173,8 +178,19 @@ public class MonitorDePID {
 	public static void main(String[] args) {
 		registrarGUISPredeterminado();
 		DetectorLanzer.registrarLanzeresDefectos();
+
 		if (args.length > 0 && args[0].equals("--monitor")) {
 			long pid = Long.parseLong(args[1]);
+
+			// Comprobar si se pasó el argumento --idemode en cualquier parte de los args
+			for (String arg : args) {
+				if ("--idemode".equalsIgnoreCase(arg)) {
+					forzarIdeMode = true;
+					CrashDetectorLogger.log("Modo IDE forzado mediante argumento --idemode.");
+					break;
+				}
+			}
+
 			monitor_proceso(pid);
 			return;
 		}
@@ -621,6 +637,12 @@ public class MonitorDePID {
 			comando.add("--monitor");
 			comando.add(String.valueOf(pid));
 
+			// Si forzarIdeMode es verdadero en el proceso principal, se lo pasamos también
+			// al proceso monitor
+			if (forzarIdeMode) {
+				comando.add("--idemode");
+			}
+
 			ProcessBuilder pb = new ProcessBuilder(comando);
 			// pb.inheritIO(); // ASEGÚRATE DE QUE ESTÉ COMENTADO
 			UmemInit.aplicarA(pb);
@@ -898,9 +920,9 @@ public class MonitorDePID {
 		// archivo cd_launcherlog y a la consola de desarrollo, para no perder
 		// la salida del juego.
 		if (ANALISIS_EN_VIVO.obtener()) {
-		    iniciarAnalisisEnVivo(System.in);
+			iniciarAnalisisEnVivo(System.in);
 		} else {
-		    iniciarVolcadoDeStream(System.in);
+			iniciarVolcadoDeStream(System.in);
 		}
 
 		System.out.println(idioma.buscando_para_pid(pid));
@@ -982,14 +1004,11 @@ public class MonitorDePID {
 				}
 
 				historia_mods();
-				
-				
-				
+
 				// Doble seguridad: aunque analizar() ya espera, llamamos aqui para
 				// que el log quede claro y para que cualquier otra ruta que no pase
 				// por analizar() tampoco se quede sin sincronizar.
 				esperarAnalizadorEnVivoSiActivo();
-				
 
 				Instant luego = Instant.now();
 				recargar(true, luego);
@@ -1046,234 +1065,238 @@ public class MonitorDePID {
 		}
 	}
 
-private static void iniciarAnalisisEnVivo(InputStream inputStream) {
-    // Preparamos el latch ANTES de arrancar el hilo para evitar la
-    // race condition en la que el hilo principal vea un latch null.
-    latchAnalisisEnVivo = new CountDownLatch(1);
-    analisisEnVivoFinalizado = false;
+	private static void iniciarAnalisisEnVivo(InputStream inputStream) {
+		// Preparamos el latch ANTES de arrancar el hilo para evitar la
+		// race condition en la que el hilo principal vea un latch null.
+		latchAnalisisEnVivo = new CountDownLatch(1);
+		analisisEnVivoFinalizado = false;
 
-    Thread hilo = new Thread(() -> {
-        try {
-            File archivoLog = NoRegistroDeLauncherVShojo.cd_launcherlog;
-            
-            // Si NO estamos en modo IDE, preparamos el archivo log en disco
-            if (!IDE_MODE.obtener()) {
-                archivoLog.delete();
-                archivoLog.createNewFile();
-            }
+		Thread hilo = new Thread(() -> {
+			try {
+				File archivoLog = NoRegistroDeLauncherVShojo.cd_launcherlog;
 
-            Consola consolaViva = new Consola(archivoLog.toPath());
-            consolaViva.nueva = true;
-            consolaViva.analizadaEnVivo = true; // Evita que se reanalice en el recargar post-crash
-            consolaViva.verificacion_de_stacktrace = new VerificacionDeStackTrace(consolaViva);
+				// Comprobamos si el modo IDE está activado por configuración O por argumento
+				// --idemode
+				boolean esModoIde = IDE_MODE.obtener() || MonitorDePID.forzarIdeMode;
 
-            // La añadimos a la lista global para que sus errores se muestren en la GUI
-            MonitorDePID.consolas.add(consolaViva);
+				// Si NO estamos en modo IDE, preparamos el archivo log en disco
+				if (!esModoIde) {
+					archivoLog.delete();
+					archivoLog.createNewFile();
+				}
 
-            // Usar el analizador EXISTENTE (MonitorDePID.analizador)
-            AnalizadorNuevo nuevo = new AnalizadorNuevo(analizador);
+				Consola consolaViva = new Consola(archivoLog.toPath());
+				consolaViva.nueva = true;
+				consolaViva.analizadaEnVivo = true; // Evita que se reanalice en el recargar post-crash
+				consolaViva.verificacion_de_stacktrace = new VerificacionDeStackTrace(consolaViva);
 
-            // Buffer temporal para armar las lineas que se enviaran a la consola
-            StringBuilder bufferConsola = new StringBuilder();
+				// La añadimos a la lista global para que sus errores se muestren en la GUI
+				MonitorDePID.consolas.add(consolaViva);
 
-            // Si estamos en modo IDE, fos será null y no escribiremos en disco
-            final FileOutputStream fos = IDE_MODE.obtener() ? null : new FileOutputStream(archivoLog, true);
+				// Usar el analizador EXISTENTE (MonitorDePID.analizador)
+				AnalizadorNuevo nuevo = new AnalizadorNuevo(analizador);
 
-            try {
-                // Bifurcamos el InputStream: enviamos a la consola y (si no es modo IDE) al archivo
-                InputStream teeStream = new InputStream() {
-                    @Override
-                    public int read() throws IOException {
-                        int b = inputStream.read();
-                        if (b != -1) {
-                            if (fos != null) {
-                                fos.write(b);
-                            }
+				// Buffer temporal para armar las lineas que se enviaran a la consola
+				StringBuilder bufferConsola = new StringBuilder();
 
-                            if (b == '\n') {
-                                String linea = bufferConsola.toString();
-                                bufferConsola.setLength(0);
-                                if (!linea.trim().isEmpty()) {
-                                    CrashDetectorLogger.enviarALaConsola(linea);
-                                }
-                            } else if (b != '\r') {
-                                bufferConsola.append((char) b);
-                            }
-                        }
-                        return b;
-                    }
+				// Si estamos en modo IDE, fos será null y no escribiremos en disco
+				final FileOutputStream fos = esModoIde ? null : new FileOutputStream(archivoLog, true);
 
-                    @Override
-                    public int read(byte[] b, int off, int len) throws IOException {
-                        int read = inputStream.read(b, off, len);
-                        if (read > 0) {
-                            if (fos != null) {
-                                fos.write(b, off, read);
-                            }
+				try {
+					// Bifurcamos el InputStream: enviamos a la consola y (si no es modo IDE) al
+					// archivo
+					InputStream teeStream = new InputStream() {
+						@Override
+						public int read() throws IOException {
+							int b = inputStream.read();
+							if (b != -1) {
+								if (fos != null) {
+									fos.write(b);
+								}
 
-                            String trozo = new String(b, off, read, java.nio.charset.StandardCharsets.UTF_8);
-                            for (String parte : trozo.split("\n", -1)) {
-                                if (parte.endsWith("\r")) {
-                                    parte = parte.substring(0, parte.length() - 1);
-                                }
-                                if (!parte.trim().isEmpty()) {
-                                    CrashDetectorLogger.enviarALaConsola(parte);
-                                }
-                            }
-                        }
-                        return read;
-                    }
-                };
+								if (b == '\n') {
+									String linea = bufferConsola.toString();
+									bufferConsola.setLength(0);
+									if (!linea.trim().isEmpty()) {
+										CrashDetectorLogger.enviarALaConsola(linea);
+									}
+								} else if (b != '\r') {
+									bufferConsola.append((char) b);
+								}
+							}
+							return b;
+						}
 
-                nuevo.analizarEnVivo(consolaViva, teeStream, analizador.obtenerVerificacionesUnion());
-                
-                if (fos != null) {
-                    fos.flush();
-                }
-            } finally {
-                // Nos aseguramos de cerrar el archivo si fue abierto
-                if (fos != null) {
-                    try {
-                        fos.close();
-                    } catch (IOException ignored) {
-                    }
-                }
-            }
+						@Override
+						public int read(byte[] b, int off, int len) throws IOException {
+							int read = inputStream.read(b, off, len);
+							if (read > 0) {
+								if (fos != null) {
+									fos.write(b, off, read);
+								}
 
-            CrashDetectorLogger.log("[EnVivo] Stream cerrado. Análisis en vivo finalizado.");
+								String trozo = new String(b, off, read, java.nio.charset.StandardCharsets.UTF_8);
+								for (String parte : trozo.split("\n", -1)) {
+									if (parte.endsWith("\r")) {
+										parte = parte.substring(0, parte.length() - 1);
+									}
+									if (!parte.trim().isEmpty()) {
+										CrashDetectorLogger.enviarALaConsola(parte);
+									}
+								}
+							}
+							return read;
+						}
+					};
 
-        } catch (Exception e) {
-            CrashDetectorLogger.logException(e);
-        } finally {
-            // SIEMPRE liberamos el latch, incluso si algo fallo, para no
-            // dejar bloqueado al hilo principal esperando indefinidamente.
-            analisisEnVivoFinalizado = true;
-            CountDownLatch l = latchAnalisisEnVivo;
-            if (l != null) {
-                l.countDown();
-            }
-        }
-    }, "CD-AnalisisEnVivo");
-    hilo.setDaemon(true);
+					nuevo.analizarEnVivo(consolaViva, teeStream, analizador.obtenerVerificacionesUnion());
 
-    // Asignamos la referencia al hilo y activamos el flag de streaming
-    // ANTES de arrancar el hilo.
-    hiloAnalisisEnVivo = hilo;
-    enStreamingMode = true;
-    hilo.start();
-}
+					if (fos != null) {
+						fos.flush();
+					}
+				} finally {
+					// Nos aseguramos de cerrar el archivo si fue abierto
+					if (fos != null) {
+						try {
+							fos.close();
+						} catch (IOException ignored) {
+						}
+					}
+				}
 
-/**
- * Volca el InputStream al archivo cd_launcherlog y a la consola de
- * desarrollo SIN realizar analisis en vivo.
- *
- * Se utiliza cuando ANALISIS_EN_VIVO esta desactivado pero aun asi
- * queremos conservar la salida del juego que nos llega por stdin.
- * De este modo el analizador post-crash podra leer el archivo y
- * detectar los problemas como si fuera un log normal.
- * 
- * Si IDE_MODE esta activado, solo se envia a la consola de desarrollo
- * y se omite la escritura del archivo cd_launcherlog.
- */
-private static void iniciarVolcadoDeStream(InputStream inputStream) {
-    Thread hilo = new Thread(() -> {
-        File archivoLog = NoRegistroDeLauncherVShojo.cd_launcherlog;
-        try {
-            // Si NO estamos en modo IDE, preparamos el archivo
-            if (!IDE_MODE.obtener()) {
-                archivoLog.delete();
-                archivoLog.createNewFile();
-            }
+				CrashDetectorLogger.log("[EnVivo] Stream cerrado. Análisis en vivo finalizado.");
 
-            // Si estamos en modo IDE, fos será null
-            final FileOutputStream fos = IDE_MODE.obtener() ? null : new FileOutputStream(archivoLog, true);
+			} catch (Exception e) {
+				CrashDetectorLogger.logException(e);
+			} finally {
+				// SIEMPRE liberamos el latch, incluso si algo fallo, para no
+				// dejar bloqueado al hilo principal esperando indefinidamente.
+				analisisEnVivoFinalizado = true;
+				CountDownLatch l = latchAnalisisEnVivo;
+				if (l != null) {
+					l.countDown();
+				}
+			}
+		}, "CD-AnalisisEnVivo");
+		hilo.setDaemon(true);
 
-            try {
-                byte[] buf = new byte[8192];
-                int n;
-                while ((n = inputStream.read(buf)) != -1) {
-                    // 1) Escribir al archivo si no estamos en modo IDE
-                    if (fos != null) {
-                        fos.write(buf, 0, n);
-                        fos.flush();
-                    }
+		// Asignamos la referencia al hilo y activamos el flag de streaming
+		// ANTES de arrancar el hilo.
+		hiloAnalisisEnVivo = hilo;
+		enStreamingMode = true;
+		hilo.start();
+	}
 
-                    // 2) Enviar a la consola de desarrollo
-                    String trozo = new String(buf, 0, n, java.nio.charset.StandardCharsets.UTF_8);
-                    for (String parte : trozo.split("\n", -1)) {
-                        if (parte.endsWith("\r")) {
-                            parte = parte.substring(0, parte.length() - 1);
-                        }
-                        if (!parte.trim().isEmpty()) {
-                            CrashDetectorLogger.enviarALaConsola(parte);
-                        }
-                    }
-                }
-            } finally {
-                if (fos != null) {
-                    try {
-                        fos.close();
-                    } catch (IOException ignored) {
-                    }
-                }
-            }
+	/**
+	 * Volca el InputStream al archivo cd_launcherlog y a la consola de desarrollo
+	 * SIN realizar analisis en vivo.
+	 *
+	 * Se utiliza cuando ANALISIS_EN_VIVO esta desactivado pero aun asi queremos
+	 * conservar la salida del juego que nos llega por stdin. De este modo el
+	 * analizador post-crash podra leer el archivo y detectar los problemas como si
+	 * fuera un log normal.
+	 * 
+	 * Si IDE_MODE esta activado, solo se envia a la consola de desarrollo y se
+	 * omite la escritura del archivo cd_launcherlog.
+	 */
+	private static void iniciarVolcadoDeStream(InputStream inputStream) {
+		Thread hilo = new Thread(() -> {
+			File archivoLog = NoRegistroDeLauncherVShojo.cd_launcherlog;
+			try {
+				// Comprobamos si el modo IDE está activado por configuración O por argumento
+				// --idemode
+				boolean esModoIde = IDE_MODE.obtener() || MonitorDePID.forzarIdeMode;
 
-            CrashDetectorLogger.log("[VolcadoStream] Stream cerrado. Volcado finalizado.");
+				// Si NO estamos en modo IDE, preparamos el archivo
+				if (!esModoIde) {
+					archivoLog.delete();
+					archivoLog.createNewFile();
+				}
 
-        } catch (Exception e) {
-            CrashDetectorLogger.logException(e);
-        }
-    }, "CD-VolcadoStream");
-    hilo.setDaemon(true);
+				// Si estamos en modo IDE, fos será null
+				final FileOutputStream fos = esModoIde ? null : new FileOutputStream(archivoLog, true);
 
-    hilo.start();
-}
+				try {
+					byte[] buf = new byte[8192];
+					int n;
+					while ((n = inputStream.read(buf)) != -1) {
+						// 1) Escribir al archivo si no estamos en modo IDE
+						if (fos != null) {
+							fos.write(buf, 0, n);
+							fos.flush();
+						}
 
+						// 2) Enviar a la consola de desarrollo
+						String trozo = new String(buf, 0, n, java.nio.charset.StandardCharsets.UTF_8);
+						for (String parte : trozo.split("\n", -1)) {
+							if (parte.endsWith("\r")) {
+								parte = parte.substring(0, parte.length() - 1);
+							}
+							if (!parte.trim().isEmpty()) {
+								CrashDetectorLogger.enviarALaConsola(parte);
+							}
+						}
+					}
+				} finally {
+					if (fos != null) {
+						try {
+							fos.close();
+						} catch (IOException ignored) {
+						}
+					}
+				}
 
+				CrashDetectorLogger.log("[VolcadoStream] Stream cerrado. Volcado finalizado.");
 
-/**
- * Si el analisis en vivo esta activo, espera a que el hilo de streaming
- * termine por completo antes de continuar.
- *
- * Esto corrige la race condition en la que, si el juego crashea muy
- * rapido, el hilo principal entra a analizar() antes de que el hilo
- * de streaming haya terminado de procesar el stream. Sin esta espera,
- * los resultados del analisis en vivo se perderian o se produciria una
- * ConcurrentModificationException sobre los errores de la consola viva.
- */
-public static void esperarAnalizadorEnVivoSiActivo() {
-    if (!enStreamingMode) {
-        return;
-    }
+			} catch (Exception e) {
+				CrashDetectorLogger.logException(e);
+			}
+		}, "CD-VolcadoStream");
+		hilo.setDaemon(true);
 
-    CrashDetectorLogger.log("[EnVivo] Esperando a que el analisis en vivo termine...");
+		hilo.start();
+	}
 
-    // 1) Esperar al latch (se libera en el finally del hilo de streaming)
-    CountDownLatch latch = latchAnalisisEnVivo;
-    if (latch != null) {
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-    }
+	/**
+	 * Si el analisis en vivo esta activo, espera a que el hilo de streaming termine
+	 * por completo antes de continuar.
+	 *
+	 * Esto corrige la race condition en la que, si el juego crashea muy rapido, el
+	 * hilo principal entra a analizar() antes de que el hilo de streaming haya
+	 * terminado de procesar el stream. Sin esta espera, los resultados del analisis
+	 * en vivo se perderian o se produciria una ConcurrentModificationException
+	 * sobre los errores de la consola viva.
+	 */
+	public static void esperarAnalizadorEnVivoSiActivo() {
+		if (!enStreamingMode) {
+			return;
+		}
 
-    // 2) Por seguridad, tambien hacemos join del hilo por si el latch
-    //    se hubiera liberado pero el hilo aun estuviera en su bloque finally.
-    Thread hilo = hiloAnalisisEnVivo;
-    if (hilo != null && hilo.isAlive()) {
-        try {
-            hilo.join();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-    }
+		CrashDetectorLogger.log("[EnVivo] Esperando a que el analisis en vivo termine...");
 
-    CrashDetectorLogger.log("[EnVivo] Analisis en vivo terminado. Procediendo con el analisis final.");
-}
+		// 1) Esperar al latch (se libera en el finally del hilo de streaming)
+		CountDownLatch latch = latchAnalisisEnVivo;
+		if (latch != null) {
+			try {
+				latch.await();
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
 
+		// 2) Por seguridad, tambien hacemos join del hilo por si el latch
+		// se hubiera liberado pero el hilo aun estuviera en su bloque finally.
+		Thread hilo = hiloAnalisisEnVivo;
+		if (hilo != null && hilo.isAlive()) {
+			try {
+				hilo.join();
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
 
-
+		CrashDetectorLogger.log("[EnVivo] Analisis en vivo terminado. Procediendo con el analisis final.");
+	}
 
 	public static void establecerLookAndFeel() {
 		ConfigString lf = ConfigString.de("lf", "nativo");
@@ -1473,13 +1496,13 @@ public static void esperarAnalizadorEnVivoSiActivo() {
 	}
 
 	private static void registrarCanariosPorDefecto() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated catch block
 		CanarioDeOrdenJudicial.canarios.add(new CDPasteAsbestosstarEgoismJPCanario());
 		CanarioDeOrdenJudicial.canarios.add(new CDInformesAsbestosstarEgoismJPCanario());
 	}
 
 	public static void fin(CountDownLatch latch) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated catch block
 
 		ArchivoDeCodigoError0.delete();
 		// viajo_ultima_mods.toFile().delete();
@@ -1525,7 +1548,7 @@ public static void esperarAnalizadorEnVivoSiActivo() {
 	 * @param luego el tiempo ACTUAL AHORA
 	 */
 	private static void finalizarConsolasLentas(Instant luego) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated catch block
 
 		if (Consola.tiene_registro_de_launcher(consolas) && !consola_de_launcher_inyectado) {
 			Duration duration = Duration.between(luego, Instant.now());
@@ -1546,27 +1569,27 @@ public static void esperarAnalizadorEnVivoSiActivo() {
 	}
 
 	public static String analizar(List<Consola> consolas) {
-	    // CRITICAL: si estabamos en modo streaming, PRIMERO esperamos a que
-	    // el hilo de analisis en vivo termine. Solo asi garantizamos que
-	    // consolaViva.errores_de_lectadores este completamente poblado y que
-	    // no haya ConcurrentModificationException ni resultados perdidos.
-	    esperarAnalizadorEnVivoSiActivo();
+		// CRITICAL: si estabamos en modo streaming, PRIMERO esperamos a que
+		// el hilo de analisis en vivo termine. Solo asi garantizamos que
+		// consolaViva.errores_de_lectadores este completamente poblado y que
+		// no haya ConcurrentModificationException ni resultados perdidos.
+		esperarAnalizadorEnVivoSiActivo();
 
-	    // Si no estábamos en streaming, creamos un nuevo analizador limpio
-	    if (analizador == null || !enStreamingMode) {
-	        analizador = new Analizador();
-	        // Al crear uno nuevo, permitimos que todo se reanalice desde cero
-	        for (Consola c : consolas) {
-	            c.analizadaEnVivo = false;
-	        }
-	    }
+		// Si no estábamos en streaming, creamos un nuevo analizador limpio
+		if (analizador == null || !enStreamingMode) {
+			analizador = new Analizador();
+			// Al crear uno nuevo, permitimos que todo se reanalice desde cero
+			for (Consola c : consolas) {
+				c.analizadaEnVivo = false;
+			}
+		}
 
-	    // Se desactiva el streaming para esta instancia (si era true, ya aprovechamos
-	    // el analizador existente y ya esperamos a que terminara)
-	    enStreamingMode = false;
+		// Se desactiva el streaming para esta instancia (si era true, ya aprovechamos
+		// el analizador existente y ya esperamos a que terminara)
+		enStreamingMode = false;
 
-	    analizador.analizar(consolas);
-	    return analizador.toString();
+		analizador.analizar(consolas);
+		return analizador.toString();
 	}
 
 	// Compatible approach (Java 7+)
@@ -1777,7 +1800,7 @@ public static void esperarAnalizadorEnVivoSiActivo() {
 	 * @return true si el proceso existe y está activo
 	 * @throws IOException Si hay un error al ejecutar el comando
 	 */
-//	private static boolean verificarConTasklist(long pid) throws IOException, InterruptedException {
+//	private static boolean verificarConTasklist(pid) throws IOException, InterruptedException {
 //	    ProcessBuilder pb = new ProcessBuilder("tasklist", "/FI", "PID eq " + pid, "/FO", "CSV", "/NH");
 //	    Process proceso = pb.start();
 //	    try (BufferedReader reader = new BufferedReader(
