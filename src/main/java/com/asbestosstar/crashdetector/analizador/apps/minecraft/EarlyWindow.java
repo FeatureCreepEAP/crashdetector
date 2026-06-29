@@ -10,175 +10,175 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public class EarlyWindow implements Verificaciones {
 
-    private static final String APPLE_METAL_OPENGL_RENDERER = "AppleMetalOpenGLRenderer";
-    private static final String EARLY_FRAMEBUFFER_DRAW = "net.minecraftforge.fml.earlydisplay.EarlyFramebuffer.draw";
+	private static final String APPLE_METAL_OPENGL_RENDERER = "AppleMetalOpenGLRenderer";
+	private static final String EARLY_FRAMEBUFFER_DRAW = "net.minecraftforge.fml.earlydisplay.EarlyFramebuffer.draw";
 
-    private static final String MAIN_LINE = "Loading ImmediateWindowProvider fmlearlywindow";
-    private static final String FALLBACK_1 = "Failed to initialize the mod loading system and display.";
-    private static final String FALLBACK_2 = "Failed to initialize graphics window with current settings.";
-    public static final String wayland_26 = "The platform does not provide the window position";
+	private static final String MAIN_LINE = "Loading ImmediateWindowProvider fmlearlywindow";
+	private static final String FALLBACK_1 = "Failed to initialize the mod loading system and display.";
+	private static final String FALLBACK_2 = "Failed to initialize graphics window with current settings.";
+	public static final String wayland_26 = "The platform does not provide the window position";
 
-    private boolean activado = false;
-    private boolean limitacionOpenGLMacOSDetectada = false;
+	private boolean activado = false;
+	private boolean limitacionOpenGLMacOSDetectada = false;
 
-    private boolean appleMetalDetectado = false;
-    private boolean earlyFramebufferDetectado = false;
+	private boolean appleMetalDetectado = false;
+	private boolean earlyFramebufferDetectado = false;
 
-    private int lineaMainLine = -1;
+	private int lineaMainLine = -1;
 
-    private String mensaje = "";
-    private String enlaceHtml = "";
+	private String mensaje = "";
+	private String enlaceHtml = "";
 
-    @Override
-    public String[] patronesRapidos() {
-        return new String[] { APPLE_METAL_OPENGL_RENDERER, EARLY_FRAMEBUFFER_DRAW, MAIN_LINE, FALLBACK_1, FALLBACK_2,
-                wayland_26 };
-    }
+	@Override
+	public String[] patronesRapidos() {
+		return new String[] { APPLE_METAL_OPENGL_RENDERER, EARLY_FRAMEBUFFER_DRAW, MAIN_LINE, FALLBACK_1, FALLBACK_2,
+				wayland_26 };
+	}
 
-    @Override
-    public void verificarCoincidencia(EventoDeCoincidencia evento) {
-        if (evento == null || evento.linea == null) {
-            return;
-        }
+	@Override
+	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+		if (evento == null || evento.linea == null) {
+			return;
+		}
 
-        procesarLinea(evento.consola, evento.linea, evento.numeroDeLinea);
-    }
+		procesarLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+	}
 
-    @Override
-    public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-        procesarLinea(consola, linea, numero_de_linea);
-    }
+	@Override
+	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
+		procesarLinea(consola, linea, numero_de_linea);
+	}
 
-    private void procesarLinea(Consola consola, String linea, int numeroDeLinea) {
-        if (linea == null || linea.trim().isEmpty()) {
-            return;
-        }
+	private void procesarLinea(Consola consola, String linea, int numeroDeLinea) {
+		if (linea == null || linea.trim().isEmpty()) {
+			return;
+		}
 
-        if (linea.contains(APPLE_METAL_OPENGL_RENDERER)) {
-            appleMetalDetectado = true;
-        }
+		if (linea.contains(APPLE_METAL_OPENGL_RENDERER)) {
+			appleMetalDetectado = true;
+		}
 
-        if (linea.contains(EARLY_FRAMEBUFFER_DRAW)) {
-            earlyFramebufferDetectado = true;
-        }
+		if (linea.contains(EARLY_FRAMEBUFFER_DRAW)) {
+			earlyFramebufferDetectado = true;
+		}
 
-        limitacionOpenGLMacOSDetectada = appleMetalDetectado && earlyFramebufferDetectado;
+		limitacionOpenGLMacOSDetectada = appleMetalDetectado && earlyFramebufferDetectado;
 
-        if (linea.contains(MAIN_LINE)) {
-            lineaMainLine = numeroDeLinea;
-        }
+		if (linea.contains(MAIN_LINE)) {
+			lineaMainLine = numeroDeLinea;
+		}
 
-        if (activado) {
-            return;
-        }
+		if (activado) {
+			return;
+		}
 
-        if (lineaContieneFallback(linea)) {
-            activar(consola, numeroDeLinea);
-            return;
-        }
+		if (lineaContieneFallback(linea)) {
+			activar(consola, numeroDeLinea);
+			return;
+		}
 
-        if (limitacionOpenGLMacOSDetectada) {
-            activar(consola, numeroDeLinea);
-        }
-    }
+		if (limitacionOpenGLMacOSDetectada) {
+			activar(consola, numeroDeLinea);
+		}
+	}
 
-    @Override
-    public void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
-        if (activado) {
-            return;
-        }
+	@Override
+	public void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
+		if (activado) {
+			return;
+		}
 
-        // Seguridad: Asegurarnos de que la línea fue detectada y que el arreglo de 
-        // líneas de ESTA consola específica ya fue inicializado (no es nulo).
-        if (lineaMainLine >= 0 && consola != null && consola.lineas_verificar != null) {
-            
-            // Al usar consola.lineas_verificar.length nos aseguramos de usar el sistema
-            // de números de línea exacto de este archivo en particular, evitando 
-            // conflictos si hay otras consolas en memoria.
-            int totalLineas = consola.lineas_verificar.length;
-            
-            // Los índices empiezan en 0, por lo que la última línea es el total - 1.
-            if (lineaMainLine == totalLineas - 1) {
-                activar(consola, lineaMainLine);
-            }
-        }
-    }
+		// Seguridad: Asegurarnos de que la línea fue detectada y que el arreglo de
+		// líneas de ESTA consola específica ya fue inicializado (no es nulo).
+		if (lineaMainLine >= 0 && consola != null && consola.lineas_verificar != null) {
 
-    private boolean lineaContieneFallback(String linea) {
-        return linea.contains(FALLBACK_1) || linea.contains(FALLBACK_2) || linea.contains(wayland_26);
-    }
+			// Al usar consola.lineas_verificar.length nos aseguramos de usar el sistema
+			// de números de línea exacto de este archivo en particular, evitando
+			// conflictos si hay otras consolas en memoria.
+			int totalLineas = consola.lineas_verificar.length;
 
-    private void activar(Consola consola, int numeroDeLinea) {
-        if (activado) {
-            return;
-        }
+			// Los índices empiezan en 0, por lo que la última línea es el total - 1.
+			if (lineaMainLine == totalLineas - 1) {
+				activar(consola, lineaMainLine);
+			}
+		}
+	}
 
-        mensaje = construirMensaje();
+	private boolean lineaContieneFallback(String linea) {
+		return linea.contains(FALLBACK_1) || linea.contains(FALLBACK_2) || linea.contains(wayland_26);
+	}
 
-        if (consola != null && numeroDeLinea >= 0) {
-            enlaceHtml = consola.agregarErrorALectador(numeroDeLinea, this);
-        }
+	private void activar(Consola consola, int numeroDeLinea) {
+		if (activado) {
+			return;
+		}
 
-        activado = true;
-    }
+		mensaje = construirMensaje();
 
-    private String construirMensaje() {
-        String base = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
+		if (consola != null && numeroDeLinea >= 0) {
+			enlaceHtml = consola.agregarErrorALectador(numeroDeLinea, this);
+		}
 
-        if (limitacionOpenGLMacOSDetectada) {
-            return base + MonitorDePID.idioma.fmlEarlyWindowMacOSOpenGL();
-        }
+		activado = true;
+	}
 
-        return base;
-    }
+	private String construirMensaje() {
+		String base = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
 
-    @Override
-    public Verificaciones nueva() {
-        return new EarlyWindow();
-    }
+		if (limitacionOpenGLMacOSDetectada) {
+			return base + MonitorDePID.idioma.fmlEarlyWindowMacOSOpenGL();
+		}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+		return base;
+	}
 
-    @Override
-    public float prioridad() {
-        return 1500.0f;
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new EarlyWindow();
+	}
 
-    @Override
-    public String mensaje() {
-        return activado ? mensaje + (enlaceHtml != null ? enlaceHtml : "") : "";
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombre_de_early_window();
-    }
+	@Override
+	public float prioridad() {
+		return 1500.0f;
+	}
 
-    @Override
-    public QuickFix solucion() {
-        return QuickFix.NINGUN;
-    }
+	@Override
+	public String mensaje() {
+		return activado ? mensaje + (enlaceHtml != null ? enlaceHtml : "") : "";
+	}
 
-    @Override
-    public boolean recomendadoParaCorperata() {
-        return true;
-    }
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombre_de_early_window();
+	}
 
-    @Override
-    public String id() {
-        return "earlywindow";
-    }
+	@Override
+	public QuickFix solucion() {
+		return QuickFix.NINGUN;
+	}
 
-    @Override
-    public String[] ocupaTrazo() {
-        return new String[] { MAIN_LINE };
-    }
+	@Override
+	public boolean recomendadoParaCorperata() {
+		return true;
+	}
 
-    @Override
-    public Documento docs() {
-        return Documento.NINGUN;
-    }
+	@Override
+	public String id() {
+		return "earlywindow";
+	}
+
+	@Override
+	public String[] ocupaTrazo() {
+		return new String[] { MAIN_LINE };
+	}
+
+	@Override
+	public Documento docs() {
+		return Documento.NINGUN;
+	}
 }

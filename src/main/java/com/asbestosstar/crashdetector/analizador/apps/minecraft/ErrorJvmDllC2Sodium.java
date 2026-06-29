@@ -17,9 +17,9 @@ public class ErrorJvmDllC2Sodium implements Verificaciones {
 	private static final String SIGBUS = "SIGBUS";
 	private static final String SIGSEGV = "SIGSEGV";
 	private static final String PROBLEMATIC_FRAME = "Problematic frame:";
-	private static final String JVM_DLL = "jvm.dll";
-	private static final String LIBJVM_DYLIB = "libjvm.dylib";
-	private static final String LIBJVM_SO = "libjvm.so";
+	private static final String JVM_DLL = "[jvm.dll";
+	private static final String LIBJVM_DYLIB = "[libjvm.dylib";
+	private static final String LIBJVM_SO = "[libjvm.so";
 
 	private static final String C2_COMPILER_THREAD = "C2 CompilerThread";
 	private static final String CURRENT_COMPILE_TASK = "Current CompileTask:";
