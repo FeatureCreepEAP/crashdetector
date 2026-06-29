@@ -1,42 +1,67 @@
 package com.asbestosstar.crashdetector.app;
 
+import java.io.File;
+import java.nio.file.Path;
+
+import com.asbestosstar.crashdetector.CargadoresComun;
+import com.asbestosstar.crashdetector.CargadoresComun.CDOrigin;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Transformaciones;
 
 /**
- * Nuevo punto de entrada principal para el JAR.
+ * Controlador principal de la aplicación.
  * 
- * - Si se ejecuta normalmente mediante "java -jar", engaña a MonitorDePID para
- * que abra directamente en modo IDE. Esto se logra pasando "--monitor", un PID
- * imposible (666666) y "--idemode". Al no existir dicho proceso en el sistema
- * operativo, el bucle de monitoreo termina al instante y lanza la GUI.
- * 
- * - Si el classloader actual es asignable a org.jboss.modules.ModuleClassLoader
- * (o cualquier subclase no-final), escribe un mensaje en la consola y no hace
- * nada más para evitar conflictos en entornos JBoss/WildFly.
+ * Se comporta como un modloader normal (inicializando transformaciones y
+ * cargadores) y asegura que, al momento de lanzar el proceso monitor hijo, se
+ * pase implícitamente el argumento --idemode sin modificar la lógica de
+ * construcción de ProcessBuilder en MonitorDePID.
  */
 public class CrashDetectorApp {
 
+	/**
+	 * Origen de ejecución detectado. Por defecto asume que es una ejecución directa
+	 * desde JAR o IDE (modo app independiente).
+	 */
+	private static CDOrigin origenActual = CDOrigin.STANDALONE;
+
 	public static void main(String[] args) {
+		// 1. Verificación de seguridad: Bloquear si estamos dentro de JBoss Modules
 		if (esClassLoaderDeJBossModules()) {
 			System.out.println("Se está ejecutando con un classloader de JBoss Modules, no se iniciará CrashDetector.");
 			return;
 		}
 
-		// Simulamos el modo IDE original de tu configuración de ejecución:
-		// Al pasarle un PID imposible (666666), la función nativa viva(pid)
-		// retornará false instantáneamente, lo que fuerza a que la lógica de
-		// monitor_proceso salte el bucle infinito y abra la GUI de inmediato.
-		MonitorDePID.main(new String[] { "--monitor", "666666", "--idemode" });
+		// 2. Inicialización estilo Modloader (igual que hace CrashDetectorFlint)
+		inicializarComoModloader();
+
+		// 3. Forzamos el modo IDE para que el proceso hijo que se generará
+		// más abajo no escriba en el disco duro.
+		MonitorDePID.forzarIdeMode = true;
+
+	}
+
+	/**
+	 * Inicializa el entorno de transformaciones y cargadores, simulando el
+	 * comportamiento que tendría al ser cargado por FlintLoader, Forge, Fabric,
+	 * etc.
+	 */
+	private static void inicializarComoModloader() {
+		try {
+			// Inicializamos transformaciones (necesario para el análisis de bytecode)
+			Transformaciones.init();
+		} catch (Exception e) {
+			System.err.println("Error al inicializar transformaciones en modo App:");
+			e.printStackTrace();
+		}
+
+		// Inicializamos el cargador común apuntando a la carpeta mods estándar.
+		// Si el origen fuera otro, se podría cambiar, pero para un JAR standalone esto
+		// es correcto.
+		CargadoresComun.init(new Path[] { new File("mods/").toPath() }, origenActual);
 	}
 
 	/**
 	 * Comprueba si el classloader actual pertenece al ecosistema de JBoss Modules.
-	 * 
-	 * En lugar de fiarnos de cadenas de texto, buscamos la clase base de JBoss en
-	 * el classpath. Como ModuleClassLoader no es 'final', un classloader
-	 * personalizado podría heredar de ella. Usamos isAssignableFrom sobre el
-	 * .getClass() del classloader actual para cubrir la clase base y cualquier
-	 * subclase.
 	 * 
 	 * @return true si se detecta que el classloader actual es de JBoss Modules,
 	 *         false si no.
@@ -44,27 +69,24 @@ public class CrashDetectorApp {
 	private static boolean esClassLoaderDeJBossModules() {
 		ClassLoader clActual = CrashDetectorApp.class.getClassLoader();
 
-		// Si por alguna razón no hay classloader
 		if (clActual == null) {
 			return false;
 		}
 
 		try {
 			// Intentamos cargar la clase base de JBoss Modules.
-			// Si lanza ClassNotFoundException, significa que JBoss NO está en el classpath.
 			Class<?> jbossModuleClassLoaderClass = Class.forName("org.jboss.modules.ModuleClassLoader", false,
 					clActual);
 
 			// Obtenemos la clase real de la instancia de nuestro classloader actual
 			Class<?> claseRealDelClActual = clActual.getClass();
 
-			// Verificamos si la clase de nuestro classloader ES un ModuleClassLoader
-			// o si HEREDA de él (isAssignableFrom maneja la jerarquía correctamente).
+			// Verificamos si la clase de nuestro classloader ES o HEREDA de
+			// ModuleClassLoader
 			return jbossModuleClassLoaderClass.isAssignableFrom(claseRealDelClActual);
 
 		} catch (ClassNotFoundException e) {
-			// La clase de JBoss no existe en el classpath actual.
-			// Estamos en un entorno normal (java -jar estándar, IDE, etc.).
+			// No estamos en JBoss
 			return false;
 		}
 	}

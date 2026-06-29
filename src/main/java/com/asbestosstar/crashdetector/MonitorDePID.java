@@ -134,14 +134,6 @@ public class MonitorDePID {
 	public static volatile boolean analisisEnVivoFinalizado = true;
 
 	/**
-	 * Si está activado, el monitor NO escribirá el archivo cd_launcherlog en el
-	 * disco. Útil para entornos de desarrollo (IDE) donde no queremos modificar el
-	 * sistema de archivos pero sí queremos ver la salida en la consola de
-	 * desarrollo.
-	 */
-	public static final ConfigBoolean IDE_MODE = ConfigBoolean.de("ide_mode", false);
-
-	/**
 	 * Bandera estática activada por el argumento --idemode en CLI. Sobreescribe la
 	 * configuración para evitar la escritura de cd_launcherlog.
 	 */
@@ -1077,7 +1069,7 @@ public class MonitorDePID {
 
 				// Comprobamos si el modo IDE está activado por configuración O por argumento
 				// --idemode
-				boolean esModoIde = IDE_MODE.obtener() || MonitorDePID.forzarIdeMode;
+				boolean esModoIde = MonitorDePID.forzarIdeMode;
 
 				// Si NO estamos en modo IDE, preparamos el archivo log en disco
 				if (!esModoIde) {
@@ -1205,7 +1197,7 @@ public class MonitorDePID {
 			try {
 				// Comprobamos si el modo IDE está activado por configuración O por argumento
 				// --idemode
-				boolean esModoIde = IDE_MODE.obtener() || MonitorDePID.forzarIdeMode;
+				boolean esModoIde = MonitorDePID.forzarIdeMode;
 
 				// Si NO estamos en modo IDE, preparamos el archivo
 				if (!esModoIde) {
