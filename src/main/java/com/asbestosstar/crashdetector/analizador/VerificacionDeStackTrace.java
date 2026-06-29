@@ -1377,51 +1377,51 @@ public class VerificacionDeStackTrace {
 		return info;
 	}
 
-    private static String extraerClaseFaltanteDeLinea(String linea) {
+	private static String extraerClaseFaltanteDeLinea(String linea) {
 
-        if (linea == null || linea.isEmpty()) {
-            return null;
-        }
+		if (linea == null || linea.isEmpty()) {
+			return null;
+		}
 
-        String claseFaltante;
-        int startIdx;
+		String claseFaltante;
+		int startIdx;
 
-        if ((startIdx = linea.indexOf("ClassNotFoundException:")) >= 0) {
-            startIdx += 23; // length of "ClassNotFoundException:"
-            claseFaltante = linea.substring(startIdx).trim();
-        } else if ((startIdx = linea.indexOf("NoClassDefFoundError:")) >= 0) {
-            startIdx += 21; // length of "NoClassDefFoundError:"
-            claseFaltante = linea.substring(startIdx).trim();
-        } else {
-            return null;
-        }
+		if ((startIdx = linea.indexOf("ClassNotFoundException:")) >= 0) {
+			startIdx += 23; // length of "ClassNotFoundException:"
+			claseFaltante = linea.substring(startIdx).trim();
+		} else if ((startIdx = linea.indexOf("NoClassDefFoundError:")) >= 0) {
+			startIdx += 21; // length of "NoClassDefFoundError:"
+			claseFaltante = linea.substring(startIdx).trim();
+		} else {
+			return null;
+		}
 
-        if (claseFaltante.startsWith("Could not initialize class ")) {
-            claseFaltante = claseFaltante.substring(27).trim();
-        }
+		if (claseFaltante.startsWith("Could not initialize class ")) {
+			claseFaltante = claseFaltante.substring(27).trim();
+		}
 
-        // ===================================================================
-        // NUEVO: Cortar el paréntesis de metadata del hilo de NeoForge/Forge
-        // Formato problemático: ClaseFaltante (fml_loader@4/0/42/ruta...)
-        // Si existe un paréntesis abierto '(', cortamos todo desde ahí.
-        // ===================================================================
-        int parentesisHilo = claseFaltante.indexOf('(');
-        if (parentesisHilo > 0) {
-            claseFaltante = claseFaltante.substring(0, parentesisHilo).trim();
-        }
+		// ===================================================================
+		// NUEVO: Cortar el paréntesis de metadata del hilo de NeoForge/Forge
+		// Formato problemático: ClaseFaltante (fml_loader@4/0/42/ruta...)
+		// Si existe un paréntesis abierto '(', cortamos todo desde ahí.
+		// ===================================================================
+		int parentesisHilo = claseFaltante.indexOf('(');
+		if (parentesisHilo > 0) {
+			claseFaltante = claseFaltante.substring(0, parentesisHilo).trim();
+		}
 
-        // Cortar por espacio normal (por si acaso)
-        int espacio = claseFaltante.indexOf(' ');
-        if (espacio >= 0) {
-            claseFaltante = claseFaltante.substring(0, espacio).trim();
-        }
+		// Cortar por espacio normal (por si acaso)
+		int espacio = claseFaltante.indexOf(' ');
+		if (espacio >= 0) {
+			claseFaltante = claseFaltante.substring(0, espacio).trim();
+		}
 
-        if (claseFaltante.isEmpty()) {
-            return null;
-        }
+		if (claseFaltante.isEmpty()) {
+			return null;
+		}
 
-        return claseFaltante.replace('.', '/');
-    }
+		return claseFaltante.replace('.', '/');
+	}
 
 	private void procesarJsonMixinEnLinea(String linea, int consolaLineaInicio, boolean fatal) {
 
@@ -2174,100 +2174,101 @@ public class VerificacionDeStackTrace {
 	 * intenta con un patrón simple "at <modid>@<ver>/...". Devuelve null si no se
 	 * detecta un modid confiable.
 	 */
-public static String extraerModidDeLinea(String linea) {
-    if (linea == null || linea.isEmpty()) {
-        return null;
-    }
+	public static String extraerModidDeLinea(String linea) {
+		if (linea == null || linea.isEmpty()) {
+			return null;
+		}
 
-    // ===================================================================
-    // 1. NUEVA LÓGICA: PRIORIDAD ABSOLUTA PARA PREFIJOS DE CARGADORES
-    // Si la línea empieza con TRANSFORMER/ o MC-BOOTSTRAP/, el modid real 
-    // está inyectado en la ruta, no al final en los corchetes.
-    // Ejemplo: TRANSFORMER/computercraft@1.113.1/ruta.clase
-    // ===================================================================
-    String[] prefijosCargador = { "TRANSFORMER/", "MC-BOOTSTRAP/", "LAYER PLUGIN/", "SECURE-BOOTSTRAP/" };
-    String prefijoEncontrado = null;
+		// ===================================================================
+		// 1. NUEVA LÓGICA: PRIORIDAD ABSOLUTA PARA PREFIJOS DE CARGADORES
+		// Si la línea empieza con TRANSFORMER/ o MC-BOOTSTRAP/, el modid real
+		// está inyectado en la ruta, no al final en los corchetes.
+		// Ejemplo: TRANSFORMER/computercraft@1.113.1/ruta.clase
+		// ===================================================================
+		String[] prefijosCargador = { "TRANSFORMER/", "MC-BOOTSTRAP/", "LAYER PLUGIN/", "SECURE-BOOTSTRAP/" };
+		String prefijoEncontrado = null;
 
-    for (String prefijo : prefijosCargador) {
-        if (linea.startsWith(prefijo)) {
-            prefijoEncontrado = prefijo;
-            break;
-        }
-    }
+		for (String prefijo : prefijosCargador) {
+			if (linea.startsWith(prefijo)) {
+				prefijoEncontrado = prefijo;
+				break;
+			}
+		}
 
-    if (prefijoEncontrado != null) {
-        String resto = linea.substring(prefijoEncontrado.length()).trim();
-        int separador = resto.indexOf('/');
+		if (prefijoEncontrado != null) {
+			String resto = linea.substring(prefijoEncontrado.length()).trim();
+			int separador = resto.indexOf('/');
 
-        if (separador > 0) {
-            String bloqueMetadata = resto.substring(0, separador).trim();
-            int arroba = bloqueMetadata.indexOf('@');
-            
-            if (arroba > 0) {
-                String modidExtraido = bloqueMetadata.substring(0, arroba).trim();
-                
-                // Evitar devolver "fml_loader" o "fml_core" como si fueran mods culpables
-                if (!modidExtraido.isEmpty() && !esModNoPermite(modidExtraido)) {
-                    return modidExtraido;
-                }
-            }
-        }
-    }
+			if (separador > 0) {
+				String bloqueMetadata = resto.substring(0, separador).trim();
+				int arroba = bloqueMetadata.indexOf('@');
 
-    // ===================================================================
-    // 2. LÓGICA TRADICIONAL: Buscar en corchetes [modid@version]
-    // Formatos típicos de Forge/NeoForge/Fabric al final de la línea "at ... ~[...]"
-    // ===================================================================
-    int ultimoCorchete = linea.lastIndexOf('[');
-    if (ultimoCorchete >= 0) {
-        int cierreCorchete = linea.indexOf(']', ultimoCorchete);
-        if (cierreCorchete > ultimoCorchete) {
-            String contenido = linea.substring(ultimoCorchete + 1, cierreCorchete).trim();
+				if (arroba > 0) {
+					String modidExtraido = bloqueMetadata.substring(0, arroba).trim();
 
-            if (!contenido.isEmpty()) {
-                // Formato: modid@version
-                int arroba = contenido.indexOf('@');
-                if (arroba > 0) {
-                    String modid = contenido.substring(0, arroba).trim();
-                    if (!modid.isEmpty() && !esModNoPermite(modid)) {
-                        return modid;
-                    }
-                } 
-                // Formato a veces sin versión o directamente el nombre del jar si no tenía @
-                else if (!contenido.contains("/") && !contenido.endsWith(".jar")) {
-                    if (!esModNoPermite(contenido)) {
-                        return contenido;
-                    }
-                }
-            }
-        }
-    }
+					// Evitar devolver "fml_loader" o "fml_core" como si fueran mods culpables
+					if (!modidExtraido.isEmpty() && !esModNoPermite(modidExtraido)) {
+						return modidExtraido;
+					}
+				}
+			}
+		}
 
-    // ===================================================================
-    // 3. LÓGICA DE RESPALDO: Buscar en la misma ruta si no hay corchetes
-    // (A veces ocurre en logs muy antiguos o de modloaders muy simples)
-    // ===================================================================
-    // Ya sabemos por el paso 1 que no empieza con los prefijos especiales.
-    // Podemos buscar un patrón tipo "modid/ruta/clase" si no encontramos nada.
-    if (linea.startsWith("at ")) {
-        String temp = linea.substring(3).trim();
-        
-        // Limpiar posibles cosas raras antes del paquete real
-        temp = temp.replace("knot//", "").replace("app//", "").trim();
-        
-        int primerSlash = temp.indexOf('/');
-        if (primerSlash > 0) {
-            String posibleModid = temp.substring(0, primerSlash).trim();
-            
-            // Solo devolverlo si no parece un paquete de java estándar (no tiene puntos)
-            if (!posibleModid.contains(".") && !esModNoPermite(posibleModid)) {
-                return posibleModid;
-            }
-        }
-    }
+		// ===================================================================
+		// 2. LÓGICA TRADICIONAL: Buscar en corchetes [modid@version]
+		// Formatos típicos de Forge/NeoForge/Fabric al final de la línea "at ...
+		// ~[...]"
+		// ===================================================================
+		int ultimoCorchete = linea.lastIndexOf('[');
+		if (ultimoCorchete >= 0) {
+			int cierreCorchete = linea.indexOf(']', ultimoCorchete);
+			if (cierreCorchete > ultimoCorchete) {
+				String contenido = linea.substring(ultimoCorchete + 1, cierreCorchete).trim();
 
-    return null;
-}
+				if (!contenido.isEmpty()) {
+					// Formato: modid@version
+					int arroba = contenido.indexOf('@');
+					if (arroba > 0) {
+						String modid = contenido.substring(0, arroba).trim();
+						if (!modid.isEmpty() && !esModNoPermite(modid)) {
+							return modid;
+						}
+					}
+					// Formato a veces sin versión o directamente el nombre del jar si no tenía @
+					else if (!contenido.contains("/") && !contenido.endsWith(".jar")) {
+						if (!esModNoPermite(contenido)) {
+							return contenido;
+						}
+					}
+				}
+			}
+		}
+
+		// ===================================================================
+		// 3. LÓGICA DE RESPALDO: Buscar en la misma ruta si no hay corchetes
+		// (A veces ocurre en logs muy antiguos o de modloaders muy simples)
+		// ===================================================================
+		// Ya sabemos por el paso 1 que no empieza con los prefijos especiales.
+		// Podemos buscar un patrón tipo "modid/ruta/clase" si no encontramos nada.
+		if (linea.startsWith("at ")) {
+			String temp = linea.substring(3).trim();
+
+			// Limpiar posibles cosas raras antes del paquete real
+			temp = temp.replace("knot//", "").replace("app//", "").trim();
+
+			int primerSlash = temp.indexOf('/');
+			if (primerSlash > 0) {
+				String posibleModid = temp.substring(0, primerSlash).trim();
+
+				// Solo devolverlo si no parece un paquete de java estándar (no tiene puntos)
+				if (!posibleModid.contains(".") && !esModNoPermite(posibleModid)) {
+					return posibleModid;
+				}
+			}
+		}
+
+		return null;
+	}
 
 	/**
 	 * Extrae el nombre de paquete de una línea de stack trace. Maneja: - Módulos de

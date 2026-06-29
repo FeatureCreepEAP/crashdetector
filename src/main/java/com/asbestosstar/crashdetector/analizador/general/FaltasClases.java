@@ -389,60 +389,60 @@ public class FaltasClases implements Verificaciones {
 		}
 	}
 
-    private String buscarOrigenDesdeVDST(VerificacionDeStackTrace vdst, int lineaError) {
-        if (vdst == null || vdst.trazos_completos == null || vdst.trazos_completos.isEmpty()) {
-            return "";
-        }
+	private String buscarOrigenDesdeVDST(VerificacionDeStackTrace vdst, int lineaError) {
+		if (vdst == null || vdst.trazos_completos == null || vdst.trazos_completos.isEmpty()) {
+			return "";
+		}
 
-        int ventanaSuperior = lineaError + 50;
+		int ventanaSuperior = lineaError + 50;
 
-        for (TraceInfo trace : vdst.trazos_completos) {
-            if (trace == null) {
-                continue;
-            }
+		for (TraceInfo trace : vdst.trazos_completos) {
+			if (trace == null) {
+				continue;
+			}
 
-            boolean dentroDelTrace = trace.consolaLineaComenzar <= lineaError
-                    && trace.consolaLineaTerminar >= lineaError;
+			boolean dentroDelTrace = trace.consolaLineaComenzar <= lineaError
+					&& trace.consolaLineaTerminar >= lineaError;
 
-            boolean cercanoDespues = trace.consolaLineaComenzar >= lineaError
-                    && trace.consolaLineaComenzar <= ventanaSuperior;
+			boolean cercanoDespues = trace.consolaLineaComenzar >= lineaError
+					&& trace.consolaLineaComenzar <= ventanaSuperior;
 
-            if (!dentroDelTrace && !cercanoDespues) {
-                continue;
-            }
+			if (!dentroDelTrace && !cercanoDespues) {
+				continue;
+			}
 
-            if (trace.lineas == null || trace.lineas.isEmpty()) {
-                continue;
-            }
+			if (trace.lineas == null || trace.lineas.isEmpty()) {
+				continue;
+			}
 
-            for (VerificacionDeStackTrace.LineaTrazo lt : trace.lineas) {
-                if (lt == null) {
-                    continue;
-                }
+			for (VerificacionDeStackTrace.LineaTrazo lt : trace.lineas) {
+				if (lt == null) {
+					continue;
+				}
 
-                String posibleOrigen = (lt.origen != null && !lt.origen.isEmpty()) ? lt.origen : lt.clase;
-                
-                if (posibleOrigen == null || posibleOrigen.isEmpty()) {
-                    continue;
-                }
+				String posibleOrigen = (lt.origen != null && !lt.origen.isEmpty()) ? lt.origen : lt.clase;
 
-                // ===================================================================
-                // NUEVO: FILTRO CRÍTICO PARA NEOFORGE
-                // Ignorar los orígenes de los hilos de carga diferida (DeferredWorkQueue)
-                // porque NUNCA son el mod que causó el error real.
-                // ===================================================================
-                if (posibleOrigen.contains("fml_loader") || posibleOrigen.contains("DeferredWorkQueue")) {
-                    continue; // Saltamos esta línea y seguimos buscando en el stacktrace
-                }
+				if (posibleOrigen == null || posibleOrigen.isEmpty()) {
+					continue;
+				}
 
-                // Si llegamos aquí, es un origen válido (ej. computercraft, cc-tweaked...jar)
-                return posibleOrigen;
-            }
-        }
+				// ===================================================================
+				// NUEVO: FILTRO CRÍTICO PARA NEOFORGE
+				// Ignorar los orígenes de los hilos de carga diferida (DeferredWorkQueue)
+				// porque NUNCA son el mod que causó el error real.
+				// ===================================================================
+				if (posibleOrigen.contains("fml_loader") || posibleOrigen.contains("DeferredWorkQueue")) {
+					continue; // Saltamos esta línea y seguimos buscando en el stacktrace
+				}
 
-        // Fallback por si todo el trace era del cargador (muy raro)
-        return "";
-    }
+				// Si llegamos aquí, es un origen válido (ej. computercraft, cc-tweaked...jar)
+				return posibleOrigen;
+			}
+		}
+
+		// Fallback por si todo el trace era del cargador (muy raro)
+		return "";
+	}
 
 	/**
 	 * Limpia el origen para que solo contenga información relevante (JAR, modid o
@@ -670,33 +670,34 @@ public class FaltasClases implements Verificaciones {
 	}
 
 	// Formatea sin replace(regex). Corta en '(' o espacio y convierte "." a "/".
-    // Formatea sin replace(regex). Corta en '(', espacio o ')' y convierte "." a "/".
-    private String formatearClase(String clase) {
-        if (clase == null) {
-            return "";
-        }
+	// Formatea sin replace(regex). Corta en '(', espacio o ')' y convierte "." a
+	// "/".
+	private String formatearClase(String clase) {
+		if (clase == null) {
+			return "";
+		}
 
-        int fin = clase.length();
+		int fin = clase.length();
 
-        for (int i = 0; i < clase.length(); i++) {
-            char c = clase.charAt(i);
-            
-            // Si encontramos un espacio, un paréntesis de método o un paréntesis de cierre,
-            // cortamos la cadena ahí.
-            if (c == '(' || c == ' ' || c == ')') {
-                fin = i;
-                break;
-            }
-        }
+		for (int i = 0; i < clase.length(); i++) {
+			char c = clase.charAt(i);
 
-        StringBuilder sb = new StringBuilder(fin);
-        for (int i = 0; i < fin; i++) {
-            char c = clase.charAt(i);
-            sb.append(c == '.' ? '/' : c);
-        }
+			// Si encontramos un espacio, un paréntesis de método o un paréntesis de cierre,
+			// cortamos la cadena ahí.
+			if (c == '(' || c == ' ' || c == ')') {
+				fin = i;
+				break;
+			}
+		}
 
-        return sb.toString();
-    }
+		StringBuilder sb = new StringBuilder(fin);
+		for (int i = 0; i < fin; i++) {
+			char c = clase.charAt(i);
+			sb.append(c == '.' ? '/' : c);
+		}
+
+		return sb.toString();
+	}
 
 	@Override
 	public Verificaciones nueva() {

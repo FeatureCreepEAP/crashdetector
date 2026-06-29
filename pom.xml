@@ -122,6 +122,8 @@
 							<Premain-Class>
 								com.asbestosstar.crashdetector.CrashDetectorFCMC
 							</Premain-Class>
+							    <Main-Class>com.asbestosstar.crashdetector.app.CrashDetectorApp</Main-Class>
+
 							<Can-Redefine-Classes>true</Can-Redefine-Classes>
 							<Can-Retransform-Classes>true</Can-Retransform-Classes>
 							<FMLModType>LIBRARY</FMLModType><!-- para NeoForge
