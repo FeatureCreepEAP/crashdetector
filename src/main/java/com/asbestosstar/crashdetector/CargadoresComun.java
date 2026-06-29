@@ -8,10 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-
-import com.asbestosstar.crashdetector.divisor.HolaMundoConsolaDivisidor;
+import com.asbestosstar.crashdetector.cargador.Cargador;
 
 public class CargadoresComun {
 
@@ -24,8 +21,6 @@ public class CargadoresComun {
 	}
 
 	public static void init(Collection<Path> carpetas_de_mods, CDOrigin origin) {
-		// TODO Auto-generated method stub
-
 		// Asegurar detección correcta de CDLauncher en ESTE layer
 		detectarCdLauncherPorArgs();
 
@@ -34,10 +29,10 @@ public class CargadoresComun {
 			Statics.cargador = true;
 			if (!Statics.app_en_cdlauncher) {
 				ProxySysOutSysErr.init();
-				if (ProxyLog4j2.log4j2existe()) {
+				if (Cargador.claseExiste("org.apache.logging.log4j.core.LoggerContext")) {
 					ProxyLog4j2.init();
-					LogManager.getLogger(HolaMundoConsolaDivisidor.class).log(Level.ERROR,
-							HolaMundoConsolaDivisidor.HOLA_MUNDO);
+				} else {
+					System.err.println("[ProxyLog4j2] Saltando - clases de Log4j2 no encontradas");
 				}
 			}
 			if (!origin.equals(CDOrigin.FEATURECREEP) && CrashDetectorFCMC.existeFeatureCreep()) {

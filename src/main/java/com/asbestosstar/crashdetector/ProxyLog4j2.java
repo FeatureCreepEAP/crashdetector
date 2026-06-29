@@ -34,10 +34,6 @@ public final class ProxyLog4j2 {
 	}
 
 	public static void init() {
-		if (!log4j2existe()) {
-			System.err.println("[ProxyLog4j2] Saltando - clases de Log4j2 no encontradas");
-			return;
-		}
 
 		try {
 			esperarProxyListo();
@@ -197,10 +193,6 @@ public final class ProxyLog4j2 {
 		while (ProxySysOutSysErr.flujoSincronizadoSeguro == null) {
 			Thread.sleep(10);
 		}
-	}
-
-	public static boolean log4j2existe() {
-		return Cargador.claseExiste("org.apache.logging.log4j.core.LoggerContext");
 	}
 
 	/**
