@@ -31,12 +31,15 @@ public class CrashDetectorApp {
 			return;
 		}
 
-		// 2. Inicialización estilo Modloader (igual que hace CrashDetectorFlint)
-		inicializarComoModloader();
-
+		
 		// 3. Forzamos el modo IDE para que el proceso hijo que se generará
 		// más abajo no escriba en el disco duro.
 		MonitorDePID.forzarIdeMode = true;
+		
+		// 2. Inicialización estilo Modloader (igual que hace CrashDetectorFlint)
+		inicializarComoModloader();
+
+
 
 	}
 
