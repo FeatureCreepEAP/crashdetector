@@ -678,12 +678,12 @@
 </dependency>
 
         <!-- TLauncher Jar Dependency -->
-        <dependency>
-            <groupId>tlauncher</groupId>
-            <artifactId>original-TLauncher-2.9369</artifactId>
-            <version>2.9369</version>
-            <scope>provided</scope>
-        </dependency>
+<dependency>
+    <groupId>com.asbestosstar.stub</groupId>
+    <artifactId>original-tlauncher</artifactId>
+    <version>2.9371</version>
+    <scope>provided</scope>
+</dependency>
 
         <!-- TLModLoader Dependency -->
         <dependency>
@@ -792,12 +792,6 @@
             <url>https://res.tlauncher.org/unb/libraries/</url>
         </repository>
 
-        <!-- Fakes a Maven path to download the Ivy-hosted TLauncher jar seamlessly -->
-      <repository>
-    <id>TLauncher-ivy</id>
-    <name>TLauncher Ivy</name>
-    <url>https://repo.tlauncher.ru/tlauncher-sources/prod/release/</url>
-</repository>
 
 
         <repository>
