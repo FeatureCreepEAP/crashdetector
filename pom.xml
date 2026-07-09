@@ -793,11 +793,11 @@
         </repository>
 
         <!-- Fakes a Maven path to download the Ivy-hosted TLauncher jar seamlessly -->
-        <repository>
-            <id>TLauncher-ivy</id>
-            <name>TLauncher Ivy</name>
-            <url>https://repo.tlauncher.org/tlauncher-sources/prod/release/tlauncher/2.9369/</url>
-        </repository>
+      <repository>
+    <id>TLauncher-ivy</id>
+    <name>TLauncher Ivy</name>
+    <url>https://repo.tlauncher.ru/tlauncher-sources/prod/release/</url>
+</repository>
 
 
         <repository>
