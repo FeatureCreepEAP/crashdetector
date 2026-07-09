@@ -444,13 +444,13 @@
         </dependency>
 
 
-        <!-- Source: https://mvnrepository.com/artifact/org.bukkit/bukkit -->
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.7.9-R0.2</version>
-            <scope>provided</scope>
-        </dependency>
+     <dependency>
+    <groupId>io.papermc.paper</groupId>
+    <artifactId>paper-api</artifactId>
+    <version>1.21.4-R0.1-SNAPSHOT</version>
+    <scope>provided</scope>
+</dependency>
+
 
 
         <dependency>
@@ -689,7 +689,7 @@
         <dependency>
             <groupId>com.asbestosstar</groupId>
             <artifactId>tlmodloader</artifactId>
-            <version>${project.version}</version>
+            <version>1.0.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -771,7 +771,8 @@
             <url>https://maven.neoforged.net/releases/</url>
         </repository>
 
- <!--
+        <!-- 
+
         <repository>
             <id>carm</id>
             <name>carm</name>
@@ -791,11 +792,11 @@
             <url>https://res.tlauncher.org/unb/libraries/</url>
         </repository>
 
+        <!-- Fakes a Maven path to download the Ivy-hosted TLauncher jar seamlessly -->
         <repository>
             <id>TLauncher-ivy</id>
             <name>TLauncher Ivy</name>
-            <url>https://repo.tlauncher.org/tlauncher-sources/prod/release/tlauncher/</url>
-            <layout>ivy</layout>
+            <url>https://repo.tlauncher.org/tlauncher-sources/prod/release/tlauncher/2.9369/</url>
         </repository>
 
 
