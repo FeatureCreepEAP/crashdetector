@@ -1,0 +1,7 @@
+accessWidener v2 named
+
+# Reglas exclusivas para la variante TLauncher.
+# Estas reglas son deliberadamente conservadoras porque no se proporcionaron
+# nombres de campos privados concretos de la versión de TLauncher utilizada.
+accessible class org/tlauncher/tlauncher/rmo/TLauncher
+accessible method org/tlauncher/tlauncher/rmo/TLauncher main ([Ljava/lang/String;)V

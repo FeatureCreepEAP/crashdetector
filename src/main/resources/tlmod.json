@@ -1,0 +1,16 @@
+{
+  "id": "crashdetector",
+  "version": "${version}",
+  "entrypoints": [
+    "com.asbestosstar.crashdetector.app.lanzermod.tlauncher.CrashDetectorTLauncher"
+  ],
+  "mixins": [
+    "crashdetector-tlauncher.mixins.json"
+  ],
+  "accessWideners": [
+    "crashdetector-tlauncher.accesswidener"
+  ],
+  "coremods": [
+    "com.asbestosstar.crashdetector.app.lanzermod.tlauncher.CrashDetectorByteCoremod"
+  ]
+}

@@ -23,7 +23,7 @@ public class Statics {
 	// SOLO PARA despues de Entregar en proceso CD
 
 	public static long INICIO_DE_LA_APP;// Cuando la aplicacion iniciar originalmente
-
+	public static File CARPETA_DE_APP = new File(System.getProperty("user.dir"));
 	public static File carpeta_como_archivo = new File("crash_detector/");
 	public static Path carpeta = carpeta_como_archivo.toPath();
 	public static File carpeta_mundial_como_archivo = new File(System.getProperty("user.home"), "crash_detector/");

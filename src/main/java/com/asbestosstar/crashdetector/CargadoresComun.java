@@ -92,6 +92,7 @@ public class CargadoresComun {
 		public static CDOrigin LOADERCOMPLEX = new CDOrigin();
 		public static CDOrigin RISUGAMI = new CDOrigin();
 		public static CDOrigin STANDALONE = new CDOrigin();;
+		public static CDOrigin TLMODLOADER = new CDOrigin();;
 
 	}
 

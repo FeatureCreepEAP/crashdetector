@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.asbestosstar.crashdetector.app.lanzermod.tlauncher.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "TLauncherMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}
