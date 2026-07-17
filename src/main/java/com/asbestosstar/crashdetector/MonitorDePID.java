@@ -18,7 +18,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
@@ -43,7 +42,6 @@ import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.detectorlanzer.DetectorLanzer;
 import com.asbestosstar.crashdetector.dto.modpack.CopiaDeSeguridadDeArchivos;
-import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.actualizador.ActualizadorModsMiwa;
 import com.asbestosstar.crashdetector.gui.tipos.antimanipulacion.AntiManipulacionGUIPanko;
@@ -118,8 +116,8 @@ public class MonitorDePID {
 	public static OutputStream flujoHaciaMonitor;
 	public static boolean enStreamingMode = false;
 
-	public static final List<String> archivosLogCLI = new ArrayList<String>();
-	public static final List<String> archivosLogTextoTemporalesCLI = new ArrayList<String>();
+	private static final List<String> archivosLogCLI = new ArrayList<String>();
+	private static final List<String> archivosLogTextoTemporalesCLI = new ArrayList<String>();
 
 	private static final String CARPETA_LOGS_TEXTO_CLI = "logs_cli_temporales";
 	private static final String PREFIJO_LOG_TEXTO_CLI = "log-texto-cli-";
@@ -186,8 +184,7 @@ public class MonitorDePID {
 
 		if (args.length > 0 && "--monitor".equalsIgnoreCase(args[0])) {
 			if (args.length < 2) {
-				System.err.println("Error: falta el PID después de --monitor.");
-				mostrarAyudaCLI();
+				System.err.println("Error interno: falta el PID después de --monitor.");
 				return;
 			}
 
@@ -204,15 +201,6 @@ public class MonitorDePID {
 			}
 
 			monitor_proceso(pidMonitor);
-			return;
-		}
-
-		/*
-		 * Devuelve true para comandos que terminan aquí, como grep, help o un error.
-		 * Para analizar logs devuelve false después de guardar las rutas, para que el
-		 * arranque normal continúe y pueda crear el proceso --monitor.
-		 */
-		if (procesarArgumentosCLIApp(args)) {
 			return;
 		}
 
@@ -653,12 +641,14 @@ public class MonitorDePID {
 			 * El proceso monitor ya recibió las rutas y pasa a ser responsable de
 			 * eliminarlas al salir. Solo vaciamos la lista; no borramos los archivos.
 			 */
+			archivosLogCLI.clear();
 			archivosLogTextoTemporalesCLI.clear();
 
 		} catch (Exception e) {
 			/*
 			 * Si el monitor no pudo arrancar, nadie consumirá los temporales.
 			 */
+			archivosLogCLI.clear();
 			limpiarArchivosTemporalesTextoCLI();
 			System.out.println("error con comenzando el proceso CD");
 			e.printStackTrace();
@@ -667,177 +657,41 @@ public class MonitorDePID {
 
 	}
 
-	public static boolean procesarArgumentosCLIApp(String[] args) {
-		if (args == null || args.length == 0) {
-			return false;
-		}
-
-		String comando = args[0] == null ? "" : args[0].toLowerCase(Locale.ROOT);
-
-		if ("--help".equals(comando) || "-h".equals(comando) || "help".equals(comando)) {
-			mostrarAyudaCLI();
-			return true;
-		}
-
-		if ("grepr".equals(comando) || "fgrepr".equals(comando)) {
-			ejecutarGrepCLI(args);
-			return true;
-		}
-
-		if (esComandoAnalizarLogs(comando)) {
-			/*
-			 * Si falla la validación, detenemos el arranque. Si funciona, continuamos para
-			 * que se cree el proceso monitor.
-			 */
-			return !configurarArchivosLogCLI(args, 1);
-		}
-
-		if (esComandoAnalizarTextoLog(comando)) {
-			/*
-			 * Cada argumento posterior representa el contenido completo de un log. Debe ir
-			 * entre comillas si contiene espacios o saltos de línea.
-			 */
-			return !configurarTextosLogCLI(args, 1);
-		}
-
-		return false;
-	}
-
-	private static boolean esComandoAnalizarLogs(String comando) {
-		return "analizar".equals(comando) || "analyse".equals(comando) || "analyze".equals(comando)
-				|| "logs".equals(comando) || "--analizar".equals(comando) || "--analyse".equals(comando)
-				|| "--analyze".equals(comando) || "--logs".equals(comando);
-	}
-
-	private static boolean esComandoAnalizarTextoLog(String comando) {
-		return "analizar-texto".equals(comando) || "analizartexto".equals(comando) || "analyse-text".equals(comando)
-				|| "analyze-text".equals(comando) || "log-text".equals(comando) || "logs-text".equals(comando)
-				|| "--analizar-texto".equals(comando) || "--analyse-text".equals(comando)
-				|| "--analyze-text".equals(comando) || "--log-text".equals(comando) || "--logs-text".equals(comando);
-	}
-
-	private static void ejecutarGrepCLI(String[] args) {
-		boolean usarRegex = "grepr".equalsIgnoreCase(args[0]);
-		boolean ignorarMayusculas = false;
-		String directorio = Statics.CARPETA_DE_APP.getAbsolutePath();
-
-		int indice = 1;
-		while (indice < args.length) {
-			String argumento = args[indice];
-
-			if ("-i".equals(argumento) || "--ignore-case".equals(argumento)) {
-				ignorarMayusculas = true;
-				indice++;
-				continue;
-			}
-
-			if ("--help".equals(argumento) || "-h".equals(argumento)) {
-				mostrarAyudaCLI();
-				return;
-			}
-
-			if ("--".equals(argumento)) {
-				indice++;
-			}
-			break;
-		}
-
-		if (indice >= args.length) {
-			System.err.println("Error: falta la cadena de búsqueda.");
-			mostrarAyudaCLI();
-			return;
-		}
-
-		String cadenaBusqueda = args[indice++];
-
-		if (indice < args.length) {
-			directorio = args[indice++];
-		}
-
-		if (indice < args.length) {
-			System.err.println("Error: se recibieron argumentos adicionales para grep.");
-			mostrarAyudaCLI();
-			return;
-		}
-
-		List<String> resultadosBusqueda = BusquedaArchivos.buscar(directorio, cadenaBusqueda, usarRegex,
-				ignorarMayusculas);
-
-		for (String resultado : resultadosBusqueda) {
-			System.out.println(resultado);
-		}
-	}
-
-	public static boolean configurarArchivosLogCLI(String[] args, int primerIndice) {
-		if (args == null || primerIndice >= args.length) {
-			System.err.println("Error: falta al menos un archivo de log para analizar.");
-			mostrarAyudaCLI();
-			return false;
-		}
-
-		List<String> rutasValidadas = new ArrayList<String>();
-		Set<String> rutasSinDuplicados = new LinkedHashSet<String>();
-
-		for (int i = primerIndice; i < args.length; i++) {
-			String argumento = args[i];
-
-			if ("--".equals(argumento)) {
-				continue;
-			}
-
-			if (argumento == null || argumento.trim().isEmpty()) {
-				System.err.println("Error: se recibió una ruta de log vacía.");
-				return false;
-			}
-
-			File archivo;
-			try {
-				archivo = new File(argumento).getCanonicalFile();
-			} catch (IOException e) {
-				System.err.println("Error al resolver la ruta del log: " + argumento);
-				System.err.println(e.getMessage());
-				return false;
-			}
-
-			if (!archivo.exists()) {
-				System.err.println("Error: el archivo de log no existe: " + archivo.getAbsolutePath());
-				return false;
-			}
-
-			if (!archivo.isFile()) {
-				System.err.println("Error: la ruta no es un archivo: " + archivo.getAbsolutePath());
-				return false;
-			}
-
-			if (!archivo.canRead()) {
-				System.err.println("Error: no se puede leer el archivo de log: " + archivo.getAbsolutePath());
-				return false;
-			}
-
-			String rutaCanonica = archivo.getAbsolutePath();
-			if (rutasSinDuplicados.add(rutaCanonica)) {
-				rutasValidadas.add(rutaCanonica);
-			}
-		}
-
-		if (rutasValidadas.isEmpty()) {
-			System.err.println("Error: no se recibió ningún archivo de log válido.");
-			return false;
-		}
-
-		/*
-		 * Una ejecución CLI usa un solo tipo principal. Limpiamos cualquier entrada
-		 * temporal anterior antes de guardar las rutas nuevas.
-		 */
+	/**
+	 * Recibe las entradas ya validadas por CrashDetectorCli.
+	 *
+	 * Las rutas normales se conservan sin modificar. Las rutas temporales pasan a
+	 * ser responsabilidad de MonitorDePID y se eliminarán si el monitor no puede
+	 * iniciarse.
+	 */
+	public static synchronized void configurarEntradasCLI(List<String> rutas, List<String> rutasTemporales) {
 		limpiarArchivosTemporalesTextoCLI();
 		archivosLogCLI.clear();
-		archivosLogCLI.addAll(rutasValidadas);
 
-		for (String ruta : archivosLogCLI) {
-			System.out.println("Log preparado para el proceso monitor: " + ruta);
+		if (rutas != null) {
+			archivosLogCLI.addAll(rutas);
 		}
 
-		return true;
+		if (rutasTemporales != null) {
+			archivosLogTextoTemporalesCLI.addAll(rutasTemporales);
+		}
+	}
+
+	/**
+	 * Materializa el contenido literal de un log como UTF-8 para que Consola pueda
+	 * analizarlo mediante su flujo normal basado en Path.
+	 */
+	public static Path crearArchivoTemporalTextoCLI(String texto) throws IOException {
+		if (texto == null || texto.trim().isEmpty()) {
+			throw new IOException("El texto del log está vacío.");
+		}
+
+		Path carpetaTemporales = obtenerCarpetaLogsTextoCLI();
+		Files.createDirectories(carpetaTemporales);
+
+		Path temporal = Files.createTempFile(carpetaTemporales, PREFIJO_LOG_TEXTO_CLI, ".log");
+		Files.write(temporal, texto.getBytes(StandardCharsets.UTF_8));
+		return temporal.toFile().getCanonicalFile().toPath();
 	}
 
 	private static boolean configurarProcesoMonitorDesdeCLI(String[] args, int primerIndice) {
@@ -972,72 +826,6 @@ public class MonitorDePID {
 		}
 
 		return archivo;
-	}
-
-	public static boolean configurarTextosLogCLI(String[] args, int primerIndice) {
-		if (args == null || primerIndice >= args.length) {
-			System.err.println("Error: falta el texto del log para analizar.");
-			mostrarAyudaCLI();
-			return false;
-		}
-
-		List<String> textosValidados = new ArrayList<String>();
-		Set<String> textosSinDuplicados = new LinkedHashSet<String>();
-
-		for (int i = primerIndice; i < args.length; i++) {
-			String texto = args[i];
-
-			if ("--".equals(texto)) {
-				continue;
-			}
-
-			if (texto == null || texto.trim().isEmpty()) {
-				System.err.println("Error: se recibió un texto de log vacío.");
-				return false;
-			}
-
-			if (textosSinDuplicados.add(texto)) {
-				textosValidados.add(texto);
-			}
-		}
-
-		if (textosValidados.isEmpty()) {
-			System.err.println("Error: no se recibió ningún texto de log válido.");
-			return false;
-		}
-
-		/*
-		 * La aplicación recibe texto real, pero Consola trabaja con Path. Por eso
-		 * materializamos cada texto como un archivo UTF-8 privado de CrashDetector. El
-		 * proceso monitor lo elimina cuando termina.
-		 */
-		List<String> temporalesCreados = new ArrayList<String>();
-
-		try {
-			Path carpetaTemporales = obtenerCarpetaLogsTextoCLI();
-			Files.createDirectories(carpetaTemporales);
-
-			for (String texto : textosValidados) {
-				Path temporal = Files.createTempFile(carpetaTemporales, PREFIJO_LOG_TEXTO_CLI, ".log");
-				Files.write(temporal, texto.getBytes(StandardCharsets.UTF_8));
-				temporalesCreados.add(temporal.toFile().getCanonicalPath());
-			}
-		} catch (IOException e) {
-			eliminarArchivosTemporalesRecibidos(temporalesCreados);
-			System.err.println("Error al preparar el texto del log:");
-			System.err.println(e.getMessage());
-			return false;
-		}
-
-		limpiarArchivosTemporalesTextoCLI();
-		archivosLogCLI.clear();
-		archivosLogTextoTemporalesCLI.addAll(temporalesCreados);
-
-		for (int i = 0; i < archivosLogTextoTemporalesCLI.size(); i++) {
-			System.out.println("Texto de log preparado para el proceso monitor: entrada " + (i + 1));
-		}
-
-		return true;
 	}
 
 	private static Path obtenerCarpetaLogsTextoCLI() {
@@ -2073,30 +1861,6 @@ public class MonitorDePID {
 		}
 
 		frame_blanco.dispose();
-	}
-
-	public static void mostrarAyudaCLI() {
-		System.out.println("Uso:");
-		System.out.println("  java -jar CrashDetectorApp.jar");
-		System.out.println("  java -jar CrashDetectorApp.jar grepr [-i] <regex> [directorio]");
-		System.out.println("  java -jar CrashDetectorApp.jar fgrepr [-i] <texto> [directorio]");
-		System.out.println("  java -jar CrashDetectorApp.jar analizar <log1> [log2 ...]");
-		System.out.println("  java -jar CrashDetectorApp.jar analizar-texto \"<contenido1>\" [\"<contenido2>\" ...]");
-		System.out.println();
-		System.out.println("Comandos:");
-		System.out.println("  grepr          Busca mediante una expresión regular.");
-		System.out.println("  fgrepr         Busca texto literal.");
-		System.out.println("  analizar       Analiza uno o varios logs indicados mediante sus rutas.");
-		System.out.println("  analizar-texto Analiza el contenido real de uno o varios logs recibido por CLI.");
-		System.out.println();
-		System.out.println("Opciones de grep:");
-		System.out.println("  -i, --ignore-case  Ignora mayúsculas y minúsculas.");
-		System.out.println();
-		System.out.println("Cada argumento de analizar-texto representa un log independiente.");
-		System.out.println("Use comillas para conservar espacios y saltos de línea.");
-		System.out.println();
-		System.out.println("Alias de analizar: analyse, analyze y logs.");
-		System.out.println("Alias de analizar-texto: analyse-text, analyze-text, log-text y logs-text.");
 	}
 
 	/**
