@@ -14,6 +14,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
+import com.asbestosstar.crashdetector.app.container.ContainerCli;
 
 /**
  * Gestiona los argumentos públicos de la aplicación independiente.
@@ -48,6 +49,14 @@ public final class CrashDetectorCli {
 			return true;
 		}
 
+		if (ContainerCli.esComandoContainer(comando)) {
+			/*
+			 * Si la captura funciona, continúa el arranque para que MonitorDePID analice el
+			 * temporal. Ayuda y errores terminan aquí.
+			 */
+			return !ContainerCli.procesar(args);
+		}
+
 		if (esComandoAnalizarArchivos(comando)) {
 			return !configurarArchivosLog(args, 1);
 		}
@@ -66,12 +75,17 @@ public final class CrashDetectorCli {
 		System.out.println("  java -jar CrashDetectorApp.jar fgrepr [-i] <texto> [directorio]");
 		System.out.println("  java -jar CrashDetectorApp.jar analizar <log1> [log2 ...]");
 		System.out.println("  java -jar CrashDetectorApp.jar analizar-texto \"<contenido1>\" [\"<contenido2>\" ...]");
+		System.out.println("  java -jar CrashDetectorApp.jar container <plataforma> logs <objetivo> [opciones]");
 		System.out.println();
 		System.out.println("Comandos:");
 		System.out.println("  grepr          Busca mediante una expresión regular.");
 		System.out.println("  fgrepr         Busca texto literal.");
 		System.out.println("  analizar       Analiza uno o varios logs indicados mediante sus rutas.");
 		System.out.println("  analizar-texto Analiza el contenido real de uno o varios logs recibido por CLI.");
+		System.out.println("  container      Obtiene y analiza logs de Kubernetes, OpenShift, Rancher, Docker,");
+		System.out.println("                 Podman u Oracle Solaris Zones.");
+		System.out.println();
+		System.out.println("Use 'container --help' para las opciones de cada plataforma.");
 		System.out.println();
 		System.out.println("Opciones de grep:");
 		System.out.println("  -i, --ignore-case  Ignora mayúsculas y minúsculas.");
