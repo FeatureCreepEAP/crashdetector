@@ -15,6 +15,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.app.container.ContainerCli;
+import com.asbestosstar.crashdetector.app.ansible.AnsibleCli;
 
 /**
  * Gestiona los argumentos públicos de la aplicación independiente.
@@ -49,6 +50,14 @@ public final class CrashDetectorCli {
 			return true;
 		}
 
+		if (AnsibleCli.esComandoAnsible(comando)) {
+			/*
+			 * Logs y playbooks preparan una entrada y continúan el arranque. Status, ayuda
+			 * y errores terminan aquí.
+			 */
+			return !AnsibleCli.procesar(args);
+		}
+
 		if (ContainerCli.esComandoContainer(comando)) {
 			/*
 			 * Si la captura funciona, continúa el arranque para que MonitorDePID analice el
@@ -76,6 +85,7 @@ public final class CrashDetectorCli {
 		System.out.println("  java -jar CrashDetectorApp.jar analizar <log1> [log2 ...]");
 		System.out.println("  java -jar CrashDetectorApp.jar analizar-texto \"<contenido1>\" [\"<contenido2>\" ...]");
 		System.out.println("  java -jar CrashDetectorApp.jar container <plataforma> logs <objetivo> [opciones]");
+		System.out.println("  java -jar CrashDetectorApp.jar ansible <logs|playbook|status> [opciones]");
 		System.out.println();
 		System.out.println("Comandos:");
 		System.out.println("  grepr          Busca mediante una expresión regular.");
@@ -84,8 +94,10 @@ public final class CrashDetectorCli {
 		System.out.println("  analizar-texto Analiza el contenido real de uno o varios logs recibido por CLI.");
 		System.out.println("  container      Obtiene y analiza logs de Kubernetes, OpenShift, Rancher, Docker,");
 		System.out.println("                 Podman u Oracle Solaris Zones.");
+		System.out.println("  ansible        Recopila logs remotos, ejecuta playbooks explícitos o muestra estado.");
 		System.out.println();
 		System.out.println("Use 'container --help' para las opciones de cada plataforma.");
+		System.out.println("Use 'ansible --help' para recopilación remota y playbooks.");
 		System.out.println();
 		System.out.println("Opciones de grep:");
 		System.out.println("  -i, --ignore-case  Ignora mayúsculas y minúsculas.");
