@@ -4,9 +4,10 @@
   "package": "com.asbestosstar.crashdetector.app.lanzermod.tlauncher.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "TLauncherMixin"
+    "MinecraftLauncherMixin",
+    "CrashDescriptorMixin"
   ],
   "injectors": {
-    "defaultRequire": 0
+    "defaultRequire": 1
   }
 }
