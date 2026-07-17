@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.cargador;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -197,7 +199,7 @@ public class CargadorHMod implements Cargador {
 	private static boolean jarEstaEnServerProperties(ArchivoDeMod mod) {
 
 		try {
-			java.io.File serverProperties = new java.io.File("server.properties");
+			java.io.File serverProperties = new java.io.File(Statics.CARPETA_DE_APP, "server.properties");
 
 			if (!serverProperties.isFile()) {
 				return false;

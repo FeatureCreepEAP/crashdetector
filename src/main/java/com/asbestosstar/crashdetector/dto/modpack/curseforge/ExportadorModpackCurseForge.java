@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.dto.modpack.curseforge;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
@@ -31,7 +33,7 @@ public class ExportadorModpackCurseForge {
 			throw new IOException("La ubicación del archivo de salida es nula.");
 		}
 
-		Path carpetaInstancia = Paths.get(".").toAbsolutePath().normalize();
+		Path carpetaInstancia = Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize();
 
 		try {
 			ActualizadorTLauncherAdditional.actualizar(carpetaInstancia);

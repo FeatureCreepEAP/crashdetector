@@ -56,7 +56,7 @@ public class AntiManipulacion implements Verificaciones {
 
 		List<String> errores = new ArrayList<>();
 
-		Path archivoHashes = Paths.get("anti_manipulacion.json");
+		Path archivoHashes = Statics.CARPETA_DE_APP.toPath().resolve("anti_manipulacion.json");
 		if (!Files.exists(archivoHashes)) {
 			return;
 		}
@@ -102,7 +102,7 @@ public class AntiManipulacion implements Verificaciones {
 				// Convertir a ruta absoluta.
 				Path rutaAbsoluta = Paths.get(rutaRelativa);
 				if (!rutaAbsoluta.isAbsolute()) {
-					Path userDir = Paths.get(System.getProperty("user.dir"));
+					Path userDir = Statics.CARPETA_DE_APP.toPath();
 					rutaAbsoluta = userDir.resolve(rutaRelativa);
 				}
 
@@ -248,7 +248,7 @@ public class AntiManipulacion implements Verificaciones {
 
 			for (String error : errores) {
 				// Convertir rutas absolutas a relativas en el mensaje.
-				String errorRel = error.replace(Paths.get(System.getProperty("user.dir")).toString(), ".");
+				String errorRel = error.replace(Statics.CARPETA_DE_APP.toPath().toString(), ".");
 				sb.append("<li>").append(errorRel).append("</li>");
 			}
 

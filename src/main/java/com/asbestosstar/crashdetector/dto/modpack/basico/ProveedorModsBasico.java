@@ -69,7 +69,7 @@ public class ProveedorModsBasico implements ProveedorMods, ProveedorConExtension
 		}
 
 		if (carpetaDestino == null) {
-			carpetaDestino = java.nio.file.Paths.get(".").toAbsolutePath().normalize();
+			carpetaDestino = Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize();
 		}
 
 		carpetaDestino = carpetaDestino.toAbsolutePath().normalize();
@@ -341,7 +341,7 @@ public class ProveedorModsBasico implements ProveedorMods, ProveedorConExtension
 			Files.createDirectories(padre);
 		}
 
-		Path carpetaBase = java.nio.file.Paths.get(".").toAbsolutePath().normalize();
+		Path carpetaBase = Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize();
 		Path carpetaStatics = Statics.carpeta.toAbsolutePath().normalize();
 
 		try (ZipOutputStream zos = new ZipOutputStream(Files.newOutputStream(ubicacionArchivoModpack))) {

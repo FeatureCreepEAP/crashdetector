@@ -702,7 +702,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 	public void cargarArchivosJAR() {
 
-		Path modsDir = Paths.get(System.getProperty("user.dir")).resolve("mods");
+		Path modsDir = Statics.CARPETA_DE_APP.toPath().resolve("mods");
 		archivosJAR = new ArrayList<>();
 
 		if (!Files.exists(modsDir))
@@ -739,7 +739,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 		cargarArchivosJAR();
 
-		Path modsDir = Paths.get(System.getProperty("user.dir")).resolve("mods");
+		Path modsDir = Statics.CARPETA_DE_APP.toPath().resolve("mods");
 		boolean usaCurseForge = modsDir.toString().contains("curseforge");
 
 		for (String archivo : archivosJAR) {

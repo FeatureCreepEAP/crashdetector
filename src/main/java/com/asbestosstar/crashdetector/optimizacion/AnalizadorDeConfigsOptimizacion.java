@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.optimizacion;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
@@ -16,7 +18,7 @@ import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 
 public class AnalizadorDeConfigsOptimizacion {
 
-	private static final Path CARPETA_CONFIG = new File("./config").toPath();
+	private static final Path CARPETA_CONFIG = Statics.CARPETA_DE_APP.toPath().resolve("config");
 
 	public static class MejoraConfig {
 		public final String archivo;

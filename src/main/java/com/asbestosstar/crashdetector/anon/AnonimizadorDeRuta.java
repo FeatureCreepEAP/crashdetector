@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.anon;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
@@ -21,7 +23,7 @@ public class AnonimizadorDeRuta {
 			return rutaOriginal;
 		}
 
-		String directorioActual = normalizarRuta(System.getProperty("user.dir"));
+		String directorioActual = normalizarRuta(Statics.CARPETA_DE_APP.getAbsolutePath());
 		String directorioHome = normalizarRuta(System.getProperty("user.home"));
 
 		String relativaActual = relativizarSiCorresponde(rutaNormalizada, directorioActual, ".");

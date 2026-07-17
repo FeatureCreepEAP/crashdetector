@@ -85,9 +85,9 @@ public abstract class ConfigsModsGUI extends JDialog implements CrashDetectorGUI
 
 	public void buscarConfigsEditables() {
 		archivosConfigs.clear();
-		buscarEnCarpeta(new File("./config"));
-		buscarEnCarpeta(new File("./etc"));
-		buscarEnCarpeta(new File("./serverconfig"));
+		buscarEnCarpeta(new File(Statics.CARPETA_DE_APP, "config"));
+		buscarEnCarpeta(new File(Statics.CARPETA_DE_APP, "etc"));
+		buscarEnCarpeta(new File(Statics.CARPETA_DE_APP, "serverconfig"));
 		Collections.sort(archivosConfigs, (a, b) -> a.getPath().compareToIgnoreCase(b.getPath()));
 	}
 

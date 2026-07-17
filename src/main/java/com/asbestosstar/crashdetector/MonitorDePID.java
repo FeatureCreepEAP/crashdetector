@@ -191,7 +191,7 @@ public class MonitorDePID {
 			boolean useRegex = args[0].equals("grepr");
 			boolean caseInsensitive = false;
 			String searchString = "";
-			String directory = System.getProperty("user.dir");
+			String directory = Statics.CARPETA_DE_APP.getAbsolutePath();
 
 			int index = 1;
 			while (index < args.length) {

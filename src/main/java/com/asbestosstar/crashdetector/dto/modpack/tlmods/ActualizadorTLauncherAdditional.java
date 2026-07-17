@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.dto.modpack.tlmods;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -43,7 +45,7 @@ public class ActualizadorTLauncherAdditional {
 	public static final String NOMBRE_ARCHIVO = "TLauncherAdditional.json";
 
 	public static ResultadoActualizacion actualizarCarpetaActual() throws IOException {
-		return actualizar(Paths.get(".").toAbsolutePath().normalize());
+		return actualizar(Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize());
 	}
 
 	public static ResultadoActualizacion actualizar(Path carpetaInstancia) throws IOException {
@@ -543,7 +545,7 @@ public class ActualizadorTLauncherAdditional {
 	}
 
 	public static int completarIdsModrinthFaltantesCarpetaActual() throws IOException {
-		return completarIdsModrinthFaltantes(Paths.get(".").toAbsolutePath().normalize());
+		return completarIdsModrinthFaltantes(Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize());
 	}
 
 	public static int completarIdsModrinthFaltantes(Path carpetaInstancia) throws IOException {

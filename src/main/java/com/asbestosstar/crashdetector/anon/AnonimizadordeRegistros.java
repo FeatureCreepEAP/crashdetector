@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.anon;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.net.URLDecoder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -165,7 +167,7 @@ public class AnonimizadordeRegistros {
 			return contenido;
 		}
 
-		Path basePath = Paths.get(System.getProperty("user.dir")).toAbsolutePath().normalize();
+		Path basePath = Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize();
 
 		String base = basePath.toString();
 		base = base.replace("\\", "/");

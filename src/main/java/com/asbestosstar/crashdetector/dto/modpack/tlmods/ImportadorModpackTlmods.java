@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.dto.modpack.tlmods;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,7 +75,7 @@ public class ImportadorModpackTlmods implements ImportadorModpack {
 		}
 
 		if (carpetaDestino == null) {
-			carpetaDestino = java.nio.file.Paths.get(".").toAbsolutePath().normalize();
+			carpetaDestino = Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize();
 		}
 
 		if (politica == null) {

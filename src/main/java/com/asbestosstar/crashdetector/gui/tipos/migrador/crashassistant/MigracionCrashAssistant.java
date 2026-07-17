@@ -23,7 +23,7 @@ public class MigracionCrashAssistant {
 	public static final String MODO_CENTRO_SOPORTE = "centro_soporte";
 
 	// Archivos de Crash Assistant: relativos al directorio actual de la instancia.
-	public Path carpetaCA = Paths.get("config", "crash_assistant");
+	public Path carpetaCA = Statics.CARPETA_DE_APP.toPath().resolve("config").resolve("crash_assistant");
 	public Path archivoProblematicMods = carpetaCA.resolve("problematic_mods_config.json");
 	public Path archivoProblematicModsRespaldo = carpetaCA.resolve("problematic_mods.json");
 	public Path archivoConfigToml = carpetaCA.resolve("config.toml");

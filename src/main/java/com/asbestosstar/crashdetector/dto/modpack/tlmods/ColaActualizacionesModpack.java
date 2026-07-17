@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.dto.modpack.tlmods;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,7 +66,7 @@ public class ColaActualizacionesModpack {
 	}
 
 	public static List<ActualizacionPendiente> crearColaCarpetaActual() throws IOException {
-		return crearCola(Paths.get(".").toAbsolutePath().normalize());
+		return crearCola(Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize());
 	}
 
 	public static List<ActualizacionPendiente> crearCola(Path carpetaInstancia) throws IOException {

@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.dto.modpack.packwiz;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +36,7 @@ public class ExportadorModpackPackwiz {
 			throw new IOException("La ubicación del archivo de salida es nula.");
 		}
 
-		Path carpetaInstancia = Paths.get(".").toAbsolutePath().normalize();
+		Path carpetaInstancia = Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize();
 
 		try {
 			ActualizadorTLauncherAdditional.actualizar(carpetaInstancia);

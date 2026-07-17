@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.dto.modpack.tlmods;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,7 +40,7 @@ public class ExportadorModpackTlmods {
 			throw new IOException("No hay rutas seleccionadas para exportar.");
 		}
 
-		Path carpetaInstancia = Paths.get(".").toAbsolutePath().normalize();
+		Path carpetaInstancia = Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize();
 		Path archivoTLauncherAdditional = carpetaInstancia.resolve(NOMBRE_TLAUNCHER_ADDITIONAL);
 
 		// Actualiza TLauncherAdditional.json si corresponde.

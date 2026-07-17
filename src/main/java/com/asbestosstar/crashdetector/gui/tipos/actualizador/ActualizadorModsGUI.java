@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.gui.tipos.actualizador;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -62,7 +64,7 @@ public abstract class ActualizadorModsGUI extends JFrame implements CrashDetecto
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setLayout(new BorderLayout());
 
-		carpetaInstancia = Paths.get(".").toAbsolutePath().normalize();
+		carpetaInstancia = Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize();
 
 		JPanel panelIzquierdo = new JPanel(new BorderLayout(8, 8));
 		panelIzquierdo.setPreferredSize(new Dimension(250, 500));

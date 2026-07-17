@@ -30,7 +30,7 @@ public abstract class AntiManipulacionGUI extends JDialog implements CrashDetect
 
 	public static final Path ARCHIVO = Statics.carpeta.resolve("antimanipulacion.json");
 
-	public final Path baseDir = Paths.get(System.getProperty("user.dir")).toAbsolutePath();
+	public final Path baseDir = Statics.CARPETA_DE_APP.toPath().toAbsolutePath();
 
 	public final Set<String> rutasProtegidas = new LinkedHashSet<String>();
 

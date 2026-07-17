@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -179,7 +181,7 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 	 */
 	private void generarListaArchivosVacios() {
 
-		File carpetaConfig = new File("config");
+		File carpetaConfig = new File(Statics.CARPETA_DE_APP, "config");
 
 		if (!carpetaConfig.exists() || !carpetaConfig.isDirectory()) {
 			listaArchivosVaciosHtml = "";

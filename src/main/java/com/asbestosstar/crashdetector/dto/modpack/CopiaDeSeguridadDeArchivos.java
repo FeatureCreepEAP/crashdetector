@@ -85,7 +85,7 @@ public class CopiaDeSeguridadDeArchivos {
 	}
 
 	public static void hacerAutoBackupSiCorresponde() {
-		Path rutaInstancia = Paths.get(".").toAbsolutePath().normalize();
+		Path rutaInstancia = Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize();
 
 		if (!debeHacerAutoBackup(rutaInstancia)) {
 			return;
@@ -96,7 +96,7 @@ public class CopiaDeSeguridadDeArchivos {
 	}
 
 	public static void hacerAutoBackupSiCorresponde(final Path rutaInstancia, final List<Path> rutasEntrada) {
-		final Path rutaNormal = rutaInstancia == null ? Paths.get(".").toAbsolutePath().normalize()
+		final Path rutaNormal = rutaInstancia == null ? Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize()
 				: rutaInstancia.toAbsolutePath().normalize();
 
 		if (!debeHacerAutoBackup(rutaNormal)) {
@@ -160,7 +160,7 @@ public class CopiaDeSeguridadDeArchivos {
 	}
 
 	public static List<Path> obtenerRutasAutoBackupModpack(Path rutaInstancia) {
-		Path base = rutaInstancia == null ? Paths.get(".").toAbsolutePath().normalize()
+		Path base = rutaInstancia == null ? Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize()
 				: rutaInstancia.toAbsolutePath().normalize();
 
 		List<Path> ret = new ArrayList<Path>();
@@ -184,7 +184,7 @@ public class CopiaDeSeguridadDeArchivos {
 	}
 
 	private static void hacerBackupDeMundos(Path rutaInstancia) throws IOException {
-		Path base = rutaInstancia == null ? Paths.get(".").toAbsolutePath().normalize()
+		Path base = rutaInstancia == null ? Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize()
 				: rutaInstancia.toAbsolutePath().normalize();
 
 		Path saves = base.resolve("saves");

@@ -52,7 +52,7 @@ public abstract class GrepRGUI extends JFrame implements CrashDetectorGUI, Boton
 	public JLabel crearImagenEscalada(String ruta, int w, int h) {
 		java.io.File f = new java.io.File(ruta);
 		if (!f.isAbsolute()) {
-			f = new java.io.File(System.getProperty("user.dir"), ruta);
+			f = new java.io.File(Statics.CARPETA_DE_APP, ruta);
 		}
 		if (f.exists() && f.isFile()) {
 			javax.swing.ImageIcon base = new javax.swing.ImageIcon(f.getAbsolutePath());
@@ -101,7 +101,7 @@ public abstract class GrepRGUI extends JFrame implements CrashDetectorGUI, Boton
 
 	public void seleccionarCarpeta() {
 		JFileChooser chooser = new JFileChooser();
-		chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+		chooser.setCurrentDirectory(Statics.CARPETA_DE_APP);
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 			campoDirectorio.setText(chooser.getSelectedFile().getAbsolutePath());
@@ -110,7 +110,7 @@ public abstract class GrepRGUI extends JFrame implements CrashDetectorGUI, Boton
 
 	public void iniciarBusqueda() {
 		String dirCrudo = campoDirectorio.getText().trim();
-		final String directorio = dirCrudo.replace(" ", "").isEmpty() ? System.getProperty("user.dir") : dirCrudo;
+		final String directorio = dirCrudo.replace(" ", "").isEmpty() ? Statics.CARPETA_DE_APP.getAbsolutePath() : dirCrudo;
 
 		String cadena = campoCadena.getText().trim();
 		boolean usarRegex = chkRegex.isSelected();

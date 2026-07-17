@@ -469,9 +469,9 @@ public class Consola {
 //https://github.com/HMCL-dev/HMCL/issues/2663
 
 		// Agregar otros logs sin control de duplicados
-		agregarDirectorio(resultado, new File("logs/"));// Minecraft Logs
-		agregarDirectorio(resultado, new File("crash-reports/"));// Minecraft Crash Reports
-		agregarDirectorio(resultado, new File("var/logs/"));// FeatureCreep Logs
+		agregarDirectorio(resultado, new File(Statics.CARPETA_DE_APP, "logs"));// Minecraft Logs
+		agregarDirectorio(resultado, new File(Statics.CARPETA_DE_APP, "crash-reports"));// Minecraft Crash Reports
+		agregarDirectorio(resultado, new File(Statics.CARPETA_DE_APP, "var/logs"));// FeatureCreep Logs
 
 		// Configuración de TLauncher
 //		File carpetaTLauncherStarter;
@@ -510,7 +510,7 @@ public class Consola {
 		// resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
 		// resultado.add(new File("sklauncher/sklauncher_logs.txt"));no funciona
 		resultado.add(NoRegistroDeLauncherVShojo.cd_launcherlog);
-		resultado.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log")); // hs
+		resultado.add(new File(Statics.CARPETA_DE_APP, "hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log")); // hs
 
 		return resultado;
 	}

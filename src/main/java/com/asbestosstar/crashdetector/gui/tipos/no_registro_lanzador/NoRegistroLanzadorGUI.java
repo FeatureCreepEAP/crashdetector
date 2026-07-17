@@ -104,7 +104,7 @@ public abstract class NoRegistroLanzadorGUI extends JFrame implements CrashDetec
 	public JPanel piePanel;
 	public JPanel botonesPanel;
 
-	public static File cd_launcherlog = new File("cd_launcherlog");
+	public static File cd_launcherlog = new File(Statics.CARPETA_DE_APP, "cd_launcherlog");
 	public Instant instant;
 
 	public final JButton botonSubirArchivo = new JButton(MonitorDePID.idioma.agregarArchivo());
@@ -374,7 +374,7 @@ public abstract class NoRegistroLanzadorGUI extends JFrame implements CrashDetec
 		}
 
 		final long objetivoBytes = megabytes * 1024L * 1024L;
-		final File destino = new File("cd_galimatias_" + megabytes + "mb.log");
+		final File destino = new File(Statics.CARPETA_DE_APP, "cd_galimatias_" + megabytes + "mb.log");
 
 		Thread writerThread = new Thread(new Runnable() {
 			@Override

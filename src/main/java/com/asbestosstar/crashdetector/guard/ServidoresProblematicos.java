@@ -35,7 +35,7 @@ public class ServidoresProblematicos {
 	private static final File ARCHIVO_JSON_LOCAL = Statics.carpeta.resolve("inner_servers-1.2.json").toFile();
 
 	/** Archivo servers.dat del directorio actual. */
-	private static final File ARCHIVO_SERVERS_DAT = new File("servers.dat");
+	private static final File ARCHIVO_SERVERS_DAT = new File(Statics.CARPETA_DE_APP, "servers.dat");
 
 	/**
 	 * Devuelve una lista con todas las raíces de servidores problemáticos

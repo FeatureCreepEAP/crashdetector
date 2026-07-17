@@ -105,7 +105,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setLayout(new BorderLayout());
 
-		carpetaBase = Paths.get(".").toAbsolutePath().normalize();
+		carpetaBase = Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize();
 
 		JPanel panelSuperior = new JPanel(new BorderLayout(8, 8));
 		panelSuperior.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));

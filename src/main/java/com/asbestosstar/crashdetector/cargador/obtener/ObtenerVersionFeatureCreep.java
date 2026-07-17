@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.cargador.obtener;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -65,7 +67,7 @@ public class ObtenerVersionFeatureCreep {
 	}
 
 	public static ResultadoFeatureCreep detectarDesdeDirectorioActual() throws IOException {
-		return detectarDesdeInstancia(java.nio.file.Paths.get("."));
+		return detectarDesdeInstancia(Statics.CARPETA_DE_APP.toPath());
 	}
 
 	public static ResultadoFeatureCreep detectarDesdeSistema() throws IOException {
@@ -242,7 +244,7 @@ public class ObtenerVersionFeatureCreep {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Path carpeta = args.length > 0 ? java.nio.file.Paths.get(args[0]) : java.nio.file.Paths.get(".");
+		Path carpeta = args.length > 0 ? java.nio.file.Paths.get(args[0]) : Statics.CARPETA_DE_APP.toPath();
 		ResultadoFeatureCreep r = detectarDesdeInstancia(carpeta);
 
 		System.out.println("FeatureCreep: " + r.versionFeatureCreep);

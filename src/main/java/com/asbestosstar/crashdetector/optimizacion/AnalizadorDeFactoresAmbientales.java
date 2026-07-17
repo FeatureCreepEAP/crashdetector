@@ -224,7 +224,7 @@ public class AnalizadorDeFactoresAmbientales {
 
 	private static void revisarEspacioDisco(List<MejoraAmbiental> mejoras) {
 		try {
-			File dir = new File("./config").getAbsoluteFile();
+			File dir = new File(Statics.CARPETA_DE_APP, "config").getAbsoluteFile();
 			File raiz = dir.exists() ? dir : dir.getParentFile();
 
 			if (raiz == null) {

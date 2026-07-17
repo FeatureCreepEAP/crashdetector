@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.gui.tipos.principal;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Desktop;
@@ -283,7 +285,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	}
 
 	public static void abrirDirectorioEnExplorador() {
-		File directorio = new File(System.getProperty("user.dir"));
+		File directorio = Statics.CARPETA_DE_APP;
 		if (directorio.exists() && directorio.isDirectory()) {
 			try {
 				Desktop.getDesktop().open(directorio);

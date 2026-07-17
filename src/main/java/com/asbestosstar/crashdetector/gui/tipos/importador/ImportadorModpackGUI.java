@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.gui.tipos.importador;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -65,7 +67,7 @@ public abstract class ImportadorModpackGUI extends JFrame implements CrashDetect
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setLayout(new BorderLayout(8, 8));
 
-		carpetaDestino = Paths.get(".").toAbsolutePath().normalize();
+		carpetaDestino = Statics.CARPETA_DE_APP.toPath().toAbsolutePath().normalize();
 
 		JPanel panelIzquierdo = new JPanel(new BorderLayout(8, 8));
 		panelIzquierdo.setPreferredSize(new Dimension(250, 400));

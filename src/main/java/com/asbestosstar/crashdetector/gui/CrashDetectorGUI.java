@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.gui;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -80,7 +82,7 @@ public interface CrashDetectorGUI {
 	}
 
 	public static void abrirDirectorioEnExplorador() {
-		File directorio = new File(System.getProperty("user.dir"));
+		File directorio = Statics.CARPETA_DE_APP;
 
 		if (directorio.exists() && directorio.isDirectory()) {
 			try {

@@ -34,7 +34,7 @@ public abstract class JGitHubBase extends JFrame implements CrashDetectorGUI, Bo
 	public static final Map<String, Supplier<JGitHubBase>> GUIS = new HashMap<String, Supplier<JGitHubBase>>();
 
 	public File carpetaActual() {
-		return new File(System.getProperty("user.dir")).getAbsoluteFile();
+		return Statics.CARPETA_DE_APP.getAbsoluteFile();
 	}
 
 	public boolean jgitDisponible() {

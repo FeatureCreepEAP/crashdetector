@@ -541,7 +541,7 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 	}
 
 	public void abrirArchivoConDialogo() {
-		JFileChooser chooser = new JFileChooser(carpetaProyecto == null ? new File(".") : carpetaProyecto);
+		JFileChooser chooser = new JFileChooser(carpetaProyecto == null ? Statics.CARPETA_DE_APP : carpetaProyecto);
 		chooser.setDialogTitle(MonitorDePID.idioma.ideScriptAbrirArchivo());
 
 		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -599,7 +599,7 @@ public abstract class ScriptIDEGUI extends JDialog implements CrashDetectorGUI, 
 	}
 
 	public void guardarArchivoComo() {
-		JFileChooser chooser = new JFileChooser(carpetaProyecto == null ? new File(".") : carpetaProyecto);
+		JFileChooser chooser = new JFileChooser(carpetaProyecto == null ? Statics.CARPETA_DE_APP : carpetaProyecto);
 		chooser.setDialogTitle(MonitorDePID.idioma.ideScriptGuardarComo());
 
 		if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {

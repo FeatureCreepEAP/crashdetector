@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.cargador.obtener;
 
+import com.asbestosstar.crashdetector.Statics;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -76,7 +78,7 @@ public class ObtenerVersionMCForge {
 			Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
 	public static ResultadoMCForge detectarDesdeDirectorioActual() throws IOException {
-		return detectarDesdeInstancia(java.nio.file.Paths.get("."));
+		return detectarDesdeInstancia(Statics.CARPETA_DE_APP.toPath());
 	}
 
 	public static ResultadoMCForge detectarDesdeSistema() throws IOException {
@@ -332,7 +334,7 @@ public class ObtenerVersionMCForge {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Path carpeta = args.length > 0 ? java.nio.file.Paths.get(args[0]) : java.nio.file.Paths.get(".");
+		Path carpeta = args.length > 0 ? java.nio.file.Paths.get(args[0]) : Statics.CARPETA_DE_APP.toPath();
 		ResultadoMCForge r = detectarDesdeInstancia(carpeta);
 
 		System.out.println("Minecraft: " + r.versionMinecraft);

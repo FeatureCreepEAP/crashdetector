@@ -29,7 +29,7 @@ public class JGitAutoCommit {
 			}
 
 			ActualizadorTLauncherAdditional.actualizarCarpetaActual();
-			File carpeta = new File(System.getProperty("user.dir")).getAbsoluteFile();
+			File carpeta = Statics.CARPETA_DE_APP.getAbsoluteFile();
 
 			if (!JGitReflexivo.repositorioExiste(carpeta)) {
 				CrashDetectorLogger.log("JGit: no hay .git en la carpeta actual.");
