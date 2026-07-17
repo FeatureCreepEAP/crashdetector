@@ -116,6 +116,13 @@ public class MonitorDePID {
 	public static OutputStream flujoHaciaMonitor;
 	public static boolean enStreamingMode = false;
 
+	/**
+	 * Cuando es true, la ejecución fue solicitada desde CLI, nube, contenedores o
+	 * Ansible. El monitor se ejecuta en modo headless, analiza inmediatamente y
+	 * devuelve por stdout la ruta final guardada en {@link #local}.
+	 */
+	private static volatile boolean devolverResultadoCLI = false;
+
 	private static final List<String> archivosLogCLI = new ArrayList<String>();
 	private static final List<String> archivosLogTextoTemporalesCLI = new ArrayList<String>();
 
@@ -548,7 +555,15 @@ public class MonitorDePID {
 		// cargardor de extenciones aqui
 		CargadorExtensiones.cargarExtensionesProcesoApp(um_archivo);
 		recalcularIdiomaDespuesDeExtensiones();
-		Entregar.comenzarEntregar();
+
+		/*
+		 * Las ejecuciones CLI analizan entradas ya completas y no necesitan transferir
+		 * JVM_ARGS/APP_ARGS por stdin. Omitir Entregar también evita mantener abierto
+		 * el pipe mientras el proceso padre espera el resultado.
+		 */
+		if (!devolverResultadoCLI) {
+			Entregar.comenzarEntregar();
+		}
 		// Consola.escribirMapa(Instant.now());
 
 		long pid = obtenerPID();
@@ -594,6 +609,14 @@ public class MonitorDePID {
 			comando.add(javaBinary);
 			comando.add(obtenerXMXPorMitadDeRAM());
 
+			/*
+			 * Las ejecuciones originadas por CLI y sus adaptadores deben ser siempre
+			 * headless, incluso si se lanzan desde un escritorio con DISPLAY disponible.
+			 */
+			if (devolverResultadoCLI) {
+				comando.add("-Djava.awt.headless=true");
+			}
+
 			if (DaxInit.necesitaArgEspecialDax()) {
 				comando.add(DaxInit.obtenerArgEspecialDax());
 			}
@@ -614,6 +637,14 @@ public class MonitorDePID {
 				comando.add("--idemode");
 			}
 
+			/*
+			 * El proceso monitor es otra JVM; la solicitud de devolver el resultado debe
+			 * viajar como argumento interno.
+			 */
+			if (devolverResultadoCLI) {
+				comando.add("--resultado-cli");
+			}
+
 			// Las rutas deben pasarse explícitamente: el monitor es otra JVM.
 			for (String rutaLog : archivosLogCLI) {
 				comando.add("--log");
@@ -631,18 +662,52 @@ public class MonitorDePID {
 			}
 
 			ProcessBuilder pb = new ProcessBuilder(comando);
-			// pb.inheritIO(); // ASEGÚRATE DE QUE ESTÉ COMENTADO
+			/*
+			 * No usamos inheritIO(): stdin debe seguir siendo PIPE para Entregar. stdout y
+			 * stderr sí se heredan en cualquier entorno headless y en todos los comandos
+			 * CLI, para que el resultado del monitor llegue al proceso o servicio
+			 * invocador.
+			 */
+			boolean heredarSalidaMonitor = devolverResultadoCLI || GraphicsEnvironment.isHeadless();
+			if (heredarSalidaMonitor) {
+				pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+				pb.redirectError(ProcessBuilder.Redirect.INHERIT);
+			}
 			UmemInit.aplicarA(pb);
 
 			Process monitorProcess = pb.start();
 			flujoHaciaMonitor = monitorProcess.getOutputStream();
 
+			if (devolverResultadoCLI) {
+				/*
+				 * No existe protocolo Entregar en modo CLI. Cerramos stdin del monitor para que
+				 * ninguna lectura accidental pueda bloquear la finalización.
+				 */
+				try {
+					flujoHaciaMonitor.close();
+				} finally {
+					flujoHaciaMonitor = null;
+				}
+			}
+
 			/*
 			 * El proceso monitor ya recibió las rutas y pasa a ser responsable de
-			 * eliminarlas al salir. Solo vaciamos la lista; no borramos los archivos.
+			 * eliminarlas al salir. Solo vaciamos las listas; no borramos los archivos.
 			 */
 			archivosLogCLI.clear();
 			archivosLogTextoTemporalesCLI.clear();
+
+			/*
+			 * En modo CLI el monitor no espera la muerte de este proceso: analiza
+			 * inmediatamente. Por eso aquí sí podemos esperar y conservar stdout abierto
+			 * hasta que la ruta MonitorDePID.local haya sido devuelta al invocador.
+			 */
+			if (devolverResultadoCLI) {
+				int codigoSalidaMonitor = esperarExitCode(monitorProcess);
+				if (codigoSalidaMonitor != 0) {
+					System.err.println("El proceso monitor terminó con código " + codigoSalidaMonitor + ".");
+				}
+			}
 
 		} catch (Exception e) {
 			/*
@@ -653,7 +718,9 @@ public class MonitorDePID {
 			System.out.println("error con comenzando el proceso CD");
 			e.printStackTrace();
 		}
-		System.out.println("completa con comenzando el proceso CD");
+		if (!devolverResultadoCLI) {
+			System.out.println("completa con comenzando el proceso CD");
+		}
 
 	}
 
@@ -675,6 +742,25 @@ public class MonitorDePID {
 		if (rutasTemporales != null) {
 			archivosLogTextoTemporalesCLI.addAll(rutasTemporales);
 		}
+
+		/*
+		 * Este método es el punto común usado por CrashDetectorCli, cloud, contenedores
+		 * y Ansible. Activarlo aquí evita que cada adaptador implemente su propio
+		 * transporte del resultado.
+		 */
+		solicitarResultadoCLI();
+	}
+
+	/**
+	 * Solicita que el proceso monitor se ejecute en modo headless y devuelva por
+	 * stdout la ruta guardada en {@link #local}.
+	 *
+	 * Los adaptadores futuros que no llamen a configurarEntradasCLI(...) pueden
+	 * invocar este método directamente.
+	 */
+	public static synchronized void solicitarResultadoCLI() {
+		devolverResultadoCLI = true;
+		forzarIdeMode = true;
 	}
 
 	/**
@@ -704,6 +790,12 @@ public class MonitorDePID {
 			if ("--idemode".equalsIgnoreCase(argumento)) {
 				forzarIdeMode = true;
 				CrashDetectorLogger.log("Modo IDE forzado mediante argumento --idemode.");
+				continue;
+			}
+
+			if ("--resultado-cli".equalsIgnoreCase(argumento)) {
+				devolverResultadoCLI = true;
+				System.setProperty("java.awt.headless", "true");
 				continue;
 			}
 
@@ -1127,18 +1219,24 @@ public class MonitorDePID {
 			recalcularIdiomaDespuesDeExtensiones();
 		}
 
-		// Si la config lo permite, hacemos análisis en vivo del stream que nos
-		// envía el juego. Si NO lo permite, aun asi volcamos el stream al
-		// archivo cd_launcherlog y a la consola de desarrollo, para no perder
-		// la salida del juego.
-		if (ANALISIS_EN_VIVO.obtener()) {
-			iniciarAnalisisEnVivo(System.in);
-		} else {
-			iniciarVolcadoDeStream(System.in);
+		/*
+		 * En la ejecución normal, stdin contiene el stream del programa observado. En
+		 * modo CLI, stdin está reservado para el protocolo Entregar y los logs ya
+		 * fueron inyectados como archivos; arrancar otro lector aquí causaría una
+		 * carrera.
+		 */
+		if (!devolverResultadoCLI) {
+			if (ANALISIS_EN_VIVO.obtener()) {
+				iniciarAnalisisEnVivo(System.in);
+			} else {
+				iniciarVolcadoDeStream(System.in);
+			}
 		}
 
-		System.out.println(idioma.buscando_para_pid(pid));
-		Entregar.recibir();
+		if (!devolverResultadoCLI) {
+			System.out.println(idioma.buscando_para_pid(pid));
+			Entregar.recibir();
+		}
 
 //CrashDetectorLogger.log(ValidadorMicrocodigo.obtenerReporte());
 //System.out.println(ValidadorMicrocodigo.obtenerReporte());
@@ -1164,13 +1262,23 @@ public class MonitorDePID {
 
 		while (true) {
 
-			if (!viva(pid)) {
+			/*
+			 * Las entradas CLI, cloud, contenedores y Ansible ya están completas. No
+			 * debemos esperar a que muera el proceso padre, porque el padre está esperando
+			 * sincronizadamente este resultado.
+			 */
+			if (devolverResultadoCLI || !viva(pid)) {
 
 				// System.out.println( escribes el codio de error aqui );
 
-				System.out.println(idioma.pid_esta_muerto(pid));
-				System.out.println(mensaje_de_registro_lanzer_completo);
-				CrashDetectorLogger.log(idioma.pid_esta_muerto(pid));
+				if (devolverResultadoCLI) {
+					System.out.println("Analizando entradas recibidas por CLI...");
+					CrashDetectorLogger.log("Analizando entradas recibidas por CLI.");
+				} else {
+					System.out.println(idioma.pid_esta_muerto(pid));
+					System.out.println(mensaje_de_registro_lanzer_completo);
+					CrashDetectorLogger.log(idioma.pid_esta_muerto(pid));
+				}
 
 				CrashDetectorLogger.log("Finalizando Contento de Consolas");
 
@@ -1226,34 +1334,40 @@ public class MonitorDePID {
 				recargar(true, luego);
 				System.gc();
 
-				if (activar()) {
-					CrashDetectorLogger.log("activar ");
+				/*
+				 * En headless siempre se devuelve la ruta local, incluso cuando el análisis no
+				 * encontró errores. Se imprime al final para que scripts y servicios puedan
+				 * usar la última línea no vacía de stdout como valor de retorno.
+				 */
+				if (GraphicsEnvironment.isHeadless()) {
+					CrashDetectorLogger.log("headless ");
 
-					if (GraphicsEnvironment.isHeadless()) {
-						CrashDetectorLogger.log("headless ");
-
+					if (activar()) {
 						System.out.println(idioma.local_headless(enlace));
-						fin(latch);
-
-					} else {
-						establecerLookAndFeel();
-						registrarCanariosPorDefecto();
-
-						CrashDetectorLogger.log("no headless ");
-
-						final PrincipalGUI gui = TipoGUI.PRINCIPAL.obtenerGUIPredeterminado(PrincipalGUIEstiloLanzer.ID,
-								() -> {
-									return new PrincipalGUIEstiloLanzer();
-								});
-						CrashDetectorLogger.log("tiene principal gui");
-
-						SwingUtilities.invokeLater(() ->
-
-						gui.constructir(utc, latch)
-
-						);
 					}
 
+					imprimirLocalEnStdout();
+					fin(latch);
+				}
+
+				if (activar()) {
+					CrashDetectorLogger.log("activar ");
+					establecerLookAndFeel();
+					registrarCanariosPorDefecto();
+
+					CrashDetectorLogger.log("no headless ");
+
+					final PrincipalGUI gui = TipoGUI.PRINCIPAL.obtenerGUIPredeterminado(PrincipalGUIEstiloLanzer.ID,
+							() -> {
+								return new PrincipalGUIEstiloLanzer();
+							});
+					CrashDetectorLogger.log("tiene principal gui");
+
+					SwingUtilities.invokeLater(() ->
+
+					gui.constructir(utc, latch)
+
+					);
 				} else {
 					fin(latch);
 				}
@@ -1275,6 +1389,25 @@ public class MonitorDePID {
 //				break;
 //			}
 		}
+	}
+
+	/**
+	 * Imprime exactamente el valor actual de {@link #local} en stdout.
+	 *
+	 * La llamada a flush es importante para CLI, cloud, contenedores y Ansible,
+	 * porque el proceso termina inmediatamente después.
+	 */
+	private static void imprimirLocalEnStdout() {
+		String rutaLocal = local;
+
+		if (rutaLocal == null || rutaLocal.trim().isEmpty()) {
+			System.err.println("CrashDetector no pudo generar una ruta local de resultado.");
+			System.err.flush();
+			return;
+		}
+
+		System.out.println(rutaLocal);
+		System.out.flush();
 	}
 
 	private static void iniciarAnalisisEnVivo(InputStream inputStream) {
