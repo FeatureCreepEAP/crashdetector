@@ -110,7 +110,8 @@ public abstract class GrepRGUI extends JFrame implements CrashDetectorGUI, Boton
 
 	public void iniciarBusqueda() {
 		String dirCrudo = campoDirectorio.getText().trim();
-		final String directorio = dirCrudo.replace(" ", "").isEmpty() ? Statics.CARPETA_DE_APP.getAbsolutePath() : dirCrudo;
+		final String directorio = dirCrudo.replace(" ", "").isEmpty() ? Statics.CARPETA_DE_APP.getAbsolutePath()
+				: dirCrudo;
 
 		String cadena = campoCadena.getText().trim();
 		boolean usarRegex = chkRegex.isSelected();

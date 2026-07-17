@@ -78,125 +78,99 @@ public final class CrashDetectorTLauncher {
 		}
 	}
 
-
-/**
- * Registra el proceso real de Minecraft inmediatamente después de que
- * JavaProcessLauncher.start() lo haya creado.
- *
- * @param proceso         proceso Java real de Minecraft.
- * @param comandoCompleto ejecutable Java, argumentos JVM, clase principal y
- *                        argumentos del juego.
- * @param clasePrincipal  clase main obtenida de CompleteVersion.
- * @param carpetaJuego    carpeta activa de Minecraft; puede ser la carpeta
- *                        .minecraft normal o una carpeta de instancia.
- * @param inicioMillis    instante en que TLauncher inició Minecraft.
- */
-public static synchronized void registrarProcesoMinecraft(
-		Process proceso,
-		List<String> comandoCompleto,
-		String clasePrincipal,
-		File carpetaJuego,
-		long inicioMillis) {
-
-	if (!INICIALIZADO.get()) {
-		init();
-	}
-
-	if (proceso == null) {
-		throw new IllegalArgumentException(
-				"El proceso de Minecraft no puede ser null.");
-	}
-
-	List<String> comando = comandoCompleto == null
-			? Collections.<String>emptyList()
-			: new ArrayList<String>(comandoCompleto);
-
-	/*
-	 * Separa los argumentos JVM de la clase principal y los argumentos de
-	 * Minecraft.
+	/**
+	 * Registra el proceso real de Minecraft inmediatamente después de que
+	 * JavaProcessLauncher.start() lo haya creado.
+	 *
+	 * @param proceso         proceso Java real de Minecraft.
+	 * @param comandoCompleto ejecutable Java, argumentos JVM, clase principal y
+	 *                        argumentos del juego.
+	 * @param clasePrincipal  clase main obtenida de CompleteVersion.
+	 * @param carpetaJuego    carpeta activa de Minecraft; puede ser la carpeta
+	 *                        .minecraft normal o una carpeta de instancia.
+	 * @param inicioMillis    instante en que TLauncher inició Minecraft.
 	 */
-	ArgumentosSeparados argumentos =
-			separarArgumentos(comando, clasePrincipal);
+	public static synchronized void registrarProcesoMinecraft(Process proceso, List<String> comandoCompleto,
+			String clasePrincipal, File carpetaJuego, long inicioMillis) {
 
-	/*
-	 * Reinicia el estado correspondiente a una ejecución anterior de Minecraft.
-	 */
-	procesoMinecraft = proceso;
-	pidMinecraft = obtenerPid(proceso);
-	codigoSalidaPendiente = Integer.MIN_VALUE;
-	errorProcesoPendiente = null;
-	crashTLauncherPendiente = null;
-	ANALISIS_FINAL_INICIADO.set(false);
+		if (!INICIALIZADO.get()) {
+			init();
+		}
 
-	/*
-	 * Registra el PID real del proceso de Minecraft.
-	 */
-	if (pidMinecraft > 0L) {
-		MonitorDePID.pid = pidMinecraft;
-	}
+		if (proceso == null) {
+			throw new IllegalArgumentException("El proceso de Minecraft no puede ser null.");
+		}
 
-	/*
-	 * Dirige los valores del proceso directamente al estado de CrashDetector.
-	 * No se usa Entregar.comenzarEntregar() porque TLauncher ya es el proceso
-	 * monitor.
-	 */
-	Statics.JVM_ARGS = argumentos.jvm;
-	Statics.APP_ARGS = ocultarTokens(argumentos.aplicacion);
-	Statics.INICIO_DE_LA_APP = inicioMillis;
-	Statics.lanzer_del_app = "tlauncher";
-	Statics.APP = App.MINECRAFT;
-
-	Entregar.app_detecta = App.MINECRAFT;
-
-	if (inicioMillis > 0L) {
-		MonitorDePID.utc = Instant.ofEpochMilli(inicioMillis);
-	}
-
-	/*
-	 * runningMinecraftDir representa la carpeta real de la instalación activa.
-	 * Puede ser la carpeta .minecraft predeterminada o una instancia separada.
-	 */
-	if (carpetaJuego != null) {
-		File carpetaNormalizada = carpetaJuego
-				.toPath()
-				.toAbsolutePath()
-				.normalize()
-				.toFile();
-
-
-
-		Statics.CARPETA_DE_APP = carpetaNormalizada;
-
-		Path carpetaMods = carpetaNormalizada
-				.toPath()
-				.resolve("mods")
-				.toAbsolutePath()
-				.normalize();
+		List<String> comando = comandoCompleto == null ? Collections.<String>emptyList()
+				: new ArrayList<String>(comandoCompleto);
 
 		/*
-		 * La nueva ejecución puede utilizar una instancia distinta, por lo que se
-		 * elimina la carpeta de mods registrada para la ejecución anterior.
+		 * Separa los argumentos JVM de la clase principal y los argumentos de
+		 * Minecraft.
 		 */
-		Statics.carpetas_de_mods.clear();
-		Statics.carpetas_de_mods.add(carpetaMods);
+		ArgumentosSeparados argumentos = separarArgumentos(comando, clasePrincipal);
 
-		CrashDetectorLogger.log(
-				"[CrashDetector/TLauncher] Carpeta de Minecraft: "
-						+ Statics.CARPETA_DE_APP.getAbsolutePath());
+		/*
+		 * Reinicia el estado correspondiente a una ejecución anterior de Minecraft.
+		 */
+		procesoMinecraft = proceso;
+		pidMinecraft = obtenerPid(proceso);
+		codigoSalidaPendiente = Integer.MIN_VALUE;
+		errorProcesoPendiente = null;
+		crashTLauncherPendiente = null;
+		ANALISIS_FINAL_INICIADO.set(false);
 
-		CrashDetectorLogger.log(
-				"[CrashDetector/TLauncher] Carpeta de mods: "
-						+ carpetaMods);
+		/*
+		 * Registra el PID real del proceso de Minecraft.
+		 */
+		if (pidMinecraft > 0L) {
+			MonitorDePID.pid = pidMinecraft;
+		}
+
+		/*
+		 * Dirige los valores del proceso directamente al estado de CrashDetector. No se
+		 * usa Entregar.comenzarEntregar() porque TLauncher ya es el proceso monitor.
+		 */
+		Statics.JVM_ARGS = argumentos.jvm;
+		Statics.APP_ARGS = ocultarTokens(argumentos.aplicacion);
+		Statics.INICIO_DE_LA_APP = inicioMillis;
+		Statics.lanzer_del_app = "tlauncher";
+		Statics.APP = App.MINECRAFT;
+
+		Entregar.app_detecta = App.MINECRAFT;
+
+		if (inicioMillis > 0L) {
+			MonitorDePID.utc = Instant.ofEpochMilli(inicioMillis);
+		}
+
+		/*
+		 * runningMinecraftDir representa la carpeta real de la instalación activa.
+		 * Puede ser la carpeta .minecraft predeterminada o una instancia separada.
+		 */
+		if (carpetaJuego != null) {
+			File carpetaNormalizada = carpetaJuego.toPath().toAbsolutePath().normalize().toFile();
+
+			Statics.CARPETA_DE_APP = carpetaNormalizada;
+
+			Path carpetaMods = carpetaNormalizada.toPath().resolve("mods").toAbsolutePath().normalize();
+
+			/*
+			 * La nueva ejecución puede utilizar una instancia distinta, por lo que se
+			 * elimina la carpeta de mods registrada para la ejecución anterior.
+			 */
+			Statics.carpetas_de_mods.clear();
+			Statics.carpetas_de_mods.add(carpetaMods);
+
+			CrashDetectorLogger
+					.log("[CrashDetector/TLauncher] Carpeta de Minecraft: " + Statics.CARPETA_DE_APP.getAbsolutePath());
+
+			CrashDetectorLogger.log("[CrashDetector/TLauncher] Carpeta de mods: " + carpetaMods);
+		}
+
+		CrashDetectorLogger.log("[CrashDetector/TLauncher] Minecraft registrado. PID=" + pidMinecraft + ", jvmArgs="
+				+ Statics.JVM_ARGS.size() + ", appArgs=" + Statics.APP_ARGS.size());
 	}
 
-	CrashDetectorLogger.log(
-			"[CrashDetector/TLauncher] Minecraft registrado. PID="
-					+ pidMinecraft
-					+ ", jvmArgs="
-					+ Statics.JVM_ARGS.size()
-					+ ", appArgs="
-					+ Statics.APP_ARGS.size());
-}
 	/**
 	 * Guarda el código de salida tan pronto como MinecraftLauncher lo copia desde
 	 * JavaProcess. El análisis se inicia después, cuando CrashDescriptor termina.
