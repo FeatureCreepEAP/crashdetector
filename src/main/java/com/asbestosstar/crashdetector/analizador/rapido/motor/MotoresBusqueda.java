@@ -5,8 +5,11 @@ import com.asbestosstar.crashdetector.bajo.vectorapi.VectorAPIInit;
 import com.asbestosstar.crashdetector.stream.intstream.CDIntStream;
 
 /**
- * Fabrica para crear motores de busqueda de bytes con la mejor aceleracion
- * disponible.
+ * Fabrica para crear el mejor motor de busqueda de bytes disponible.
+ *
+ * Prioridad:
+ *
+ * 1. Oracle DAX sobre Solaris SPARC V9. 2. Vector API. 3. Motor escalar.
  */
 public final class MotoresBusqueda {
 
@@ -17,23 +20,16 @@ public final class MotoresBusqueda {
 	}
 
 	public static MotorBusquedaBytes crear() {
-		MotorBusquedaBytes motorDax = crearMotorDax();
-		MotorBusquedaBytes motorVector = crearMotorVector();
+		MotorBusquedaBytes motor = crearMotorDax();
 
-		/*
-		 * Si ambos motores existen, usar DAX para bloques grandes y Vector API para
-		 * bloques pequeños.
-		 */
-		if (motorDax != null && motorVector != null) {
-			return registrar(new MotorBusquedaDaxVector(motorDax, motorVector));
+		if (motor != null) {
+			return registrar(motor);
 		}
 
-		if (motorDax != null) {
-			return registrar(motorDax);
-		}
+		motor = crearMotorVector();
 
-		if (motorVector != null) {
-			return registrar(motorVector);
+		if (motor != null) {
+			return registrar(motor);
 		}
 
 		return registrar(new MotorBusquedaEscalar());
@@ -41,8 +37,7 @@ public final class MotoresBusqueda {
 
 	private static MotorBusquedaBytes crearMotorDax() {
 		/*
-		 * Rechazar inmediatamente cualquier sistema que no sea Solaris SPARC V9. No
-		 * intentar cargar la clase DAX.
+		 * No intentar cargar ninguna clase DAX fuera de Solaris SPARC V9.
 		 */
 		if (!CDIntStream.esSolarisSparcV9()) {
 			return null;
@@ -58,22 +53,18 @@ public final class MotoresBusqueda {
 			Object instancia = clase.getDeclaredConstructor().newInstance();
 
 			return (MotorBusquedaBytes) instancia;
+
 		} catch (ReflectiveOperationException e) {
-			CrashDetectorLogger.log("No se pudo crear el motor Oracle DAX: " + e.getClass().getName() + ": "
-					+ String.valueOf(e.getMessage()));
+			CrashDetectorLogger.log("No se pudo crear el motor Oracle DAX: " + describir(e));
 
-			return null;
 		} catch (LinkageError e) {
-			CrashDetectorLogger.log("No se pudo enlazar el motor Oracle DAX: " + e.getClass().getName() + ": "
-					+ String.valueOf(e.getMessage()));
+			CrashDetectorLogger.log("No se pudo enlazar el motor Oracle DAX: " + describir(e));
 
-			return null;
 		} catch (ClassCastException e) {
-			CrashDetectorLogger
-					.log("La clase del motor Oracle DAX no implementa " + MotorBusquedaBytes.class.getName());
-
-			return null;
+			CrashDetectorLogger.log("La clase Oracle DAX no implementa " + MotorBusquedaBytes.class.getName());
 		}
+
+		return null;
 	}
 
 	private static MotorBusquedaBytes crearMotorVector() {
@@ -83,17 +74,15 @@ public final class MotoresBusqueda {
 
 		try {
 			return new MotorBusquedaVectorApi();
+
 		} catch (LinkageError e) {
-			CrashDetectorLogger.log("No se pudo enlazar el motor Vector API: " + e.getClass().getName() + ": "
-					+ String.valueOf(e.getMessage()));
+			CrashDetectorLogger.log("No se pudo enlazar el motor Vector API: " + describir(e));
 
-			return null;
 		} catch (RuntimeException e) {
-			CrashDetectorLogger.log("No se pudo crear el motor Vector API: " + e.getClass().getName() + ": "
-					+ String.valueOf(e.getMessage()));
-
-			return null;
+			CrashDetectorLogger.log("No se pudo crear el motor Vector API: " + describir(e));
 		}
+
+		return null;
 	}
 
 	private static MotorBusquedaBytes registrar(MotorBusquedaBytes motor) {
@@ -101,5 +90,9 @@ public final class MotoresBusqueda {
 		CrashDetectorLogger.log("Motor de busqueda de bytes seleccionado: " + motor.nombre());
 
 		return motor;
+	}
+
+	private static String describir(Throwable error) {
+		return error.getClass().getName() + ": " + String.valueOf(error.getMessage());
 	}
 }

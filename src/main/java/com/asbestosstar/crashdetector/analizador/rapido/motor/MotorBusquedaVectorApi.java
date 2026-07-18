@@ -5,64 +5,76 @@ import jdk.incubator.vector.VectorMask;
 import jdk.incubator.vector.VectorSpecies;
 
 /**
- * Busqueda directa de bytes mediante la Vector API, sin reflexion dentro del
- * bucle caliente.
+ * Motor de busqueda de bytes acelerado mediante la Vector API.
+ *
+ * Busca todas las apariciones de un byte dentro del intervalo
+ * {@code [inicio, fin)} y escribe sus posiciones absolutas en
+ * {@code posiciones}.
+ *
+ * Esta clase debe cargarse solamente cuando la Vector API real este disponible.
+ * El JAR de stubs debe usarse unicamente para compilacion.
  */
 public final class MotorBusquedaVectorApi implements MotorBusquedaBytes {
 
 	private static final VectorSpecies<Byte> ESPECIE = ByteVector.SPECIES_PREFERRED;
-	private static final int LARGO = ESPECIE.length();
 
 	@Override
 	public int buscar(byte[] datos, int inicio, int fin, byte valor, int[] posiciones, int maxPosiciones) {
 
-		if (datos == null) {
-			throw new NullPointerException("datos");
-		}
-
-		if (posiciones == null) {
-			throw new NullPointerException("posiciones");
-		}
-
-		if (inicio < 0 || fin < inicio || fin > datos.length) {
-			throw new IndexOutOfBoundsException(
-					"Ventana invalida: inicio=" + inicio + ", fin=" + fin + ", longitud=" + datos.length);
-		}
+		validarArgumentos(datos, inicio, fin, posiciones, maxPosiciones);
 
 		int capacidad = Math.min(maxPosiciones, posiciones.length);
 
-		if (capacidad <= 0 || inicio == fin) {
+		if (capacidad == 0 || inicio == fin) {
 			return 0;
 		}
 
 		int total = 0;
+		int longitud = fin - inicio;
+
+		/*
+		 * loopBound devuelve la cantidad de elementos que pueden procesarse usando
+		 * vectores completos.
+		 */
+		int limiteVectorial = inicio + ESPECIE.loopBound(longitud);
+
 		int i = inicio;
-		int limiteVectorial = inicio + ESPECIE.loopBound(fin - inicio);
 
-		for (; i < limiteVectorial && total < capacidad; i += LARGO) {
-			VectorMask<Byte> mascara = ByteVector.fromArray(ESPECIE, datos, i).eq(valor);
+		for (; i < limiteVectorial && total < capacidad; i += ESPECIE.length()) {
 
-			if (LARGO <= Long.SIZE) {
-				long bits = mascara.toLong();
+			ByteVector vector = ByteVector.fromArray(ESPECIE, datos, i);
 
-				while (bits != 0 && total < capacidad) {
-					int carril = Long.numberOfTrailingZeros(bits);
-					posiciones[total++] = i + carril;
-					bits &= bits - 1;
-				}
-			} else if (mascara.anyTrue()) {
-				/* Reserva para una especie futura con mas de 64 carriles byte. */
-				int finBloque = i + LARGO;
+			VectorMask<Byte> mascara = vector.eq(valor);
 
-				for (int j = i; j < finBloque && total < capacidad; j++) {
-					if (datos[j] == valor) {
-						posiciones[total++] = j;
-					}
-				}
+			/*
+			 * Cada bit representa un carril coincidente.
+			 *
+			 * Para ByteVector, las especies actualmente disponibles tienen como maximo 64
+			 * carriles, por lo que las coincidencias caben en un long.
+			 */
+			long bits = mascara.toLong();
+
+			/*
+			 * Extraer las coincidencias desde el carril menor hasta el mayor para conservar
+			 * el orden ascendente.
+			 */
+			while (bits != 0L && total < capacidad) {
+				int carril = Long.numberOfTrailingZeros(bits);
+
+				posiciones[total++] = i + carril;
+
+				/*
+				 * Eliminar el bit activo menos significativo.
+				 */
+				bits &= bits - 1L;
 			}
 		}
 
+		/*
+		 * Procesar escalarmente solamente la cola que no completa un vector entero.
+		 */
 		for (; i < fin && total < capacidad; i++) {
+
 			if (datos[i] == valor) {
 				posiciones[total++] = i;
 			}
@@ -73,6 +85,34 @@ public final class MotorBusquedaVectorApi implements MotorBusquedaBytes {
 
 	@Override
 	public String nombre() {
-		return "vector-api-byte-" + (LARGO * Byte.SIZE);
+		return "vector-api-byte-" + (ESPECIE.length() * Byte.SIZE);
+	}
+
+	private static void validarArgumentos(byte[] datos, int inicio, int fin, int[] posiciones, int maxPosiciones) {
+
+		if (datos == null) {
+			throw new NullPointerException("datos");
+		}
+
+		if (posiciones == null) {
+			throw new NullPointerException("posiciones");
+		}
+
+		if (inicio < 0) {
+			throw new IndexOutOfBoundsException("inicio no puede ser negativo: " + inicio);
+		}
+
+		if (fin < inicio) {
+			throw new IndexOutOfBoundsException("fin no puede ser menor que inicio: inicio=" + inicio + ", fin=" + fin);
+		}
+
+		if (fin > datos.length) {
+			throw new IndexOutOfBoundsException(
+					"fin supera la longitud de datos: fin=" + fin + ", longitud=" + datos.length);
+		}
+
+		if (maxPosiciones < 0) {
+			throw new IllegalArgumentException("maxPosiciones no puede ser negativo: " + maxPosiciones);
+		}
 	}
 }
