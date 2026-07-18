@@ -287,7 +287,14 @@ public final class MotorDeLecturaStreaming {
 							EventoDeCoincidencia evento = new EventoDeCoincidencia(consola, consola.archivo, ver,
 									base.patron, linea, numeroLinea, inicioEnLinea, finEnLinea, estado);
 
-							ver.verificarCoincidencia(evento);
+							/*
+							 * Las instancias de Verificaciones se comparten entre logs para conservar sus
+							 * resultados en Analizador.toString(). Una sola consola puede mutar cada
+							 * verificacion a la vez.
+							 */
+							synchronized (ver) {
+								ver.verificarCoincidencia(evento);
+							}
 						} catch (Exception e) {
 							CrashDetectorLogger.logException(e);
 						}
@@ -303,7 +310,9 @@ public final class MotorDeLecturaStreaming {
 
 			for (Verificaciones ver : verificacionesLineales) {
 				try {
-					ver.verificarPorLinea(consola, linea, numeroLinea);
+					synchronized (ver) {
+						ver.verificarPorLinea(consola, linea, numeroLinea);
+					}
 				} catch (Exception e) {
 					CrashDetectorLogger.logException(e);
 				}
