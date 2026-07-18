@@ -75,6 +75,11 @@ public class GuardiaSketchyVT extends GuardiaGUI {
 			etiquetaEstado.setForeground(textoSec);
 		}
 
+		if (botonEscanerNube != null) {
+			botonEscanerNube.setText("MetaDefender+VirusTotal");
+			estilizarBotonSeguroMac(botonEscanerNube, panel, texto);
+		}
+
 		if (areaDescripcion != null) {
 			areaDescripcion.setForeground(textoSec);
 			areaDescripcion.setCaretColor(textoSec);

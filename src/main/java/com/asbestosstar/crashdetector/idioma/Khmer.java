@@ -11694,4 +11694,289 @@ public class Khmer implements Idioma {
 		return "ចាប់យកដោយស្វ័យប្រវត្តិ";
 	}
 
+	/*
+	 * អត្ថបទលំនាំសម្រាប់ឧបករណ៍ស្កេនពីចម្ងាយ។
+	 */
+
+	public String guardAbrirEscanerNube() {
+		return "VirusTotal និង MetaDefender";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "ឧបករណ៍ស្កេនពពក";
+	}
+
+	public String escanerNubeTitulo() {
+		return "ឧបករណ៍ស្កេន Mod ដោយប្រើ VirusTotal និង MetaDefender";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "យើងនឹករលឹកអ្នកខ្លាំងណាស់។ ភាពច្នៃប្រឌិត ថាមពល និងអ្វីៗគ្រប់យ៉ាងដែលអ្នកបានចែករំលែកជាមួយសហគមន៍ នៅតែមានវត្តមាននៅក្នុងគម្រោងនេះ។ ឧបករណ៍នេះរក្សាទុកនូវអនុស្សាវរីយ៍របស់ Parallel Artist Project ដោយក្តីស្រលាញ់។";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "ជូនដំណឹង៖ នៅពេលដែល Hash មិនមានរបាយការណ៍ ឯកសារ JAR នឹងត្រូវបានផ្ញើទៅកាន់អ្នកផ្តល់សេវាដែលបានជ្រើសរើស។ គំរូដែលបានផ្ទុះឡើងទៅកាន់សេវាសាធារណៈអាចត្រូវបានចែករំលែកជាមួយដៃគូសន្តិសុខ។ ការធ្វើសមកាលកម្មមិនបង្កើនកោតារបស់គណនីទេ ហើយ Thread ច្រើនពេកអាចបណ្តាលឱ្យមានកំហុស HTTP 429។ សូមកុំផ្ញើ Mod ឯកជន ឬសម្ងាត់ដោយមិនបានពិនិត្យមើលលក្ខខណ្ឌគណនីរបស់អ្នក។";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "កូនសោ API VirusTotal:";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "កូនសោ API MetaDefender:";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "Thread ព្រមគ្នា:";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "រក្សាទុកកូនសោសកល";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "ស្កេនដោយប្រើ VirusTotal";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "ស្កេនដោយប្រើ MetaDefender";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "ស្កេនដោយប្រើទាំងពីរ";
+	}
+
+	public String escanerNubeCancelar() {
+		return "បោះបង់";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "កូនសោ API និងការអនុវត្ត";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "លទ្ធផលការវិភាគ";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "កូនសោ API សកលត្រូវបានរក្សាទុកដោយជោគជ័យ។";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "បញ្ជាក់ការវិភាគពីចម្ងាយ";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "Hash SHA-256 នឹងត្រូវបានសួរនាំជាមុនសិន។ ឯកសារដែលគ្មានរបាយការណ៍នឹងត្រូវបានផ្ទុះឡើងទៅកាន់អ្នកផ្តល់សេវាដែលបានជ្រើសរើស។ តើអ្នកចង់បន្តទេ?";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "ខ្វះកូនសោ API VirusTotal។";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "ខ្វះកូនសោ API MetaDefender។";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "មិនមានឯកសារ JAR ដែលអាចអានបាននៅក្នុងថត Mod ដែលបានកំណត់រចនាសម្ព័ន្ធ។";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "ឯកសារមិនមាន ឬមិនអាចអានបាន។";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "រូបភាព Parallel Artist Project មិនមាន";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "រួចរាល់";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "កំពុងវិភាគ៖ " + completados + " នៃ " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "ការវិភាគបានបញ្ចប់។ កិច្ចការដែលបានបញ្ចប់៖ " + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "ការវិភាគត្រូវបានបោះបង់";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "VirusTotal";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "MetaDefender";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "អ្នកផ្តល់សេវាមិនស្គាល់";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "គ្មានការរកឃើញ";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "មានគ្រោះថ្នាក់";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "គួរឱ្យសង្ស័យ";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "បរាជ័យ";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "មិនស្គាល់";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "លទ្ធផលទទួលបានតាមរយៈការសួរនាំ Hash; ឯកសារមិនត្រូវបានផ្ទុះឡើងវិញទេ។";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "Hash មិនមានរបាយការណ៍ ហើយឯកសារត្រូវបានផ្ទុះឡើងសម្រាប់ការវិភាគ។";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "អ្នកផ្តល់សេវាបានបញ្ចប់សំណើ ប៉ុន្តែមិនបានផ្តល់នូវស្ថិតិដែលអាចប្រើប្រាស់បាន។";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + "បានបដិសេធកូនសោ API ឬគណនីមិនមានសិទ្ធិសម្រាប់ប្រតិបត្តិការនេះ។";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + "បានបដិសេធសំណើដោយសារតែឈានដល់កម្រិត ឬការគ្រប់គ្រងអត្រារបស់គណនី។";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " លម្អិត៖ " + detalle;
+		return proveedor + "បានផ្តល់កូដ HTTP " + codigo + "." + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + "បានផ្តល់នូវការឆ្លើយតប JSON មិនត្រឹមត្រូវ។";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return "ពេលវេលារង់ចាំសម្រាប់ការវិភាគរបស់ " + proveedor + "បានអស់។";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "អ្នកផ្តល់សេវាមិនបានផ្តល់នូវលេខសម្គាល់ការវិភាគ។";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "VirusTotal មិនបានផ្តល់នូវ URL សម្រាប់ផ្ទុះឡើងឯកសារធំ។";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "អ្នកផ្តល់សេវាបានផ្តល់នូវ URLផ្ទុះឡើងដែលមិនប្រើ HTTPS។";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "មានកំហុសមិនស្គាល់កើតឡើងកំឡុងពេលវិភាគ។";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "អ្នកផ្តល់សេវា";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "ឯកសារ";
+	}
+
+	public String escanerNubeColEstado() {
+		return "ស្ថានភាព";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "ការរកឃើញ";
+	}
+
+	public String escanerNubeColMotores() {
+		return "ម៉ាស៊ីន";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "លម្អិត";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌ផ្ទៃខាងក្រោយ";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌ផ្ទាំង";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌ផ្ទាំងភ្លឺ";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌អត្ថបទ";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌អត្ថបទបន្ទាប់បន្សំ";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌វាល";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌អត្ថបទវាល";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌សង្កត់ VirusTotal";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌សង្កត់ MetaDefender";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌សង្កត់រួមបញ្ចូល";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌ការព្រមាន";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌តារាង";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌អត្ថបទតារាង";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌ការជ្រើសរើស";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌អត្ថបទដែលបានជ្រើសរើស";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌គែម";
+	}
+
 }

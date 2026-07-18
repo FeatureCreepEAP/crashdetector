@@ -31,6 +31,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.LectadorDeDocumentosGUI;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorFirmasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla;
 import com.asbestosstar.crashdetector.gui.tipos.editorgui.EditorGUI;
+import com.asbestosstar.crashdetector.gui.tipos.escanernube.EscanerNubeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.gpu.GPUFixGUI;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.GrepRGUI;
 import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaGUI;
@@ -1293,6 +1294,33 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+	public static TipoGUI<EscanerNubeGUI> ESCANER_NUBE = new TipoGUI<EscanerNubeGUI>() {
+		@Override
+		public String id() {
+			return "escaner_nube";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.escanerNubeBotonLateral();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<EscanerNubeGUI> gui) {
+			EscanerNubeGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<EscanerNubeGUI>> obtenerGUIs() {
+			return EscanerNubeGUI.GUIS;
+		}
+
+		@Override
+		public boolean requireBuscador() {
+			return true;
+		}
+	};
+
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
@@ -1346,6 +1374,8 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(MIGRADOR_LEGACY);
 		TIPOS_DE_GUI.add(SCRIPT_IDE);
 		TIPOS_DE_GUI.add(MCP);
+
+		TIPOS_DE_GUI.add(ESCANER_NUBE);
 
 	}
 }

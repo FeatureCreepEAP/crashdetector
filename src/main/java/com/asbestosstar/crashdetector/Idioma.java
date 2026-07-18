@@ -4474,4 +4474,149 @@ public interface Idioma {
 
 	public String detectarAutomaticamente();
 
+	public String escanerNubeDetalleInformeExistente();
+
+	public String escanerNubeDetalleArchivoSubido();
+
+	public String escanerNubeFaltaClaveMetaDefender();
+
+	public String escanerNubeArchivoNoLegible();
+
+	public String escanerNubeErrorIdAnalisis();
+
+	public String escanerNubeResultadoDesconocido();
+
+	public String escanerNubeResultadoMalicioso();
+
+	public String escanerNubeResultadoFallido();
+
+	public String escanerNubeResultadoSospechoso();
+
+	public String escanerNubeResultadoSinDetecciones();
+
+	public String escanerNubeDetalleSinEstadisticas();
+
+	public String escanerNubeErrorTiempoEspera(String nombreVisible);
+
+	public String escanerNubeFaltaClaveVirusTotal();
+
+	public String escanerNubeErrorUrlSubidaVirusTotal();
+
+	public String escanerNubeErrorUrlSubidaNoSegura();
+
+	public String escanerNubeProveedorVirusTotal();
+
+	public String escanerNubeProveedorMetaDefender();
+
+	public String escanerNubeProveedorDesconocido();
+
+	public String escanerNubeErrorRespuestaJson(String nombreVisible);
+
+	public String escanerNubeErrorClaveRechazada(String nombreVisible);
+
+	public String escanerNubeErrorLimite(String nombreVisible);
+
+	public String escanerNubeErrorHttp(String nombreVisible, int codigo, String detalle);
+
+	public String escanerNubeEstadoCancelado();
+
+	/*
+	 * Claves de localización del escáner remoto. Cada idioma debe proporcionar su
+	 * propia implementación.
+	 */
+
+	public String guardAbrirEscanerNube();
+
+	public String escanerNubeBotonLateral();
+
+	public String escanerNubeTitulo();
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject();
+
+	public String escanerNubeAvisoPrivacidad();
+
+	public String escanerNubeClaveVirusTotal();
+
+	public String escanerNubeClaveMetaDefender();
+
+	public String escanerNubeNumeroHilos();
+
+	public String escanerNubeGuardarClaves();
+
+	public String escanerNubeEscanearVirusTotal();
+
+	public String escanerNubeEscanearMetaDefender();
+
+	public String escanerNubeEscanearAmbos();
+
+	public String escanerNubeCancelar();
+
+	public String escanerNubeSeccionClaves();
+
+	public String escanerNubeSeccionResultados();
+
+	public String escanerNubeClavesGuardadas();
+
+	public String escanerNubeConfirmarSubidaTitulo();
+
+	public String escanerNubeConfirmarSubidaMensaje();
+
+	public String escanerNubeSinArchivosJar();
+
+	public String escanerNubeImagenNoDisponible();
+
+	public String escanerNubeEstadoListo();
+
+	public String escanerNubeEstadoEscaneando(int completados, int total);
+
+	public String escanerNubeEstadoCompletado(int completados);
+
+	public String escanerNubeErrorDesconocido();
+
+	public String escanerNubeColProveedor();
+
+	public String escanerNubeColArchivo();
+
+	public String escanerNubeColEstado();
+
+	public String escanerNubeColDetecciones();
+
+	public String escanerNubeColMotores();
+
+	public String escanerNubeColSha256();
+
+	public String escanerNubeColDetalle();
+
+	public String escanerNubeColorFondo();
+
+	public String escanerNubeColorPanel();
+
+	public String escanerNubeColorPanelClaro();
+
+	public String escanerNubeColorTexto();
+
+	public String escanerNubeColorTextoSecundario();
+
+	public String escanerNubeColorCampo();
+
+	public String escanerNubeColorCampoTexto();
+
+	public String escanerNubeColorVirusTotal();
+
+	public String escanerNubeColorMetaDefender();
+
+	public String escanerNubeColorAmbos();
+
+	public String escanerNubeColorAdvertencia();
+
+	public String escanerNubeColorTabla();
+
+	public String escanerNubeColorTablaTexto();
+
+	public String escanerNubeColorSeleccion();
+
+	public String escanerNubeColorSeleccionTexto();
+
+	public String escanerNubeColorBorde();
+
 }

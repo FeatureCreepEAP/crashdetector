@@ -11906,4 +11906,285 @@ public class Lao implements Idioma {
 		return "ກວດຈັບອັດຕະໂນມັດ";
 	}
 
+	public String guardAbrirEscanerNube() {
+		return "VirusTotal ແລະ MetaDefender";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "ສະແກນເມຄ";
+	}
+
+	public String escanerNubeTitulo() {
+		return "ສະແກນ Mods ດ້ວຍ VirusTotal ແລະ MetaDefender";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "ພວກເຮົາຄິດຮອດຫຼາຍ. ຄວາມຄິດສ້າງສັນ, ພະລັງງານ ແລະທຸກຢ່າງທີ່ທ່ານແບ່ງປັນກັບຊຸມຊົນຍັງຄົງຢູ່ໃນໂຄງການນີ້. ເຄື່ອງມືນີ້ຮັກສາຄວາມຊົງຈຳຂອງ Parallel Artist Project ໄວ້ຢ່າງອົບອຸ່ນ.";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "ແຈ້ງເຕືອນ: ເມື່ອ hash ບໍ່ມີລາຍງານ, ໄຟລ໌ JAR ຈະຖືກສົ່ງໄປຍັງຜູ້ໃຫ້ບໍລິການທີ່ເລືອກ. ຕົວຢ່າງທີ່ອັບໂຫລດຂຶ້ນບໍລິການສາທາລະນະອາດຈະຖືກແບ່ງປັນກັບຄູ່ຮ່ວມງານດ້ານຄວາມປອດໄພ. ການເຮັດວຽກແບບຂະໜານບໍ່ເພີ່ມໂຄຕ້າຂອງບັນຊີ ແລະ threads ທີ່ຫຼາຍເກີນໄປອາດເຮັດໃຫ້ເກີດ HTTP 429. ຢ່າສົ່ງ mods ສ່ວນຕົວ ຫຼື ລັບ ໂດຍບໍ່ກວດສອບເງື່ອນໄຂຂອງບັນຊີຂອງທ່ານ.";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "API Key ຂອງ VirusTotal:";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "API Key ຂອງ MetaDefender:";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "Threads ພ້ອມກັນ:";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "ບັນທຶກ API Keys ທົ່ວໂລກ";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "ສະແກນດ້ວຍ VirusTotal";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "ສະແກນດ້ວຍ MetaDefender";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "ສະແກນດ້ວຍທັງສອງ";
+	}
+
+	public String escanerNubeCancelar() {
+		return "ຍົກເລີກ";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "API Keys ແລະ ການດຳເນີນງານ";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "ຜົນການວິເຄາະ";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "API Keys ທົ່ວໂລກຖືກບັນທຶກຢ່າງຖືກຕ້ອງ.";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "ຢືນຢັນການວິເຄາະໄກ";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "ຈະກວດສອບ SHA-256 ກ່ອນ. ໄຟລ໌ທີ່ບໍ່ມີລາຍງານຈະຖືກອັບໂຫລດໄປຍັງຜູ້ໃຫ້ບໍລິການທີ່ເລືອກ. ທ່ານຕ້ອງການດຳເນີນການຕໍ່ບໍ່?";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "ຂາດ API Key ຂອງ VirusTotal.";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "ຂາດ API Key ຂອງ MetaDefender.";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "ບໍ່ພົບໄຟລ໌ JAR ທີ່ສາມາດອ່ານໄດ້ໃນໂຟນເດີ mods ທີ່ຕັ້ງຄ່າໄວ້.";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "ໄຟລ໌ບໍ່ມີຢູ່ ຫຼື ບໍ່ສາມາດອ່ານໄດ້.";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "ຮູບພາບຂອງ Parallel Artist Project ບໍ່ມີໃຫ້ບໍລິການ";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "ພ້ອມ";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "ກຳລັງວິເຄາະ: " + completados + " ຈາກ " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "ການວິເຄາະສຳເລັດ. ວຽກທີ່ສຳເລັດ: " + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "ການວິເຄາະຖືກຍົກເລີກ";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "VirusTotal";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "MetaDefender";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "ຜູ້ໃຫ້ບໍລິການທີ່ບໍ່ຮູ້ຈັກ";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "ບໍ່ພົບການກວດພົບ";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "ມີອັນຕະລາຍ";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "ນ่าสงสัย";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "ລົ້ມເຫລວ";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "ບໍ່ຮູ້ຈັກ";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "ຜົນທີ່ໄດ້ຮັບຜ່ານການກວດສອບ hash; ໄຟລ໌ບໍ່ໄດ້ຖືກອັບໂຫລດຄືນ.";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "Hash ບໍ່ມີລາຍງານ ແລະ ໄຟລ໌ຖືກອັບໂຫລດເພື່ອການວິເຄາະ.";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "ຜູ້ໃຫ້ບໍລິການສຳເລັດຄຳຮ້ອງ, ແຕ່ບໍ່ສົ່ງຄືນສະຖິຕິທີ່ໃຊ້ການໄດ້.";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + " ປະຕິເສດ API Key ຫຼື ບັນຊີບໍ່ມີສິດສຳລັບການດຳເນີນງານນີ້.";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + " ປະຕິເສດຄຳຮ້ອງເພາະວ່າເກີນຂີດຈຳກັດ ຫຼື ການຄວບຄຸມອັດຕາຂອງບັນຊີ.";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " ລາຍລະອຽດ: " + detalle;
+		return proveedor + " ສົ່ງຄືນລະຫັດ HTTP " + codigo + "." + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + " ສົ່ງຄືນການຕອບ JSON ທີ່ບໍ່ຖືກຕ້ອງ.";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return "ໝົດເວລາລໍຖ້າການວິເຄາະຂອງ " + proveedor + ".";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "ຜູ້ໃຫ້ບໍລິການບໍ່ສົ່ງຄືນ ID ການວິເຄາະ.";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "VirusTotal ບໍ່ສົ່ງຄືນ URL ສຳລັບອັບໂຫລດໄຟລ໌ຂະໜາດໃຫຍ່.";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "ຜູ້ໃຫ້ບໍລິການສົ່ງຄືນ URL ອັບໂຫລດທີ່ບໍ່ໃຊ້ HTTPS.";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "ເກີດຂໍ້ຜິດພາດທີ່ບໍ່ຮູ້ສາເຫດໃນລະຫວ່າງການວິເຄາະ.";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "ຜູ້ໃຫ້ບໍລິການ";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "ໄຟລ໌";
+	}
+
+	public String escanerNubeColEstado() {
+		return "ສະຖານະ";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "ການກວດພົບ";
+	}
+
+	public String escanerNubeColMotores() {
+		return "ເຄື່ອງຈັກ";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "ລາຍລະອຽດ";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "ສະແກນເມຄ: ສີພື້ນຫຼັງ";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "ສະແກນເມຄ: ສີແຜງ";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "ສະແກນເມຄ: ສີແຜງອ່ອນ";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "ສະແກນເມຄ: ສີຕົວອັກສອນ";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "ສະແກນເມຄ: ສີຕົວອັກສອນຮອງ";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "ສະແກນເມຄ: ສີຊ່ອງປ້ອນຂໍ້ມູນ";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "ສະແກນເມຄ: ສີຕົວອັກສອນໃນຊ່ອງ";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "ສະແກນເມຄ: ສີເນັ້ນ VirusTotal";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "ສະແກນເມຄ: ສີເນັ້ນ MetaDefender";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "ສະແກນເມຄ: ສີເນັ້ນລວມ";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "ສະແກນເມຄ: ສີແຈ້ງເຕືອນ";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "ສະແກນເມຄ: ສີຕາຕະລາງ";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "ສະແກນເມຄ: ສີຕົວອັກສອນໃນຕາຕະລາງ";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "ສະແກນເມຄ: ສີການເລືອກ";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "ສະແກນເມຄ: ສີຕົວອັກສອນທີ່ເລືອກ";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "ສະແກນເມຄ: ສີຂອບ";
+	}
+
 }

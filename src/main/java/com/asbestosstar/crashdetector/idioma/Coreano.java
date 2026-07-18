@@ -11108,4 +11108,289 @@ public class Coreano implements Idioma {
 		return "자동 감지";
 	}
 
+	/*
+	 * 원격 스캐너의 기본 텍스트입니다.
+	 */
+
+	public String guardAbrirEscanerNube() {
+		return "VirusTotal 및 MetaDefender";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "클라우드 스캐너";
+	}
+
+	public String escanerNubeTitulo() {
+		return "VirusTotal 및 MetaDefender를 사용한 모드 스캐너";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "여러분을 매우 그리워합니다. 여러분의 창의성, 에너지, 그리고 커뮤니티와 공유했던 모든 것이 이 프로젝트에 여전히 살아있습니다. 이 도구는 Parallel Artist Project의 추억을 소중히 간직하고 있습니다.";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "알림: 해시값에 보고서가 없는 경우 JAR 파일이 선택된 공급자에게 전송됩니다. 공공 서비스에 업로드된 샘플은 보안 파트너와 공유될 수 있습니다. 병렬 처리는 계정 할당량을 증가시키지 않으며, 너무 많은 스레드는 HTTP 429 오류를 유발할 수 있습니다. 계정 조건을 검토하지 않고 비공개 또는 기밀 모드를 보내지 마십시오.";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "VirusTotal API 키:";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "MetaDefender API 키:";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "동시 스레드:";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "전역 키 저장";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "VirusTotal로 스캔";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "MetaDefender로 스캔";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "둘 다 사용하여 스캔";
+	}
+
+	public String escanerNubeCancelar() {
+		return "취소";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "API 키 및 실행";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "분석 결과";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "전역 API 키가 성공적으로 저장되었습니다.";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "원격 분석 확인";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "먼저 SHA-256 해시를 조회합니다. 보고서가 없는 파일은 선택된 공급자에게 업로드됩니다. 계속하시겠습니까?";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "VirusTotal API 키가 없습니다.";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "MetaDefender API 키가 없습니다.";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "구성된 모드 폴더에서 읽을 수 있는 JAR 파일을 찾을 수 없습니다.";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "파일이 존재하지 않거나 읽을 수 없습니다.";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "Parallel Artist Project 이미지 사용 불가";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "준비됨";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "분석 중: " + completados + " / " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "분석 완료. 완료된 작업: " + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "분석 취소됨";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "VirusTotal";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "MetaDefender";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "알 수 없는 공급자";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "감지되지 않음";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "악성";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "의심스러움";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "실패";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "알 수 없음";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "해시 조회를 통해 결과를 얻었으며 파일은 다시 업로드되지 않았습니다.";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "해시에 보고서가 없어 분석을 위해 파일이 업로드되었습니다.";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "공급자가 요청을 완료했지만 사용 가능한 통계를 반환하지 않았습니다.";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + "가 API 키를 거부했거나 계정에 이 작업에 대한 권한이 없습니다.";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + "가 계정 한도 또는 속도 제한에 도달하여 요청을 거부했습니다.";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " 세부 정보: " + detalle;
+		return proveedor + "가 HTTP 코드 " + codigo + "를 반환했습니다." + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + "가 유효하지 않은 JSON 응답을 반환했습니다.";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return proveedor + "의 분석 시간이 초과되었습니다.";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "공급자가 분석 ID를 반환하지 않았습니다.";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "VirusTotal이 대형 파일 업로드 URL을 반환하지 않았습니다.";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "공급자가 HTTPS를 사용하지 않는 업로드 URL을 반환했습니다.";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "분석 중 알 수 없는 오류가 발생했습니다.";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "공급자";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "파일";
+	}
+
+	public String escanerNubeColEstado() {
+		return "상태";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "감지 수";
+	}
+
+	public String escanerNubeColMotores() {
+		return "엔진";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "세부 정보";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "클라우드 스캐너: 배경색";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "클라우드 스캐너: 패널 색상";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "클라우드 스캐너: 밝은 패널 색상";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "클라우드 스캐너: 텍스트 색상";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "클라우드 스캐너: 보조 텍스트 색상";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "클라우드 스캐너: 필드 색상";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "클라우드 스캐너: 필드 텍스트 색상";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "클라우드 스캐너: VirusTotal 강조색";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "클라우드 스캐너: MetaDefender 강조색";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "클라우드 스캐너: 결합 강조색";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "클라우드 스캐너: 경고 색상";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "클라우드 스캐너: 테이블 색상";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "클라우드 스캐너: 테이블 텍스트 색상";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "클라우드 스캐너: 선택 색상";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "클라우드 스캐너: 선택된 텍스트 색상";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "클라우드 스캐너: 테두리 색상";
+	}
+
 }

@@ -11544,4 +11544,289 @@ public class Ingles implements Idioma {
 		return "Detect automatically";
 	}
 
+	/*
+	 * Default texts for the remote scanner.
+	 */
+
+	public String guardAbrirEscanerNube() {
+		return "VirusTotal and MetaDefender";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "Cloud Scanner";
+	}
+
+	public String escanerNubeTitulo() {
+		return "Mod Scanner with VirusTotal and MetaDefender";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "We miss you dearly. Your creativity, your energy, and everything you shared with the community are still present in this project. This tool lovingly preserves the memory of Parallel Artist Project.";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "Notice: when a hash has no report, the JAR file will be sent to the selected provider. Samples uploaded to public services may be shared with security partners. Parallelism does not increase the account quota, and too many threads may cause HTTP 429. Do not send private or confidential mods without reviewing your account terms.";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "VirusTotal API Key:";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "MetaDefender API Key:";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "Concurrent threads:";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "Save global keys";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "Scan with VirusTotal";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "Scan with MetaDefender";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "Scan with both";
+	}
+
+	public String escanerNubeCancelar() {
+		return "Cancel";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "API Keys and Execution";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "Analysis Results";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "Global API keys saved successfully.";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "Confirm Remote Analysis";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "The SHA-256 hash will be queried first. Files without a report will be uploaded to the selected provider. Do you wish to continue?";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "VirusTotal API key is missing.";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "MetaDefender API key is missing.";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "No readable JAR files found in the configured mod folders.";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "The file does not exist or cannot be read.";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "Parallel Artist Project image unavailable";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "Ready";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "Analysing: " + completados + " of " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "Analysis complete. Tasks completed: " + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "Analysis cancelled";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "VirusTotal";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "MetaDefender";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "Unknown Provider";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "No detections";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "Malicious";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "Suspicious";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "Failed";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "Unknown";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "Result obtained via hash query; file was not re-uploaded.";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "The hash had no report and the file was uploaded for analysis.";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "The provider completed the request but did not return usable statistics.";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + " rejected the API key or the account does not have permission for this operation.";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + " rejected the request because the account limit or rate control was reached.";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " Detail: " + detalle;
+		return proveedor + " returned HTTP code " + codigo + "." + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + " returned an invalid JSON response.";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return "The analysis timeout for " + proveedor + " expired.";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "The provider did not return an analysis ID.";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "VirusTotal did not return a URL for uploading the large file.";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "The provider returned an upload URL that does not use HTTPS.";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "An unknown error occurred during the analysis.";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "Provider";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "File";
+	}
+
+	public String escanerNubeColEstado() {
+		return "Status";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "Detections";
+	}
+
+	public String escanerNubeColMotores() {
+		return "Engines";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "Detail";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "Cloud Scanner: background colour";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "Cloud Scanner: panel colour";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "Cloud Scanner: light panel colour";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "Cloud Scanner: text colour";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "Cloud Scanner: secondary text colour";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "Cloud Scanner: field colour";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "Cloud Scanner: field text colour";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "Cloud Scanner: VirusTotal accent";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "Cloud Scanner: MetaDefender accent";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "Cloud Scanner: combined accent";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "Cloud Scanner: warning colour";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "Cloud Scanner: table colour";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "Cloud Scanner: table text colour";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "Cloud Scanner: selection colour";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "Cloud Scanner: selected text colour";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "Cloud Scanner: border colour";
+	}
+
 }

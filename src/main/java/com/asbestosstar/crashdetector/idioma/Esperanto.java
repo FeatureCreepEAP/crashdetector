@@ -11494,4 +11494,289 @@ public class Esperanto implements Idioma {
 		return "Aŭtomate detekti";
 	}
 
+	/*
+	 * Defaŭltaj tekstoj por la nuba skanilo.
+	 */
+
+	public String guardAbrirEscanerNube() {
+		return "VirusTotal kaj MetaDefender";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "Nuba skanilo";
+	}
+
+	public String escanerNubeTitulo() {
+		return "Mod-skanilo per VirusTotal kaj MetaDefender";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "Ni tre sopiras vin. Via kreivo, via energio kaj ĉio, kion vi kundividis kun la komunumo, daŭre ĉeestas en ĉi tiu projekto. Ĉi tiu ilo zorgeme konservas la memoron pri Parallel Artist Project.";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "Averto: Kiam haketaĵo ne havas raporton, la JAR-dosiero sendiĝos al la elektita provizanto. Specimenoj alŝutitaj al publikaj servoj povas esti kundividitaj kun sekurecaj partneroj. Paralelismo ne pliigas la kontan kvoton, kaj tro multaj fadenoj povas kaŭzi HTTP 429. Ne sendu privatajn aŭ konfidencialajn modojn sen revizi la kondiĉojn de via konto.";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "API-ŝlosilo de VirusTotal:";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "API-ŝlosilo de MetaDefender:";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "Samtempaj fadenoj:";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "Konservi tutmondajn ŝlosilojn";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "Skani per VirusTotal";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "Skani per MetaDefender";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "Skani per ambaŭ";
+	}
+
+	public String escanerNubeCancelar() {
+		return "Nuligi";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "API-ŝlosiloj kaj ekzekuto";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "Rezultoj de la analizo";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "La tutmondaj API-ŝlosiloj estis sukcese konservitaj.";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "Konfirmi malproksiman analizon";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "Unue oni konsultos la SHA-256 haketaĵon. Dosieroj sen raporto alŝutiĝos al la elektita provizanto. Ĉu vi volas daŭrigi?";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "Mankas la API-ŝlosilo de VirusTotal.";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "Mankas la API-ŝlosilo de MetaDefender.";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "Ne troviĝis legeblaj JAR-dosieroj en la agorditaj mod-dosierujoj.";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "La dosiero ne ekzistas aŭ ne estas legebla.";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "Bildo de Parallel Artist Project ne disponeblas";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "Preta";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "Analizante: " + completados + " el " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "Analizo finita. Kompletigitaj taskoj: " + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "Analizo nuligita";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "VirusTotal";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "MetaDefender";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "Nekonata provizanto";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "Sen detektoj";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "Malica";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "Suspekta";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "Malsukcesis";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "Nekonata";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "Rezulto akirita per haketaĵa konsulto; la dosiero ne re-alŝutiĝis.";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "La haketaĵo ne havis raporton kaj la dosiero alŝutiĝis por analizo.";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "La provizanto finis la peton, sed ne redonis uzeblajn statistikojn.";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + " rifuzis la API-ŝlosilon aŭ la konto ne havas permeson por ĉi tiu operacio.";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + " rifuzis la peton ĉar atingiĝis la limo aŭ frekvenc-kontrolo de la konto.";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " Detalo: " + detalle;
+		return proveedor + " redonis la HTTP-kodon " + codigo + "." + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + " redonis nevalidan JSON-respondo.";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return "Elĉerpiĝis la atenda tempo por la analizo de " + proveedor + ".";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "La provizanto ne redonis analizan identigilon.";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "VirusTotal ne redonis URL-on por alŝuti grandan dosieron.";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "La provizanto redonis alŝutan URL-on, kiu ne uzas HTTPS.";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "Okazis nekonata eraro dum la analizo.";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "Provizanto";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "Dosiero";
+	}
+
+	public String escanerNubeColEstado() {
+		return "Stato";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "Detektoj";
+	}
+
+	public String escanerNubeColMotores() {
+		return "Motoroj";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "Detalo";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "Nuba skanilo: fona koloro";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "Nuba skanilo: panela koloro";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "Nuba skanilo: hela panela koloro";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "Nuba skanilo: teksta koloro";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "Nuba skanilo: duaranga teksta koloro";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "Nuba skanilo: kampa koloro";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "Nuba skanilo: kampa teksta koloro";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "Nuba skanilo: akcento de VirusTotal";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "Nuba skanilo: akcento de MetaDefender";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "Nuba skanilo: kombinita akcento";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "Nuba skanilo: averte koloro";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "Nuba skanilo: tabla koloro";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "Nuba skanilo: tabla teksta koloro";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "Nuba skanilo: elekta koloro";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "Nuba skanilo: elektita teksta koloro";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "Nuba skanilo: bordera koloro";
+	}
+
 }

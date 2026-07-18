@@ -10879,4 +10879,289 @@ public class Chino implements Idioma {
 		return "自动检测";
 	}
 
+	/*
+	 * 远程扫描器的默认文本。
+	 */
+
+	public String guardAbrirEscanerNube() {
+		return "VirusTotal 和 MetaDefender";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "云端扫描器";
+	}
+
+	public String escanerNubeTitulo() {
+		return "使用 VirusTotal 和 MetaDefender 的模组扫描器";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "我们非常想念你们。你们的创造力、活力以及与社区分享的一切，依然存在于这个项目中。本工具怀着珍爱之情保留了 Parallel Artist Project 的回忆。";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "注意：当哈希值没有报告时，JAR 文件将被发送到选定的提供商。上传到公共服务的样本可能会与安全合作伙伴共享。并行处理不会增加账户配额，过多的线程可能导致 HTTP 429 错误。在未审查账户条款的情况下，请勿发送私人或机密模组。";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "VirusTotal API 密钥：";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "MetaDefender API 密钥：";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "并发线程数：";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "保存全局密钥";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "使用 VirusTotal 扫描";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "使用 MetaDefender 扫描";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "同时使用两者扫描";
+	}
+
+	public String escanerNubeCancelar() {
+		return "取消";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "API 密钥与执行";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "分析结果";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "全局 API 密钥已成功保存。";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "确认远程分析";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "首先将查询 SHA-256 哈希值。没有报告的文件将上传到选定的提供商。是否继续？";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "缺少 VirusTotal API 密钥。";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "缺少 MetaDefender API 密钥。";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "在配置的模组文件夹中未找到可读的 JAR 文件。";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "文件不存在或无法读取。";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "Parallel Artist Project 图片不可用";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "就绪";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "正在分析：" + completados + " / " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "分析完成。已完成任务：" + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "分析已取消";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "VirusTotal";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "MetaDefender";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "未知提供商";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "未检测到威胁";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "恶意";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "可疑";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "失败";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "未知";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "通过哈希查询获得结果；文件未重新上传。";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "哈希值无报告，文件已上传进行分析。";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "提供商完成了请求，但未返回可用的统计数据。";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + " 拒绝了 API 密钥，或者账户没有此操作的权限。";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + " 因达到账户限制或频率控制而拒绝请求。";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " 详情：" + detalle;
+		return proveedor + " 返回 HTTP 代码 " + codigo + "." + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + " 返回了无效的 JSON 响应。";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return proveedor + " 的分析超时。";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "提供商未返回分析 ID。";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "VirusTotal 未返回大文件上传 URL。";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "提供商返回的上传 URL 未使用 HTTPS。";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "分析期间发生未知错误。";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "提供商";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "文件";
+	}
+
+	public String escanerNubeColEstado() {
+		return "状态";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "检测数";
+	}
+
+	public String escanerNubeColMotores() {
+		return "引擎";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "详情";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "云端扫描器：背景颜色";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "云端扫描器：面板颜色";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "云端扫描器：浅色面板颜色";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "云端扫描器：文本颜色";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "云端扫描器：次要文本颜色";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "云端扫描器：字段颜色";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "云端扫描器：字段文本颜色";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "云端扫描器：VirusTotal 强调色";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "云端扫描器：MetaDefender 强调色";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "云端扫描器：组合强调色";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "云端扫描器：警告颜色";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "云端扫描器：表格颜色";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "云端扫描器：表格文本颜色";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "云端扫描器：选择颜色";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "云端扫描器：选中文本颜色";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "云端扫描器：边框颜色";
+	}
+
 }

@@ -11708,4 +11708,285 @@ public class Vietnamita implements Idioma {
 		return "Tự động phát hiện";
 	}
 
+	public String guardAbrirEscanerNube() {
+		return "VirusTotal và MetaDefender";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "Máy quét đám mây";
+	}
+
+	public String escanerNubeTitulo() {
+		return "Máy quét mod với VirusTotal và MetaDefender";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "Chúng tôi rất nhớ các bạn. Sự sáng tạo, năng lượng và mọi thứ các bạn chia sẻ với cộng đồng vẫn hiện diện trong dự án này. Công cụ này lưu giữ kỷ niệm về Parallel Artist Project một cách trân trọng.";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "Lưu ý: khi hash không có báo cáo, tệp JAR sẽ được gửi đến nhà cung cấp đã chọn. Các mẫu tải lên dịch vụ công cộng có thể được chia sẻ với đối tác bảo mật. Xử lý song song không tăng hạn mức tài khoản và quá nhiều luồng có thể gây ra lỗi HTTP 429. Không gửi mod riêng tư hoặc bí mật mà không xem xét điều khoản tài khoản của bạn.";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "Khóa API của VirusTotal:";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "Khóa API của MetaDefender:";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "Luồng đồng thời:";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "Lưu khóa API toàn cục";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "Quét với VirusTotal";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "Quét với MetaDefender";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "Quét với cả hai";
+	}
+
+	public String escanerNubeCancelar() {
+		return "Hủy";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "Khóa API và thực thi";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "Kết quả phân tích";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "Các khóa API toàn cục đã được lưu thành công.";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "Xác nhận phân tích từ xa";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "Trước tiên sẽ kiểm tra SHA-256. Các tệp không có báo cáo sẽ được tải lên nhà cung cấp đã chọn. Bạn có muốn tiếp tục không?";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "Thiếu khóa API của VirusTotal.";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "Thiếu khóa API của MetaDefender.";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "Không tìm thấy tệp JAR có thể đọc được trong các thư mục mod đã cấu hình.";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "Tệp không tồn tại hoặc không thể đọc được.";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "Hình ảnh của Parallel Artist Project không khả dụng";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "Sẵn sàng";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "Đang phân tích: " + completados + " trên " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "Phân tích hoàn tất. Nhiệm vụ đã hoàn thành: " + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "Phân tích đã hủy";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "VirusTotal";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "MetaDefender";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "Nhà cung cấp không xác định";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "Không phát hiện";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "Độc hại";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "Đáng ngờ";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "Thất bại";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "Không xác định";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "Kết quả thu được thông qua truy vấn hash; tệp không được tải lên lại.";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "Hash không có báo cáo và tệp đã được tải lên để phân tích.";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "Nhà cung cấp đã hoàn thành yêu cầu nhưng không trả về thống kê sử dụng được.";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + " đã từ chối khóa API hoặc tài khoản không có quyền cho thao tác này.";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + " đã từ chối yêu cầu vì đã đạt giới hạn hoặc kiểm soát tần suất của tài khoản.";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " Chi tiết: " + detalle;
+		return proveedor + " trả về mã HTTP " + codigo + "." + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + " trả về phản hồi JSON không hợp lệ.";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return "Hết thời gian chờ phân tích của " + proveedor + ".";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "Nhà cung cấp không trả về ID phân tích.";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "VirusTotal không trả về URL để tải lên tệp lớn.";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "Nhà cung cấp trả về URL tải lên không sử dụng HTTPS.";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "Đã xảy ra lỗi không xác định trong quá trình phân tích.";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "Nhà cung cấp";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "Tệp";
+	}
+
+	public String escanerNubeColEstado() {
+		return "Trạng thái";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "Phát hiện";
+	}
+
+	public String escanerNubeColMotores() {
+		return "Công cụ";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "Chi tiết";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "Máy quét đám mây: màu nền";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "Máy quét đám mây: màu bảng điều khiển";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "Máy quét đám mây: màu bảng điều khiển sáng";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "Máy quét đám mây: màu văn bản";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "Máy quét đám mây: màu văn bản phụ";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "Máy quét đám mây: màu trường";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "Máy quét đám mây: màu văn bản trường";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "Máy quét đám mây: nhấn mạnh VirusTotal";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "Máy quét đám mây: nhấn mạnh MetaDefender";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "Máy quét đám mây: nhấn mạnh kết hợp";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "Máy quét đám mây: màu cảnh báo";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "Máy quét đám mây: màu bảng";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "Máy quét đám mây: màu văn bản bảng";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "Máy quét đám mây: màu lựa chọn";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "Máy quét đám mây: màu văn bản đã chọn";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "Máy quét đám mây: màu viền";
+	}
+
 }

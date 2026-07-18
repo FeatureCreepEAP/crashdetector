@@ -12207,4 +12207,291 @@ public class Espanol implements Idioma {
 		return "Detectar automáticamente";
 	}
 
+	/*
+	 * Textos predeterminados del escáner remoto. Son métodos default para que los
+	 * idiomas existentes sigan compilando hasta que cada traducción los
+	 * sobrescriba. El idioma de respaldo es español.
+	 */
+
+	public String guardAbrirEscanerNube() {
+		return "VirusTotal y MetaDefender";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "Escáner en la nube";
+	}
+
+	public String escanerNubeTitulo() {
+		return "Escáner de mods con VirusTotal y MetaDefender";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "Los extrañamos mucho. Su creatividad, su energía y todo lo que compartieron con la comunidad siguen presentes en este proyecto. Esta herramienta conserva con cariño el recuerdo de Parallel Artist Project.";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "Aviso: cuando un hash no tenga informe, el archivo JAR se enviará al proveedor seleccionado. Las muestras subidas a servicios públicos pueden compartirse con socios de seguridad. El paralelismo no aumenta el cupo de la cuenta y demasiados hilos pueden producir HTTP 429. No envíes mods privados o confidenciales sin revisar las condiciones de tu cuenta.";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "Clave API de VirusTotal:";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "Clave API de MetaDefender:";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "Hilos simultáneos:";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "Guardar claves globales";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "Escanear con VirusTotal";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "Escanear con MetaDefender";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "Escanear con ambos";
+	}
+
+	public String escanerNubeCancelar() {
+		return "Cancelar";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "Claves API y ejecución";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "Resultados del análisis";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "Las claves API globales se guardaron correctamente.";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "Confirmar análisis remoto";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "Primero se consultará el SHA-256. Los archivos sin informe se subirán al proveedor seleccionado. ¿Deseas continuar?";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "Falta la clave API de VirusTotal.";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "Falta la clave API de MetaDefender.";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "No se encontraron archivos JAR legibles en las carpetas de mods configuradas.";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "El archivo no existe o no se puede leer.";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "Imagen de Parallel Artist Project no disponible";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "Listo";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "Analizando: " + completados + " de " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "Análisis terminado. Tareas completadas: " + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "Análisis cancelado";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "VirusTotal";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "MetaDefender";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "Proveedor desconocido";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "Sin detecciones";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "Malicioso";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "Sospechoso";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "Falló";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "Desconocido";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "Resultado obtenido mediante consulta de hash; el archivo no se volvió a subir.";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "El hash no tenía informe y el archivo se subió para su análisis.";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "El proveedor terminó la solicitud, pero no devolvió estadísticas utilizables.";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + " rechazó la clave API o la cuenta no tiene permiso para esta operación.";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + " rechazó la solicitud porque se alcanzó el límite o el control de frecuencia de la cuenta.";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " Detalle: " + detalle;
+		return proveedor + " devolvió el código HTTP " + codigo + "." + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + " devolvió una respuesta JSON no válida.";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return "Se agotó el tiempo de espera del análisis de " + proveedor + ".";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "El proveedor no devolvió un identificador de análisis.";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "VirusTotal no devolvió una URL para subir el archivo grande.";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "El proveedor devolvió una URL de subida que no usa HTTPS.";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "Ocurrió un error desconocido durante el análisis.";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "Proveedor";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "Archivo";
+	}
+
+	public String escanerNubeColEstado() {
+		return "Estado";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "Detecciones";
+	}
+
+	public String escanerNubeColMotores() {
+		return "Motores";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "Detalle";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "Escáner en la nube: color de fondo";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "Escáner en la nube: color de panel";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "Escáner en la nube: color de panel claro";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "Escáner en la nube: color de texto";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "Escáner en la nube: color de texto secundario";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "Escáner en la nube: color de campo";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "Escáner en la nube: color del texto de campo";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "Escáner en la nube: acento de VirusTotal";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "Escáner en la nube: acento de MetaDefender";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "Escáner en la nube: acento combinado";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "Escáner en la nube: color de advertencia";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "Escáner en la nube: color de tabla";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "Escáner en la nube: color del texto de tabla";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "Escáner en la nube: color de selección";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "Escáner en la nube: color del texto seleccionado";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "Escáner en la nube: color de borde";
+	}
+
 }

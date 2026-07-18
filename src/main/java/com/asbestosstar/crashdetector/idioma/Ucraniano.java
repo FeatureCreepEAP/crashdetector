@@ -10819,4 +10819,285 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Автовизначення";
 	}
 
+	public String guardAbrirEscanerNube() {
+		return "VirusTotal та MetaDefender";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "Хмарний сканер";
+	}
+
+	public String escanerNubeTitulo() {
+		return "Сканер модів з VirusTotal та MetaDefender";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "Ми дуже сумуємо за вами. Ваша креативність, енергія та все, чим ви ділилися зі спільнотою, залишаються в цьому проекті. Цей інструмент бережливо зберігає пам'ять про Parallel Artist Project.";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "Увага: якщо хеш не має звіту, файл JAR буде надіслано вибраному постачальнику. Зразки, завантажені до публічних сервісів, можуть передаватися партнерам з безпеки. Паралелізм не збільшує квоту облікового запису, а занадто багато потоків можуть спричинити помилку HTTP 429. Не надсилайте приватні або конфіденційні моди без перевірки умов вашого облікового запису.";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "API-ключ VirusTotal:";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "API-ключ MetaDefender:";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "Одночасних потоків:";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "Зберегти глобальні ключі";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "Сканувати з VirusTotal";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "Сканувати з MetaDefender";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "Сканувати обома";
+	}
+
+	public String escanerNubeCancelar() {
+		return "Скасувати";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "API-ключі та виконання";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "Результати аналізу";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "Глобальні API-ключі успішно збережено.";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "Підтвердити віддалений аналіз";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "Спочатку буде перевірено SHA-256. Файли без звіту будуть завантажені вибраному постачальнику. Бажаєте продовжити?";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "Відсутній API-ключ VirusTotal.";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "Відсутній API-ключ MetaDefender.";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "У налаштованих теках модів не знайдено читабельних файлів JAR.";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "Файл не існує або не може бути прочитаний.";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "Зображення Parallel Artist Project недоступне";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "Готово";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "Аналіз: " + completados + " з " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "Аналіз завершено. Виконано завдань: " + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "Аналіз скасовано";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "VirusTotal";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "MetaDefender";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "Невідомий постачальник";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "Без виявлень";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "Шкідливий";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "Підозрілий";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "Помилка";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "Невідомо";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "Результат отримано через запит хешу; файл не завантажувався повторно.";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "У хешу не було звіту, і файл був завантажений для аналізу.";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "Постачальник завершив запит, але не повернув придатної статистики.";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + " відхилив API-ключ або обліковий запис не має прав на цю операцію.";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + " відхилив запит, оскільки досягнуто ліміт або обмеження частоти облікового запису.";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " Деталі: " + detalle;
+		return proveedor + " повернув код HTTP " + codigo + "." + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + " повернув недійсну відповідь JSON.";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return "Час очікування аналізу " + proveedor + " минув.";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "Постачальник не повернув ідентифікатор аналізу.";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "VirusTotal не повернув URL для завантаження великого файлу.";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "Постачальник повернув URL завантаження, який не використовує HTTPS.";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "Під час аналізу сталася невідома помилка.";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "Постачальник";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "Файл";
+	}
+
+	public String escanerNubeColEstado() {
+		return "Статус";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "Виявлення";
+	}
+
+	public String escanerNubeColMotores() {
+		return "Рушії";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "Деталі";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "Хмарний сканер: колір тла";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "Хмарний сканер: колір панелі";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "Хмарний сканер: колір світлої панелі";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "Хмарний сканер: колір тексту";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "Хмарний сканер: колір вторинного тексту";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "Хмарний сканер: колір поля";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "Хмарний сканер: колір тексту поля";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "Хмарний сканер: акцент VirusTotal";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "Хмарний сканер: акцент MetaDefender";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "Хмарний сканер: комбінований акцент";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "Хмарний сканер: колір попередження";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "Хмарний сканер: колір таблиці";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "Хмарний сканер: колір тексту таблиці";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "Хмарний сканер: колір виділення";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "Хмарний сканер: колір виділеного тексту";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "Хмарний сканер: колір рамки";
+	}
+
 }

@@ -39,6 +39,8 @@ import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
+import com.asbestosstar.crashdetector.gui.tipos.escanernube.EscanerNubeGUI;
+import com.asbestosstar.crashdetector.gui.tipos.escanernube.EscanerNubeParallelArtistProject;
 
 /**
  * GUI abstracta del sistema Guard.
@@ -63,6 +65,7 @@ public abstract class GuardiaGUI extends JFrame implements BotonDeBarraLateralDe
 	public JButton botonEscanearTodo;
 	public JButton botonEscanearServidores;
 	public JButton botonEscanearMalware;
+	public JButton botonEscanerNube;
 
 	public JTable tablaServidores;
 	public JTable tablaMalware;
@@ -148,12 +151,15 @@ public abstract class GuardiaGUI extends JFrame implements BotonDeBarraLateralDe
 		botonEscanearServidores = new JButton(MonitorDePID.idioma.guardEscanearServidores());
 		botonEscanearMalware = new JButton(MonitorDePID.idioma.guardEscanearMalware());
 
+		botonEscanerNube = new JButton("MetaDefender + VirusTotal");
+
 		etiquetaEstado = new JLabel(MonitorDePID.idioma.guardEstadoListo());
 
 		barraBotones.add(botonEscanearTodo);
 		barraBotones.add(botonEscanearServidores);
 		barraBotones.add(botonEscanearMalware);
 		barraBotones.add(etiquetaEstado);
+		barraBotones.add(botonEscanerNube);
 
 		modeloServidores = new ModeloTablaServidores();
 		modeloMalware = new ModeloTablaMalware();
@@ -191,6 +197,7 @@ public abstract class GuardiaGUI extends JFrame implements BotonDeBarraLateralDe
 		botonEscanearTodo.addActionListener(e -> escanearTodoAsync());
 		botonEscanearServidores.addActionListener(e -> escanearSoloServidoresAsync());
 		botonEscanearMalware.addActionListener(e -> escanearSoloMalwareAsync());
+		botonEscanerNube.addActionListener(e -> abrirEscanerNube());
 
 		initOverlayCarga();
 		setCargando(false);
@@ -478,6 +485,17 @@ public abstract class GuardiaGUI extends JFrame implements BotonDeBarraLateralDe
 		if (botonEscanearMalware != null) {
 			botonEscanearMalware.setEnabled(!valor);
 		}
+
+		if (botonEscanerNube != null) {
+			botonEscanerNube.setEnabled(!valor);
+		}
+
+	}
+
+	public void abrirEscanerNube() {
+		EscanerNubeGUI gui = TipoGUI.ESCANER_NUBE.obtenerGUIPredeterminado(EscanerNubeParallelArtistProject.ID,
+				EscanerNubeParallelArtistProject::new);
+		gui.init();
 	}
 
 	@Override

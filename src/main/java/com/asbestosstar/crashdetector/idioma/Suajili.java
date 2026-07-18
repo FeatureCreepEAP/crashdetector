@@ -11935,4 +11935,285 @@ public class Suajili implements Idioma {
 		return "Gundua kiotomatiki";
 	}
 
+	public String guardAbrirEscanerNube() {
+		return "VirusTotal na MetaDefender";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "Kichunguzi cha wingu";
+	}
+
+	public String escanerNubeTitulo() {
+		return "Kichunguzi cha mods kwa kutumia VirusTotal na MetaDefender";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "Tunawakumbuka sana. Ubunifu wenu, nishati yenu na kila kitu mlichokigawanya na jamii bado zipo katika mradi huu. Zana hii inahifadhi kwa upendo kumbukumbu ya Parallel Artist Project.";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "Taarifa: wakati hash haina ripoti, faili la JAR litatumiwa kwa mtoa huduma uliochaguliwa. Mifano iliyopakiwa kwenye huduma za umma inaweza kushirikiwa na washirika wa usalama. Usambazaji sawia haiongezi kikomo cha akaunti na thread nyingi sana zinaweza kusababisha HTTP 429. Usitume mods za kibinafsi au za siri bila kukagua masharti ya akaunti yako.";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "Ufunguo wa API wa VirusTotal:";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "Ufunguo wa API wa MetaDefender:";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "Thread zinazoendelea kwa wakati mmoja:";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "Hifadhi ufunguo wa API wa kimataifa";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "Chunguza kwa kutumia VirusTotal";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "Chunguza kwa kutumia MetaDefender";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "Chunguza kwa kutumia vyote viwili";
+	}
+
+	public String escanerNubeCancelar() {
+		return "Ghairi";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "Ufunguo wa API na utekelezaji";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "Matokeo ya uchambuzi";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "Ufunguo wa API wa kimataifa umehifadhiwa kwa mafanikio.";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "Thibitisha uchambuzi wa mbali";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "Kwanza SHA-256 itaulizwa. Faili zisizo na ripoti zitapakiwa kwa mtoa huduma uliochaguliwa. Unataka kuendelea?";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "Ufunguo wa API wa VirusTotal hauko.";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "Ufunguo wa API wa MetaDefender hauko.";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "Hakuna faili za JAR zinazosomeka zilizopatikana katika folda za mods zilizosanidiwa.";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "Faili halipo au haisomeki.";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "Picha ya Parallel Artist Project haipatikani";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "Tayari";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "Inachunguza: " + completados + " kati ya " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "Uchambuzi umekamilika. Kazi zilizokamilika: " + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "Uchambuzi umeghairiwa";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "VirusTotal";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "MetaDefender";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "Mtoa huduma asiyejulikana";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "Hakuna ugunduzi";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "Hatari";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "La kutatanisha";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "Imeshindwa";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "Haijulikani";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "Matokeo yamepatikana kupitia kuuliza hash; faili halijapakiwa tena.";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "Hash haikuwa na ripoti na faili lilipakiwa kwa ajili ya uchambuzi.";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "Mtoa huduma alimaliza ombi, lakini hakurudisha takwimu zinazoweza kutumika.";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + " alikataa ufunguo wa API au akaunti haina ruhusa ya kufanya operesheni hii.";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + " alikataa ombi kwa sababu kikomo au udhibiti wa marudio wa akaunti umefikiwa.";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " Maelezo: " + detalle;
+		return proveedor + " alirudisha nambari ya HTTP " + codigo + "." + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + " alirudisha jibu la JSON lisilo sahihi.";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return "Muda wa kusubiri uchambuzi wa " + proveedor + " umeisha.";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "Mtoa huduma hakurudisha kitambulisho cha uchambuzi.";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "VirusTotal hakurudisha URL ya kupakia faili kubwa.";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "Mtoa huduma alirudisha URL ya kupakia ambayo haitumii HTTPS.";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "Hitilafu isiyojulikana ilitokea wakati wa uchambuzi.";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "Mtoa huduma";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "Faili";
+	}
+
+	public String escanerNubeColEstado() {
+		return "Hali";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "Ugunduzi";
+	}
+
+	public String escanerNubeColMotores() {
+		return "Injini";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "Maelezo";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "Kichunguzi cha wingu: rangi ya mandhari";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "Kichunguzi cha wingu: rangi ya paneli";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "Kichunguzi cha wingu: rangi ya paneli nyepesi";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "Kichunguzi cha wingu: rangi ya maandishi";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "Kichunguzi cha wingu: rangi ya maandishi ya sekondari";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "Kichunguzi cha wingu: rangi ya uga";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "Kichunguzi cha wingu: rangi ya maandishi ya uga";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "Kichunguzi cha wingu: msisitizo wa VirusTotal";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "Kichunguzi cha wingu: msisitizo wa MetaDefender";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "Kichunguzi cha wingu: msisitizo uliochanganywa";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "Kichunguzi cha wingu: rangi ya onyo";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "Kichunguzi cha wingu: rangi ya jedwali";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "Kichunguzi cha wingu: rangi ya maandishi ya jedwali";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "Kichunguzi cha wingu: rangi ya uteuzi";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "Kichunguzi cha wingu: rangi ya maandishi yaliyochaguliwa";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "Kichunguzi cha wingu: rangi ya mpaka";
+	}
+
 }

@@ -18,6 +18,10 @@ public class ConfigMundial {
 	private static final boolean VALOR_POR_DEFECTO_CONSENTIMIENTO_LFPDPPP = false;
 	private static final boolean VALOR_POR_DEFECTO_CONSOLA_DESARROLLO = false;
 	private static final String VALOR_POR_DEFECTO_CURSEFORGE_CLAVE_API = "";
+	private static final String CLAVE_VIRUSTOTAL_API = "virustotal_clave_api";
+	private static final String CLAVE_METADEFENDER_API = "metadefender_clave_api";
+	private static final String VALOR_POR_DEFECTO_VIRUSTOTAL_CLAVE_API = "";
+	private static final String VALOR_POR_DEFECTO_METADEFENDER_CLAVE_API = "";
 	private static final String CLAVE_RUTA_EJECUTABLE_JAVA_8 = "ruta_ejecutable_java_8";
 	private static final String VALOR_POR_DEFECTO_RUTA_EJECUTABLE_JAVA_8 = "";
 
@@ -47,6 +51,8 @@ public class ConfigMundial {
 
 			propiedades.setProperty("consola_desarrollo", String.valueOf(VALOR_POR_DEFECTO_CONSOLA_DESARROLLO));
 			propiedades.setProperty("curseforge_clave_api", VALOR_POR_DEFECTO_CURSEFORGE_CLAVE_API);
+			propiedades.setProperty(CLAVE_VIRUSTOTAL_API, VALOR_POR_DEFECTO_VIRUSTOTAL_CLAVE_API);
+			propiedades.setProperty(CLAVE_METADEFENDER_API, VALOR_POR_DEFECTO_METADEFENDER_CLAVE_API);
 			propiedades.setProperty(CLAVE_RUTA_EJECUTABLE_JAVA_8, VALOR_POR_DEFECTO_RUTA_EJECUTABLE_JAVA_8);
 			guardar();
 		}
@@ -190,6 +196,54 @@ public class ConfigMundial {
 	 */
 	public void borrarCurseForgeClaveApi() {
 		propiedades.remove("curseforge_clave_api");
+		guardar();
+	}
+
+	/**
+	 * Devuelve la clave API global de VirusTotal.
+	 */
+	public String obtenerVirusTotalClaveApi() {
+		return propiedades.getProperty(CLAVE_VIRUSTOTAL_API, VALOR_POR_DEFECTO_VIRUSTOTAL_CLAVE_API).trim();
+	}
+
+	/**
+	 * Guarda o elimina la clave API global de VirusTotal.
+	 */
+	public void guardarVirusTotalClaveApi(String claveApi) {
+		if (claveApi == null || claveApi.trim().isEmpty()) {
+			propiedades.remove(CLAVE_VIRUSTOTAL_API);
+		} else {
+			propiedades.setProperty(CLAVE_VIRUSTOTAL_API, claveApi.trim());
+		}
+		guardar();
+	}
+
+	public void borrarVirusTotalClaveApi() {
+		propiedades.remove(CLAVE_VIRUSTOTAL_API);
+		guardar();
+	}
+
+	/**
+	 * Devuelve la clave API global de MetaDefender.
+	 */
+	public String obtenerMetaDefenderClaveApi() {
+		return propiedades.getProperty(CLAVE_METADEFENDER_API, VALOR_POR_DEFECTO_METADEFENDER_CLAVE_API).trim();
+	}
+
+	/**
+	 * Guarda o elimina la clave API global de MetaDefender.
+	 */
+	public void guardarMetaDefenderClaveApi(String claveApi) {
+		if (claveApi == null || claveApi.trim().isEmpty()) {
+			propiedades.remove(CLAVE_METADEFENDER_API);
+		} else {
+			propiedades.setProperty(CLAVE_METADEFENDER_API, claveApi.trim());
+		}
+		guardar();
+	}
+
+	public void borrarMetaDefenderClaveApi() {
+		propiedades.remove(CLAVE_METADEFENDER_API);
 		guardar();
 	}
 

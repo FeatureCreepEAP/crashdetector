@@ -12077,4 +12077,289 @@ public class Indonesia implements Idioma {
 		return "Deteksi otomatis";
 	}
 
+	/*
+	 * Teks default untuk pemindai jarak jauh.
+	 */
+
+	public String guardAbrirEscanerNube() {
+		return "VirusTotal dan MetaDefender";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "Pemindai Cloud";
+	}
+
+	public String escanerNubeTitulo() {
+		return "Pemindai mod dengan VirusTotal dan MetaDefender";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "Kami sangat merindukan kalian. Kreativitas, energi, dan semua yang kalian bagikan dengan komunitas tetap hadir dalam proyek ini. Alat ini dengan penuh kasih menjaga kenangan Parallel Artist Project.";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "Peringatan: ketika hash tidak memiliki laporan, file JAR akan dikirim ke penyedia yang dipilih. Sampel yang diunggah ke layanan publik dapat dibagikan dengan mitra keamanan. Paralelisme tidak meningkatkan kuota akun dan terlalu banyak thread dapat menyebabkan HTTP 429. Jangan kirim mod pribadi atau rahasia tanpa meninjau ketentuan akun Anda.";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "Kunci API VirusTotal:";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "Kunci API MetaDefender:";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "Thread simultan:";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "Simpan kunci global";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "Pindai dengan VirusTotal";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "Pindai dengan MetaDefender";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "Pindai dengan keduanya";
+	}
+
+	public String escanerNubeCancelar() {
+		return "Batal";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "Kunci API dan eksekusi";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "Hasil analisis";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "Kunci API global berhasil disimpan.";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "Konfirmasi analisis jarak jauh";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "Hash SHA-256 akan diperiksa terlebih dahulu. File tanpa laporan akan diunggah ke penyedia yang dipilih. Apakah Anda ingin melanjutkan?";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "Kunci API VirusTotal hilang.";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "Kunci API MetaDefender hilang.";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "Tidak ditemukan file JAR yang dapat dibaca di folder mod yang dikonfigurasi.";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "File tidak ada atau tidak dapat dibaca.";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "Gambar Parallel Artist Project tidak tersedia";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "Siap";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "Menganalisis: " + completados + " dari " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "Analisis selesai. Tugas selesai: " + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "Analisis dibatalkan";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "VirusTotal";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "MetaDefender";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "Penyedia tidak dikenal";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "Tidak terdeteksi";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "Berbahaya";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "Mencurigakan";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "Gagal";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "Tidak diketahui";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "Hasil diperoleh melalui kueri hash; file tidak diunggah ulang.";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "Hash tidak memiliki laporan dan file diunggah untuk analisis.";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "Penyedia menyelesaikan permintaan, tetapi tidak mengembalikan statistik yang dapat digunakan.";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + " menolak kunci API atau akun tidak memiliki izin untuk operasi ini.";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + " menolak permintaan karena batas atau kontrol frekuensi akun telah tercapai.";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " Detail: " + detalle;
+		return proveedor + " mengembalikan kode HTTP " + codigo + "." + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + " mengembalikan respons JSON yang tidak valid.";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return "Waktu tunggu analisis " + proveedor + " habis.";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "Penyedia tidak mengembalikan ID analisis.";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "VirusTotal tidak mengembalikan URL untuk mengunggah file besar.";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "Penyedia mengembalikan URL unggahan yang tidak menggunakan HTTPS.";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "Terjadi kesalahan tidak dikenal selama analisis.";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "Penyedia";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "File";
+	}
+
+	public String escanerNubeColEstado() {
+		return "Status";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "Deteksi";
+	}
+
+	public String escanerNubeColMotores() {
+		return "Mesin";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "Detail";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "Pemindai Cloud: warna latar belakang";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "Pemindai Cloud: warna panel";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "Pemindai Cloud: warna panel terang";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "Pemindai Cloud: warna teks";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "Pemindai Cloud: warna teks sekunder";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "Pemindai Cloud: warna bidang";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "Pemindai Cloud: warna teks bidang";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "Pemindai Cloud: aksen VirusTotal";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "Pemindai Cloud: aksen MetaDefender";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "Pemindai Cloud: aksen gabungan";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "Pemindai Cloud: warna peringatan";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "Pemindai Cloud: warna tabel";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "Pemindai Cloud: warna teks tabel";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "Pemindai Cloud: warna seleksi";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "Pemindai Cloud: warna teks terpilih";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "Pemindai Cloud: warna batas";
+	}
+
 }

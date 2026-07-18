@@ -11396,4 +11396,289 @@ public class Arabe implements Idioma {
 		return "الكشف التلقائي";
 	}
 
+	/*
+	 * النصوص الافتراضية للماسح الضوئي السحابي.
+	 */
+
+	public String guardAbrirEscanerNube() {
+		return "VirusTotal و MetaDefender";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "الماسح السحابي";
+	}
+
+	public String escanerNubeTitulo() {
+		return "ماسح الإضافات باستخدام VirusTotal و MetaDefender";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "نفتقدكم كثيراً. إبداعكم، طاقتكم، وكل ما شاركتموه مع المجتمع لا يزال حاضراً في هذا المشروع. تحافظ هذه الأداة بحب على ذكرى Parallel Artist Project.";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "تنبيه: عندما لا يكون هناك تقرير للتجزئة (hash)، سيتم إرسال ملف JAR إلى المزود المحدد. قد تشارك العينات المرفوعة إلى الخدمات العامة مع شركاء الأمن. لا يزيد التوازي من حصة الحساب، وقد تؤدي الخيوط الكثيرة جداً إلى خطأ HTTP 429. لا ترسل إضافات خاصة أو سرية دون مراجعة شروط حسابك.";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "مفتاح API لـ VirusTotal:";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "مفتاح API لـ MetaDefender:";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "الخيوط المتزامنة:";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "حفظ المفاتيح العامة";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "فحص باستخدام VirusTotal";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "فحص باستخدام MetaDefender";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "فحص باستخدام كليهما";
+	}
+
+	public String escanerNubeCancelar() {
+		return "إلغاء";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "مفاتيح API والتشغيل";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "نتائج التحليل";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "تم حفظ مفاتيح API العامة بنجاح.";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "تأكيد التحليل عن بُعد";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "سيتم أولاً الاستعلام عن تجزئة SHA-256. ستُرفع الملفات التي لا تحتوي على تقرير إلى المزود المحدد. هل ترغب في المتابعة؟";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "مفتاح API لـ VirusTotal مفقود.";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "مفتاح API لـ MetaDefender مفقود.";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "لم يتم العثور على ملفات JAR قابلة للقراءة في مجلدات الإضافات المُعدة.";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "الملف غير موجود أو لا يمكن قراءته.";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "صورة Parallel Artist Project غير متاحة";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "جاهز";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "جاري التحليل: " + completados + " من " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "اكتمل التحليل. المهام المكتملة: " + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "تم إلغاء التحليل";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "VirusTotal";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "MetaDefender";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "مزود غير معروف";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "لا توجد اكتشافات";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "خبيث";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "مشبوه";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "فشل";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "غير معروف";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "تم الحصول على النتيجة عبر استعلام التجزئة؛ لم تتم إعادة رفع الملف.";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "لم يكن للتجزئة تقرير، وتم رفع الملف للتحليل.";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "أنهى المزود الطلب، لكنه لم يُرجع إحصائيات قابلة للاستخدام.";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + " رفض مفتاح API أو أن الحساب ليس لديه إذن لهذه العملية.";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + " رفض الطلب بسبب الوصول إلى الحد الأقصى أو التحكم في وتيرة الحساب.";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " التفاصيل: " + detalle;
+		return proveedor + " أعاد رمز HTTP " + codigo + "." + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + " أعاد استجابة JSON غير صالحة.";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return "انتهت مهلة انتظار تحليل " + proveedor + ".";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "لم يُرجع المزود معرفاً للتحليل.";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "لم يُرجع VirusTotal عنوان URL لرفع الملف الكبير.";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "أعاد المزود عنوان URL للرفع لا يستخدم HTTPS.";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "حدث خطأ غير معروف أثناء التحليل.";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "المزود";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "الملف";
+	}
+
+	public String escanerNubeColEstado() {
+		return "الحالة";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "الاكتشافات";
+	}
+
+	public String escanerNubeColMotores() {
+		return "المحركات";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "التفاصيل";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "الماسح السحابي: لون الخلفية";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "الماسح السحابي: لون اللوحة";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "الماسح السحابي: لون اللوحة الفاتحة";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "الماسح السحابي: لون النص";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "الماسح السحابي: لون النص الثانوي";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "الماسح السحابي: لون الحقل";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "الماسح السحابي: لون نص الحقل";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "الماسح السحابي: لون تمييز VirusTotal";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "الماسح السحابي: لون تمييز MetaDefender";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "الماسح السحابي: اللون المميز المشترك";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "الماسح السحابي: لون التحذير";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "الماسح السحابي: لون الجدول";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "الماسح السحابي: لون نص الجدول";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "الماسح السحابي: لون التحديد";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "الماسح السحابي: لون النص المحدد";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "الماسح السحابي: لون الحدود";
+	}
+
 }

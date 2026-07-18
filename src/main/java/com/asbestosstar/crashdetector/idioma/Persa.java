@@ -11448,4 +11448,285 @@ public class Persa implements Idioma {
 		return "تشخیص خودکار";
 	}
 
+	public String guardAbrirEscanerNube() {
+		return "ویروس‌توتال و متا دیفندر";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "اسکنر ابری";
+	}
+
+	public String escanerNubeTitulo() {
+		return "اسکن مادها با ویروس‌توتال و متا دیفندر";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "ما بسیار دلتنگ شما هستیم. خلاقیت، انرژی و هر آنچه با جامعه به اشتراک گذاشتید در این پروژه همچنان حاضر است. این ابزار یاد Parallel Artist Project را با محبت حفظ می‌کند.";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "هشدار: وقتی هش گزارشی نداشته باشد، فایل JAR به ارائه‌دهنده انتخاب شده ارسال می‌شود. نمونه‌های آپلود شده به سرویس‌های عمومی ممکن است با شرکای امنیتی به اشتراک گذاشته شوند. موازی‌سازی سهمیه حساب را افزایش نمی‌دهد و رشته‌های بیش از حد ممکن است منجر به خطای HTTP 429 شود. مادهای خصوصی یا محرمانه را بدون بررسی شرایط حساب خود ارسال نکنید.";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "کلید API ویروس‌توتال:";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "کلید API متا دیفندر:";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "رشته‌های همزمان:";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "ذخیره کلیدهای API جهانی";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "اسکن با ویروس‌توتال";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "اسکن با متا دیفندر";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "اسکن با هر دو";
+	}
+
+	public String escanerNubeCancelar() {
+		return "لغو";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "کلیدهای API و اجرا";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "نتایج تحلیل";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "کلیدهای API جهانی با موفقیت ذخیره شدند.";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "تأیید تحلیل از راه دور";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "ابتدا SHA-256 بررسی می‌شود. فایل‌های بدون گزارش به ارائه‌دهنده انتخاب شده آپلود می‌شوند. آیا می‌خواهید ادامه دهید؟";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "کلید API ویروس‌توتال موجود نیست.";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "کلید API متا دیفندر موجود نیست.";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "هیچ فایل JAR قابل خواندن در پوشه‌های ماد پیکربندی شده یافت نشد.";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "فایل وجود ندارد یا قابل خواندن نیست.";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "تصویر Parallel Artist Project در دسترس نیست";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "آماده";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "در حال تحلیل: " + completados + " از " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "تحلیل پایان یافت. وظایف تکمیل شده: " + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "تحلیل لغو شد";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "ویروس‌توتال";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "متا دیفندر";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "ارائه‌دهنده ناشناس";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "بدون تشخیص";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "بدافزار";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "مشکوک";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "ناموفق";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "ناشناخته";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "نتیجه از طریق پرس‌وجوی هش به دست آمد؛ فایل مجدداً آپلود نشد.";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "هش گزارشی نداشت و فایل برای تحلیل آپلود شد.";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "ارائه‌دهنده درخواست را تکمیل کرد، اما آمار قابل استفاده‌ای برنگرداند.";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + " کلید API را رد کرد یا حساب مجوز این عملیات را ندارد.";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + " درخواست را رد کرد زیرا محدودیت یا کنترل نرخ حساب Reached شده است.";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " جزئیات: " + detalle;
+		return proveedor + " کد HTTP " + codigo + " را برگرداند." + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + " پاسخ JSON نامعتبری برگرداند.";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return "زمان انتظار برای تحلیل " + proveedor + " به پایان رسید.";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "ارائه‌دهنده شناسه تحلیل را برنگرداند.";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "ویروس‌توتال URL ای برای آپلود فایل بزرگ برنگرداند.";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "ارائه‌دهنده URL آپلودی را برگرداند که از HTTPS استفاده نمی‌کند.";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "خطای ناشناخته‌ای در حین تحلیل رخ داد.";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "ارائه‌دهنده";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "فایل";
+	}
+
+	public String escanerNubeColEstado() {
+		return "وضعیت";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "تشخیص‌ها";
+	}
+
+	public String escanerNubeColMotores() {
+		return "موتورها";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "جزئیات";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "اسکنر ابری: رنگ پس‌زمینه";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "اسکنر ابری: رنگ پنل";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "اسکنر ابری: رنگ پنل روشن";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "اسکنر ابری: رنگ متن";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "اسکنر ابری: رنگ متن ثانویه";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "اسکنر ابری: رنگ فیلد";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "اسکنر ابری: رنگ متن فیلد";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "اسکنر ابری: تأکید ویروس‌توتال";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "اسکنر ابری: تأکید متا دیفندر";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "اسکنر ابری: تأکید ترکیبی";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "اسکنر ابری: رنگ هشدار";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "اسکنر ابری: رنگ جدول";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "اسکنر ابری: رنگ متن جدول";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "اسکنر ابری: رنگ انتخاب";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "اسکنر ابری: رنگ متن انتخاب شده";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "اسکنر ابری: رنگ حاشیه";
+	}
+
 }

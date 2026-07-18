@@ -11112,5 +11112,289 @@ public class Japones implements Idioma {
 	public String detectarAutomaticamente() {
 		return "自動検出";
 	}
+	/*
+	 * リモートスキャナーのデフォルトテキスト。
+	 */
+
+	public String guardAbrirEscanerNube() {
+		return "VirusTotal および MetaDefender";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "クラウドスキャナー";
+	}
+
+	public String escanerNubeTitulo() {
+		return "VirusTotal と MetaDefender を使用した Mod スキャナー";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "皆さんをとても懐かしく思います。皆さんの創造性、エネルギー、そしてコミュニティと共有したすべては、このプロジェクトに今も生き続けています。このツールは Parallel Artist Project の思い出を大切に守っています。";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "注意: ハッシュにレポートがない場合、JAR ファイルは選択されたプロバイダーに送信されます。公共サービスにアップロードされたサンプルは、セキュリティパートナーと共有される可能性があります。並列処理はアカウントの_quota_を増やしませんが、スレッドが多すぎると HTTP 429 エラーが発生する可能性があります。アカウントの利用規約を確認せずに、プライベートまたは機密性の高い Mod を送信しないでください。";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "VirusTotal API キー:";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "MetaDefender API キー:";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "同時スレッド数:";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "グローバルキーを保存";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "VirusTotal でスキャン";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "MetaDefender でスキャン";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "両方でスキャン";
+	}
+
+	public String escanerNubeCancelar() {
+		return "キャンセル";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "API キーと実行";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "分析結果";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "グローバル API キーが正常に保存されました。";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "リモート分析の確認";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "まず SHA-256 ハッシュを照会します。レポートのないファイルは選択されたプロバイダーにアップロードされます。続行しますか？";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "VirusTotal API キーがありません。";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "MetaDefender API キーがありません。";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "設定された Mod フォルダに読み取り可能な JAR ファイルが見つかりません。";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "ファイルが存在しないか、読み取れません。";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "Parallel Artist Project の画像は利用できません";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "準備完了";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "分析中: " + completados + " / " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "分析完了。完了したタスク: " + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "分析がキャンセルされました";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "VirusTotal";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "MetaDefender";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "不明なプロバイダー";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "検出なし";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "悪意あり";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "疑わしい";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "失敗";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "不明";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "ハッシュ照会により結果を取得しました。ファイルは再アップロードされませんでした。";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "ハッシュにレポートがなかったため、ファイルをアップロードして分析しました。";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "プロバイダーはリクエストを完了しましたが、使用可能な統計情報を返しませんでした。";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + " が API キーを拒否したか、アカウントにこの操作の権限がありません。";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + " がアカウントの制限またはレート制御に達したため、リクエストを拒否しました。";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " 詳細: " + detalle;
+		return proveedor + " が HTTP コード " + codigo + " を返しました。" + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + " が無効な JSON レスポンスを返しました。";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return proveedor + " の分析タイムアウトが発生しました。";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "プロバイダーが分析 ID を返しませんでした。";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "VirusTotal が大容量ファイルアップロード用の URL を返しませんでした。";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "プロバイダーが HTTPS を使用しないアップロード URL を返しました。";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "分析中に不明なエラーが発生しました。";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "プロバイダー";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "ファイル";
+	}
+
+	public String escanerNubeColEstado() {
+		return "状態";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "検出数";
+	}
+
+	public String escanerNubeColMotores() {
+		return "エンジン";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "詳細";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "クラウドスキャナー: 背景色";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "クラウドスキャナー: パネル色";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "クラウドスキャナー: 明るいパネル色";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "クラウドスキャナー: テキスト色";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "クラウドスキャナー: 副テキスト色";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "クラウドスキャナー: フィールド色";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "クラウドスキャナー: フィールドテキスト色";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "クラウドスキャナー: VirusTotal アクセント";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "クラウドスキャナー: MetaDefender アクセント";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "クラウドスキャナー: 複合アクセント";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "クラウドスキャナー: 警告色";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "クラウドスキャナー: テーブル色";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "クラウドスキャナー: テーブルテキスト色";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "クラウドスキャナー: 選択色";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "クラウドスキャナー: 選択テキスト色";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "クラウドスキャナー: 境界線色";
+	}
 
 }

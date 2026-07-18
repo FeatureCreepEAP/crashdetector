@@ -11492,4 +11492,285 @@ public class Ruso implements Idioma {
 		return "Автоопределение";
 	}
 
+	public String guardAbrirEscanerNube() {
+		return "VirusTotal и MetaDefender";
+	}
+
+	public String escanerNubeBotonLateral() {
+		return "Облачный сканер";
+	}
+
+	public String escanerNubeTitulo() {
+		return "Сканер модов с VirusTotal и MetaDefender";
+	}
+
+	public String escanerNubeMensajeRecuerdoParallelArtistProject() {
+		return "Мы очень скучаем по вам. Ваше творчество, энергия и всё, чем вы делились с сообществом, остаются в этом проекте. Этот инструмент бережно хранит память о Parallel Artist Project.";
+	}
+
+	public String escanerNubeAvisoPrivacidad() {
+		return "Внимание: если у хэша нет отчёта, файл JAR будет отправлен выбранному провайдеру. Образцы, загруженные в публичные сервисы, могут передаваться партнёрам по безопасности. Параллелизм не увеличивает квоту аккаунта, а слишком много потоков могут вызвать ошибку HTTP 429. Не отправляйте приватные или конфиденциальные моды без проверки условий вашего аккаунта.";
+	}
+
+	public String escanerNubeClaveVirusTotal() {
+		return "API-ключ VirusTotal:";
+	}
+
+	public String escanerNubeClaveMetaDefender() {
+		return "API-ключ MetaDefender:";
+	}
+
+	public String escanerNubeNumeroHilos() {
+		return "Одновременных потоков:";
+	}
+
+	public String escanerNubeGuardarClaves() {
+		return "Сохранить глобальные ключи";
+	}
+
+	public String escanerNubeEscanearVirusTotal() {
+		return "Сканировать с VirusTotal";
+	}
+
+	public String escanerNubeEscanearMetaDefender() {
+		return "Сканировать с MetaDefender";
+	}
+
+	public String escanerNubeEscanearAmbos() {
+		return "Сканировать обоими";
+	}
+
+	public String escanerNubeCancelar() {
+		return "Отмена";
+	}
+
+	public String escanerNubeSeccionClaves() {
+		return "API-ключи и выполнение";
+	}
+
+	public String escanerNubeSeccionResultados() {
+		return "Результаты анализа";
+	}
+
+	public String escanerNubeClavesGuardadas() {
+		return "Глобальные API-ключи успешно сохранены.";
+	}
+
+	public String escanerNubeConfirmarSubidaTitulo() {
+		return "Подтвердить удалённый анализ";
+	}
+
+	public String escanerNubeConfirmarSubidaMensaje() {
+		return "Сначала будет проверен SHA-256. Файлы без отчёта будут загружены выбранному провайдеру. Хотите продолжить?";
+	}
+
+	public String escanerNubeFaltaClaveVirusTotal() {
+		return "Отсутствует API-ключ VirusTotal.";
+	}
+
+	public String escanerNubeFaltaClaveMetaDefender() {
+		return "Отсутствует API-ключ MetaDefender.";
+	}
+
+	public String escanerNubeSinArchivosJar() {
+		return "В настроенных папках модов не найдено читаемых файлов JAR.";
+	}
+
+	public String escanerNubeArchivoNoLegible() {
+		return "Файл не существует или не может быть прочитан.";
+	}
+
+	public String escanerNubeImagenNoDisponible() {
+		return "Изображение Parallel Artist Project недоступно";
+	}
+
+	public String escanerNubeEstadoListo() {
+		return "Готово";
+	}
+
+	public String escanerNubeEstadoEscaneando(int completados, int total) {
+		return "Анализ: " + completados + " из " + total;
+	}
+
+	public String escanerNubeEstadoCompletado(int completados) {
+		return "Анализ завершён. Выполнено задач: " + completados;
+	}
+
+	public String escanerNubeEstadoCancelado() {
+		return "Анализ отменён";
+	}
+
+	public String escanerNubeProveedorVirusTotal() {
+		return "VirusTotal";
+	}
+
+	public String escanerNubeProveedorMetaDefender() {
+		return "MetaDefender";
+	}
+
+	public String escanerNubeProveedorDesconocido() {
+		return "Неизвестный провайдер";
+	}
+
+	public String escanerNubeResultadoSinDetecciones() {
+		return "Нет обнаружений";
+	}
+
+	public String escanerNubeResultadoMalicioso() {
+		return "Вредоносный";
+	}
+
+	public String escanerNubeResultadoSospechoso() {
+		return "Подозрительный";
+	}
+
+	public String escanerNubeResultadoFallido() {
+		return "Ошибка";
+	}
+
+	public String escanerNubeResultadoDesconocido() {
+		return "Неизвестно";
+	}
+
+	public String escanerNubeDetalleInformeExistente() {
+		return "Результат получен через запрос хэша; файл не загружался повторно.";
+	}
+
+	public String escanerNubeDetalleArchivoSubido() {
+		return "У хэша не было отчёта, и файл был загружен для анализа.";
+	}
+
+	public String escanerNubeDetalleSinEstadisticas() {
+		return "Провайдер завершил запрос, но не вернул пригодную статистику.";
+	}
+
+	public String escanerNubeErrorClaveRechazada(String proveedor) {
+		return proveedor + " отклонил API-ключ или у аккаунта нет прав на эту операцию.";
+	}
+
+	public String escanerNubeErrorLimite(String proveedor) {
+		return proveedor + " отклонил запрос, так как достигнут лимит или ограничение частоты аккаунта.";
+	}
+
+	public String escanerNubeErrorHttp(String proveedor, int codigo, String detalle) {
+		String sufijo = detalle == null || detalle.trim().isEmpty() ? "" : " Детали: " + detalle;
+		return proveedor + " вернул код HTTP " + codigo + "." + sufijo;
+	}
+
+	public String escanerNubeErrorRespuestaJson(String proveedor) {
+		return proveedor + " вернул неверный ответ JSON.";
+	}
+
+	public String escanerNubeErrorTiempoEspera(String proveedor) {
+		return "Истекло время ожидания анализа " + proveedor + ".";
+	}
+
+	public String escanerNubeErrorIdAnalisis() {
+		return "Провайдер не вернул идентификатор анализа.";
+	}
+
+	public String escanerNubeErrorUrlSubidaVirusTotal() {
+		return "VirusTotal не вернул URL для загрузки большого файла.";
+	}
+
+	public String escanerNubeErrorUrlSubidaNoSegura() {
+		return "Провайдер вернул URL загрузки, который не использует HTTPS.";
+	}
+
+	public String escanerNubeErrorDesconocido() {
+		return "Во время анализа произошла неизвестная ошибка.";
+	}
+
+	public String escanerNubeColProveedor() {
+		return "Провайдер";
+	}
+
+	public String escanerNubeColArchivo() {
+		return "Файл";
+	}
+
+	public String escanerNubeColEstado() {
+		return "Статус";
+	}
+
+	public String escanerNubeColDetecciones() {
+		return "Обнаружения";
+	}
+
+	public String escanerNubeColMotores() {
+		return "Движки";
+	}
+
+	public String escanerNubeColSha256() {
+		return "SHA-256";
+	}
+
+	public String escanerNubeColDetalle() {
+		return "Детали";
+	}
+
+	public String escanerNubeColorFondo() {
+		return "Облачный сканер: цвет фона";
+	}
+
+	public String escanerNubeColorPanel() {
+		return "Облачный сканер: цвет панели";
+	}
+
+	public String escanerNubeColorPanelClaro() {
+		return "Облачный сканер: цвет светлой панели";
+	}
+
+	public String escanerNubeColorTexto() {
+		return "Облачный сканер: цвет текста";
+	}
+
+	public String escanerNubeColorTextoSecundario() {
+		return "Облачный сканер: цвет вторичного текста";
+	}
+
+	public String escanerNubeColorCampo() {
+		return "Облачный сканер: цвет поля";
+	}
+
+	public String escanerNubeColorCampoTexto() {
+		return "Облачный сканер: цвет текста поля";
+	}
+
+	public String escanerNubeColorVirusTotal() {
+		return "Облачный сканер: акцент VirusTotal";
+	}
+
+	public String escanerNubeColorMetaDefender() {
+		return "Облачный сканер: акцент MetaDefender";
+	}
+
+	public String escanerNubeColorAmbos() {
+		return "Облачный сканер: комбинированный акцент";
+	}
+
+	public String escanerNubeColorAdvertencia() {
+		return "Облачный сканер: цвет предупреждения";
+	}
+
+	public String escanerNubeColorTabla() {
+		return "Облачный сканер: цвет таблицы";
+	}
+
+	public String escanerNubeColorTablaTexto() {
+		return "Облачный сканер: цвет текста таблицы";
+	}
+
+	public String escanerNubeColorSeleccion() {
+		return "Облачный сканер: цвет выделения";
+	}
+
+	public String escanerNubeColorSeleccionTexto() {
+		return "Облачный сканер: цвет выделенного текста";
+	}
+
+	public String escanerNubeColorBorde() {
+		return "Облачный сканер: цвет границы";
+	}
+
 }
