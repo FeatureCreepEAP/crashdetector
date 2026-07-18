@@ -392,6 +392,17 @@ public class MonitorDePID {
 				Statics.carpeta.resolve("imagenes/logo_crashassistant.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/niwa.png", Statics.carpeta.resolve("imagenes/niwa.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/motherv3.png", Statics.carpeta.resolve("imagenes/motherv3.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/hs_err.png", Statics.carpeta.resolve("imagenes/hs_err.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/heapdump.png", Statics.carpeta.resolve("imagenes/heapdump.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/parallel_artist_project.png",
+				Statics.carpeta.resolve("imagenes/parallel_artist_project.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/momose_nina.png",
+				Statics.carpeta.resolve("imagenes/momose_nina.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/wendy_mizumi.png",
+				Statics.carpeta.resolve("imagenes/wendy_mizumi.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/holostars_en.png",
+				Statics.carpeta.resolve("imagenes/holostars_en.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/fifa_iran.png", Statics.carpeta.resolve("imagenes/fifa_iran.png").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/AbrolDeMods.md",
 				Statics.carpeta.resolve("docs/espanol/minecraft/AbrolDeMods.md").toFile());
@@ -437,6 +448,18 @@ public class MonitorDePID {
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/SpongeMixins.md",
 				Statics.carpeta.resolve("docs/espanol/minecraft/SpongeMixins.md").toFile());
+
+		copiarACarpetaDesdeJar("/docs/ingles/minecraft/INTEGRACION_ANSIBLE.md",
+				Statics.carpeta.resolve("docs/ingles/minecraft/INTEGRACION_ANSIBLE.md").toFile());
+
+		copiarACarpetaDesdeJar("/docs/ingles/minecraft/INTEGRACIONES_DE_CONTENEDORES.md",
+				Statics.carpeta.resolve("docs/ingles/minecraft/INTEGRACIONES_DE_CONTENEDORES.md").toFile());
+
+		copiarACarpetaDesdeJar("/docs/ingles/minecraft/RESULTADO_CLI_SIN_INTERFAZ_GRAFICA.md",
+				Statics.carpeta.resolve("docs/ingles/minecraft/RESULTADO_CLI_SIN_INTERFAZ_GRAFICA.md").toFile());
+
+		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Lag.md",
+				Statics.carpeta.resolve("docs/ingles/minecraft/Lag.md").toFile());
 
 //docs		
 
@@ -489,6 +512,18 @@ public class MonitorDePID {
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/SpongeMixins.md",
 				Statics.carpeta.resolve("docs/ingles/minecraft/SpongeMixins.md").toFile());
+
+		copiarACarpetaDesdeJar("/docs/ingles/minecraft/ANSIBLE_INTEGRATION.md",
+				Statics.carpeta.resolve("docs/ingles/minecraft/ANSIBLE_INTEGRATION.md").toFile());
+
+		copiarACarpetaDesdeJar("/docs/ingles/minecraft/CONTAINER_INTEGRATIONS.md",
+				Statics.carpeta.resolve("docs/ingles/minecraft/CONTAINER_INTEGRATIONS.md").toFile());
+
+		copiarACarpetaDesdeJar("/docs/ingles/minecraft/HEADLESS_CLI_RESULT.md",
+				Statics.carpeta.resolve("docs/ingles/minecraft/HEADLESS_CLI_RESULT.md").toFile());
+
+		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Lag.md",
+				Statics.carpeta.resolve("docs/ingles/minecraft/Lag.md").toFile());
 
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
