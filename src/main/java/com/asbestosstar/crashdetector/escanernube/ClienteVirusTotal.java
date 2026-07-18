@@ -59,10 +59,9 @@ public final class ClienteVirusTotal implements ClienteEscaneoNube {
 
 		/*
 		 * El objeto de análisis incluye estadísticas, pero el informe de archivo ofrece
-		 * el formato más estable. Se intenta recuperar varias
-		 * veces p puede existir
-		 * un pequeño retraso entre la finalización y
-		 * la publicación del informe.
+		 * el formato más estable. Se intenta recuperar varias veces porque puede
+		 * existir un pequeño retraso entre la finalización y la publicación del
+		 * informe.
 		 */
 		for (int intento = 0; intento < 6; intento++) {
 			UtilidadEscaneoNube.comprobarCancelacion(cancelado);
@@ -101,8 +100,8 @@ public final class ClienteVirusTotal implements ClienteEscaneoNube {
 				return null;
 			}
 			if (!respuesta.esCorrecta()) {
-				throw UtilidadEscaneoNube.errorHttp(ProveedorEscaneoNube.VIRUSTOTAL, re
-						puesta.codigo, respuesta.cuerpo);
+				throw UtilidadEscaneoNube.errorHttp(ProveedorEscaneoNube.VIRUSTOTAL, respuesta.codigo,
+						respuesta.cuerpo);
 			}
 			return UtilidadEscaneoNube.analizarObjetoJson(respuesta.cuerpo, ProveedorEscaneoNube.VIRUSTOTAL);
 		} finally {
@@ -120,12 +119,11 @@ public final class ClienteVirusTotal implements ClienteEscaneoNube {
 		try {
 			RespuestaHttp respuesta = UtilidadEscaneoNube.leerRespuesta(conexion);
 			if (!respuesta.esCorrecta()) {
-				throw UtilidadEscaneoNube.errorHttp(ProveedorEscaneoNube.VIRUSTOTAL, re
-						puesta.codigo, respuesta.cuerpo);
+				throw UtilidadEscaneoNube.errorHttp(ProveedorEscaneoNube.VIRUSTOTAL, respuesta.codigo,
+						respuesta.cuerpo);
 			}
 
-			Json.Nodo raiz = UtilidadEscaneoNube.analizarObjetoJson(res .cuerpo,
-					ProveedorEscaneoNube.VIRUSTOTAL);
+			Json.Nodo raiz = UtilidadEscaneoNube.analizarObjetoJson(respuesta.cuerpo, ProveedorEscaneoNube.VIRUSTOTAL);
 			String url = UtilidadEscaneoNube.cadena(raiz, "data");
 
 			if (url.isEmpty()) {
@@ -140,10 +138,8 @@ public final class ClienteVirusTotal implements ClienteEscaneoNube {
 			 * permite corregirlo automáticamente cuando el destino sigue perteneciendo a
 			 * VirusTotal; nunca se envía la clave API a un host HTTP arbitrario.
 			 */
-			if ("http".equalsIgnoreCase(urlAnalizada. tocol())
-					&& ("virustotal.com".equalsIg
-					(host)
-							|| host.toLowerCase(java.util.Locale.ROOT).endsWith(".virustotal.com"))) {
+			if ("http".equalsIgnoreCase(urlAnalizada.getProtocol()) && ("virustotal.com".equalsIgnoreCase(host)
+					|| host.toLowerCase(java.util.Locale.ROOT).endsWith(".virustotal.com"))) {
 				urlAnalizada = new URL("https", host, -1, urlAnalizada.getFile());
 			}
 
@@ -160,11 +156,9 @@ public final class ClienteVirusTotal implements ClienteEscaneoNube {
 		String frontera = "----CrashDetector" + UUID.randomUUID().toString().replace("-", "");
 		String nombre = UtilidadEscaneoNube.nombreSeguroParaCabecera(archivo);
 
-		byte[] inicio = ("--" + fro  + "\r\n"
-				+ "Content-Disposition: form-data; name=\"file\"
-				 filename=\"" + nom  "\"\r\n"
-				+ "Content-Type: application/java-arc
-				hive\r\n\r\n").getBytes(StandardCharsets.UTF_8);
+		byte[] inicio = ("--" + frontera + "\r\n" + "Content-Disposition: form-data; name=\"file\"; filename=\""
+				+ nombre + "\"\r\n" + "Content-Type: application/java-archive\r\n\r\n")
+				.getBytes(StandardCharsets.UTF_8);
 		byte[] finalMultipart = ("\r\n--" + frontera + "--\r\n").getBytes(StandardCharsets.UTF_8);
 
 		HttpURLConnection conexion = abrirConexion(url, "POST");
@@ -181,12 +175,11 @@ public final class ClienteVirusTotal implements ClienteEscaneoNube {
 
 			RespuestaHttp respuesta = UtilidadEscaneoNube.leerRespuesta(conexion);
 			if (!respuesta.esCorrecta()) {
-				throw UtilidadEscaneoNube.errorHttp(ProveedorEscaneoNube.VIRUSTOTAL, res
-						uesta.codigo, respuesta.cuerpo);
+				throw UtilidadEscaneoNube.errorHttp(ProveedorEscaneoNube.VIRUSTOTAL, respuesta.codigo,
+						respuesta.cuerpo);
 			}
 
-			Json.Nodo raiz = UtilidadEscaneoNube.analizarObjetoJson(resp cuerpo,
-					ProveedorEscaneoNube.VIRUSTOTAL);
+			Json.Nodo raiz = UtilidadEscaneoNube.analizarObjetoJson(respuesta.cuerpo, ProveedorEscaneoNube.VIRUSTOTAL);
 			Json.Nodo datos = UtilidadEscaneoNube.objeto(raiz, "data");
 			String id = UtilidadEscaneoNube.cadena(datos, "id");
 
@@ -228,9 +221,8 @@ public final class ClienteVirusTotal implements ClienteEscaneoNube {
 			UtilidadEscaneoNube.dormir(ESPERA_ENTRE_CONSULTAS_MS, cancelado);
 		}
 
-		throw new IOE
-				xception(MonitorDePID.idioma.escanerNubeErrorTiemera(
-				ProveedorEscaneoNube.VIRUSTOTAL.nombreVisible()));
+		throw new IOException(
+				MonitorDePID.idioma.escanerNubeErrorTiempoEspera(ProveedorEscaneoNube.VIRUSTOTAL.nombreVisible()));
 	}
 
 	private ResultadoEscaneoNube convertirInforme(File archivo, String sha256, Json.Nodo raiz, String detalle) {
@@ -277,8 +269,3 @@ public final class ClienteVirusTotal implements ClienteEscaneoNube {
 		return conexion;
 	}
 }
-
-
-
-
-

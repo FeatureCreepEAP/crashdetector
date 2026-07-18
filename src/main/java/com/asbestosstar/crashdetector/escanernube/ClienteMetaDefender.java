@@ -67,8 +67,8 @@ public final class ClienteMetaDefender implements ClienteEscaneoNube {
 	}
 
 	private Json.Nodo obtenerInformePorHash(String sha256) throws IOException {
-		HttpURLConnection conexion = abrirConexion(RUTA_HASH + UtilidadEscaneoNube.codificarSeg
-				entoRuta(sha256), "GET");
+		HttpURLConnection conexion = abrirConexion(RUTA_HASH + UtilidadEscaneoNube.codificarSegmentoRuta(sha256),
+				"GET");
 		try {
 			RespuestaHttp respuesta = UtilidadEscaneoNube.leerRespuesta(conexion);
 			if (respuesta.codigo == HttpURLConnection.HTTP_NOT_FOUND) {
@@ -144,9 +144,8 @@ public final class ClienteMetaDefender implements ClienteEscaneoNube {
 			UtilidadEscaneoNube.dormir(ESPERA_ENTRE_CONSULTAS_MS, cancelado);
 		}
 
-		throw ne
-				w IOException(MonitorDePID.idioma.escanerNubeErropoEspera(
-				ProveedorEscaneoNube.METADEFENDER.nombreVisible()));
+		throw new IOException(
+				MonitorDePID.idioma.escanerNubeErrorTiempoEspera(ProveedorEscaneoNube.METADEFENDER.nombreVisible()));
 	}
 
 	private ResultadoEscaneoNube convertirInforme(File archivo, String sha256, Json.Nodo raiz, String detalle) {
@@ -200,8 +199,3 @@ public final class ClienteMetaDefender implements ClienteEscaneoNube {
 		return conexion;
 	}
 }
-
-
-
-
-

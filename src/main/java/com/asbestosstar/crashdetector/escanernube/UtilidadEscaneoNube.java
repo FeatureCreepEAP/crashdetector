@@ -85,15 +85,13 @@ public final class UtilidadEscaneoNube {
 		return texto.toString();
 	}
 
-
 	public static Json.Nodo analizarObjetoJson(String cuerpo, ProveedorEscaneoNube proveedor) throws IOException {
 		try {
 			String texto = cuerpo == null || cuerpo.trim().isEmpty() ? "{}" : cuerpo;
 			Json.Nodo nodo = Json.leer(texto);
 
 			if (!esObjetoReal(nodo)) {
-				throw new IOException(
-						MonitorDePID.idioma.escanerNubeErrorRespuestaJson(proveedor.nombreVisible()));
+				throw new IOException(MonitorDePID.idioma.escanerNubeErrorRespuestaJson(proveedor.nombreVisible()));
 			}
 
 			return nodo;
@@ -189,7 +187,7 @@ public final class UtilidadEscaneoNube {
 	 * nodo obtenido en objeto al escribir sobre el. Aqui necesitamos distinguir un
 	 * objeto JSON real de un valor nulo recibido desde una API.
 	 */
-	private c boolean esObjetoReal(Json.Nodo nodo) {
+	private static boolean esObjetoReal(Json.Nodo nodo) {
 		if (nodo == null) {
 			return false;
 		}
@@ -214,8 +212,7 @@ public final class UtilidadEscaneoNube {
 		}
 
 		String detalle = limpiarDetalleServidor(cuerpo);
-		return new IOException(
-				MonitorDePID.idioma.escanerNubeErrorHttp(proveedor.nombreVisible(), codigo, detalle));
+		return new IOException(MonitorDePID.idioma.escanerNubeErrorHttp(proveedor.nombreVisible(), codigo, detalle));
 	}
 
 	public static String limpiarDetalleServidor(String cuerpo) {
@@ -283,7 +280,3 @@ public final class UtilidadEscaneoNube {
 		}
 	}
 }
-
-
-
-
