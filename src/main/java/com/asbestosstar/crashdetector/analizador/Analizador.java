@@ -61,7 +61,7 @@ import com.asbestosstar.crashdetector.analizador.general.SpongeMixinConfigsProbl
 import com.asbestosstar.crashdetector.analizador.general.TienesModDesAnimado;
 import com.asbestosstar.crashdetector.analizador.general.VerificacionGPU;
 import com.asbestosstar.crashdetector.analizador.general.VersionInvalidaSemver;
-import com.asbestosstar.crashdetector.analizador.rapido.AnalizadorNuevo;
+import com.asbestosstar.crashdetector.analizador.rapido.MotorAnalisisMultinucleo;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.config.ConfigStringArray;
 
@@ -431,7 +431,7 @@ public class Analizador {
 		// Delegamos el análisis a AnalizadorNuevo que maneja el motor de streaming
 		// y la compatibilidad con verificaciones legacy.
 		// AnalizadorNuevo ya se encarga del log de inicio.
-		AnalizadorNuevo nuevo = new AnalizadorNuevo(this);
+		MotorAnalisisMultinucleo nuevo = new MotorAnalisisMultinucleo(this);
 
 		// Pasamos TODAS las verificaciones disponibles para que el analizador nuevo las
 		// gestione.

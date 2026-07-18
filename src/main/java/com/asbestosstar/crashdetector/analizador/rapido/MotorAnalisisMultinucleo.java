@@ -26,7 +26,7 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
  * de cada verificacion. Esto evita carreras en verificaciones legacy y en las
  * colecciones mutables de Consola.
  */
-public final class AnalizadorNuevo {
+public final class MotorAnalisisMultinucleo {
 
 	private final Analizador analizadorBase;
 
@@ -35,7 +35,7 @@ public final class AnalizadorNuevo {
 	private final Set<Verificaciones> verificacionesTardias = Collections
 			.newSetFromMap(new IdentityHashMap<Verificaciones, Boolean>());
 
-	public AnalizadorNuevo(Analizador analizadorBase) {
+	public MotorAnalisisMultinucleo(Analizador analizadorBase) {
 		this.analizadorBase = analizadorBase;
 
 		if (analizadorBase != null) {

@@ -28,7 +28,7 @@ import javax.swing.UIManager;
 import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.rapido.AnalizadorNuevo;
+import com.asbestosstar.crashdetector.analizador.rapido.MotorAnalisisMultinucleo;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.sparc.DaxInit;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.sparc.UmemInit;
 import com.asbestosstar.crashdetector.bajo.vectorapi.VectorAPIInit;
@@ -1439,7 +1439,7 @@ public class MonitorDePID {
 				MonitorDePID.consolas.add(consolaViva);
 
 				// Usar el analizador EXISTENTE (MonitorDePID.analizador)
-				AnalizadorNuevo nuevo = new AnalizadorNuevo(analizador);
+				MotorAnalisisMultinucleo nuevo = new MotorAnalisisMultinucleo(analizador);
 
 				// Buffer temporal para armar las lineas que se enviaran a la consola
 				StringBuilder bufferConsola = new StringBuilder();
