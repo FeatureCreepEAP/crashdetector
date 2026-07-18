@@ -696,7 +696,12 @@
 
 
 
-
+<dependency>
+    <groupId>com.asbestosstar</groupId>
+    <artifactId>vectorapistubs</artifactId>
+    <version>1.0.0</version>
+    <scope>provided</scope>
+</dependency>
 
 
 

@@ -5,10 +5,12 @@ import java.util.stream.IntStream;
 import com.oracle.stream.DaxIntStream;
 
 /**
- * Fabrica separada para Oracle DAX IntStream.
+ * Puente separado hacia Oracle DAX Stream Offload.
  *
- * Esta clase solo debe cargarse cuando comOracleStream.jar o el stub compatible
- * ya esta en el classpath.
+ * <p>
+ * Esta clase solamente debe cargarse cuando el JAR y la biblioteca nativa de
+ * Oracle estén disponibles.
+ * </p>
  */
 public final class CDOracleIntStream {
 
@@ -17,5 +19,12 @@ public final class CDOracleIntStream {
 
 	public static IntStream de(int[] datos) {
 		return DaxIntStream.of(datos);
+	}
+
+	/**
+	 * Oracle solamente considera para DAX los flujos marcados como paralelos.
+	 */
+	public static IntStream deParalelo(int[] datos) {
+		return DaxIntStream.of(datos).parallel();
 	}
 }
