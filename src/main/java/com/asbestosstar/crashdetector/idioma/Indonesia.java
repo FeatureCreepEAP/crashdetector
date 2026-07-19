@@ -12362,4 +12362,341 @@ public class Indonesia implements Idioma {
 		return "Pemindai Cloud: warna batas";
 	}
 
+	@Override
+	public String controlJVMDisponible() {
+		return "Saluran diagnosis lokal JVM tersedia.";
+	}
+
+	@Override
+	public String controlJVMGcAceptado() {
+		return "JVM menerima permintaan pengumpulan sampah. System.gc() adalah permintaan usaha terbaik dan JVM dapat memutuskan berapa banyak pekerjaan yang harus dilakukan.";
+	}
+
+	@Override
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "Heap dump dibuat di:\n" + ruta;
+	}
+
+	@Override
+	public String controlJVMCrashAceptado() {
+		return "JVM menerima permintaan crash diagnostik. Proses akan ditutup dan HotSpot akan mencoba membuat file hs_err_pid.";
+	}
+
+	@Override
+	public String controlJVMNoDisponible() {
+		return "Tidak dapat terhubung ke saluran diagnosis lokal JVM yang diamati. Fungsi ini hanya tersedia ketika CrashDetector dimuat di dalam proses game.";
+	}
+
+	@Override
+	public String controlJVMNoAutorizado() {
+		return "JVM menolak permintaan diagnosis karena token lokal tidak valid.";
+	}
+
+	@Override
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "Operasi diagnosis JVM gagal."
+				: "Operasi diagnosis JVM gagal:\n" + detalle;
+	}
+
+	@Override
+	public String consolaCrearHsErr() {
+		return "Picu crash dan buat hs_err";
+	}
+
+	@Override
+	public String consolaEjecutarGc() {
+		return "Minta pengumpulan sampah";
+	}
+
+	@Override
+	public String consolaHeapDump() {
+		return "Heap dump";
+	}
+
+	@Override
+	public String consolaBajar() {
+		return "Pergi ke akhir konsol";
+	}
+
+	@Override
+	public String consolaCompartirLogs() {
+		return "Bagikan log";
+	}
+
+	@Override
+	public String consolaDetenerProceso() {
+		return "Hentikan proses";
+	}
+
+	@Override
+	public String consolaAdvertenciaCrashHsErr() {
+		return "Operasi ini akan sengaja menyebabkan kesalahan native fatal di JVM game. Proses akan segera berakhir dan kemajuan yang belum disimpan akan hilang. HotSpot akan mencoba menulis file hs_err_pid di direktori kerja atau folder sementara. Lanjutkan?";
+	}
+
+	@Override
+	public String consolaGenerarHeapDump() {
+		return "Hasilkan heap dump";
+	}
+
+	@Override
+	public String consolaAbrirVisorHeapDump() {
+		return "Buka penampil heap dump";
+	}
+
+	@Override
+	public String consolaHeapDumpAccion() {
+		return "Anda dapat membuat heap dump dari JVM yang diamati atau membuka penampil untuk mengimpor yang sudah ada.";
+	}
+
+	@Override
+	public String consolaAdvertenciaHeapDump() {
+		return "Heap dump bisa sangat besar dan dapat menjeda game saat ditulis. Ini juga dapat berisi informasi sensitif yang ada di memori, termasuk nama pengguna, jalur, pesan, alamat, kunci, kata sandi, atau token akses. Simpan dan bagikan file dengan hati-hati.";
+	}
+
+	@Override
+	public String consolaHeapDumpSoloVivos() {
+		return "Sertakan hanya objek yang hidup dan dapat dijangkau";
+	}
+
+	@Override
+	public String consolaGuardarHeapDump() {
+		return "Simpan heap dump";
+	}
+
+	@Override
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "File sudah ada dan HotSpot tidak dapat menimpanya:\n" + ruta
+				+ "\n\nHapus sebelum membuat heap dump baru?";
+	}
+
+	@Override
+	public String consolaHeapDumpAbrirDespues() {
+		return "Heap dump selesai. Buka sekarang di penampil?";
+	}
+
+	@Override
+	public String consolaDiagnosticoJVM() {
+		return "Diagnosis JVM";
+	}
+
+	@Override
+	public String heapVisorTitulo() {
+		return "Penampil heap dump — Iran";
+	}
+
+	@Override
+	public String heapVisorDescripcion() {
+		return "Impor file HPROF untuk melihat kelas, paket, dan mod mana yang menempati sebagian besar memori dangkal yang diperkirakan. Analisis cepat tidak menghitung ukuran yang ditahan atau pohon dominator, tetapi memungkinkan menemukan konsumen besar tanpa memuat setiap objek dari dump ke dalam memori.";
+	}
+
+	@Override
+	public String heapVisorAyudaArbol() {
+		return "Tab kelas mengurutkan tipe berdasarkan memori dangkal yang diperkirakan. Tab mod dan paket memungkinkan memperluas beberapa tingkat: JAR atau perpustakaan, paket, dan kelas. Kelas dikaitkan dengan JAR dari folder mod terakhir ketika opsi identifikasi diaktifkan.";
+	}
+
+	@Override
+	public String heapVisorSeleccionarArchivo() {
+		return "Pilih heap dump HPROF";
+	}
+
+	@Override
+	public String heapVisorAnalisisEnCurso() {
+		return "Sudah ada analisis heap dump yang sedang berlangsung.";
+	}
+
+	@Override
+	public String heapVisorArchivoNoValido() {
+		return "File yang dipilih tidak ada atau tidak dapat dibaca.";
+	}
+
+	@Override
+	public String heapVisorAnalizando(String archivo) {
+		return "Menganalisis " + archivo + "...";
+	}
+
+	@Override
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "Menganalisis heap dump: " + porcentaje + "% — " + detalle;
+	}
+
+	@Override
+	public String heapVisorListo(String memoria, long objetos) {
+		return "Siap: " + memoria + " dangkal diperkirakan dalam " + objetos + " objek atau array.";
+	}
+
+	@Override
+	public String heapVisorCancelado() {
+		return "Analisis dibatalkan.";
+	}
+
+	@Override
+	public String heapVisorError() {
+		return "Analisis heap dump gagal.";
+	}
+
+	@Override
+	public String heapVisorErrorDetalle(String detalle) {
+		return "Tidak dapat menganalisis heap dump:\n" + detalle;
+	}
+
+	@Override
+	public String heapVisorRaiz() {
+		return "Heap";
+	}
+
+	@Override
+	public String heapVisorSinMod() {
+		return "Tidak ada mod yang diidentifikasi";
+	}
+
+	@Override
+	public String heapVisorImportar() {
+		return "Impor HPROF";
+	}
+
+	@Override
+	public String heapVisorCancelar() {
+		return "Batalkan analisis";
+	}
+
+	@Override
+	public String heapVisorExpandir() {
+		return "Perluas hingga 4 tingkat";
+	}
+
+	@Override
+	public String heapVisorContraer() {
+		return "Ciutkan semua";
+	}
+
+	@Override
+	public String heapVisorIdentificarMods() {
+		return "Hubungkan kelas dengan JAR mod";
+	}
+
+	@Override
+	public String heapVisorPestanaClases() {
+		return "Kelas";
+	}
+
+	@Override
+	public String heapVisorPestanaMods() {
+		return "Mod dan paket";
+	}
+
+	@Override
+	public String heapVisorColClase() {
+		return "Kelas";
+	}
+
+	@Override
+	public String heapVisorColMod() {
+		return "Mod atau perpustakaan";
+	}
+
+	@Override
+	public String heapVisorColInstancias() {
+		return "Instansi";
+	}
+
+	@Override
+	public String heapVisorColMemoria() {
+		return "Byte diperkirakan";
+	}
+
+	@Override
+	public String heapVisorColPorcentaje() {
+		return "Persentase";
+	}
+
+	@Override
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " instansi — " + memoria;
+	}
+
+	@Override
+	public String heapVisorImagenAlternativa() {
+		return "Pilihan Iran";
+	}
+
+	@Override
+	public String heapVisorColorTextoClaro() {
+		return "Teks terang penampil heap";
+	}
+
+	@Override
+	public String heapVisorColorVerde() {
+		return "Hijau penampil heap";
+	}
+
+	@Override
+	public String heapVisorColorRojo() {
+		return "Merah penampil heap";
+	}
+
+	@Override
+	public String heapVisorColorTabla() {
+		return "Latar belakang tabel penampil heap";
+	}
+
+	@Override
+	public String heapVisorColorSeleccion() {
+		return "Seleksi penampil heap";
+	}
+
+	@Override
+	public String heapVisorColorBorde() {
+		return "Batas penampil heap";
+	}
+
+	@Override
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	@Override
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	@Override
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	@Override
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	@Override
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	@Override
+	public String heapVisorGrupoArreglos() {
+		return "Array";
+	}
+
+	@Override
+	public String heapVisorClaseDesconocida() {
+		return "Kelas tidak dikenal";
+	}
+
+	@Override
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "Kelas 0x" + idHexadecimal;
+	}
+
+	@Override
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "Primitif tidak dikenal";
+	}
+
+	@Override
+	public String consolaCancelar() {
+		return "Batal";
+	}
+
 }

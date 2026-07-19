@@ -11773,4 +11773,274 @@ public class Ruso implements Idioma {
 		return "Облачный сканер: цвет границы";
 	}
 
+	public String controlJVMDisponible() {
+		return "Локальный диагностический канал JVM доступен.";
+	}
+
+	public String controlJVMGcAceptado() {
+		return "JVM получила запрос на сборку мусора. System.gc() — это запрос с наилучшими усилиями, и JVM может решить, сколько работы выполнить.";
+	}
+
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "Дамп кучи создан в:\n" + ruta;
+	}
+
+	public String controlJVMCrashAceptado() {
+		return "JVM приняла запрос на диагностический краш. Процесс будет закрыт, и HotSpot попытается создать файл hs_err_pid.";
+	}
+
+	public String controlJVMNoDisponible() {
+		return "Не удалось подключиться к локальному диагностическому каналу наблюдаемой JVM. Функция доступна только тогда, когда CrashDetector загружен внутри процесса игры.";
+	}
+
+	public String controlJVMNoAutorizado() {
+		return "JVM отклонила диагностический запрос, так как локальный токен недействителен.";
+	}
+
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "Диагностическая операция JVM не удалась."
+				: "Диагностическая операция JVM не удалась:\n" + detalle;
+	}
+
+	public String consolaCrearHsErr() {
+		return "Вызвать краш и создать hs_err";
+	}
+
+	public String consolaEjecutarGc() {
+		return "Запросить сборку мусора";
+	}
+
+	public String consolaHeapDump() {
+		return "Дамп кучи";
+	}
+
+	public String consolaBajar() {
+		return "Перейти в конец консоли";
+	}
+
+	public String consolaCompartirLogs() {
+		return "Поделиться логами";
+	}
+
+	public String consolaDetenerProceso() {
+		return "Остановить процесс";
+	}
+
+	public String consolaAdvertenciaCrashHsErr() {
+		return "Эта операция намеренно вызовет фатальную нативную ошибку в JVM игры. Процесс немедленно завершится, и любой несохраненный прогресс будет потерян. HotSpot попытается записать файл hs_err_pid в рабочую директорию или временную папку. Продолжить?";
+	}
+
+	public String consolaGenerarHeapDump() {
+		return "Создать дамп кучи";
+	}
+
+	public String consolaAbrirVisorHeapDump() {
+		return "Открыть просмотрщик дампа кучи";
+	}
+
+	public String consolaHeapDumpAccion() {
+		return "Вы можете создать дамп кучи наблюдаемой JVM или открыть просмотрщик для импорта существующего.";
+	}
+
+	public String consolaAdvertenciaHeapDump() {
+		return "Дамп кучи может быть очень большим и может приостановить игру во время записи. Он также может содержать конфиденциальную информацию, присутствующую в памяти, включая имена пользователей, пути, сообщения, адреса, ключи, пароли или токены доступа. Сохраняйте и делитесь файлом осторожно.";
+	}
+
+	public String consolaHeapDumpSoloVivos() {
+		return "Включать только живые и достижимые объекты";
+	}
+
+	public String consolaGuardarHeapDump() {
+		return "Сохранить дамп кучи";
+	}
+
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "Файл уже существует, и HotSpot не может его перезаписать:\n" + ruta
+				+ "\n\nУдалить его перед созданием нового дампа кучи?";
+	}
+
+	public String consolaHeapDumpAbrirDespues() {
+		return "Дамп кучи завершен. Открыть его сейчас в просмотрщике?";
+	}
+
+	public String consolaDiagnosticoJVM() {
+		return "Диагностика JVM";
+	}
+
+	public String heapVisorTitulo() {
+		return "Просмотрщик дампа кучи — Иран";
+	}
+
+	public String heapVisorDescripcion() {
+		return "Импортируйте файл HPROF, чтобы увидеть, какие классы, пакеты и моды занимают больше всего оценочной поверхностной памяти. Быстрый анализ не вычисляет удерживаемый размер или дерево доминаторов, но позволяет находить крупных потребителей без загрузки каждого объекта из дампа в память.";
+	}
+
+	public String heapVisorAyudaArbol() {
+		return "Вкладка классов сортирует типы по оценочной поверхностной памяти. Вкладка модов и пакетов позволяет развернуть несколько уровней: JAR или библиотека, пакет и класс. Классы связываются с JAR из последней папки модов, когда опция идентификации включена.";
+	}
+
+	public String heapVisorSeleccionarArchivo() {
+		return "Выбрать дамп кучи HPROF";
+	}
+
+	public String heapVisorAnalisisEnCurso() {
+		return "Анализ дампа кучи уже выполняется.";
+	}
+
+	public String heapVisorArchivoNoValido() {
+		return "Выбранный файл не существует или не может быть прочитан.";
+	}
+
+	public String heapVisorAnalizando(String archivo) {
+		return "Анализ " + archivo + "...";
+	}
+
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "Анализ дампа кучи: " + porcentaje + "% — " + detalle;
+	}
+
+	public String heapVisorListo(String memoria, long objetos) {
+		return "Готово: " + memoria + " оценочных поверхностных в " + objetos + " объектах или массивах.";
+	}
+
+	public String heapVisorCancelado() {
+		return "Анализ отменен.";
+	}
+
+	public String heapVisorError() {
+		return "Анализ дампа кучи не удался.";
+	}
+
+	public String heapVisorErrorDetalle(String detalle) {
+		return "Не удалось проанализировать дамп кучи:\n" + detalle;
+	}
+
+	public String heapVisorRaiz() {
+		return "Куча";
+	}
+
+	public String heapVisorSinMod() {
+		return "Мод не идентифицирован";
+	}
+
+	public String heapVisorImportar() {
+		return "Импорт HPROF";
+	}
+
+	public String heapVisorCancelar() {
+		return "Отменить анализ";
+	}
+
+	public String heapVisorExpandir() {
+		return "Развернуть до 4 уровней";
+	}
+
+	public String heapVisorContraer() {
+		return "Свернуть все";
+	}
+
+	public String heapVisorIdentificarMods() {
+		return "Связать классы с JAR модов";
+	}
+
+	public String heapVisorPestanaClases() {
+		return "Классы";
+	}
+
+	public String heapVisorPestanaMods() {
+		return "Моды и пакеты";
+	}
+
+	public String heapVisorColClase() {
+		return "Класс";
+	}
+
+	public String heapVisorColMod() {
+		return "Мод или библиотека";
+	}
+
+	public String heapVisorColInstancias() {
+		return "Экземпляры";
+	}
+
+	public String heapVisorColMemoria() {
+		return "Оценочные байты";
+	}
+
+	public String heapVisorColPorcentaje() {
+		return "Процент";
+	}
+
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " экземпляров — " + memoria;
+	}
+
+	public String heapVisorImagenAlternativa() {
+		return "Выбор Ирана";
+	}
+
+	public String heapVisorColorTextoClaro() {
+		return "Светлый текст просмотрщика кучи";
+	}
+
+	public String heapVisorColorVerde() {
+		return "Зеленый цвет просмотрщика кучи";
+	}
+
+	public String heapVisorColorRojo() {
+		return "Красный цвет просмотрщика кучи";
+	}
+
+	public String heapVisorColorTabla() {
+		return "Фон таблицы просмотрщика кучи";
+	}
+
+	public String heapVisorColorSeleccion() {
+		return "Выделение просмотрщика кучи";
+	}
+
+	public String heapVisorColorBorde() {
+		return "Граница просмотрщика кучи";
+	}
+
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	public String heapVisorGrupoArreglos() {
+		return "Массивы";
+	}
+
+	public String heapVisorClaseDesconocida() {
+		return "Неизвестный класс";
+	}
+
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "Класс 0x" + idHexadecimal;
+	}
+
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "Неизвестный примитив";
+	}
+
+	public String consolaCancelar() {
+		return "Отмена";
+	}
+
 }

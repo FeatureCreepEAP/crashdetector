@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.cargador.Cargador;
+import com.asbestosstar.crashdetector.controljvm.ServidorControlJVM;
 
 public class CargadoresComun {
 
@@ -27,6 +28,13 @@ public class CargadoresComun {
 		Statics.carpetas_de_mods.addAll(carpetas_de_mods);
 		if (!Statics.cargador) {
 			Statics.cargador = true;
+
+			/*
+			 * El servidor vive dentro de la JVM del juego. La JVM monitora se comunica con
+			 * él por loopback usando un token aleatorio.
+			 */
+			ServidorControlJVM.iniciar();
+
 			if (!Statics.app_en_cdlauncher) {
 				ProxySysOutSysErr.init();
 				if (Cargador.claseExiste("org.apache.logging.log4j.core.LoggerContext")) {

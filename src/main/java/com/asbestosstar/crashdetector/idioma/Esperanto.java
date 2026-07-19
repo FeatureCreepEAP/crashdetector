@@ -11779,4 +11779,341 @@ public class Esperanto implements Idioma {
 		return "Nuba skanilo: bordera koloro";
 	}
 
+	@Override
+	public String controlJVMDisponible() {
+		return "La loka diagnoza kanalo de JVM estas disponebla.";
+	}
+
+	@Override
+	public String controlJVMGcAceptado() {
+		return "JVM ricevis la peton pri rubkolektado. System.gc() estas peto de plej bona klopodo kaj JVM povas decidi kiom da laboro plenumi.";
+	}
+
+	@Override
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "La amaseldumpo estis kreita en:\n" + ruta;
+	}
+
+	@Override
+	public String controlJVMCrashAceptado() {
+		return "JVM akceptis la peton pri diagnoza kraŝo. La procezo fermiĝos kaj HotSpot provos krei dosieron hs_err_pid.";
+	}
+
+	@Override
+	public String controlJVMNoDisponible() {
+		return "Ne eblis konektiĝi al la loka diagnoza kanalo de la observata JVM. La funkcio nur haveblas kiam CrashDetector ŝargiĝis ene de la ludprocezo.";
+	}
+
+	@Override
+	public String controlJVMNoAutorizado() {
+		return "JVM rifuzis la diagnosan peton ĉar la loka ĵetono ne validas.";
+	}
+
+	@Override
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "La diagnoza operacio de JVM malsukcesis."
+				: "La diagnoza operacio de JVM malsukcesis:\n" + detalle;
+	}
+
+	@Override
+	public String consolaCrearHsErr() {
+		return "Kaŭzi kraŝon kaj krei hs_err";
+	}
+
+	@Override
+	public String consolaEjecutarGc() {
+		return "Peti rubkolektadon";
+	}
+
+	@Override
+	public String consolaHeapDump() {
+		return "Amaseldumpo";
+	}
+
+	@Override
+	public String consolaBajar() {
+		return "Iri al la fino de la konzolo";
+	}
+
+	@Override
+	public String consolaCompartirLogs() {
+		return "Kundividi registrojn";
+	}
+
+	@Override
+	public String consolaDetenerProceso() {
+		return "Haligi procezon";
+	}
+
+	@Override
+	public String consolaAdvertenciaCrashHsErr() {
+		return "Ĉi tiu operacio intence kaŭzos fatalan nacian eraron en la JVM de la ludo. La procezo tuj finiĝos kaj iu ajn nesavita progreso perdiĝos. HotSpot provos skribi dosieron hs_err_pid en la labora dosierujo aŭ en la provizora dosierujo. Ĉu daŭrigi?";
+	}
+
+	@Override
+	public String consolaGenerarHeapDump() {
+		return "Generi amaseldumpon";
+	}
+
+	@Override
+	public String consolaAbrirVisorHeapDump() {
+		return "Malfermi vidilon de amaseldumpo";
+	}
+
+	@Override
+	public String consolaHeapDumpAccion() {
+		return "Vi povas krei amaseldumpon de la observata JVM aŭ malfermi la vidilon por importi ekzistantan.";
+	}
+
+	@Override
+	public String consolaAdvertenciaHeapDump() {
+		return "Amaseldumpo povas esti tre granda kaj povas paŭzigi la ludon dum skribado. Ĝi ankaŭ povas enhavi sentemajn informojn ĉeestantajn en memoro, inkluzive uzantnomojn, vojojn, mesaĝojn, adresojn, ŝlosilojn, pasvortojn aŭ alirĵetonojn. Konservu kaj kundividu la dosieron zorge.";
+	}
+
+	@Override
+	public String consolaHeapDumpSoloVivos() {
+		return "Inkluzivi nur vivajn kaj atingeblajn objektojn";
+	}
+
+	@Override
+	public String consolaGuardarHeapDump() {
+		return "Konservi amaseldumpon";
+	}
+
+	@Override
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "La dosiero jam ekzistas kaj HotSpot ne povas superskribi ĝin:\n" + ruta
+				+ "\n\nĈu forigi ĝin antaŭ krei la novan amaseldumpon?";
+	}
+
+	@Override
+	public String consolaHeapDumpAbrirDespues() {
+		return "La amaseldumpo finiĝis. Ĉu malfermi ĝin nun en la vidilo?";
+	}
+
+	@Override
+	public String consolaDiagnosticoJVM() {
+		return "Diagnozo de JVM";
+	}
+
+	@Override
+	public String heapVisorTitulo() {
+		return "Vidilo de amaseldumpo — Irano";
+	}
+
+	@Override
+	public String heapVisorDescripcion() {
+		return "Importu HPROF-dosieron por vidi kiuj klasoj, pakoj kaj modoj okupas la plej multan estimatan surfacan memoron. La rapida analizo ne kalkulas retenitan grandon aŭ dominantan arbon, sed permesas lokigi grandajn konsumantojn sen ŝargi ĉiun objekton de la dumpo en memoron.";
+	}
+
+	@Override
+	public String heapVisorAyudaArbol() {
+		return "La langeto de klasoj ordigas la tipojn laŭ estimata surfaca memoro. La langeto de modoj kaj pakoj permesas etendi plurajn nivelojn: JAR aŭ biblioteko, pako kaj klaso. La klasoj rilatas al la JAR-oj de la lasta moddosierujo kiam la identiga opcio estas aktivigita.";
+	}
+
+	@Override
+	public String heapVisorSeleccionarArchivo() {
+		return "Elekti HPROF amaseldumpon";
+	}
+
+	@Override
+	public String heapVisorAnalisisEnCurso() {
+		return "Jam estas analizo de amaseldumpo okazanta.";
+	}
+
+	@Override
+	public String heapVisorArchivoNoValido() {
+		return "La elektita dosiero ne ekzistas aŭ ne estas legebla.";
+	}
+
+	@Override
+	public String heapVisorAnalizando(String archivo) {
+		return "Analizante " + archivo + "...";
+	}
+
+	@Override
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "Analizante amaseldumpon: " + porcentaje + "% — " + detalle;
+	}
+
+	@Override
+	public String heapVisorListo(String memoria, long objetos) {
+		return "Preta: " + memoria + " estimataj surfacaj en " + objetos + " objektoj aŭ tabeloj.";
+	}
+
+	@Override
+	public String heapVisorCancelado() {
+		return "Analizo nuligita.";
+	}
+
+	@Override
+	public String heapVisorError() {
+		return "La analizo de la amaseldumpo malsukcesis.";
+	}
+
+	@Override
+	public String heapVisorErrorDetalle(String detalle) {
+		return "Ne eblis analizi la amaseldumpon:\n" + detalle;
+	}
+
+	@Override
+	public String heapVisorRaiz() {
+		return "Amaso";
+	}
+
+	@Override
+	public String heapVisorSinMod() {
+		return "Sen identigita modo";
+	}
+
+	@Override
+	public String heapVisorImportar() {
+		return "Importi HPROF";
+	}
+
+	@Override
+	public String heapVisorCancelar() {
+		return "Nuligi analizon";
+	}
+
+	@Override
+	public String heapVisorExpandir() {
+		return "Etendi ĝis 4 niveloj";
+	}
+
+	@Override
+	public String heapVisorContraer() {
+		return "Kolapsi ĉion";
+	}
+
+	@Override
+	public String heapVisorIdentificarMods() {
+		return "Rilati klasojn al JAR-oj de modoj";
+	}
+
+	@Override
+	public String heapVisorPestanaClases() {
+		return "Klasoj";
+	}
+
+	@Override
+	public String heapVisorPestanaMods() {
+		return "Modoj kaj pakoj";
+	}
+
+	@Override
+	public String heapVisorColClase() {
+		return "Klaso";
+	}
+
+	@Override
+	public String heapVisorColMod() {
+		return "Modo aŭ biblioteko";
+	}
+
+	@Override
+	public String heapVisorColInstancias() {
+		return "Instancoj";
+	}
+
+	@Override
+	public String heapVisorColMemoria() {
+		return "Estimataj bajtoj";
+	}
+
+	@Override
+	public String heapVisorColPorcentaje() {
+		return "Procento";
+	}
+
+	@Override
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " instancoj — " + memoria;
+	}
+
+	@Override
+	public String heapVisorImagenAlternativa() {
+		return "Elekto de Irano";
+	}
+
+	@Override
+	public String heapVisorColorTextoClaro() {
+		return "Hela teksto de amasvidilo";
+	}
+
+	@Override
+	public String heapVisorColorVerde() {
+		return "Verda de amasvidilo";
+	}
+
+	@Override
+	public String heapVisorColorRojo() {
+		return "Ruĝa de amasvidilo";
+	}
+
+	@Override
+	public String heapVisorColorTabla() {
+		return "Fono de tabelo de amasvidilo";
+	}
+
+	@Override
+	public String heapVisorColorSeleccion() {
+		return "Selektado de amasvidilo";
+	}
+
+	@Override
+	public String heapVisorColorBorde() {
+		return "Bordero de amasvidilo";
+	}
+
+	@Override
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	@Override
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	@Override
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	@Override
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	@Override
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	@Override
+	public String heapVisorGrupoArreglos() {
+		return "Tabeloj";
+	}
+
+	@Override
+	public String heapVisorClaseDesconocida() {
+		return "Nekonata klaso";
+	}
+
+	@Override
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "Klaso 0x" + idHexadecimal;
+	}
+
+	@Override
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "Nekonata primitivo";
+	}
+
+	@Override
+	public String consolaCancelar() {
+		return "Nuligi";
+	}
+
 }

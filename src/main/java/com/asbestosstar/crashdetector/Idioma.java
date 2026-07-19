@@ -4619,4 +4619,138 @@ public interface Idioma {
 
 	public String escanerNubeColorBorde();
 
+	public String controlJVMDisponible();
+
+	public String controlJVMGcAceptado();
+
+	public String controlJVMHeapDumpCreado(String ruta);
+
+	public String controlJVMCrashAceptado();
+
+	public String controlJVMNoDisponible();
+
+	public String controlJVMNoAutorizado();
+
+	public String controlJVMError(String detalle);
+
+	public String consolaCrearHsErr();
+
+	public String consolaEjecutarGc();
+
+	public String consolaHeapDump();
+
+	public String consolaBajar();
+
+	public String consolaCompartirLogs();
+
+	public String consolaDetenerProceso();
+
+	public String consolaAdvertenciaCrashHsErr();
+
+	public String consolaGenerarHeapDump();
+
+	public String consolaAbrirVisorHeapDump();
+
+	public String consolaHeapDumpAccion();
+
+	public String consolaAdvertenciaHeapDump();
+
+	public String consolaHeapDumpSoloVivos();
+
+	public String consolaGuardarHeapDump();
+
+	public String consolaHeapDumpSobrescribir(String ruta);
+
+	public String consolaHeapDumpAbrirDespues();
+
+	public String consolaDiagnosticoJVM();
+
+	public String heapVisorTitulo();
+
+	public String heapVisorDescripcion();
+
+	public String heapVisorAyudaArbol();
+
+	public String heapVisorSeleccionarArchivo();
+
+	public String heapVisorAnalisisEnCurso();
+
+	public String heapVisorArchivoNoValido();
+
+	public String heapVisorAnalizando(String archivo);
+
+	public String heapVisorProgreso(int porcentaje, String detalle);
+
+	public String heapVisorListo(String memoria, long objetos);
+
+	public String heapVisorCancelado();
+
+	public String heapVisorError();
+
+	public String heapVisorErrorDetalle(String detalle);
+
+	public String heapVisorRaiz();
+
+	public String heapVisorSinMod();
+
+	public String heapVisorImportar();
+
+	public String heapVisorCancelar();
+
+	public String heapVisorExpandir();
+
+	public String heapVisorContraer();
+
+	public String heapVisorIdentificarMods();
+
+	public String heapVisorPestanaClases();
+
+	public String heapVisorPestanaMods();
+
+	public String heapVisorColClase();
+
+	public String heapVisorColMod();
+
+	public String heapVisorColInstancias();
+
+	public String heapVisorColMemoria();
+
+	public String heapVisorColPorcentaje();
+
+	public String heapVisorDetalleNodo(long instancias, String memoria);
+
+	public String heapVisorImagenAlternativa();
+
+	public String heapVisorColorTextoClaro();
+
+	public String heapVisorColorVerde();
+
+	public String heapVisorColorRojo();
+
+	public String heapVisorColorTabla();
+
+	public String heapVisorColorSeleccion();
+
+	public String heapVisorColorBorde();
+
+	public String heapVisorGrupoMinecraft();
+
+	public String heapVisorGrupoForge();
+
+	public String heapVisorGrupoFabric();
+
+	public String heapVisorGrupoLwjgl();
+
+	public String heapVisorGrupoJava();
+
+	public String heapVisorGrupoArreglos();
+
+	public String heapVisorClaseDesconocida();
+
+	public String heapVisorClaseId(String idHexadecimal);
+
+	public String heapVisorTipoPrimitivoDesconocido();
+
+	public String consolaCancelar();
+
 }

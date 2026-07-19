@@ -404,6 +404,9 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/holostars_en.png",
 				Statics.carpeta.resolve("imagenes/holostars_en.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/fifa_iran.png", Statics.carpeta.resolve("imagenes/fifa_iran.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/count_binface.png",
+				Statics.carpeta.resolve("imagenes/count_binface.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/gc.png", Statics.carpeta.resolve("imagenes/gc.png").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/AbrolDeMods.md",
 				Statics.carpeta.resolve("docs/espanol/minecraft/AbrolDeMods.md").toFile());

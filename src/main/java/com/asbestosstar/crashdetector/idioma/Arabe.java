@@ -11681,4 +11681,341 @@ public class Arabe implements Idioma {
 		return "الماسح السحابي: لون الحدود";
 	}
 
+	@Override
+	public String controlJVMDisponible() {
+		return "قناة التشخيص المحلية لـ JVM متاحة.";
+	}
+
+	@Override
+	public String controlJVMGcAceptado() {
+		return "تلقت JVM طلب جمع القمامة. System.gc() هو طلب بأفضل جهد، وقد تقرر JVM مقدار العمل الذي يجب القيام به.";
+	}
+
+	@Override
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "تم إنشاء تفريغ الكومة (Heap Dump) في:\n" + ruta;
+	}
+
+	@Override
+	public String controlJVMCrashAceptado() {
+		return "قبلت JVM طلب التعطل التشخيصي. ستغلق العملية وسيحاول HotSpot إنشاء ملف hs_err_pid.";
+	}
+
+	@Override
+	public String controlJVMNoDisponible() {
+		return "لم يتم الاتصال بقناة التشخيص المحلية لـ JVM المراقبة. هذه الوظيفة متاحة فقط عند تحميل CrashDetector داخل عملية اللعبة.";
+	}
+
+	@Override
+	public String controlJVMNoAutorizado() {
+		return "رفضت JVM طلب التشخيص لأن الرمز المحلي غير صالح.";
+	}
+
+	@Override
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "فشلت عملية تشخيص JVM."
+				: "فشلت عملية تشخيص JVM:\n" + detalle;
+	}
+
+	@Override
+	public String consolaCrearHsErr() {
+		return "إحداث تعطل وإنشاء hs_err";
+	}
+
+	@Override
+	public String consolaEjecutarGc() {
+		return "طلب جمع القمامة";
+	}
+
+	@Override
+	public String consolaHeapDump() {
+		return "تفريغ الكومة";
+	}
+
+	@Override
+	public String consolaBajar() {
+		return "الانتقال إلى نهاية وحدة التحكم";
+	}
+
+	@Override
+	public String consolaCompartirLogs() {
+		return "مشاركة السجلات";
+	}
+
+	@Override
+	public String consolaDetenerProceso() {
+		return "إيقاف العملية";
+	}
+
+	@Override
+	public String consolaAdvertenciaCrashHsErr() {
+		return "ستتسبب هذه العملية عمداً في حدوث خطأ أصلي قاتل في JVM اللعبة. ستنتهي العملية فوراً وستفقد أي تقدم غير محفوظ. سيحاول HotSpot كتابة ملف hs_err_pid في دليل العمل أو المجلد المؤقت. هل تريد المتابعة؟";
+	}
+
+	@Override
+	public String consolaGenerarHeapDump() {
+		return "إنشاء تفريغ للكومة";
+	}
+
+	@Override
+	public String consolaAbrirVisorHeapDump() {
+		return "فتح عارض تفريغ الكومة";
+	}
+
+	@Override
+	public String consolaHeapDumpAccion() {
+		return "يمكنك إنشاء تفريغ لكومة JVM المراقبة أو فتح العارض لاستيراد واحد موجود.";
+	}
+
+	@Override
+	public String consolaAdvertenciaHeapDump() {
+		return "يمكن أن يكون تفريغ الكومة كبيراً جداً وقد يوقف اللعبة أثناء الكتابة. قد يحتوي أيضاً على معلومات حساسة موجودة في الذاكرة، بما في ذلك أسماء المستخدمين والمسارات والرسائل والعناوين والمفاتيح وكلمات المرور أو رموز الوصول. احفظ وشارك الملف بحذر.";
+	}
+
+	@Override
+	public String consolaHeapDumpSoloVivos() {
+		return "تضمين الكائنات الحية والقابلة للوصول فقط";
+	}
+
+	@Override
+	public String consolaGuardarHeapDump() {
+		return "حفظ تفريغ الكومة";
+	}
+
+	@Override
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "الملف موجود بالفعل ولا يمكن لـ HotSpot كتابته فوقه:\n" + ruta
+				+ "\n\nهل تريد حذفه قبل إنشاء تفريغ الكومة الجديد؟";
+	}
+
+	@Override
+	public String consolaHeapDumpAbrirDespues() {
+		return "اكتمل تفريغ الكومة. هل تريد فتحه الآن في العارض؟";
+	}
+
+	@Override
+	public String consolaDiagnosticoJVM() {
+		return "تشخيص JVM";
+	}
+
+	@Override
+	public String heapVisorTitulo() {
+		return "عارض تفريغ الكومة — إيران";
+	}
+
+	@Override
+	public String heapVisorDescripcion() {
+		return "استورد ملف HPROF لعرض الفئات والحزم والإضافات التي تستهلك أكبر قدر من الذاكرة السطحية المقدرة. لا يحسب التحليل السريع الحجم المحتفظ به أو شجرة المسيطر، لكنه يسمح بتحديد المستهلكين الكبار دون تحميل كل كائن من التفريغ في الذاكرة.";
+	}
+
+	@Override
+	public String heapVisorAyudaArbol() {
+		return "sortيب التبويب الخاص بالفئات الأنواع حسب الذاكرة السطحية المقدرة. يتيح تبويب الإضافات والحزم توسيع عدة مستويات: JAR أو مكتبة، حزمة وفئة. ترتبط الفئات بملفات JAR في آخر مجلد للإضافات عند تفعيل خيار التعريف.";
+	}
+
+	@Override
+	public String heapVisorSeleccionarArchivo() {
+		return "تحديد تفريغ كومة HPROF";
+	}
+
+	@Override
+	public String heapVisorAnalisisEnCurso() {
+		return "يوجد بالفعل تحليل لتفريغ الكومة قيد التنفيذ.";
+	}
+
+	@Override
+	public String heapVisorArchivoNoValido() {
+		return "الملف المحدد غير موجود أو لا يمكن قراءته.";
+	}
+
+	@Override
+	public String heapVisorAnalizando(String archivo) {
+		return "جاري تحليل " + archivo + "...";
+	}
+
+	@Override
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "جاري تحليل تفريغ الكومة: " + porcentaje + "% — " + detalle;
+	}
+
+	@Override
+	public String heapVisorListo(String memoria, long objetos) {
+		return "جاهز: " + memoria + " سطحية مقدرة في " + objetos + " كائن أو مصفوفة.";
+	}
+
+	@Override
+	public String heapVisorCancelado() {
+		return "تم إلغاء التحليل.";
+	}
+
+	@Override
+	public String heapVisorError() {
+		return "فشل تحليل تفريغ الكومة.";
+	}
+
+	@Override
+	public String heapVisorErrorDetalle(String detalle) {
+		return "لم يتمكن من تحليل تفريغ الكومة:\n" + detalle;
+	}
+
+	@Override
+	public String heapVisorRaiz() {
+		return "الكومة";
+	}
+
+	@Override
+	public String heapVisorSinMod() {
+		return "لم يتم تحديد إضافة";
+	}
+
+	@Override
+	public String heapVisorImportar() {
+		return "استيراد HPROF";
+	}
+
+	@Override
+	public String heapVisorCancelar() {
+		return "إلغاء التحليل";
+	}
+
+	@Override
+	public String heapVisorExpandir() {
+		return "توسيع حتى 4 مستويات";
+	}
+
+	@Override
+	public String heapVisorContraer() {
+		return "طي الكل";
+	}
+
+	@Override
+	public String heapVisorIdentificarMods() {
+		return "ربط الفئات بملفات JAR للإضافات";
+	}
+
+	@Override
+	public String heapVisorPestanaClases() {
+		return "الفئات";
+	}
+
+	@Override
+	public String heapVisorPestanaMods() {
+		return "الإضافات والحزم";
+	}
+
+	@Override
+	public String heapVisorColClase() {
+		return "الفئة";
+	}
+
+	@Override
+	public String heapVisorColMod() {
+		return "الإضافة أو المكتبة";
+	}
+
+	@Override
+	public String heapVisorColInstancias() {
+		return "النسخ";
+	}
+
+	@Override
+	public String heapVisorColMemoria() {
+		return "البايتات المقدرة";
+	}
+
+	@Override
+	public String heapVisorColPorcentaje() {
+		return "النسبة المئوية";
+	}
+
+	@Override
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " نسخ — " + memoria;
+	}
+
+	@Override
+	public String heapVisorImagenAlternativa() {
+		return "اختيار إيران";
+	}
+
+	@Override
+	public String heapVisorColorTextoClaro() {
+		return "نص فاتح لعارض الكومة";
+	}
+
+	@Override
+	public String heapVisorColorVerde() {
+		return "أخضر عارض الكومة";
+	}
+
+	@Override
+	public String heapVisorColorRojo() {
+		return "أحمر عارض الكومة";
+	}
+
+	@Override
+	public String heapVisorColorTabla() {
+		return "خلفية جدول عارض الكومة";
+	}
+
+	@Override
+	public String heapVisorColorSeleccion() {
+		return "تحديد عارض الكومة";
+	}
+
+	@Override
+	public String heapVisorColorBorde() {
+		return "حدود عارض الكومة";
+	}
+
+	@Override
+	public String heapVisorGrupoMinecraft() {
+		return "ماينكرافت";
+	}
+
+	@Override
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	@Override
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	@Override
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	@Override
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	@Override
+	public String heapVisorGrupoArreglos() {
+		return "المصفوفات";
+	}
+
+	@Override
+	public String heapVisorClaseDesconocida() {
+		return "فئة غير معروفة";
+	}
+
+	@Override
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "فئة 0x" + idHexadecimal;
+	}
+
+	@Override
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "نوع بدائي غير معروف";
+	}
+
+	@Override
+	public String consolaCancelar() {
+		return "إلغاء";
+	}
+
 }

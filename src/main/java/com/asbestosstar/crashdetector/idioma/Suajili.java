@@ -12216,4 +12216,274 @@ public class Suajili implements Idioma {
 		return "Kichunguzi cha wingu: rangi ya mpaka";
 	}
 
+	public String controlJVMDisponible() {
+		return "Chaneli ya ndani ya utambuzi wa JVM inapatikana.";
+	}
+
+	public String controlJVMGcAceptado() {
+		return "JVM ilipokea ombi la ukusanyaji takataka. System.gc() ni ombi la juhudi bora na JVM inaweza kuamua kazi ngapi ya kufanya.";
+	}
+
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "Heap dump iliundwa katika:\n" + ruta;
+	}
+
+	public String controlJVMCrashAceptado() {
+		return "JVM ilikubali ombi la crash ya utambuzi. Mchakato utaishia na HotSpot itajaribu kuunda faili ya hs_err_pid.";
+	}
+
+	public String controlJVMNoDisponible() {
+		return "Haikuweza kuunganisha na chaneli ya ndani ya utambuzi wa JVM inayoangaliwa. Kipengele hiki kinapatikana tu wakati CrashDetector imepakuliwa ndani ya mchakato wa mchezo.";
+	}
+
+	public String controlJVMNoAutorizado() {
+		return "JVM ilikataa ombi la utambuzi kwa sababu tokeni ya ndani si sahihi.";
+	}
+
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "Operesheni ya utambuzi wa JVM ilishindwa."
+				: "Operesheni ya utambuzi wa JVM ilishindwa:\n" + detalle;
+	}
+
+	public String consolaCrearHsErr() {
+		return "Sababisha crash na uunde hs_err";
+	}
+
+	public String consolaEjecutarGc() {
+		return "Omba ukusanyaji takataka";
+	}
+
+	public String consolaHeapDump() {
+		return "Heap dump";
+	}
+
+	public String consolaBajar() {
+		return "Nenda mwishoni mwa konsoli";
+	}
+
+	public String consolaCompartirLogs() {
+		return "Shiriki rekodi";
+	}
+
+	public String consolaDetenerProceso() {
+		return "Simamisha mchakato";
+	}
+
+	public String consolaAdvertenciaCrashHsErr() {
+		return "Operesheni hii itasababisha makosa asilia mabaya kwa makusudi katika JVM ya mchezo. Mchakato utaishia mara moja na maendeleo yoyote yasiyohifadhiwa yatapotea. HotSpot itajaribu kuandika faili ya hs_err_pid katika saraka ya kufanya kazi au folda ya muda. Unaendelea?";
+	}
+
+	public String consolaGenerarHeapDump() {
+		return "Tengeneza heap dump";
+	}
+
+	public String consolaAbrirVisorHeapDump() {
+		return "Fungua kitazama cha heap dump";
+	}
+
+	public String consolaHeapDumpAccion() {
+		return "Unaweza kutengeneza heap dump ya JVM inayoangaliwa au ufungue kitazama ili kuingiza moja iliyopo.";
+	}
+
+	public String consolaAdvertenciaHeapDump() {
+		return "Heap dump inaweza kuwa kubwa sana na inaweza kusimamisha mchezo wakati wa kuandika. Pia inaweza kuwa na taarifa nyeti zilizopo katika kumbukumbu, ikiwa ni pamoja na majina ya watumiaji, njia, ujumbe, anwani, funguo, nenosiri au tokeni za upatikanaji. Hifadhi na shiriki faili kwa tahadhari.";
+	}
+
+	public String consolaHeapDumpSoloVivos() {
+		return "Jumuisha vitu vilivyo hai na vinavyoweza kufikiwa pekee";
+	}
+
+	public String consolaGuardarHeapDump() {
+		return "Hifadhi heap dump";
+	}
+
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "Faili tayari ipo na HotSpot haiwezi kuiandika tena:\n" + ruta
+				+ "\n\nIfute kabla ya kutengeneza heap dump mpya?";
+	}
+
+	public String consolaHeapDumpAbrirDespues() {
+		return "Heap dump imemalizika. Ifungue sasa katika kitazama?";
+	}
+
+	public String consolaDiagnosticoJVM() {
+		return "Utambuzi wa JVM";
+	}
+
+	public String heapVisorTitulo() {
+		return "Kitazama cha heap dump — Iran";
+	}
+
+	public String heapVisorDescripcion() {
+		return "Ingiza faili ya HPROF ili kuona ni aina zipi, vifurushi na mod zinazochukua kumbukumbu ya juu zaidi ya makadirio ya uso. Uchambuzi wa haraka hauhesabu ukubwa ulioshikiliwa au mti wa watawala, lakini inaruhusu kupata watumiaji wakubwa bila kupakia kila kitu kutoka kwenye dump katika kumbukumbu.";
+	}
+
+	public String heapVisorAyudaArbol() {
+		return "Kichupo cha darasa hupanga aina kwa kumbukumbu ya juu ya makadirio ya uso. Kichupo cha mod na vifurushi kinaruhusu kupanua viwango vingi: JAR au maktaba, kifurushi na darasa. Darasa zinahusishwa na JAR kutoka kwenye folda ya mwisho ya mod wakati chaguo la utambulisho limewezeshwa.";
+	}
+
+	public String heapVisorSeleccionarArchivo() {
+		return "Chagua heap dump ya HPROF";
+	}
+
+	public String heapVisorAnalisisEnCurso() {
+		return "Tayari kuna uchambuzi wa heap dump unaofanyika.";
+	}
+
+	public String heapVisorArchivoNoValido() {
+		return "Faili iliyochaguliwa haipo au haiwezi kusomwa.";
+	}
+
+	public String heapVisorAnalizando(String archivo) {
+		return "Inachambua " + archivo + "...";
+	}
+
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "Inachambua heap dump: " + porcentaje + "% — " + detalle;
+	}
+
+	public String heapVisorListo(String memoria, long objetos) {
+		return "Tayari: " + memoria + " za juu za makadirio katika vitu " + objetos + " au array.";
+	}
+
+	public String heapVisorCancelado() {
+		return "Uchambuzi umeghairiwa.";
+	}
+
+	public String heapVisorError() {
+		return "Uchambuzi wa heap dump ulishindwa.";
+	}
+
+	public String heapVisorErrorDetalle(String detalle) {
+		return "Haikuweza kuchambua heap dump:\n" + detalle;
+	}
+
+	public String heapVisorRaiz() {
+		return "Heap";
+	}
+
+	public String heapVisorSinMod() {
+		return "Hakuna mod iliyotambuliwa";
+	}
+
+	public String heapVisorImportar() {
+		return "Ingiza HPROF";
+	}
+
+	public String heapVisorCancelar() {
+		return "Ghairi uchambuzi";
+	}
+
+	public String heapVisorExpandir() {
+		return "Panua hadi viwango 4";
+	}
+
+	public String heapVisorContraer() {
+		return "Kunja yote";
+	}
+
+	public String heapVisorIdentificarMods() {
+		return "Husisha darasa na JAR za mod";
+	}
+
+	public String heapVisorPestanaClases() {
+		return "Darasa";
+	}
+
+	public String heapVisorPestanaMods() {
+		return "Mod na vifurushi";
+	}
+
+	public String heapVisorColClase() {
+		return "Darasa";
+	}
+
+	public String heapVisorColMod() {
+		return "Mod au maktaba";
+	}
+
+	public String heapVisorColInstancias() {
+		return "Mifano";
+	}
+
+	public String heapVisorColMemoria() {
+		return "Baiti za makadirio";
+	}
+
+	public String heapVisorColPorcentaje() {
+		return "Asilimia";
+	}
+
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " mifano — " + memoria;
+	}
+
+	public String heapVisorImagenAlternativa() {
+		return "Uchaguzi wa Iran";
+	}
+
+	public String heapVisorColorTextoClaro() {
+		return "Maandishi nyepesi ya kitazama cha heap";
+	}
+
+	public String heapVisorColorVerde() {
+		return "Kijani cha kitazama cha heap";
+	}
+
+	public String heapVisorColorRojo() {
+		return "Nyekundu cha kitazama cha heap";
+	}
+
+	public String heapVisorColorTabla() {
+		return "Mandhari ya jedwali la kitazama cha heap";
+	}
+
+	public String heapVisorColorSeleccion() {
+		return "Uchaguzi wa kitazama cha heap";
+	}
+
+	public String heapVisorColorBorde() {
+		return "Mpaka wa kitazama cha heap";
+	}
+
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	public String heapVisorGrupoArreglos() {
+		return "Array";
+	}
+
+	public String heapVisorClaseDesconocida() {
+		return "Darasa lisilojulikana";
+	}
+
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "Darasa 0x" + idHexadecimal;
+	}
+
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "Msingi usiojulikana";
+	}
+
+	public String consolaCancelar() {
+		return "Ghairi";
+	}
+
 }

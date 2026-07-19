@@ -11393,4 +11393,339 @@ public class Coreano implements Idioma {
 		return "클라우드 스캐너: 테두리 색상";
 	}
 
+	@Override
+	public String controlJVMDisponible() {
+		return "로컬 JVM 진단 채널을 사용할 수 있습니다.";
+	}
+
+	@Override
+	public String controlJVMGcAceptado() {
+		return "JVM이 가비지 컬렉션 요청을 받았습니다. System.gc()는 최선의 노력을 다하는 요청이며, JVM은 수행할 작업량을 결정할 수 있습니다.";
+	}
+
+	@Override
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "힙 덤프가 다음 위치에 생성되었습니다:\n" + ruta;
+	}
+
+	@Override
+	public String controlJVMCrashAceptado() {
+		return "JVM이 진단 충돌 요청을 수락했습니다. 프로세스가 종료되며 HotSpot이 hs_err_pid 파일을 생성하려고 시도합니다.";
+	}
+
+	@Override
+	public String controlJVMNoDisponible() {
+		return "모니터링 중인 JVM의 로컬 진단 채널에 연결할 수 없습니다. 이 기능은 CrashDetector가 게임 프로세스 내에서 로드된 경우에만 사용할 수 있습니다.";
+	}
+
+	@Override
+	public String controlJVMNoAutorizado() {
+		return "로컬 토큰이 유효하지 않아 JVM이 진단 요청을 거부했습니다.";
+	}
+
+	@Override
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "JVM 진단 작업이 실패했습니다." : "JVM 진단 작업이 실패했습니다:\n" + detalle;
+	}
+
+	@Override
+	public String consolaCrearHsErr() {
+		return "충돌 유발 및 hs_err 생성";
+	}
+
+	@Override
+	public String consolaEjecutarGc() {
+		return "가비지 컬렉션 요청";
+	}
+
+	@Override
+	public String consolaHeapDump() {
+		return "힙 덤프";
+	}
+
+	@Override
+	public String consolaBajar() {
+		return "콘솔 끝으로 이동";
+	}
+
+	@Override
+	public String consolaCompartirLogs() {
+		return "로그 공유";
+	}
+
+	@Override
+	public String consolaDetenerProceso() {
+		return "프로세스 중지";
+	}
+
+	@Override
+	public String consolaAdvertenciaCrashHsErr() {
+		return "이 작업은 의도적으로 게임 JVM에서 치명적인 네이티브 오류를 발생시킵니다. 프로세스가 즉시 종료되며 저장되지 않은 진행 상황은 모두 손실됩니다. HotSpot은 작업 디렉터리 또는 임시 폴더에 hs_err_pid 파일을 작성하려고 시도합니다. 계속하시겠습니까?";
+	}
+
+	@Override
+	public String consolaGenerarHeapDump() {
+		return "힙 덤프 생성";
+	}
+
+	@Override
+	public String consolaAbrirVisorHeapDump() {
+		return "힙 덤프 뷰어 열기";
+	}
+
+	@Override
+	public String consolaHeapDumpAccion() {
+		return "모니터링 중인 JVM의 힙 덤프를 생성하거나 기존 덤프를 가져오기 위해 뷰어를 열 수 있습니다.";
+	}
+
+	@Override
+	public String consolaAdvertenciaHeapDump() {
+		return "힙 덤프는 매우 클 수 있으며 작성 중 게임을 일시 정지시킬 수 있습니다. 또한 메모리에 있는 사용자 이름, 경로, 메시지, 주소, 키, 비밀번호 또는 액세스 토큰을 포함한 민감한 정보를 포함할 수 있습니다. 파일을 주의해서 저장하고 공유하십시오.";
+	}
+
+	@Override
+	public String consolaHeapDumpSoloVivos() {
+		return "살아있고 도달 가능한 객체만 포함";
+	}
+
+	@Override
+	public String consolaGuardarHeapDump() {
+		return "힙 덤프 저장";
+	}
+
+	@Override
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "파일이 이미 존재하며 HotSpot이 이를 덮어쓸 수 없습니다:\n" + ruta + "\n\n새 힙 덤프를 생성하기 전에 삭제하시겠습니까?";
+	}
+
+	@Override
+	public String consolaHeapDumpAbrirDespues() {
+		return "힙 덤프가 완료되었습니다. 지금 뷰어에서 열겠습니까?";
+	}
+
+	@Override
+	public String consolaDiagnosticoJVM() {
+		return "JVM 진단";
+	}
+
+	@Override
+	public String heapVisorTitulo() {
+		return "힙 덤프 뷰어 — 이란";
+	}
+
+	@Override
+	public String heapVisorDescripcion() {
+		return "HPROF 파일을 가져와서 가장 많은 추정 얕은 메모리를 차지하는 클래스, 패키지 및 모드를 확인합니다. 빠른 분석은 보유 크기나 지배자 트리를 계산하지 않지만, 덤프의 모든 객체를 메모리에 로드하지 않고도 대형 소비자를 찾을 수 있게 해줍니다.";
+	}
+
+	@Override
+	public String heapVisorAyudaArbol() {
+		return "클래스 탭은 추정 얕은 메모리별로 유형을 정렬합니다. 모드 및 패키지 탭은 여러 수준(JAR 또는 라이브러리, 패키지 및 클래스)을 확장할 수 있게 해줍니다. 식별 옵션이 활성화되면 클래스는 마지막 모드 폴더의 JAR과 연관됩니다.";
+	}
+
+	@Override
+	public String heapVisorSeleccionarArchivo() {
+		return "HPROF 힙 덤프 선택";
+	}
+
+	@Override
+	public String heapVisorAnalisisEnCurso() {
+		return "이미 힙 덤프 분석이 진행 중입니다.";
+	}
+
+	@Override
+	public String heapVisorArchivoNoValido() {
+		return "선택한 파일이 존재하지 않거나 읽을 수 없습니다.";
+	}
+
+	@Override
+	public String heapVisorAnalizando(String archivo) {
+		return "" + archivo + " 분석 중...";
+	}
+
+	@Override
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "힙 덤프 분석 중: " + porcentaje + "% — " + detalle;
+	}
+
+	@Override
+	public String heapVisorListo(String memoria, long objetos) {
+		return "준비됨: " + objetos + "개의 객체 또는 배열에서 추정 얕은 메모리 " + memoria;
+	}
+
+	@Override
+	public String heapVisorCancelado() {
+		return "분석이 취소되었습니다.";
+	}
+
+	@Override
+	public String heapVisorError() {
+		return "힙 덤프 분석이 실패했습니다.";
+	}
+
+	@Override
+	public String heapVisorErrorDetalle(String detalle) {
+		return "힙 덤프를 분석할 수 없습니다:\n" + detalle;
+	}
+
+	@Override
+	public String heapVisorRaiz() {
+		return "힙";
+	}
+
+	@Override
+	public String heapVisorSinMod() {
+		return "식별된 모드 없음";
+	}
+
+	@Override
+	public String heapVisorImportar() {
+		return "HPROF 가져오기";
+	}
+
+	@Override
+	public String heapVisorCancelar() {
+		return "분석 취소";
+	}
+
+	@Override
+	public String heapVisorExpandir() {
+		return "4단계까지 확장";
+	}
+
+	@Override
+	public String heapVisorContraer() {
+		return "모두 축소";
+	}
+
+	@Override
+	public String heapVisorIdentificarMods() {
+		return "클래스를 모드 JAR과 연관";
+	}
+
+	@Override
+	public String heapVisorPestanaClases() {
+		return "클래스";
+	}
+
+	@Override
+	public String heapVisorPestanaMods() {
+		return "모드 및 패키지";
+	}
+
+	@Override
+	public String heapVisorColClase() {
+		return "클래스";
+	}
+
+	@Override
+	public String heapVisorColMod() {
+		return "모드 또는 라이브러리";
+	}
+
+	@Override
+	public String heapVisorColInstancias() {
+		return "인스턴스";
+	}
+
+	@Override
+	public String heapVisorColMemoria() {
+		return "추정 바이트";
+	}
+
+	@Override
+	public String heapVisorColPorcentaje() {
+		return "백분율";
+	}
+
+	@Override
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " 인스턴스 — " + memoria;
+	}
+
+	@Override
+	public String heapVisorImagenAlternativa() {
+		return "이란 선택";
+	}
+
+	@Override
+	public String heapVisorColorTextoClaro() {
+		return "힙 뷰어 밝은 텍스트";
+	}
+
+	@Override
+	public String heapVisorColorVerde() {
+		return "힙 뷰어 녹색";
+	}
+
+	@Override
+	public String heapVisorColorRojo() {
+		return "힙 뷰어 빨간색";
+	}
+
+	@Override
+	public String heapVisorColorTabla() {
+		return "힙 뷰어 테이블 배경";
+	}
+
+	@Override
+	public String heapVisorColorSeleccion() {
+		return "힙 뷰어 선택";
+	}
+
+	@Override
+	public String heapVisorColorBorde() {
+		return "힙 뷰어 테두리";
+	}
+
+	@Override
+	public String heapVisorGrupoMinecraft() {
+		return "마인크래프트";
+	}
+
+	@Override
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	@Override
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	@Override
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	@Override
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	@Override
+	public String heapVisorGrupoArreglos() {
+		return "배열";
+	}
+
+	@Override
+	public String heapVisorClaseDesconocida() {
+		return "알 수 없는 클래스";
+	}
+
+	@Override
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "클래스 0x" + idHexadecimal;
+	}
+
+	@Override
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "알 수 없는 기본 유형";
+	}
+
+	@Override
+	public String consolaCancelar() {
+		return "취소";
+	}
+
 }

@@ -11397,4 +11397,339 @@ public class Japones implements Idioma {
 		return "クラウドスキャナー: 境界線色";
 	}
 
+	@Override
+	public String controlJVMDisponible() {
+		return "ローカル JVM 診断チャネルが利用可能です。";
+	}
+
+	@Override
+	public String controlJVMGcAceptado() {
+		return "JVM がガベージコレクションのリクエストを受け取りました。System.gc() はベストエフォート型のリクエストであり、JVM は実行する作業量を決定できます。";
+	}
+
+	@Override
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "ヒープダンプが作成されました:\n" + ruta;
+	}
+
+	@Override
+	public String controlJVMCrashAceptado() {
+		return "JVM が診断クラッシュのリクエストを受け入れました。プロセスは終了し、HotSpot は hs_err_pid ファイルの作成を試みます。";
+	}
+
+	@Override
+	public String controlJVMNoDisponible() {
+		return "監視対象の JVM のローカル診断チャネルに接続できませんでした。この機能は、CrashDetector がゲームプロセス内でロードされている場合にのみ利用可能です。";
+	}
+
+	@Override
+	public String controlJVMNoAutorizado() {
+		return "ローカルトークンが無効なため、JVM が診断リクエストを拒否しました。";
+	}
+
+	@Override
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "JVM 診断操作が失敗しました。" : "JVM 診断操作が失敗しました:\n" + detalle;
+	}
+
+	@Override
+	public String consolaCrearHsErr() {
+		return "クラッシュを誘発して hs_err を作成";
+	}
+
+	@Override
+	public String consolaEjecutarGc() {
+		return "ガベージコレクションをリクエスト";
+	}
+
+	@Override
+	public String consolaHeapDump() {
+		return "ヒープダンプ";
+	}
+
+	@Override
+	public String consolaBajar() {
+		return "コンソールの末尾へ移動";
+	}
+
+	@Override
+	public String consolaCompartirLogs() {
+		return "ログを共有";
+	}
+
+	@Override
+	public String consolaDetenerProceso() {
+		return "プロセスを停止";
+	}
+
+	@Override
+	public String consolaAdvertenciaCrashHsErr() {
+		return "この操作は意図的にゲームの JVM で致命的なネイティブエラーを引き起こします。プロセスは直ちに終了し、保存されていない進捗はすべて失われます。HotSpot は作業ディレクトリまたは一時フォルダに hs_err_pid ファイルを書き込もうとします。続行しますか？";
+	}
+
+	@Override
+	public String consolaGenerarHeapDump() {
+		return "ヒープダンプを生成";
+	}
+
+	@Override
+	public String consolaAbrirVisorHeapDump() {
+		return "ヒープダンプビューアを開く";
+	}
+
+	@Override
+	public String consolaHeapDumpAccion() {
+		return "監視対象の JVM のヒープダンプを作成するか、既存のものをインポートするためにビューアを開くことができます。";
+	}
+
+	@Override
+	public String consolaAdvertenciaHeapDump() {
+		return "ヒープダンプは非常に大きくなる可能性があり、書き込み中にゲームが一時停止する場合があります。また、メモリ内にあるユーザー名、パス、メッセージ、アドレス、キー、パスワード、またはアクセストークンなどの機密情報を含む可能性があります。ファイルの保存と共有には注意してください。";
+	}
+
+	@Override
+	public String consolaHeapDumpSoloVivos() {
+		return "生存しており到達可能なオブジェクトのみを含める";
+	}
+
+	@Override
+	public String consolaGuardarHeapDump() {
+		return "ヒープダンプを保存";
+	}
+
+	@Override
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "ファイルはすでに存在し、HotSpot はそれを上書きできません:\n" + ruta + "\n\n新しいヒープダンプを作成する前に削除しますか？";
+	}
+
+	@Override
+	public String consolaHeapDumpAbrirDespues() {
+		return "ヒープダンプが完了しました。今すぐビューアで開きますか？";
+	}
+
+	@Override
+	public String consolaDiagnosticoJVM() {
+		return "JVM 診断";
+	}
+
+	@Override
+	public String heapVisorTitulo() {
+		return "ヒープダンプビューア — イラン";
+	}
+
+	@Override
+	public String heapVisorDescripcion() {
+		return "HPROF ファイルをインポートして、どのクラス、パッケージ、および Mod が推定浅層メモリを最も多く占有しているかを確認します。高速分析は保持サイズや支配木を計算しませんが、ダンプ内のすべてのオブジェクトをメモリにロードせずに大きな消費者を特定することができます。";
+	}
+
+	@Override
+	public String heapVisorAyudaArbol() {
+		return "クラスタブは推定浅層メモリによってタイプを並べ替えます。Mod およびパッケージタブは、JAR またはライブラリ、パッケージ、およびクラスといった複数のレベルを展開することを可能にします。識別オプションが有効な場合、クラスは最後の Mod フォルダ内の JAR に関連付けられます。";
+	}
+
+	@Override
+	public String heapVisorSeleccionarArchivo() {
+		return "HPROF ヒープダンプを選択";
+	}
+
+	@Override
+	public String heapVisorAnalisisEnCurso() {
+		return "すでにヒープダンプの分析が進行中です。";
+	}
+
+	@Override
+	public String heapVisorArchivoNoValido() {
+		return "選択したファイルが存在しないか、読み取れません。";
+	}
+
+	@Override
+	public String heapVisorAnalizando(String archivo) {
+		return "" + archivo + " を分析中...";
+	}
+
+	@Override
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "ヒープダンプを分析中: " + porcentaje + "% — " + detalle;
+	}
+
+	@Override
+	public String heapVisorListo(String memoria, long objetos) {
+		return "準備完了: " + objetos + " 個のオブジェクトまたは配列で推定浅層メモリ " + memoria;
+	}
+
+	@Override
+	public String heapVisorCancelado() {
+		return "分析がキャンセルされました。";
+	}
+
+	@Override
+	public String heapVisorError() {
+		return "ヒープダンプの分析に失敗しました。";
+	}
+
+	@Override
+	public String heapVisorErrorDetalle(String detalle) {
+		return "ヒープダンプを分析できませんでした:\n" + detalle;
+	}
+
+	@Override
+	public String heapVisorRaiz() {
+		return "ヒープ";
+	}
+
+	@Override
+	public String heapVisorSinMod() {
+		return "識別された Mod なし";
+	}
+
+	@Override
+	public String heapVisorImportar() {
+		return "HPROF をインポート";
+	}
+
+	@Override
+	public String heapVisorCancelar() {
+		return "分析をキャンセル";
+	}
+
+	@Override
+	public String heapVisorExpandir() {
+		return "4 レベルまで展開";
+	}
+
+	@Override
+	public String heapVisorContraer() {
+		return "すべて折りたたむ";
+	}
+
+	@Override
+	public String heapVisorIdentificarMods() {
+		return "クラスを Mod JAR に関連付ける";
+	}
+
+	@Override
+	public String heapVisorPestanaClases() {
+		return "クラス";
+	}
+
+	@Override
+	public String heapVisorPestanaMods() {
+		return "Mod とパッケージ";
+	}
+
+	@Override
+	public String heapVisorColClase() {
+		return "クラス";
+	}
+
+	@Override
+	public String heapVisorColMod() {
+		return "Mod またはライブラリ";
+	}
+
+	@Override
+	public String heapVisorColInstancias() {
+		return "インスタンス";
+	}
+
+	@Override
+	public String heapVisorColMemoria() {
+		return "推定バイト数";
+	}
+
+	@Override
+	public String heapVisorColPorcentaje() {
+		return "パーセンテージ";
+	}
+
+	@Override
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " インスタンス — " + memoria;
+	}
+
+	@Override
+	public String heapVisorImagenAlternativa() {
+		return "イランの選択";
+	}
+
+	@Override
+	public String heapVisorColorTextoClaro() {
+		return "ヒープビューアの明るいテキスト";
+	}
+
+	@Override
+	public String heapVisorColorVerde() {
+		return "ヒープビューアの緑";
+	}
+
+	@Override
+	public String heapVisorColorRojo() {
+		return "ヒープビューアの赤";
+	}
+
+	@Override
+	public String heapVisorColorTabla() {
+		return "ヒープビューアのテーブル背景";
+	}
+
+	@Override
+	public String heapVisorColorSeleccion() {
+		return "ヒープビューアの選択";
+	}
+
+	@Override
+	public String heapVisorColorBorde() {
+		return "ヒープビューアの境界線";
+	}
+
+	@Override
+	public String heapVisorGrupoMinecraft() {
+		return "マインクラフト";
+	}
+
+	@Override
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	@Override
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	@Override
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	@Override
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	@Override
+	public String heapVisorGrupoArreglos() {
+		return "配列";
+	}
+
+	@Override
+	public String heapVisorClaseDesconocida() {
+		return "不明なクラス";
+	}
+
+	@Override
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "クラス 0x" + idHexadecimal;
+	}
+
+	@Override
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "不明なプリミティブ";
+	}
+
+	@Override
+	public String consolaCancelar() {
+		return "キャンセル";
+	}
+
 }

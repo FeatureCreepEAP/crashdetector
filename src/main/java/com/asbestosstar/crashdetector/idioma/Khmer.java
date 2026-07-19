@@ -11979,4 +11979,341 @@ public class Khmer implements Idioma {
 		return "ឧបករណ៍ស្កេនពពក៖ ពណ៌គែម";
 	}
 
+	@Override
+	public String controlJVMDisponible() {
+		return "ឆានែលធ្វើរោគវិនិច្ឆ័យ JVM មូលដ្ឋានមាន។";
+	}
+
+	@Override
+	public String controlJVMGcAceptado() {
+		return "JVM បានទទួលសំណើប្រមូលសំរាម។ System.gc() គឺជាសំណើដែលព្យាយាមអស់ពីសមត្ថភាព ហើយ JVM អាចសម្រេចចិត្តថាតើត្រូវធ្វើការងារប៉ុន្មាន។";
+	}
+
+	@Override
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "ការបញ្ចេញ Heap ត្រូវបានបង្កើតនៅ:\n" + ruta;
+	}
+
+	@Override
+	public String controlJVMCrashAceptado() {
+		return "JVM បានទទួលយកសំណើធ្វើរោគវិនិច្ឆ័យការដួលរលំ។ ដំណើរការនឹងបិទ ហើយ HotSpot នឹងព្យាយាមបង្កើតឯកសារ hs_err_pid។";
+	}
+
+	@Override
+	public String controlJVMNoDisponible() {
+		return "មិនអាចភ្ជាប់ទៅកាន់ឆានែលធ្វើរោគវិនិច្ឆ័យមូលដ្ឋាននៃ JVM ដែលកំពុងតាមដានបានទេ។ មុខងារនេះមានតែនៅពេលដែល CrashDetector ត្រូវបានផ្ទុកនៅក្នុងដំណើរការហ្គេម។";
+	}
+
+	@Override
+	public String controlJVMNoAutorizado() {
+		return "JVM បានបដិសេធសំណើធ្វើរោគវិនិច្ឆ័យដោយសារតែ Token មូលដ្ឋានមិនត្រឹមត្រូវ។";
+	}
+
+	@Override
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "ប្រតិបត្តិការធ្វើរោគវិនិច្ឆ័យ JVM បានបរាជ័យ។"
+				: "ប្រតិបត្តិការធ្វើរោគវិនិច្ឆ័យ JVM បានបរាជ័យ:\n" + detalle;
+	}
+
+	@Override
+	public String consolaCrearHsErr() {
+		return "បង្កឱ្យមានការដួលរលំ និងបង្កើត hs_err";
+	}
+
+	@Override
+	public String consolaEjecutarGc() {
+		return "ស្នើសុំប្រមូលសំរាម";
+	}
+
+	@Override
+	public String consolaHeapDump() {
+		return "ការបញ្ចេញ Heap";
+	}
+
+	@Override
+	public String consolaBajar() {
+		return "ទៅចុងបញ្ចប់នៃកុងសូល";
+	}
+
+	@Override
+	public String consolaCompartirLogs() {
+		return "ចែករំលែកកំណត់ហេតុ";
+	}
+
+	@Override
+	public String consolaDetenerProceso() {
+		return "បញ្ឈប់ដំណើរការ";
+	}
+
+	@Override
+	public String consolaAdvertenciaCrashHsErr() {
+		return "ប្រតិបត្តិការនេះនឹងបង្កឱ្យមានកំហុស Native ធ្ងន់ធ្ងរដោយចេតនានៅក្នុង JVM នៃហ្គេម។ ដំណើរការនឹងបញ្ចប់ភ្លាមៗ ហើយការវិវត្តន៍ដែលមិនបានរក្សាទុកនឹងបាត់បង់។ HotSpot នឹងព្យាយាមសរសេរឯកសារ hs_err_pid នៅក្នុងថតការងារ ឬថតបណ្តោះអាសន្ន។ តើអ្នកចង់បន្តទេ?";
+	}
+
+	@Override
+	public String consolaGenerarHeapDump() {
+		return "បង្កើតការបញ្ចេញ Heap";
+	}
+
+	@Override
+	public String consolaAbrirVisorHeapDump() {
+		return "បើកកម្មវិធីមើលការបញ្ចេញ Heap";
+	}
+
+	@Override
+	public String consolaHeapDumpAccion() {
+		return "អ្នកអាចបង្កើតការបញ្ចេញ Heap នៃ JVM ដែលកំពុងតាមដាន ឬបើកកម្មវិធីមើលដើម្បីនាំចូលមួយដែលមានស្រាប់។";
+	}
+
+	@Override
+	public String consolaAdvertenciaHeapDump() {
+		return "ការបញ្ចេញ Heap អាចមានទំហំធំខ្លាំង ហើយអាចផ្អាកហ្គេមនៅពេលកំពុងសរសេរ។ វាក៏អាចមានព័ត៌មានសម្ងាត់ដែលមាននៅក្នុងអង្គចងចាំ រួមមានឈ្មោះអ្នកប្រើប្រាស់ ផ្លូវ សារ អាសយដ្ឋាន កូនសោ ពាក្យសម្ងាត់ ឬ Token ចូលប្រើ។ សូមរក្សាទុក និងចែករំលែកឯកសារដោយប្រុងប្រយ័ត្ន។";
+	}
+
+	@Override
+	public String consolaHeapDumpSoloVivos() {
+		return "រួមបញ្ចូលតែវត្ថុដែលរស់ និងអាចចូលដំណើរការបាន";
+	}
+
+	@Override
+	public String consolaGuardarHeapDump() {
+		return "រក្សាទុកការបញ្ចេញ Heap";
+	}
+
+	@Override
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "ឯកសារមានស្រាប់ហើយ ហើយ HotSpot មិនអាចសរសេរជាន់លើវាបានទេ:\n" + ruta
+				+ "\n\nតើលុបវាចោលមុននឹងបង្កើតការបញ្ចេញ Heap ថ្មី?";
+	}
+
+	@Override
+	public String consolaHeapDumpAbrirDespues() {
+		return "ការបញ្ចេញ Heap បានបញ្ចប់។ តើបើកវាឥឡូវនេះនៅក្នុងកម្មវិធីមើល?";
+	}
+
+	@Override
+	public String consolaDiagnosticoJVM() {
+		return "ការធ្វើរោគវិនិច្ឆ័យ JVM";
+	}
+
+	@Override
+	public String heapVisorTitulo() {
+		return "កម្មវិធីមើលការបញ្ចេញ Heap — អ៊ីរ៉ង់";
+	}
+
+	@Override
+	public String heapVisorDescripcion() {
+		return "នាំចូលឯកសារ HPROF ដើម្បីមើលថាតើថ្នាក់ កញ្ចប់ និង Mods ណាខ្លះដែលកាន់កាប់អង្គចងចាំ Shallow ប៉ាន់ស្មានច្រើនជាងគេ។ ការវិភាគរហ័សមិនគណនាទំហំដែលបានរក្សាទុក ឬដើមឈើ Dominator ទេ ប៉ុន្តែអនុញ្ញាតឱ្យកំណត់ទីតាំងអ្នកប្រើប្រាស់ច្រើនដោយមិនចាំបាច់ផ្ទុកវត្ថុនីមួយៗពីការបញ្ចេញទៅក្នុងអង្គចងចាំ។";
+	}
+
+	@Override
+	public String heapVisorAyudaArbol() {
+		return "ផ្ទាំងថ្នាក់តម្រៀបប្រភេទតាមអង្គចងចាំ Shallow ប៉ាន់ស្មាន។ ផ្ទាំង Mods និងកញ្ចប់អនុញ្ញាតឱ្យពង្រីកកម្រិតជាច្រើន៖ JAR ឬបណ្ណាល័យ កញ្ចប់ និងថ្នាក់។ ថ្នាក់ត្រូវបានភ្ជាប់ជាមួយ JAR នៅក្នុងថត Mods ចុងក្រោយនៅពេលដែលជម្រើសកំណត់អត្តសញ្ញាណត្រូវបានបើក។";
+	}
+
+	@Override
+	public String heapVisorSeleccionarArchivo() {
+		return "ជ្រើសរើសការបញ្ចេញ Heap HPROF";
+	}
+
+	@Override
+	public String heapVisorAnalisisEnCurso() {
+		return "មានការវិភាគការបញ្ចេញ Heap កំពុងដំណើរការរួចហើយ។";
+	}
+
+	@Override
+	public String heapVisorArchivoNoValido() {
+		return "ឯកសារដែលបានជ្រើសរើសមិនមាន ឬមិនអាចអានបាន។";
+	}
+
+	@Override
+	public String heapVisorAnalizando(String archivo) {
+		return "កំពុងវិភាគ " + archivo + "...";
+	}
+
+	@Override
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "កំពុងវិភាគការបញ្ចេញ Heap: " + porcentaje + "% — " + detalle;
+	}
+
+	@Override
+	public String heapVisorListo(String memoria, long objetos) {
+		return "រួចរាល់៖ " + memoria + " Shallow ប៉ាន់ស្មានក្នុង " + objetos + " វត្ថុ ឬអារេ។";
+	}
+
+	@Override
+	public String heapVisorCancelado() {
+		return "ការវិភាគត្រូវបានបោះបង់។";
+	}
+
+	@Override
+	public String heapVisorError() {
+		return "ការវិភាគការបញ្ចេញ Heap បានបរាជ័យ។";
+	}
+
+	@Override
+	public String heapVisorErrorDetalle(String detalle) {
+		return "មិនអាចវិភាគការបញ្ចេញ Heap បាន៖\n" + detalle;
+	}
+
+	@Override
+	public String heapVisorRaiz() {
+		return "Heap";
+	}
+
+	@Override
+	public String heapVisorSinMod() {
+		return "គ្មាន Mod ដែលបានកំណត់អត្តសញ្ញាណ";
+	}
+
+	@Override
+	public String heapVisorImportar() {
+		return "នាំចូល HPROF";
+	}
+
+	@Override
+	public String heapVisorCancelar() {
+		return "បោះបង់ការវិភាគ";
+	}
+
+	@Override
+	public String heapVisorExpandir() {
+		return "ពង្រីករហូតដល់ 4 កម្រិត";
+	}
+
+	@Override
+	public String heapVisorContraer() {
+		return "បង្រួមទាំងអស់";
+	}
+
+	@Override
+	public String heapVisorIdentificarMods() {
+		return "ភ្ជាប់ថ្នាក់ជាមួយ JAR នៃ Mods";
+	}
+
+	@Override
+	public String heapVisorPestanaClases() {
+		return "ថ្នាក់";
+	}
+
+	@Override
+	public String heapVisorPestanaMods() {
+		return "Mods និងកញ្ចប់";
+	}
+
+	@Override
+	public String heapVisorColClase() {
+		return "ថ្នាក់";
+	}
+
+	@Override
+	public String heapVisorColMod() {
+		return "Mod ឬបណ្ណាល័យ";
+	}
+
+	@Override
+	public String heapVisorColInstancias() {
+		return "ចំនួន Instance";
+	}
+
+	@Override
+	public String heapVisorColMemoria() {
+		return "ប៉ាន់ស្មាន Byte";
+	}
+
+	@Override
+	public String heapVisorColPorcentaje() {
+		return "ភាគរយ";
+	}
+
+	@Override
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " instances — " + memoria;
+	}
+
+	@Override
+	public String heapVisorImagenAlternativa() {
+		return "ការជ្រើសរើសរបស់អ៊ីរ៉ង់";
+	}
+
+	@Override
+	public String heapVisorColorTextoClaro() {
+		return "អត្ថបទភ្លឺនៃកម្មវិធីមើល Heap";
+	}
+
+	@Override
+	public String heapVisorColorVerde() {
+		return "ពណ៌បៃតងនៃកម្មវិធីមើល Heap";
+	}
+
+	@Override
+	public String heapVisorColorRojo() {
+		return "ពណ៌ក្រហមនៃកម្មវិធីមើល Heap";
+	}
+
+	@Override
+	public String heapVisorColorTabla() {
+		return "ផ្ទៃខាងក្រោយតារាងនៃកម្មវិធីមើល Heap";
+	}
+
+	@Override
+	public String heapVisorColorSeleccion() {
+		return "ការជ្រើសរើសនៃកម្មវិធីមើល Heap";
+	}
+
+	@Override
+	public String heapVisorColorBorde() {
+		return "គែមនៃកម្មវិធីមើល Heap";
+	}
+
+	@Override
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	@Override
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	@Override
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	@Override
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	@Override
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	@Override
+	public String heapVisorGrupoArreglos() {
+		return "អារេ";
+	}
+
+	@Override
+	public String heapVisorClaseDesconocida() {
+		return "ថ្នាក់មិនស្គាល់";
+	}
+
+	@Override
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "ថ្នាក់ 0x" + idHexadecimal;
+	}
+
+	@Override
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "ប្រភេទ Primitive មិនស្គាល់";
+	}
+
+	@Override
+	public String consolaCancelar() {
+		return "បោះបង់";
+	}
+
 }

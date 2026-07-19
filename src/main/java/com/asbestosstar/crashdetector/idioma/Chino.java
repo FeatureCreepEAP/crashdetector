@@ -11164,4 +11164,339 @@ public class Chino implements Idioma {
 		return "云端扫描器：边框颜色";
 	}
 
+	@Override
+	public String controlJVMDisponible() {
+		return "本地 JVM 诊断通道可用。";
+	}
+
+	@Override
+	public String controlJVMGcAceptado() {
+		return "JVM 已接收垃圾回收请求。System.gc() 是一个尽力而为的请求，JVM 可能会决定执行多少工作。";
+	}
+
+	@Override
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "堆转储已创建于：\n" + ruta;
+	}
+
+	@Override
+	public String controlJVMCrashAceptado() {
+		return "JVM 已接受诊断崩溃请求。进程将关闭，HotSpot 将尝试创建 hs_err_pid 文件。";
+	}
+
+	@Override
+	public String controlJVMNoDisponible() {
+		return "无法连接到被监控 JVM 的本地诊断通道。此功能仅在 CrashDetector 加载到游戏进程中时可用。";
+	}
+
+	@Override
+	public String controlJVMNoAutorizado() {
+		return "JVM 拒绝了诊断请求，因为本地令牌无效。";
+	}
+
+	@Override
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "JVM 诊断操作失败。" : "JVM 诊断操作失败：\n" + detalle;
+	}
+
+	@Override
+	public String consolaCrearHsErr() {
+		return "触发崩溃并创建 hs_err";
+	}
+
+	@Override
+	public String consolaEjecutarGc() {
+		return "请求垃圾回收";
+	}
+
+	@Override
+	public String consolaHeapDump() {
+		return "堆转储";
+	}
+
+	@Override
+	public String consolaBajar() {
+		return "跳转到控制台末尾";
+	}
+
+	@Override
+	public String consolaCompartirLogs() {
+		return "分享日志";
+	}
+
+	@Override
+	public String consolaDetenerProceso() {
+		return "停止进程";
+	}
+
+	@Override
+	public String consolaAdvertenciaCrashHsErr() {
+		return "此操作将故意导致游戏 JVM 发生致命的本机错误。进程将立即终止，任何未保存的进度都将丢失。HotSpot 将尝试在工作目录或临时文件夹中写入 hs_err_pid 文件。是否继续？";
+	}
+
+	@Override
+	public String consolaGenerarHeapDump() {
+		return "生成堆转储";
+	}
+
+	@Override
+	public String consolaAbrirVisorHeapDump() {
+		return "打开堆转储查看器";
+	}
+
+	@Override
+	public String consolaHeapDumpAccion() {
+		return "您可以为被监控的 JVM 创建堆转储，或打开查看器以导入现有的转储文件。";
+	}
+
+	@Override
+	public String consolaAdvertenciaHeapDump() {
+		return "堆转储可能非常大，并且在写入时可能会暂停游戏。它还可能包含内存中的敏感信息，包括用户名、路径、消息、地址、密钥、密码或访问令牌。请谨慎保存和共享文件。";
+	}
+
+	@Override
+	public String consolaHeapDumpSoloVivos() {
+		return "仅包含存活且可访问的对象";
+	}
+
+	@Override
+	public String consolaGuardarHeapDump() {
+		return "保存堆转储";
+	}
+
+	@Override
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "文件已存在，HotSpot 无法覆盖它：\n" + ruta + "\n\n是否在创建新堆转储之前删除它？";
+	}
+
+	@Override
+	public String consolaHeapDumpAbrirDespues() {
+		return "堆转储已完成。是否现在在查看器中打开它？";
+	}
+
+	@Override
+	public String consolaDiagnosticoJVM() {
+		return "JVM 诊断";
+	}
+
+	@Override
+	public String heapVisorTitulo() {
+		return "堆转储查看器 — 伊朗";
+	}
+
+	@Override
+	public String heapVisorDescripcion() {
+		return "导入 HPROF 文件以查看哪些类、包和模组占用了最多的估计浅层内存。快速分析不计算保留大小或支配树，但允许在不将转储中的每个对象加载到内存的情况下定位大型消耗者。";
+	}
+
+	@Override
+	public String heapVisorAyudaArbol() {
+		return "类选项卡按估计浅层内存对类型进行排序。模组和包选项卡允许展开多个层级：JAR 或库、包和类。当启用识别选项时，类与最后一个模组文件夹中的 JAR 相关联。";
+	}
+
+	@Override
+	public String heapVisorSeleccionarArchivo() {
+		return "选择 HPROF 堆转储";
+	}
+
+	@Override
+	public String heapVisorAnalisisEnCurso() {
+		return "已有堆转储分析正在进行中。";
+	}
+
+	@Override
+	public String heapVisorArchivoNoValido() {
+		return "所选文件不存在或无法读取。";
+	}
+
+	@Override
+	public String heapVisorAnalizando(String archivo) {
+		return "正在分析 " + archivo + "...";
+	}
+
+	@Override
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "正在分析堆转储：" + porcentaje + "% — " + detalle;
+	}
+
+	@Override
+	public String heapVisorListo(String memoria, long objetos) {
+		return "就绪：" + memoria + " 估计浅层内存，共 " + objetos + " 个对象或数组。";
+	}
+
+	@Override
+	public String heapVisorCancelado() {
+		return "分析已取消。";
+	}
+
+	@Override
+	public String heapVisorError() {
+		return "堆转储分析失败。";
+	}
+
+	@Override
+	public String heapVisorErrorDetalle(String detalle) {
+		return "无法分析堆转储：\n" + detalle;
+	}
+
+	@Override
+	public String heapVisorRaiz() {
+		return "堆";
+	}
+
+	@Override
+	public String heapVisorSinMod() {
+		return "未识别模组";
+	}
+
+	@Override
+	public String heapVisorImportar() {
+		return "导入 HPROF";
+	}
+
+	@Override
+	public String heapVisorCancelar() {
+		return "取消分析";
+	}
+
+	@Override
+	public String heapVisorExpandir() {
+		return "展开至 4 层";
+	}
+
+	@Override
+	public String heapVisorContraer() {
+		return "全部折叠";
+	}
+
+	@Override
+	public String heapVisorIdentificarMods() {
+		return "将类与模组 JAR 关联";
+	}
+
+	@Override
+	public String heapVisorPestanaClases() {
+		return "类";
+	}
+
+	@Override
+	public String heapVisorPestanaMods() {
+		return "模组和包";
+	}
+
+	@Override
+	public String heapVisorColClase() {
+		return "类";
+	}
+
+	@Override
+	public String heapVisorColMod() {
+		return "模组或库";
+	}
+
+	@Override
+	public String heapVisorColInstancias() {
+		return "实例数";
+	}
+
+	@Override
+	public String heapVisorColMemoria() {
+		return "估计字节数";
+	}
+
+	@Override
+	public String heapVisorColPorcentaje() {
+		return "百分比";
+	}
+
+	@Override
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " 个实例 — " + memoria;
+	}
+
+	@Override
+	public String heapVisorImagenAlternativa() {
+		return "伊朗选择";
+	}
+
+	@Override
+	public String heapVisorColorTextoClaro() {
+		return "堆查看器浅色文本";
+	}
+
+	@Override
+	public String heapVisorColorVerde() {
+		return "堆查看器绿色";
+	}
+
+	@Override
+	public String heapVisorColorRojo() {
+		return "堆查看器红色";
+	}
+
+	@Override
+	public String heapVisorColorTabla() {
+		return "堆查看器表格背景";
+	}
+
+	@Override
+	public String heapVisorColorSeleccion() {
+		return "堆查看器选择";
+	}
+
+	@Override
+	public String heapVisorColorBorde() {
+		return "堆查看器边框";
+	}
+
+	@Override
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	@Override
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	@Override
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	@Override
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	@Override
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	@Override
+	public String heapVisorGrupoArreglos() {
+		return "数组";
+	}
+
+	@Override
+	public String heapVisorClaseDesconocida() {
+		return "未知类";
+	}
+
+	@Override
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "类 0x" + idHexadecimal;
+	}
+
+	@Override
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "未知原始类型";
+	}
+
+	@Override
+	public String consolaCancelar() {
+		return "取消";
+	}
+
 }

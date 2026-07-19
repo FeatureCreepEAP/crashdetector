@@ -12187,4 +12187,273 @@ public class Lao implements Idioma {
 		return "ສະແກນເມຄ: ສີຂອບ";
 	}
 
+	public String controlJVMDisponible() {
+		return "ຊ່ອງທາງການວິນິດໄສ JVM ທ້ອງຖິ່ນພ້ອມໃຊ້ງານ.";
+	}
+
+	public String controlJVMGcAceptado() {
+		return "JVM ໄດ້ຮັບຄຳຮ້ອງຂໍເກັບກຳຂີ້ເຫຍື້ອ. System.gc() ແມ່ນຄຳຮ້ອງຂໍທີ່ພະຍາຍາມເຮັດໃຫ້ດີທີ່ສຸດ ແລະ JVM ສາມາດຕັດສິນໃຈວ່າຈະເຮັດວຽກຫຼາຍປານໃດ.";
+	}
+
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "Heap dump ຖືກສ້າງແລ້ວທີ່:\n" + ruta;
+	}
+
+	public String controlJVMCrashAceptado() {
+		return "JVM ຍອມຮັບຄຳຮ້ອງຂໍ crash ວິນິດໄສ. ຂະບວນການຈະປິດ ແລະ HotSpot ຈະພະຍາຍາມສ້າງໄຟລ໌ hs_err_pid.";
+	}
+
+	public String controlJVMNoDisponible() {
+		return "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບຊ່ອງທາງການວິນິດໄສ JVM ທ້ອງຖິ່ນທີ່ສັງເກດເບິ່ງ. ຟັງຊັນນີ້ໃຊ້ໄດ້ເມື່ອ CrashDetector ຖືກໂຫລດພາຍໃນຂະບວນການເກມເທົ່ານັ້ນ.";
+	}
+
+	public String controlJVMNoAutorizado() {
+		return "JVM ປະຕິເສດຄຳຮ້ອງຂໍວິນິດໄສເພາະວ່າ token ທ້ອງຖິ່ນບໍ່ຖືກຕ້ອງ.";
+	}
+
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "ການດຳເນີນງານວິນິດໄສ JVM ລົ້ມເຫລວ."
+				: "ການດຳເນີນງານວິນິດໄສ JVM ລົ້ມເຫລວ:\n" + detalle;
+	}
+
+	public String consolaCrearHsErr() {
+		return "ກະທຳ crash ແລະ ສ້າງ hs_err";
+	}
+
+	public String consolaEjecutarGc() {
+		return "ຮ້ອງຂໍເກັບກຳຂີ້ເຫຍື້ອ";
+	}
+
+	public String consolaHeapDump() {
+		return "Heap dump";
+	}
+
+	public String consolaBajar() {
+		return "ໄປທີ່ທ້າຍຂອງ console";
+	}
+
+	public String consolaCompartirLogs() {
+		return "ແບ່ງປັນບັນທຶກ";
+	}
+
+	public String consolaDetenerProceso() {
+		return "ຢຸດຂະບວນການ";
+	}
+
+	public String consolaAdvertenciaCrashHsErr() {
+		return "ການດຳເນີນງານນີ້ຈະກະທຳຄວາມຜິດພາດ native ຮ້າຍແຮງໃນ JVM ຂອງເກມໂດຍເຈຕນາ. ຂະບວນການຈະສິ້ນສຸດທັນທີ ແລະ ຄວາມຄືບໜ້າທີ່ບໍ່ໄດ້ບັນທຶກຈະສູນເສຍ. HotSpot ຈະພະຍາຍາມຂຽນໄຟລ໌ hs_err_pid ໃນໂຟນເດີເຮັດວຽກ ຫຼື ໂຟນເດີຊົ່ວຄາວ. ດຳເນີນການຕໍ່?";
+	}
+
+	public String consolaGenerarHeapDump() {
+		return "ສ້າງ heap dump";
+	}
+
+	public String consolaAbrirVisorHeapDump() {
+		return "ເປີດຕົວເບິ່ງ heap dump";
+	}
+
+	public String consolaHeapDumpAccion() {
+		return "ທ່ານສາມາດສ້າງ heap dump ຂອງ JVM ທີ່ສັງເກດເບິ່ງ ຫຼື ເປີດຕົວເບິ່ງເພື່ອນຳເຂົ້າອັນທີ່ມີຢູ່.";
+	}
+
+	public String consolaAdvertenciaHeapDump() {
+		return "Heap dump ອາດຈະມີຂະໜາດໃຫຍ່ຫຼາຍ ແລະ ອາດຢຸດເກມຊົ່ວຄາວໃນຂະນະທີ່ຂຽນ. ມັນຍັງອາດມີຂໍ້ມູນລັບທີ່ຢູ່ໃນໜ່ວຍຄວາມຈຳ, ລວມທັງຊື່ຜູ້ໃຊ້, ເສັ້ນທາງ, ຂໍ້ຄວາມ, ທີ່ຢູ່, ຄີ, ລະຫັດຜ່ານ ຫຼື token ການເຂົ້າເຖິງ. ບັນທຶກ ແລະ ແບ່ງປັນໄຟລ໌ດ້ວຍຄວາມລະມັດລະວັງ.";
+	}
+
+	public String consolaHeapDumpSoloVivos() {
+		return "ລວມສະເພາະວັດຖຸທີ່ມີຊີວິດ ແລະ ເຂົ້າເຖິງໄດ້";
+	}
+
+	public String consolaGuardarHeapDump() {
+		return "ບັນທຶກ heap dump";
+	}
+
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "ໄຟລ໌ມີຢູ່ແລ້ວ ແລະ HotSpot ບໍ່ສາມາດຂຽນທັບໄດ້:\n" + ruta + "\n\nລຶບມັນກ່ອນສ້າງ heap dump ໃໝ່ບໍ່?";
+	}
+
+	public String consolaHeapDumpAbrirDespues() {
+		return "Heap dump ສຳເລັດແລ້ວ. ເປີດມັນໃນຕົວເບິ່ງເລີຍບໍ່?";
+	}
+
+	public String consolaDiagnosticoJVM() {
+		return "ການວິນິດໄສ JVM";
+	}
+
+	public String heapVisorTitulo() {
+		return "ຕົວເບິ່ງ heap dump — ອີຣ່ານ";
+	}
+
+	public String heapVisorDescripcion() {
+		return "ນຳເຂົ້າໄຟລ໌ HPROF ເພື່ອເບິ່ງວ່າ class, package ແລະ mod ໃດໃຊ້ໜ່ວຍຄວາມຈຳ superficial ຫຼາຍທີ່ສຸດ. ການວິເຄາະໄວບໍ່ຄິດໄລ່ຂະໜາດ retained ຫຼື ຕົ້ນໄມ້ dominator, ແຕ່ຊ່ວຍໃຫ້ຊອກຫາຜູ້ໃຊ້ໜ່ວຍຄວາມຈຳຫຼາຍໂດຍບໍ່ຕ້ອງໂຫລດທຸກວັດຖຸຈາກ dump ເຂົ້າໜ່ວຍຄວາມຈຳ.";
+	}
+
+	public String heapVisorAyudaArbol() {
+		return "ແຖັບ Class ຈັດລຳດັບປະເພດຕາມໜ່ວຍຄວາມຈຳ superficial ປະເມີນ. ແຖັບ Mods ແລະ Packages ອະນຸຍາດໃຫ້ຂະຫຍາຍຫຼາຍລະດັບ: JAR ຫຼື library, package ແລະ class. Classes ຈະຖືກເຊື່ອມໂຍງກັບ JAR ຈາກໂຟນເດີ mods ສຸດທ້າຍເມື່ອເປີດໃຊ້ຕົວເລືອກການລະບຸຕົວ.";
+	}
+
+	public String heapVisorSeleccionarArchivo() {
+		return "ເລືອກ heap dump HPROF";
+	}
+
+	public String heapVisorAnalisisEnCurso() {
+		return "ມີການວິເຄາະ heap dump ກຳລັງດຳເນີນຢູ່.";
+	}
+
+	public String heapVisorArchivoNoValido() {
+		return "ໄຟລ໌ທີ່ເລືອກບໍ່ມີຢູ່ ຫຼື ບໍ່ສາມາດອ່ານໄດ້.";
+	}
+
+	public String heapVisorAnalizando(String archivo) {
+		return "ກຳລັງວິເຄາະ " + archivo + "...";
+	}
+
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "ກຳລັງວິເຄາະ heap dump: " + porcentaje + "% — " + detalle;
+	}
+
+	public String heapVisorListo(String memoria, long objetos) {
+		return "ພ້ອມ: " + memoria + " superficial ປະເມີນໃນ " + objetos + " ວັດຖຸ ຫຼື ອາເຣ.";
+	}
+
+	public String heapVisorCancelado() {
+		return "ການວິເຄາະຖືກຍົກເລີກ.";
+	}
+
+	public String heapVisorError() {
+		return "ການວິເຄາະ heap dump ລົ້ມເຫລວ.";
+	}
+
+	public String heapVisorErrorDetalle(String detalle) {
+		return "ບໍ່ສາມາດວິເຄາະ heap dump ໄດ້:\n" + detalle;
+	}
+
+	public String heapVisorRaiz() {
+		return "Heap";
+	}
+
+	public String heapVisorSinMod() {
+		return "ບໍ່ມີ mod ທີ່ລະບຸຕົວ";
+	}
+
+	public String heapVisorImportar() {
+		return "ນຳເຂົ້າ HPROF";
+	}
+
+	public String heapVisorCancelar() {
+		return "ຍົກເລີກການວິເຄາະ";
+	}
+
+	public String heapVisorExpandir() {
+		return "ຂະຫຍາຍຈົນເຖິງ 4 ລະດັບ";
+	}
+
+	public String heapVisorContraer() {
+		return "ຫຍໍ້ທັງໝົດ";
+	}
+
+	public String heapVisorIdentificarMods() {
+		return "ເຊື່ອມໂຍງ classes ກັບ JAR ຂອງ mods";
+	}
+
+	public String heapVisorPestanaClases() {
+		return "Classes";
+	}
+
+	public String heapVisorPestanaMods() {
+		return "Mods ແລະ Packages";
+	}
+
+	public String heapVisorColClase() {
+		return "Class";
+	}
+
+	public String heapVisorColMod() {
+		return "Mod ຫຼື Library";
+	}
+
+	public String heapVisorColInstancias() {
+		return "Instances";
+	}
+
+	public String heapVisorColMemoria() {
+		return "Bytes ປະເມີນ";
+	}
+
+	public String heapVisorColPorcentaje() {
+		return "ເປີເຊັນ";
+	}
+
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " instances — " + memoria;
+	}
+
+	public String heapVisorImagenAlternativa() {
+		return "ການເລືອກຂອງອີຣ່ານ";
+	}
+
+	public String heapVisorColorTextoClaro() {
+		return "ຂໍ້ຄວາມສີອ່ອນຂອງຕົວເບິ່ງ heap";
+	}
+
+	public String heapVisorColorVerde() {
+		return "ສີຂຽວຂອງຕົວເບິ່ງ heap";
+	}
+
+	public String heapVisorColorRojo() {
+		return "ສີແດງຂອງຕົວເບິ່ງ heap";
+	}
+
+	public String heapVisorColorTabla() {
+		return "ພື້ນຫຼັງຕາຕະລາງຂອງຕົວເບິ່ງ heap";
+	}
+
+	public String heapVisorColorSeleccion() {
+		return "ການເລືອກຂອງຕົວເບິ່ງ heap";
+	}
+
+	public String heapVisorColorBorde() {
+		return "ຂອບຂອງຕົວເບິ່ງ heap";
+	}
+
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	public String heapVisorGrupoArreglos() {
+		return "Arrays";
+	}
+
+	public String heapVisorClaseDesconocida() {
+		return "Class ທີ່ບໍ່ຮູ້ຈັກ";
+	}
+
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "Class 0x" + idHexadecimal;
+	}
+
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "Primitive ທີ່ບໍ່ຮູ້ຈັກ";
+	}
+
+	public String consolaCancelar() {
+		return "ຍົກເລີກ";
+	}
+
 }

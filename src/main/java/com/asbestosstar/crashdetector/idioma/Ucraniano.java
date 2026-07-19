@@ -11100,4 +11100,274 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Хмарний сканер: колір рамки";
 	}
 
+	public String controlJVMDisponible() {
+		return "Локальний діагностичний канал JVM доступний.";
+	}
+
+	public String controlJVMGcAceptado() {
+		return "JVM отримала запит на збирання сміття. System.gc() — це запит з найкращими зусиллями, і JVM може вирішити, скільки роботи виконати.";
+	}
+
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "Знімок купи створено в:\n" + ruta;
+	}
+
+	public String controlJVMCrashAceptado() {
+		return "JVM прийняла запит на діагностичний краш. Процес буде закрито, і HotSpot спробує створити файл hs_err_pid.";
+	}
+
+	public String controlJVMNoDisponible() {
+		return "Не вдалося підключитися до локального діагностичного каналу спостережуваної JVM. Функція доступна лише тоді, коли CrashDetector завантажено всередині процесу гри.";
+	}
+
+	public String controlJVMNoAutorizado() {
+		return "JVM відхилила діагностичний запит, оскільки локальний токен недійсний.";
+	}
+
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "Діагностична операція JVM не вдалася."
+				: "Діагностична операція JVM не вдалася:\n" + detalle;
+	}
+
+	public String consolaCrearHsErr() {
+		return "Спровокувати краш і створити hs_err";
+	}
+
+	public String consolaEjecutarGc() {
+		return "Запитати збирання сміття";
+	}
+
+	public String consolaHeapDump() {
+		return "Знімок купи";
+	}
+
+	public String consolaBajar() {
+		return "Перейти в кінець консолі";
+	}
+
+	public String consolaCompartirLogs() {
+		return "Поділитися логами";
+	}
+
+	public String consolaDetenerProceso() {
+		return "Зупинити процес";
+	}
+
+	public String consolaAdvertenciaCrashHsErr() {
+		return "Ця операція навмисне спричинить фатальну нативну помилку в JVM гри. Процес негайно завершиться, і будь-який незбережений прогрес буде втрачено. HotSpot спробує записати файл hs_err_pid у робочий каталог або тимчасову папку. Продовжити?";
+	}
+
+	public String consolaGenerarHeapDump() {
+		return "Створити знімок купи";
+	}
+
+	public String consolaAbrirVisorHeapDump() {
+		return "Відкрити переглядач знімка купи";
+	}
+
+	public String consolaHeapDumpAccion() {
+		return "Ви можете створити знімок купи спостережуваної JVM або відкрити переглядач для імпорту наявного.";
+	}
+
+	public String consolaAdvertenciaHeapDump() {
+		return "Знімок купи може бути дуже великим і може призупинити гру під час запису. Він також може містити чутливу інформацію, присутню в пам'яті, включаючи імена користувачів, шляхи, повідомлення, адреси, ключі, паролі або токени доступу. Зберігайте та діліться файлом обережно.";
+	}
+
+	public String consolaHeapDumpSoloVivos() {
+		return "Включати лише живі та досяжні об'єкти";
+	}
+
+	public String consolaGuardarHeapDump() {
+		return "Зберегти знімок купи";
+	}
+
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "Файл вже існує, і HotSpot не може його перезаписати:\n" + ruta
+				+ "\n\nВидалити його перед створенням нового знімка купи?";
+	}
+
+	public String consolaHeapDumpAbrirDespues() {
+		return "Знімок купи завершено. Відкрити його зараз у переглядачі?";
+	}
+
+	public String consolaDiagnosticoJVM() {
+		return "Діагностика JVM";
+	}
+
+	public String heapVisorTitulo() {
+		return "Переглядач знімка купи — Іран";
+	}
+
+	public String heapVisorDescripcion() {
+		return "Імпортуйте файл HPROF, щоб побачити, які класи, пакети та моди займають найбільше оціночної поверхневої пам'яті. Швидкий аналіз не обчислює утримуваний розмір або дерево домінаторів, але дозволяє знаходити великих споживачів без завантаження кожного об'єкта з дампу в пам'ять.";
+	}
+
+	public String heapVisorAyudaArbol() {
+		return "Вкладка класів сортує типи за оціночною поверхневою пам'яттю. Вкладка модів та пакетів дозволяє розгорнути кілька рівнів: JAR або бібліотека, пакет і клас. Класи пов'язуються з JAR з останньої папки модів, коли опція ідентифікації увімкнена.";
+	}
+
+	public String heapVisorSeleccionarArchivo() {
+		return "Вибрати знімок купи HPROF";
+	}
+
+	public String heapVisorAnalisisEnCurso() {
+		return "Аналіз знімка купи вже виконується.";
+	}
+
+	public String heapVisorArchivoNoValido() {
+		return "Вибраний файл не існує або не може бути прочитаний.";
+	}
+
+	public String heapVisorAnalizando(String archivo) {
+		return "Аналіз " + archivo + "...";
+	}
+
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "Аналіз знімка купи: " + porcentaje + "% — " + detalle;
+	}
+
+	public String heapVisorListo(String memoria, long objetos) {
+		return "Готово: " + memoria + " оціночних поверхневих у " + objetos + " об'єктах або масивах.";
+	}
+
+	public String heapVisorCancelado() {
+		return "Аналіз скасовано.";
+	}
+
+	public String heapVisorError() {
+		return "Аналіз знімка купи не вдався.";
+	}
+
+	public String heapVisorErrorDetalle(String detalle) {
+		return "Не вдалося проаналізувати знімок купи:\n" + detalle;
+	}
+
+	public String heapVisorRaiz() {
+		return "Купа";
+	}
+
+	public String heapVisorSinMod() {
+		return "Мод не ідентифіковано";
+	}
+
+	public String heapVisorImportar() {
+		return "Імпорт HPROF";
+	}
+
+	public String heapVisorCancelar() {
+		return "Скасувати аналіз";
+	}
+
+	public String heapVisorExpandir() {
+		return "Розгорнути до 4 рівнів";
+	}
+
+	public String heapVisorContraer() {
+		return "Згорнути все";
+	}
+
+	public String heapVisorIdentificarMods() {
+		return "Пов'язати класи з JAR модів";
+	}
+
+	public String heapVisorPestanaClases() {
+		return "Класи";
+	}
+
+	public String heapVisorPestanaMods() {
+		return "Моди та пакети";
+	}
+
+	public String heapVisorColClase() {
+		return "Клас";
+	}
+
+	public String heapVisorColMod() {
+		return "Мод або бібліотека";
+	}
+
+	public String heapVisorColInstancias() {
+		return "Екземпляри";
+	}
+
+	public String heapVisorColMemoria() {
+		return "Оцінкові байти";
+	}
+
+	public String heapVisorColPorcentaje() {
+		return "Відсоток";
+	}
+
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " екземплярів — " + memoria;
+	}
+
+	public String heapVisorImagenAlternativa() {
+		return "Вибір Ірану";
+	}
+
+	public String heapVisorColorTextoClaro() {
+		return "Світлий текст переглядача купи";
+	}
+
+	public String heapVisorColorVerde() {
+		return "Зелений колір переглядача купи";
+	}
+
+	public String heapVisorColorRojo() {
+		return "Червоний колір переглядача купи";
+	}
+
+	public String heapVisorColorTabla() {
+		return "Фон таблиці переглядача купи";
+	}
+
+	public String heapVisorColorSeleccion() {
+		return "Виділення переглядача купи";
+	}
+
+	public String heapVisorColorBorde() {
+		return "Межа переглядача купи";
+	}
+
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	public String heapVisorGrupoArreglos() {
+		return "Масиви";
+	}
+
+	public String heapVisorClaseDesconocida() {
+		return "Невідомий клас";
+	}
+
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "Клас 0x" + idHexadecimal;
+	}
+
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "Невідомий примітив";
+	}
+
+	public String consolaCancelar() {
+		return "Скасувати";
+	}
+
 }

@@ -12351,4 +12351,341 @@ public class Frances implements Idioma {
 		return "Scanner dans le cloud : couleur de bordure";
 	}
 
+	@Override
+	public String controlJVMDisponible() {
+		return "Le canal local de diagnostic de la JVM est disponible.";
+	}
+
+	@Override
+	public String controlJVMGcAceptado() {
+		return "La JVM a reçu la demande de ramasse-miettes. System.gc() est une demande au meilleur effort et la JVM peut décider combien de travail effectuer.";
+	}
+
+	@Override
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "Le vidage de tas a été créé dans :\n" + ruta;
+	}
+
+	@Override
+	public String controlJVMCrashAceptado() {
+		return "La JVM a accepté la demande de plantage diagnostique. Le processus se fermera et HotSpot tentera de créer un fichier hs_err_pid.";
+	}
+
+	@Override
+	public String controlJVMNoDisponible() {
+		return "Impossible de se connecter au canal local de diagnostic de la JVM observée. La fonction n'est disponible que lorsque CrashDetector est chargé dans le processus du jeu.";
+	}
+
+	@Override
+	public String controlJVMNoAutorizado() {
+		return "La JVM a rejeté la demande de diagnostic car le jeton local n'est pas valide.";
+	}
+
+	@Override
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "L'opération de diagnostic de la JVM a échoué."
+				: "L'opération de diagnostic de la JVM a échoué :\n" + detalle;
+	}
+
+	@Override
+	public String consolaCrearHsErr() {
+		return "Provoquer un plantage et créer hs_err";
+	}
+
+	@Override
+	public String consolaEjecutarGc() {
+		return "Demander le ramasse-miettes";
+	}
+
+	@Override
+	public String consolaHeapDump() {
+		return "Vidage de tas";
+	}
+
+	@Override
+	public String consolaBajar() {
+		return "Aller à la fin de la console";
+	}
+
+	@Override
+	public String consolaCompartirLogs() {
+		return "Partager les journaux";
+	}
+
+	@Override
+	public String consolaDetenerProceso() {
+		return "Arrêter le processus";
+	}
+
+	@Override
+	public String consolaAdvertenciaCrashHsErr() {
+		return "Cette opération provoquera délibérément une erreur native fatale dans la JVM du jeu. Le processus se terminera immédiatement et toute progression non sauvegardée sera perdue. HotSpot tentera d'écrire un fichier hs_err_pid dans le répertoire de travail ou dans le dossier temporaire. Continuer ?";
+	}
+
+	@Override
+	public String consolaGenerarHeapDump() {
+		return "Générer un vidage de tas";
+	}
+
+	@Override
+	public String consolaAbrirVisorHeapDump() {
+		return "Ouvrir le visualiseur de vidage de tas";
+	}
+
+	@Override
+	public String consolaHeapDumpAccion() {
+		return "Vous pouvez créer un vidage de tas de la JVM observée ou ouvrir le visualiseur pour importer un existant.";
+	}
+
+	@Override
+	public String consolaAdvertenciaHeapDump() {
+		return "Un vidage de tas peut être très volumineux et peut suspendre le jeu pendant l'écriture. Il peut également contenir des informations sensibles présentes en mémoire, y compris les noms d'utilisateur, les chemins, les messages, les adresses, les clés, les mots de passe ou les jetons d'accès. Enregistrez et partagez le fichier avec prudence.";
+	}
+
+	@Override
+	public String consolaHeapDumpSoloVivos() {
+		return "Inclure uniquement les objets vivants et accessibles";
+	}
+
+	@Override
+	public String consolaGuardarHeapDump() {
+		return "Enregistrer le vidage de tas";
+	}
+
+	@Override
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "Le fichier existe déjà et HotSpot ne peut pas l'écraser :\n" + ruta
+				+ "\n\nLe supprimer avant de créer le nouveau vidage de tas ?";
+	}
+
+	@Override
+	public String consolaHeapDumpAbrirDespues() {
+		return "Le vidage de tas est terminé. L'ouvrir maintenant dans le visualiseur ?";
+	}
+
+	@Override
+	public String consolaDiagnosticoJVM() {
+		return "Diagnostic de la JVM";
+	}
+
+	@Override
+	public String heapVisorTitulo() {
+		return "Visualiseur de vidage de tas — Iran";
+	}
+
+	@Override
+	public String heapVisorDescripcion() {
+		return "Importez un fichier HPROF pour voir quelles classes, packages et mods occupent le plus de mémoire superficielle estimée. L'analyse rapide ne calcule pas la taille retenue ni un arbre de dominateurs, mais permet de localiser les grands consommateurs sans charger chaque objet du dump en mémoire.";
+	}
+
+	@Override
+	public String heapVisorAyudaArbol() {
+		return "L'onglet des classes trie les types par mémoire superficielle estimée. L'onglet des mods et packages permet d'étendre plusieurs niveaux : JAR ou bibliothèque, package et classe. Les classes sont associées aux JAR du dernier dossier de mods lorsque l'option d'identification est activée.";
+	}
+
+	@Override
+	public String heapVisorSeleccionarArchivo() {
+		return "Sélectionner un vidage de tas HPROF";
+	}
+
+	@Override
+	public String heapVisorAnalisisEnCurso() {
+		return "Une analyse de vidage de tas est déjà en cours.";
+	}
+
+	@Override
+	public String heapVisorArchivoNoValido() {
+		return "Le fichier sélectionné n'existe pas ou ne peut pas être lu.";
+	}
+
+	@Override
+	public String heapVisorAnalizando(String archivo) {
+		return "Analyse de " + archivo + "...";
+	}
+
+	@Override
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "Analyse du vidage de tas : " + porcentaje + "% — " + detalle;
+	}
+
+	@Override
+	public String heapVisorListo(String memoria, long objetos) {
+		return "Prêt : " + memoria + " superficiels estimés dans " + objetos + " objets ou tableaux.";
+	}
+
+	@Override
+	public String heapVisorCancelado() {
+		return "Analyse annulée.";
+	}
+
+	@Override
+	public String heapVisorError() {
+		return "L'analyse du vidage de tas a échoué.";
+	}
+
+	@Override
+	public String heapVisorErrorDetalle(String detalle) {
+		return "Impossible d'analyser le vidage de tas :\n" + detalle;
+	}
+
+	@Override
+	public String heapVisorRaiz() {
+		return "Tas";
+	}
+
+	@Override
+	public String heapVisorSinMod() {
+		return "Aucun mod identifié";
+	}
+
+	@Override
+	public String heapVisorImportar() {
+		return "Importer HPROF";
+	}
+
+	@Override
+	public String heapVisorCancelar() {
+		return "Annuler l'analyse";
+	}
+
+	@Override
+	public String heapVisorExpandir() {
+		return "Étendre jusqu'à 4 niveaux";
+	}
+
+	@Override
+	public String heapVisorContraer() {
+		return "Réduire tout";
+	}
+
+	@Override
+	public String heapVisorIdentificarMods() {
+		return "Associer les classes aux JAR des mods";
+	}
+
+	@Override
+	public String heapVisorPestanaClases() {
+		return "Classes";
+	}
+
+	@Override
+	public String heapVisorPestanaMods() {
+		return "Mods et packages";
+	}
+
+	@Override
+	public String heapVisorColClase() {
+		return "Classe";
+	}
+
+	@Override
+	public String heapVisorColMod() {
+		return "Mod ou bibliothèque";
+	}
+
+	@Override
+	public String heapVisorColInstancias() {
+		return "Instances";
+	}
+
+	@Override
+	public String heapVisorColMemoria() {
+		return "Octets estimés";
+	}
+
+	@Override
+	public String heapVisorColPorcentaje() {
+		return "Pourcentage";
+	}
+
+	@Override
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " instances — " + memoria;
+	}
+
+	@Override
+	public String heapVisorImagenAlternativa() {
+		return "Sélection de l'Iran";
+	}
+
+	@Override
+	public String heapVisorColorTextoClaro() {
+		return "Texte clair du visualiseur de tas";
+	}
+
+	@Override
+	public String heapVisorColorVerde() {
+		return "Vert du visualiseur de tas";
+	}
+
+	@Override
+	public String heapVisorColorRojo() {
+		return "Rouge du visualiseur de tas";
+	}
+
+	@Override
+	public String heapVisorColorTabla() {
+		return "Fond de tableau du visualiseur de tas";
+	}
+
+	@Override
+	public String heapVisorColorSeleccion() {
+		return "Sélection du visualiseur de tas";
+	}
+
+	@Override
+	public String heapVisorColorBorde() {
+		return "Bordure du visualiseur de tas";
+	}
+
+	@Override
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	@Override
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	@Override
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	@Override
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	@Override
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	@Override
+	public String heapVisorGrupoArreglos() {
+		return "Tableaux";
+	}
+
+	@Override
+	public String heapVisorClaseDesconocida() {
+		return "Classe inconnue";
+	}
+
+	@Override
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "Classe 0x" + idHexadecimal;
+	}
+
+	@Override
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "Primitif inconnu";
+	}
+
+	@Override
+	public String consolaCancelar() {
+		return "Annuler";
+	}
+
 }

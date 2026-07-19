@@ -11829,4 +11829,341 @@ public class Ingles implements Idioma {
 		return "Cloud Scanner: border colour";
 	}
 
+	@Override
+	public String controlJVMDisponible() {
+		return "The local JVM diagnostic channel is available.";
+	}
+
+	@Override
+	public String controlJVMGcAceptado() {
+		return "The JVM received the garbage collection request. System.gc() is a best-effort request and the JVM may decide how much work to perform.";
+	}
+
+	@Override
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "The heap dump was created at:\n" + ruta;
+	}
+
+	@Override
+	public String controlJVMCrashAceptado() {
+		return "The JVM accepted the diagnostic crash request. The process will close and HotSpot will attempt to create an hs_err_pid file.";
+	}
+
+	@Override
+	public String controlJVMNoDisponible() {
+		return "Could not connect to the local diagnostic channel of the observed JVM. The function is only available when CrashDetector is loaded within the game process.";
+	}
+
+	@Override
+	public String controlJVMNoAutorizado() {
+		return "The JVM rejected the diagnostic request because the local token is invalid.";
+	}
+
+	@Override
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "The JVM diagnostic operation failed."
+				: "The JVM diagnostic operation failed:\n" + detalle;
+	}
+
+	@Override
+	public String consolaCrearHsErr() {
+		return "Trigger crash and create hs_err";
+	}
+
+	@Override
+	public String consolaEjecutarGc() {
+		return "Request garbage collection";
+	}
+
+	@Override
+	public String consolaHeapDump() {
+		return "Heap dump";
+	}
+
+	@Override
+	public String consolaBajar() {
+		return "Go to end of console";
+	}
+
+	@Override
+	public String consolaCompartirLogs() {
+		return "Share logs";
+	}
+
+	@Override
+	public String consolaDetenerProceso() {
+		return "Stop process";
+	}
+
+	@Override
+	public String consolaAdvertenciaCrashHsErr() {
+		return "This operation will deliberately cause a fatal native error in the game's JVM. The process will terminate immediately and any unsaved progress will be lost. HotSpot will attempt to write an hs_err_pid file in the working directory or temporary folder. Continue?";
+	}
+
+	@Override
+	public String consolaGenerarHeapDump() {
+		return "Generate heap dump";
+	}
+
+	@Override
+	public String consolaAbrirVisorHeapDump() {
+		return "Open heap dump viewer";
+	}
+
+	@Override
+	public String consolaHeapDumpAccion() {
+		return "You can create a heap dump of the observed JVM or open the viewer to import an existing one.";
+	}
+
+	@Override
+	public String consolaAdvertenciaHeapDump() {
+		return "A heap dump can be very large and may pause the game while writing. It may also contain sensitive information present in memory, including usernames, paths, messages, addresses, keys, passwords, or access tokens. Save and share the file with care.";
+	}
+
+	@Override
+	public String consolaHeapDumpSoloVivos() {
+		return "Include only live and reachable objects";
+	}
+
+	@Override
+	public String consolaGuardarHeapDump() {
+		return "Save heap dump";
+	}
+
+	@Override
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "The file already exists and HotSpot cannot overwrite it:\n" + ruta
+				+ "\n\nDelete it before creating the new heap dump?";
+	}
+
+	@Override
+	public String consolaHeapDumpAbrirDespues() {
+		return "The heap dump is complete. Open it now in the viewer?";
+	}
+
+	@Override
+	public String consolaDiagnosticoJVM() {
+		return "JVM Diagnostics";
+	}
+
+	@Override
+	public String heapVisorTitulo() {
+		return "Heap Dump Viewer — Iran";
+	}
+
+	@Override
+	public String heapVisorDescripcion() {
+		return "Import an HPROF file to see which classes, packages, and mods occupy the most estimated shallow memory. Quick analysis does not calculate retained size or a dominator tree, but allows locating large consumers without loading every object from the dump into memory.";
+	}
+
+	@Override
+	public String heapVisorAyudaArbol() {
+		return "The classes tab sorts types by estimated shallow memory. The mods and packages tab allows expanding several levels: JAR or library, package, and class. Classes are related to the JARs in the last mods folder when the identification option is enabled.";
+	}
+
+	@Override
+	public String heapVisorSeleccionarArchivo() {
+		return "Select HPROF heap dump";
+	}
+
+	@Override
+	public String heapVisorAnalisisEnCurso() {
+		return "There is already a heap dump analysis in progress.";
+	}
+
+	@Override
+	public String heapVisorArchivoNoValido() {
+		return "The selected file does not exist or cannot be read.";
+	}
+
+	@Override
+	public String heapVisorAnalizando(String archivo) {
+		return "Analysing " + archivo + "...";
+	}
+
+	@Override
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "Analysing heap dump: " + porcentaje + "% — " + detalle;
+	}
+
+	@Override
+	public String heapVisorListo(String memoria, long objetos) {
+		return "Ready: " + memoria + " estimated shallow in " + objetos + " objects or arrays.";
+	}
+
+	@Override
+	public String heapVisorCancelado() {
+		return "Analysis cancelled.";
+	}
+
+	@Override
+	public String heapVisorError() {
+		return "The heap dump analysis failed.";
+	}
+
+	@Override
+	public String heapVisorErrorDetalle(String detalle) {
+		return "Could not analyse the heap dump:\n" + detalle;
+	}
+
+	@Override
+	public String heapVisorRaiz() {
+		return "Heap";
+	}
+
+	@Override
+	public String heapVisorSinMod() {
+		return "No mod identified";
+	}
+
+	@Override
+	public String heapVisorImportar() {
+		return "Import HPROF";
+	}
+
+	@Override
+	public String heapVisorCancelar() {
+		return "Cancel analysis";
+	}
+
+	@Override
+	public String heapVisorExpandir() {
+		return "Expand up to 4 levels";
+	}
+
+	@Override
+	public String heapVisorContraer() {
+		return "Collapse all";
+	}
+
+	@Override
+	public String heapVisorIdentificarMods() {
+		return "Relate classes to mod JARs";
+	}
+
+	@Override
+	public String heapVisorPestanaClases() {
+		return "Classes";
+	}
+
+	@Override
+	public String heapVisorPestanaMods() {
+		return "Mods and packages";
+	}
+
+	@Override
+	public String heapVisorColClase() {
+		return "Class";
+	}
+
+	@Override
+	public String heapVisorColMod() {
+		return "Mod or library";
+	}
+
+	@Override
+	public String heapVisorColInstancias() {
+		return "Instances";
+	}
+
+	@Override
+	public String heapVisorColMemoria() {
+		return "Estimated bytes";
+	}
+
+	@Override
+	public String heapVisorColPorcentaje() {
+		return "Percentage";
+	}
+
+	@Override
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " instances — " + memoria;
+	}
+
+	@Override
+	public String heapVisorImagenAlternativa() {
+		return "Iran selection";
+	}
+
+	@Override
+	public String heapVisorColorTextoClaro() {
+		return "Heap viewer light text";
+	}
+
+	@Override
+	public String heapVisorColorVerde() {
+		return "Heap viewer green";
+	}
+
+	@Override
+	public String heapVisorColorRojo() {
+		return "Heap viewer red";
+	}
+
+	@Override
+	public String heapVisorColorTabla() {
+		return "Heap viewer table background";
+	}
+
+	@Override
+	public String heapVisorColorSeleccion() {
+		return "Heap viewer selection";
+	}
+
+	@Override
+	public String heapVisorColorBorde() {
+		return "Heap viewer border";
+	}
+
+	@Override
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	@Override
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	@Override
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	@Override
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	@Override
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	@Override
+	public String heapVisorGrupoArreglos() {
+		return "Arrays";
+	}
+
+	@Override
+	public String heapVisorClaseDesconocida() {
+		return "Unknown class";
+	}
+
+	@Override
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "Class 0x" + idHexadecimal;
+	}
+
+	@Override
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "Unknown primitive";
+	}
+
+	@Override
+	public String consolaCancelar() {
+		return "Cancel";
+	}
+
 }

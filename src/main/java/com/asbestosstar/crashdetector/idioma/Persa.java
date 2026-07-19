@@ -11729,4 +11729,274 @@ public class Persa implements Idioma {
 		return "اسکنر ابری: رنگ حاشیه";
 	}
 
+	public String controlJVMDisponible() {
+		return "کانال تشخیصی محلی JVM در دسترس است.";
+	}
+
+	public String controlJVMGcAceptado() {
+		return "JVM درخواست جمع‌آوری زباله را دریافت کرد. System.gc() یک درخواست تلاش بهترین است و JVM می‌تواند تصمیم بگیرد چه مقدار کار انجام دهد.";
+	}
+
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "Heap dump در مسیر زیر ایجاد شد:\n" + ruta;
+	}
+
+	public String controlJVMCrashAceptado() {
+		return "JVM درخواست کرش تشخیصی را پذیرفت. فرآیند بسته خواهد شد و HotSpot سعی می‌کند فایل hs_err_pid ایجاد کند.";
+	}
+
+	public String controlJVMNoDisponible() {
+		return "اتصال به کانال تشخیصی محلی JVM مشاهده شده امکان‌پذیر نبود. این قابلیت فقط زمانی در دسترس است که CrashDetector در داخل فرآیند بازی بارگذاری شده باشد.";
+	}
+
+	public String controlJVMNoAutorizado() {
+		return "JVM درخواست تشخیصی را رد کرد زیرا توکن محلی نامعتبر است.";
+	}
+
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "عملیات تشخیصی JVM ناموفق بود."
+				: "عملیات تشخیصی JVM ناموفق بود:\n" + detalle;
+	}
+
+	public String consolaCrearHsErr() {
+		return "ایجاد کرش و ساخت hs_err";
+	}
+
+	public String consolaEjecutarGc() {
+		return "درخواست جمع‌آوری زباله";
+	}
+
+	public String consolaHeapDump() {
+		return "Heap dump";
+	}
+
+	public String consolaBajar() {
+		return "رفتن به انتهای کنسول";
+	}
+
+	public String consolaCompartirLogs() {
+		return "اشتراک‌گذاری لاگ‌ها";
+	}
+
+	public String consolaDetenerProceso() {
+		return "توقف فرآیند";
+	}
+
+	public String consolaAdvertenciaCrashHsErr() {
+		return "این عملیات عمداً باعث خطای بومی کشنده در JVM بازی می‌شود. فرآیند بلافاصله پایان می‌یابد و هر پیشرفت ذخیره نشده از بین می‌رود. HotSpot سعی می‌کند فایل hs_err_pid را در دایرکتوری کاری یا پوشه موقت بنویسد. ادامه می‌دهید؟";
+	}
+
+	public String consolaGenerarHeapDump() {
+		return "ایجاد heap dump";
+	}
+
+	public String consolaAbrirVisorHeapDump() {
+		return "باز کردن نمایشگر heap dump";
+	}
+
+	public String consolaHeapDumpAccion() {
+		return "می‌توانید یک heap dump از JVM مشاهده شده ایجاد کنید یا نمایشگر را باز کنید تا یک مورد موجود را وارد کنید.";
+	}
+
+	public String consolaAdvertenciaHeapDump() {
+		return "یک heap dump می‌تواند بسیار بزرگ باشد و ممکن است بازی را هنگام نوشتن متوقف کند. همچنین ممکن است حاوی اطلاعات حساس موجود در حافظه باشد، از جمله نام‌های کاربری، مسیرها، پیام‌ها، آدرس‌ها، کلیدها، رمزهای عبور یا توکن‌های دسترسی. فایل را با احتیاط ذخیره و به اشتراک بگذارید.";
+	}
+
+	public String consolaHeapDumpSoloVivos() {
+		return "فقط شامل اشیاء زنده و قابل دسترس";
+	}
+
+	public String consolaGuardarHeapDump() {
+		return "ذخیره heap dump";
+	}
+
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "فایل از قبل وجود دارد و HotSpot نمی‌تواند آن را بازنویسی کند:\n" + ruta
+				+ "\n\nقبل از ایجاد heap dump جدید حذف شود؟";
+	}
+
+	public String consolaHeapDumpAbrirDespues() {
+		return "Heap dump تکمیل شد. آیا اکنون در نمایشگر باز شود؟";
+	}
+
+	public String consolaDiagnosticoJVM() {
+		return "تشخیص JVM";
+	}
+
+	public String heapVisorTitulo() {
+		return "نمایشگر heap dump — ایران";
+	}
+
+	public String heapVisorDescripcion() {
+		return "یک فایل HPROF را وارد کنید تا ببینید کدام کلاس‌ها، بسته‌ها و مادهای بیشترین حافظه سطحی تخمینی را اشغال می‌کنند. تحلیل سریع اندازه retained یا درخت dominator را محاسبه نمی‌کند، اما اجازه می‌دهد مصرف‌کنندگان بزرگ را بدون بارگذاری هر شیء از dump در حافظه پیدا کنید.";
+	}
+
+	public String heapVisorAyudaArbol() {
+		return "تب کلاس‌ها انواع را بر اساس حافظه سطحی تخمینی مرتب می‌کند. تب مادهای و بسته‌ها اجازه می‌دهد چندین سطح گسترش یابد: JAR یا کتابخانه، بسته و کلاس. کلاس‌ها هنگامی که گزینه شناسایی فعال باشد، به JARهای آخرین پوشه ماد مرتبط می‌شوند.";
+	}
+
+	public String heapVisorSeleccionarArchivo() {
+		return "انتخاب heap dump HPROF";
+	}
+
+	public String heapVisorAnalisisEnCurso() {
+		return "هم‌اکنون یک تحلیل heap dump در حال انجام است.";
+	}
+
+	public String heapVisorArchivoNoValido() {
+		return "فایل انتخاب شده وجود ندارد یا قابل خواندن نیست.";
+	}
+
+	public String heapVisorAnalizando(String archivo) {
+		return "در حال تحلیل " + archivo + "...";
+	}
+
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "در حال تحلیل heap dump: " + porcentaje + "% — " + detalle;
+	}
+
+	public String heapVisorListo(String memoria, long objetos) {
+		return "آماده: " + memoria + " سطحی تخمینی در " + objetos + " شیء یا آرایه.";
+	}
+
+	public String heapVisorCancelado() {
+		return "تحلیل لغو شد.";
+	}
+
+	public String heapVisorError() {
+		return "تحلیل heap dump ناموفق بود.";
+	}
+
+	public String heapVisorErrorDetalle(String detalle) {
+		return "تحلیل heap dump امکان‌پذیر نبود:\n" + detalle;
+	}
+
+	public String heapVisorRaiz() {
+		return "Heap";
+	}
+
+	public String heapVisorSinMod() {
+		return "بدون ماد شناسایی شده";
+	}
+
+	public String heapVisorImportar() {
+		return "وارد کردن HPROF";
+	}
+
+	public String heapVisorCancelar() {
+		return "لغو تحلیل";
+	}
+
+	public String heapVisorExpandir() {
+		return "گسترش تا ۴ سطح";
+	}
+
+	public String heapVisorContraer() {
+		return "جمع کردن همه";
+	}
+
+	public String heapVisorIdentificarMods() {
+		return "مرتبط کردن کلاس‌ها با JARهای ماد";
+	}
+
+	public String heapVisorPestanaClases() {
+		return "کلاس‌ها";
+	}
+
+	public String heapVisorPestanaMods() {
+		return "مادها و بسته‌ها";
+	}
+
+	public String heapVisorColClase() {
+		return "کلاس";
+	}
+
+	public String heapVisorColMod() {
+		return "ماد یا کتابخانه";
+	}
+
+	public String heapVisorColInstancias() {
+		return "نمونه‌ها";
+	}
+
+	public String heapVisorColMemoria() {
+		return "بایت‌های تخمینی";
+	}
+
+	public String heapVisorColPorcentaje() {
+		return "درصد";
+	}
+
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " نمونه — " + memoria;
+	}
+
+	public String heapVisorImagenAlternativa() {
+		return "انتخاب ایران";
+	}
+
+	public String heapVisorColorTextoClaro() {
+		return "متن روشن نمایشگر heap";
+	}
+
+	public String heapVisorColorVerde() {
+		return "سبز نمایشگر heap";
+	}
+
+	public String heapVisorColorRojo() {
+		return "قرمز نمایشگر heap";
+	}
+
+	public String heapVisorColorTabla() {
+		return "پس‌زمینه جدول نمایشگر heap";
+	}
+
+	public String heapVisorColorSeleccion() {
+		return "انتخاب نمایشگر heap";
+	}
+
+	public String heapVisorColorBorde() {
+		return "حاشیه نمایشگر heap";
+	}
+
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	public String heapVisorGrupoArreglos() {
+		return "آرایه‌ها";
+	}
+
+	public String heapVisorClaseDesconocida() {
+		return "کلاس ناشناس";
+	}
+
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "کلاس 0x" + idHexadecimal;
+	}
+
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "اولیه ناشناس";
+	}
+
+	public String consolaCancelar() {
+		return "لغو";
+	}
+
 }

@@ -13,6 +13,7 @@ import java.awt.event.MouseWheelEvent;
 import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.concurrent.Callable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -31,6 +33,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.text.DefaultCaret;
 
 import com.asbestosstar.crashdetector.ConfigMundial;
@@ -43,9 +46,13 @@ import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
 import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
+import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.controljvm.ClienteControlJVM;
+import com.asbestosstar.crashdetector.controljvm.RespuestaControlJVM;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.heapdump.VisorHeapDumpIranFifa;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos;
 import com.asbestosstar.crashdetector.lanzer.CDLauncher;
@@ -61,6 +68,9 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 	private JScrollPane scroll;
 	private JPanel barra;
 
+	private JButton hsErr;
+	private JButton gc;
+	private JButton heapDump;
 	private JButton bajar;
 	private JButton logs;
 	private JButton stop;
@@ -72,9 +82,14 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 	private ConfigColor fondo = ConfigColor.de("consola.dev.fondo", java.awt.Color.BLACK);
 	private ConfigColor texto = ConfigColor.de("consola.dev.texto", java.awt.Color.WHITE);
 	private ConfigColor barraInferior = ConfigColor.de("consola.dev.barra", java.awt.Color.decode("#404040"));
+	private final ConfigBoolean countbinface_gc_png = ConfigBoolean.de("countbinface_gc_png", true);
 
 	private static final int TAMANO_ICONO_BOTON = 32;
 
+	private static final String ICONO_HS_ERR = "imagenes/hs_err.png";
+	private static final String ICONO_GC = "imagenes/gc.png";
+	private static final String ICONO_GC_COUNT_BINFACE = "imagenes/count_binface.png";
+	private static final String ICONO_HEAP_DUMP = "imagenes/heapdump.png";
 	private static final String ICONO_BAJAR = "imagenes/consola_bajar.png";
 	private static final String ICONO_LOGS = "imagenes/consola_logs.png";
 	private static final String ICONO_STOP = "imagenes/consola_stop.png";
@@ -183,15 +198,29 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 		barra.setBackground(barraInferior.obtener());
 		barra.setPreferredSize(new Dimension(10, 46));
 
-		bajar = crearBotonIcono(ICONO_BAJAR, "⬇");
-		logs = crearBotonIcono(ICONO_LOGS, "§");
-		stop = crearBotonIcono(ICONO_STOP, "■");
+		hsErr = crearBotonIcono(ICONO_HS_ERR, MonitorDePID.idioma.consolaCrearHsErr());
+		gc = crearBotonIcono(rutaIconoGc(), MonitorDePID.idioma.consolaEjecutarGc());
+		heapDump = crearBotonIcono(ICONO_HEAP_DUMP, MonitorDePID.idioma.consolaHeapDump());
+		bajar = crearBotonIcono(ICONO_BAJAR, MonitorDePID.idioma.consolaBajar());
+		logs = crearBotonIcono(ICONO_LOGS, MonitorDePID.idioma.consolaCompartirLogs());
+		stop = crearBotonIcono(ICONO_STOP, MonitorDePID.idioma.consolaDetenerProceso());
+		actualizarIconoGc();
 
-		for (JButton b : new JButton[] { bajar, logs, stop }) {
+		for (JButton b : new JButton[] { heapDump, gc, hsErr, bajar, logs, stop }) {
 			estilizarBotonInferior(b);
 		}
 
 		barra.add(Box.createHorizontalGlue());
+		barra.add(heapDump);
+		barra.add(Box.createHorizontalStrut(8));
+		barra.add(gc);
+		barra.add(Box.createHorizontalStrut(8));
+		/*
+		 * El botón hs_err queda inmediatamente a la izquierda de la flecha de bajar,
+		 * como se solicitó.
+		 */
+		barra.add(hsErr);
+		barra.add(Box.createHorizontalStrut(8));
 		barra.add(bajar);
 		barra.add(Box.createHorizontalStrut(8));
 		barra.add(logs);
@@ -200,6 +229,11 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 		barra.add(Box.createHorizontalStrut(8));
 
 		add(barra, BorderLayout.SOUTH);
+
+		// Diagnóstico de la JVM observada
+		heapDump.addActionListener(e -> abrirAccionesHeapDump());
+		gc.addActionListener(e -> solicitarGc());
+		hsErr.addActionListener(e -> confirmarCrashHsErr());
 
 		// Scroll manual al fondo
 		bajar.addActionListener(e -> bajarAlFondoYReactivarAutoScroll());
@@ -277,6 +311,188 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 
 		// Al abrir la consola, empezar siguiendo el fondo.
 		bajarAlFondoYReactivarAutoScroll();
+	}
+
+	private void solicitarGc() {
+		ejecutarComandoControl(new Callable<RespuestaControlJVM>() {
+			@Override
+			public RespuestaControlJVM call() {
+				return new ClienteControlJVM(MonitorDePID.pid).solicitarGc();
+			}
+		}, null);
+	}
+
+	private void confirmarCrashHsErr() {
+		int respuesta = JOptionPane.showConfirmDialog(this, MonitorDePID.idioma.consolaAdvertenciaCrashHsErr(),
+				MonitorDePID.idioma.consolaCrearHsErr(), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+		if (respuesta != JOptionPane.YES_OPTION) {
+			return;
+		}
+
+		ejecutarComandoControl(new Callable<RespuestaControlJVM>() {
+			@Override
+			public RespuestaControlJVM call() {
+				return new ClienteControlJVM(MonitorDePID.pid).provocarCrashHsErr();
+			}
+		}, null);
+	}
+
+	private void abrirAccionesHeapDump() {
+		Object[] opciones = { MonitorDePID.idioma.consolaGenerarHeapDump(),
+				MonitorDePID.idioma.consolaAbrirVisorHeapDump(), MonitorDePID.idioma.consolaCancelar() };
+
+		int seleccion = JOptionPane.showOptionDialog(this, MonitorDePID.idioma.consolaHeapDumpAccion(),
+				MonitorDePID.idioma.consolaHeapDump(), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+				opciones, opciones[0]);
+
+		if (seleccion == 0) {
+			generarHeapDump();
+		} else if (seleccion == 1) {
+			abrirVisorHeapDump(null);
+		}
+	}
+
+	private void generarHeapDump() {
+		JTextArea advertencia = new JTextArea(MonitorDePID.idioma.consolaAdvertenciaHeapDump());
+		advertencia.setEditable(false);
+		advertencia.setLineWrap(true);
+		advertencia.setWrapStyleWord(true);
+		advertencia.setRows(7);
+		advertencia.setColumns(48);
+		advertencia.setOpaque(false);
+
+		JCheckBox soloVivos = new JCheckBox(MonitorDePID.idioma.consolaHeapDumpSoloVivos());
+		soloVivos.setSelected(false);
+
+		JPanel panel = new JPanel(new BorderLayout(0, 8));
+		panel.add(advertencia, BorderLayout.CENTER);
+		panel.add(soloVivos, BorderLayout.SOUTH);
+
+		int aceptar = JOptionPane.showConfirmDialog(this, panel, MonitorDePID.idioma.consolaHeapDump(),
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+
+		if (aceptar != JOptionPane.OK_OPTION) {
+			return;
+		}
+
+		JFileChooser selector = new JFileChooser();
+		selector.setDialogTitle(MonitorDePID.idioma.consolaGuardarHeapDump());
+		selector.setSelectedFile(new File("heap-" + MonitorDePID.pid + "-" + System.currentTimeMillis() + ".hprof"));
+
+		if (selector.showSaveDialog(this) != JFileChooser.APPROVE_OPTION) {
+			return;
+		}
+
+		File destino = asegurarExtensionHprof(selector.getSelectedFile());
+
+		if (destino.exists()) {
+			int sobrescribir = JOptionPane.showConfirmDialog(this,
+					MonitorDePID.idioma.consolaHeapDumpSobrescribir(destino.getAbsolutePath()),
+					MonitorDePID.idioma.consolaHeapDump(), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+			if (sobrescribir != JOptionPane.YES_OPTION) {
+				return;
+			}
+
+			try {
+				Files.delete(destino.toPath());
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this, MonitorDePID.idioma.controlJVMError(e.getMessage()));
+				return;
+			}
+		}
+
+		final File archivoFinal = destino;
+		final boolean soloObjetosVivos = soloVivos.isSelected();
+
+		ejecutarComandoControl(new Callable<RespuestaControlJVM>() {
+			@Override
+			public RespuestaControlJVM call() {
+				return new ClienteControlJVM(MonitorDePID.pid).crearHeapDump(archivoFinal, soloObjetosVivos);
+			}
+		}, new Runnable() {
+			@Override
+			public void run() {
+				int abrir = JOptionPane.showConfirmDialog(ConsolaDesarrolladorGUITL.this,
+						MonitorDePID.idioma.consolaHeapDumpAbrirDespues(), MonitorDePID.idioma.consolaHeapDump(),
+						JOptionPane.YES_NO_OPTION);
+
+				if (abrir == JOptionPane.YES_OPTION) {
+					abrirVisorHeapDump(archivoFinal);
+				}
+			}
+		});
+	}
+
+	private File asegurarExtensionHprof(File archivo) {
+		if (archivo == null) {
+			return null;
+		}
+
+		String nombre = archivo.getName().toLowerCase(java.util.Locale.ROOT);
+		if (nombre.endsWith(".hprof")) {
+			return archivo;
+		}
+
+		File padre = archivo.getParentFile();
+		return new File(padre, archivo.getName() + ".hprof");
+	}
+
+	private void abrirVisorHeapDump(File archivo) {
+		VisorHeapDumpIranFifa visor = new VisorHeapDumpIranFifa();
+		if (archivo == null) {
+			visor.init();
+		} else {
+			visor.abrirArchivo(archivo);
+		}
+	}
+
+	private void ejecutarComandoControl(final Callable<RespuestaControlJVM> tarea, final Runnable despuesDeExito) {
+		setBotonesDiagnosticoHabilitados(false);
+
+		SwingWorker<RespuestaControlJVM, Void> trabajo = new SwingWorker<RespuestaControlJVM, Void>() {
+			@Override
+			protected RespuestaControlJVM doInBackground() throws Exception {
+				return tarea.call();
+			}
+
+			@Override
+			protected void done() {
+				try {
+					RespuestaControlJVM respuesta = get();
+					JOptionPane.showMessageDialog(ConsolaDesarrolladorGUITL.this, respuesta.mensajeUsuario(),
+							MonitorDePID.idioma.consolaDiagnosticoJVM(),
+							respuesta.esCorrecta() ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE);
+
+					if (respuesta.esCorrecta() && despuesDeExito != null) {
+						despuesDeExito.run();
+					}
+				} catch (Exception e) {
+					Throwable causa = e.getCause() == null ? e : e.getCause();
+					CrashDetectorLogger.logException(causa);
+					JOptionPane.showMessageDialog(ConsolaDesarrolladorGUITL.this,
+							MonitorDePID.idioma.controlJVMError(causa.getMessage() == null ? "" : causa.getMessage()),
+							MonitorDePID.idioma.consolaDiagnosticoJVM(), JOptionPane.ERROR_MESSAGE);
+				} finally {
+					setBotonesDiagnosticoHabilitados(true);
+				}
+			}
+		};
+
+		trabajo.execute();
+	}
+
+	private void setBotonesDiagnosticoHabilitados(boolean habilitados) {
+		if (hsErr != null) {
+			hsErr.setEnabled(habilitados);
+		}
+		if (gc != null) {
+			gc.setEnabled(habilitados);
+		}
+		if (heapDump != null) {
+			heapDump.setEnabled(habilitados);
+		}
 	}
 
 	private boolean estaAlFondo() {
@@ -389,9 +605,54 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 		return boton;
 	}
 
+	private String rutaIconoGc() {
+		return countbinface_gc_png.obtener() ? ICONO_GC_COUNT_BINFACE : ICONO_GC;
+	}
+
+	/**
+	 * Recarga solamente el icono del botón de GC. Esto permite que el cambio del
+	 * ConfigBoolean se refleje inmediatamente cuando la apariencia se recarga.
+	 */
+	private void actualizarIconoGc() {
+		if (gc == null) {
+			return;
+		}
+
+		String textoAccesible = MonitorDePID.idioma.consolaEjecutarGc();
+		ImageIcon icono = cargarIcono32(rutaIconoGc());
+
+		/*
+		 * Si count_binface.png no está disponible, conservar un botón gráfico usando
+		 * gc.png en vez de caer directamente al texto.
+		 */
+		if (icono.getIconWidth() <= 0 && countbinface_gc_png.obtener()) {
+			icono = cargarIcono32(ICONO_GC);
+		}
+
+		if (icono.getIconWidth() > 0) {
+			gc.setIcon(icono);
+			gc.setText("");
+		} else {
+			gc.setIcon(null);
+			gc.setText(textoAccesible);
+		}
+
+		gc.setToolTipText(textoAccesible);
+		gc.getAccessibleContext().setAccessibleName(textoAccesible);
+	}
+
 	private ImageIcon cargarIcono32(String rutaRelativa) {
-		ImageIcon icono = cargarIconoConFallback(Statics.carpeta.resolve(rutaRelativa).toString(),
-				"/mnt/data/" + nombreArchivo(rutaRelativa));
+		ImageIcon icono = new ImageIcon();
+		URL recurso = getClass().getResource("/" + rutaRelativa.replace('\\', '/'));
+
+		if (recurso != null) {
+			icono = new ImageIcon(recurso);
+		}
+
+		if (icono.getIconWidth() <= 0) {
+			icono = cargarIconoConFallback(Statics.carpeta.resolve(rutaRelativa).toString(),
+					"/mnt/data/" + nombreArchivo(rutaRelativa));
+		}
 
 		if (icono.getIconWidth() <= 0) {
 			return icono;
@@ -559,7 +820,9 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 			barra.setBackground(barraInferior.obtener());
 		}
 
-		for (JButton b : new JButton[] { bajar, logs, stop }) {
+		actualizarIconoGc();
+
+		for (JButton b : new JButton[] { heapDump, gc, hsErr, bajar, logs, stop }) {
 			estilizarBotonInferior(b);
 		}
 
@@ -575,10 +838,12 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 		fondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
 		texto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
 		barraInferior.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorPanel());
+		countbinface_gc_png.establecerNombreParaMostrar(() -> "Count Binface GC PNG");
 
 		ret.add(fondo);
 		ret.add(texto);
 		ret.add(barraInferior);
+		ret.add(countbinface_gc_png);
 
 		return ret;
 	}

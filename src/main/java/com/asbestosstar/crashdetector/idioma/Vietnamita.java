@@ -11989,4 +11989,274 @@ public class Vietnamita implements Idioma {
 		return "Máy quét đám mây: màu viền";
 	}
 
+	public String controlJVMDisponible() {
+		return "Kênh chẩn đoán cục bộ của JVM khả dụng.";
+	}
+
+	public String controlJVMGcAceptado() {
+		return "JVM đã nhận yêu cầu thu gom rác. System.gc() là một yêu cầu nỗ lực tốt nhất và JVM có thể quyết định thực hiện bao nhiêu công việc.";
+	}
+
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "Heap dump đã được tạo tại:\n" + ruta;
+	}
+
+	public String controlJVMCrashAceptado() {
+		return "JVM đã chấp nhận yêu cầu crash chẩn đoán. Quá trình sẽ đóng lại và HotSpot sẽ cố gắng tạo tệp hs_err_pid.";
+	}
+
+	public String controlJVMNoDisponible() {
+		return "Không thể kết nối với kênh chẩn đoán cục bộ của JVM đang được quan sát. Tính năng này chỉ khả dụng khi CrashDetector được tải bên trong quá trình trò chơi.";
+	}
+
+	public String controlJVMNoAutorizado() {
+		return "JVM đã từ chối yêu cầu chẩn đoán vì token cục bộ không hợp lệ.";
+	}
+
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "Thao tác chẩn đoán JVM thất bại."
+				: "Thao tác chẩn đoán JVM thất bại:\n" + detalle;
+	}
+
+	public String consolaCrearHsErr() {
+		return "Gây crash và tạo hs_err";
+	}
+
+	public String consolaEjecutarGc() {
+		return "Yêu cầu thu gom rác";
+	}
+
+	public String consolaHeapDump() {
+		return "Heap dump";
+	}
+
+	public String consolaBajar() {
+		return "Đi đến cuối bảng điều khiển";
+	}
+
+	public String consolaCompartirLogs() {
+		return "Chia sẻ nhật ký";
+	}
+
+	public String consolaDetenerProceso() {
+		return "Dừng quá trình";
+	}
+
+	public String consolaAdvertenciaCrashHsErr() {
+		return "Thao tác này sẽ cố ý gây ra lỗi gốc nghiêm trọng trong JVM của trò chơi. Quá trình sẽ kết thúc ngay lập tức và mọi tiến trình chưa lưu sẽ bị mất. HotSpot sẽ cố gắng ghi tệp hs_err_pid vào thư mục làm việc hoặc thư mục tạm. Tiếp tục?";
+	}
+
+	public String consolaGenerarHeapDump() {
+		return "Tạo heap dump";
+	}
+
+	public String consolaAbrirVisorHeapDump() {
+		return "Mở trình xem heap dump";
+	}
+
+	public String consolaHeapDumpAccion() {
+		return "Bạn có thể tạo heap dump của JVM đang được quan sát hoặc mở trình xem để nhập một cái hiện có.";
+	}
+
+	public String consolaAdvertenciaHeapDump() {
+		return "Heap dump có thể rất lớn và có thể tạm dừng trò chơi trong khi ghi. Nó cũng có thể chứa thông tin nhạy cảm hiện diện trong bộ nhớ, bao gồm tên người dùng, đường dẫn, tin nhắn, địa chỉ, khóa, mật khẩu hoặc token truy cập. Lưu và chia sẻ tệp một cách cẩn thận.";
+	}
+
+	public String consolaHeapDumpSoloVivos() {
+		return "Chỉ bao gồm các đối tượng sống và có thể truy cập";
+	}
+
+	public String consolaGuardarHeapDump() {
+		return "Lưu heap dump";
+	}
+
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "Tệp đã tồn tại và HotSpot không thể ghi đè lên nó:\n" + ruta
+				+ "\n\nXóa nó trước khi tạo heap dump mới?";
+	}
+
+	public String consolaHeapDumpAbrirDespues() {
+		return "Heap dump đã hoàn tất. Mở nó ngay bây giờ trong trình xem?";
+	}
+
+	public String consolaDiagnosticoJVM() {
+		return "Chẩn đoán JVM";
+	}
+
+	public String heapVisorTitulo() {
+		return "Trình xem heap dump — Iran";
+	}
+
+	public String heapVisorDescripcion() {
+		return "Nhập tệp HPROF để xem lớp, gói và mod nào chiếm nhiều bộ nhớ bề mặt ước tính nhất. Phân tích nhanh không tính toán kích thước được giữ lại hoặc cây thống trị, nhưng cho phép xác định các đối tượng tiêu thụ lớn mà không cần tải từng đối tượng từ dump vào bộ nhớ.";
+	}
+
+	public String heapVisorAyudaArbol() {
+		return "Tab lớp sắp xếp các loại theo bộ nhớ bề mặt ước tính. Tab mod và gói cho phép mở rộng nhiều cấp độ: JAR hoặc thư viện, gói và lớp. Các lớp được liên kết với JAR từ thư mục mod cuối cùng khi tùy chọn nhận dạng được bật.";
+	}
+
+	public String heapVisorSeleccionarArchivo() {
+		return "Chọn heap dump HPROF";
+	}
+
+	public String heapVisorAnalisisEnCurso() {
+		return "Đang có một phân tích heap dump đang diễn ra.";
+	}
+
+	public String heapVisorArchivoNoValido() {
+		return "Tệp đã chọn không tồn tại hoặc không thể đọc được.";
+	}
+
+	public String heapVisorAnalizando(String archivo) {
+		return "Đang phân tích " + archivo + "...";
+	}
+
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "Đang phân tích heap dump: " + porcentaje + "% — " + detalle;
+	}
+
+	public String heapVisorListo(String memoria, long objetos) {
+		return "Sẵn sàng: " + memoria + " bề mặt ước tính trong " + objetos + " đối tượng hoặc mảng.";
+	}
+
+	public String heapVisorCancelado() {
+		return "Phân tích đã hủy.";
+	}
+
+	public String heapVisorError() {
+		return "Phân tích heap dump thất bại.";
+	}
+
+	public String heapVisorErrorDetalle(String detalle) {
+		return "Không thể phân tích heap dump:\n" + detalle;
+	}
+
+	public String heapVisorRaiz() {
+		return "Heap";
+	}
+
+	public String heapVisorSinMod() {
+		return "Không có mod được xác định";
+	}
+
+	public String heapVisorImportar() {
+		return "Nhập HPROF";
+	}
+
+	public String heapVisorCancelar() {
+		return "Hủy phân tích";
+	}
+
+	public String heapVisorExpandir() {
+		return "Mở rộng đến 4 cấp độ";
+	}
+
+	public String heapVisorContraer() {
+		return "Thu gọn tất cả";
+	}
+
+	public String heapVisorIdentificarMods() {
+		return "Liên kết lớp với JAR của mod";
+	}
+
+	public String heapVisorPestanaClases() {
+		return "Lớp";
+	}
+
+	public String heapVisorPestanaMods() {
+		return "Mod và gói";
+	}
+
+	public String heapVisorColClase() {
+		return "Lớp";
+	}
+
+	public String heapVisorColMod() {
+		return "Mod hoặc thư viện";
+	}
+
+	public String heapVisorColInstancias() {
+		return "Phiên bản";
+	}
+
+	public String heapVisorColMemoria() {
+		return "Byte ước tính";
+	}
+
+	public String heapVisorColPorcentaje() {
+		return "Phần trăm";
+	}
+
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " phiên bản — " + memoria;
+	}
+
+	public String heapVisorImagenAlternativa() {
+		return "Lựa chọn của Iran";
+	}
+
+	public String heapVisorColorTextoClaro() {
+		return "Văn bản sáng của trình xem heap";
+	}
+
+	public String heapVisorColorVerde() {
+		return "Màu xanh lá của trình xem heap";
+	}
+
+	public String heapVisorColorRojo() {
+		return "Màu đỏ của trình xem heap";
+	}
+
+	public String heapVisorColorTabla() {
+		return "Nền bảng của trình xem heap";
+	}
+
+	public String heapVisorColorSeleccion() {
+		return "Lựa chọn của trình xem heap";
+	}
+
+	public String heapVisorColorBorde() {
+		return "Viền của trình xem heap";
+	}
+
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	public String heapVisorGrupoArreglos() {
+		return "Mảng";
+	}
+
+	public String heapVisorClaseDesconocida() {
+		return "Lớp không xác định";
+	}
+
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "Lớp 0x" + idHexadecimal;
+	}
+
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "Nguyên thủy không xác định";
+	}
+
+	public String consolaCancelar() {
+		return "Hủy";
+	}
+
 }

@@ -11959,4 +11959,273 @@ public class Tailandes implements Idioma {
 		return "สแกนเนอร์บนคลาวด์: สีขอบ";
 	}
 
+	public String controlJVMDisponible() {
+		return "ช่องทางการวินิจฉัย JVM ในเครื่องพร้อมใช้งาน";
+	}
+
+	public String controlJVMGcAceptado() {
+		return "JVM ได้รับคำขอเก็บขยะแล้ว System.gc() เป็นคำขอที่พยายามทำให้ดีที่สุด และ JVM สามารถตัดสินใจได้ว่าจะทำงานมากน้อยเพียงใด";
+	}
+
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "สร้าง heap dump แล้วที่:\n" + ruta;
+	}
+
+	public String controlJVMCrashAceptado() {
+		return "JVM ยอมรับคำขอ crash เพื่อวินิจฉัย กระบวนการจะปิดลง และ HotSpot จะพยายามสร้างไฟล์ hs_err_pid";
+	}
+
+	public String controlJVMNoDisponible() {
+		return "ไม่สามารถเชื่อมต่อกับช่องทางการวินิจฉัย JVM ในเครื่องที่สังเกตได้ ฟังก์ชันนี้ใช้งานได้เฉพาะเมื่อโหลด CrashDetector ภายในกระบวนการเกมเท่านั้น";
+	}
+
+	public String controlJVMNoAutorizado() {
+		return "JVM ปฏิเสธคำขอวินิจฉัยเนื่องจากโทเค็นในเครื่องไม่ถูกต้อง";
+	}
+
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "การดำเนินการวินิจฉัย JVM ล้มเหลว"
+				: "การดำเนินการวินิจฉัย JVM ล้มเหลว:\n" + detalle;
+	}
+
+	public String consolaCrearHsErr() {
+		return "ก่อให้เกิด crash และสร้าง hs_err";
+	}
+
+	public String consolaEjecutarGc() {
+		return "ขอเก็บขยะ";
+	}
+
+	public String consolaHeapDump() {
+		return "Heap dump";
+	}
+
+	public String consolaBajar() {
+		return "ไปที่ท้ายคอนโซล";
+	}
+
+	public String consolaCompartirLogs() {
+		return "แบ่งปันบันทึก";
+	}
+
+	public String consolaDetenerProceso() {
+		return "หยุดกระบวนการ";
+	}
+
+	public String consolaAdvertenciaCrashHsErr() {
+		return "การดำเนินการนี้จะจงใจทำให้เกิดข้อผิดพลาดพื้นเมืองร้ายแรงใน JVM ของเกม กระบวนการจะสิ้นสุดทันที และความคืบหน้าที่ยังไม่ได้บันทึกจะสูญหาย HotSpot จะพยายามเขียนไฟล์ hs_err_pid ในไดเร็กทอรีการทำงานหรือโฟลเดอร์ชั่วคราว ดำเนินการต่อหรือไม่?";
+	}
+
+	public String consolaGenerarHeapDump() {
+		return "สร้าง heap dump";
+	}
+
+	public String consolaAbrirVisorHeapDump() {
+		return "เปิดตัวดู heap dump";
+	}
+
+	public String consolaHeapDumpAccion() {
+		return "คุณสามารถสร้าง heap dump ของ JVM ที่สังเกตได้ หรือเปิดตัวดูเพื่อนำเข้าที่มีอยู่";
+	}
+
+	public String consolaAdvertenciaHeapDump() {
+		return "Heap dump อาจมีขนาดใหญ่มากและอาจทำให้เกมหยุดชะงักขณะเขียน นอกจากนี้ยังอาจมีข้อมูลละเอียดอ่อนที่อยู่ในหน่วยความจำ รวมถึงชื่อผู้ใช้ เส้นทาง ข้อความ ที่อยู่ คีย์ รหัสผ่าน หรือโทเค็นการเข้าถึง บันทึกและแบ่งปันไฟล์อย่างระมัดระวัง";
+	}
+
+	public String consolaHeapDumpSoloVivos() {
+		return "รวมเฉพาะวัตถุที่มีชีวิตและเข้าถึงได้";
+	}
+
+	public String consolaGuardarHeapDump() {
+		return "บันทึก heap dump";
+	}
+
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "ไฟล์มีอยู่แล้ว และ HotSpot ไม่สามารถเขียนทับได้:\n" + ruta + "\n\nลบก่อนสร้าง heap dump ใหม่หรือไม่?";
+	}
+
+	public String consolaHeapDumpAbrirDespues() {
+		return "Heap dump เสร็จสิ้น เปิดในตัวดูเลยหรือไม่?";
+	}
+
+	public String consolaDiagnosticoJVM() {
+		return "การวินิจฉัย JVM";
+	}
+
+	public String heapVisorTitulo() {
+		return "ตัวดู heap dump — อิหร่าน";
+	}
+
+	public String heapVisorDescripcion() {
+		return "นำเข้าไฟล์ HPROF เพื่อดูว่าคลาส แพ็คเกจ และม็อดใดใช้หน่วยความจำผิวเผินโดยประมาณมากที่สุด การวิเคราะห์ด่วนไม่คำนวณขนาดที่ถูกกักเก็บหรือต้นไม้ผู้ครอบครอง แต่ช่วยให้ค้นหาผู้บริโภคขนาดใหญ่ได้โดยไม่ต้องโหลดแต่ละออบเจ็กต์จาก dump เข้าไปในหน่วยความจำ";
+	}
+
+	public String heapVisorAyudaArbol() {
+		return "แท็บคลาสเรียงลำดับประเภทตามหน่วยความจำผิวเผินโดยประมาณ แท็บม็อดและแพ็คเกจอนุญาตให้ขยายหลายระดับ: JAR หรือไลบรารี แพ็คเกจ และคลาส คลาสจะเชื่อมโยงกับ JAR จากโฟลเดอร์ม็อดล่าสุดเมื่อเปิดใช้งานตัวเลือกการระบุตัวตน";
+	}
+
+	public String heapVisorSeleccionarArchivo() {
+		return "เลือก heap dump HPROF";
+	}
+
+	public String heapVisorAnalisisEnCurso() {
+		return "มีการวิเคราะห์ heap dump กำลังดำเนินอยู่";
+	}
+
+	public String heapVisorArchivoNoValido() {
+		return "ไฟล์ที่เลือกไม่มีอยู่หรือไม่สามารถอ่านได้";
+	}
+
+	public String heapVisorAnalizando(String archivo) {
+		return "กำลังวิเคราะห์ " + archivo + "...";
+	}
+
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "กำลังวิเคราะห์ heap dump: " + porcentaje + "% — " + detalle;
+	}
+
+	public String heapVisorListo(String memoria, long objetos) {
+		return "พร้อม: " + memoria + " ผิวเผินโดยประมาณใน " + objetos + " ออบเจ็กต์หรืออาร์เรย์";
+	}
+
+	public String heapVisorCancelado() {
+		return "การวิเคราะห์ถูกยกเลิก";
+	}
+
+	public String heapVisorError() {
+		return "การวิเคราะห์ heap dump ล้มเหลว";
+	}
+
+	public String heapVisorErrorDetalle(String detalle) {
+		return "ไม่สามารถวิเคราะห์ heap dump ได้:\n" + detalle;
+	}
+
+	public String heapVisorRaiz() {
+		return "Heap";
+	}
+
+	public String heapVisorSinMod() {
+		return "ไม่มีการระบุม็อด";
+	}
+
+	public String heapVisorImportar() {
+		return "นำเข้า HPROF";
+	}
+
+	public String heapVisorCancelar() {
+		return "ยกเลิกการวิเคราะห์";
+	}
+
+	public String heapVisorExpandir() {
+		return "ขยายถึง 4 ระดับ";
+	}
+
+	public String heapVisorContraer() {
+		return "ยุบทั้งหมด";
+	}
+
+	public String heapVisorIdentificarMods() {
+		return "เชื่อมโยงคลาสกับ JAR ของม็อด";
+	}
+
+	public String heapVisorPestanaClases() {
+		return "คลาส";
+	}
+
+	public String heapVisorPestanaMods() {
+		return "ม็อดและแพ็คเกจ";
+	}
+
+	public String heapVisorColClase() {
+		return "คลาส";
+	}
+
+	public String heapVisorColMod() {
+		return "ม็อดหรือไลบรารี";
+	}
+
+	public String heapVisorColInstancias() {
+		return "อินสแตนซ์";
+	}
+
+	public String heapVisorColMemoria() {
+		return "ไบต์โดยประมาณ";
+	}
+
+	public String heapVisorColPorcentaje() {
+		return "เปอร์เซ็นต์";
+	}
+
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " อินสแตนซ์ — " + memoria;
+	}
+
+	public String heapVisorImagenAlternativa() {
+		return "การเลือกของอิหร่าน";
+	}
+
+	public String heapVisorColorTextoClaro() {
+		return "ข้อความสีอ่อนของตัวดู heap";
+	}
+
+	public String heapVisorColorVerde() {
+		return "สีเขียวของตัวดู heap";
+	}
+
+	public String heapVisorColorRojo() {
+		return "สีแดงของตัวดู heap";
+	}
+
+	public String heapVisorColorTabla() {
+		return "พื้นหลังตารางของตัวดู heap";
+	}
+
+	public String heapVisorColorSeleccion() {
+		return "การเลือกของตัวดู heap";
+	}
+
+	public String heapVisorColorBorde() {
+		return "ขอบของตัวดู heap";
+	}
+
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	public String heapVisorGrupoArreglos() {
+		return "อาร์เรย์";
+	}
+
+	public String heapVisorClaseDesconocida() {
+		return "คลาสที่ไม่รู้จัก";
+	}
+
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "คลาส 0x" + idHexadecimal;
+	}
+
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "ชนิดพื้นฐานที่ไม่รู้จัก";
+	}
+
+	public String consolaCancelar() {
+		return "ยกเลิก";
+	}
+
 }

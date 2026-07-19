@@ -12494,4 +12494,341 @@ public class Espanol implements Idioma {
 		return "Escáner en la nube: color de borde";
 	}
 
+	@Override
+	public String controlJVMDisponible() {
+		return "El canal local de diagnóstico de la JVM está disponible.";
+	}
+
+	@Override
+	public String controlJVMGcAceptado() {
+		return "La JVM recibió la solicitud de recolección de basura. System.gc() es una solicitud de mejor esfuerzo y la JVM puede decidir cuánto trabajo realizar.";
+	}
+
+	@Override
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "El heap dump fue creado en:\n" + ruta;
+	}
+
+	@Override
+	public String controlJVMCrashAceptado() {
+		return "La JVM aceptó la solicitud de crash diagnóstico. El proceso se cerrará y HotSpot intentará crear un archivo hs_err_pid.";
+	}
+
+	@Override
+	public String controlJVMNoDisponible() {
+		return "No se pudo conectar con el canal local de diagnóstico de la JVM observada. La función solo está disponible cuando CrashDetector se cargó dentro del proceso del juego.";
+	}
+
+	@Override
+	public String controlJVMNoAutorizado() {
+		return "La JVM rechazó la solicitud de diagnóstico porque el token local no es válido.";
+	}
+
+	@Override
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "La operación de diagnóstico de la JVM falló."
+				: "La operación de diagnóstico de la JVM falló:\n" + detalle;
+	}
+
+	@Override
+	public String consolaCrearHsErr() {
+		return "Provocar crash y crear hs_err";
+	}
+
+	@Override
+	public String consolaEjecutarGc() {
+		return "Solicitar recolección de basura";
+	}
+
+	@Override
+	public String consolaHeapDump() {
+		return "Heap dump";
+	}
+
+	@Override
+	public String consolaBajar() {
+		return "Ir al final de la consola";
+	}
+
+	@Override
+	public String consolaCompartirLogs() {
+		return "Compartir registros";
+	}
+
+	@Override
+	public String consolaDetenerProceso() {
+		return "Detener proceso";
+	}
+
+	@Override
+	public String consolaAdvertenciaCrashHsErr() {
+		return "Esta operación provocará deliberadamente un error nativo fatal en la JVM del juego. El proceso terminará inmediatamente y se perderá cualquier progreso no guardado. HotSpot intentará escribir un archivo hs_err_pid en el directorio de trabajo o en la carpeta temporal. ¿Continuar?";
+	}
+
+	@Override
+	public String consolaGenerarHeapDump() {
+		return "Generar heap dump";
+	}
+
+	@Override
+	public String consolaAbrirVisorHeapDump() {
+		return "Abrir visor de heap dump";
+	}
+
+	@Override
+	public String consolaHeapDumpAccion() {
+		return "Puedes crear un heap dump de la JVM observada o abrir el visor para importar uno existente.";
+	}
+
+	@Override
+	public String consolaAdvertenciaHeapDump() {
+		return "Un heap dump puede ser muy grande y puede pausar el juego mientras se escribe. También puede contener información sensible presente en memoria, incluidos nombres de usuario, rutas, mensajes, direcciones, claves, contraseñas o tokens de acceso. Guarda y comparte el archivo con cuidado.";
+	}
+
+	@Override
+	public String consolaHeapDumpSoloVivos() {
+		return "Incluir solamente objetos vivos y alcanzables";
+	}
+
+	@Override
+	public String consolaGuardarHeapDump() {
+		return "Guardar heap dump";
+	}
+
+	@Override
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "El archivo ya existe y HotSpot no puede sobrescribirlo:\n" + ruta
+				+ "\n\n¿Eliminarlo antes de crear el nuevo heap dump?";
+	}
+
+	@Override
+	public String consolaHeapDumpAbrirDespues() {
+		return "El heap dump terminó. ¿Abrirlo ahora en el visor?";
+	}
+
+	@Override
+	public String consolaDiagnosticoJVM() {
+		return "Diagnóstico de JVM";
+	}
+
+	@Override
+	public String heapVisorTitulo() {
+		return "Visor de heap dump — Irán";
+	}
+
+	@Override
+	public String heapVisorDescripcion() {
+		return "Importa un archivo HPROF para ver qué clases, paquetes y mods ocupan más memoria superficial estimada. El análisis rápido no calcula tamaño retenido ni un árbol de dominadores, pero permite localizar grandes consumidores sin cargar cada objeto del dump en memoria.";
+	}
+
+	@Override
+	public String heapVisorAyudaArbol() {
+		return "La pestaña de clases ordena los tipos por memoria superficial estimada. La pestaña de mods y paquetes permite expandir varios niveles: JAR o biblioteca, paquete y clase. Las clases se relacionan con los JAR de la última carpeta de mods cuando la opción de identificación está activada.";
+	}
+
+	@Override
+	public String heapVisorSeleccionarArchivo() {
+		return "Seleccionar heap dump HPROF";
+	}
+
+	@Override
+	public String heapVisorAnalisisEnCurso() {
+		return "Ya hay un análisis de heap dump en curso.";
+	}
+
+	@Override
+	public String heapVisorArchivoNoValido() {
+		return "El archivo seleccionado no existe o no se puede leer.";
+	}
+
+	@Override
+	public String heapVisorAnalizando(String archivo) {
+		return "Analizando " + archivo + "...";
+	}
+
+	@Override
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "Analizando heap dump: " + porcentaje + "% — " + detalle;
+	}
+
+	@Override
+	public String heapVisorListo(String memoria, long objetos) {
+		return "Listo: " + memoria + " superficiales estimados en " + objetos + " objetos o arreglos.";
+	}
+
+	@Override
+	public String heapVisorCancelado() {
+		return "Análisis cancelado.";
+	}
+
+	@Override
+	public String heapVisorError() {
+		return "El análisis del heap dump falló.";
+	}
+
+	@Override
+	public String heapVisorErrorDetalle(String detalle) {
+		return "No se pudo analizar el heap dump:\n" + detalle;
+	}
+
+	@Override
+	public String heapVisorRaiz() {
+		return "Heap";
+	}
+
+	@Override
+	public String heapVisorSinMod() {
+		return "Sin mod identificado";
+	}
+
+	@Override
+	public String heapVisorImportar() {
+		return "Importar HPROF";
+	}
+
+	@Override
+	public String heapVisorCancelar() {
+		return "Cancelar análisis";
+	}
+
+	@Override
+	public String heapVisorExpandir() {
+		return "Expandir hasta 4 niveles";
+	}
+
+	@Override
+	public String heapVisorContraer() {
+		return "Contraer todo";
+	}
+
+	@Override
+	public String heapVisorIdentificarMods() {
+		return "Relacionar clases con JAR de mods";
+	}
+
+	@Override
+	public String heapVisorPestanaClases() {
+		return "Clases";
+	}
+
+	@Override
+	public String heapVisorPestanaMods() {
+		return "Mods y paquetes";
+	}
+
+	@Override
+	public String heapVisorColClase() {
+		return "Clase";
+	}
+
+	@Override
+	public String heapVisorColMod() {
+		return "Mod o biblioteca";
+	}
+
+	@Override
+	public String heapVisorColInstancias() {
+		return "Instancias";
+	}
+
+	@Override
+	public String heapVisorColMemoria() {
+		return "Bytes estimados";
+	}
+
+	@Override
+	public String heapVisorColPorcentaje() {
+		return "Porcentaje";
+	}
+
+	@Override
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " instancias — " + memoria;
+	}
+
+	@Override
+	public String heapVisorImagenAlternativa() {
+		return "Selección de Irán";
+	}
+
+	@Override
+	public String heapVisorColorTextoClaro() {
+		return "Texto claro del visor de heap";
+	}
+
+	@Override
+	public String heapVisorColorVerde() {
+		return "Verde del visor de heap";
+	}
+
+	@Override
+	public String heapVisorColorRojo() {
+		return "Rojo del visor de heap";
+	}
+
+	@Override
+	public String heapVisorColorTabla() {
+		return "Fondo de tabla del visor de heap";
+	}
+
+	@Override
+	public String heapVisorColorSeleccion() {
+		return "Selección del visor de heap";
+	}
+
+	@Override
+	public String heapVisorColorBorde() {
+		return "Borde del visor de heap";
+	}
+
+	@Override
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	@Override
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	@Override
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	@Override
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	@Override
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	@Override
+	public String heapVisorGrupoArreglos() {
+		return "Arreglos";
+	}
+
+	@Override
+	public String heapVisorClaseDesconocida() {
+		return "Clase desconocida";
+	}
+
+	@Override
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "Clase 0x" + idHexadecimal;
+	}
+
+	@Override
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "Primitivo desconocido";
+	}
+
+	@Override
+	public String consolaCancelar() {
+		return "Cancelar";
+	}
+
 }

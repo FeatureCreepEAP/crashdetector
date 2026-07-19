@@ -11780,4 +11780,274 @@ public class Portuges implements Idioma {
 		return "Scanner na nuvem: cor da borda";
 	}
 
+	public String controlJVMDisponible() {
+		return "O canal local de diagnóstico da JVM está disponível.";
+	}
+
+	public String controlJVMGcAceptado() {
+		return "A JVM recebeu a solicitação de coleta de lixo. System.gc() é uma solicitação de melhor esforço e a JVM pode decidir quanto trabalho realizar.";
+	}
+
+	public String controlJVMHeapDumpCreado(String ruta) {
+		return "O heap dump foi criado em:\n" + ruta;
+	}
+
+	public String controlJVMCrashAceptado() {
+		return "A JVM aceitou a solicitação de crash diagnóstico. O processo será encerrado e o HotSpot tentará criar um arquivo hs_err_pid.";
+	}
+
+	public String controlJVMNoDisponible() {
+		return "Não foi possível conectar ao canal local de diagnóstico da JVM observada. A função só está disponível quando o CrashDetector foi carregado dentro do processo do jogo.";
+	}
+
+	public String controlJVMNoAutorizado() {
+		return "A JVM rejeitou a solicitação de diagnóstico porque o token local não é válido.";
+	}
+
+	public String controlJVMError(String detalle) {
+		return detalle == null || detalle.trim().isEmpty() ? "A operação de diagnóstico da JVM falhou."
+				: "A operação de diagnóstico da JVM falhou:\n" + detalle;
+	}
+
+	public String consolaCrearHsErr() {
+		return "Provocar crash e criar hs_err";
+	}
+
+	public String consolaEjecutarGc() {
+		return "Solicitar coleta de lixo";
+	}
+
+	public String consolaHeapDump() {
+		return "Heap dump";
+	}
+
+	public String consolaBajar() {
+		return "Ir para o final do console";
+	}
+
+	public String consolaCompartirLogs() {
+		return "Compartilhar registros";
+	}
+
+	public String consolaDetenerProceso() {
+		return "Parar processo";
+	}
+
+	public String consolaAdvertenciaCrashHsErr() {
+		return "Esta operação provocará deliberadamente um erro nativo fatal na JVM do jogo. O processo terminará imediatamente e qualquer progresso não salvo será perdido. O HotSpot tentará escrever um arquivo hs_err_pid no diretório de trabalho ou na pasta temporária. Continuar?";
+	}
+
+	public String consolaGenerarHeapDump() {
+		return "Gerar heap dump";
+	}
+
+	public String consolaAbrirVisorHeapDump() {
+		return "Abrir visualizador de heap dump";
+	}
+
+	public String consolaHeapDumpAccion() {
+		return "Você pode criar um heap dump da JVM observada ou abrir o visualizador para importar um existente.";
+	}
+
+	public String consolaAdvertenciaHeapDump() {
+		return "Um heap dump pode ser muito grande e pode pausar o jogo enquanto é escrito. Também pode conter informações sensíveis presentes na memória, incluindo nomes de usuário, caminhos, mensagens, endereços, chaves, senhas ou tokens de acesso. Salve e compartilhe o arquivo com cuidado.";
+	}
+
+	public String consolaHeapDumpSoloVivos() {
+		return "Incluir somente objetos vivos e alcançáveis";
+	}
+
+	public String consolaGuardarHeapDump() {
+		return "Salvar heap dump";
+	}
+
+	public String consolaHeapDumpSobrescribir(String ruta) {
+		return "O arquivo já existe e o HotSpot não pode sobrescrevê-lo:\n" + ruta
+				+ "\n\nExcluir antes de criar o novo heap dump?";
+	}
+
+	public String consolaHeapDumpAbrirDespues() {
+		return "O heap dump terminou. Abrir agora no visualizador?";
+	}
+
+	public String consolaDiagnosticoJVM() {
+		return "Diagnóstico de JVM";
+	}
+
+	public String heapVisorTitulo() {
+		return "Visualizador de heap dump — Irã";
+	}
+
+	public String heapVisorDescripcion() {
+		return "Importe um arquivo HPROF para ver quais classes, pacotes e mods ocupam mais memória superficial estimada. A análise rápida não calcula tamanho retido nem uma árvore de dominadores, mas permite localizar grandes consumidores sem carregar cada objeto do dump na memória.";
+	}
+
+	public String heapVisorAyudaArbol() {
+		return "A aba de classes ordena os tipos por memória superficial estimada. A aba de mods e pacotes permite expandir vários níveis: JAR ou biblioteca, pacote e classe. As classes são relacionadas aos JARs da última pasta de mods quando a opção de identificação está ativada.";
+	}
+
+	public String heapVisorSeleccionarArchivo() {
+		return "Selecionar heap dump HPROF";
+	}
+
+	public String heapVisorAnalisisEnCurso() {
+		return "Já há uma análise de heap dump em andamento.";
+	}
+
+	public String heapVisorArchivoNoValido() {
+		return "O arquivo selecionado não existe ou não pode ser lido.";
+	}
+
+	public String heapVisorAnalizando(String archivo) {
+		return "Analisando " + archivo + "...";
+	}
+
+	public String heapVisorProgreso(int porcentaje, String detalle) {
+		return "Analisando heap dump: " + porcentaje + "% — " + detalle;
+	}
+
+	public String heapVisorListo(String memoria, long objetos) {
+		return "Pronto: " + memoria + " superficiais estimados em " + objetos + " objetos ou arrays.";
+	}
+
+	public String heapVisorCancelado() {
+		return "Análise cancelada.";
+	}
+
+	public String heapVisorError() {
+		return "A análise do heap dump falhou.";
+	}
+
+	public String heapVisorErrorDetalle(String detalle) {
+		return "Não foi possível analisar o heap dump:\n" + detalle;
+	}
+
+	public String heapVisorRaiz() {
+		return "Heap";
+	}
+
+	public String heapVisorSinMod() {
+		return "Sem mod identificado";
+	}
+
+	public String heapVisorImportar() {
+		return "Importar HPROF";
+	}
+
+	public String heapVisorCancelar() {
+		return "Cancelar análise";
+	}
+
+	public String heapVisorExpandir() {
+		return "Expandir até 4 níveis";
+	}
+
+	public String heapVisorContraer() {
+		return "Recolher tudo";
+	}
+
+	public String heapVisorIdentificarMods() {
+		return "Relacionar classes com JARs de mods";
+	}
+
+	public String heapVisorPestanaClases() {
+		return "Classes";
+	}
+
+	public String heapVisorPestanaMods() {
+		return "Mods e pacotes";
+	}
+
+	public String heapVisorColClase() {
+		return "Classe";
+	}
+
+	public String heapVisorColMod() {
+		return "Mod ou biblioteca";
+	}
+
+	public String heapVisorColInstancias() {
+		return "Instâncias";
+	}
+
+	public String heapVisorColMemoria() {
+		return "Bytes estimados";
+	}
+
+	public String heapVisorColPorcentaje() {
+		return "Porcentagem";
+	}
+
+	public String heapVisorDetalleNodo(long instancias, String memoria) {
+		return instancias + " instâncias — " + memoria;
+	}
+
+	public String heapVisorImagenAlternativa() {
+		return "Seleção do Irã";
+	}
+
+	public String heapVisorColorTextoClaro() {
+		return "Texto claro do visualizador de heap";
+	}
+
+	public String heapVisorColorVerde() {
+		return "Verde do visualizador de heap";
+	}
+
+	public String heapVisorColorRojo() {
+		return "Vermelho do visualizador de heap";
+	}
+
+	public String heapVisorColorTabla() {
+		return "Fundo da tabela do visualizador de heap";
+	}
+
+	public String heapVisorColorSeleccion() {
+		return "Seleção do visualizador de heap";
+	}
+
+	public String heapVisorColorBorde() {
+		return "Borda do visualizador de heap";
+	}
+
+	public String heapVisorGrupoMinecraft() {
+		return "Minecraft";
+	}
+
+	public String heapVisorGrupoForge() {
+		return "Minecraft Forge";
+	}
+
+	public String heapVisorGrupoFabric() {
+		return "Fabric";
+	}
+
+	public String heapVisorGrupoLwjgl() {
+		return "LWJGL";
+	}
+
+	public String heapVisorGrupoJava() {
+		return "Java";
+	}
+
+	public String heapVisorGrupoArreglos() {
+		return "Arrays";
+	}
+
+	public String heapVisorClaseDesconocida() {
+		return "Classe desconhecida";
+	}
+
+	public String heapVisorClaseId(String idHexadecimal) {
+		return "Classe 0x" + idHexadecimal;
+	}
+
+	public String heapVisorTipoPrimitivoDesconocido() {
+		return "Primitivo desconhecido";
+	}
+
+	public String consolaCancelar() {
+		return "Cancelar";
+	}
+
 }
