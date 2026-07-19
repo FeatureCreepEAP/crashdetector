@@ -12316,4 +12316,400 @@ public class Khmer implements Idioma {
 		return "បោះបង់";
 	}
 
+	@Override
+	public String bittorrentActualizar() {
+		return "ធ្វើបច្ចុប្បន្នភាព";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirDebeSerZip() {
+		return "BitTorrent គាំទ្រតែឯកសារ ZIP ដែលបាននាំចេញដោយមុខងារចែករំលែកឧបករណ៍។";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirNoValido() {
+		return "ឯកសារដែលបានព្យាយាមចែករំលែកមិនមាន ឬមិនអាចអានបាន។";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrent() {
+		return "ឯកសារ .torrent";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrentSalida() {
+		return "រក្សាទុក .torrent ជា";
+	}
+
+	@Override
+	public String bittorrentColDescargado() {
+		return "បានទាញយក";
+	}
+
+	@Override
+	public String bittorrentColEstado() {
+		return "ស្ថានភាព";
+	}
+
+	@Override
+	public String bittorrentColNombre() {
+		return "ឈ្មោះ";
+	}
+
+	@Override
+	public String bittorrentColPares() {
+		return "Peer";
+	}
+
+	@Override
+	public String bittorrentColProgreso() {
+		return "ដំណើរការ";
+	}
+
+	@Override
+	public String bittorrentColSubido() {
+		return "បានផ្ទុះឡើង";
+	}
+
+	@Override
+	public String bittorrentColTipo() {
+		return "ប្រភេទ";
+	}
+
+	@Override
+	public String bittorrentColorAcento() {
+		return "ពណ៌សង្កត់របស់កម្មវិធី BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorAcentoSecundario() {
+		return "ពណ៌សង្កត់បន្ទាប់បន្សំរបស់កម្មវិធី BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorBorde() {
+		return "គែមរបស់កម្មវិធី BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorFondo() {
+		return "ផ្ទៃខាងក្រោយរបស់កម្មវិធី BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorPanel() {
+		return "ផ្ទាំងរបស់កម្មវិធី BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorPanelClaro() {
+		return "ផ្ទាំងភ្លឺរបស់កម្មវិធី BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorSeleccion() {
+		return "ការជ្រើសរើសរបស់កម្មវិធី BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorTexto() {
+		return "អត្ថបទភ្លឺរបស់កម្មវិធី BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorTextoOscuro() {
+		return "អត្ថបទងងឹតរបស់កម្មវិធី BitTorrent";
+	}
+
+	@Override
+	public String bittorrentComentarioTorrent() {
+		return "ឯកសារដែលបានចែករំលែកសម្រាប់ការធ្វើរោគវិនិច្ឆ័យ និងការគាំទ្របច្ចេកទេសតាមរយៈ CrashDetector។";
+	}
+
+	@Override
+	public String bittorrentConfiguracionGuardada() {
+		return "ការកំណត់រចនាសម្ព័ន្ធ BitTorrent ត្រូវបានរក្សាទុក។ ការផ្លាស់ប្តូរច្រក  DHT, PEX និងការរកឃើញមូលដ្ឋាននឹងត្រូវបានអនុវត្តទៅកាន់ runtime ថ្មីបន្ទាប់ពីចាប់ផ្តើមកម្មវិធីឡើងវិញ។";
+	}
+
+	@Override
+	public String bittorrentConfirmarPrivacidad() {
+		return "ខ្ញុំយល់ពីការព្រមានឯកជនភាព និងអនុញ្ញាតឱ្យមានការផ្ទេរ P2P នេះ។";
+	}
+
+	@Override
+	public String bittorrentCopiarMagnet() {
+		return "ចម្លង Magnet";
+	}
+
+	@Override
+	public String bittorrentCrearCompartir() {
+		return "បង្កើត .torrent និងចាប់ផ្តើមចែករំលែក";
+	}
+
+	@Override
+	public String bittorrentDebeAceptarPrivacidad() {
+		return "អ្នកត្រូវអាន និងទទួលយកការព្រមានឯកជនភាពមុនពេលចាប់ផ្តើមការផ្ទេរ BitTorrent។";
+	}
+
+	@Override
+	public String bittorrentDestino() {
+		return "ថតទាញយក";
+	}
+
+	@Override
+	public String bittorrentDestinoNoValido() {
+		return "សូមជ្រើសរើសថតទាញយកដែលត្រឹមត្រូវ និងអាចសរសេរបាន។";
+	}
+
+	@Override
+	public String bittorrentDetenerSeleccionada() {
+		return "បញ្ឈប់ការផ្ទេរដែលបានជ្រើសរើស";
+	}
+
+	@Override
+	public String bittorrentElegirDestino() {
+		return "ជ្រើសរើសថតទាញយក";
+	}
+
+	@Override
+	public String bittorrentElegirOrigen() {
+		return "ជ្រើសរើសឯកសារ ឬថតដើម្បីចែករំលែក";
+	}
+
+	@Override
+	public String bittorrentElegirTorrent() {
+		return "ជ្រើសរើសឯកសារ .torrent";
+	}
+
+	@Override
+	public String bittorrentErrorCrearComparticion() {
+		return "មិនអាចបង្កើត ឬចាប់ផ្តើមការចែករំលែក BitTorrent បាន។";
+	}
+
+	@Override
+	public String bittorrentErrorDetalle(String detalle) {
+		return "មិនអាចបញ្ចប់ប្រតិបត្តិការ BitTorrent បាន៖\n" + detalle;
+	}
+
+	@Override
+	public String bittorrentEstadoCompartiendo() {
+		return "កំពុងចែករំលែក";
+	}
+
+	@Override
+	public String bittorrentEstadoDescargando() {
+		return "កំពុងទាញយក";
+	}
+
+	@Override
+	public String bittorrentEstadoDetenido() {
+		return "បានបញ្ឈប់";
+	}
+
+	@Override
+	public String bittorrentEstadoError() {
+		return "កំហុស";
+	}
+
+	@Override
+	public String bittorrentEstadoIniciando() {
+		return "កំពុងចាប់ផ្តើម";
+	}
+
+	@Override
+	public String bittorrentEtiquetaTipo() {
+		return "BitTorrent";
+	}
+
+	@Override
+	public String bittorrentExaminar() {
+		return "រកមើល...";
+	}
+
+	@Override
+	public String bittorrentFaltaTorrentOMagnet() {
+		return "បិទភ្ជាប់ Magnet ឬជ្រើសរើសឯកសារ .torrent។";
+	}
+
+	@Override
+	public String bittorrentGuardarConfiguracion() {
+		return "រក្សាទុក Trackers និងជម្រើស";
+	}
+
+	@Override
+	public String bittorrentGuardarTorrent() {
+		return "រក្សាទុកឯកសារ .torrent";
+	}
+
+	@Override
+	public String bittorrentHilosHash() {
+		return "Thread ផ្ទៀងផ្ទាត់";
+	}
+
+	@Override
+	public String bittorrentImagenAlternativa() {
+		return "Holostars English";
+	}
+
+	@Override
+	public String bittorrentIniciarDescarga() {
+		return "ចាប់ផ្តើមទាញយក";
+	}
+
+	@Override
+	public String bittorrentMagnet() {
+		return "Magnet";
+	}
+
+	@Override
+	public String bittorrentMagnetCopiado() {
+		return "Magnet ត្រូវបានចម្លងទៅកាន់ Clipboard។";
+	}
+
+	@Override
+	public String bittorrentMagnetNoValido() {
+		return "Magnet មិនត្រឹមត្រូវ ឬមិនមាន info-hash BitTorrent។";
+	}
+
+	@Override
+	public String bittorrentOrigen() {
+		return "ឯកសារ ឬថតប្រភព";
+	}
+
+	@Override
+	public String bittorrentOrigenNoValido() {
+		return "សូមជ្រើសរើសឯកសារ ឬថតប្រភពដែលត្រឹមត្រូវ។";
+	}
+
+	@Override
+	public String bittorrentOrigenVacio() {
+		return "ឯកសារ ឬថតដែលបានជ្រើសរើសមិនមានទិន្នន័យសម្រាប់ចែករំលែក។";
+	}
+
+	@Override
+	public String bittorrentPestanaAbrir() {
+		return "បើក .torrent ឬ Magnet";
+	}
+
+	@Override
+	public String bittorrentPestanaConfiguracion() {
+		return "ឯកជនភាព និង Trackers";
+	}
+
+	@Override
+	public String bittorrentPestanaCrear() {
+		return "បង្កើត និងចែករំលែក";
+	}
+
+	@Override
+	public String bittorrentPestanaTransferencias() {
+		return "ការផ្ទេរ";
+	}
+
+	@Override
+	public String bittorrentPrivacidadAdvertencia() {
+		return "ការព្រមានឯកជនភាព៖ BitTorrent គឺជាបណ្តាញ Peer-to-Peer ហើយមិនមែនជាការផ្ទុះឡើងឯកជន End-to-End ទេ។ អាសយដ្ឋាន IP សាធារណៈរបស់អ្នកអាចមើលឃើញដោយ Trackers ដែលបានកំណត់រចនាសម្ព័ន្ធ និងដោយ Peers ដែលចូលរួមក្នុងការផ្ទេរ។ ឈ្មោះឯកសារ និងថត ទំហំ និងរចនាសម្ព័ន្ធ .torrent អាចមើលឃើញដោយអ្នកណាម្នាក់ដែលទទួលបាន .torrent ឬ Magnet។ កំណែដែលគ្មានការពឹងផ្អែកនេះប្រើតែ Trackers ដែលអ្នកកំណត់រចនាសម្ព័ន្ធប៉ុណ្ណោះ។ វាមិនបើក DHT, PEX ឬការរកឃើញមូលដ្ឋានទេ។ ពិនិត្យមើលមាតិកាមុនពេលចែករំលែក និងលុប Access Tokens, ពាក្យសម្ងាត់, Cookies, Keys, Sessions, ទិន្នន័យផ្ទាល់ខ្លួន និង Logs ដែលមានលក្ខណៈសម្ងាត់។ ចែករំលែក Magnet ឬ .torrent ជាមួយតែការគាំទ្រដែលមានសិទ្ធិអនុញ្ញាតប៉ុណ្ណោះ ហើយរក្សាកម្មវិធីឱ្យបើកនៅពេលដែលអ្នកជា Seeder តែមួយគត់។";
+	}
+
+	@Override
+	public String bittorrentPrivacidadTitulo() {
+		return "ឯកជនភាព BitTorrent";
+	}
+
+	@Override
+	public String bittorrentPuerto() {
+		return "ច្រក BitTorrent";
+	}
+
+	@Override
+	public String bittorrentSeguirCompartiendo() {
+		return "បន្តចែករំលែកបន្ទាប់ពីការទាញយកបានបញ្ចប់";
+	}
+
+	@Override
+	public String bittorrentSobrescribirTorrent(String ruta) {
+		return "ឯកសារ .torrent មានស្រាប់ហើយ៖\n" + ruta + "\n\nតើអ្នកចង់សរសេរជាន់លើវាទេ?";
+	}
+
+	@Override
+	public String bittorrentTipoDescarga() {
+		return "ទាញយក";
+	}
+
+	@Override
+	public String bittorrentTipoSemilla() {
+		return "Seed";
+	}
+
+	@Override
+	public String bittorrentTitulo() {
+		return "កម្មវិធី BitTorrent — Holostars EN";
+	}
+
+	@Override
+	public String bittorrentTorrentCreado(String ruta) {
+		return "ឯកសារ .torrent ត្រូវបានបង្កើត ហើយការ Seed បានចាប់ផ្តើម៖\n" + ruta
+				+ "\n\nសូមរក្សា CrashDetector ឱ្យបើករហូតដល់ការគាំទ្របានទាញយករួចរាល់។";
+	}
+
+	@Override
+	public String bittorrentTorrentNoValido() {
+		return "ឯកសារ .torrent មិនមាន Bencode ដែលត្រឹមត្រូវ។";
+	}
+
+	@Override
+	public String bittorrentTorrentSinInfo() {
+		return "ឯកសារ .torrent មិនមាន Info Dictionary ដែលត្រូវការ។";
+	}
+
+	@Override
+	public String bittorrentTrackerNoValido(String tracker) {
+		return "Tracker មិនត្រឹមត្រូវ៖ " + tracker + "\nទទួលយកតែ URL http, https ឬ udp ប៉ុណ្ណោះ។";
+	}
+
+	@Override
+	public String bittorrentTrackers() {
+		return "Trackers, មួយក្នុងមួយបន្ទាត់";
+	}
+
+	@Override
+	public String bittorrentTrackersConfig() {
+		return "Trackers BitTorrent ផ្ទាល់ខ្លួន";
+	}
+
+	@Override
+	public String bittorrentTransferenciaIniciada() {
+		return "ការផ្ទេរ BitTorrent ត្រូវបានចាប់ផ្តើម។";
+	}
+
+	@Override
+	public String bittorrentUsarDht() {
+		return "ប្រើ DHT និង Router សាធារណៈដើម្បីរក Peers";
+	}
+
+	@Override
+	public String bittorrentUsarLsd() {
+		return "ប្រើការរកឃើញ Peer មូលដ្ឋាននៅលើបណ្តាញ LAN";
+	}
+
+	@Override
+	public String bittorrentUsarPex() {
+		return "អនុញ្ញាតឱ្យមានការផ្លាស់ប្តូរ Peer រវាងកម្មវិធី";
+	}
+
+	@Override
+	public String bittorrentSinTrackersNiDht() {
+		return "សូមកំណត់រចនាសម្ព័ន្ធយ៉ាងហោចណាស់ Tracker HTTP, HTTPS ឬ UDP មួយមុនពេលបង្កើត ឬបើកការចែករំលែក BitTorrent ដែលផ្អែកលើ Magnet។";
+	}
+
+	@Override
+	public String bittorrentNombreTorrentPorDefecto() {
+		return "torrent";
+	}
+
+	@Override
+	public String bittorrentNombreArchivoPorDefecto() {
+		return "ឯកសារ";
+	}
+
 }

@@ -11499,4 +11499,399 @@ public class Chino implements Idioma {
 		return "取消";
 	}
 
+	@Override
+	public String bittorrentActualizar() {
+		return "更新";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirDebeSerZip() {
+		return "BitTorrent 仅支持由实例共享功能导出的 ZIP 文件。";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirNoValido() {
+		return "尝试共享的文件不存在或无法读取。";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrent() {
+		return ".torrent 文件";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrentSalida() {
+		return "保存 .torrent 为";
+	}
+
+	@Override
+	public String bittorrentColDescargado() {
+		return "已下载";
+	}
+
+	@Override
+	public String bittorrentColEstado() {
+		return "状态";
+	}
+
+	@Override
+	public String bittorrentColNombre() {
+		return "名称";
+	}
+
+	@Override
+	public String bittorrentColPares() {
+		return "对等节点";
+	}
+
+	@Override
+	public String bittorrentColProgreso() {
+		return "进度";
+	}
+
+	@Override
+	public String bittorrentColSubido() {
+		return "已上传";
+	}
+
+	@Override
+	public String bittorrentColTipo() {
+		return "类型";
+	}
+
+	@Override
+	public String bittorrentColorAcento() {
+		return "BitTorrent 客户端强调色";
+	}
+
+	@Override
+	public String bittorrentColorAcentoSecundario() {
+		return "BitTorrent 客户端次要强调色";
+	}
+
+	@Override
+	public String bittorrentColorBorde() {
+		return "BitTorrent 客户端边框";
+	}
+
+	@Override
+	public String bittorrentColorFondo() {
+		return "BitTorrent 客户端背景";
+	}
+
+	@Override
+	public String bittorrentColorPanel() {
+		return "BitTorrent 客户端面板";
+	}
+
+	@Override
+	public String bittorrentColorPanelClaro() {
+		return "BitTorrent 客户端浅色面板";
+	}
+
+	@Override
+	public String bittorrentColorSeleccion() {
+		return "BitTorrent 客户端选择";
+	}
+
+	@Override
+	public String bittorrentColorTexto() {
+		return "BitTorrent 客户端浅色文本";
+	}
+
+	@Override
+	public String bittorrentColorTextoOscuro() {
+		return "BitTorrent 客户端深色文本";
+	}
+
+	@Override
+	public String bittorrentComentarioTorrent() {
+		return "通过 CrashDetector 共享用于诊断和技术支持的文件。";
+	}
+
+	@Override
+	public String bittorrentConfiguracionGuardada() {
+		return "BitTorrent 配置已保存。端口、DHT、PEX 和本地发现的更改将在重启应用后应用于新的运行时。";
+	}
+
+	@Override
+	public String bittorrentConfirmarPrivacidad() {
+		return "我理解隐私警告并授权此 P2P 传输。";
+	}
+
+	@Override
+	public String bittorrentCopiarMagnet() {
+		return "复制磁力链接";
+	}
+
+	@Override
+	public String bittorrentCrearCompartir() {
+		return "创建 .torrent 并开始分享";
+	}
+
+	@Override
+	public String bittorrentDebeAceptarPrivacidad() {
+		return "在启动 BitTorrent 传输之前，您必须阅读并接受隐私警告。";
+	}
+
+	@Override
+	public String bittorrentDestino() {
+		return "下载文件夹";
+	}
+
+	@Override
+	public String bittorrentDestinoNoValido() {
+		return "请选择一个有效且可写的下载文件夹。";
+	}
+
+	@Override
+	public String bittorrentDetenerSeleccionada() {
+		return "停止选定的传输";
+	}
+
+	@Override
+	public String bittorrentElegirDestino() {
+		return "选择下载文件夹";
+	}
+
+	@Override
+	public String bittorrentElegirOrigen() {
+		return "选择要共享的文件或文件夹";
+	}
+
+	@Override
+	public String bittorrentElegirTorrent() {
+		return "选择 .torrent 文件";
+	}
+
+	@Override
+	public String bittorrentErrorCrearComparticion() {
+		return "无法创建或启动 BitTorrent 共享。";
+	}
+
+	@Override
+	public String bittorrentErrorDetalle(String detalle) {
+		return "无法完成 BitTorrent 操作：\n" + detalle;
+	}
+
+	@Override
+	public String bittorrentEstadoCompartiendo() {
+		return "分享中";
+	}
+
+	@Override
+	public String bittorrentEstadoDescargando() {
+		return "下载中";
+	}
+
+	@Override
+	public String bittorrentEstadoDetenido() {
+		return "已停止";
+	}
+
+	@Override
+	public String bittorrentEstadoError() {
+		return "错误";
+	}
+
+	@Override
+	public String bittorrentEstadoIniciando() {
+		return "正在启动";
+	}
+
+	@Override
+	public String bittorrentEtiquetaTipo() {
+		return "BitTorrent";
+	}
+
+	@Override
+	public String bittorrentExaminar() {
+		return "浏览...";
+	}
+
+	@Override
+	public String bittorrentFaltaTorrentOMagnet() {
+		return "粘贴磁力链接或选择 .torrent 文件。";
+	}
+
+	@Override
+	public String bittorrentGuardarConfiguracion() {
+		return "保存跟踪器和选项";
+	}
+
+	@Override
+	public String bittorrentGuardarTorrent() {
+		return "保存 .torrent 文件";
+	}
+
+	@Override
+	public String bittorrentHilosHash() {
+		return "验证线程";
+	}
+
+	@Override
+	public String bittorrentImagenAlternativa() {
+		return "Holostars English";
+	}
+
+	@Override
+	public String bittorrentIniciarDescarga() {
+		return "开始下载";
+	}
+
+	@Override
+	public String bittorrentMagnet() {
+		return "磁力链接";
+	}
+
+	@Override
+	public String bittorrentMagnetCopiado() {
+		return "磁力链接已复制到剪贴板。";
+	}
+
+	@Override
+	public String bittorrentMagnetNoValido() {
+		return "磁力链接无效或不包含 BitTorrent info-hash。";
+	}
+
+	@Override
+	public String bittorrentOrigen() {
+		return "源文件或文件夹";
+	}
+
+	@Override
+	public String bittorrentOrigenNoValido() {
+		return "请选择有效的源文件或文件夹。";
+	}
+
+	@Override
+	public String bittorrentOrigenVacio() {
+		return "选定的文件或文件夹不包含可共享的数据。";
+	}
+
+	@Override
+	public String bittorrentPestanaAbrir() {
+		return "打开 .torrent 或磁力链接";
+	}
+
+	@Override
+	public String bittorrentPestanaConfiguracion() {
+		return "隐私和跟踪器";
+	}
+
+	@Override
+	public String bittorrentPestanaCrear() {
+		return "创建和共享";
+	}
+
+	@Override
+	public String bittorrentPestanaTransferencias() {
+		return "传输";
+	}
+
+	@Override
+	public String bittorrentPrivacidadAdvertencia() {
+		return "隐私警告：BitTorrent 是一个对等网络，而不是端到端的私有上传。您的公共 IP 地址对配置的跟踪器和参与传输的对等节点可见。文件名、文件夹名、大小和 .torrent 结构可能对任何接收 .torrent 或磁力链接的人可见。此无依赖版本仅使用您配置的跟踪器；不启用 DHT、PEX 或本地发现。在共享之前请检查内容，并删除访问令牌、密码、Cookie、密钥、会话、个人数据和敏感日志。仅与授权支持人员共享磁力链接或 .torrent，并在您是唯一种子时保持应用程序打开。";
+	}
+
+	@Override
+	public String bittorrentPrivacidadTitulo() {
+		return "BitTorrent 隐私";
+	}
+
+	@Override
+	public String bittorrentPuerto() {
+		return "BitTorrent 端口";
+	}
+
+	@Override
+	public String bittorrentSeguirCompartiendo() {
+		return "下载完成后继续分享";
+	}
+
+	@Override
+	public String bittorrentSobrescribirTorrent(String ruta) {
+		return ".torrent 文件已存在：\n" + ruta + "\n\n是否覆盖？";
+	}
+
+	@Override
+	public String bittorrentTipoDescarga() {
+		return "下载";
+	}
+
+	@Override
+	public String bittorrentTipoSemilla() {
+		return "做种";
+	}
+
+	@Override
+	public String bittorrentTitulo() {
+		return "BitTorrent 客户端 — Holostars EN";
+	}
+
+	@Override
+	public String bittorrentTorrentCreado(String ruta) {
+		return ".torrent 文件已创建并开始做种：\n" + ruta + "\n\n请保持 CrashDetector 打开，直到支持人员完成下载。";
+	}
+
+	@Override
+	public String bittorrentTorrentNoValido() {
+		return ".torrent 文件不包含有效的 bencode。";
+	}
+
+	@Override
+	public String bittorrentTorrentSinInfo() {
+		return ".torrent 文件不包含必需的 info 字典。";
+	}
+
+	@Override
+	public String bittorrentTrackerNoValido(String tracker) {
+		return "无效的跟踪器：" + tracker + "\n仅接受 http、https 或 udp URL。";
+	}
+
+	@Override
+	public String bittorrentTrackers() {
+		return "跟踪器，每行一个";
+	}
+
+	@Override
+	public String bittorrentTrackersConfig() {
+		return "自定义 BitTorrent 跟踪器";
+	}
+
+	@Override
+	public String bittorrentTransferenciaIniciada() {
+		return "BitTorrent 传输已启动。";
+	}
+
+	@Override
+	public String bittorrentUsarDht() {
+		return "使用 DHT 和公共路由器查找对等节点";
+	}
+
+	@Override
+	public String bittorrentUsarLsd() {
+		return "在局域网中使用本地对等发现";
+	}
+
+	@Override
+	public String bittorrentUsarPex() {
+		return "允许客户端之间的对等交换";
+	}
+
+	@Override
+	public String bittorrentSinTrackersNiDht() {
+		return "在创建或打开基于磁力链接的 BitTorrent 共享之前，请至少配置一个 HTTP、HTTPS 或 UDP 跟踪器。";
+	}
+
+	@Override
+	public String bittorrentNombreTorrentPorDefecto() {
+		return "torrent";
+	}
+
+	@Override
+	public String bittorrentNombreArchivoPorDefecto() {
+		return "文件";
+	}
+
 }

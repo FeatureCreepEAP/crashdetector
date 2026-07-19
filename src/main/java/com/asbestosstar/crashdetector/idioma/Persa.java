@@ -11999,4 +11999,321 @@ public class Persa implements Idioma {
 		return "لغو";
 	}
 
+	public String bittorrentActualizar() {
+		return "به‌روزرسانی";
+	}
+
+	public String bittorrentArchivoCompartirDebeSerZip() {
+		return "BitTorrent فقط از فایل ZIP صادر شده توسط تابع اشتراک‌گذاری نمونه پشتیبانی می‌کند.";
+	}
+
+	public String bittorrentArchivoCompartirNoValido() {
+		return "فایلی که سعی شد به اشتراک گذاشته شود وجود ندارد یا قابل خواندن نیست.";
+	}
+
+	public String bittorrentArchivoTorrent() {
+		return "فایل .torrent";
+	}
+
+	public String bittorrentArchivoTorrentSalida() {
+		return "ذخیره .torrent به عنوان";
+	}
+
+	public String bittorrentColDescargado() {
+		return "دانلود شده";
+	}
+
+	public String bittorrentColEstado() {
+		return "وضعیت";
+	}
+
+	public String bittorrentColNombre() {
+		return "نام";
+	}
+
+	public String bittorrentColPares() {
+		return "همتایان";
+	}
+
+	public String bittorrentColProgreso() {
+		return "پیشرفت";
+	}
+
+	public String bittorrentColSubido() {
+		return "آپلود شده";
+	}
+
+	public String bittorrentColTipo() {
+		return "نوع";
+	}
+
+	public String bittorrentColorAcento() {
+		return "رنگ تأکید کلاینت BitTorrent";
+	}
+
+	public String bittorrentColorAcentoSecundario() {
+		return "رنگ تأکید ثانویه کلاینت BitTorrent";
+	}
+
+	public String bittorrentColorBorde() {
+		return "حاشیه کلاینت BitTorrent";
+	}
+
+	public String bittorrentColorFondo() {
+		return "پس‌زمینه کلاینت BitTorrent";
+	}
+
+	public String bittorrentColorPanel() {
+		return "پنل کلاینت BitTorrent";
+	}
+
+	public String bittorrentColorPanelClaro() {
+		return "پنل روشن کلاینت BitTorrent";
+	}
+
+	public String bittorrentColorSeleccion() {
+		return "انتخاب کلاینت BitTorrent";
+	}
+
+	public String bittorrentColorTexto() {
+		return "متن روشن کلاینت BitTorrent";
+	}
+
+	public String bittorrentColorTextoOscuro() {
+		return "متن تیره کلاینت BitTorrent";
+	}
+
+	public String bittorrentComentarioTorrent() {
+		return "فایل به اشتراک گذاشته شده برای عیب‌یابی و پشتیبانی فنی از طریق CrashDetector.";
+	}
+
+	public String bittorrentConfiguracionGuardada() {
+		return "تنظیمات BitTorrent ذخیره شد. تغییرات پورت، DHT، PEX و کشف محلی پس از راه‌اندازی مجدد برنامه روی runtime جدید اعمال می‌شوند.";
+	}
+
+	public String bittorrentConfirmarPrivacidad() {
+		return "من هشدار حریم خصوصی را درک می‌کنم و این انتقال P2P را مجاز می‌دانم.";
+	}
+
+	public String bittorrentCopiarMagnet() {
+		return "کپی magnet";
+	}
+
+	public String bittorrentCrearCompartir() {
+		return "ایجاد .torrent و شروع اشتراک‌گذاری";
+	}
+
+	public String bittorrentDebeAceptarPrivacidad() {
+		return "باید هشدار حریم خصوصی را بخوانید و بپذیرید قبل از شروع انتقال BitTorrent.";
+	}
+
+	public String bittorrentDestino() {
+		return "پوشه دانلود";
+	}
+
+	public String bittorrentDestinoNoValido() {
+		return "یک پوشه دانلود معتبر و قابل نوشتن انتخاب کنید.";
+	}
+
+	public String bittorrentDetenerSeleccionada() {
+		return "توقف انتقال انتخاب شده";
+	}
+
+	public String bittorrentElegirDestino() {
+		return "انتخاب پوشه دانلود";
+	}
+
+	public String bittorrentElegirOrigen() {
+		return "انتخاب فایل یا پوشه برای اشتراک‌گذاری";
+	}
+
+	public String bittorrentElegirTorrent() {
+		return "انتخاب فایل .torrent";
+	}
+
+	public String bittorrentErrorCrearComparticion() {
+		return "ایجاد یا شروع اشتراک‌گذاری BitTorrent امکان‌پذیر نبود.";
+	}
+
+	public String bittorrentErrorDetalle(String detalle) {
+		return "عملیات BitTorrent تکمیل نشد:\n" + detalle;
+	}
+
+	public String bittorrentEstadoCompartiendo() {
+		return "در حال اشتراک‌گذاری";
+	}
+
+	public String bittorrentEstadoDescargando() {
+		return "در حال دانلود";
+	}
+
+	public String bittorrentEstadoDetenido() {
+		return "متوقف شده";
+	}
+
+	public String bittorrentEstadoError() {
+		return "خطا";
+	}
+
+	public String bittorrentEstadoIniciando() {
+		return "در حال شروع";
+	}
+
+	public String bittorrentEtiquetaTipo() {
+		return "BitTorrent";
+	}
+
+	public String bittorrentExaminar() {
+		return "مرور...";
+	}
+
+	public String bittorrentFaltaTorrentOMagnet() {
+		return "یک magnet جایگذاری کنید یا یک فایل .torrent انتخاب کنید.";
+	}
+
+	public String bittorrentGuardarConfiguracion() {
+		return "ذخیره trackerها و گزینه‌ها";
+	}
+
+	public String bittorrentGuardarTorrent() {
+		return "ذخیره فایل .torrent";
+	}
+
+	public String bittorrentHilosHash() {
+		return "رشته‌های بررسی";
+	}
+
+	public String bittorrentImagenAlternativa() {
+		return "Holostars English";
+	}
+
+	public String bittorrentIniciarDescarga() {
+		return "شروع دانلود";
+	}
+
+	public String bittorrentMagnet() {
+		return "Magnet";
+	}
+
+	public String bittorrentMagnetCopiado() {
+		return "Magnet در کلیپ‌بورد کپی شد.";
+	}
+
+	public String bittorrentMagnetNoValido() {
+		return "Magnet معتبر نیست یا حاوی info-hash بیت‌تورنت نیست.";
+	}
+
+	public String bittorrentOrigen() {
+		return "فایل یا پوشه مبدأ";
+	}
+
+	public String bittorrentOrigenNoValido() {
+		return "یک فایل یا پوشه مبدأ معتبر انتخاب کنید.";
+	}
+
+	public String bittorrentOrigenVacio() {
+		return "فایل یا پوشه انتخاب شده حاوی داده‌ای برای اشتراک‌گذاری نیست.";
+	}
+
+	public String bittorrentPestanaAbrir() {
+		return "باز کردن .torrent یا magnet";
+	}
+
+	public String bittorrentPestanaConfiguracion() {
+		return "حریم خصوصی و trackerها";
+	}
+
+	public String bittorrentPestanaCrear() {
+		return "ایجاد و اشتراک‌گذاری";
+	}
+
+	public String bittorrentPestanaTransferencias() {
+		return "انتقال‌ها";
+	}
+
+	public String bittorrentPrivacidadAdvertencia() {
+		return "هشدار حریم خصوصی: BitTorrent یک شبکه همتا به همتا است و نه یک آپلود خصوصی end-to-end. آدرس IP عمومی شما برای trackerهای پیکربندی شده و همتایان شرکت‌کننده در انتقال قابل مشاهده است. نام‌های فایل و پوشه، اندازه‌ها و ساختار .torrent ممکن است برای هر کسی که .torrent یا magnet را دریافت کند قابل مشاهده باشد. این نسخه بدون وابستگی فقط از trackerهایی که شما پیکربندی می‌کنید استفاده می‌کند؛ DHT، PEX یا کشف محلی را فعال نمی‌کند. قبل از اشتراک‌گذاری محتوا را بررسی کنید و توکن‌های دسترسی، رمزهای عبور، کوکی‌ها، کلیدها، نشست‌ها، داده‌های شخصی و لاگ‌های حساس را حذف کنید. magnet یا .torrent را فقط با پشتیبانی مجاز به اشتراک بگذارید و برنامه را باز نگه دارید تا زمانی که تنها Seeder باشید.";
+	}
+
+	public String bittorrentPrivacidadTitulo() {
+		return "حریم خصوصی BitTorrent";
+	}
+
+	public String bittorrentPuerto() {
+		return "پورت BitTorrent";
+	}
+
+	public String bittorrentSeguirCompartiendo() {
+		return "ادامه اشتراک‌گذاری پس از اتمام دانلود";
+	}
+
+	public String bittorrentSobrescribirTorrent(String ruta) {
+		return "فایل .torrent از قبل وجود دارد:\n" + ruta + "\n\nآیا بازنویسی شود؟";
+	}
+
+	public String bittorrentTipoDescarga() {
+		return "دانلود";
+	}
+
+	public String bittorrentTipoSemilla() {
+		return "Seed";
+	}
+
+	public String bittorrentTitulo() {
+		return "کلاینت BitTorrent — Holostars EN";
+	}
+
+	public String bittorrentTorrentCreado(String ruta) {
+		return "فایل .torrent ایجاد شد و seeding آغاز شد:\n" + ruta
+				+ "\n\nCrashDetector را باز نگه دارید تا پشتیبانی دانلود را تمام کند.";
+	}
+
+	public String bittorrentTorrentNoValido() {
+		return "فایل .torrent حاوی bencode معتبر نیست.";
+	}
+
+	public String bittorrentTorrentSinInfo() {
+		return "فایل .torrent حاوی دیکشنری info مورد نیاز نیست.";
+	}
+
+	public String bittorrentTrackerNoValido(String tracker) {
+		return "Tracker نامعتبر: " + tracker + "\nفقط URLهای http، https یا udp پذیرفته می‌شوند.";
+	}
+
+	public String bittorrentTrackers() {
+		return "Trackerها، یکی در هر خط";
+	}
+
+	public String bittorrentTrackersConfig() {
+		return "Trackerهای شخصی BitTorrent";
+	}
+
+	public String bittorrentTransferenciaIniciada() {
+		return "انتقال BitTorrent آغاز شد.";
+	}
+
+	public String bittorrentUsarDht() {
+		return "استفاده از DHT و روترهای عمومی برای یافتن همتایان";
+	}
+
+	public String bittorrentUsarLsd() {
+		return "استفاده از کشف محلی همتایان در شبکه LAN";
+	}
+
+	public String bittorrentUsarPex() {
+		return "اجازه تبادل همتا بین کلاینت‌ها";
+	}
+
+	public String bittorrentSinTrackersNiDht() {
+		return "قبل از ایجاد یا باز کردن اشتراک‌گذاری BitTorrent مبتنی بر magnet، حداقل یک tracker HTTP، HTTPS یا UDP پیکربندی کنید.";
+	}
+
+	public String bittorrentNombreTorrentPorDefecto() {
+		return "torrent";
+	}
+
+	public String bittorrentNombreArchivoPorDefecto() {
+		return "فایل";
+	}
+
 }

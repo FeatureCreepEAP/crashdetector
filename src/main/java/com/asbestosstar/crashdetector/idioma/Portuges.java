@@ -12050,4 +12050,321 @@ public class Portuges implements Idioma {
 		return "Cancelar";
 	}
 
+	public String bittorrentActualizar() {
+		return "Atualizar";
+	}
+
+	public String bittorrentArchivoCompartirDebeSerZip() {
+		return "O BitTorrent suporta apenas o arquivo ZIP exportado pela função de compartilhar instância.";
+	}
+
+	public String bittorrentArchivoCompartirNoValido() {
+		return "O arquivo que se tentou compartilhar não existe ou não pode ser lido.";
+	}
+
+	public String bittorrentArchivoTorrent() {
+		return "Arquivo .torrent";
+	}
+
+	public String bittorrentArchivoTorrentSalida() {
+		return "Salvar .torrent como";
+	}
+
+	public String bittorrentColDescargado() {
+		return "Baixado";
+	}
+
+	public String bittorrentColEstado() {
+		return "Status";
+	}
+
+	public String bittorrentColNombre() {
+		return "Nome";
+	}
+
+	public String bittorrentColPares() {
+		return "Pares";
+	}
+
+	public String bittorrentColProgreso() {
+		return "Progresso";
+	}
+
+	public String bittorrentColSubido() {
+		return "Enviado";
+	}
+
+	public String bittorrentColTipo() {
+		return "Tipo";
+	}
+
+	public String bittorrentColorAcento() {
+		return "Destaque do cliente BitTorrent";
+	}
+
+	public String bittorrentColorAcentoSecundario() {
+		return "Destaque secundário do cliente BitTorrent";
+	}
+
+	public String bittorrentColorBorde() {
+		return "Borda do cliente BitTorrent";
+	}
+
+	public String bittorrentColorFondo() {
+		return "Fundo do cliente BitTorrent";
+	}
+
+	public String bittorrentColorPanel() {
+		return "Painel do cliente BitTorrent";
+	}
+
+	public String bittorrentColorPanelClaro() {
+		return "Painel claro do cliente BitTorrent";
+	}
+
+	public String bittorrentColorSeleccion() {
+		return "Seleção do cliente BitTorrent";
+	}
+
+	public String bittorrentColorTexto() {
+		return "Texto claro do cliente BitTorrent";
+	}
+
+	public String bittorrentColorTextoOscuro() {
+		return "Texto escuro do cliente BitTorrent";
+	}
+
+	public String bittorrentComentarioTorrent() {
+		return "Arquivo compartilhado para diagnóstico e suporte técnico via CrashDetector.";
+	}
+
+	public String bittorrentConfiguracionGuardada() {
+		return "A configuração do BitTorrent foi salva. As alterações de porta, DHT, PEX e descoberta local serão aplicadas a um novo runtime após reiniciar o aplicativo.";
+	}
+
+	public String bittorrentConfirmarPrivacidad() {
+		return "Entendo o aviso de privacidade e autorizo esta transferência P2P.";
+	}
+
+	public String bittorrentCopiarMagnet() {
+		return "Copiar magnet";
+	}
+
+	public String bittorrentCrearCompartir() {
+		return "Criar .torrent e começar a compartilhar";
+	}
+
+	public String bittorrentDebeAceptarPrivacidad() {
+		return "Você deve ler e aceitar o aviso de privacidade antes de iniciar uma transferência BitTorrent.";
+	}
+
+	public String bittorrentDestino() {
+		return "Pasta de download";
+	}
+
+	public String bittorrentDestinoNoValido() {
+		return "Selecione uma pasta de download válida e gravável.";
+	}
+
+	public String bittorrentDetenerSeleccionada() {
+		return "Parar transferência selecionada";
+	}
+
+	public String bittorrentElegirDestino() {
+		return "Selecionar pasta de download";
+	}
+
+	public String bittorrentElegirOrigen() {
+		return "Selecionar arquivo ou pasta para compartilhar";
+	}
+
+	public String bittorrentElegirTorrent() {
+		return "Selecionar arquivo .torrent";
+	}
+
+	public String bittorrentErrorCrearComparticion() {
+		return "Não foi possível criar ou iniciar o compartilhamento BitTorrent.";
+	}
+
+	public String bittorrentErrorDetalle(String detalle) {
+		return "Não foi possível concluir a operação BitTorrent:\n" + detalle;
+	}
+
+	public String bittorrentEstadoCompartiendo() {
+		return "Compartilhando";
+	}
+
+	public String bittorrentEstadoDescargando() {
+		return "Baixando";
+	}
+
+	public String bittorrentEstadoDetenido() {
+		return "Parado";
+	}
+
+	public String bittorrentEstadoError() {
+		return "Erro";
+	}
+
+	public String bittorrentEstadoIniciando() {
+		return "Iniciando";
+	}
+
+	public String bittorrentEtiquetaTipo() {
+		return "BitTorrent";
+	}
+
+	public String bittorrentExaminar() {
+		return "Navegar...";
+	}
+
+	public String bittorrentFaltaTorrentOMagnet() {
+		return "Cole um magnet ou selecione um arquivo .torrent.";
+	}
+
+	public String bittorrentGuardarConfiguracion() {
+		return "Salvar trackers e opções";
+	}
+
+	public String bittorrentGuardarTorrent() {
+		return "Salvar arquivo .torrent";
+	}
+
+	public String bittorrentHilosHash() {
+		return "Threads de verificação";
+	}
+
+	public String bittorrentImagenAlternativa() {
+		return "Holostars English";
+	}
+
+	public String bittorrentIniciarDescarga() {
+		return "Iniciar download";
+	}
+
+	public String bittorrentMagnet() {
+		return "Magnet";
+	}
+
+	public String bittorrentMagnetCopiado() {
+		return "O magnet foi copiado para a área de transferência.";
+	}
+
+	public String bittorrentMagnetNoValido() {
+		return "O magnet não é válido ou não contém um info-hash BitTorrent.";
+	}
+
+	public String bittorrentOrigen() {
+		return "Arquivo ou pasta de origem";
+	}
+
+	public String bittorrentOrigenNoValido() {
+		return "Selecione um arquivo ou uma pasta de origem válida.";
+	}
+
+	public String bittorrentOrigenVacio() {
+		return "O arquivo ou a pasta selecionada não contém dados para compartilhar.";
+	}
+
+	public String bittorrentPestanaAbrir() {
+		return "Abrir .torrent ou magnet";
+	}
+
+	public String bittorrentPestanaConfiguracion() {
+		return "Privacidade e trackers";
+	}
+
+	public String bittorrentPestanaCrear() {
+		return "Criar e compartilhar";
+	}
+
+	public String bittorrentPestanaTransferencias() {
+		return "Transferências";
+	}
+
+	public String bittorrentPrivacidadAdvertencia() {
+		return "AVISO DE PRIVACIDADE: O BitTorrent é uma rede peer-to-peer e não um upload privado de ponta a ponta. Seu endereço IP público é visível para os trackers configurados e para os pares que participam da transferência. Os nomes de arquivos e pastas, tamanhos e estrutura do .torrent podem ser visíveis para qualquer pessoa que receba o .torrent ou o magnet. Esta versão sem dependências usa apenas os trackers que você configurar; não ativa DHT, PEX nem descoberta local. Revise o conteúdo antes de compartilhar e exclua tokens de acesso, senhas, cookies, chaves, sessões, dados pessoais e logs sensíveis. Compartilhe o magnet ou .torrent apenas com o suporte autorizado e mantenha o aplicativo aberto enquanto for o único seeder.";
+	}
+
+	public String bittorrentPrivacidadTitulo() {
+		return "Privacidade do BitTorrent";
+	}
+
+	public String bittorrentPuerto() {
+		return "Porta BitTorrent";
+	}
+
+	public String bittorrentSeguirCompartiendo() {
+		return "Continuar compartilhando após concluir o download";
+	}
+
+	public String bittorrentSobrescribirTorrent(String ruta) {
+		return "O arquivo .torrent já existe:\n" + ruta + "\n\nSobrescrevê-lo?";
+	}
+
+	public String bittorrentTipoDescarga() {
+		return "Download";
+	}
+
+	public String bittorrentTipoSemilla() {
+		return "Seed";
+	}
+
+	public String bittorrentTitulo() {
+		return "Cliente BitTorrent — Holostars EN";
+	}
+
+	public String bittorrentTorrentCreado(String ruta) {
+		return "O arquivo .torrent foi criado e o seeding começou:\n" + ruta
+				+ "\n\nMantenha o CrashDetector aberto até que o suporte termine de baixar.";
+	}
+
+	public String bittorrentTorrentNoValido() {
+		return "O arquivo .torrent não contém bencode válido.";
+	}
+
+	public String bittorrentTorrentSinInfo() {
+		return "O arquivo .torrent não contém o dicionário info necessário.";
+	}
+
+	public String bittorrentTrackerNoValido(String tracker) {
+		return "Tracker inválido: " + tracker + "\nApenas URLs http, https ou udp são aceitas.";
+	}
+
+	public String bittorrentTrackers() {
+		return "Trackers, um por linha";
+	}
+
+	public String bittorrentTrackersConfig() {
+		return "Trackers BitTorrent personalizados";
+	}
+
+	public String bittorrentTransferenciaIniciada() {
+		return "A transferência BitTorrent foi iniciada.";
+	}
+
+	public String bittorrentUsarDht() {
+		return "Usar DHT e roteadores públicos para encontrar pares";
+	}
+
+	public String bittorrentUsarLsd() {
+		return "Usar descoberta local de pares na rede LAN";
+	}
+
+	public String bittorrentUsarPex() {
+		return "Permitir troca de pares entre clientes";
+	}
+
+	public String bittorrentSinTrackersNiDht() {
+		return "Configure pelo menos um tracker HTTP, HTTPS ou UDP antes de criar ou abrir um compartilhamento BitTorrent baseado em magnet.";
+	}
+
+	public String bittorrentNombreTorrentPorDefecto() {
+		return "torrent";
+	}
+
+	public String bittorrentNombreArchivoPorDefecto() {
+		return "arquivo";
+	}
+
 }

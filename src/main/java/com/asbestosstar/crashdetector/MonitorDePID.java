@@ -47,6 +47,7 @@ import com.asbestosstar.crashdetector.gui.tipos.actualizador.ActualizadorModsMiw
 import com.asbestosstar.crashdetector.gui.tipos.antimanipulacion.AntiManipulacionGUIPanko;
 import com.asbestosstar.crashdetector.gui.tipos.aplic.ActaDeProteccionDelIdiomaCulturalDePyongyangGUIKimJongUn;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
+import com.asbestosstar.crashdetector.gui.tipos.bittorrent.BitTorrentGUIHolostarsEN;
 import com.asbestosstar.crashdetector.gui.tipos.canario.CanarioDeOrdenJudicialGUI1984;
 import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.cdpaste.CDPasteHistorialGUIWilhelmiaFrost;
@@ -408,18 +409,9 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/count_binface.png",
 				Statics.carpeta.resolve("imagenes/count_binface.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/gc.png", Statics.carpeta.resolve("imagenes/gc.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/ike_eveland.png", Statics.carpeta.resolve("imagenes/ike_eveland.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/ike_eveland.png",
+				Statics.carpeta.resolve("imagenes/ike_eveland.png").toFile());
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/AbrolDeMods.md",
 				Statics.carpeta.resolve("docs/espanol/minecraft/AbrolDeMods.md").toFile());
 
@@ -1212,7 +1204,7 @@ public class MonitorDePID {
 		TipoGUI.MCP.registrarGUI(McpGUIMotherV3.ID, McpGUIMotherV3::new);
 		TipoGUI.ESCANER_NUBE.registrarGUI(EscanerNubeParallelArtistProject.ID, EscanerNubeParallelArtistProject::new);
 		TipoGUI.VISOR_HEAP_DUMP.registrarGUI(VisorHeapDumpIranFifa.ID, VisorHeapDumpIranFifa::new);
-
+		TipoGUI.BITTORRENT.registrarGUI(BitTorrentGUIHolostarsEN.ID, BitTorrentGUIHolostarsEN::new);
 	}
 
 	/**

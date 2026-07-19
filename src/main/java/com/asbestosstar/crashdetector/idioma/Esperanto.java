@@ -12116,4 +12116,400 @@ public class Esperanto implements Idioma {
 		return "Nuligi";
 	}
 
+	@Override
+	public String bittorrentActualizar() {
+		return "Ĝisdatigi";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirDebeSerZip() {
+		return "BitTorrent subtenas nur la ZIP-dosieron eksportitan de la funkcio por kunhavigi instancojn.";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirNoValido() {
+		return "La dosiero, kiun oni provis kunhavigi, ne ekzistas aŭ ne estas legebla.";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrent() {
+		return ".torrent dosiero";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrentSalida() {
+		return "Konservi .torrent kiel";
+	}
+
+	@Override
+	public String bittorrentColDescargado() {
+		return "Elŝutita";
+	}
+
+	@Override
+	public String bittorrentColEstado() {
+		return "Stato";
+	}
+
+	@Override
+	public String bittorrentColNombre() {
+		return "Nomo";
+	}
+
+	@Override
+	public String bittorrentColPares() {
+		return "Samranguloj";
+	}
+
+	@Override
+	public String bittorrentColProgreso() {
+		return "Progreso";
+	}
+
+	@Override
+	public String bittorrentColSubido() {
+		return "Alŝutita";
+	}
+
+	@Override
+	public String bittorrentColTipo() {
+		return "Tipo";
+	}
+
+	@Override
+	public String bittorrentColorAcento() {
+		return "Akcento de BitTorrent-kliento";
+	}
+
+	@Override
+	public String bittorrentColorAcentoSecundario() {
+		return "Duaranga akcento de BitTorrent-kliento";
+	}
+
+	@Override
+	public String bittorrentColorBorde() {
+		return "Bordero de BitTorrent-kliento";
+	}
+
+	@Override
+	public String bittorrentColorFondo() {
+		return "Fono de BitTorrent-kliento";
+	}
+
+	@Override
+	public String bittorrentColorPanel() {
+		return "Panelo de BitTorrent-kliento";
+	}
+
+	@Override
+	public String bittorrentColorPanelClaro() {
+		return "Hela panelo de BitTorrent-kliento";
+	}
+
+	@Override
+	public String bittorrentColorSeleccion() {
+		return "Selektado de BitTorrent-kliento";
+	}
+
+	@Override
+	public String bittorrentColorTexto() {
+		return "Hela teksto de BitTorrent-kliento";
+	}
+
+	@Override
+	public String bittorrentColorTextoOscuro() {
+		return "Malhela teksto de BitTorrent-kliento";
+	}
+
+	@Override
+	public String bittorrentComentarioTorrent() {
+		return "Dosiero kunhavigita por diagnozo kaj teknika subteno per CrashDetector.";
+	}
+
+	@Override
+	public String bittorrentConfiguracionGuardada() {
+		return "La BitTorrent-agordo estis konservita. La ŝanĝoj de pordo, DHT, PEX kaj loka malkovro aplikiĝos al nova rultempo post restartigo de la aplikaĵo.";
+	}
+
+	@Override
+	public String bittorrentConfirmarPrivacidad() {
+		return "Mi komprenas la averton pri privateco kaj rajtigas ĉi tiun P2P-transigon.";
+	}
+
+	@Override
+	public String bittorrentCopiarMagnet() {
+		return "Kopii magneton";
+	}
+
+	@Override
+	public String bittorrentCrearCompartir() {
+		return "Krei .torrent kaj komenci kunhavigi";
+	}
+
+	@Override
+	public String bittorrentDebeAceptarPrivacidad() {
+		return "Vi devas legi kaj akcepti la averton pri privateco antaŭ komenci BitTorrent-transigon.";
+	}
+
+	@Override
+	public String bittorrentDestino() {
+		return "Elŝuta dosierujo";
+	}
+
+	@Override
+	public String bittorrentDestinoNoValido() {
+		return "Elektu validan kaj skribeblan elŝutan dosierujon.";
+	}
+
+	@Override
+	public String bittorrentDetenerSeleccionada() {
+		return "Haligi elektitan transigon";
+	}
+
+	@Override
+	public String bittorrentElegirDestino() {
+		return "Elekti elŝutan dosierujon";
+	}
+
+	@Override
+	public String bittorrentElegirOrigen() {
+		return "Elekti dosieron aŭ dosierujon por kunhavigi";
+	}
+
+	@Override
+	public String bittorrentElegirTorrent() {
+		return "Elekti .torrent dosieron";
+	}
+
+	@Override
+	public String bittorrentErrorCrearComparticion() {
+		return "Ne eblis krei aŭ komenci BitTorrent-kunhavigon.";
+	}
+
+	@Override
+	public String bittorrentErrorDetalle(String detalle) {
+		return "Ne eblis kompletigi la BitTorrent-operacion:\n" + detalle;
+	}
+
+	@Override
+	public String bittorrentEstadoCompartiendo() {
+		return "Kunhavigante";
+	}
+
+	@Override
+	public String bittorrentEstadoDescargando() {
+		return "Elŝutante";
+	}
+
+	@Override
+	public String bittorrentEstadoDetenido() {
+		return "Haligita";
+	}
+
+	@Override
+	public String bittorrentEstadoError() {
+		return "Eraro";
+	}
+
+	@Override
+	public String bittorrentEstadoIniciando() {
+		return "Komencante";
+	}
+
+	@Override
+	public String bittorrentEtiquetaTipo() {
+		return "BitTorrent";
+	}
+
+	@Override
+	public String bittorrentExaminar() {
+		return "Foliumi...";
+	}
+
+	@Override
+	public String bittorrentFaltaTorrentOMagnet() {
+		return "Algluu magneton aŭ elektu .torrent dosieron.";
+	}
+
+	@Override
+	public String bittorrentGuardarConfiguracion() {
+		return "Konservi spurilojn kaj opciojn";
+	}
+
+	@Override
+	public String bittorrentGuardarTorrent() {
+		return "Konservi .torrent dosieron";
+	}
+
+	@Override
+	public String bittorrentHilosHash() {
+		return "Kontrolfadenoj";
+	}
+
+	@Override
+	public String bittorrentImagenAlternativa() {
+		return "Holostars English";
+	}
+
+	@Override
+	public String bittorrentIniciarDescarga() {
+		return "Komenci elŝuton";
+	}
+
+	@Override
+	public String bittorrentMagnet() {
+		return "Magneto";
+	}
+
+	@Override
+	public String bittorrentMagnetCopiado() {
+		return "La magneto estis kopiita al la tondujo.";
+	}
+
+	@Override
+	public String bittorrentMagnetNoValido() {
+		return "La magneto ne validas aŭ ne enhavas BitTorrent info-hash.";
+	}
+
+	@Override
+	public String bittorrentOrigen() {
+		return "Fontdosiero aŭ fontdosierujo";
+	}
+
+	@Override
+	public String bittorrentOrigenNoValido() {
+		return "Elektu validan fontdosieron aŭ fontdosierujon.";
+	}
+
+	@Override
+	public String bittorrentOrigenVacio() {
+		return "La elektita dosiero aŭ dosierujo ne enhavas datumojn por kunhavigi.";
+	}
+
+	@Override
+	public String bittorrentPestanaAbrir() {
+		return "Malfermi .torrent aŭ magneton";
+	}
+
+	@Override
+	public String bittorrentPestanaConfiguracion() {
+		return "Privateco kaj spuriloj";
+	}
+
+	@Override
+	public String bittorrentPestanaCrear() {
+		return "Krei kaj kunhavigi";
+	}
+
+	@Override
+	public String bittorrentPestanaTransferencias() {
+		return "Transigoj";
+	}
+
+	@Override
+	public String bittorrentPrivacidadAdvertencia() {
+		return "AVERTO PRI PRIVATECO: BitTorrent estas reto inter samranguloj kaj ne privata alŝuto de fino al fino. Via publika IP-adreso estas videbla por la agorditaj spuriloj kaj por la samranguloj partoprenantaj en la transigo. La nomoj de dosieroj kaj dosierujoj, grandecoj kaj strukturo de .torrent povas esti videblaj al iu ajn, kiu ricevas la .torrent aŭ la magneton. Ĉi tiu versio sen dependecoj uzas nur la spurilojn, kiujn vi agordas; ĝi ne aktivigas DHT, PEX aŭ lokan malkovron. Kontrolu la enhavon antaŭ kunhavigi kaj forigu alirĵetonojn, pasvortojn, kuketojn, ŝlosilojn, seancojn, personajn datumojn kaj sentemajn registrojn. Kunhavigu la magneton aŭ .torrent nur kun rajtigita subteno kaj tenu la aplikaĵon malfermita dum vi estas la sola semanto.";
+	}
+
+	@Override
+	public String bittorrentPrivacidadTitulo() {
+		return "Privateco de BitTorrent";
+	}
+
+	@Override
+	public String bittorrentPuerto() {
+		return "BitTorrent-pordo";
+	}
+
+	@Override
+	public String bittorrentSeguirCompartiendo() {
+		return "Daŭrigi kunhavigon post fini la elŝuton";
+	}
+
+	@Override
+	public String bittorrentSobrescribirTorrent(String ruta) {
+		return "La .torrent dosiero jam ekzistas:\n" + ruta + "\n\nĈu superskribi ĝin?";
+	}
+
+	@Override
+	public String bittorrentTipoDescarga() {
+		return "Elŝuto";
+	}
+
+	@Override
+	public String bittorrentTipoSemilla() {
+		return "Semado";
+	}
+
+	@Override
+	public String bittorrentTitulo() {
+		return "BitTorrent-kliento — Holostars EN";
+	}
+
+	@Override
+	public String bittorrentTorrentCreado(String ruta) {
+		return "La .torrent dosiero estis kreita kaj la semado komenciĝis:\n" + ruta
+				+ "\n\nTenu CrashDetector malfermita ĝis la subteno finas la elŝuton.";
+	}
+
+	@Override
+	public String bittorrentTorrentNoValido() {
+		return "La .torrent dosiero ne enhavas validan bencode.";
+	}
+
+	@Override
+	public String bittorrentTorrentSinInfo() {
+		return "La .torrent dosiero ne enhavas la bezonatan info-vortaron.";
+	}
+
+	@Override
+	public String bittorrentTrackerNoValido(String tracker) {
+		return "Nevalida spurilo: " + tracker + "\nNur http, https aŭ udp URL-oj estas akceptataj.";
+	}
+
+	@Override
+	public String bittorrentTrackers() {
+		return "Spuriloj, unu po linio";
+	}
+
+	@Override
+	public String bittorrentTrackersConfig() {
+		return "Personigitaj BitTorrent-spuriloj";
+	}
+
+	@Override
+	public String bittorrentTransferenciaIniciada() {
+		return "La BitTorrent-transigo estis komencita.";
+	}
+
+	@Override
+	public String bittorrentUsarDht() {
+		return "Uzi DHT kaj publikajn ruterojn por trovi samrangulojn";
+	}
+
+	@Override
+	public String bittorrentUsarLsd() {
+		return "Uzi lokan malkovron de samranguloj en la LAN-reto";
+	}
+
+	@Override
+	public String bittorrentUsarPex() {
+		return "Permesi interŝanĝon de samranguloj inter klientoj";
+	}
+
+	@Override
+	public String bittorrentSinTrackersNiDht() {
+		return "Agordu almenaŭ unu HTTP, HTTPS aŭ UDP spurilon antaŭ krei aŭ malfermi BitTorrent-kunhavigon bazitan sur magneto.";
+	}
+
+	@Override
+	public String bittorrentNombreTorrentPorDefecto() {
+		return "torrent";
+	}
+
+	@Override
+	public String bittorrentNombreArchivoPorDefecto() {
+		return "dosiero";
+	}
+
 }

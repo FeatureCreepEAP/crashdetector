@@ -12699,4 +12699,400 @@ public class Indonesia implements Idioma {
 		return "Batal";
 	}
 
+	@Override
+	public String bittorrentActualizar() {
+		return "Perbarui";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirDebeSerZip() {
+		return "BitTorrent hanya mendukung file ZIP yang diekspor oleh fungsi berbagi instansi.";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirNoValido() {
+		return "File yang dicoba dibagikan tidak ada atau tidak dapat dibaca.";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrent() {
+		return "File .torrent";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrentSalida() {
+		return "Simpan .torrent sebagai";
+	}
+
+	@Override
+	public String bittorrentColDescargado() {
+		return "Diunduh";
+	}
+
+	@Override
+	public String bittorrentColEstado() {
+		return "Status";
+	}
+
+	@Override
+	public String bittorrentColNombre() {
+		return "Nama";
+	}
+
+	@Override
+	public String bittorrentColPares() {
+		return "Peer";
+	}
+
+	@Override
+	public String bittorrentColProgreso() {
+		return "Progres";
+	}
+
+	@Override
+	public String bittorrentColSubido() {
+		return "Diunggah";
+	}
+
+	@Override
+	public String bittorrentColTipo() {
+		return "Tipe";
+	}
+
+	@Override
+	public String bittorrentColorAcento() {
+		return "Aksen klien BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorAcentoSecundario() {
+		return "Aksen sekunder klien BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorBorde() {
+		return "Batas klien BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorFondo() {
+		return "Latar belakang klien BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorPanel() {
+		return "Panel klien BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorPanelClaro() {
+		return "Panel terang klien BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorSeleccion() {
+		return "Seleksi klien BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorTexto() {
+		return "Teks terang klien BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorTextoOscuro() {
+		return "Teks gelap klien BitTorrent";
+	}
+
+	@Override
+	public String bittorrentComentarioTorrent() {
+		return "File dibagikan untuk diagnosis dan dukungan teknis melalui CrashDetector.";
+	}
+
+	@Override
+	public String bittorrentConfiguracionGuardada() {
+		return "Konfigurasi BitTorrent telah disimpan. Perubahan port, DHT, PEX, dan penemuan lokal akan diterapkan ke runtime baru setelah memulai ulang aplikasi.";
+	}
+
+	@Override
+	public String bittorrentConfirmarPrivacidad() {
+		return "Saya memahami peringatan privasi dan mengizinkan transfer P2P ini.";
+	}
+
+	@Override
+	public String bittorrentCopiarMagnet() {
+		return "Salin magnet";
+	}
+
+	@Override
+	public String bittorrentCrearCompartir() {
+		return "Buat .torrent dan mulai berbagi";
+	}
+
+	@Override
+	public String bittorrentDebeAceptarPrivacidad() {
+		return "Anda harus membaca dan menerima peringatan privasi sebelum memulai transfer BitTorrent.";
+	}
+
+	@Override
+	public String bittorrentDestino() {
+		return "Folder unduhan";
+	}
+
+	@Override
+	public String bittorrentDestinoNoValido() {
+		return "Pilih folder unduhan yang valid dan dapat ditulis.";
+	}
+
+	@Override
+	public String bittorrentDetenerSeleccionada() {
+		return "Hentikan transfer yang dipilih";
+	}
+
+	@Override
+	public String bittorrentElegirDestino() {
+		return "Pilih folder unduhan";
+	}
+
+	@Override
+	public String bittorrentElegirOrigen() {
+		return "Pilih file atau folder untuk dibagikan";
+	}
+
+	@Override
+	public String bittorrentElegirTorrent() {
+		return "Pilih file .torrent";
+	}
+
+	@Override
+	public String bittorrentErrorCrearComparticion() {
+		return "Tidak dapat membuat atau memulai berbagi BitTorrent.";
+	}
+
+	@Override
+	public String bittorrentErrorDetalle(String detalle) {
+		return "Tidak dapat menyelesaikan operasi BitTorrent:\n" + detalle;
+	}
+
+	@Override
+	public String bittorrentEstadoCompartiendo() {
+		return "Berbagi";
+	}
+
+	@Override
+	public String bittorrentEstadoDescargando() {
+		return "Mengunduh";
+	}
+
+	@Override
+	public String bittorrentEstadoDetenido() {
+		return "Dihentikan";
+	}
+
+	@Override
+	public String bittorrentEstadoError() {
+		return "Kesalahan";
+	}
+
+	@Override
+	public String bittorrentEstadoIniciando() {
+		return "Memulai";
+	}
+
+	@Override
+	public String bittorrentEtiquetaTipo() {
+		return "BitTorrent";
+	}
+
+	@Override
+	public String bittorrentExaminar() {
+		return "Telusuri...";
+	}
+
+	@Override
+	public String bittorrentFaltaTorrentOMagnet() {
+		return "Tempel magnet atau pilih file .torrent.";
+	}
+
+	@Override
+	public String bittorrentGuardarConfiguracion() {
+		return "Simpan tracker dan opsi";
+	}
+
+	@Override
+	public String bittorrentGuardarTorrent() {
+		return "Simpan file .torrent";
+	}
+
+	@Override
+	public String bittorrentHilosHash() {
+		return "Thread verifikasi";
+	}
+
+	@Override
+	public String bittorrentImagenAlternativa() {
+		return "Holostars English";
+	}
+
+	@Override
+	public String bittorrentIniciarDescarga() {
+		return "Mulai unduhan";
+	}
+
+	@Override
+	public String bittorrentMagnet() {
+		return "Magnet";
+	}
+
+	@Override
+	public String bittorrentMagnetCopiado() {
+		return "Magnet telah disalin ke clipboard.";
+	}
+
+	@Override
+	public String bittorrentMagnetNoValido() {
+		return "Magnet tidak valid atau tidak mengandung info-hash BitTorrent.";
+	}
+
+	@Override
+	public String bittorrentOrigen() {
+		return "File atau folder sumber";
+	}
+
+	@Override
+	public String bittorrentOrigenNoValido() {
+		return "Pilih file atau folder sumber yang valid.";
+	}
+
+	@Override
+	public String bittorrentOrigenVacio() {
+		return "File atau folder yang dipilih tidak berisi data untuk dibagikan.";
+	}
+
+	@Override
+	public String bittorrentPestanaAbrir() {
+		return "Buka .torrent atau magnet";
+	}
+
+	@Override
+	public String bittorrentPestanaConfiguracion() {
+		return "Privasi dan tracker";
+	}
+
+	@Override
+	public String bittorrentPestanaCrear() {
+		return "Buat dan bagikan";
+	}
+
+	@Override
+	public String bittorrentPestanaTransferencias() {
+		return "Transfer";
+	}
+
+	@Override
+	public String bittorrentPrivacidadAdvertencia() {
+		return "PERINGATAN PRIVASI: BitTorrent adalah jaringan peer-to-peer dan bukan unggahan pribadi end-to-end. Alamat IP publik Anda terlihat oleh tracker yang dikonfigurasi dan oleh peer yang berpartisipasi dalam transfer. Nama file dan folder, ukuran, dan struktur .torrent dapat terlihat oleh siapa pun yang menerima .torrent atau magnet. Versi tanpa dependensi ini hanya menggunakan tracker yang Anda konfigurasikan; tidak mengaktifkan DHT, PEX, atau penemuan lokal. Tinjau konten sebelum membagikan dan hapus token akses, kata sandi, cookie, kunci, sesi, data pribadi, dan log sensitif. Bagikan magnet atau .torrent hanya dengan dukungan yang berwenang dan biarkan aplikasi terbuka selama Anda adalah satu-satunya seeder.";
+	}
+
+	@Override
+	public String bittorrentPrivacidadTitulo() {
+		return "Privasi BitTorrent";
+	}
+
+	@Override
+	public String bittorrentPuerto() {
+		return "Port BitTorrent";
+	}
+
+	@Override
+	public String bittorrentSeguirCompartiendo() {
+		return "Lanjutkan berbagi setelah unduhan selesai";
+	}
+
+	@Override
+	public String bittorrentSobrescribirTorrent(String ruta) {
+		return "File .torrent sudah ada:\n" + ruta + "\n\nTimpa file tersebut?";
+	}
+
+	@Override
+	public String bittorrentTipoDescarga() {
+		return "Unduhan";
+	}
+
+	@Override
+	public String bittorrentTipoSemilla() {
+		return "Seed";
+	}
+
+	@Override
+	public String bittorrentTitulo() {
+		return "Klien BitTorrent — Holostars EN";
+	}
+
+	@Override
+	public String bittorrentTorrentCreado(String ruta) {
+		return "File .torrent telah dibuat dan seeding dimulai:\n" + ruta
+				+ "\n\nBiarkan CrashDetector terbuka hingga dukungan selesai mengunduh.";
+	}
+
+	@Override
+	public String bittorrentTorrentNoValido() {
+		return "File .torrent tidak mengandung bencode yang valid.";
+	}
+
+	@Override
+	public String bittorrentTorrentSinInfo() {
+		return "File .torrent tidak mengandung kamus info yang diperlukan.";
+	}
+
+	@Override
+	public String bittorrentTrackerNoValido(String tracker) {
+		return "Tracker tidak valid: " + tracker + "\nHanya URL http, https, atau udp yang diterima.";
+	}
+
+	@Override
+	public String bittorrentTrackers() {
+		return "Tracker, satu per baris";
+	}
+
+	@Override
+	public String bittorrentTrackersConfig() {
+		return "Tracker BitTorrent kustom";
+	}
+
+	@Override
+	public String bittorrentTransferenciaIniciada() {
+		return "Transfer BitTorrent telah dimulai.";
+	}
+
+	@Override
+	public String bittorrentUsarDht() {
+		return "Gunakan DHT dan router publik untuk menemukan peer";
+	}
+
+	@Override
+	public String bittorrentUsarLsd() {
+		return "Gunakan penemuan peer lokal di jaringan LAN";
+	}
+
+	@Override
+	public String bittorrentUsarPex() {
+		return "Izinkan pertukaran peer antar klien";
+	}
+
+	@Override
+	public String bittorrentSinTrackersNiDht() {
+		return "Konfigurasikan setidaknya satu tracker HTTP, HTTPS, atau UDP sebelum membuat atau membuka berbagi BitTorrent berbasis magnet.";
+	}
+
+	@Override
+	public String bittorrentNombreTorrentPorDefecto() {
+		return "torrent";
+	}
+
+	@Override
+	public String bittorrentNombreArchivoPorDefecto() {
+		return "file";
+	}
+
 }

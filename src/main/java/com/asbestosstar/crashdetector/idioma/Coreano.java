@@ -11728,4 +11728,399 @@ public class Coreano implements Idioma {
 		return "취소";
 	}
 
+	@Override
+	public String bittorrentActualizar() {
+		return "업데이트";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirDebeSerZip() {
+		return "BitTorrent는 인스턴스 공유 기능에서 내보낸 ZIP 파일만 지원합니다.";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirNoValido() {
+		return "공유하려는 파일이 존재하지 않거나 읽을 수 없습니다.";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrent() {
+		return ".torrent 파일";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrentSalida() {
+		return ".torrent 저장 이름";
+	}
+
+	@Override
+	public String bittorrentColDescargado() {
+		return "다운로드됨";
+	}
+
+	@Override
+	public String bittorrentColEstado() {
+		return "상태";
+	}
+
+	@Override
+	public String bittorrentColNombre() {
+		return "이름";
+	}
+
+	@Override
+	public String bittorrentColPares() {
+		return "피어";
+	}
+
+	@Override
+	public String bittorrentColProgreso() {
+		return "진행률";
+	}
+
+	@Override
+	public String bittorrentColSubido() {
+		return "업로드됨";
+	}
+
+	@Override
+	public String bittorrentColTipo() {
+		return "유형";
+	}
+
+	@Override
+	public String bittorrentColorAcento() {
+		return "BitTorrent 클라이언트 강조색";
+	}
+
+	@Override
+	public String bittorrentColorAcentoSecundario() {
+		return "BitTorrent 클라이언트 보조 강조색";
+	}
+
+	@Override
+	public String bittorrentColorBorde() {
+		return "BitTorrent 클라이언트 테두리";
+	}
+
+	@Override
+	public String bittorrentColorFondo() {
+		return "BitTorrent 클라이언트 배경";
+	}
+
+	@Override
+	public String bittorrentColorPanel() {
+		return "BitTorrent 클라이언트 패널";
+	}
+
+	@Override
+	public String bittorrentColorPanelClaro() {
+		return "BitTorrent 클라이언트 밝은 패널";
+	}
+
+	@Override
+	public String bittorrentColorSeleccion() {
+		return "BitTorrent 클라이언트 선택";
+	}
+
+	@Override
+	public String bittorrentColorTexto() {
+		return "BitTorrent 클라이언트 밝은 텍스트";
+	}
+
+	@Override
+	public String bittorrentColorTextoOscuro() {
+		return "BitTorrent 클라이언트 어두운 텍스트";
+	}
+
+	@Override
+	public String bittorrentComentarioTorrent() {
+		return "CrashDetector를 통한 진단 및 기술 지원을 위해 공유된 파일입니다.";
+	}
+
+	@Override
+	public String bittorrentConfiguracionGuardada() {
+		return "BitTorrent 설정이 저장되었습니다. 포트, DHT, PEX 및 로컬 발견 변경 사항은 애플리케이션 재시작 후 새로운 런타임에 적용됩니다.";
+	}
+
+	@Override
+	public String bittorrentConfirmarPrivacidad() {
+		return "개인정보 보호 경고를 이해하며 이 P2P 전송을 승인합니다.";
+	}
+
+	@Override
+	public String bittorrentCopiarMagnet() {
+		return "마그넷 링크 복사";
+	}
+
+	@Override
+	public String bittorrentCrearCompartir() {
+		return ".torrent 생성 및 공유 시작";
+	}
+
+	@Override
+	public String bittorrentDebeAceptarPrivacidad() {
+		return "BitTorrent 전송을 시작하기 전에 개인정보 보호 경고를 읽고 수락해야 합니다.";
+	}
+
+	@Override
+	public String bittorrentDestino() {
+		return "다운로드 폴더";
+	}
+
+	@Override
+	public String bittorrentDestinoNoValido() {
+		return "유효하고 쓰기 가능한 다운로드 폴더를 선택하십시오.";
+	}
+
+	@Override
+	public String bittorrentDetenerSeleccionada() {
+		return "선택한 전송 중지";
+	}
+
+	@Override
+	public String bittorrentElegirDestino() {
+		return "다운로드 폴더 선택";
+	}
+
+	@Override
+	public String bittorrentElegirOrigen() {
+		return "공유할 파일 또는 폴더 선택";
+	}
+
+	@Override
+	public String bittorrentElegirTorrent() {
+		return ".torrent 파일 선택";
+	}
+
+	@Override
+	public String bittorrentErrorCrearComparticion() {
+		return "BitTorrent 공유를 생성하거나 시작할 수 없습니다.";
+	}
+
+	@Override
+	public String bittorrentErrorDetalle(String detalle) {
+		return "BitTorrent 작업을 완료할 수 없습니다:\n" + detalle;
+	}
+
+	@Override
+	public String bittorrentEstadoCompartiendo() {
+		return "공유 중";
+	}
+
+	@Override
+	public String bittorrentEstadoDescargando() {
+		return "다운로드 중";
+	}
+
+	@Override
+	public String bittorrentEstadoDetenido() {
+		return "중지됨";
+	}
+
+	@Override
+	public String bittorrentEstadoError() {
+		return "오류";
+	}
+
+	@Override
+	public String bittorrentEstadoIniciando() {
+		return "시작 중";
+	}
+
+	@Override
+	public String bittorrentEtiquetaTipo() {
+		return "BitTorrent";
+	}
+
+	@Override
+	public String bittorrentExaminar() {
+		return "찾아보기...";
+	}
+
+	@Override
+	public String bittorrentFaltaTorrentOMagnet() {
+		return "마그넷 링크를 붙여넣거나 .torrent 파일을 선택하십시오.";
+	}
+
+	@Override
+	public String bittorrentGuardarConfiguracion() {
+		return "트래커 및 옵션 저장";
+	}
+
+	@Override
+	public String bittorrentGuardarTorrent() {
+		return ".torrent 파일 저장";
+	}
+
+	@Override
+	public String bittorrentHilosHash() {
+		return "검증 스레드";
+	}
+
+	@Override
+	public String bittorrentImagenAlternativa() {
+		return "Holostars English";
+	}
+
+	@Override
+	public String bittorrentIniciarDescarga() {
+		return "다운로드 시작";
+	}
+
+	@Override
+	public String bittorrentMagnet() {
+		return "마그넷 링크";
+	}
+
+	@Override
+	public String bittorrentMagnetCopiado() {
+		return "마그넷 링크가 클립보드에 복사되었습니다.";
+	}
+
+	@Override
+	public String bittorrentMagnetNoValido() {
+		return "마그넷 링크가 유효하지 않거나 BitTorrent info-hash를 포함하지 않습니다.";
+	}
+
+	@Override
+	public String bittorrentOrigen() {
+		return "원본 파일 또는 폴더";
+	}
+
+	@Override
+	public String bittorrentOrigenNoValido() {
+		return "유효한 원본 파일 또는 폴더를 선택하십시오.";
+	}
+
+	@Override
+	public String bittorrentOrigenVacio() {
+		return "선택한 파일 또는 폴더에 공유할 데이터가 없습니다.";
+	}
+
+	@Override
+	public String bittorrentPestanaAbrir() {
+		return ".torrent 또는 마그넷 링크 열기";
+	}
+
+	@Override
+	public String bittorrentPestanaConfiguracion() {
+		return "개인정보 보호 및 트래커";
+	}
+
+	@Override
+	public String bittorrentPestanaCrear() {
+		return "생성 및 공유";
+	}
+
+	@Override
+	public String bittorrentPestanaTransferencias() {
+		return "전송";
+	}
+
+	@Override
+	public String bittorrentPrivacidadAdvertencia() {
+		return "개인정보 보호 경고: BitTorrent는 엔드투엔드 개인 업로드가 아닌 피어 투 피어 네트워크입니다. 귀하의 공개 IP 주소는 구성된 트래커와 전송에 참여하는 피어에게 표시됩니다. 파일 및 폴더 이름, 크기 및 .torrent 구조는 .torrent 또는 마그넷 링크를 받는 모든 사람에게 표시될 수 있습니다. 이 종속성 없는 버전은 사용자가 구성한 트래커만 사용합니다. DHT, PEX 또는 로컬 발견을 활성화하지 않습니다. 공유하기 전에 내용을 검토하고 액세스 토큰, 비밀번호, 쿠키, 키, 세션, 개인 데이터 및 민감한 로그를 삭제하십시오. 마그넷 링크 또는 .torrent는 승인된 지원팀과만 공유하고 귀하가 유일한 시더인 동안 애플리케이션을 열어 두십시오.";
+	}
+
+	@Override
+	public String bittorrentPrivacidadTitulo() {
+		return "BitTorrent 개인정보 보호";
+	}
+
+	@Override
+	public String bittorrentPuerto() {
+		return "BitTorrent 포트";
+	}
+
+	@Override
+	public String bittorrentSeguirCompartiendo() {
+		return "다운로드 완료 후 계속 공유";
+	}
+
+	@Override
+	public String bittorrentSobrescribirTorrent(String ruta) {
+		return ".torrent 파일이 이미 있습니다:\n" + ruta + "\n\n덮어쓰시겠습니까?";
+	}
+
+	@Override
+	public String bittorrentTipoDescarga() {
+		return "다운로드";
+	}
+
+	@Override
+	public String bittorrentTipoSemilla() {
+		return "시딩";
+	}
+
+	@Override
+	public String bittorrentTitulo() {
+		return "BitTorrent 클라이언트 — Holostars EN";
+	}
+
+	@Override
+	public String bittorrentTorrentCreado(String ruta) {
+		return ".torrent 파일이 생성되고 시딩이 시작되었습니다:\n" + ruta + "\n\n지원팀이 다운로드를 완료할 때까지 CrashDetector를 열어 두십시오.";
+	}
+
+	@Override
+	public String bittorrentTorrentNoValido() {
+		return ".torrent 파일에 유효한 bencode가 포함되어 있지 않습니다.";
+	}
+
+	@Override
+	public String bittorrentTorrentSinInfo() {
+		return ".torrent 파일에 필요한 info 딕셔너리가 포함되어 있지 않습니다.";
+	}
+
+	@Override
+	public String bittorrentTrackerNoValido(String tracker) {
+		return "유효하지 않은 트래커: " + tracker + "\nhttp, https 또는 udp URL만 허용됩니다.";
+	}
+
+	@Override
+	public String bittorrentTrackers() {
+		return "트래커, 줄당 하나";
+	}
+
+	@Override
+	public String bittorrentTrackersConfig() {
+		return "사용자 정의 BitTorrent 트래커";
+	}
+
+	@Override
+	public String bittorrentTransferenciaIniciada() {
+		return "BitTorrent 전송이 시작되었습니다.";
+	}
+
+	@Override
+	public String bittorrentUsarDht() {
+		return "DHT 및 공용 라우터를 사용하여 피어 찾기";
+	}
+
+	@Override
+	public String bittorrentUsarLsd() {
+		return "LAN 네트워크에서 로컬 피어 발견 사용";
+	}
+
+	@Override
+	public String bittorrentUsarPex() {
+		return "클라이언트 간 피어 교환 허용";
+	}
+
+	@Override
+	public String bittorrentSinTrackersNiDht() {
+		return "마그넷 기반 BitTorrent 공유를 생성하거나 열기 전에 최소한 하나의 HTTP, HTTPS 또는 UDP 트래커를 구성하십시오.";
+	}
+
+	@Override
+	public String bittorrentNombreTorrentPorDefecto() {
+		return "torrent";
+	}
+
+	@Override
+	public String bittorrentNombreArchivoPorDefecto() {
+		return "파일";
+	}
+
 }

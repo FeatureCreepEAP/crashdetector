@@ -43,6 +43,7 @@ import javax.swing.tree.TreePath;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
+import com.asbestosstar.crashdetector.api_sitio_archivo.SitioBitTorrent;
 import com.asbestosstar.crashdetector.api_sitio_archivo.SitioDeArchivoAPI;
 import com.asbestosstar.crashdetector.api_sitio_archivo.SitioDeArchivoAPI.ObservadorDeTransferencia;
 import com.asbestosstar.crashdetector.api_sitio_archivo.WormholeApp;
@@ -50,6 +51,8 @@ import com.asbestosstar.crashdetector.dto.modpack.CopiaDeSeguridadDeArchivos;
 import com.asbestosstar.crashdetector.dto.modpack.ProveedorMods;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
+import com.asbestosstar.crashdetector.gui.tipos.bittorrent.BitTorrentGUI;
+import com.asbestosstar.crashdetector.gui.tipos.bittorrent.BitTorrentGUIHolostarsEN;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
 
@@ -62,16 +65,17 @@ import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
  * usa selección triestado: - check = todo seleccionado - cuadrado = selección
  * parcial - vacío = no seleccionado
  *
- * Nota: - wormhole.app queda registrado aquí como servicio integrado por
- * defecto. - otros servicios pueden registrarse desde extensiones.
+ * Nota: - wormhole.app y BitTorrent quedan registrados aquí como servicios
+ * integrados por defecto. - otros servicios pueden registrarse desde
+ * extensiones.
  */
 public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetectorGUI {
 
 	public static final Map<String, Supplier<CompartirInstanciaGUI>> GUIS = new HashMap<>();
 
 	static {
-		// Ojo: la implementación existente en tu código se llama WormHoleApp.
 		SitioDeArchivoAPI.SERVICIOS_REGISTRADOS.put("wormhole.app", new WormholeApp());
+		SitioDeArchivoAPI.SERVICIOS_REGISTRADOS.put("bittorrent", new SitioBitTorrent());
 	}
 
 	public JTextArea areaPolitica;
@@ -524,6 +528,44 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		return ret;
 	}
 
+	/**
+	 * Muestra la advertencia de privacidad antes de iniciar una publicación P2P.
+	 *
+	 * En BitTorrent, los trackers y los demás peers pueden conocer la dirección IP
+	 * pública del usuario. Además, los nombres y tamaños incluidos en el torrent
+	 * son visibles para quienes reciben sus metadatos.
+	 */
+	private boolean confirmarPrivacidadBitTorrent() {
+		JTextArea advertencia = new JTextArea(MonitorDePID.idioma.bittorrentPrivacidadAdvertencia());
+		advertencia.setEditable(false);
+		advertencia.setLineWrap(true);
+		advertencia.setWrapStyleWord(true);
+		advertencia.setRows(12);
+		advertencia.setColumns(58);
+		advertencia.setOpaque(false);
+		advertencia.setCaretPosition(0);
+
+		JScrollPane scroll = new JScrollPane(advertencia);
+		scroll.setBorder(null);
+		scroll.setPreferredSize(new Dimension(620, 260));
+
+		int resultado = JOptionPane.showConfirmDialog(this, scroll, MonitorDePID.idioma.bittorrentPrivacidadTitulo(),
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+
+		return resultado == JOptionPane.OK_OPTION;
+	}
+
+	/**
+	 * Abre la implementación BitTorrent configurada, selecciona la pestaña de
+	 * creación y coloca el archivo empaquetado como origen.
+	 */
+	private void abrirBitTorrentParaCompartir(Path archivoOrigen) {
+		BitTorrentGUI gui = TipoGUI.BITTORRENT.obtenerGUIPredeterminado(BitTorrentGUIHolostarsEN.ID,
+				BitTorrentGUIHolostarsEN::new);
+
+		gui.constructir(BitTorrentGUI.ArgumentosConstruccion.paraCompartir(archivoOrigen, true));
+	}
+
 	public void compartirSeleccion() {
 		List<Path> rutas = obtenerSeleccionFinal();
 		if (rutas.isEmpty()) {
@@ -532,7 +574,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 			return;
 		}
 
-		ProveedorMods proveedor = obtenerProveedorFormatoSeleccionado();
+		final ProveedorMods proveedor = obtenerProveedorFormatoSeleccionado();
 		String servicio = (String) comboServicio.getSelectedItem();
 
 		if (proveedor == null) {
@@ -541,10 +583,16 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 			return;
 		}
 
-		SitioDeArchivoAPI api = SitioDeArchivoAPI.SERVICIOS_REGISTRADOS.get(servicio);
+		final SitioDeArchivoAPI api = SitioDeArchivoAPI.SERVICIOS_REGISTRADOS.get(servicio);
 		if (api == null) {
 			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.compartirInstanciaServicioNoDisponible(),
 					MonitorDePID.idioma.error(), JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+
+		final boolean compartirConBitTorrent = api instanceof SitioBitTorrent;
+
+		if (compartirConBitTorrent && !confirmarPrivacidadBitTorrent()) {
 			return;
 		}
 
@@ -562,6 +610,15 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 				String extension = CopiaDeSeguridadDeArchivos.obtenerExtensionProveedor(proveedor);
 				zipCreado = CopiaDeSeguridadDeArchivos.crearRutaBackup(carpetaBase, extension);
 				proveedor.exportarModpack(zipCreado, rutas);
+
+				/*
+				 * BitTorrent se termina de configurar en su GUI dedicada. Aquí solamente
+				 * preparamos el archivo y dejamos que el usuario revise trackers, ruta del
+				 * .torrent y demás opciones antes de empezar a sembrar.
+				 */
+				if (compartirConBitTorrent) {
+					return null;
+				}
 
 				etiquetaEstado.setText(MonitorDePID.idioma.compartirInstanciaEstadoSubiendo());
 				setTextoCarga(MonitorDePID.idioma.compartirInstanciaEstadoSubiendo());
@@ -612,6 +669,12 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 			protected void done() {
 				try {
 					get();
+
+					if (compartirConBitTorrent) {
+						abrirBitTorrentParaCompartir(zipCreado);
+						etiquetaEstado.setText(MonitorDePID.idioma.compartirInstanciaEstadoListo());
+						return;
+					}
 
 					StringBuilder sb = new StringBuilder();
 					sb.append(MonitorDePID.idioma.compartirInstanciaSubidaCompleta());

@@ -35,6 +35,7 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
+import com.asbestosstar.crashdetector.gui.tipos.bittorrent.BitTorrentGUIHolostarsEN;
 import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
@@ -151,6 +152,9 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 				() -> new ScriptIDEGUINiwaJPlus());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.VISOR_HEAP_DUMP, VisorHeapDumpIranFifa.ID,
 				() -> new VisorHeapDumpIranFifa());
+
+		registrarBotonDeBarraLateralDerecha(TipoGUI.BITTORRENT, BitTorrentGUIHolostarsEN.ID,
+				() -> new BitTorrentGUIHolostarsEN());
 
 	}
 

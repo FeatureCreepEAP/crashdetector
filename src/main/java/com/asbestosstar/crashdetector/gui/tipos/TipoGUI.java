@@ -15,6 +15,7 @@ import com.asbestosstar.crashdetector.gui.tipos.actualizador.ActualizadorModsGUI
 import com.asbestosstar.crashdetector.gui.tipos.antimanipulacion.AntiManipulacionGUI;
 import com.asbestosstar.crashdetector.gui.tipos.aplic.ActaDeProteccionDelIdiomaCulturalDePyongyangGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUI;
+import com.asbestosstar.crashdetector.gui.tipos.bittorrent.BitTorrentGUI;
 import com.asbestosstar.crashdetector.gui.tipos.canario.CanarioDeOrdenJudicialGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cdpaste.CDPasteHistorialGUI;
@@ -1325,7 +1326,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 	/**
 	 * Visor de archivos HPROF y heap dumps.
 	 */
-	public static final TipoGUI<VisorHeapDumpGUI> VISOR_HEAP_DUMP = new TipoGUI<VisorHeapDumpGUI>() {
+	public static TipoGUI<VisorHeapDumpGUI> VISOR_HEAP_DUMP = new TipoGUI<VisorHeapDumpGUI>() {
 		@Override
 		public String id() {
 			return "visor_heap_dump";
@@ -1344,6 +1345,31 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		@Override
 		public Map<String, Supplier<VisorHeapDumpGUI>> obtenerGUIs() {
 			return VisorHeapDumpGUI.GUIS;
+		}
+	};
+
+	/**
+	 * Cliente BitTorrent para compartir archivos de soporte.
+	 */
+	public static TipoGUI<BitTorrentGUI> BITTORRENT = new TipoGUI<BitTorrentGUI>() {
+		@Override
+		public String id() {
+			return "bittorrent";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.bittorrentEtiquetaTipo();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<BitTorrentGUI> gui) {
+			BitTorrentGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<BitTorrentGUI>> obtenerGUIs() {
+			return BitTorrentGUI.GUIS;
 		}
 	};
 
@@ -1402,6 +1428,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(MCP);
 		TIPOS_DE_GUI.add(ESCANER_NUBE);
 		TIPOS_DE_GUI.add(VISOR_HEAP_DUMP);
+		TIPOS_DE_GUI.add(BITTORRENT);
 
 	}
 }

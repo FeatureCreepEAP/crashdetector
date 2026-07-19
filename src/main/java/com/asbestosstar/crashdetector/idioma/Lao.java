@@ -12456,4 +12456,321 @@ public class Lao implements Idioma {
 		return "ຍົກເລີກ";
 	}
 
+	public String bittorrentActualizar() {
+		return "ອັບເດດ";
+	}
+
+	public String bittorrentArchivoCompartirDebeSerZip() {
+		return "BitTorrent ຮອງຮັບສະເພາະໄຟລ໌ ZIP ທີ່ສົ່ງອອກຈາກຟັງຊັນແບ່ງປັນ instance.";
+	}
+
+	public String bittorrentArchivoCompartirNoValido() {
+		return "ໄຟລ໌ທີ່ພະຍາຍາມແບ່ງປັນບໍ່ມີຢູ່ ຫຼື ບໍ່ສາມາດອ່ານໄດ້.";
+	}
+
+	public String bittorrentArchivoTorrent() {
+		return "ໄຟລ໌ .torrent";
+	}
+
+	public String bittorrentArchivoTorrentSalida() {
+		return "ບັນທຶກ .torrent ເປັນ";
+	}
+
+	public String bittorrentColDescargado() {
+		return "ດາວໂຫລດແລ້ວ";
+	}
+
+	public String bittorrentColEstado() {
+		return "ສະຖານະ";
+	}
+
+	public String bittorrentColNombre() {
+		return "ຊື່";
+	}
+
+	public String bittorrentColPares() {
+		return "ຄູ່";
+	}
+
+	public String bittorrentColProgreso() {
+		return "ຄວາມຄືບໜ້າ";
+	}
+
+	public String bittorrentColSubido() {
+		return "ອັບໂຫລດແລ້ວ";
+	}
+
+	public String bittorrentColTipo() {
+		return "ປະເພດ";
+	}
+
+	public String bittorrentColorAcento() {
+		return "ສີເນັ້ນຂອງລູກຄ້າ BitTorrent";
+	}
+
+	public String bittorrentColorAcentoSecundario() {
+		return "ສີເນັ້ນຮອງຂອງລູກຄ້າ BitTorrent";
+	}
+
+	public String bittorrentColorBorde() {
+		return "ຂອບຂອງລູກຄ້າ BitTorrent";
+	}
+
+	public String bittorrentColorFondo() {
+		return "ພື້ນຫຼັງຂອງລູກຄ້າ BitTorrent";
+	}
+
+	public String bittorrentColorPanel() {
+		return "ແຜງຂອງລູກຄ້າ BitTorrent";
+	}
+
+	public String bittorrentColorPanelClaro() {
+		return "ແຜງອ່ອນຂອງລູກຄ້າ BitTorrent";
+	}
+
+	public String bittorrentColorSeleccion() {
+		return "ການເລືອກຂອງລູກຄ້າ BitTorrent";
+	}
+
+	public String bittorrentColorTexto() {
+		return "ຂໍ້ຄວາມສີອ່ອນຂອງລູກຄ້າ BitTorrent";
+	}
+
+	public String bittorrentColorTextoOscuro() {
+		return "ຂໍ້ຄວາມສີເຂັ້ມຂອງລູກຄ້າ BitTorrent";
+	}
+
+	public String bittorrentComentarioTorrent() {
+		return "ໄຟລ໌ແບ່ງປັນສຳລັບການວິນິດໄສ ແລະ ການສະໜັບສະໜູນດ້ານວິຊາການຜ່ານ CrashDetector.";
+	}
+
+	public String bittorrentConfiguracionGuardada() {
+		return "ການຕັ້ງຄ່າ BitTorrent ຖືກບັນທຶກແລ້ວ. ການປ່ຽນແປງ port, DHT, PEX ແລະ ການຄົ້ນພົບທ້ອງຖິ່ນຈະຖືກນຳໃຊ້ກັບ runtime ໃໝ່ຫຼັງຈາກ restart ແອັບ.";
+	}
+
+	public String bittorrentConfirmarPrivacidad() {
+		return "ຂ້ອຍເຂົ້າໃຈຄຳເຕືອນດ້ານຄວາມເປັນສ່ວນຕົວ ແລະ ອະນຸຍາດການໂອນຖ່າຍ P2P ນີ້.";
+	}
+
+	public String bittorrentCopiarMagnet() {
+		return "ຄັດລອກ magnet";
+	}
+
+	public String bittorrentCrearCompartir() {
+		return "ສ້າງ .torrent ແລະ ເລີ່ມແບ່ງປັນ";
+	}
+
+	public String bittorrentDebeAceptarPrivacidad() {
+		return "ເຈົ້າຕ້ອງອ່ານ ແລະ ຍອມຮັບຄຳເຕືອນດ້ານຄວາມເປັນສ່ວນຕົວກ່ອນເລີ່ມການໂອນຖ່າຍ BitTorrent.";
+	}
+
+	public String bittorrentDestino() {
+		return "ໂຟນເດີດາວໂຫລດ";
+	}
+
+	public String bittorrentDestinoNoValido() {
+		return "ເລືອກໂຟນເດີດາວໂຫລດທີ່ຖືກຕ້ອງ ແລະ ສາມາດຂຽນໄດ້.";
+	}
+
+	public String bittorrentDetenerSeleccionada() {
+		return "ຢຸດການໂອນຖ່າຍທີ່ເລືອກ";
+	}
+
+	public String bittorrentElegirDestino() {
+		return "ເລືອກໂຟນເດີດາວໂຫລດ";
+	}
+
+	public String bittorrentElegirOrigen() {
+		return "ເລືອກໄຟລ໌ ຫຼື ໂຟນເດີເພື່ອແບ່ງປັນ";
+	}
+
+	public String bittorrentElegirTorrent() {
+		return "ເລືອກໄຟລ໌ .torrent";
+	}
+
+	public String bittorrentErrorCrearComparticion() {
+		return "ບໍ່ສາມາດສ້າງ ຫຼື ເລີ່ມການແບ່ງປັນ BitTorrent ໄດ້.";
+	}
+
+	public String bittorrentErrorDetalle(String detalle) {
+		return "ບໍ່ສາມາດດຳເນີນການ BitTorrent ໃຫ້ສຳເລັດໄດ້:\n" + detalle;
+	}
+
+	public String bittorrentEstadoCompartiendo() {
+		return "ກຳລັງແບ່ງປັນ";
+	}
+
+	public String bittorrentEstadoDescargando() {
+		return "ກຳລັງດາວໂຫລດ";
+	}
+
+	public String bittorrentEstadoDetenido() {
+		return "ຢຸດແລ້ວ";
+	}
+
+	public String bittorrentEstadoError() {
+		return "ຜິດພາດ";
+	}
+
+	public String bittorrentEstadoIniciando() {
+		return "ກຳລັງເລີ່ມຕົ້ນ";
+	}
+
+	public String bittorrentEtiquetaTipo() {
+		return "BitTorrent";
+	}
+
+	public String bittorrentExaminar() {
+		return "ຄົ້ນຫາ...";
+	}
+
+	public String bittorrentFaltaTorrentOMagnet() {
+		return "ວາງ magnet ຫຼື ເລືອກໄຟລ໌ .torrent.";
+	}
+
+	public String bittorrentGuardarConfiguracion() {
+		return "ບັນທຶກ trackers ແລະ ຕົວເລືອກ";
+	}
+
+	public String bittorrentGuardarTorrent() {
+		return "ບັນທຶກໄຟລ໌ .torrent";
+	}
+
+	public String bittorrentHilosHash() {
+		return "Threads ກວດສອບ";
+	}
+
+	public String bittorrentImagenAlternativa() {
+		return "Holostars English";
+	}
+
+	public String bittorrentIniciarDescarga() {
+		return "ເລີ່ມດາວໂຫລດ";
+	}
+
+	public String bittorrentMagnet() {
+		return "Magnet";
+	}
+
+	public String bittorrentMagnetCopiado() {
+		return "Magnet ຖືກຄັດລອກໃສ່ clipboard ແລ້ວ.";
+	}
+
+	public String bittorrentMagnetNoValido() {
+		return "Magnet ບໍ່ຖືກຕ້ອງ ຫຼື ບໍ່ມີ info-hash BitTorrent.";
+	}
+
+	public String bittorrentOrigen() {
+		return "ໄຟລ໌ ຫຼື ໂຟນເດີຕົ້ນທາງ";
+	}
+
+	public String bittorrentOrigenNoValido() {
+		return "ເລືອກໄຟລ໌ ຫຼື ໂຟນເດີຕົ້ນທາງທີ່ຖືກຕ້ອງ.";
+	}
+
+	public String bittorrentOrigenVacio() {
+		return "ໄຟລ໌ ຫຼື ໂຟນເດີທີ່ເລືອກບໍ່ມີຂໍ້ມູນສຳລັບແບ່ງປັນ.";
+	}
+
+	public String bittorrentPestanaAbrir() {
+		return "ເປີດ .torrent ຫຼື magnet";
+	}
+
+	public String bittorrentPestanaConfiguracion() {
+		return "ຄວາມເປັນສ່ວນຕົວ ແລະ trackers";
+	}
+
+	public String bittorrentPestanaCrear() {
+		return "ສ້າງ ແລະ ແບ່ງປັນ";
+	}
+
+	public String bittorrentPestanaTransferencias() {
+		return "ການໂອນຖ່າຍ";
+	}
+
+	public String bittorrentPrivacidadAdvertencia() {
+		return "ຄຳເຕືອນດ້ານຄວາມເປັນສ່ວນຕົວ: BitTorrent ແມ່ນເຄືອຂ່າຍ peer-to-peer ແລະ ບໍ່ແມ່ນການອັບໂຫລດສ່ວນຕົວແບບ end-to-end. IP ສາທາລະນະຂອງເຈົ້າຈະເຫັນໄດ້ໂດຍ trackers ທີ່ຕັ້ງຄ່າໄວ້ ແລະ ຄູ່ທີ່ມີສ່ວນຮ່ວມໃນການໂອນຖ່າຍ. ຊື່ໄຟລ໌, ໂຟນເດີ, ຂະໜາດ ແລະ ໂຄງສ້າງຂອງ .torrent ອາດເຫັນໄດ້ໂດຍຜູ້ທີ່ໄດ້ຮັບ .torrent ຫຼື magnet. ເວີຊັນນີ້ທີ່ບໍ່ມີ dependencies ໃຊ້ສະເພາະ trackers ທີ່ເຈົ້າຕັ້ງຄ່າ; ບໍ່ເປີດໃຊ້ DHT, PEX ຫຼື ການຄົ້ນພົບທ້ອງຖິ່ນ. ກວດສອບເນື້ອຫາກ່ອນແບ່ງປັນ ແລະ ລຶບ access tokens, ລະຫັດຜ່ານ, cookies, keys, sessions, ຂໍ້ມູນສ່ວນຕົວ ແລະ ບັນທຶກທີ່ລະອຽດອ່ອນ. ແບ່ງປັນ magnet ຫຼື .torrent ກັບຝ່າຍສະໜັບສະໜູນທີ່ໄດ້ຮັບອະນຸຍາດເທົ່ານັ້ນ ແລະ ປ່ອຍແອັບເປີດໄວ້ໃນຂະນະທີ່ເຈົ້າເປັນ seeder ດຽວ.";
+	}
+
+	public String bittorrentPrivacidadTitulo() {
+		return "ຄວາມເປັນສ່ວນຕົວຂອງ BitTorrent";
+	}
+
+	public String bittorrentPuerto() {
+		return "Port BitTorrent";
+	}
+
+	public String bittorrentSeguirCompartiendo() {
+		return "ສືບຕໍ່ແບ່ງປັນຫຼັງຈາກດາວໂຫລດສຳເລັດ";
+	}
+
+	public String bittorrentSobrescribirTorrent(String ruta) {
+		return "ໄຟລ໌ .torrent ມີຢູ່ແລ້ວ:\n" + ruta + "\n\nຂຽນທັບບໍ່?";
+	}
+
+	public String bittorrentTipoDescarga() {
+		return "ດາວໂຫລດ";
+	}
+
+	public String bittorrentTipoSemilla() {
+		return "Seed";
+	}
+
+	public String bittorrentTitulo() {
+		return "ລູກຄ້າ BitTorrent — Holostars EN";
+	}
+
+	public String bittorrentTorrentCreado(String ruta) {
+		return "ໄຟລ໌ .torrent ຖືກສ້າງ ແລະ ການ seeding ເລີ່ມຕົ້ນແລ້ວ:\n" + ruta
+				+ "\n\nຮັກສາ CrashDetector ໃຫ້ເປີດໄວ້ຈົນກະທັ່ງຝ່າຍສະໜັບສະໜູນດາວໂຫລດສຳເລັດ.";
+	}
+
+	public String bittorrentTorrentNoValido() {
+		return "ໄຟລ໌ .torrent ບໍ່ມີ bencode ທີ່ຖືກຕ້ອງ.";
+	}
+
+	public String bittorrentTorrentSinInfo() {
+		return "ໄຟລ໌ .torrent ບໍ່ມີ dictionary info ທີ່ຈຳເປັນ.";
+	}
+
+	public String bittorrentTrackerNoValido(String tracker) {
+		return "Tracker ບໍ່ຖືກຕ້ອງ: " + tracker + "\nຮັບສະເພາະ URLs http, https ຫຼື udp.";
+	}
+
+	public String bittorrentTrackers() {
+		return "Trackers, ໜຶ່ງຕໍ່ແຖວ";
+	}
+
+	public String bittorrentTrackersConfig() {
+		return "Trackers BitTorrent ສ່ວນຕົວ";
+	}
+
+	public String bittorrentTransferenciaIniciada() {
+		return "ການໂອນຖ່າຍ BitTorrent ເລີ່ມຕົ້ນແລ້ວ.";
+	}
+
+	public String bittorrentUsarDht() {
+		return "ໃຊ້ DHT ແລະ routers ສາທາລະນະເພື່ອຊອກຫາຄູ່";
+	}
+
+	public String bittorrentUsarLsd() {
+		return "ໃຊ້ການຄົ້ນພົບຄູ້ທ້ອງຖິ່ນໃນເຄືອຂ່າຍ LAN";
+	}
+
+	public String bittorrentUsarPex() {
+		return "ອະນຸຍາດການແລກປ່ຽນຄູ່ລະຫວ່າງລູກຄ້າ";
+	}
+
+	public String bittorrentSinTrackersNiDht() {
+		return "ຕັ້ງຄ່າຢ່າງໜ້ອຍໜຶ່ງ tracker HTTP, HTTPS ຫຼື UDP ກ່ອນສ້າງ ຫຼື ເປີດການແບ່ງປັນ BitTorrent ທີ່ອີງໃສ່ magnet.";
+	}
+
+	public String bittorrentNombreTorrentPorDefecto() {
+		return "torrent";
+	}
+
+	public String bittorrentNombreArchivoPorDefecto() {
+		return "ໄຟລ໌";
+	}
+
 }

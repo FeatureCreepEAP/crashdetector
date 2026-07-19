@@ -4753,4 +4753,162 @@ public interface Idioma {
 
 	public String consolaCancelar();
 
+	public String bittorrentActualizar();
+
+	public String bittorrentArchivoCompartirDebeSerZip();
+
+	public String bittorrentArchivoCompartirNoValido();
+
+	public String bittorrentArchivoTorrent();
+
+	public String bittorrentArchivoTorrentSalida();
+
+	public String bittorrentColDescargado();
+
+	public String bittorrentColEstado();
+
+	public String bittorrentColNombre();
+
+	public String bittorrentColPares();
+
+	public String bittorrentColProgreso();
+
+	public String bittorrentColSubido();
+
+	public String bittorrentColTipo();
+
+	public String bittorrentColorAcento();
+
+	public String bittorrentColorAcentoSecundario();
+
+	public String bittorrentColorBorde();
+
+	public String bittorrentColorFondo();
+
+	public String bittorrentColorPanel();
+
+	public String bittorrentColorPanelClaro();
+
+	public String bittorrentColorSeleccion();
+
+	public String bittorrentColorTexto();
+
+	public String bittorrentColorTextoOscuro();
+
+	public String bittorrentComentarioTorrent();
+
+	public String bittorrentConfiguracionGuardada();
+
+	public String bittorrentConfirmarPrivacidad();
+
+	public String bittorrentCopiarMagnet();
+
+	public String bittorrentCrearCompartir();
+
+	public String bittorrentDebeAceptarPrivacidad();
+
+	public String bittorrentDestino();
+
+	public String bittorrentDestinoNoValido();
+
+	public String bittorrentDetenerSeleccionada();
+
+	public String bittorrentElegirDestino();
+
+	public String bittorrentElegirOrigen();
+
+	public String bittorrentElegirTorrent();
+
+	public String bittorrentErrorCrearComparticion();
+
+	public String bittorrentErrorDetalle(String detalle);
+
+	public String bittorrentEstadoCompartiendo();
+
+	public String bittorrentEstadoDescargando();
+
+	public String bittorrentEstadoDetenido();
+
+	public String bittorrentEstadoError();
+
+	public String bittorrentEstadoIniciando();
+
+	public String bittorrentEtiquetaTipo();
+
+	public String bittorrentExaminar();
+
+	public String bittorrentFaltaTorrentOMagnet();
+
+	public String bittorrentGuardarConfiguracion();
+
+	public String bittorrentGuardarTorrent();
+
+	public String bittorrentHilosHash();
+
+	public String bittorrentImagenAlternativa();
+
+	public String bittorrentIniciarDescarga();
+
+	public String bittorrentMagnet();
+
+	public String bittorrentMagnetCopiado();
+
+	public String bittorrentMagnetNoValido();
+
+	public String bittorrentOrigen();
+
+	public String bittorrentOrigenNoValido();
+
+	public String bittorrentOrigenVacio();
+
+	public String bittorrentPestanaAbrir();
+
+	public String bittorrentPestanaConfiguracion();
+
+	public String bittorrentPestanaCrear();
+
+	public String bittorrentPestanaTransferencias();
+
+	public String bittorrentPrivacidadAdvertencia();
+
+	public String bittorrentPrivacidadTitulo();
+
+	public String bittorrentPuerto();
+
+	public String bittorrentSeguirCompartiendo();
+
+	public String bittorrentSobrescribirTorrent(String ruta);
+
+	public String bittorrentTipoDescarga();
+
+	public String bittorrentTipoSemilla();
+
+	public String bittorrentTitulo();
+
+	public String bittorrentTorrentCreado(String ruta);
+
+	public String bittorrentTorrentNoValido();
+
+	public String bittorrentTorrentSinInfo();
+
+	public String bittorrentTrackerNoValido(String tracker);
+
+	public String bittorrentTrackers();
+
+	public String bittorrentTrackersConfig();
+
+	public String bittorrentTransferenciaIniciada();
+
+	public String bittorrentUsarDht();
+
+	public String bittorrentUsarLsd();
+
+	public String bittorrentUsarPex();
+
+	public String bittorrentSinTrackersNiDht();
+
+	public String bittorrentNombreTorrentPorDefecto();
+
+	public String bittorrentNombreArchivoPorDefecto();
+
 }

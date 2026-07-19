@@ -12259,4 +12259,321 @@ public class Vietnamita implements Idioma {
 		return "Hủy";
 	}
 
+	public String bittorrentActualizar() {
+		return "Cập nhật";
+	}
+
+	public String bittorrentArchivoCompartirDebeSerZip() {
+		return "BitTorrent chỉ hỗ trợ tệp ZIP được xuất bởi chức năng chia sẻ phiên bản.";
+	}
+
+	public String bittorrentArchivoCompartirNoValido() {
+		return "Tệp cố gắng chia sẻ không tồn tại hoặc không thể đọc được.";
+	}
+
+	public String bittorrentArchivoTorrent() {
+		return "Tệp .torrent";
+	}
+
+	public String bittorrentArchivoTorrentSalida() {
+		return "Lưu .torrent dưới dạng";
+	}
+
+	public String bittorrentColDescargado() {
+		return "Đã tải xuống";
+	}
+
+	public String bittorrentColEstado() {
+		return "Trạng thái";
+	}
+
+	public String bittorrentColNombre() {
+		return "Tên";
+	}
+
+	public String bittorrentColPares() {
+		return "Peer";
+	}
+
+	public String bittorrentColProgreso() {
+		return "Tiến độ";
+	}
+
+	public String bittorrentColSubido() {
+		return "Đã tải lên";
+	}
+
+	public String bittorrentColTipo() {
+		return "Loại";
+	}
+
+	public String bittorrentColorAcento() {
+		return "Màu nhấn của client BitTorrent";
+	}
+
+	public String bittorrentColorAcentoSecundario() {
+		return "Màu nhấn phụ của client BitTorrent";
+	}
+
+	public String bittorrentColorBorde() {
+		return "Viền của client BitTorrent";
+	}
+
+	public String bittorrentColorFondo() {
+		return "Nền của client BitTorrent";
+	}
+
+	public String bittorrentColorPanel() {
+		return "Bảng điều khiển của client BitTorrent";
+	}
+
+	public String bittorrentColorPanelClaro() {
+		return "Bảng điều khiển sáng của client BitTorrent";
+	}
+
+	public String bittorrentColorSeleccion() {
+		return "Lựa chọn của client BitTorrent";
+	}
+
+	public String bittorrentColorTexto() {
+		return "Văn bản sáng của client BitTorrent";
+	}
+
+	public String bittorrentColorTextoOscuro() {
+		return "Văn bản tối của client BitTorrent";
+	}
+
+	public String bittorrentComentarioTorrent() {
+		return "Tệp được chia sẻ để chẩn đoán và hỗ trợ kỹ thuật thông qua CrashDetector.";
+	}
+
+	public String bittorrentConfiguracionGuardada() {
+		return "Cấu hình BitTorrent đã được lưu. Các thay đổi về cổng, DHT, PEX và phát hiện cục bộ sẽ được áp dụng cho runtime mới sau khi khởi động lại ứng dụng.";
+	}
+
+	public String bittorrentConfirmarPrivacidad() {
+		return "Tôi hiểu cảnh báo quyền riêng tư và cho phép truyền tải P2P này.";
+	}
+
+	public String bittorrentCopiarMagnet() {
+		return "Sao chép magnet";
+	}
+
+	public String bittorrentCrearCompartir() {
+		return "Tạo .torrent và bắt đầu chia sẻ";
+	}
+
+	public String bittorrentDebeAceptarPrivacidad() {
+		return "Bạn phải đọc và chấp nhận cảnh báo quyền riêng tư trước khi bắt đầu truyền tải BitTorrent.";
+	}
+
+	public String bittorrentDestino() {
+		return "Thư mục tải xuống";
+	}
+
+	public String bittorrentDestinoNoValido() {
+		return "Chọn một thư mục tải xuống hợp lệ và có thể ghi.";
+	}
+
+	public String bittorrentDetenerSeleccionada() {
+		return "Dừng truyền tải đã chọn";
+	}
+
+	public String bittorrentElegirDestino() {
+		return "Chọn thư mục tải xuống";
+	}
+
+	public String bittorrentElegirOrigen() {
+		return "Chọn tệp hoặc thư mục để chia sẻ";
+	}
+
+	public String bittorrentElegirTorrent() {
+		return "Chọn tệp .torrent";
+	}
+
+	public String bittorrentErrorCrearComparticion() {
+		return "Không thể tạo hoặc bắt đầu chia sẻ BitTorrent.";
+	}
+
+	public String bittorrentErrorDetalle(String detalle) {
+		return "Không thể hoàn thành thao tác BitTorrent:\n" + detalle;
+	}
+
+	public String bittorrentEstadoCompartiendo() {
+		return "Đang chia sẻ";
+	}
+
+	public String bittorrentEstadoDescargando() {
+		return "Đang tải xuống";
+	}
+
+	public String bittorrentEstadoDetenido() {
+		return "Đã dừng";
+	}
+
+	public String bittorrentEstadoError() {
+		return "Lỗi";
+	}
+
+	public String bittorrentEstadoIniciando() {
+		return "Đang khởi động";
+	}
+
+	public String bittorrentEtiquetaTipo() {
+		return "BitTorrent";
+	}
+
+	public String bittorrentExaminar() {
+		return "Duyệt...";
+	}
+
+	public String bittorrentFaltaTorrentOMagnet() {
+		return "Dán magnet hoặc chọn tệp .torrent.";
+	}
+
+	public String bittorrentGuardarConfiguracion() {
+		return "Lưu tracker và tùy chọn";
+	}
+
+	public String bittorrentGuardarTorrent() {
+		return "Lưu tệp .torrent";
+	}
+
+	public String bittorrentHilosHash() {
+		return "Luồng kiểm tra";
+	}
+
+	public String bittorrentImagenAlternativa() {
+		return "Holostars English";
+	}
+
+	public String bittorrentIniciarDescarga() {
+		return "Bắt đầu tải xuống";
+	}
+
+	public String bittorrentMagnet() {
+		return "Magnet";
+	}
+
+	public String bittorrentMagnetCopiado() {
+		return "Magnet đã được sao chép vào clipboard.";
+	}
+
+	public String bittorrentMagnetNoValido() {
+		return "Magnet không hợp lệ hoặc không chứa info-hash BitTorrent.";
+	}
+
+	public String bittorrentOrigen() {
+		return "Tệp hoặc thư mục nguồn";
+	}
+
+	public String bittorrentOrigenNoValido() {
+		return "Chọn một tệp hoặc thư mục nguồn hợp lệ.";
+	}
+
+	public String bittorrentOrigenVacio() {
+		return "Tệp hoặc thư mục đã chọn không chứa dữ liệu để chia sẻ.";
+	}
+
+	public String bittorrentPestanaAbrir() {
+		return "Mở .torrent hoặc magnet";
+	}
+
+	public String bittorrentPestanaConfiguracion() {
+		return "Quyền riêng tư và tracker";
+	}
+
+	public String bittorrentPestanaCrear() {
+		return "Tạo và chia sẻ";
+	}
+
+	public String bittorrentPestanaTransferencias() {
+		return "Truyền tải";
+	}
+
+	public String bittorrentPrivacidadAdvertencia() {
+		return "CẢNH BÁO QUYỀN RIÊNG TƯ: BitTorrent là mạng peer-to-peer chứ không phải tải lên riêng tư end-to-end. Địa chỉ IP công khai của bạn hiển thị cho các tracker đã cấu hình và các peer tham gia truyền tải. Tên tệp và thư mục, kích thước và cấu trúc của .torrent có thể hiển thị cho bất kỳ ai nhận được .torrent hoặc magnet. Phiên bản không có dependency này chỉ sử dụng các tracker bạn cấu hình; không kích hoạt DHT, PEX hoặc phát hiện cục bộ. Kiểm tra nội dung trước khi chia sẻ và xóa token truy cập, mật khẩu, cookie, khóa, session, dữ liệu cá nhân và log nhạy cảm. Chỉ chia sẻ magnet hoặc .torrent với bộ phận hỗ trợ được ủy quyền và giữ ứng dụng mở trong khi bạn là seeder duy nhất.";
+	}
+
+	public String bittorrentPrivacidadTitulo() {
+		return "Quyền riêng tư của BitTorrent";
+	}
+
+	public String bittorrentPuerto() {
+		return "Cổng BitTorrent";
+	}
+
+	public String bittorrentSeguirCompartiendo() {
+		return "Tiếp tục chia sẻ sau khi hoàn tất tải xuống";
+	}
+
+	public String bittorrentSobrescribirTorrent(String ruta) {
+		return "Tệp .torrent đã tồn tại:\n" + ruta + "\n\nGhi đè lên nó?";
+	}
+
+	public String bittorrentTipoDescarga() {
+		return "Tải xuống";
+	}
+
+	public String bittorrentTipoSemilla() {
+		return "Seed";
+	}
+
+	public String bittorrentTitulo() {
+		return "Client BitTorrent — Holostars EN";
+	}
+
+	public String bittorrentTorrentCreado(String ruta) {
+		return "Tệp .torrent đã được tạo và seeding đã bắt đầu:\n" + ruta
+				+ "\n\nGiữ CrashDetector mở cho đến khi bộ phận hỗ trợ hoàn tất tải xuống.";
+	}
+
+	public String bittorrentTorrentNoValido() {
+		return "Tệp .torrent không chứa bencode hợp lệ.";
+	}
+
+	public String bittorrentTorrentSinInfo() {
+		return "Tệp .torrent không chứa từ điển info cần thiết.";
+	}
+
+	public String bittorrentTrackerNoValido(String tracker) {
+		return "Tracker không hợp lệ: " + tracker + "\nChỉ chấp nhận URL http, https hoặc udp.";
+	}
+
+	public String bittorrentTrackers() {
+		return "Tracker, một dòng mỗi cái";
+	}
+
+	public String bittorrentTrackersConfig() {
+		return "Tracker BitTorrent tùy chỉnh";
+	}
+
+	public String bittorrentTransferenciaIniciada() {
+		return "Truyền tải BitTorrent đã được bắt đầu.";
+	}
+
+	public String bittorrentUsarDht() {
+		return "Sử dụng DHT và router công cộng để tìm peer";
+	}
+
+	public String bittorrentUsarLsd() {
+		return "Sử dụng phát hiện peer cục bộ trong mạng LAN";
+	}
+
+	public String bittorrentUsarPex() {
+		return "Cho phép trao đổi peer giữa các client";
+	}
+
+	public String bittorrentSinTrackersNiDht() {
+		return "Cấu hình ít nhất một tracker HTTP, HTTPS hoặc UDP trước khi tạo hoặc mở chia sẻ BitTorrent dựa trên magnet.";
+	}
+
+	public String bittorrentNombreTorrentPorDefecto() {
+		return "torrent";
+	}
+
+	public String bittorrentNombreArchivoPorDefecto() {
+		return "tệp";
+	}
+
 }

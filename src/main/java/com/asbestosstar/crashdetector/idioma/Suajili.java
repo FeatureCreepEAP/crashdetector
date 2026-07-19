@@ -12486,4 +12486,321 @@ public class Suajili implements Idioma {
 		return "Ghairi";
 	}
 
+	public String bittorrentActualizar() {
+		return "Sasisha";
+	}
+
+	public String bittorrentArchivoCompartirDebeSerZip() {
+		return "BitTorrent inasaidia tu faili ya ZIP iliyosafirishwa na kazi ya kushiriki mfano.";
+	}
+
+	public String bittorrentArchivoCompartirNoValido() {
+		return "Faili ambayo ilijaribu kushirikiwa haipo au haiwezi kusomwa.";
+	}
+
+	public String bittorrentArchivoTorrent() {
+		return "Faili ya .torrent";
+	}
+
+	public String bittorrentArchivoTorrentSalida() {
+		return "Hifadhi .torrent kama";
+	}
+
+	public String bittorrentColDescargado() {
+		return "Imepakuliwa";
+	}
+
+	public String bittorrentColEstado() {
+		return "Hali";
+	}
+
+	public String bittorrentColNombre() {
+		return "Jina";
+	}
+
+	public String bittorrentColPares() {
+		return "Wenzao";
+	}
+
+	public String bittorrentColProgreso() {
+		return "Maendeleo";
+	}
+
+	public String bittorrentColSubido() {
+		return "Imepakiwa";
+	}
+
+	public String bittorrentColTipo() {
+		return "Aina";
+	}
+
+	public String bittorrentColorAcento() {
+		return "Rangi ya msisitizo wa mteja wa BitTorrent";
+	}
+
+	public String bittorrentColorAcentoSecundario() {
+		return "Rangi ya msisitizo wa pili wa mteja wa BitTorrent";
+	}
+
+	public String bittorrentColorBorde() {
+		return "Mpaka wa mteja wa BitTorrent";
+	}
+
+	public String bittorrentColorFondo() {
+		return "Mandhari ya mteja wa BitTorrent";
+	}
+
+	public String bittorrentColorPanel() {
+		return "Paneli ya mteja wa BitTorrent";
+	}
+
+	public String bittorrentColorPanelClaro() {
+		return "Paneli nyepesi ya mteja wa BitTorrent";
+	}
+
+	public String bittorrentColorSeleccion() {
+		return "Uchaguzi wa mteja wa BitTorrent";
+	}
+
+	public String bittorrentColorTexto() {
+		return "Maandishi nyepesi ya mteja wa BitTorrent";
+	}
+
+	public String bittorrentColorTextoOscuro() {
+		return "Maandishi yekundu ya mteja wa BitTorrent";
+	}
+
+	public String bittorrentComentarioTorrent() {
+		return "Faili iliyoshirikiwa kwa ajili ya utambuzi na usaidizi wa kiufundi kupitia CrashDetector.";
+	}
+
+	public String bittorrentConfiguracionGuardada() {
+		return "Mipangilio ya BitTorrent imehifadhiwa. Mabadiliko ya bandari, DHT, PEX na ugunduzi wa ndani yatatumika kwa runtime mpya baada ya kuanzisha upya programu.";
+	}
+
+	public String bittorrentConfirmarPrivacidad() {
+		return "Naelewa onyo la faragha na naidhinisha uhamisho huu wa P2P.";
+	}
+
+	public String bittorrentCopiarMagnet() {
+		return "Nakili magnet";
+	}
+
+	public String bittorrentCrearCompartir() {
+		return "Unda .torrent na uanze kushiriki";
+	}
+
+	public String bittorrentDebeAceptarPrivacidad() {
+		return "Unapaswa kusoma na kukubali onyo la faragha kabla ya kuanza uhamisho wa BitTorrent.";
+	}
+
+	public String bittorrentDestino() {
+		return "Folda ya kupakua";
+	}
+
+	public String bittorrentDestinoNoValido() {
+		return "Chagua folda halali ya kupakua ambayo inaweza kuandikwa.";
+	}
+
+	public String bittorrentDetenerSeleccionada() {
+		return "Simamisha uhamisho uliochaguliwa";
+	}
+
+	public String bittorrentElegirDestino() {
+		return "Chagua folda ya kupakua";
+	}
+
+	public String bittorrentElegirOrigen() {
+		return "Chagua faili au folda ya kushiriki";
+	}
+
+	public String bittorrentElegirTorrent() {
+		return "Chagua faili ya .torrent";
+	}
+
+	public String bittorrentErrorCrearComparticion() {
+		return "Haikuweza kuunda au kuanza kushiriki kwa BitTorrent.";
+	}
+
+	public String bittorrentErrorDetalle(String detalle) {
+		return "Haikuweza kukamilisha operesheni ya BitTorrent:\n" + detalle;
+	}
+
+	public String bittorrentEstadoCompartiendo() {
+		return "Inashiriki";
+	}
+
+	public String bittorrentEstadoDescargando() {
+		return "Inapakua";
+	}
+
+	public String bittorrentEstadoDetenido() {
+		return "Imesimamishwa";
+	}
+
+	public String bittorrentEstadoError() {
+		return "Hitilafu";
+	}
+
+	public String bittorrentEstadoIniciando() {
+		return "Inaanza";
+	}
+
+	public String bittorrentEtiquetaTipo() {
+		return "BitTorrent";
+	}
+
+	public String bittorrentExaminar() {
+		return "Vinjari...";
+	}
+
+	public String bittorrentFaltaTorrentOMagnet() {
+		return "Bandika magnet au chagua faili ya .torrent.";
+	}
+
+	public String bittorrentGuardarConfiguracion() {
+		return "Hifadhi wafuatiliaji na chaguo";
+	}
+
+	public String bittorrentGuardarTorrent() {
+		return "Hifadhi faili ya .torrent";
+	}
+
+	public String bittorrentHilosHash() {
+		return "Thread za ukaguzi";
+	}
+
+	public String bittorrentImagenAlternativa() {
+		return "Holostars English";
+	}
+
+	public String bittorrentIniciarDescarga() {
+		return "Anza kupakua";
+	}
+
+	public String bittorrentMagnet() {
+		return "Magnet";
+	}
+
+	public String bittorrentMagnetCopiado() {
+		return "Magnet imenakiliwa kwenye ubao wa kunakili.";
+	}
+
+	public String bittorrentMagnetNoValido() {
+		return "Magnet si halali au haina info-hash ya BitTorrent.";
+	}
+
+	public String bittorrentOrigen() {
+		return "Faili au folda ya asili";
+	}
+
+	public String bittorrentOrigenNoValido() {
+		return "Chagua faili au folda halali ya asili.";
+	}
+
+	public String bittorrentOrigenVacio() {
+		return "Faili au folda iliyochaguliwa haina data ya kushiriki.";
+	}
+
+	public String bittorrentPestanaAbrir() {
+		return "Fungua .torrent au magnet";
+	}
+
+	public String bittorrentPestanaConfiguracion() {
+		return "Faragha na wafuatiliaji";
+	}
+
+	public String bittorrentPestanaCrear() {
+		return "Unda na shiriki";
+	}
+
+	public String bittorrentPestanaTransferencias() {
+		return "Uhamisho";
+	}
+
+	public String bittorrentPrivacidadAdvertencia() {
+		return "ONYO LA FARAGHA: BitTorrent ni mtandao wa peer-to-peer na sio upakiaji wa kibinafsi wa mwisho hadi mwisho. Anwani yako ya IP ya umma inaonekana kwa wafuatiliaji waliosanidiwa na wenzao wanaoshiriki katika uhamisho. Majina ya faili na folda, ukubwa na muundo wa .torrent yanaweza kuonekana kwa mtu yeyote anayepokea .torrent au magnet. Toleo hili lisilo na tegemezi hutumia tu wafuatiliaji unaosanidi; haiwasha DHT, PEX au ugunduzi wa ndani. Angalia maudhui kabla ya kushiriki na ufute tokeni za upatikanaji, nenosiri, vidokezo, funguo, vipindi, data za kibinafsi na rekodi nyeti. Shiriki magnet au .torrent na usaidizi ulioidhinishwa pekee na uweke programu ikiwa imefunguka wakati wewe ndiye seeder pekee.";
+	}
+
+	public String bittorrentPrivacidadTitulo() {
+		return "Faragha ya BitTorrent";
+	}
+
+	public String bittorrentPuerto() {
+		return "Bandari ya BitTorrent";
+	}
+
+	public String bittorrentSeguirCompartiendo() {
+		return "Endelea kushiriki baada ya kukamilisha upakuaji";
+	}
+
+	public String bittorrentSobrescribirTorrent(String ruta) {
+		return "Faili ya .torrent tayari ipo:\n" + ruta + "\n\nJe, uiandike tena?";
+	}
+
+	public String bittorrentTipoDescarga() {
+		return "Upakuaji";
+	}
+
+	public String bittorrentTipoSemilla() {
+		return "Mbegu";
+	}
+
+	public String bittorrentTitulo() {
+		return "Mteja wa BitTorrent — Holostars EN";
+	}
+
+	public String bittorrentTorrentCreado(String ruta) {
+		return "Faili ya .torrent iliundwa na seeding ilianza:\n" + ruta
+				+ "\n\nWeka CrashDetector ikiwa imefungua hadi usaidizi umalize kupakua.";
+	}
+
+	public String bittorrentTorrentNoValido() {
+		return "Faili ya .torrent haina bencode halali.";
+	}
+
+	public String bittorrentTorrentSinInfo() {
+		return "Faili ya .torrent haina kamusi ya info inayohitajika.";
+	}
+
+	public String bittorrentTrackerNoValido(String tracker) {
+		return "Mfuatiliaji si halali: " + tracker + "\nURL za http, https au udp pekee zinakubalika.";
+	}
+
+	public String bittorrentTrackers() {
+		return "Wafuatiliaji, mmoja kwa kila mstari";
+	}
+
+	public String bittorrentTrackersConfig() {
+		return "Wafuatiliaji wa BitTorrent wa kibinafsi";
+	}
+
+	public String bittorrentTransferenciaIniciada() {
+		return "Uhamisho wa BitTorrent umeanzishwa.";
+	}
+
+	public String bittorrentUsarDht() {
+		return "Tumia DHT na routa za umma kupata wenzao";
+	}
+
+	public String bittorrentUsarLsd() {
+		return "Tumia ugunduzi wa ndani wa wenzao katika mtandao wa LAN";
+	}
+
+	public String bittorrentUsarPex() {
+		return "Ruhusu ubadilishanaji wa wenzao kati ya wateja";
+	}
+
+	public String bittorrentSinTrackersNiDht() {
+		return "Sanidi angalau mfuatiliaji mmoja wa HTTP, HTTPS au UDP kabla ya kuunda au kufungua kushiriki kwa BitTorrent kulingana na magnet.";
+	}
+
+	public String bittorrentNombreTorrentPorDefecto() {
+		return "torrent";
+	}
+
+	public String bittorrentNombreArchivoPorDefecto() {
+		return "faili";
+	}
+
 }

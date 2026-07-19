@@ -12018,4 +12018,400 @@ public class Arabe implements Idioma {
 		return "إلغاء";
 	}
 
+	@Override
+	public String bittorrentActualizar() {
+		return "تحديث";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirDebeSerZip() {
+		return "يدعم BitTorrent فقط ملف ZIP الذي تم تصديره بواسطة وظيفة مشاركة المثيل.";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirNoValido() {
+		return "الملف الذي تمت محاولة مشاركته غير موجود أو لا يمكن قراءته.";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrent() {
+		return "ملف .torrent";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrentSalida() {
+		return "حفظ .torrent باسم";
+	}
+
+	@Override
+	public String bittorrentColDescargado() {
+		return "تم التنزيل";
+	}
+
+	@Override
+	public String bittorrentColEstado() {
+		return "الحالة";
+	}
+
+	@Override
+	public String bittorrentColNombre() {
+		return "الاسم";
+	}
+
+	@Override
+	public String bittorrentColPares() {
+		return "الأقران";
+	}
+
+	@Override
+	public String bittorrentColProgreso() {
+		return "التقدم";
+	}
+
+	@Override
+	public String bittorrentColSubido() {
+		return "تم الرفع";
+	}
+
+	@Override
+	public String bittorrentColTipo() {
+		return "النوع";
+	}
+
+	@Override
+	public String bittorrentColorAcento() {
+		return "لون تمييز عميل BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorAcentoSecundario() {
+		return "لون التمييز الثانوي لعميل BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorBorde() {
+		return "حدود عميل BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorFondo() {
+		return "خلفية عميل BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorPanel() {
+		return "لوحة عميل BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorPanelClaro() {
+		return "لوحة فاتحة لعميل BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorSeleccion() {
+		return "تحديد عميل BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorTexto() {
+		return "نص فاتح لعميل BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorTextoOscuro() {
+		return "نص داكن لعميل BitTorrent";
+	}
+
+	@Override
+	public String bittorrentComentarioTorrent() {
+		return "ملف مشترك لأغراض التشخيص والدعم الفني عبر CrashDetector.";
+	}
+
+	@Override
+	public String bittorrentConfiguracionGuardada() {
+		return "تم حفظ إعدادات BitTorrent. سيتم تطبيق تغييرات المنفذ و DHT و PEX والاكتشاف المحلي على جلسة عمل جديدة بعد إعادة تشغيل التطبيق.";
+	}
+
+	@Override
+	public String bittorrentConfirmarPrivacidad() {
+		return "أفهم تحذير الخصوصية وأوافق على هذه النقلية من نظير إلى نظير.";
+	}
+
+	@Override
+	public String bittorrentCopiarMagnet() {
+		return "نسخ الرابط المغناطيسي";
+	}
+
+	@Override
+	public String bittorrentCrearCompartir() {
+		return "إنشاء .torrent والبدء في المشاركة";
+	}
+
+	@Override
+	public String bittorrentDebeAceptarPrivacidad() {
+		return "يجب عليك قراءة وقبول تحذير الخصوصية قبل بدء نقل BitTorrent.";
+	}
+
+	@Override
+	public String bittorrentDestino() {
+		return "مجلد التنزيل";
+	}
+
+	@Override
+	public String bittorrentDestinoNoValido() {
+		return "حدد مجلد تنزيل صالح وقابل للكتابة.";
+	}
+
+	@Override
+	public String bittorrentDetenerSeleccionada() {
+		return "إيقاف النقل المحدد";
+	}
+
+	@Override
+	public String bittorrentElegirDestino() {
+		return "تحديد مجلد التنزيل";
+	}
+
+	@Override
+	public String bittorrentElegirOrigen() {
+		return "تحديد ملف أو مجلد للمشاركة";
+	}
+
+	@Override
+	public String bittorrentElegirTorrent() {
+		return "تحديد ملف .torrent";
+	}
+
+	@Override
+	public String bittorrentErrorCrearComparticion() {
+		return "تعذر إنشاء أو بدء مشاركة BitTorrent.";
+	}
+
+	@Override
+	public String bittorrentErrorDetalle(String detalle) {
+		return "تعذر إكمال عملية BitTorrent:\n" + detalle;
+	}
+
+	@Override
+	public String bittorrentEstadoCompartiendo() {
+		return "جاري المشاركة";
+	}
+
+	@Override
+	public String bittorrentEstadoDescargando() {
+		return "جاري التنزيل";
+	}
+
+	@Override
+	public String bittorrentEstadoDetenido() {
+		return "متوقف";
+	}
+
+	@Override
+	public String bittorrentEstadoError() {
+		return "خطأ";
+	}
+
+	@Override
+	public String bittorrentEstadoIniciando() {
+		return "جاري البدء";
+	}
+
+	@Override
+	public String bittorrentEtiquetaTipo() {
+		return "BitTorrent";
+	}
+
+	@Override
+	public String bittorrentExaminar() {
+		return "تصفح...";
+	}
+
+	@Override
+	public String bittorrentFaltaTorrentOMagnet() {
+		return "الصق رابطاً مغناطيسياً أو حدد ملف .torrent.";
+	}
+
+	@Override
+	public String bittorrentGuardarConfiguracion() {
+		return "حفظ المتعقبين والخيارات";
+	}
+
+	@Override
+	public String bittorrentGuardarTorrent() {
+		return "حفظ ملف .torrent";
+	}
+
+	@Override
+	public String bittorrentHilosHash() {
+		return "خيوط التحقق";
+	}
+
+	@Override
+	public String bittorrentImagenAlternativa() {
+		return "Holostars English";
+	}
+
+	@Override
+	public String bittorrentIniciarDescarga() {
+		return "بدء التنزيل";
+	}
+
+	@Override
+	public String bittorrentMagnet() {
+		return "الرابط المغناطيسي";
+	}
+
+	@Override
+	public String bittorrentMagnetCopiado() {
+		return "تم نسخ الرابط المغناطيسي إلى الحافظة.";
+	}
+
+	@Override
+	public String bittorrentMagnetNoValido() {
+		return "الرابط المغناطيسي غير صالح أو لا يحتوي على info-hash لـ BitTorrent.";
+	}
+
+	@Override
+	public String bittorrentOrigen() {
+		return "ملف أو مجلد المصدر";
+	}
+
+	@Override
+	public String bittorrentOrigenNoValido() {
+		return "حدد ملفاً أو مجلد مصدراً صالحاً.";
+	}
+
+	@Override
+	public String bittorrentOrigenVacio() {
+		return "الملف أو المجلد المحدد لا يحتوي على بيانات للمشاركة.";
+	}
+
+	@Override
+	public String bittorrentPestanaAbrir() {
+		return "فتح .torrent أو رابط مغناطيسي";
+	}
+
+	@Override
+	public String bittorrentPestanaConfiguracion() {
+		return "الخصوصية والمتعقبون";
+	}
+
+	@Override
+	public String bittorrentPestanaCrear() {
+		return "إنشاء ومشاركة";
+	}
+
+	@Override
+	public String bittorrentPestanaTransferencias() {
+		return "عمليات النقل";
+	}
+
+	@Override
+	public String bittorrentPrivacidadAdvertencia() {
+		return "تحذير الخصوصية: BitTorrent هي شبكة نظير إلى نظير وليست رفعاً خاصاً من طرف إلى طرف. عنوان IP العام الخاص بك مرئي للمتتبعين المكونين وللأقران المشاركين في النقل. أسماء الملفات والمجلدات والأحجام وهيكل .torrent قد تكون مرئية لأي شخص يتلقى ملف .torrent أو الرابط المغناطيسي. هذا الإصدار بدون تبعيات يستخدم فقط المتتبعين الذين تقوم بتكوينها؛ لا يقوم بتشغيل DHT أو PEX أو الاكتشاف المحلي. راجع المحتوى قبل المشاركة واحذف رموز الوصول وكلمات المرور وملفات تعريف الارتباط والمفاتيح والجلسات والبيانات الشخصية والسجلات الحساسة. شارك الرابط المغناطيسي أو .torrent فقط مع الدعم المصرح به واحتفظ بالتطبيق مفتوحاً طالما أنك الباذر الوحيد.";
+	}
+
+	@Override
+	public String bittorrentPrivacidadTitulo() {
+		return "خصوصية BitTorrent";
+	}
+
+	@Override
+	public String bittorrentPuerto() {
+		return "منفذ BitTorrent";
+	}
+
+	@Override
+	public String bittorrentSeguirCompartiendo() {
+		return "استمر في المشاركة بعد اكتمال التنزيل";
+	}
+
+	@Override
+	public String bittorrentSobrescribirTorrent(String ruta) {
+		return "ملف .torrent موجود بالفعل:\n" + ruta + "\n\nهل تريد استبداله؟";
+	}
+
+	@Override
+	public String bittorrentTipoDescarga() {
+		return "تنزيل";
+	}
+
+	@Override
+	public String bittorrentTipoSemilla() {
+		return "بذر";
+	}
+
+	@Override
+	public String bittorrentTitulo() {
+		return "عميل BitTorrent — Holostars EN";
+	}
+
+	@Override
+	public String bittorrentTorrentCreado(String ruta) {
+		return "تم إنشاء ملف .torrent وبدأ البذر:\n" + ruta
+				+ "\n\nاحتفظ بـ CrashDetector مفتوحاً حتى ينتهي الدعم من التنزيل.";
+	}
+
+	@Override
+	public String bittorrentTorrentNoValido() {
+		return "ملف .torrent لا يحتوي على bencode صالح.";
+	}
+
+	@Override
+	public String bittorrentTorrentSinInfo() {
+		return "ملف .torrent لا يحتوي على قاموس info المطلوب.";
+	}
+
+	@Override
+	public String bittorrentTrackerNoValido(String tracker) {
+		return "متعقب غير صالح: " + tracker + "\nتقبل فقط عناوين URL من نوع http أو https أو udp.";
+	}
+
+	@Override
+	public String bittorrentTrackers() {
+		return "المتعقبون، واحد في كل سطر";
+	}
+
+	@Override
+	public String bittorrentTrackersConfig() {
+		return "متعقبو BitTorrent المخصصون";
+	}
+
+	@Override
+	public String bittorrentTransferenciaIniciada() {
+		return "تم بدء نقل BitTorrent.";
+	}
+
+	@Override
+	public String bittorrentUsarDht() {
+		return "استخدام DHT وأجهزة التوجيه العامة للعثور على الأقران";
+	}
+
+	@Override
+	public String bittorrentUsarLsd() {
+		return "استخدام اكتشاف الأقران المحلي في شبكة LAN";
+	}
+
+	@Override
+	public String bittorrentUsarPex() {
+		return "السماح بتبادل الأقران بين العملاء";
+	}
+
+	@Override
+	public String bittorrentSinTrackersNiDht() {
+		return "قم بتكوين متتبع HTTP أو HTTPS أو UDP واحد على الأقل قبل إنشاء أو فتح مشاركة BitTorrent تعتمد على الرابط المغناطيسي.";
+	}
+
+	@Override
+	public String bittorrentNombreTorrentPorDefecto() {
+		return "torrent";
+	}
+
+	@Override
+	public String bittorrentNombreArchivoPorDefecto() {
+		return "ملف";
+	}
+
 }

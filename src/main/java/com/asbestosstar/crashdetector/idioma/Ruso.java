@@ -12043,4 +12043,321 @@ public class Ruso implements Idioma {
 		return "Отмена";
 	}
 
+	public String bittorrentActualizar() {
+		return "Обновить";
+	}
+
+	public String bittorrentArchivoCompartirDebeSerZip() {
+		return "BitTorrent поддерживает только ZIP-файл, экспортированный функцией обмена экземпляром.";
+	}
+
+	public String bittorrentArchivoCompartirNoValido() {
+		return "Файл, который пытались поделиться, не существует или не может быть прочитан.";
+	}
+
+	public String bittorrentArchivoTorrent() {
+		return "Файл .torrent";
+	}
+
+	public String bittorrentArchivoTorrentSalida() {
+		return "Сохранить .torrent как";
+	}
+
+	public String bittorrentColDescargado() {
+		return "Скачано";
+	}
+
+	public String bittorrentColEstado() {
+		return "Статус";
+	}
+
+	public String bittorrentColNombre() {
+		return "Имя";
+	}
+
+	public String bittorrentColPares() {
+		return "Пиры";
+	}
+
+	public String bittorrentColProgreso() {
+		return "Прогресс";
+	}
+
+	public String bittorrentColSubido() {
+		return "Загружено";
+	}
+
+	public String bittorrentColTipo() {
+		return "Тип";
+	}
+
+	public String bittorrentColorAcento() {
+		return "Акцент клиента BitTorrent";
+	}
+
+	public String bittorrentColorAcentoSecundario() {
+		return "Вторичный акцент клиента BitTorrent";
+	}
+
+	public String bittorrentColorBorde() {
+		return "Граница клиента BitTorrent";
+	}
+
+	public String bittorrentColorFondo() {
+		return "Фон клиента BitTorrent";
+	}
+
+	public String bittorrentColorPanel() {
+		return "Панель клиента BitTorrent";
+	}
+
+	public String bittorrentColorPanelClaro() {
+		return "Светлая панель клиента BitTorrent";
+	}
+
+	public String bittorrentColorSeleccion() {
+		return "Выделение клиента BitTorrent";
+	}
+
+	public String bittorrentColorTexto() {
+		return "Светлый текст клиента BitTorrent";
+	}
+
+	public String bittorrentColorTextoOscuro() {
+		return "Темный текст клиента BitTorrent";
+	}
+
+	public String bittorrentComentarioTorrent() {
+		return "Файл, предоставленный для диагностики и технической поддержки через CrashDetector.";
+	}
+
+	public String bittorrentConfiguracionGuardada() {
+		return "Конфигурация BitTorrent сохранена. Изменения порта, DHT, PEX и локального обнаружения будут применены к новому runtime после перезапуска приложения.";
+	}
+
+	public String bittorrentConfirmarPrivacidad() {
+		return "Я понимаю предупреждение о конфиденциальности и разрешаю эту P2P-передачу.";
+	}
+
+	public String bittorrentCopiarMagnet() {
+		return "Копировать magnet";
+	}
+
+	public String bittorrentCrearCompartir() {
+		return "Создать .torrent и начать обмен";
+	}
+
+	public String bittorrentDebeAceptarPrivacidad() {
+		return "Вы должны прочитать и принять предупреждение о конфиденциальности перед началом передачи BitTorrent.";
+	}
+
+	public String bittorrentDestino() {
+		return "Папка загрузки";
+	}
+
+	public String bittorrentDestinoNoValido() {
+		return "Выберите действительную папку для загрузки с правами на запись.";
+	}
+
+	public String bittorrentDetenerSeleccionada() {
+		return "Остановить выбранную передачу";
+	}
+
+	public String bittorrentElegirDestino() {
+		return "Выбрать папку загрузки";
+	}
+
+	public String bittorrentElegirOrigen() {
+		return "Выбрать файл или папку для обмена";
+	}
+
+	public String bittorrentElegirTorrent() {
+		return "Выбрать файл .torrent";
+	}
+
+	public String bittorrentErrorCrearComparticion() {
+		return "Не удалось создать или начать обмен BitTorrent.";
+	}
+
+	public String bittorrentErrorDetalle(String detalle) {
+		return "Не удалось завершить операцию BitTorrent:\n" + detalle;
+	}
+
+	public String bittorrentEstadoCompartiendo() {
+		return "Раздача";
+	}
+
+	public String bittorrentEstadoDescargando() {
+		return "Загрузка";
+	}
+
+	public String bittorrentEstadoDetenido() {
+		return "Остановлено";
+	}
+
+	public String bittorrentEstadoError() {
+		return "Ошибка";
+	}
+
+	public String bittorrentEstadoIniciando() {
+		return "Запуск";
+	}
+
+	public String bittorrentEtiquetaTipo() {
+		return "BitTorrent";
+	}
+
+	public String bittorrentExaminar() {
+		return "Обзор...";
+	}
+
+	public String bittorrentFaltaTorrentOMagnet() {
+		return "Вставьте magnet или выберите файл .torrent.";
+	}
+
+	public String bittorrentGuardarConfiguracion() {
+		return "Сохранить трекеры и настройки";
+	}
+
+	public String bittorrentGuardarTorrent() {
+		return "Сохранить файл .torrent";
+	}
+
+	public String bittorrentHilosHash() {
+		return "Потоки проверки";
+	}
+
+	public String bittorrentImagenAlternativa() {
+		return "Holostars English";
+	}
+
+	public String bittorrentIniciarDescarga() {
+		return "Начать загрузку";
+	}
+
+	public String bittorrentMagnet() {
+		return "Magnet";
+	}
+
+	public String bittorrentMagnetCopiado() {
+		return "Magnet скопирован в буфер обмена.";
+	}
+
+	public String bittorrentMagnetNoValido() {
+		return "Magnet недействителен или не содержит info-hash BitTorrent.";
+	}
+
+	public String bittorrentOrigen() {
+		return "Исходный файл или папка";
+	}
+
+	public String bittorrentOrigenNoValido() {
+		return "Выберите действительный исходный файл или папку.";
+	}
+
+	public String bittorrentOrigenVacio() {
+		return "Выбранный файл или папка не содержат данных для обмена.";
+	}
+
+	public String bittorrentPestanaAbrir() {
+		return "Открыть .torrent или magnet";
+	}
+
+	public String bittorrentPestanaConfiguracion() {
+		return "Конфиденциальность и трекеры";
+	}
+
+	public String bittorrentPestanaCrear() {
+		return "Создать и поделиться";
+	}
+
+	public String bittorrentPestanaTransferencias() {
+		return "Передачи";
+	}
+
+	public String bittorrentPrivacidadAdvertencia() {
+		return "ПРЕДУПРЕЖДЕНИЕ О КОНФИДЕНЦИАЛЬНОСТИ: BitTorrent — это одноранговая сеть, а не частная загрузка типа end-to-end. Ваш публичный IP-адрес виден настроенным трекерам и пирам, участвующим в передаче. Имена файлов и папок, размеры и структура .torrent могут быть видны любому, кто получит .torrent или magnet. Эта версия без зависимостей использует только те трекеры, которые вы настроите; она не активирует DHT, PEX или локальное обнаружение. Проверьте содержимое перед обменом и удалите токены доступа, пароли, куки, ключи, сессии, личные данные и чувствительные логи. Делитесь magnet или .torrent только с авторизованной поддержкой и держите приложение открытым, пока вы являетесь единственным сидером.";
+	}
+
+	public String bittorrentPrivacidadTitulo() {
+		return "Конфиденциальность BitTorrent";
+	}
+
+	public String bittorrentPuerto() {
+		return "Порт BitTorrent";
+	}
+
+	public String bittorrentSeguirCompartiendo() {
+		return "Продолжать раздачу после завершения загрузки";
+	}
+
+	public String bittorrentSobrescribirTorrent(String ruta) {
+		return "Файл .torrent уже существует:\n" + ruta + "\n\nПерезаписать его?";
+	}
+
+	public String bittorrentTipoDescarga() {
+		return "Загрузка";
+	}
+
+	public String bittorrentTipoSemilla() {
+		return "Сид";
+	}
+
+	public String bittorrentTitulo() {
+		return "Клиент BitTorrent — Holostars EN";
+	}
+
+	public String bittorrentTorrentCreado(String ruta) {
+		return "Файл .torrent создан, и сидирование началось:\n" + ruta
+				+ "\n\nДержите CrashDetector открытым, пока поддержка не завершит загрузку.";
+	}
+
+	public String bittorrentTorrentNoValido() {
+		return "Файл .torrent не содержит корректного bencode.";
+	}
+
+	public String bittorrentTorrentSinInfo() {
+		return "Файл .torrent не содержит необходимого словаря info.";
+	}
+
+	public String bittorrentTrackerNoValido(String tracker) {
+		return "Недействительный трекер: " + tracker + "\nПринимаются только URL http, https или udp.";
+	}
+
+	public String bittorrentTrackers() {
+		return "Трекеры, по одному в строке";
+	}
+
+	public String bittorrentTrackersConfig() {
+		return "Пользовательские трекеры BitTorrent";
+	}
+
+	public String bittorrentTransferenciaIniciada() {
+		return "Передача BitTorrent начата.";
+	}
+
+	public String bittorrentUsarDht() {
+		return "Использовать DHT и публичные роутеры для поиска пиров";
+	}
+
+	public String bittorrentUsarLsd() {
+		return "Использовать локальное обнаружение пиров в сети LAN";
+	}
+
+	public String bittorrentUsarPex() {
+		return "Разрешить обмен пирами между клиентами";
+	}
+
+	public String bittorrentSinTrackersNiDht() {
+		return "Настройте хотя бы один трекер HTTP, HTTPS или UDP перед созданием или открытием обмена BitTorrent на основе magnet.";
+	}
+
+	public String bittorrentNombreTorrentPorDefecto() {
+		return "torrent";
+	}
+
+	public String bittorrentNombreArchivoPorDefecto() {
+		return "файл";
+	}
+
 }

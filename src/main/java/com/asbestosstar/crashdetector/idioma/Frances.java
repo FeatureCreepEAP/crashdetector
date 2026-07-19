@@ -12688,4 +12688,400 @@ public class Frances implements Idioma {
 		return "Annuler";
 	}
 
+	@Override
+	public String bittorrentActualizar() {
+		return "Mettre à jour";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirDebeSerZip() {
+		return "BitTorrent ne prend en charge que le fichier ZIP exporté par la fonction de partage d'instance.";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirNoValido() {
+		return "Le fichier tenté d'être partagé n'existe pas ou ne peut pas être lu.";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrent() {
+		return "Fichier .torrent";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrentSalida() {
+		return "Enregistrer .torrent sous";
+	}
+
+	@Override
+	public String bittorrentColDescargado() {
+		return "Téléchargé";
+	}
+
+	@Override
+	public String bittorrentColEstado() {
+		return "État";
+	}
+
+	@Override
+	public String bittorrentColNombre() {
+		return "Nom";
+	}
+
+	@Override
+	public String bittorrentColPares() {
+		return "Pairs";
+	}
+
+	@Override
+	public String bittorrentColProgreso() {
+		return "Progression";
+	}
+
+	@Override
+	public String bittorrentColSubido() {
+		return "Envoyé";
+	}
+
+	@Override
+	public String bittorrentColTipo() {
+		return "Type";
+	}
+
+	@Override
+	public String bittorrentColorAcento() {
+		return "Accent du client BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorAcentoSecundario() {
+		return "Accent secondaire du client BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorBorde() {
+		return "Bordure du client BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorFondo() {
+		return "Fond du client BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorPanel() {
+		return "Panneau du client BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorPanelClaro() {
+		return "Panneau clair du client BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorSeleccion() {
+		return "Sélection du client BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorTexto() {
+		return "Texte clair du client BitTorrent";
+	}
+
+	@Override
+	public String bittorrentColorTextoOscuro() {
+		return "Texte sombre du client BitTorrent";
+	}
+
+	@Override
+	public String bittorrentComentarioTorrent() {
+		return "Fichier partagé pour le diagnostic et le support technique via CrashDetector.";
+	}
+
+	@Override
+	public String bittorrentConfiguracionGuardada() {
+		return "La configuration BitTorrent a été enregistrée. Les changements de port, DHT, PEX et découverte locale s'appliqueront à un nouveau runtime après le redémarrage de l'application.";
+	}
+
+	@Override
+	public String bittorrentConfirmarPrivacidad() {
+		return "Je comprends l'avertissement de confidentialité et j'autorise ce transfert P2P.";
+	}
+
+	@Override
+	public String bittorrentCopiarMagnet() {
+		return "Copier le magnet";
+	}
+
+	@Override
+	public String bittorrentCrearCompartir() {
+		return "Créer .torrent et commencer le partage";
+	}
+
+	@Override
+	public String bittorrentDebeAceptarPrivacidad() {
+		return "Vous devez lire et accepter l'avertissement de confidentialité avant de démarrer un transfert BitTorrent.";
+	}
+
+	@Override
+	public String bittorrentDestino() {
+		return "Dossier de téléchargement";
+	}
+
+	@Override
+	public String bittorrentDestinoNoValido() {
+		return "Sélectionnez un dossier de téléchargement valide et accessible en écriture.";
+	}
+
+	@Override
+	public String bittorrentDetenerSeleccionada() {
+		return "Arrêter le transfert sélectionné";
+	}
+
+	@Override
+	public String bittorrentElegirDestino() {
+		return "Sélectionner le dossier de téléchargement";
+	}
+
+	@Override
+	public String bittorrentElegirOrigen() {
+		return "Sélectionner le fichier ou le dossier à partager";
+	}
+
+	@Override
+	public String bittorrentElegirTorrent() {
+		return "Sélectionner le fichier .torrent";
+	}
+
+	@Override
+	public String bittorrentErrorCrearComparticion() {
+		return "Impossible de créer ou de démarrer le partage BitTorrent.";
+	}
+
+	@Override
+	public String bittorrentErrorDetalle(String detalle) {
+		return "Impossible de terminer l'opération BitTorrent :\n" + detalle;
+	}
+
+	@Override
+	public String bittorrentEstadoCompartiendo() {
+		return "Partage en cours";
+	}
+
+	@Override
+	public String bittorrentEstadoDescargando() {
+		return "Téléchargement en cours";
+	}
+
+	@Override
+	public String bittorrentEstadoDetenido() {
+		return "Arrêté";
+	}
+
+	@Override
+	public String bittorrentEstadoError() {
+		return "Erreur";
+	}
+
+	@Override
+	public String bittorrentEstadoIniciando() {
+		return "Démarrage";
+	}
+
+	@Override
+	public String bittorrentEtiquetaTipo() {
+		return "BitTorrent";
+	}
+
+	@Override
+	public String bittorrentExaminar() {
+		return "Parcourir...";
+	}
+
+	@Override
+	public String bittorrentFaltaTorrentOMagnet() {
+		return "Collez un magnet ou sélectionnez un fichier .torrent.";
+	}
+
+	@Override
+	public String bittorrentGuardarConfiguracion() {
+		return "Enregistrer les trackers et les options";
+	}
+
+	@Override
+	public String bittorrentGuardarTorrent() {
+		return "Enregistrer le fichier .torrent";
+	}
+
+	@Override
+	public String bittorrentHilosHash() {
+		return "Threads de vérification";
+	}
+
+	@Override
+	public String bittorrentImagenAlternativa() {
+		return "Holostars English";
+	}
+
+	@Override
+	public String bittorrentIniciarDescarga() {
+		return "Démarrer le téléchargement";
+	}
+
+	@Override
+	public String bittorrentMagnet() {
+		return "Magnet";
+	}
+
+	@Override
+	public String bittorrentMagnetCopiado() {
+		return "Le magnet a été copié dans le presse-papiers.";
+	}
+
+	@Override
+	public String bittorrentMagnetNoValido() {
+		return "Le magnet n'est pas valide ou ne contient pas de info-hash BitTorrent.";
+	}
+
+	@Override
+	public String bittorrentOrigen() {
+		return "Fichier ou dossier source";
+	}
+
+	@Override
+	public String bittorrentOrigenNoValido() {
+		return "Sélectionnez un fichier ou un dossier source valide.";
+	}
+
+	@Override
+	public String bittorrentOrigenVacio() {
+		return "Le fichier ou le dossier sélectionné ne contient aucune donnée à partager.";
+	}
+
+	@Override
+	public String bittorrentPestanaAbrir() {
+		return "Ouvrir .torrent ou magnet";
+	}
+
+	@Override
+	public String bittorrentPestanaConfiguracion() {
+		return "Confidentialité et trackers";
+	}
+
+	@Override
+	public String bittorrentPestanaCrear() {
+		return "Créer et partager";
+	}
+
+	@Override
+	public String bittorrentPestanaTransferencias() {
+		return "Transferts";
+	}
+
+	@Override
+	public String bittorrentPrivacidadAdvertencia() {
+		return "AVERTISSEMENT DE CONFIDENTIALITÉ : BitTorrent est un réseau pair à pair et non un envoi privé de bout en bout. Votre adresse IP publique est visible pour les trackers configurés et pour les pairs participant au transfert. Les noms de fichiers et de dossiers, les tailles et la structure du .torrent peuvent être visibles pour toute personne recevant le .torrent ou le magnet. Cette version sans dépendances utilise uniquement les trackers que vous configurez ; elle n'active pas DHT, PEX ni la découverte locale. Vérifiez le contenu avant de partager et supprimez les jetons d'accès, mots de passe, cookies, clés, sessions, données personnelles et journaux sensibles. Partagez le magnet ou .torrent uniquement avec le support autorisé et gardez l'application ouverte tant que vous êtes le seul seedeur.";
+	}
+
+	@Override
+	public String bittorrentPrivacidadTitulo() {
+		return "Confidentialité de BitTorrent";
+	}
+
+	@Override
+	public String bittorrentPuerto() {
+		return "Port BitTorrent";
+	}
+
+	@Override
+	public String bittorrentSeguirCompartiendo() {
+		return "Continuer le partage après avoir terminé le téléchargement";
+	}
+
+	@Override
+	public String bittorrentSobrescribirTorrent(String ruta) {
+		return "Le fichier .torrent existe déjà :\n" + ruta + "\n\nLe remplacer ?";
+	}
+
+	@Override
+	public String bittorrentTipoDescarga() {
+		return "Téléchargement";
+	}
+
+	@Override
+	public String bittorrentTipoSemilla() {
+		return "Seed";
+	}
+
+	@Override
+	public String bittorrentTitulo() {
+		return "Client BitTorrent — Holostars EN";
+	}
+
+	@Override
+	public String bittorrentTorrentCreado(String ruta) {
+		return "Le fichier .torrent a été créé et le seeding a commencé :\n" + ruta
+				+ "\n\nGardez CrashDetector ouvert jusqu'à ce que le support ait terminé le téléchargement.";
+	}
+
+	@Override
+	public String bittorrentTorrentNoValido() {
+		return "Le fichier .torrent ne contient pas de bencode valide.";
+	}
+
+	@Override
+	public String bittorrentTorrentSinInfo() {
+		return "Le fichier .torrent ne contient pas le dictionnaire info requis.";
+	}
+
+	@Override
+	public String bittorrentTrackerNoValido(String tracker) {
+		return "Tracker invalide : " + tracker + "\nSeules les URL http, https ou udp sont acceptées.";
+	}
+
+	@Override
+	public String bittorrentTrackers() {
+		return "Trackers, un par ligne";
+	}
+
+	@Override
+	public String bittorrentTrackersConfig() {
+		return "Trackers BitTorrent personnalisés";
+	}
+
+	@Override
+	public String bittorrentTransferenciaIniciada() {
+		return "Le transfert BitTorrent a été initié.";
+	}
+
+	@Override
+	public String bittorrentUsarDht() {
+		return "Utiliser DHT et les routeurs publics pour trouver des pairs";
+	}
+
+	@Override
+	public String bittorrentUsarLsd() {
+		return "Utiliser la découverte locale de pairs sur le réseau LAN";
+	}
+
+	@Override
+	public String bittorrentUsarPex() {
+		return "Autoriser l'échange de pairs entre clients";
+	}
+
+	@Override
+	public String bittorrentSinTrackersNiDht() {
+		return "Configurez au moins un tracker HTTP, HTTPS ou UDP avant de créer ou d'ouvrir un partage BitTorrent basé sur un magnet.";
+	}
+
+	@Override
+	public String bittorrentNombreTorrentPorDefecto() {
+		return "torrent";
+	}
+
+	@Override
+	public String bittorrentNombreArchivoPorDefecto() {
+		return "fichier";
+	}
+
 }

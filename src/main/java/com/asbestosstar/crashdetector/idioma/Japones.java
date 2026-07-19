@@ -11732,4 +11732,399 @@ public class Japones implements Idioma {
 		return "キャンセル";
 	}
 
+	@Override
+	public String bittorrentActualizar() {
+		return "更新";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirDebeSerZip() {
+		return "BitTorrent は、インスタンス共有機能によってエクスポートされた ZIP ファイルのみをサポートします。";
+	}
+
+	@Override
+	public String bittorrentArchivoCompartirNoValido() {
+		return "共有しようとしたファイルが存在しないか、読み取れません。";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrent() {
+		return ".torrent ファイル";
+	}
+
+	@Override
+	public String bittorrentArchivoTorrentSalida() {
+		return ".torrent の保存名";
+	}
+
+	@Override
+	public String bittorrentColDescargado() {
+		return "ダウンロード済み";
+	}
+
+	@Override
+	public String bittorrentColEstado() {
+		return "状態";
+	}
+
+	@Override
+	public String bittorrentColNombre() {
+		return "名前";
+	}
+
+	@Override
+	public String bittorrentColPares() {
+		return "ピア";
+	}
+
+	@Override
+	public String bittorrentColProgreso() {
+		return "進捗";
+	}
+
+	@Override
+	public String bittorrentColSubido() {
+		return "アップロード済み";
+	}
+
+	@Override
+	public String bittorrentColTipo() {
+		return "タイプ";
+	}
+
+	@Override
+	public String bittorrentColorAcento() {
+		return "BitTorrent クライアントのアクセント";
+	}
+
+	@Override
+	public String bittorrentColorAcentoSecundario() {
+		return "BitTorrent クライアントのサブアクセント";
+	}
+
+	@Override
+	public String bittorrentColorBorde() {
+		return "BitTorrent クライアントの境界線";
+	}
+
+	@Override
+	public String bittorrentColorFondo() {
+		return "BitTorrent クライアントの背景";
+	}
+
+	@Override
+	public String bittorrentColorPanel() {
+		return "BitTorrent クライアントのパネル";
+	}
+
+	@Override
+	public String bittorrentColorPanelClaro() {
+		return "BitTorrent クライアントの明るいパネル";
+	}
+
+	@Override
+	public String bittorrentColorSeleccion() {
+		return "BitTorrent クライアントの選択";
+	}
+
+	@Override
+	public String bittorrentColorTexto() {
+		return "BitTorrent クライアントの明るいテキスト";
+	}
+
+	@Override
+	public String bittorrentColorTextoOscuro() {
+		return "BitTorrent クライアントの暗いテキスト";
+	}
+
+	@Override
+	public String bittorrentComentarioTorrent() {
+		return "CrashDetector を介した診断および技術サポートのために共有されたファイル。";
+	}
+
+	@Override
+	public String bittorrentConfiguracionGuardada() {
+		return "BitTorrent 設定が保存されました。ポート、DHT、PEX、およびローカル検出の変更は、アプリケーションの再起動後に新しいランタイムに適用されます。";
+	}
+
+	@Override
+	public String bittorrentConfirmarPrivacidad() {
+		return "プライバシー警告を理解し、この P2P 転送を承認します。";
+	}
+
+	@Override
+	public String bittorrentCopiarMagnet() {
+		return "マグネットリンクをコピー";
+	}
+
+	@Override
+	public String bittorrentCrearCompartir() {
+		return ".torrent を作成して共有を開始";
+	}
+
+	@Override
+	public String bittorrentDebeAceptarPrivacidad() {
+		return "BitTorrent 転送を開始する前に、プライバシー警告を読んで承認する必要があります。";
+	}
+
+	@Override
+	public String bittorrentDestino() {
+		return "ダウンロードフォルダ";
+	}
+
+	@Override
+	public String bittorrentDestinoNoValido() {
+		return "有効で書き込み可能なダウンロードフォルダを選択してください。";
+	}
+
+	@Override
+	public String bittorrentDetenerSeleccionada() {
+		return "選択した転送を停止";
+	}
+
+	@Override
+	public String bittorrentElegirDestino() {
+		return "ダウンロードフォルダを選択";
+	}
+
+	@Override
+	public String bittorrentElegirOrigen() {
+		return "共有するファイルまたはフォルダを選択";
+	}
+
+	@Override
+	public String bittorrentElegirTorrent() {
+		return ".torrent ファイルを選択";
+	}
+
+	@Override
+	public String bittorrentErrorCrearComparticion() {
+		return "BitTorrent 共有を作成または開始できませんでした。";
+	}
+
+	@Override
+	public String bittorrentErrorDetalle(String detalle) {
+		return "BitTorrent 操作を完了できませんでした:\n" + detalle;
+	}
+
+	@Override
+	public String bittorrentEstadoCompartiendo() {
+		return "共有中";
+	}
+
+	@Override
+	public String bittorrentEstadoDescargando() {
+		return "ダウンロード中";
+	}
+
+	@Override
+	public String bittorrentEstadoDetenido() {
+		return "停止";
+	}
+
+	@Override
+	public String bittorrentEstadoError() {
+		return "エラー";
+	}
+
+	@Override
+	public String bittorrentEstadoIniciando() {
+		return "開始中";
+	}
+
+	@Override
+	public String bittorrentEtiquetaTipo() {
+		return "BitTorrent";
+	}
+
+	@Override
+	public String bittorrentExaminar() {
+		return "参照...";
+	}
+
+	@Override
+	public String bittorrentFaltaTorrentOMagnet() {
+		return "マグネットリンクを貼り付けるか、.torrent ファイルを選択してください。";
+	}
+
+	@Override
+	public String bittorrentGuardarConfiguracion() {
+		return "トラッカーとオプションを保存";
+	}
+
+	@Override
+	public String bittorrentGuardarTorrent() {
+		return ".torrent ファイルを保存";
+	}
+
+	@Override
+	public String bittorrentHilosHash() {
+		return "検証スレッド";
+	}
+
+	@Override
+	public String bittorrentImagenAlternativa() {
+		return "Holostars English";
+	}
+
+	@Override
+	public String bittorrentIniciarDescarga() {
+		return "ダウンロードを開始";
+	}
+
+	@Override
+	public String bittorrentMagnet() {
+		return "マグネットリンク";
+	}
+
+	@Override
+	public String bittorrentMagnetCopiado() {
+		return "マグネットリンクがクリップボードにコピーされました。";
+	}
+
+	@Override
+	public String bittorrentMagnetNoValido() {
+		return "マグネットリンクが無効か、BitTorrent info-hash を含んでいません。";
+	}
+
+	@Override
+	public String bittorrentOrigen() {
+		return "ソースファイルまたはフォルダ";
+	}
+
+	@Override
+	public String bittorrentOrigenNoValido() {
+		return "有効なソースファイルまたはフォルダを選択してください。";
+	}
+
+	@Override
+	public String bittorrentOrigenVacio() {
+		return "選択したファイルまたはフォルダには共有するデータが含まれていません。";
+	}
+
+	@Override
+	public String bittorrentPestanaAbrir() {
+		return ".torrent またはマグネットリンクを開く";
+	}
+
+	@Override
+	public String bittorrentPestanaConfiguracion() {
+		return "プライバシーとトラッカー";
+	}
+
+	@Override
+	public String bittorrentPestanaCrear() {
+		return "作成と共有";
+	}
+
+	@Override
+	public String bittorrentPestanaTransferencias() {
+		return "転送";
+	}
+
+	@Override
+	public String bittorrentPrivacidadAdvertencia() {
+		return "プライバシー警告: BitTorrent はピアツーピアネットワークであり、エンドツーエンドのプライベートアップロードではありません。あなたの公開 IP アドレスは、構成されたトラッカーと転送に参加しているピアに表示されます。ファイル名、フォルダ名、サイズ、および .torrent 構造は、.torrent またはマグネットリンクを受け取る任何人に表示される可能性があります。この依存関係のないバージョンは、あなたが構成したトラッカーのみを使用します。DHT、PEX、またはローカル検出を有効にしません。共有する前にコンテンツを確認し、アクセストークン、パスワード、クッキー、キー、セッション、個人データ、および機密ログを削除してください。マグネットリンクまたは .torrent は認可されたサポートとのみ共有し、あなたが唯一のシーダーである間、アプリケーションを開いたままにしてください。";
+	}
+
+	@Override
+	public String bittorrentPrivacidadTitulo() {
+		return "BitTorrent プライバシー";
+	}
+
+	@Override
+	public String bittorrentPuerto() {
+		return "BitTorrent ポート";
+	}
+
+	@Override
+	public String bittorrentSeguirCompartiendo() {
+		return "ダウンロード完了後も共有を続ける";
+	}
+
+	@Override
+	public String bittorrentSobrescribirTorrent(String ruta) {
+		return ".torrent ファイルはすでに存在します:\n" + ruta + "\n\n上書きしますか？";
+	}
+
+	@Override
+	public String bittorrentTipoDescarga() {
+		return "ダウンロード";
+	}
+
+	@Override
+	public String bittorrentTipoSemilla() {
+		return "シード";
+	}
+
+	@Override
+	public String bittorrentTitulo() {
+		return "BitTorrent クライアント — Holostars EN";
+	}
+
+	@Override
+	public String bittorrentTorrentCreado(String ruta) {
+		return ".torrent ファイルが作成され、シードが開始されました:\n" + ruta + "\n\nサポートがダウンロードを完了するまで CrashDetector を開いたままにしてください。";
+	}
+
+	@Override
+	public String bittorrentTorrentNoValido() {
+		return ".torrent ファイルに有効な bencode が含まれていません。";
+	}
+
+	@Override
+	public String bittorrentTorrentSinInfo() {
+		return ".torrent ファイルに必要な info ディクショナリが含まれていません。";
+	}
+
+	@Override
+	public String bittorrentTrackerNoValido(String tracker) {
+		return "無効なトラッカー: " + tracker + "\nhttp、https、または udp URL のみが受け入れられます。";
+	}
+
+	@Override
+	public String bittorrentTrackers() {
+		return "トラッカー（1行に1つ）";
+	}
+
+	@Override
+	public String bittorrentTrackersConfig() {
+		return "カスタム BitTorrent トラッカー";
+	}
+
+	@Override
+	public String bittorrentTransferenciaIniciada() {
+		return "BitTorrent 転送が開始されました。";
+	}
+
+	@Override
+	public String bittorrentUsarDht() {
+		return "DHT と公開ルーターを使用してピアを見つける";
+	}
+
+	@Override
+	public String bittorrentUsarLsd() {
+		return "LAN ネットワークでローカルピア検出を使用";
+	}
+
+	@Override
+	public String bittorrentUsarPex() {
+		return "クライアント間のピア交換を許可";
+	}
+
+	@Override
+	public String bittorrentSinTrackersNiDht() {
+		return "マグネットベースの BitTorrent 共有を作成または開く前に、少なくとも1つの HTTP、HTTPS、または UDP トラッカーを構成してください。";
+	}
+
+	@Override
+	public String bittorrentNombreTorrentPorDefecto() {
+		return "torrent";
+	}
+
+	@Override
+	public String bittorrentNombreArchivoPorDefecto() {
+		return "ファイル";
+	}
+
 }
