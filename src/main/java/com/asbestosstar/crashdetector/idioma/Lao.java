@@ -12281,7 +12281,7 @@ public class Lao implements Idioma {
 	}
 
 	public String heapVisorTitulo() {
-		return "ຕົວເບິ່ງ heap dump — ອີຣ່ານ";
+		return "ຕົວເບິ່ງ heap dump";
 	}
 
 	public String heapVisorDescripcion() {

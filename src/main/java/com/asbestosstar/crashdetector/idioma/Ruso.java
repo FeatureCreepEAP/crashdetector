@@ -11868,7 +11868,7 @@ public class Ruso implements Idioma {
 	}
 
 	public String heapVisorTitulo() {
-		return "Просмотрщик дампа кучи — Иран";
+		return "Просмотрщик дампа кучи";
 	}
 
 	public String heapVisorDescripcion() {

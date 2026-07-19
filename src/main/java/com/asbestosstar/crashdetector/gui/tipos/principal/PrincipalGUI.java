@@ -1,7 +1,5 @@
 package com.asbestosstar.crashdetector.gui.tipos.principal;
 
-import com.asbestosstar.crashdetector.Statics;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Desktop;
@@ -28,6 +26,7 @@ import javax.swing.JScrollPane;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.config.ConfigColor;
@@ -47,6 +46,7 @@ import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUINimu
 import com.asbestosstar.crashdetector.gui.tipos.docs.LectadorDeDocumentosStudyJuche;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaSketchyVT;
+import com.asbestosstar.crashdetector.gui.tipos.heapdump.VisorHeapDumpIranFifa;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.ia.IAGUILuotianyi;
 import com.asbestosstar.crashdetector.gui.tipos.jgit.JGitHubIzzy;
@@ -149,6 +149,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 				() -> new MigradorLegacySamekoSaba());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.SCRIPT_IDE, ScriptIDEGUINiwaJPlus.ID,
 				() -> new ScriptIDEGUINiwaJPlus());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.VISOR_HEAP_DUMP, VisorHeapDumpIranFifa.ID,
+				() -> new VisorHeapDumpIranFifa());
 
 	}
 

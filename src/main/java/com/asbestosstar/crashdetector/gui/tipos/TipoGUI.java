@@ -35,6 +35,7 @@ import com.asbestosstar.crashdetector.gui.tipos.escanernube.EscanerNubeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.gpu.GPUFixGUI;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.GrepRGUI;
 import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaGUI;
+import com.asbestosstar.crashdetector.gui.tipos.heapdump.VisorHeapDumpGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.ia.IAGUI;
 import com.asbestosstar.crashdetector.gui.tipos.importador.DialogoConflictoImportacionGUI;
@@ -1322,6 +1323,31 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 	};
 
 	/**
+	 * Visor de archivos HPROF y heap dumps.
+	 */
+	public static final TipoGUI<VisorHeapDumpGUI> VISOR_HEAP_DUMP = new TipoGUI<VisorHeapDumpGUI>() {
+		@Override
+		public String id() {
+			return "visor_heap_dump";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.heapVisorTitulo();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<VisorHeapDumpGUI> gui) {
+			VisorHeapDumpGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<VisorHeapDumpGUI>> obtenerGUIs() {
+			return VisorHeapDumpGUI.GUIS;
+		}
+	};
+
+	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
 	static {
@@ -1374,8 +1400,8 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(MIGRADOR_LEGACY);
 		TIPOS_DE_GUI.add(SCRIPT_IDE);
 		TIPOS_DE_GUI.add(MCP);
-
 		TIPOS_DE_GUI.add(ESCANER_NUBE);
+		TIPOS_DE_GUI.add(VISOR_HEAP_DUMP);
 
 	}
 }

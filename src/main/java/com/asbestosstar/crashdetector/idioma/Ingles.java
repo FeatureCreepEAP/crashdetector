@@ -11948,7 +11948,7 @@ public class Ingles implements Idioma {
 
 	@Override
 	public String heapVisorTitulo() {
-		return "Heap Dump Viewer — Iran";
+		return "Heap Dump Viewer";
 	}
 
 	@Override

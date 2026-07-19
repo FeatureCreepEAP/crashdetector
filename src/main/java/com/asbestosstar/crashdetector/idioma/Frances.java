@@ -12470,7 +12470,7 @@ public class Frances implements Idioma {
 
 	@Override
 	public String heapVisorTitulo() {
-		return "Visualiseur de vidage de tas — Iran";
+		return "Visualiseur de vidage de tas";
 	}
 
 	@Override

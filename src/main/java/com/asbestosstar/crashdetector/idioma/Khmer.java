@@ -12098,7 +12098,7 @@ public class Khmer implements Idioma {
 
 	@Override
 	public String heapVisorTitulo() {
-		return "កម្មវិធីមើលការបញ្ចេញ Heap — អ៊ីរ៉ង់";
+		return "កម្មវិធីមើលការបញ្ចេញ Heap";
 	}
 
 	@Override

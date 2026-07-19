@@ -72,6 +72,7 @@ import com.asbestosstar.crashdetector.gui.tipos.escanernube.EscanerNubeParallelA
 import com.asbestosstar.crashdetector.gui.tipos.gpu.GPUFixOptimusPrime;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaSketchyVT;
+import com.asbestosstar.crashdetector.gui.tipos.heapdump.VisorHeapDumpIranFifa;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaModsGUILegacy;
 import com.asbestosstar.crashdetector.gui.tipos.ia.IAGUILuotianyi;
@@ -1198,8 +1199,8 @@ public class MonitorDePID {
 		TipoGUI.PRINCIPAL.registrarGUI(PrincipalGUICentroSoporte.ID, PrincipalGUICentroSoporte::new);
 		TipoGUI.SCRIPT_IDE.registrarGUI(ScriptIDEGUINiwaJPlus.ID, ScriptIDEGUINiwaJPlus::new);
 		TipoGUI.MCP.registrarGUI(McpGUIMotherV3.ID, McpGUIMotherV3::new);
-
 		TipoGUI.ESCANER_NUBE.registrarGUI(EscanerNubeParallelArtistProject.ID, EscanerNubeParallelArtistProject::new);
+		TipoGUI.VISOR_HEAP_DUMP.registrarGUI(VisorHeapDumpIranFifa.ID, VisorHeapDumpIranFifa::new);
 
 	}
 

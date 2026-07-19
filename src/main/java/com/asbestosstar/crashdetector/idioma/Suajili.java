@@ -12311,7 +12311,7 @@ public class Suajili implements Idioma {
 	}
 
 	public String heapVisorTitulo() {
-		return "Kitazama cha heap dump — Iran";
+		return "Kitazama cha heap dump";
 	}
 
 	public String heapVisorDescripcion() {

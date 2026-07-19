@@ -11898,7 +11898,7 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String heapVisorTitulo() {
-		return "Vidilo de amaseldumpo — Irano";
+		return "Vidilo de amaseldumpo";
 	}
 
 	@Override

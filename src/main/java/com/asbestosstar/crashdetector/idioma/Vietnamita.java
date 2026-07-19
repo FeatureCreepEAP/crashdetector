@@ -12084,7 +12084,7 @@ public class Vietnamita implements Idioma {
 	}
 
 	public String heapVisorTitulo() {
-		return "Trình xem heap dump — Iran";
+		return "Trình xem heap dump";
 	}
 
 	public String heapVisorDescripcion() {

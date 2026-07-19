@@ -12481,7 +12481,7 @@ public class Indonesia implements Idioma {
 
 	@Override
 	public String heapVisorTitulo() {
-		return "Penampil heap dump — Iran";
+		return "Penampil heap dump";
 	}
 
 	@Override

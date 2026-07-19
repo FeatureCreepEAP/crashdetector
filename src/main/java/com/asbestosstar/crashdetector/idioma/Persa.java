@@ -11824,7 +11824,7 @@ public class Persa implements Idioma {
 	}
 
 	public String heapVisorTitulo() {
-		return "نمایشگر heap dump — ایران";
+		return "نمایشگر heap dump";
 	}
 
 	public String heapVisorDescripcion() {

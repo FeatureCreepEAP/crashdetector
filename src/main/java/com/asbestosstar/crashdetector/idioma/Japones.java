@@ -11514,7 +11514,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String heapVisorTitulo() {
-		return "ヒープダンプビューア — イラン";
+		return "ヒープダンプビューア";
 	}
 
 	@Override

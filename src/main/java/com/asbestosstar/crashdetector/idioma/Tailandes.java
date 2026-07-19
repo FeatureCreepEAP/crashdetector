@@ -12053,7 +12053,7 @@ public class Tailandes implements Idioma {
 	}
 
 	public String heapVisorTitulo() {
-		return "ตัวดู heap dump — อิหร่าน";
+		return "ตัวดู heap dump";
 	}
 
 	public String heapVisorDescripcion() {

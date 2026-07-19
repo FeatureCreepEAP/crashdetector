@@ -11195,7 +11195,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	}
 
 	public String heapVisorTitulo() {
-		return "Переглядач знімка купи — Іран";
+		return "Переглядач знімка купи";
 	}
 
 	public String heapVisorDescripcion() {

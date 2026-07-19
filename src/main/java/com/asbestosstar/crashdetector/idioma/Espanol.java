@@ -12613,7 +12613,7 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String heapVisorTitulo() {
-		return "Visor de heap dump — Irán";
+		return "Visor de heap dump";
 	}
 
 	@Override

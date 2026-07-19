@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -31,7 +32,6 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -41,6 +41,9 @@ import javax.swing.tree.TreePath;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
+import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.heapdump.AnalizadorHprofRapido;
 import com.asbestosstar.crashdetector.heapdump.EstadisticaHeap;
 import com.asbestosstar.crashdetector.heapdump.ResultadoHeapDump;
@@ -51,7 +54,9 @@ import com.asbestosstar.crashdetector.heapdump.ResultadoHeapDump;
  * La lógica de importación, análisis, tabla y árbol jerárquico permanece en
  * esta clase. Una implementación concreta define los colores y la imagen.
  */
-public abstract class VisorHeapDumpGUI extends JFrame {
+public abstract class VisorHeapDumpGUI extends JFrame implements BotonDeBarraLateralDerecha {
+
+	public static final Map<String, Supplier<VisorHeapDumpGUI>> GUIS = new LinkedHashMap<String, Supplier<VisorHeapDumpGUI>>();
 
 	private static final long serialVersionUID = 1L;
 	private static final int MAXIMO_SEGMENTOS_PAQUETE = 5;
@@ -81,6 +86,7 @@ public abstract class VisorHeapDumpGUI extends JFrame {
 	protected final AtomicBoolean cancelado = new AtomicBoolean(false);
 	protected boolean inicializada;
 
+	@Override
 	public void init() {
 		if (inicializada) {
 			recargarTextos();
@@ -463,7 +469,19 @@ public abstract class VisorHeapDumpGUI extends JFrame {
 		}
 	}
 
+	@Override
+	public TipoGUI<VisorHeapDumpGUI> tipo() {
+		return TipoGUI.VISOR_HEAP_DUMP;
+	}
+
+	@Override
+	public abstract String id();
+
+	@Override
 	public abstract void recargarApariencia();
+
+	@Override
+	public abstract List<ElementoConfig> obtenerElementosConfigs();
 
 	protected static String formatearBytes(long bytes) {
 		double valor = bytes;

@@ -11510,7 +11510,7 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String heapVisorTitulo() {
-		return "힙 덤프 뷰어 — 이란";
+		return "힙 덤프 뷰어";
 	}
 
 	@Override

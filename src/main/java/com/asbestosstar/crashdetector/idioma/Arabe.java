@@ -11800,7 +11800,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String heapVisorTitulo() {
-		return "عارض تفريغ الكومة — إيران";
+		return "عارض تفريغ الكومة";
 	}
 
 	@Override

@@ -11875,7 +11875,7 @@ public class Portuges implements Idioma {
 	}
 
 	public String heapVisorTitulo() {
-		return "Visualizador de heap dump — Irã";
+		return "Visualizador de heap dump";
 	}
 
 	public String heapVisorDescripcion() {

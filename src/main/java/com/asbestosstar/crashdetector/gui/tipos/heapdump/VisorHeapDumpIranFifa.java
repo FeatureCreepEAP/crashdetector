@@ -11,16 +11,11 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTree;
 import javax.swing.JViewport;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -33,7 +28,14 @@ import com.asbestosstar.crashdetector.config.ElementoConfig;
  */
 public final class VisorHeapDumpIranFifa extends VisorHeapDumpGUI {
 
+	public static final String ID = "visor_heap_dump_iran_fifa";
+
 	private static final long serialVersionUID = 1L;
+
+	@Override
+	public String id() {
+		return ID;
+	}
 
 	private final ConfigColor colorFondo = ConfigColor.de("tema.heapdump.iran.fondo", new Color(20, 73, 55));
 	private final ConfigColor colorPanel = ConfigColor.de("tema.heapdump.iran.panel", new Color(245, 246, 242));
@@ -220,6 +222,7 @@ public final class VisorHeapDumpIranFifa extends VisorHeapDumpGUI {
 		}
 	}
 
+	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
 		List<ElementoConfig> elementos = new ArrayList<ElementoConfig>();
 

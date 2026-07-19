@@ -11281,7 +11281,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String heapVisorTitulo() {
-		return "堆转储查看器 — 伊朗";
+		return "堆转储查看器";
 	}
 
 	@Override
