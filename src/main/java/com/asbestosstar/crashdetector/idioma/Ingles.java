@@ -12562,4 +12562,359 @@ public class Ingles implements Idioma {
 		return "file";
 	}
 
+	@Override
+	public String gitAvanzadoTipo() {
+		return "Advanced Git client";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "Open advanced Git client";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "Advanced Git client — Wendy Mizumi: Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / current repository archive";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "Repository";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "Branch";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "Refresh";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "Fetch";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "Pull";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "Push";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "New branch";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "Commit history";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "Unstaged changes";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "Staged changes";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "Stage selected";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "Stage all";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "Unstage selected";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "Unstage all";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "View diff";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "View blame";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "Commit message";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "Create commit";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "Diff";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "Activity";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "Refreshing the current repository...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "JGit is not available. Install the dependencies from the normal Git GUI and restart the application.";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "The advanced client can only be opened after creating the current instance repository from the normal Git GUI.";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "Unstaged: " + noPreparados + " | Staged: " + preparados + " | Commits shown: " + commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "Enter a commit message.";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "New branch name:";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "Switch to branch '" + rama + "'? Local changes must be compatible with the branch switch.";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "The Git operation could not be completed. Check the Activity tab and the CrashDetector log.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "Operation completed.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "The operation failed.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "Status and history refreshed.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "Fetching remote references...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "Downloading and integrating changes...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "Pushing commits to the remote...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "Staging selected files...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "Staging all changes...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "Unstaging selected files...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "Clearing the staging area...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "Creating commit...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "Creating and switching to branch '" + rama + "'...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "Switching to branch '" + rama + "'...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "Status";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "Path";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "Hash";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "Date";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "Author";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "Message";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "Added";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "Modified";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "Deleted";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "Untracked";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "Conflict";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "Renamed";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "Advanced Git — Lost Media background";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "Advanced Git — panel";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "Advanced Git — secondary panel";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "Advanced Git — text";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "Advanced Git — muted text";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "Advanced Git — archive blue";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "Advanced Git — ribbon pink";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "Advanced Git — border";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "Advanced Git — table";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "Advanced Git — selection";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "Advanced Git — diff background";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "Advanced Git — button";
+	}
+
 }

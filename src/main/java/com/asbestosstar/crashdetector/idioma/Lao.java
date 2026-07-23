@@ -12773,4 +12773,359 @@ public class Lao implements Idioma {
 		return "ໄຟລ໌";
 	}
 
+	@Override
+	public String gitAvanzadoTipo() {
+		return "ໂປຣແກຣມ Git ຂັ້ນສູງ";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "ເປີດໂປຣແກຣມ Git ຂັ້ນສູງ";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "ໂປຣແກຣມ Git ຂັ້ນສູງ — Wendy Mizumi: Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / ຄັງເກັບ repository ປັດຈຸບັນ";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "Repository";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "ສາຂາ";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "ໂຫຼດໃໝ່";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "Fetch";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "Pull";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "Push";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "ສາຂາໃໝ່";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "ປະຫວັດ commit";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "ການປ່ຽນແປງທີ່ຍັງບໍ່ stage";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "ການປ່ຽນແປງທີ່ stage ແລ້ວ";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "Stage ລາຍການທີ່ເລືອກ";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "Stage ທັງໝົດ";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "Unstage ລາຍການທີ່ເລືອກ";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "Unstage ທັງໝົດ";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "ເບິ່ງ diff";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "ເບິ່ງ blame";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "ຂໍ້ຄວາມ commit";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "ສ້າງ commit";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "Diff";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "ກິດຈະກໍາ";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "ກໍາລັງໂຫຼດ repository ປັດຈຸບັນໃໝ່...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "ບໍ່ສາມາດໃຊ້ JGit ໄດ້. ກະລຸນາຕິດຕັ້ງ dependency ຈາກໜ້າ Git ປົກກະຕິ ແລ້ວເລີ່ມໂປຣແກຣມໃໝ່.";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "ສາມາດເປີດໂປຣແກຣມຂັ້ນສູງໄດ້ຫຼັງຈາກສ້າງ repository ຂອງ instance ປັດຈຸບັນຈາກໜ້າ Git ປົກກະຕິເທົ່ານັ້ນ.";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "ຍັງບໍ່ stage: " + noPreparados + " | stage ແລ້ວ: " + preparados + " | commit ທີ່ສະແດງ: " + commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "ກະລຸນາປ້ອນຂໍ້ຄວາມ commit.";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "ຊື່ສາຂາໃໝ່:";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "ຈະປ່ຽນໄປສາຂາ “" + rama + "” ບໍ? ການປ່ຽນແປງໃນເຄື່ອງຕ້ອງສອດຄ່ອງກັບການປ່ຽນສາຂາ.";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "ບໍ່ສາມາດສໍາເລັດການດໍາເນີນງານ Git ໄດ້. ກະລຸນາກວດແຖບກິດຈະກໍາ ແລະ log ຂອງ CrashDetector.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "ການດໍາເນີນງານສໍາເລັດແລ້ວ.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "ການດໍາເນີນງານລົ້ມເຫຼວ.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "ໂຫຼດສະຖານະ ແລະປະຫວັດໃໝ່ແລ້ວ.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "ກໍາລັງ fetch reference ຈາກ remote...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "ກໍາລັງດາວໂຫຼດ ແລະລວມການປ່ຽນແປງ...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "ກໍາລັງ push commit ໄປຫາ remote repository...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "ກໍາລັງ stage ໄຟລ໌ທີ່ເລືອກ...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "ກໍາລັງ stage ການປ່ຽນແປງທັງໝົດ...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "ກໍາລັງ unstage ໄຟລ໌ທີ່ເລືອກ...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "ກໍາລັງລ້າງ staging area...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "ກໍາລັງສ້າງ commit...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "ກໍາລັງສ້າງ ແລະປ່ຽນໄປສາຂາ “" + rama + "”...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "ກໍາລັງປ່ຽນໄປສາຂາ “" + rama + "”...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "ສະຖານະ";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "ເສັ້ນທາງ";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "Hash";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "ວັນທີ";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "ຜູ້ຂຽນ";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "ຂໍ້ຄວາມ";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "ເພີ່ມແລ້ວ";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "ປ່ຽນແປງແລ້ວ";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "ລຶບແລ້ວ";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "ບໍ່ໄດ້ຕິດຕາມ";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "ຂັດແຍ່ງ";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "ປ່ຽນຊື່ແລ້ວ";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "Git ຂັ້ນສູງ — ພື້ນຫຼັງ Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "Git ຂັ້ນສູງ — ແຜງ";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "Git ຂັ້ນສູງ — ແຜງຮອງ";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "Git ຂັ້ນສູງ — ຂໍ້ຄວາມ";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "Git ຂັ້ນສູງ — ຂໍ້ຄວາມຈາງ";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "Git ຂັ້ນສູງ — ສີຟ້າຄັງເກັບ";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "Git ຂັ້ນສູງ — ສີບົວໂບ";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "Git ຂັ້ນສູງ — ຂອບ";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "Git ຂັ້ນສູງ — ຕາຕະລາງ";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "Git ຂັ້ນສູງ — ລາຍການທີ່ເລືອກ";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "Git ຂັ້ນສູງ — ພື້ນຫຼັງ diff";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "Git ຂັ້ນສູງ — ປຸ່ມ";
+	}
+
 }

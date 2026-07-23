@@ -12123,4 +12123,359 @@ public class Coreano implements Idioma {
 		return "파일";
 	}
 
+	@Override
+	public String gitAvanzadoTipo() {
+		return "고급 Git 클라이언트";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "고급 Git 클라이언트 열기";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "고급 Git 클라이언트 — Wendy Mizumi: Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / 현재 저장소 아카이브";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "저장소";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "브랜치";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "새로 고침";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "가져오기";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "풀";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "푸시";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "새 브랜치";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "커밋 기록";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "스테이징되지 않은 변경 사항";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "스테이징된 변경 사항";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "선택 항목 스테이징";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "모두 스테이징";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "선택 항목 스테이징 해제";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "모두 스테이징 해제";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "차이 보기";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "Blame 보기";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "커밋 메시지";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "커밋 만들기";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "차이";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "활동";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "현재 저장소를 새로 고치는 중...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "JGit을 사용할 수 없습니다. 일반 Git GUI에서 종속성을 설치한 뒤 애플리케이션을 다시 시작하십시오.";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "고급 클라이언트는 일반 Git GUI에서 현재 인스턴스의 저장소를 만든 뒤에만 열 수 있습니다.";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "스테이징되지 않음: " + noPreparados + " | 스테이징됨: " + preparados + " | 표시된 커밋: " + commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "커밋 메시지를 입력하십시오.";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "새 브랜치 이름:";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "브랜치 '" + rama + "'(으)로 전환하시겠습니까? 로컬 변경 사항이 브랜치 전환과 호환되어야 합니다.";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "Git 작업을 완료하지 못했습니다. 활동 탭과 CrashDetector 로그를 확인하십시오.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "작업이 완료되었습니다.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "작업에 실패했습니다.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "상태와 기록을 새로 고쳤습니다.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "원격 참조를 가져오는 중...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "변경 사항을 다운로드하고 통합하는 중...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "커밋을 원격 저장소로 푸시하는 중...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "선택한 파일을 스테이징하는 중...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "모든 변경 사항을 스테이징하는 중...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "선택한 파일의 스테이징을 해제하는 중...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "스테이징 영역을 비우는 중...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "커밋을 만드는 중...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "브랜치 '" + rama + "'을(를) 만들고 전환하는 중...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "브랜치 '" + rama + "'(으)로 전환하는 중...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "상태";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "경로";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "해시";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "날짜";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "작성자";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "메시지";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "추가됨";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "수정됨";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "삭제됨";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "추적되지 않음";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "충돌";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "이름 변경됨";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "고급 Git — Lost Media 배경";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "고급 Git — 패널";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "고급 Git — 보조 패널";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "고급 Git — 텍스트";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "고급 Git — 흐린 텍스트";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "고급 Git — 아카이브 파랑";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "고급 Git — 리본 분홍";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "고급 Git — 테두리";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "고급 Git — 표";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "고급 Git — 선택";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "고급 Git — 차이 배경";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "고급 Git — 버튼";
+	}
+
 }

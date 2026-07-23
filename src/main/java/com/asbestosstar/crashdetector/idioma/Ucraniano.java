@@ -11687,4 +11687,359 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "файл";
 	}
 
+	@Override
+	public String gitAvanzadoTipo() {
+		return "Розширений клієнт Git";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "Відкрити розширений клієнт Git";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "Розширений клієнт Git — Wendy Mizumi: Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / архів поточного репозиторію";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "Репозиторій";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "Гілка";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "Оновити";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "Отримати";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "Завантажити";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "Надіслати";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "Нова гілка";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "Історія комітів";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "Неіндексовані зміни";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "Індексовані зміни";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "Додати вибране до індексу";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "Додати все до індексу";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "Прибрати вибране з індексу";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "Очистити індекс";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "Переглянути різницю";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "Переглянути blame";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "Повідомлення коміту";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "Створити коміт";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "Різниця";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "Дії";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "Оновлення поточного репозиторію...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "JGit недоступний. Установіть залежності зі звичайного інтерфейсу Git і перезапустіть програму.";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "Розширений клієнт можна відкрити лише після створення репозиторію поточного екземпляра зі звичайного інтерфейсу Git.";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "Неіндексовані: " + noPreparados + " | Індексовані: " + preparados + " | Показано комітів: " + commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "Введіть повідомлення коміту.";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "Назва нової гілки:";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "Перейти до гілки «" + rama + "»? Локальні зміни мають бути сумісними з перемиканням гілки.";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "Не вдалося завершити операцію Git. Перевірте вкладку «Дії» та журнал CrashDetector.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "Операцію завершено.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "Операція завершилася помилкою.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "Стан та історію оновлено.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "Отримання посилань віддаленого репозиторію...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "Завантаження та інтеграція змін...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "Надсилання комітів до віддаленого репозиторію...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "Додавання вибраних файлів до індексу...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "Додавання всіх змін до індексу...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "Вилучення вибраних файлів з індексу...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "Очищення індексу...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "Створення коміту...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "Створення та перехід до гілки «" + rama + "»...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "Перехід до гілки «" + rama + "»...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "Стан";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "Шлях";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "Хеш";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "Дата";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "Автор";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "Повідомлення";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "Додано";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "Змінено";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "Видалено";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "Не відстежується";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "Конфлікт";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "Перейменовано";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "Розширений Git — фон Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "Розширений Git — панель";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "Розширений Git — додаткова панель";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "Розширений Git — текст";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "Розширений Git — приглушений текст";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "Розширений Git — архівний синій";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "Розширений Git — стрічковий рожевий";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "Розширений Git — межа";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "Розширений Git — таблиця";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "Розширений Git — виділення";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "Розширений Git — фон різниці";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "Розширений Git — кнопка";
+	}
+
 }

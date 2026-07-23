@@ -883,4 +883,361 @@ public class Malayo extends Indonesia {
 	public String nombreProblemaWorldModFaltante() {
 		return "Mod tiada dalam dunia";
 	}
+
+	@Override
+	public String gitAvanzadoTipo() {
+		return "Klien Git lanjutan";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "Buka klien Git lanjutan";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "Klien Git lanjutan — Wendy Mizumi: Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / arkib repositori semasa";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "Repositori";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "Cabang";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "Muat semula";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "Ambil";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "Tarik";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "Tolak";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "Cabang baharu";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "Sejarah commit";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "Perubahan belum distage";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "Perubahan telah distage";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "Stage pilihan";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "Stage semua";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "Unstage pilihan";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "Unstage semua";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "Lihat diff";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "Lihat blame";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "Mesej commit";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "Cipta commit";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "Diff";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "Aktiviti";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "Memuat semula repositori semasa...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "JGit tidak tersedia. Pasang kebergantungan daripada GUI Git biasa, kemudian mulakan semula aplikasi.";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "Klien lanjutan hanya boleh dibuka selepas repositori bagi instans semasa dicipta melalui GUI Git biasa.";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "Belum distage: " + noPreparados + " | Telah distage: " + preparados + " | Commit dipaparkan: "
+				+ commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "Masukkan mesej commit.";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "Nama cabang baharu:";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "Tukar ke cabang '" + rama + "'? Perubahan tempatan mestilah serasi dengan pertukaran cabang.";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "Operasi Git tidak dapat diselesaikan. Semak tab Aktiviti dan log CrashDetector.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "Operasi selesai.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "Operasi gagal.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "Status dan sejarah telah dimuat semula.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "Mengambil rujukan remote...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "Memuat turun dan menggabungkan perubahan...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "Menghantar commit ke repositori remote...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "Men-stage fail yang dipilih...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "Men-stage semua perubahan...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "Mengeluarkan fail yang dipilih daripada staging area...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "Mengosongkan staging area...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "Mencipta commit...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "Mencipta dan bertukar ke cabang '" + rama + "'...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "Bertukar ke cabang '" + rama + "'...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "Status";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "Laluan";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "Hash";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "Tarikh";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "Pengarang";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "Mesej";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "Ditambah";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "Diubah";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "Dipadam";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "Tidak dijejak";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "Konflik";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "Dinamakan semula";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "Git lanjutan — latar Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "Git lanjutan — panel";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "Git lanjutan — panel sekunder";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "Git lanjutan — teks";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "Git lanjutan — teks lembut";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "Git lanjutan — biru arkib";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "Git lanjutan — merah jambu reben";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "Git lanjutan — sempadan";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "Git lanjutan — jadual";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "Git lanjutan — pilihan";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "Git lanjutan — latar diff";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "Git lanjutan — butang";
+	}
+
 }

@@ -12512,4 +12512,359 @@ public class Esperanto implements Idioma {
 		return "dosiero";
 	}
 
+	@Override
+	public String gitAvanzadoTipo() {
+		return "Altnivela Git-kliento";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "Malfermi la altnivelan Git-klienton";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "Altnivela Git-kliento — Wendy Mizumi: Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / arkivo de la nuna deponejo";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "Deponejo";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "Branĉo";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "Aktualigi";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "Venigi";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "Tiri";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "Puŝi";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "Nova branĉo";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "Historio de commit-oj";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "Neindeksitaj ŝanĝoj";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "Indeksitaj ŝanĝoj";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "Indeksi la elektitajn";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "Indeksi ĉion";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "Forigi la elektitajn el la indekso";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "Malplenigi la indekson";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "Montri la diferencon";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "Montri blame";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "Mesaĝo de commit";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "Krei commit-on";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "Diferenco";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "Agado";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "Aktualigante la nunan deponejon...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "JGit ne estas disponebla. Instalu la dependecojn per la ordinara Git-interfaco kaj restartigu la aplikaĵon.";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "La altnivela kliento povas esti malfermita nur post kreo de la deponejo de la nuna instanco per la ordinara Git-interfaco.";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "Neindeksitaj: " + noPreparados + " | Indeksitaj: " + preparados + " | Montritaj commit-oj: " + commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "Enigu mesaĝon por la commit.";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "Nomo de la nova branĉo:";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "Ĉu ŝanĝi al la branĉo “" + rama + "”? La lokaj ŝanĝoj devas esti kongruaj kun la branĉŝanĝo.";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "La Git-operacio ne povis esti finita. Kontrolu la langeton Agado kaj la protokolon de CrashDetector.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "Operacio finita.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "La operacio malsukcesis.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "Stato kaj historio aktualigitaj.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "Venigante forajn referencojn...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "Elŝutante kaj kunfandante ŝanĝojn...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "Sendante commit-ojn al la fora deponejo...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "Indeksante la elektitajn dosierojn...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "Indeksante ĉiujn ŝanĝojn...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "Forigante la elektitajn dosierojn el la indekso...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "Malplenigante la indekson...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "Kreante commit-on...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "Kreante kaj ŝanĝante al la branĉo “" + rama + "”...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "Ŝanĝante al la branĉo “" + rama + "”...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "Stato";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "Vojo";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "Haketo";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "Dato";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "Aŭtoro";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "Mesaĝo";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "Aldonita";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "Ŝanĝita";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "Forigita";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "Nesekvata";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "Konflikto";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "Renomita";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "Altnivela Git — fono Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "Altnivela Git — panelo";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "Altnivela Git — duaranga panelo";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "Altnivela Git — teksto";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "Altnivela Git — milda teksto";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "Altnivela Git — arkiva bluo";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "Altnivela Git — rubanda rozo";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "Altnivela Git — rando";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "Altnivela Git — tabelo";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "Altnivela Git — elekto";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "Altnivela Git — fono de diferenco";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "Altnivela Git — butono";
+	}
+
 }

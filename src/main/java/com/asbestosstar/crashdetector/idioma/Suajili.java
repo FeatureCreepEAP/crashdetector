@@ -12803,4 +12803,360 @@ public class Suajili implements Idioma {
 		return "faili";
 	}
 
+	@Override
+	public String gitAvanzadoTipo() {
+		return "Kiteja cha Git cha kiwango cha juu";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "Fungua kiteja cha Git cha kiwango cha juu";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "Kiteja cha Git cha kiwango cha juu — Wendy Mizumi: Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / kumbukumbu ya hazina ya sasa";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "Hazina";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "Tawi";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "Onyesha upya";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "Leta";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "Vuta";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "Sukuma";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "Tawi jipya";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "Historia ya commit";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "Mabadiliko ambayo hayajawekwa kwenye stage";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "Mabadiliko yaliyowekwa kwenye stage";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "Weka vilivyochaguliwa kwenye stage";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "Weka vyote kwenye stage";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "Ondoa vilivyochaguliwa kwenye stage";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "Ondoa vyote kwenye stage";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "Tazama tofauti";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "Tazama blame";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "Ujumbe wa commit";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "Tengeneza commit";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "Tofauti";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "Shughuli";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "Inaonyesha upya hazina ya sasa...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "JGit haipatikani. Sakinisha vitegemezi kupitia GUI ya kawaida ya Git kisha uanzishe programu upya.";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "Kiteja cha kiwango cha juu kinaweza kufunguliwa tu baada ya kuunda hazina ya instance ya sasa kupitia GUI ya kawaida ya Git.";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "Hazijawekwa stage: " + noPreparados + " | Zimewekwa stage: " + preparados + " | Commit zinazoonyeshwa: "
+				+ commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "Weka ujumbe wa commit.";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "Jina la tawi jipya:";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "Ubadili hadi tawi '" + rama + "'? Mabadiliko ya ndani lazima yalingane na ubadilishaji wa tawi.";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "Operesheni ya Git haikuweza kukamilika. Angalia kichupo cha Shughuli na logi ya CrashDetector.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "Operesheni imekamilika.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "Operesheni imeshindwa.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "Hali na historia zimeonyeshwa upya.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "Inaleta marejeo kutoka remote...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "Inapakua na kuunganisha mabadiliko...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "Inasukuma commit kwenda hazina ya remote...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "Inaweka faili zilizochaguliwa kwenye stage...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "Inaweka mabadiliko yote kwenye stage...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "Inaondoa faili zilizochaguliwa kwenye stage...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "Inasafisha staging area...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "Inatengeneza commit...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "Inatengeneza na kubadili hadi tawi '" + rama + "'...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "Inabadilisha hadi tawi '" + rama + "'...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "Hali";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "Njia";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "Hash";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "Tarehe";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "Mwandishi";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "Ujumbe";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "Imeongezwa";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "Imebadilishwa";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "Imefutwa";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "Haifuatiliwi";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "Mgongano";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "Imepewa jina jipya";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "Git ya kiwango cha juu — mandharinyuma ya Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "Git ya kiwango cha juu — paneli";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "Git ya kiwango cha juu — paneli ya pili";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "Git ya kiwango cha juu — maandishi";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "Git ya kiwango cha juu — maandishi yaliyopoozwa";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "Git ya kiwango cha juu — buluu ya kumbukumbu";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "Git ya kiwango cha juu — waridi wa utepe";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "Git ya kiwango cha juu — mpaka";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "Git ya kiwango cha juu — jedwali";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "Git ya kiwango cha juu — uteuzi";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "Git ya kiwango cha juu — mandharinyuma ya tofauti";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "Git ya kiwango cha juu — kitufe";
+	}
+
 }

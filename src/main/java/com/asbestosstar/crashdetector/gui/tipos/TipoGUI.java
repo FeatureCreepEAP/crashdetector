@@ -63,6 +63,7 @@ import com.asbestosstar.crashdetector.gui.tipos.quickfix.TodosQuickFixesGUI;
 import com.asbestosstar.crashdetector.gui.tipos.rendimiento.AdministradorDeRendimientoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.sampler.SamplerGUI;
 import com.asbestosstar.crashdetector.gui.tipos.scriptide.ScriptIDEGUI;
+import com.asbestosstar.crashdetector.gui.tipos.jgit.avanzado.ClienteGitAvanzadoGUI;
 
 public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
@@ -1376,6 +1377,34 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
+
+	/**
+	 * Cliente Git avanzado del repositorio actual.
+	 *
+	 * No se agrega a TIPOS_DE_GUI deliberadamente: se abre exclusivamente desde la
+	 * GUI Git normal cuando el repositorio actual ya existe.
+	 */
+	public static TipoGUI<ClienteGitAvanzadoGUI> CLIENTE_GIT_AVANZADO = new TipoGUI<ClienteGitAvanzadoGUI>() {
+		@Override
+		public String id() {
+			return "cliente_git_avanzado";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.gitAvanzadoTipo();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<ClienteGitAvanzadoGUI> gui) {
+			ClienteGitAvanzadoGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<ClienteGitAvanzadoGUI>> obtenerGUIs() {
+			return ClienteGitAvanzadoGUI.GUIS;
+		}
+	};
 	static {
 		TIPOS_DE_GUI.add(PRINCIPAL);
 		TIPOS_DE_GUI.add(GREPR);

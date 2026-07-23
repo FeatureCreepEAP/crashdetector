@@ -12545,4 +12545,359 @@ public class Tailandes implements Idioma {
 		return "ไฟล์";
 	}
 
+	@Override
+	public String gitAvanzadoTipo() {
+		return "ไคลเอนต์ Git ขั้นสูง";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "เปิดไคลเอนต์ Git ขั้นสูง";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "ไคลเอนต์ Git ขั้นสูง — Wendy Mizumi: Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / คลังเก็บของ repository ปัจจุบัน";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "Repository";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "สาขา";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "รีเฟรช";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "Fetch";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "Pull";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "Push";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "สาขาใหม่";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "ประวัติ commit";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "การเปลี่ยนแปลงที่ยังไม่ stage";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "การเปลี่ยนแปลงที่ stage แล้ว";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "Stage รายการที่เลือก";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "Stage ทั้งหมด";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "Unstage รายการที่เลือก";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "Unstage ทั้งหมด";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "ดูความแตกต่าง";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "ดู blame";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "ข้อความ commit";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "สร้าง commit";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "ความแตกต่าง";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "กิจกรรม";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "กำลังรีเฟรช repository ปัจจุบัน...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "ไม่สามารถใช้ JGit ได้ โปรดติดตั้ง dependency จากหน้าต่าง Git ปกติ แล้วเริ่มแอปพลิเคชันใหม่";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "สามารถเปิดไคลเอนต์ขั้นสูงได้หลังจากสร้าง repository ของ instance ปัจจุบันจากหน้าต่าง Git ปกติแล้วเท่านั้น";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "ยังไม่ stage: " + noPreparados + " | stage แล้ว: " + preparados + " | commit ที่แสดง: " + commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "โปรดป้อนข้อความ commit";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "ชื่อสาขาใหม่:";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "เปลี่ยนไปยังสาขา “" + rama + "” หรือไม่ การเปลี่ยนแปลงภายในเครื่องต้องเข้ากันได้กับการเปลี่ยนสาขา";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "ไม่สามารถดำเนินการ Git ให้เสร็จได้ โปรดตรวจสอบแท็บกิจกรรมและบันทึกของ CrashDetector";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "ดำเนินการเสร็จแล้ว";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "การดำเนินการล้มเหลว";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "รีเฟรชสถานะและประวัติแล้ว";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "กำลัง fetch reference จาก remote...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "กำลังดาวน์โหลดและรวมการเปลี่ยนแปลง...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "กำลัง push commit ไปยัง remote repository...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "กำลัง stage ไฟล์ที่เลือก...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "กำลัง stage การเปลี่ยนแปลงทั้งหมด...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "กำลัง unstage ไฟล์ที่เลือก...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "กำลังล้าง staging area...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "กำลังสร้าง commit...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "กำลังสร้างและเปลี่ยนไปยังสาขา “" + rama + "”...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "กำลังเปลี่ยนไปยังสาขา “" + rama + "”...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "สถานะ";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "เส้นทาง";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "Hash";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "วันที่";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "ผู้เขียน";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "ข้อความ";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "เพิ่มแล้ว";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "แก้ไขแล้ว";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "ลบแล้ว";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "ยังไม่ติดตาม";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "ขัดแย้ง";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "เปลี่ยนชื่อแล้ว";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "Git ขั้นสูง — พื้นหลัง Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "Git ขั้นสูง — แผง";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "Git ขั้นสูง — แผงรอง";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "Git ขั้นสูง — ข้อความ";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "Git ขั้นสูง — ข้อความแบบนุ่ม";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "Git ขั้นสูง — สีน้ำเงินคลังเก็บ";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "Git ขั้นสูง — สีชมพูริบบิ้น";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "Git ขั้นสูง — เส้นขอบ";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "Git ขั้นสูง — ตาราง";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "Git ขั้นสูง — รายการที่เลือก";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "Git ขั้นสูง — พื้นหลังความแตกต่าง";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "Git ขั้นสูง — ปุ่ม";
+	}
+
 }

@@ -12316,4 +12316,360 @@ public class Persa implements Idioma {
 		return "فایل";
 	}
 
+	@Override
+	public String gitAvanzadoTipo() {
+		return "کلاینت پیشرفته Git";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "باز کردن کلاینت پیشرفته Git";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "کلاینت پیشرفته Git — Wendy Mizumi: Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / بایگانی مخزن فعلی";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "مخزن";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "شاخه";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "تازه‌سازی";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "واکشی";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "دریافت";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "ارسال";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "شاخه جدید";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "تاریخچه commitها";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "تغییرات مرحله‌بندی‌نشده";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "تغییرات مرحله‌بندی‌شده";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "مرحله‌بندی انتخاب‌شده‌ها";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "مرحله‌بندی همه";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "لغو مرحله‌بندی انتخاب‌شده‌ها";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "لغو مرحله‌بندی همه";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "نمایش تفاوت‌ها";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "نمایش Blame";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "پیام commit";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "ایجاد commit";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "تفاوت‌ها";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "فعالیت";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "در حال تازه‌سازی مخزن فعلی...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "JGit در دسترس نیست. وابستگی‌ها را از رابط معمولی Git نصب کنید و برنامه را دوباره راه‌اندازی کنید.";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "کلاینت پیشرفته فقط پس از ایجاد مخزن نمونه فعلی از رابط معمولی Git قابل باز شدن است.";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "مرحله‌بندی‌نشده: " + noPreparados + " | مرحله‌بندی‌شده: " + preparados + " | commitهای نمایش‌داده‌شده: "
+				+ commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "یک پیام برای commit وارد کنید.";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "نام شاخه جدید:";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "به شاخه «" + rama + "» برویم؟ تغییرات محلی باید با تغییر شاخه سازگار باشند.";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "عملیات Git کامل نشد. زبانه فعالیت و گزارش CrashDetector را بررسی کنید.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "عملیات کامل شد.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "عملیات ناموفق بود.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "وضعیت و تاریخچه تازه‌سازی شد.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "در حال واکشی ارجاع‌های مخزن دوردست...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "در حال دریافت و ادغام تغییرات...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "در حال ارسال commitها به مخزن دوردست...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "در حال مرحله‌بندی فایل‌های انتخاب‌شده...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "در حال مرحله‌بندی همه تغییرات...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "در حال لغو مرحله‌بندی فایل‌های انتخاب‌شده...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "در حال خالی کردن ناحیه مرحله‌بندی...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "در حال ایجاد commit...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "در حال ایجاد شاخه «" + rama + "» و رفتن به آن...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "در حال رفتن به شاخه «" + rama + "»...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "وضعیت";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "مسیر";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "هش";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "تاریخ";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "نویسنده";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "پیام";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "افزوده‌شده";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "تغییریافته";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "حذف‌شده";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "ردیابی‌نشده";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "تعارض";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "تغییرنام‌یافته";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "Git پیشرفته — پس‌زمینه Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "Git پیشرفته — پنل";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "Git پیشرفته — پنل ثانویه";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "Git پیشرفته — متن";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "Git پیشرفته — متن کم‌رنگ";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "Git پیشرفته — آبی بایگانی";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "Git پیشرفته — صورتی روبان";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "Git پیشرفته — حاشیه";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "Git پیشرفته — جدول";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "Git پیشرفته — انتخاب";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "Git پیشرفته — پس‌زمینه تفاوت‌ها";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "Git پیشرفته — دکمه";
+	}
+
 }

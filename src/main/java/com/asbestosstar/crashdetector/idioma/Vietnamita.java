@@ -12576,4 +12576,359 @@ public class Vietnamita implements Idioma {
 		return "tệp";
 	}
 
+	@Override
+	public String gitAvanzadoTipo() {
+		return "Ứng dụng Git nâng cao";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "Mở ứng dụng Git nâng cao";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "Ứng dụng Git nâng cao — Wendy Mizumi: Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / kho lưu trữ của repository hiện tại";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "Repository";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "Nhánh";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "Làm mới";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "Fetch";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "Pull";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "Push";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "Nhánh mới";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "Lịch sử commit";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "Thay đổi chưa stage";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "Thay đổi đã stage";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "Stage mục đã chọn";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "Stage tất cả";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "Unstage mục đã chọn";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "Unstage tất cả";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "Xem diff";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "Xem blame";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "Nội dung commit";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "Tạo commit";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "Diff";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "Hoạt động";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "Đang làm mới repository hiện tại...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "JGit không khả dụng. Hãy cài các dependency từ giao diện Git thông thường rồi khởi động lại ứng dụng.";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "Chỉ có thể mở ứng dụng nâng cao sau khi tạo repository cho phiên bản hiện tại từ giao diện Git thông thường.";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "Chưa stage: " + noPreparados + " | Đã stage: " + preparados + " | Commit đang hiển thị: " + commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "Hãy nhập nội dung commit.";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "Tên nhánh mới:";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "Chuyển sang nhánh '" + rama + "'? Các thay đổi cục bộ phải tương thích với việc chuyển nhánh.";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "Không thể hoàn tất thao tác Git. Hãy kiểm tra tab Hoạt động và nhật ký CrashDetector.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "Thao tác đã hoàn tất.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "Thao tác thất bại.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "Đã làm mới trạng thái và lịch sử.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "Đang lấy các tham chiếu từ remote...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "Đang tải xuống và tích hợp các thay đổi...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "Đang đẩy các commit lên repository remote...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "Đang stage các tệp đã chọn...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "Đang stage tất cả thay đổi...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "Đang unstage các tệp đã chọn...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "Đang làm trống staging area...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "Đang tạo commit...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "Đang tạo và chuyển sang nhánh '" + rama + "'...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "Đang chuyển sang nhánh '" + rama + "'...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "Trạng thái";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "Đường dẫn";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "Hash";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "Ngày";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "Tác giả";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "Nội dung";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "Đã thêm";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "Đã sửa đổi";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "Đã xóa";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "Chưa được theo dõi";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "Xung đột";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "Đã đổi tên";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "Git nâng cao — nền Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "Git nâng cao — bảng";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "Git nâng cao — bảng phụ";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "Git nâng cao — văn bản";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "Git nâng cao — văn bản dịu";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "Git nâng cao — xanh lưu trữ";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "Git nâng cao — hồng dải băng";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "Git nâng cao — viền";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "Git nâng cao — bảng dữ liệu";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "Git nâng cao — vùng chọn";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "Git nâng cao — nền diff";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "Git nâng cao — nút";
+	}
+
 }

@@ -12712,4 +12712,360 @@ public class Khmer implements Idioma {
 		return "ឯកសារ";
 	}
 
+	@Override
+	public String gitAvanzadoTipo() {
+		return "កម្មវិធី Git កម្រិតខ្ពស់";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "បើកកម្មវិធី Git កម្រិតខ្ពស់";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "កម្មវិធី Git កម្រិតខ្ពស់ — Wendy Mizumi: Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / បណ្ណសារឃ្លាំងបច្ចុប្បន្ន";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "ឃ្លាំង";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "សាខា";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "ធ្វើបច្ចុប្បន្នភាព";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "ទាញយកព័ត៌មាន";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "ទាញ";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "បញ្ជូន";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "សាខាថ្មី";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "ប្រវត្តិ commit";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "ការផ្លាស់ប្តូរមិនទាន់ដាក់ក្នុង stage";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "ការផ្លាស់ប្តូរដែលបានដាក់ក្នុង stage";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "ដាក់ជម្រើសក្នុង stage";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "ដាក់ទាំងអស់ក្នុង stage";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "ដកជម្រើសចេញពី stage";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "ដកទាំងអស់ចេញពី stage";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "មើលភាពខុសគ្នា";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "មើល blame";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "សារ commit";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "បង្កើត commit";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "ភាពខុសគ្នា";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "សកម្មភាព";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "កំពុងធ្វើបច្ចុប្បន្នភាពឃ្លាំងបច្ចុប្បន្ន...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "មិនមាន JGit ទេ។ សូមដំឡើង dependency ពីផ្ទាំង Git ធម្មតា ហើយចាប់ផ្តើមកម្មវិធីឡើងវិញ។";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "អាចបើកកម្មវិធីកម្រិតខ្ពស់បានតែបន្ទាប់ពីបង្កើតឃ្លាំងសម្រាប់ instance បច្ចុប្បន្នពីផ្ទាំង Git ធម្មតា។";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "មិនទាន់ដាក់ក្នុង stage: " + noPreparados + " | បានដាក់ក្នុង stage: " + preparados
+				+ " | commit ដែលបង្ហាញ: " + commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "សូមបញ្ចូលសារ commit។";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "ឈ្មោះសាខាថ្មី:";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "ប្តូរទៅសាខា “" + rama + "” ឬ? ការផ្លាស់ប្តូរក្នុងម៉ាស៊ីនត្រូវតែឆបគ្នាជាមួយការប្តូរសាខា។";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "មិនអាចបញ្ចប់ប្រតិបត្តិការ Git បានទេ។ សូមពិនិត្យផ្ទាំងសកម្មភាព និងកំណត់ហេតុ CrashDetector។";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "ប្រតិបត្តិការបានបញ្ចប់។";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "ប្រតិបត្តិការបរាជ័យ។";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "បានធ្វើបច្ចុប្បន្នភាពស្ថានភាព និងប្រវត្តិ។";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "កំពុងទាញយក reference ពី remote...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "កំពុងទាញយក និងបញ្ចូលការផ្លាស់ប្តូរ...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "កំពុងបញ្ជូន commit ទៅឃ្លាំង remote...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "កំពុងដាក់ឯកសារដែលបានជ្រើសក្នុង stage...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "កំពុងដាក់ការផ្លាស់ប្តូរទាំងអស់ក្នុង stage...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "កំពុងដកឯកសារដែលបានជ្រើសចេញពី stage...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "កំពុងសម្អាត staging area...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "កំពុងបង្កើត commit...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "កំពុងបង្កើត និងប្តូរទៅសាខា “" + rama + "”...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "កំពុងប្តូរទៅសាខា “" + rama + "”...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "ស្ថានភាព";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "ផ្លូវ";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "Hash";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "កាលបរិច្ឆេទ";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "អ្នកនិពន្ធ";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "សារ";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "បានបន្ថែម";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "បានកែប្រែ";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "បានលុប";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "មិនបានតាមដាន";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "ជម្លោះ";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "បានប្តូរឈ្មោះ";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "Git កម្រិតខ្ពស់ — ផ្ទៃខាងក្រោយ Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "Git កម្រិតខ្ពស់ — ផ្ទាំង";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "Git កម្រិតខ្ពស់ — ផ្ទាំងរង";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "Git កម្រិតខ្ពស់ — អត្ថបទ";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "Git កម្រិតខ្ពស់ — អត្ថបទស្រាល";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "Git កម្រិតខ្ពស់ — ពណ៌ខៀវបណ្ណសារ";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "Git កម្រិតខ្ពស់ — ពណ៌ផ្កាឈូកខ្សែបូ";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "Git កម្រិតខ្ពស់ — ស៊ុម";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "Git កម្រិតខ្ពស់ — តារាង";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "Git កម្រិតខ្ពស់ — ជម្រើស";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "Git កម្រិតខ្ពស់ — ផ្ទៃខាងក្រោយភាពខុសគ្នា";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "Git កម្រិតខ្ពស់ — ប៊ូតុង";
+	}
+
 }

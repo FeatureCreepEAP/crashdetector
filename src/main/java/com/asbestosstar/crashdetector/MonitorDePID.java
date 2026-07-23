@@ -108,6 +108,7 @@ import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlaye
 import com.asbestosstar.crashdetector.gui.tipos.rendimiento.AdministradorDeRendimientoNightcore;
 import com.asbestosstar.crashdetector.gui.tipos.sampler.SamplerGUIEineLotta;
 import com.asbestosstar.crashdetector.gui.tipos.scriptide.ScriptIDEGUINiwaJPlus;
+import com.asbestosstar.crashdetector.gui.tipos.jgit.avanzado.ClienteGitAvanzadoWendyMizumi;
 
 public class MonitorDePID {
 
@@ -1186,6 +1187,7 @@ public class MonitorDePID {
 				DialogoConflictoImportacionYumeiriReyu::new);
 		TipoGUI.IMPORTADOR_MODPACK.registrarGUI(ImportadorModpackMausleepsVT.ID, ImportadorModpackMausleepsVT::new);
 		TipoGUI.JGIT_HUB.registrarGUI(JGitHubIzzy.ID, JGitHubIzzy::new);
+		TipoGUI.CLIENTE_GIT_AVANZADO.registrarGUI(ClienteGitAvanzadoWendyMizumi.ID, ClienteGitAvanzadoWendyMizumi::new);
 		TipoGUI.GPU_FIX.registrarGUI(GPUFixOptimusPrime.ID, GPUFixOptimusPrime::new);
 		TipoGUI.ADMINISTRADOR_DE_RENDIMIENTO.registrarGUI(AdministradorDeRendimientoNightcore.ID,
 				AdministradorDeRendimientoNightcore::new);

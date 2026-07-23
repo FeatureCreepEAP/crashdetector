@@ -12127,4 +12127,359 @@ public class Japones implements Idioma {
 		return "ファイル";
 	}
 
+	@Override
+	public String gitAvanzadoTipo() {
+		return "高度なGitクライアント";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "高度なGitクライアントを開く";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "高度なGitクライアント — Wendy Mizumi: Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / 現在のリポジトリアーカイブ";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "リポジトリ";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "ブランチ";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "更新";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "フェッチ";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "プル";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "プッシュ";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "新しいブランチ";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "コミット履歴";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "ステージされていない変更";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "ステージ済みの変更";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "選択項目をステージ";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "すべてステージ";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "選択項目のステージを解除";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "すべてのステージを解除";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "差分を表示";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "Blameを表示";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "コミットメッセージ";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "コミットを作成";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "差分";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "アクティビティ";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "現在のリポジトリを更新しています...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "JGitを利用できません。通常のGit GUIから依存関係をインストールし、アプリケーションを再起動してください。";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "高度なクライアントは、通常のGit GUIから現在のインスタンスのリポジトリを作成した後にのみ開けます。";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "未ステージ: " + noPreparados + " | ステージ済み: " + preparados + " | 表示コミット数: " + commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "コミットメッセージを入力してください。";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "新しいブランチ名:";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "ブランチ「" + rama + "」に切り替えますか？ローカルの変更はブランチ切り替えと互換性がある必要があります。";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "Git操作を完了できませんでした。アクティビティタブとCrashDetectorログを確認してください。";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "操作が完了しました。";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "操作に失敗しました。";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "状態と履歴を更新しました。";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "リモート参照を取得しています...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "変更をダウンロードして統合しています...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "コミットをリモートへプッシュしています...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "選択したファイルをステージしています...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "すべての変更をステージしています...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "選択したファイルのステージを解除しています...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "ステージ領域を空にしています...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "コミットを作成しています...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "ブランチ「" + rama + "」を作成して切り替えています...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "ブランチ「" + rama + "」に切り替えています...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "状態";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "パス";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "ハッシュ";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "日付";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "作成者";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "メッセージ";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "追加";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "変更";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "削除";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "未追跡";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "競合";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "名前変更";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "高度なGit — Lost Media背景";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "高度なGit — パネル";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "高度なGit — サブパネル";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "高度なGit — テキスト";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "高度なGit — 控えめなテキスト";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "高度なGit — アーカイブブルー";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "高度なGit — リボンピンク";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "高度なGit — 境界線";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "高度なGit — テーブル";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "高度なGit — 選択";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "高度なGit — 差分背景";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "高度なGit — ボタン";
+	}
+
 }

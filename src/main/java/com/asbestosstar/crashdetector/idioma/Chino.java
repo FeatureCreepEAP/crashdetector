@@ -11894,4 +11894,359 @@ public class Chino implements Idioma {
 		return "文件";
 	}
 
+	@Override
+	public String gitAvanzadoTipo() {
+		return "高级 Git 客户端";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "打开高级 Git 客户端";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "高级 Git 客户端 — Wendy Mizumi：Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / 当前仓库档案";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "仓库";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "分支";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "刷新";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "获取";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "拉取";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "推送";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "新建分支";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "提交历史";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "未暂存的更改";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "已暂存的更改";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "暂存所选";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "暂存全部";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "取消暂存所选";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "取消暂存全部";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "查看差异";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "查看 Blame";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "提交信息";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "创建提交";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "差异";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "活动";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "正在刷新当前仓库...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "JGit 不可用。请从普通 Git 界面安装依赖项，然后重新启动应用程序。";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "只有先从普通 Git 界面为当前实例创建仓库，才能打开高级客户端。";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "未暂存：" + noPreparados + " | 已暂存：" + preparados + " | 显示的提交：" + commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "请输入提交信息。";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "新分支名称：";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "切换到分支“" + rama + "”吗？本地更改必须与分支切换兼容。";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "无法完成 Git 操作。请检查“活动”选项卡和 CrashDetector 日志。";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "操作已完成。";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "操作失败。";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "状态和历史记录已刷新。";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "正在获取远程引用...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "正在下载并整合更改...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "正在向远程仓库推送提交...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "正在暂存所选文件...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "正在暂存全部更改...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "正在取消暂存所选文件...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "正在清空暂存区...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "正在创建提交...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "正在创建并切换到分支“" + rama + "”...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "正在切换到分支“" + rama + "”...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "状态";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "路径";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "哈希";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "日期";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "作者";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "信息";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "已添加";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "已修改";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "已删除";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "未跟踪";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "冲突";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "已重命名";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "高级 Git — Lost Media 背景";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "高级 Git — 面板";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "高级 Git — 次级面板";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "高级 Git — 文本";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "高级 Git — 柔和文本";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "高级 Git — 档案蓝";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "高级 Git — 缎带粉";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "高级 Git — 边框";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "高级 Git — 表格";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "高级 Git — 选中项";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "高级 Git — 差异背景";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "高级 Git — 按钮";
+	}
+
 }

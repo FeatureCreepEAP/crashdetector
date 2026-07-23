@@ -12414,4 +12414,359 @@ public class Arabe implements Idioma {
 		return "ملف";
 	}
 
+	@Override
+	public String gitAvanzadoTipo() {
+		return "عميل Git متقدم";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "فتح عميل Git المتقدم";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "عميل Git المتقدم — Wendy Mizumi: Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / أرشيف المستودع الحالي";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "المستودع";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "الفرع";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "تحديث";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "جلب";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "سحب";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "دفع";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "فرع جديد";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "سجل الالتزامات";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "تغييرات غير مُرحّلة";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "تغييرات مُرحّلة";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "ترحيل المحدد";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "ترحيل الكل";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "إلغاء ترحيل المحدد";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "إلغاء ترحيل الكل";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "عرض الفروق";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "عرض Blame";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "رسالة الالتزام";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "إنشاء التزام";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "الفروق";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "النشاط";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "جارٍ تحديث المستودع الحالي...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "JGit غير متاح. ثبّت الاعتماديات من واجهة Git العادية ثم أعد تشغيل التطبيق.";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "لا يمكن فتح العميل المتقدم إلا بعد إنشاء مستودع النسخة الحالية من واجهة Git العادية.";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "غير مُرحّل: " + noPreparados + " | مُرحّل: " + preparados + " | الالتزامات المعروضة: " + commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "اكتب رسالة للالتزام.";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "اسم الفرع الجديد:";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "هل تريد التبديل إلى الفرع «" + rama + "»؟ يجب أن تكون التغييرات المحلية متوافقة مع تبديل الفرع.";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "تعذر إكمال عملية Git. راجع علامة تبويب النشاط وسجل CrashDetector.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "اكتملت العملية.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "فشلت العملية.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "تم تحديث الحالة والسجل.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "جارٍ جلب مراجع المستودع البعيد...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "جارٍ تنزيل التغييرات ودمجها...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "جارٍ دفع الالتزامات إلى المستودع البعيد...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "جارٍ ترحيل الملفات المحددة...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "جارٍ ترحيل جميع التغييرات...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "جارٍ إلغاء ترحيل الملفات المحددة...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "جارٍ إفراغ منطقة الترحيل...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "جارٍ إنشاء الالتزام...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "جارٍ إنشاء الفرع «" + rama + "» والتبديل إليه...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "جارٍ التبديل إلى الفرع «" + rama + "»...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "الحالة";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "المسار";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "التجزئة";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "التاريخ";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "المؤلف";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "الرسالة";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "مضاف";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "معدّل";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "محذوف";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "غير متعقّب";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "تعارض";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "أعيدت تسميته";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "Git المتقدم — خلفية Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "Git المتقدم — اللوحة";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "Git المتقدم — اللوحة الثانوية";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "Git المتقدم — النص";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "Git المتقدم — النص الخافت";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "Git المتقدم — أزرق الأرشيف";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "Git المتقدم — وردي الشريط";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "Git المتقدم — الحدود";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "Git المتقدم — الجدول";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "Git المتقدم — التحديد";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "Git المتقدم — خلفية الفروق";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "Git المتقدم — الزر";
+	}
+
 }

@@ -4911,4 +4911,146 @@ public interface Idioma {
 
 	public String bittorrentNombreArchivoPorDefecto();
 
+	public String gitAvanzadoTipo();
+
+	public String jgitAbrirClienteAvanzado();
+
+	public String gitAvanzadoTitulo();
+
+	public String gitAvanzadoSerieLostMedia();
+
+	public String gitAvanzadoRepositorio();
+
+	public String gitAvanzadoRama();
+
+	public String gitAvanzadoActualizar();
+
+	public String gitAvanzadoFetch();
+
+	public String gitAvanzadoPull();
+
+	public String gitAvanzadoPush();
+
+	public String gitAvanzadoNuevaRama();
+
+	public String gitAvanzadoHistorial();
+
+	public String gitAvanzadoNoPreparados();
+
+	public String gitAvanzadoPreparados();
+
+	public String gitAvanzadoPrepararSeleccion();
+
+	public String gitAvanzadoPrepararTodo();
+
+	public String gitAvanzadoQuitarSeleccion();
+
+	public String gitAvanzadoQuitarTodo();
+
+	public String gitAvanzadoVerDiff();
+
+	public String gitAvanzadoVerBlame();
+
+	public String gitAvanzadoMensajeCommit();
+
+	public String gitAvanzadoCommit();
+
+	public String gitAvanzadoDiff();
+
+	public String gitAvanzadoBlame();
+
+	public String gitAvanzadoActividad();
+
+	public String gitAvanzadoActualizando();
+
+	public String gitAvanzadoJGitNoDisponible();
+
+	public String gitAvanzadoRepositorioRequerido();
+
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits);
+
+	public String gitAvanzadoMensajeRequerido();
+
+	public String gitAvanzadoNombreNuevaRama();
+
+	public String gitAvanzadoConfirmarCambioRama(String rama);
+
+	public String gitAvanzadoErrorOperacion();
+
+	public String gitAvanzadoOperacionCompletada();
+
+	public String gitAvanzadoOperacionFallida();
+
+	public String gitAvanzadoActividadActualizado();
+
+	public String gitAvanzadoActividadFetch();
+
+	public String gitAvanzadoActividadPull();
+
+	public String gitAvanzadoActividadPush();
+
+	public String gitAvanzadoActividadPreparar();
+
+	public String gitAvanzadoActividadPrepararTodo();
+
+	public String gitAvanzadoActividadQuitarPreparacion();
+
+	public String gitAvanzadoActividadQuitarTodo();
+
+	public String gitAvanzadoActividadCommit();
+
+	public String gitAvanzadoActividadCrearRama(String rama);
+
+	public String gitAvanzadoActividadCambiarRama(String rama);
+
+	public String gitAvanzadoColEstado();
+
+	public String gitAvanzadoColRuta();
+
+	public String gitAvanzadoColHash();
+
+	public String gitAvanzadoColFecha();
+
+	public String gitAvanzadoColAutor();
+
+	public String gitAvanzadoColMensaje();
+
+	public String gitAvanzadoEstadoAgregado();
+
+	public String gitAvanzadoEstadoModificado();
+
+	public String gitAvanzadoEstadoEliminado();
+
+	public String gitAvanzadoEstadoNoRastreado();
+
+	public String gitAvanzadoEstadoConflicto();
+
+	public String gitAvanzadoEstadoRenombrado();
+
+	public String gitAvanzadoWendyImagenAlternativa();
+
+	public String gitAvanzadoColorFondo();
+
+	public String gitAvanzadoColorPanel();
+
+	public String gitAvanzadoColorPanelSecundario();
+
+	public String gitAvanzadoColorTexto();
+
+	public String gitAvanzadoColorTextoSuave();
+
+	public String gitAvanzadoColorAzul();
+
+	public String gitAvanzadoColorRosa();
+
+	public String gitAvanzadoColorBorde();
+
+	public String gitAvanzadoColorTabla();
+
+	public String gitAvanzadoColorSeleccion();
+
+	public String gitAvanzadoColorDiff();
+
+	public String gitAvanzadoColorBoton();
+
 }

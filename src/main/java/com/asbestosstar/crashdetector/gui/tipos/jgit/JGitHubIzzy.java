@@ -37,6 +37,9 @@ import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.jgit.avanzado.ClienteGitAvanzadoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.jgit.avanzado.ClienteGitAvanzadoWendyMizumi;
 import com.asbestosstar.crashdetector.gui.tipos.jgit.forge.ConfigCrearRepositorio;
 import com.asbestosstar.crashdetector.gui.tipos.jgit.forge.GitForgeAPI;
 import com.asbestosstar.crashdetector.gui.tipos.jgit.forge.RegistroGitForge;
@@ -73,6 +76,7 @@ public class JGitHubIzzy extends JGitHubBase {
 	private JButton botonCommitManual;
 	private JButton botonPushManual;
 	private JButton botonAbrirGuiSwing;
+	private JButton botonClienteAvanzado;
 	private JButton botonDescargarFaltantes;
 
 	private JCheckBox checkAutoCommit;
@@ -242,8 +246,10 @@ public class JGitHubIzzy extends JGitHubBase {
 		JPanel p = crearPanelSeccion(MonitorDePID.idioma.jgitSeccionHerramientas());
 
 		botonAbrirGuiSwing = crearBoton(MonitorDePID.idioma.jgitAbrirGuiSwing());
+		botonClienteAvanzado = crearBoton(MonitorDePID.idioma.jgitAbrirClienteAvanzado());
 
 		p.add(botonAbrirGuiSwing);
+		p.add(botonClienteAvanzado);
 
 		return p;
 	}
@@ -325,6 +331,7 @@ public class JGitHubIzzy extends JGitHubBase {
 		botonCommitManual.addActionListener(e -> accionCommitManual());
 		botonPushManual.addActionListener(e -> accionPushManual());
 		botonAbrirGuiSwing.addActionListener(e -> abrirGuiSwing());
+		botonClienteAvanzado.addActionListener(e -> abrirClienteAvanzado());
 
 		checkAutoCommit.addActionListener(e -> {
 			JGitAutoCommit.AUTO_COMMIT.escribir(checkAutoCommit.isSelected());
@@ -520,6 +527,21 @@ public class JGitHubIzzy extends JGitHubBase {
 		actualizarEstadoBotones();
 	}
 
+	/**
+	 * Abre el cliente avanzado solamente para el repositorio de la instancia
+	 * actual. El botón permanece deshabilitado hasta que exista el repositorio.
+	 */
+	private void abrirClienteAvanzado() {
+		if (!repoExiste()) {
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.gitAvanzadoRepositorioRequerido());
+			return;
+		}
+
+		ClienteGitAvanzadoGUI gui = TipoGUI.CLIENTE_GIT_AVANZADO
+				.obtenerGUIPredeterminado(ClienteGitAvanzadoWendyMizumi.ID, ClienteGitAvanzadoWendyMizumi::new);
+		gui.constructir(carpetaActual());
+	}
+
 	private void seleccionarForgeEnCombo(String idForge) {
 		if (comboForge == null || idForge == null) {
 			return;
@@ -563,6 +585,7 @@ public class JGitHubIzzy extends JGitHubBase {
 		botonCommitManual.setEnabled(repo);
 		botonPushManual.setEnabled(remote);
 		botonAbrirGuiSwing.setEnabled(repo);
+		botonClienteAvanzado.setEnabled(repo);
 		checkAutoCommit.setEnabled(repo);
 		checkAutoPush.setEnabled(repo && remote);
 

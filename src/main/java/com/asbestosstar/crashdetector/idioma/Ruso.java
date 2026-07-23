@@ -12360,4 +12360,361 @@ public class Ruso implements Idioma {
 		return "файл";
 	}
 
+	@Override
+	public String gitAvanzadoTipo() {
+		return "Расширенный Git-клиент";
+	}
+
+	@Override
+	public String jgitAbrirClienteAvanzado() {
+		return "Открыть расширенный Git-клиент";
+	}
+
+	@Override
+	public String gitAvanzadoTitulo() {
+		return "Расширенный Git-клиент — Wendy Mizumi: Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoSerieLostMedia() {
+		return "Wendy Mizumi — Lost Media / архив текущего репозитория";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorio() {
+		return "Репозиторий";
+	}
+
+	@Override
+	public String gitAvanzadoRama() {
+		return "Ветка";
+	}
+
+	@Override
+	public String gitAvanzadoActualizar() {
+		return "Обновить";
+	}
+
+	@Override
+	public String gitAvanzadoFetch() {
+		return "Fetch";
+	}
+
+	@Override
+	public String gitAvanzadoPull() {
+		return "Pull";
+	}
+
+	@Override
+	public String gitAvanzadoPush() {
+		return "Push";
+	}
+
+	@Override
+	public String gitAvanzadoNuevaRama() {
+		return "Новая ветка";
+	}
+
+	@Override
+	public String gitAvanzadoHistorial() {
+		return "История коммитов";
+	}
+
+	@Override
+	public String gitAvanzadoNoPreparados() {
+		return "Неподготовленные изменения";
+	}
+
+	@Override
+	public String gitAvanzadoPreparados() {
+		return "Подготовленные изменения";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararSeleccion() {
+		return "Подготовить выбранное";
+	}
+
+	@Override
+	public String gitAvanzadoPrepararTodo() {
+		return "Подготовить всё";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarSeleccion() {
+		return "Убрать выбранное из индекса";
+	}
+
+	@Override
+	public String gitAvanzadoQuitarTodo() {
+		return "Очистить индекс";
+	}
+
+	@Override
+	public String gitAvanzadoVerDiff() {
+		return "Показать diff";
+	}
+
+	@Override
+	public String gitAvanzadoVerBlame() {
+		return "Показать blame";
+	}
+
+	@Override
+	public String gitAvanzadoMensajeCommit() {
+		return "Сообщение коммита";
+	}
+
+	@Override
+	public String gitAvanzadoCommit() {
+		return "Создать коммит";
+	}
+
+	@Override
+	public String gitAvanzadoDiff() {
+		return "Diff";
+	}
+
+	@Override
+	public String gitAvanzadoBlame() {
+		return "Blame";
+	}
+
+	@Override
+	public String gitAvanzadoActividad() {
+		return "Активность";
+	}
+
+	@Override
+	public String gitAvanzadoActualizando() {
+		return "Обновление текущего репозитория...";
+	}
+
+	@Override
+	public String gitAvanzadoJGitNoDisponible() {
+		return "JGit недоступен. Установите зависимости через обычный интерфейс Git и перезапустите приложение.";
+	}
+
+	@Override
+	public String gitAvanzadoRepositorioRequerido() {
+		return "Расширенный клиент можно открыть только после создания репозитория текущего экземпляра через обычный интерфейс Git.";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoResumen(int noPreparados, int preparados, int commits) {
+		return "Неподготовлено: " + noPreparados + " | Подготовлено: " + preparados + " | Показано коммитов: "
+				+ commits;
+	}
+
+	@Override
+	public String gitAvanzadoMensajeRequerido() {
+		return "Введите сообщение коммита.";
+	}
+
+	@Override
+	public String gitAvanzadoNombreNuevaRama() {
+		return "Имя новой ветки:";
+	}
+
+	@Override
+	public String gitAvanzadoConfirmarCambioRama(String rama) {
+		return "Переключиться на ветку «" + rama
+				+ "»? Локальные изменения должны быть совместимы с переключением ветки.";
+	}
+
+	@Override
+	public String gitAvanzadoErrorOperacion() {
+		return "Не удалось завершить операцию Git. Проверьте вкладку «Активность» и журнал CrashDetector.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionCompletada() {
+		return "Операция завершена.";
+	}
+
+	@Override
+	public String gitAvanzadoOperacionFallida() {
+		return "Операция завершилась ошибкой.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadActualizado() {
+		return "Состояние и история обновлены.";
+	}
+
+	@Override
+	public String gitAvanzadoActividadFetch() {
+		return "Получение ссылок удалённого репозитория...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPull() {
+		return "Загрузка и интеграция изменений...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPush() {
+		return "Отправка коммитов в удалённый репозиторий...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPreparar() {
+		return "Подготовка выбранных файлов...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadPrepararTodo() {
+		return "Подготовка всех изменений...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarPreparacion() {
+		return "Удаление выбранных файлов из индекса...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadQuitarTodo() {
+		return "Очистка индекса...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCommit() {
+		return "Создание коммита...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCrearRama(String rama) {
+		return "Создание и переключение на ветку «" + rama + "»...";
+	}
+
+	@Override
+	public String gitAvanzadoActividadCambiarRama(String rama) {
+		return "Переключение на ветку «" + rama + "»...";
+	}
+
+	@Override
+	public String gitAvanzadoColEstado() {
+		return "Состояние";
+	}
+
+	@Override
+	public String gitAvanzadoColRuta() {
+		return "Путь";
+	}
+
+	@Override
+	public String gitAvanzadoColHash() {
+		return "Хэш";
+	}
+
+	@Override
+	public String gitAvanzadoColFecha() {
+		return "Дата";
+	}
+
+	@Override
+	public String gitAvanzadoColAutor() {
+		return "Автор";
+	}
+
+	@Override
+	public String gitAvanzadoColMensaje() {
+		return "Сообщение";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoAgregado() {
+		return "Добавлен";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoModificado() {
+		return "Изменён";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoEliminado() {
+		return "Удалён";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoNoRastreado() {
+		return "Не отслеживается";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoConflicto() {
+		return "Конфликт";
+	}
+
+	@Override
+	public String gitAvanzadoEstadoRenombrado() {
+		return "Переименован";
+	}
+
+	@Override
+	public String gitAvanzadoWendyImagenAlternativa() {
+		return "Wendy Mizumi — Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorFondo() {
+		return "Расширенный Git — фон Lost Media";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanel() {
+		return "Расширенный Git — панель";
+	}
+
+	@Override
+	public String gitAvanzadoColorPanelSecundario() {
+		return "Расширенный Git — дополнительная панель";
+	}
+
+	@Override
+	public String gitAvanzadoColorTexto() {
+		return "Расширенный Git — текст";
+	}
+
+	@Override
+	public String gitAvanzadoColorTextoSuave() {
+		return "Расширенный Git — приглушённый текст";
+	}
+
+	@Override
+	public String gitAvanzadoColorAzul() {
+		return "Расширенный Git — архивный синий";
+	}
+
+	@Override
+	public String gitAvanzadoColorRosa() {
+		return "Расширенный Git — ленточный розовый";
+	}
+
+	@Override
+	public String gitAvanzadoColorBorde() {
+		return "Расширенный Git — граница";
+	}
+
+	@Override
+	public String gitAvanzadoColorTabla() {
+		return "Расширенный Git — таблица";
+	}
+
+	@Override
+	public String gitAvanzadoColorSeleccion() {
+		return "Расширенный Git — выделение";
+	}
+
+	@Override
+	public String gitAvanzadoColorDiff() {
+		return "Расширенный Git — фон diff";
+	}
+
+	@Override
+	public String gitAvanzadoColorBoton() {
+		return "Расширенный Git — кнопка";
+	}
+
 }
