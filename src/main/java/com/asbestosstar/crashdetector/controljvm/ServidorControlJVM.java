@@ -194,6 +194,16 @@ public final class ServidorControlJVM {
 					return;
 				}
 
+				if ("CLASS_BYTES".equals(comando)) {
+					CapturadorBytesClase.Resultado resultado = CapturadorBytesClase.capturar(argumento);
+					if (resultado.correcto && resultado.bytes != null) {
+						responderConDatos(salida, true, resultado.codigo, resultado.detalle, resultado.bytes);
+					} else {
+						responder(salida, false, resultado.codigo, resultado.detalle);
+					}
+					return;
+				}
+
 				responder(salida, false, RespuestaControlJVM.CODIGO_ERROR, "Comando desconocido");
 			} catch (Throwable t) {
 				CrashDetectorLogger.logException(t);
@@ -209,6 +219,20 @@ public final class ServidorControlJVM {
 		salida.writeBoolean(correcta);
 		salida.writeUTF(codigo == null ? RespuestaControlJVM.CODIGO_ERROR : codigo);
 		salida.writeUTF(detalle == null ? "" : detalle);
+		salida.flush();
+	}
+
+	private static void responderConDatos(DataOutputStream salida, boolean correcta, String codigo, String detalle,
+			byte[] datos) throws Exception {
+		if (datos == null || datos.length == 0 || datos.length > 64 * 1024 * 1024) {
+			responder(salida, false, RespuestaControlJVM.CODIGO_DATOS_INVALIDOS, "LONGITUD_INVALIDA");
+			return;
+		}
+		salida.writeBoolean(correcta);
+		salida.writeUTF(codigo == null ? RespuestaControlJVM.CODIGO_ERROR : codigo);
+		salida.writeUTF(detalle == null ? "" : detalle);
+		salida.writeInt(datos.length);
+		salida.write(datos);
 		salida.flush();
 	}
 

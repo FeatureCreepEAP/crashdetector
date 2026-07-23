@@ -13582,4 +13582,179 @@ public class Espanol implements Idioma {
 		return "Git avanzado — botón";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "Transferidor de clases — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "Escribe el nombre de una clase cargada en el proceso observado usando puntos o barras. CrashDetector solicitará sus bytes actuales a la JVM y el Buscador los usará antes que los bytes del JAR. Estas copias existen solo en memoria y se eliminan automáticamente cuando cambia el proceso.";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "Nombre de la clase";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "Transferir clase";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "Borrar transferidas";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "Solicitando " + nombreClase + " a la JVM observada...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "Clase transferida: " + nombreClase + " (" + bytes + " bytes).";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "No se pudo transferir la clase: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "Abrir transferidor de clases";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "Generador de parches — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "Generador de parches";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "Crea un proyecto Java para una extensión de CrashDetector, permite que una AI edite el parche mediante MCP y compila el JAR con el classpath actual.";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "Carpeta del proyecto";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "Nombre del proyecto";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "Paquete base";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "Clase objetivo";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "Ruta del JDK";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "Seleccionar…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "Descargar Red Hat JDK";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "Descargar Tribble/Tribblix JDK";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "Crear proyecto";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "Compilar JAR";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "Abrir carpeta";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "Listo.";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "Creando el proyecto…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "Compilando el proyecto…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "Proyecto creado en: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "JAR compilado en: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "Error: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "La ruta seleccionada no contiene un JDK válido con javac.";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "Después de crear el proyecto, vaya a AI > MCP e inicie el servidor MCP para que la AI pueda leer, editar y compilar el parche.";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "Seleccionar carpeta del proyecto";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "Seleccionar JDK";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "La carpeta ya es un proyecto de parches. ¿Desea actualizar los archivos de plantilla?";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "Se abrió la página de descarga del JDK.";
+	}
+
 }

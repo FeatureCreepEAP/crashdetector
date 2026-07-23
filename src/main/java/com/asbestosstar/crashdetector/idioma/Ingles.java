@@ -12917,4 +12917,179 @@ public class Ingles implements Idioma {
 		return "Advanced Git — button";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "Class transferer — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "Enter the name of a class loaded in the observed process using dots or slashes. CrashDetector will request its current bytes from the JVM, and the Finder will use them before the bytes from the JAR. These copies exist only in memory and are removed automatically when the process changes.";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "Class name";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "Transfer class";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "Clear transferred classes";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "Requesting " + nombreClase + " from the observed JVM...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "Class transferred: " + nombreClase + " (" + bytes + " bytes).";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "The class could not be transferred: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "Open class transferer";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "Patch generator — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "Patch generator";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "Creates a Java project for a CrashDetector extension, lets an AI edit the patch through MCP, and compiles the JAR with the current classpath.";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "Project folder";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "Project name";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "Base package";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "Target class";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "JDK path";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "Select…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "Download Red Hat JDK";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "Download Tribble/Tribblix JDK";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "Create project";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "Compile JAR";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "Open folder";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "Ready.";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "Creating the project…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "Compiling the project…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "Project created at: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "JAR compiled at: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "Error: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "The selected path does not contain a valid JDK with javac.";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "After creating the project, go to AI > MCP and start the MCP server so the AI can read, edit and compile the patch.";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "Select project folder";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "Select JDK";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "The folder is already a patch project. Update the template files?";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "The JDK download page was opened.";
+	}
+
 }

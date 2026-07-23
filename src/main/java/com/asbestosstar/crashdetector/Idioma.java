@@ -5053,4 +5053,74 @@ public interface Idioma {
 
 	public String gitAvanzadoColorBoton();
 
+	public String transferidorClasesTitulo();
+
+	public String transferidorClasesDescripcion();
+
+	public String transferidorClasesNombreClase();
+
+	public String transferidorClasesTransferir();
+
+	public String transferidorClasesLimpiar();
+
+	public String transferidorClasesSolicitando(String nombreClase);
+
+	public String transferidorClasesExito(String nombreClase, int bytes);
+
+	public String transferidorClasesError(String detalle);
+
+	public String consolaAbrirTransferidorClases();
+
+	public String generadorParchesTitulo();
+
+	public String generadorParchesBotonSidebar();
+
+	public String generadorParchesDescripcion();
+
+	public String generadorParchesDirectorio();
+
+	public String generadorParchesNombre();
+
+	public String generadorParchesPaquete();
+
+	public String generadorParchesClaseObjetivo();
+
+	public String generadorParchesJdk();
+
+	public String generadorParchesSeleccionar();
+
+	public String generadorParchesDescargarRedHat();
+
+	public String generadorParchesDescargarTribble();
+
+	public String generadorParchesCrear();
+
+	public String generadorParchesCompilar();
+
+	public String generadorParchesAbrirCarpeta();
+
+	public String generadorParchesListo();
+
+	public String generadorParchesCreando();
+
+	public String generadorParchesCompilando();
+
+	public String generadorParchesCreado(String ruta);
+
+	public String generadorParchesCompilado(String ruta);
+
+	public String generadorParchesError(String detalle);
+
+	public String generadorParchesJdkInvalido();
+
+	public String generadorParchesMcpInstruccion();
+
+	public String generadorParchesSeleccionarDirectorioTitulo();
+
+	public String generadorParchesSeleccionarJdkTitulo();
+
+	public String generadorParchesProyectoExiste();
+
+	public String generadorParchesDescargaAbierta();
+
 }

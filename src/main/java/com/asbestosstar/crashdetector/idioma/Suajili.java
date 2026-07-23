@@ -13159,4 +13159,179 @@ public class Suajili implements Idioma {
 		return "Git ya kiwango cha juu — kitufe";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "Kihamishaji cha class — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "Andika jina la class iliyopakiwa katika process inayofuatiliwa kwa kutumia nukta au mikwaju. CrashDetector itaomba byte zake za sasa kutoka JVM, na Kitafutaji kitazitumia kabla ya byte za JAR. Nakala hizi hukaa kwenye kumbukumbu pekee na hufutwa kiotomatiki process inapobadilika.";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "Jina la class";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "Hamisha class";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "Futa class zilizohamishwa";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "Inaomba " + nombreClase + " kutoka JVM inayofuatiliwa...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "Class imehamishwa: " + nombreClase + " (" + bytes + " byte).";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "Class haikuweza kuhamishwa: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "Fungua kihamishaji cha class";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "Kizalishi cha viraka — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "Kizalishi cha viraka";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "Huunda mradi wa Java wa kiendelezi cha CrashDetector, huruhusu AI kuhariri kiraka kupitia MCP, na hukusanya JAR kwa classpath ya sasa.";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "Folda ya mradi";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "Jina la mradi";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "Kifurushi msingi";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "Darasa lengwa";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "Njia ya JDK";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "Chagua…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "Pakua Red Hat JDK";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "Pakua Tribble/Tribblix JDK";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "Unda mradi";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "Kusanya JAR";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "Fungua folda";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "Tayari.";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "Inaunda mradi…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "Inakusanya mradi…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "Mradi umeundwa katika: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "JAR imekusanywa katika: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "Hitilafu: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "Njia iliyochaguliwa haina JDK halali yenye javac.";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "Baada ya kuunda mradi, nenda AI > MCP na uanzishe seva ya MCP ili AI iweze kusoma, kuhariri na kukusanya kiraka.";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "Chagua folda ya mradi";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "Chagua JDK";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "Folda tayari ni mradi wa kiraka. Sasisha faili za kiolezo?";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "Ukurasa wa kupakua JDK umefunguliwa.";
+	}
+
 }

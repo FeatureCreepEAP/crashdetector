@@ -12249,4 +12249,179 @@ public class Chino implements Idioma {
 		return "高级 Git — 按钮";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "类传输器 — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "请输入观察进程中已加载类的名称，可使用点或斜杠。CrashDetector 将向 JVM 请求该类当前的字节，搜索器会优先使用这些字节而不是 JAR 中的字节。这些副本仅保存在内存中，并会在进程改变时自动删除。";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "类名";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "传输类";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "清除已传输类";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "正在向观察中的 JVM 请求 " + nombreClase + "...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "类已传输：" + nombreClase + "（" + bytes + " 字节）。";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "无法传输类：" + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "打开类传输器";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "补丁生成器 — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "补丁生成器";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "为 CrashDetector 扩展创建 Java 项目，让 AI 通过 MCP 编辑补丁，并使用当前 classpath 编译 JAR。";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "项目文件夹";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "项目名称";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "基础包名";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "目标类";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "JDK 路径";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "选择…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "下载 Red Hat JDK";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "下载 Tribble/Tribblix JDK";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "创建项目";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "编译 JAR";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "打开文件夹";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "就绪。";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "正在创建项目…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "正在编译项目…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "项目已创建：" + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "JAR 已编译：" + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "错误：" + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "所选路径中没有带 javac 的有效 JDK。";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "创建项目后，请转到 AI > MCP 并启动 MCP 服务器，以便 AI 读取、编辑和编译补丁。";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "选择项目文件夹";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "选择 JDK";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "该文件夹已经是补丁项目。是否更新模板文件？";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "已打开 JDK 下载页面。";
+	}
+
 }

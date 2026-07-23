@@ -12478,4 +12478,179 @@ public class Coreano implements Idioma {
 		return "고급 Git — 버튼";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "클래스 전송기 — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "관찰 중인 프로세스에 로드된 클래스 이름을 점 또는 슬래시로 입력하십시오. CrashDetector가 JVM에서 현재 바이트를 요청하며, 검색기는 JAR의 바이트보다 이를 먼저 사용합니다. 복사본은 메모리에만 존재하고 프로세스가 바뀌면 자동으로 삭제됩니다.";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "클래스 이름";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "클래스 전송";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "전송된 클래스 지우기";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "관찰 중인 JVM에 " + nombreClase + " 요청 중...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "클래스 전송 완료: " + nombreClase + " (" + bytes + "바이트).";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "클래스를 전송할 수 없습니다: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "클래스 전송기 열기";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "패치 생성기 — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "패치 생성기";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "CrashDetector 확장용 Java 프로젝트를 만들고 AI가 MCP를 통해 패치를 편집하도록 하며 현재 classpath로 JAR을 컴파일합니다.";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "프로젝트 폴더";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "프로젝트 이름";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "기본 패키지";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "대상 클래스";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "JDK 경로";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "선택…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "Red Hat JDK 다운로드";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "Tribble/Tribblix JDK 다운로드";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "프로젝트 만들기";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "JAR 컴파일";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "폴더 열기";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "준비됨.";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "프로젝트 만드는 중…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "프로젝트 컴파일 중…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "프로젝트 생성 위치: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "JAR 컴파일 위치: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "오류: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "선택한 경로에 javac가 포함된 유효한 JDK가 없습니다.";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "프로젝트를 만든 후 AI > MCP에서 MCP 서버를 시작하여 AI가 패치를 읽고 편집하고 컴파일할 수 있게 하십시오.";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "프로젝트 폴더 선택";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "JDK 선택";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "이 폴더는 이미 패치 프로젝트입니다. 템플릿 파일을 업데이트하시겠습니까?";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "JDK 다운로드 페이지를 열었습니다.";
+	}
+
 }

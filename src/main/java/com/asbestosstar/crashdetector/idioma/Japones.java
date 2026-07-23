@@ -12482,4 +12482,179 @@ public class Japones implements Idioma {
 		return "高度なGit — ボタン";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "クラス転送 — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "監視中のプロセスに読み込まれているクラス名を、ドットまたはスラッシュで入力します。CrashDetectorは現在のバイト列をJVMへ要求し、検索機能はJAR内のバイト列より先にそれを使用します。コピーはメモリ内だけに保持され、プロセスが変わると自動的に削除されます。";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "クラス名";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "クラスを転送";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "転送済みクラスを消去";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "監視中のJVMへ " + nombreClase + " を要求しています...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "クラスを転送しました: " + nombreClase + "（" + bytes + " バイト）。";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "クラスを転送できませんでした: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "クラス転送を開く";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "パッチ生成ツール — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "パッチ生成ツール";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "CrashDetector拡張用のJavaプロジェクトを作成し、AIがMCP経由でパッチを編集できるようにして、現在のclasspathでJARをコンパイルします。";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "プロジェクトフォルダー";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "プロジェクト名";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "基本パッケージ";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "対象クラス";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "JDKの場所";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "選択…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "Red Hat JDKをダウンロード";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "Tribble/Tribblix JDKをダウンロード";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "プロジェクトを作成";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "JARをコンパイル";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "フォルダーを開く";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "準備完了。";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "プロジェクトを作成中…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "プロジェクトをコンパイル中…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "プロジェクトを作成しました: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "JARをコンパイルしました: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "エラー: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "選択した場所にjavacを含む有効なJDKがありません。";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "プロジェクト作成後、AI > MCPでMCPサーバーを起動し、AIがパッチを読み取り、編集、コンパイルできるようにしてください。";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "プロジェクトフォルダーを選択";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "JDKを選択";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "このフォルダーはすでにパッチプロジェクトです。テンプレートファイルを更新しますか？";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "JDKのダウンロードページを開きました。";
+	}
+
 }

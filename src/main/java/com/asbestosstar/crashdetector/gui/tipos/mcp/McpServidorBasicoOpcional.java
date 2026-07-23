@@ -1,5 +1,6 @@
 package com.asbestosstar.crashdetector.gui.tipos.mcp;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
@@ -21,6 +22,10 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.config.json.Json;
+import com.asbestosstar.crashdetector.parches.proyecto.ConfiguracionProyectoParche;
+import com.asbestosstar.crashdetector.parches.proyecto.LocalizadorJdk;
+import com.asbestosstar.crashdetector.parches.proyecto.ResultadoCompilacionParche;
+import com.asbestosstar.crashdetector.parches.proyecto.ServicioProyectosParche;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
@@ -215,6 +220,124 @@ public class McpServidorBasicoOpcional {
 			}
 		});
 
+		registrarHerramienta(new HerramientaMcp("generador_parches_contexto", Collections.<ParametroMcp>emptyList()) {
+			@Override
+			public String ejecutar(Json.Nodo argumentos) {
+				return ServicioProyectosParche.contextoApiParches();
+			}
+		});
+
+		registrarHerramienta(new HerramientaMcp("generador_parches_estado", Collections.<ParametroMcp>emptyList()) {
+			@Override
+			public String ejecutar(Json.Nodo argumentos) {
+				return herramientaGeneradorParchesEstado();
+			}
+		});
+
+		registrarHerramienta(new HerramientaMcp("generador_parches_crear_proyecto",
+				parametros(new ParametroMcp("directorio", true), new ParametroMcp("nombre", true),
+						new ParametroMcp("paquete", true), new ParametroMcp("clase_objetivo", true))) {
+			@Override
+			public String ejecutar(Json.Nodo argumentos) throws Exception {
+				return herramientaGeneradorParchesCrearProyecto(argumentos);
+			}
+		});
+
+		registrarHerramienta(new HerramientaMcp("generador_parches_listar_archivos",
+				parametros(new ParametroMcp("proyecto", false))) {
+			@Override
+			public String ejecutar(Json.Nodo argumentos) throws Exception {
+				return herramientaGeneradorParchesListarArchivos(argumentos);
+			}
+		});
+
+		registrarHerramienta(new HerramientaMcp("generador_parches_leer_archivo",
+				parametros(new ParametroMcp("proyecto", false), new ParametroMcp("ruta", true))) {
+			@Override
+			public String ejecutar(Json.Nodo argumentos) throws Exception {
+				return ServicioProyectosParche.leerArchivoTexto(proyectoDesdeArgumentos(argumentos),
+						argumentos.obtener("ruta").comoCadena());
+			}
+		});
+
+		registrarHerramienta(
+				new HerramientaMcp("generador_parches_escribir_archivo", parametros(new ParametroMcp("proyecto", false),
+						new ParametroMcp("ruta", true), new ParametroMcp("contenido", true))) {
+					@Override
+					public String ejecutar(Json.Nodo argumentos) throws Exception {
+						File escrito = ServicioProyectosParche.escribirArchivoTexto(proyectoDesdeArgumentos(argumentos),
+								argumentos.obtener("ruta").comoCadena(), argumentos.obtener("contenido").comoCadena());
+						return "Archivo escrito: " + escrito.getCanonicalPath();
+					}
+				});
+
+		registrarHerramienta(new HerramientaMcp("generador_parches_compilar",
+				parametros(new ParametroMcp("proyecto", false), new ParametroMcp("jdk", false))) {
+			@Override
+			public String ejecutar(Json.Nodo argumentos) throws Exception {
+				return herramientaGeneradorParchesCompilar(argumentos);
+			}
+		});
+
+	}
+
+	public static String herramientaGeneradorParchesEstado() {
+		File proyecto = ServicioProyectosParche.obtenerProyectoActivo();
+		File jdk = ServicioProyectosParche.obtenerJdkActivo();
+		return "Generador de parches MCP\n" + "Proyecto activo: "
+				+ (proyecto == null ? "ninguno" : proyecto.getAbsolutePath()) + "\n" + "JDK: "
+				+ (jdk == null ? "no encontrado" : jdk.getAbsolutePath()) + "\n";
+	}
+
+	public static String herramientaGeneradorParchesCrearProyecto(Json.Nodo argumentos) throws Exception {
+		File directorio = new File(argumentos.obtener("directorio").comoCadena());
+		ConfiguracionProyectoParche configuracion = new ConfiguracionProyectoParche(
+				argumentos.obtener("nombre").comoCadena(), argumentos.obtener("paquete").comoCadena(),
+				"ExtensionCrashDetector", "ParcheGenerado", argumentos.obtener("clase_objetivo").comoCadena());
+		File creado = ServicioProyectosParche.crearProyecto(directorio, configuracion, false);
+		return "Proyecto creado: " + creado.getCanonicalPath() + "\n" + ServicioProyectosParche.contextoApiParches();
+	}
+
+	public static String herramientaGeneradorParchesListarArchivos(Json.Nodo argumentos) throws Exception {
+		File proyecto = proyectoDesdeArgumentos(argumentos);
+		List<String> archivos = ServicioProyectosParche.listarArchivos(proyecto);
+		StringBuilder salida = new StringBuilder();
+		salida.append("Proyecto: ").append(proyecto.getCanonicalPath()).append("\n");
+		for (String archivo : archivos) {
+			salida.append("- ").append(archivo).append("\n");
+		}
+		return salida.toString();
+	}
+
+	public static String herramientaGeneradorParchesCompilar(Json.Nodo argumentos) throws Exception {
+		File proyecto = proyectoDesdeArgumentos(argumentos);
+		String rutaJdk = argumentoOpcional(argumentos, "jdk");
+		File jdk = rutaJdk.isEmpty() ? ServicioProyectosParche.obtenerJdkActivo()
+				: LocalizadorJdk.normalizarJdk(new File(rutaJdk));
+		ResultadoCompilacionParche resultado = ServicioProyectosParche.compilarProyecto(proyecto, jdk);
+		if (!resultado.correcta) {
+			return "Compilación fallida.\n" + resultado.salidaCompilador;
+		}
+		return "Compilación correcta.\nJAR: " + resultado.archivoJar.getCanonicalPath() + "\n"
+				+ resultado.salidaCompilador;
+	}
+
+	private static File proyectoDesdeArgumentos(Json.Nodo argumentos) throws Exception {
+		String ruta = argumentoOpcional(argumentos, "proyecto");
+		File proyecto = ruta.isEmpty() ? ServicioProyectosParche.obtenerProyectoActivo() : new File(ruta);
+		if (proyecto == null) {
+			throw new IllegalStateException("No hay un proyecto de parches activo.");
+		}
+		return ServicioProyectosParche.validarProyecto(proyecto);
+	}
+
+	private static String argumentoOpcional(Json.Nodo argumentos, String nombre) {
+		try {
+			String valor = argumentos.obtener(nombre).comoCadena();
+			return valor == null ? "" : valor.trim();
+		} catch (Throwable t) {
+			return "";
+		}
 	}
 
 	public static String herramientaListarSpongeMixins() {
@@ -687,9 +810,15 @@ public class McpServidorBasicoOpcional {
 		HERRAMIENTAS_MCP.put(herramienta.nombre, herramienta);
 	}
 
-	public static List<ParametroMcp> parametros(ParametroMcp parametro) {
+	public static List<ParametroMcp> parametros(ParametroMcp... parametros) {
 		List<ParametroMcp> lista = new ArrayList<ParametroMcp>();
-		lista.add(parametro);
+		if (parametros != null) {
+			for (ParametroMcp parametro : parametros) {
+				if (parametro != null) {
+					lista.add(parametro);
+				}
+			}
+		}
 		return lista;
 	}
 
@@ -772,7 +901,7 @@ public class McpServidorBasicoOpcional {
 
 		Json.Nodo serverInfo = result.obtener("serverInfo");
 		serverInfo.obtener("name").poner("CrashDetector MCP");
-		serverInfo.obtener("version").poner("0.2");
+		serverInfo.obtener("version").poner("0.3");
 
 		Json.Nodo capabilities = result.obtener("capabilities");
 		capabilities.obtener("tools");
@@ -1072,7 +1201,7 @@ public class McpServidorBasicoOpcional {
 			return herramienta;
 		}
 
-		public abstract String ejecutar(Json.Nodo argumentos);
+		public abstract String ejecutar(Json.Nodo argumentos) throws Exception;
 	}
 
 	public static class ParametroMcp {

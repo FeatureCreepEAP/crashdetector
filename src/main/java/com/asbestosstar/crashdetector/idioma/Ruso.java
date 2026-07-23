@@ -12717,4 +12717,179 @@ public class Ruso implements Idioma {
 		return "Расширенный Git — кнопка";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "Передача классов — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "Введите имя класса, загруженного в наблюдаемом процессе, используя точки или косые черты. CrashDetector запросит его текущие байты у JVM, и Поиск будет использовать их раньше байтов из JAR. Копии хранятся только в памяти и автоматически удаляются при смене процесса.";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "Имя класса";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "Передать класс";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "Очистить переданные классы";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "Запрос " + nombreClase + " у наблюдаемой JVM...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "Класс передан: " + nombreClase + " (" + bytes + " байт).";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "Не удалось передать класс: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "Открыть передачу классов";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "Генератор патчей — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "Генератор патчей";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "Создаёт Java-проект расширения CrashDetector, позволяет ИИ редактировать патч через MCP и компилирует JAR с текущим classpath.";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "Папка проекта";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "Имя проекта";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "Базовый пакет";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "Целевой класс";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "Путь к JDK";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "Выбрать…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "Скачать Red Hat JDK";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "Скачать Tribble/Tribblix JDK";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "Создать проект";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "Скомпилировать JAR";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "Открыть папку";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "Готово.";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "Создание проекта…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "Компиляция проекта…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "Проект создан: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "JAR скомпилирован: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "Ошибка: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "Выбранный путь не содержит действительный JDK с javac.";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "После создания проекта откройте AI > MCP и запустите сервер MCP, чтобы ИИ мог читать, редактировать и компилировать патч.";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "Выбрать папку проекта";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "Выбрать JDK";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "Папка уже является проектом патча. Обновить файлы шаблона?";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "Открыта страница загрузки JDK.";
+	}
+
 }

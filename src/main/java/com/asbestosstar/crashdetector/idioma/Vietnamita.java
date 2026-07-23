@@ -12931,4 +12931,179 @@ public class Vietnamita implements Idioma {
 		return "Git nâng cao — nút";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "Trình chuyển lớp — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "Nhập tên của một lớp đã được tải trong tiến trình đang theo dõi bằng dấu chấm hoặc dấu gạch chéo. CrashDetector sẽ yêu cầu byte hiện tại từ JVM, và Trình tìm kiếm sẽ dùng chúng trước byte trong JAR. Các bản sao chỉ tồn tại trong bộ nhớ và tự động bị xóa khi tiến trình thay đổi.";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "Tên lớp";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "Chuyển lớp";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "Xóa các lớp đã chuyển";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "Đang yêu cầu " + nombreClase + " từ JVM được theo dõi...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "Đã chuyển lớp: " + nombreClase + " (" + bytes + " byte).";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "Không thể chuyển lớp: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "Mở trình chuyển lớp";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "Trình tạo bản vá — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "Trình tạo bản vá";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "Tạo dự án Java cho tiện ích mở rộng CrashDetector, cho phép AI sửa bản vá qua MCP và biên dịch JAR bằng classpath hiện tại.";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "Thư mục dự án";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "Tên dự án";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "Gói cơ sở";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "Lớp đích";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "Đường dẫn JDK";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "Chọn…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "Tải Red Hat JDK";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "Tải Tribble/Tribblix JDK";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "Tạo dự án";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "Biên dịch JAR";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "Mở thư mục";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "Sẵn sàng.";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "Đang tạo dự án…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "Đang biên dịch dự án…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "Dự án đã được tạo tại: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "JAR đã được biên dịch tại: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "Lỗi: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "Đường dẫn đã chọn không chứa JDK hợp lệ có javac.";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "Sau khi tạo dự án, hãy vào AI > MCP và khởi động máy chủ MCP để AI có thể đọc, sửa và biên dịch bản vá.";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "Chọn thư mục dự án";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "Chọn JDK";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "Thư mục đã là dự án bản vá. Cập nhật các tệp mẫu?";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "Đã mở trang tải JDK.";
+	}
+
 }

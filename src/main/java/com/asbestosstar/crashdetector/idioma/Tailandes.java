@@ -12900,4 +12900,179 @@ public class Tailandes implements Idioma {
 		return "Git ขั้นสูง — ปุ่ม";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "ตัวถ่ายโอนคลาส — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "ป้อนชื่อคลาสที่โหลดอยู่ในโปรเซสที่กำลังติดตาม โดยใช้จุดหรือเครื่องหมายทับ CrashDetector จะขอไบต์ปัจจุบันจาก JVM และตัวค้นหาจะใช้ไบต์เหล่านี้ก่อนข้อมูลจาก JAR สำเนาจะอยู่ในหน่วยความจำเท่านั้นและถูกลบอัตโนมัติเมื่อโปรเซสเปลี่ยน";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "ชื่อคลาส";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "ถ่ายโอนคลาส";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "ล้างคลาสที่ถ่ายโอน";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "กำลังขอ " + nombreClase + " จาก JVM ที่ติดตาม...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "ถ่ายโอนคลาสแล้ว: " + nombreClase + " (" + bytes + " ไบต์)";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "ไม่สามารถถ่ายโอนคลาสได้: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "เปิดตัวถ่ายโอนคลาส";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "ตัวสร้างแพตช์ — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "ตัวสร้างแพตช์";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "สร้างโปรเจกต์ Java สำหรับส่วนขยาย CrashDetector ให้ AI แก้ไขแพตช์ผ่าน MCP และคอมไพล์ JAR ด้วย classpath ปัจจุบัน";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "โฟลเดอร์โปรเจกต์";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "ชื่อโปรเจกต์";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "แพ็กเกจพื้นฐาน";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "คลาสเป้าหมาย";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "ตำแหน่ง JDK";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "เลือก…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "ดาวน์โหลด Red Hat JDK";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "ดาวน์โหลด Tribble/Tribblix JDK";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "สร้างโปรเจกต์";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "คอมไพล์ JAR";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "เปิดโฟลเดอร์";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "พร้อม";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "กำลังสร้างโปรเจกต์…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "กำลังคอมไพล์โปรเจกต์…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "สร้างโปรเจกต์ที่: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "คอมไพล์ JAR ที่: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "ข้อผิดพลาด: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "ตำแหน่งที่เลือกไม่มี JDK ที่ถูกต้องพร้อม javac";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "หลังสร้างโปรเจกต์ ให้ไปที่ AI > MCP และเริ่มเซิร์ฟเวอร์ MCP เพื่อให้ AI อ่าน แก้ไข และคอมไพล์แพตช์ได้";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "เลือกโฟลเดอร์โปรเจกต์";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "เลือก JDK";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "โฟลเดอร์นี้เป็นโปรเจกต์แพตช์อยู่แล้ว ต้องการอัปเดตไฟล์แม่แบบหรือไม่";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "เปิดหน้าดาวน์โหลด JDK แล้ว";
+	}
+
 }

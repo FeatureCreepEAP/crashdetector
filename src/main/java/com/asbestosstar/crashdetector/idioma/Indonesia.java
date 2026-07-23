@@ -13451,4 +13451,179 @@ public class Indonesia implements Idioma {
 		return "Git lanjutan — tombol";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "Pentransfer kelas — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "Masukkan nama kelas yang dimuat dalam proses yang diamati dengan titik atau garis miring. CrashDetector akan meminta byte terkini dari JVM, dan Pencari akan menggunakannya sebelum byte dari JAR. Salinan ini hanya berada di memori dan otomatis dihapus ketika proses berubah.";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "Nama kelas";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "Transfer kelas";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "Hapus kelas yang ditransfer";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "Meminta " + nombreClase + " dari JVM yang diamati...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "Kelas ditransfer: " + nombreClase + " (" + bytes + " byte).";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "Kelas tidak dapat ditransfer: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "Buka pentransfer kelas";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "Pembuat patch — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "Pembuat patch";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "Membuat proyek Java untuk ekstensi CrashDetector, memungkinkan AI mengedit patch melalui MCP, lalu mengompilasi JAR dengan classpath saat ini.";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "Folder proyek";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "Nama proyek";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "Paket dasar";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "Kelas target";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "Lokasi JDK";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "Pilih…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "Unduh Red Hat JDK";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "Unduh Tribble/Tribblix JDK";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "Buat proyek";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "Kompilasi JAR";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "Buka folder";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "Siap.";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "Membuat proyek…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "Mengompilasi proyek…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "Proyek dibuat di: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "JAR dikompilasi di: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "Kesalahan: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "Lokasi yang dipilih tidak berisi JDK valid dengan javac.";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "Setelah membuat proyek, buka AI > MCP dan jalankan server MCP agar AI dapat membaca, mengedit, dan mengompilasi patch.";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "Pilih folder proyek";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "Pilih JDK";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "Folder ini sudah merupakan proyek patch. Perbarui berkas templat?";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "Halaman unduhan JDK telah dibuka.";
+	}
+
 }

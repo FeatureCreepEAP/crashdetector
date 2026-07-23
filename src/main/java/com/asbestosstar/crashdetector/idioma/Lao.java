@@ -13128,4 +13128,179 @@ public class Lao implements Idioma {
 		return "Git ຂັ້ນສູງ — ປຸ່ມ";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "ໂປຣແກຣມຖ່າຍໂອນ class — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "ປ້ອນຊື່ class ທີ່ໂຫຼດຢູ່ໃນ process ທີ່ກຳລັງຕິດຕາມ ໂດຍໃຊ້ຈຸດ ຫຼື /. CrashDetector ຈະຂໍ byte ປັດຈຸບັນຈາກ JVM ແລະຕົວຄົ້ນຫາຈະໃຊ້ມັນກ່ອນ byte ຈາກ JAR. ສຳເນົາເຫຼົ່ານີ້ຢູ່ໃນ memory ເທົ່ານັ້ນ ແລະຖືກລຶບອັດຕະໂນມັດເມື່ອ process ປ່ຽນ.";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "ຊື່ class";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "ຖ່າຍໂອນ class";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "ລ້າງ class ທີ່ຖ່າຍໂອນ";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "ກຳລັງຂໍ " + nombreClase + " ຈາກ JVM ທີ່ຕິດຕາມ...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "ຖ່າຍໂອນ class ແລ້ວ: " + nombreClase + " (" + bytes + " bytes).";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "ບໍ່ສາມາດຖ່າຍໂອນ class ໄດ້: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "ເປີດໂປຣແກຣມຖ່າຍໂອນ class";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "ໂປຣແກຣມສ້າງ patch — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "ໂປຣແກຣມສ້າງ patch";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "ສ້າງໂຄງການ Java ສໍາລັບ CrashDetector extension, ໃຫ້ AI ແກ້ patch ຜ່ານ MCP ແລະ compile JAR ດ້ວຍ classpath ປັດຈຸບັນ.";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "ໂຟນເດີໂຄງການ";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "ຊື່ໂຄງການ";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "package ພື້ນຖານ";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "class ເປົ້າໝາຍ";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "ທີ່ຢູ່ JDK";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "ເລືອກ…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "ດາວໂຫຼດ Red Hat JDK";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "ດາວໂຫຼດ Tribble/Tribblix JDK";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "ສ້າງໂຄງການ";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "Compile JAR";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "ເປີດໂຟນເດີ";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "ພ້ອມ.";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "ກໍາລັງສ້າງໂຄງການ…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "ກໍາລັງ compile ໂຄງການ…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "ສ້າງໂຄງການແລ້ວທີ່: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "compile JAR ແລ້ວທີ່: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "ຂໍ້ຜິດພາດ: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "ທີ່ຢູ່ທີ່ເລືອກບໍ່ມີ JDK ທີ່ຖືກຕ້ອງພ້ອມ javac.";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "ຫຼັງຈາກສ້າງໂຄງການ ໃຫ້ໄປ AI > MCP ແລະເລີ່ມ MCP server ເພື່ອໃຫ້ AI ອ່ານ ແກ້ ແລະ compile patch.";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "ເລືອກໂຟນເດີໂຄງການ";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "ເລືອກ JDK";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "ໂຟນເດີນີ້ເປັນໂຄງການ patch ແລ້ວ. ອັບເດດໄຟລ໌ແມ່ແບບບໍ?";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "ເປີດໜ້າດາວໂຫຼດ JDK ແລ້ວ.";
+	}
+
 }

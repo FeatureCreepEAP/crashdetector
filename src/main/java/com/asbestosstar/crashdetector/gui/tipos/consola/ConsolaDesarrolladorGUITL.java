@@ -53,6 +53,8 @@ import com.asbestosstar.crashdetector.controljvm.ClienteControlJVM;
 import com.asbestosstar.crashdetector.controljvm.RespuestaControlJVM;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.heapdump.VisorHeapDumpIranFifa;
+import com.asbestosstar.crashdetector.gui.tipos.transferidor_clases.TransferidorClasesEonOfStars;
+import com.asbestosstar.crashdetector.gui.tipos.transferidor_clases.TransferidorClasesGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos;
 import com.asbestosstar.crashdetector.lanzer.CDLauncher;
@@ -71,6 +73,7 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 	private JButton hsErr;
 	private JButton gc;
 	private JButton heapDump;
+	private JButton transferidorClases;
 	private JButton bajar;
 	private JButton logs;
 	private JButton stop;
@@ -90,6 +93,7 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 	private static final String ICONO_GC = "imagenes/gc.png";
 	private static final String ICONO_GC_COUNT_BINFACE = "imagenes/count_binface.png";
 	private static final String ICONO_HEAP_DUMP = "imagenes/heapdump.png";
+	private static final String ICONO_TRANSFERIDOR_CLASES = "imagenes/eon_of_stars.png";
 	private static final String ICONO_BAJAR = "imagenes/consola_bajar.png";
 	private static final String ICONO_LOGS = "imagenes/consola_logs.png";
 	private static final String ICONO_STOP = "imagenes/consola_stop.png";
@@ -201,16 +205,20 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 		hsErr = crearBotonIcono(ICONO_HS_ERR, MonitorDePID.idioma.consolaCrearHsErr());
 		gc = crearBotonIcono(rutaIconoGc(), MonitorDePID.idioma.consolaEjecutarGc());
 		heapDump = crearBotonIcono(ICONO_HEAP_DUMP, MonitorDePID.idioma.consolaHeapDump());
+		transferidorClases = crearBotonIcono(ICONO_TRANSFERIDOR_CLASES,
+				MonitorDePID.idioma.consolaAbrirTransferidorClases());
 		bajar = crearBotonIcono(ICONO_BAJAR, MonitorDePID.idioma.consolaBajar());
 		logs = crearBotonIcono(ICONO_LOGS, MonitorDePID.idioma.consolaCompartirLogs());
 		stop = crearBotonIcono(ICONO_STOP, MonitorDePID.idioma.consolaDetenerProceso());
 		actualizarIconoGc();
 
-		for (JButton b : new JButton[] { heapDump, gc, hsErr, bajar, logs, stop }) {
+		for (JButton b : new JButton[] { transferidorClases, heapDump, gc, hsErr, bajar, logs, stop }) {
 			estilizarBotonInferior(b);
 		}
 
 		barra.add(Box.createHorizontalGlue());
+		barra.add(transferidorClases);
+		barra.add(Box.createHorizontalStrut(8));
 		barra.add(heapDump);
 		barra.add(Box.createHorizontalStrut(8));
 		barra.add(gc);
@@ -230,7 +238,8 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 
 		add(barra, BorderLayout.SOUTH);
 
-		// Diagnóstico de la JVM observada
+		// Herramientas de la JVM observada
+		transferidorClases.addActionListener(e -> abrirTransferidorClases());
 		heapDump.addActionListener(e -> abrirAccionesHeapDump());
 		gc.addActionListener(e -> solicitarGc());
 		hsErr.addActionListener(e -> confirmarCrashHsErr());
@@ -311,6 +320,12 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 
 		// Al abrir la consola, empezar siguiendo el fondo.
 		bajarAlFondoYReactivarAutoScroll();
+	}
+
+	private void abrirTransferidorClases() {
+		TransferidorClasesGUI gui = TipoGUI.TRANSFERIDOR_CLASES
+				.obtenerGUIPredeterminado(TransferidorClasesEonOfStars.ID, () -> new TransferidorClasesEonOfStars());
+		gui.init();
 	}
 
 	private void solicitarGc() {
@@ -822,7 +837,7 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 
 		actualizarIconoGc();
 
-		for (JButton b : new JButton[] { heapDump, gc, hsErr, bajar, logs, stop }) {
+		for (JButton b : new JButton[] { transferidorClases, heapDump, gc, hsErr, bajar, logs, stop }) {
 			estilizarBotonInferior(b);
 		}
 

@@ -24,6 +24,7 @@ public final class ClienteControlJVM {
 	private static final String PROTOCOLO = "CD-JVM-CONTROL-1";
 	private static final int TIEMPO_CONEXION_MS = 5_000;
 	private static final int TIEMPO_LECTURA_MS = 120_000;
+	private static final int MAX_BYTES_CLASE = 64 * 1024 * 1024;
 
 	private final long pid;
 
@@ -48,6 +49,18 @@ public final class ClienteControlJVM {
 
 	public RespuestaControlJVM provocarCrashHsErr() {
 		return enviar("CRASH_HS_ERR", "", false);
+	}
+
+	/**
+	 * Solicita los bytes actuales de una clase cargada en la JVM observada.
+	 *
+	 * El nombre puede usar puntos, barras, el sufijo .class o un descriptor JVM.
+	 */
+	public RespuestaControlJVM solicitarBytesClase(String nombreClase) {
+		if (nombreClase == null || nombreClase.trim().isEmpty()) {
+			return new RespuestaControlJVM(false, RespuestaControlJVM.CODIGO_ERROR, "NOMBRE_CLASE_VACIO");
+		}
+		return enviarBytes("CLASS_BYTES", nombreClase.trim());
 	}
 
 	private RespuestaControlJVM enviar(String comando, String argumento, boolean bandera) {
@@ -81,6 +94,60 @@ public final class ClienteControlJVM {
 				String detalle = entrada.readUTF();
 
 				return new RespuestaControlJVM(correcta, codigo, detalle);
+			}
+		} catch (Exception e) {
+			return new RespuestaControlJVM(false, RespuestaControlJVM.CODIGO_NO_DISPONIBLE, mensajeSeguro(e));
+		} finally {
+			try {
+				socket.close();
+			} catch (Exception ignorado) {
+			}
+		}
+	}
+
+	private RespuestaControlJVM enviarBytes(String comando, String argumento) {
+		ConfiguracionCanal configuracion;
+
+		try {
+			configuracion = leerConfiguracion();
+		} catch (Exception e) {
+			return new RespuestaControlJVM(false, RespuestaControlJVM.CODIGO_NO_DISPONIBLE, mensajeSeguro(e));
+		}
+
+		Socket socket = new Socket();
+
+		try {
+			socket.connect(new InetSocketAddress(InetAddress.getLoopbackAddress(), configuracion.puerto),
+					TIEMPO_CONEXION_MS);
+			socket.setSoTimeout(TIEMPO_LECTURA_MS);
+
+			try (DataOutputStream salida = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+					DataInputStream entrada = new DataInputStream(new BufferedInputStream(socket.getInputStream()))) {
+
+				salida.writeUTF(PROTOCOLO);
+				salida.writeUTF(configuracion.token);
+				salida.writeUTF(comando);
+				salida.writeUTF(argumento == null ? "" : argumento);
+				salida.writeBoolean(false);
+				salida.flush();
+
+				boolean correcta = entrada.readBoolean();
+				String codigo = entrada.readUTF();
+				String detalle = entrada.readUTF();
+
+				if (!correcta) {
+					return new RespuestaControlJVM(false, codigo, detalle);
+				}
+
+				int longitud = entrada.readInt();
+				if (longitud <= 0 || longitud > MAX_BYTES_CLASE) {
+					return new RespuestaControlJVM(false, RespuestaControlJVM.CODIGO_DATOS_INVALIDOS,
+							"LONGITUD=" + longitud);
+				}
+
+				byte[] datos = new byte[longitud];
+				entrada.readFully(datos);
+				return new RespuestaControlJVM(true, codigo, detalle, datos);
 			}
 		} catch (Exception e) {
 			return new RespuestaControlJVM(false, RespuestaControlJVM.CODIGO_NO_DISPONIBLE, mensajeSeguro(e));

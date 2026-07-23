@@ -11,6 +11,7 @@ import com.asbestosstar.crashdetector.lanzer.servicio.CDProfiler;
 import com.asbestosstar.crashdetector.lanzer.servicio.CDSampler;
 import com.asbestosstar.crashdetector.lanzer.servicio.CDTracer;
 import com.asbestosstar.crashdetector.lanzer.servicio.ServicioCDLauncher;
+import com.asbestosstar.crashdetector.controljvm.InstrumentacionCrashDetector;
 
 /**
  * CrashDetectorFCMC
@@ -37,6 +38,7 @@ public class CrashDetectorFCMC {
 	private static final String BRIDGE_CLASS = "com.asbestosstar.crashdetector.CrashDetectorFeatureCreepJBoss";
 
 	public static void premain(String args, Instrumentation instrument) {
+		InstrumentacionCrashDetector.establecer(instrument);
 
 		/* ================= CDLauncher ================= */
 

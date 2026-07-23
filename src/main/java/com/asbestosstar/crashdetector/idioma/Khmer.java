@@ -13068,4 +13068,179 @@ public class Khmer implements Idioma {
 		return "Git កម្រិតខ្ពស់ — ប៊ូតុង";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "កម្មវិធីផ្ទេរ class — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "បញ្ចូលឈ្មោះ class ដែលបានផ្ទុកក្នុង process កំពុងតាមដាន ដោយប្រើសញ្ញាចុច ឬសញ្ញា /. CrashDetector នឹងស្នើ byte បច្ចុប្បន្នពី JVM ហើយកម្មវិធីស្វែងរកនឹងប្រើវាមុន byte ក្នុង JAR។ ច្បាប់ចម្លងទាំងនេះមានតែក្នុង memory ហើយត្រូវលុបដោយស្វ័យប្រវត្តិនៅពេល process ផ្លាស់ប្តូរ។";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "ឈ្មោះ class";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "ផ្ទេរ class";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "សម្អាត class ដែលបានផ្ទេរ";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "កំពុងស្នើ " + nombreClase + " ពី JVM កំពុងតាមដាន...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "បានផ្ទេរ class: " + nombreClase + " (" + bytes + " bytes)។";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "មិនអាចផ្ទេរ class បានទេ: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "បើកកម្មវិធីផ្ទេរ class";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "កម្មវិធីបង្កើតបំណះ — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "កម្មវិធីបង្កើតបំណះ";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "បង្កើតគម្រោង Java សម្រាប់ផ្នែកបន្ថែម CrashDetector អនុញ្ញាតឱ្យ AI កែបំណះតាម MCP និង compile JAR ដោយប្រើ classpath បច្ចុប្បន្ន។";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "ថតគម្រោង";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "ឈ្មោះគម្រោង";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "package មូលដ្ឋាន";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "class គោលដៅ";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "ទីតាំង JDK";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "ជ្រើស…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "ទាញយក Red Hat JDK";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "ទាញយក Tribble/Tribblix JDK";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "បង្កើតគម្រោង";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "Compile JAR";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "បើកថត";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "រួចរាល់។";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "កំពុងបង្កើតគម្រោង…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "កំពុង compile គម្រោង…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "បានបង្កើតគម្រោងនៅ: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "បាន compile JAR នៅ: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "កំហុស: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "ទីតាំងដែលបានជ្រើសមិនមាន JDK ត្រឹមត្រូវដែលមាន javac ទេ។";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "បន្ទាប់ពីបង្កើតគម្រោង សូមទៅ AI > MCP ហើយចាប់ផ្តើម MCP server ដើម្បីឱ្យ AI អាចអាន កែ និង compile បំណះ។";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "ជ្រើសថតគម្រោង";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "ជ្រើស JDK";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "ថតនេះជាគម្រោងបំណះរួចហើយ។ ធ្វើបច្ចុប្បន្នភាពឯកសារគំរូឬ?";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "បានបើកទំព័រទាញយក JDK។";
+	}
+
 }

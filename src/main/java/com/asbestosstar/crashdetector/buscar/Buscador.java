@@ -425,6 +425,16 @@ public class Buscador {
 		// Normalizar a formato interno ASM: a/b/C
 		String claseInterna = normalizarNombreClaseInterno(nombreClase);
 
+		/*
+		 * Los bytes obtenidos desde la JVM observada tienen prioridad sobre el JAR.
+		 * ClasesTransferidas invalida automáticamente el caché cuando cambia el PID.
+		 */
+		byte[] transferidos = ClasesTransferidas.obtener(MonitorDePID.pid, claseInterna);
+		if (transferidos != null) {
+			CrashDetectorLogger.log("Usando clase transferida desde la JVM: " + claseInterna);
+			return transferidos;
+		}
+
 		for (ArchivoDeMod mod : obtenerTodosLosModsYSubmodsRecursivos()) {
 			try {
 				if (mod.existeClase(claseInterna)) {
@@ -500,6 +510,10 @@ public class Buscador {
 	 * @return true si al menos un mod contiene la clase, false en caso contrario
 	 */
 	public static boolean existeClaseEnAlgunMod(String nombreClase) {
+		String claseInterna = normalizarNombreClaseInterno(nombreClase);
+		if (ClasesTransferidas.contiene(MonitorDePID.pid, claseInterna)) {
+			return true;
+		}
 		for (ArchivoDeMod mod : obtenerTodosLosModsYSubmodsRecursivos()) {
 			if (mod.existeClase(nombreClase)) {
 				return true;

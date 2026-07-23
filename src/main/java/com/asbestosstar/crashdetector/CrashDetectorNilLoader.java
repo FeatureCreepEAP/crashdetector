@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
+import com.asbestosstar.crashdetector.controljvm.InstrumentacionCrashDetector;
 
 public class CrashDetectorNilLoader implements Runnable {
 
@@ -26,6 +27,7 @@ public class CrashDetectorNilLoader implements Runnable {
 			// Obtenemos la Instrumentation interna de NilLoader por reflexión.
 			Instrumentation inst = obtenerInstrumentationDeNilLoader();
 
+			InstrumentacionCrashDetector.establecer(inst);
 			// Registramos el transformer para que NilLoader aplique los parches.
 			if (inst != null) {
 				inst.addTransformer(new Transformaciones());

@@ -109,6 +109,8 @@ import com.asbestosstar.crashdetector.gui.tipos.rendimiento.AdministradorDeRendi
 import com.asbestosstar.crashdetector.gui.tipos.sampler.SamplerGUIEineLotta;
 import com.asbestosstar.crashdetector.gui.tipos.scriptide.ScriptIDEGUINiwaJPlus;
 import com.asbestosstar.crashdetector.gui.tipos.jgit.avanzado.ClienteGitAvanzadoWendyMizumi;
+import com.asbestosstar.crashdetector.gui.tipos.transferidor_clases.TransferidorClasesEonOfStars;
+import com.asbestosstar.crashdetector.gui.tipos.generador_parches.GeneradorParchesJKT48V;
 
 public class MonitorDePID {
 
@@ -233,6 +235,9 @@ public class MonitorDePID {
 		File corredoruma = Statics.carpeta.resolve("corredoruma.htm").toFile();
 		copiarACarpetaDesdeJar("/corredoruma.htm", corredoruma);
 
+		copiarACarpetaDesdeJar("/imagenes/jkt48v.png", Statics.carpeta.resolve("imagenes/jkt48v.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/eon_of_stars.png",
+				Statics.carpeta.resolve("imagenes/eon_of_stars.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/gura.png", Statics.carpeta.resolve("imagenes/gura.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/clio.png", Statics.carpeta.resolve("imagenes/clio.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/hamu.png", Statics.carpeta.resolve("imagenes/hamu.png").toFile());
@@ -1133,6 +1138,9 @@ public class MonitorDePID {
 	}
 
 	public static void registrarGUISPredeterminado() {
+		TipoGUI.GENERADOR_DE_PARCHES.registrarGUI(GeneradorParchesJKT48V.ID, () -> new GeneradorParchesJKT48V());
+		TipoGUI.TRANSFERIDOR_CLASES.registrarGUI(TransferidorClasesEonOfStars.ID,
+				() -> new TransferidorClasesEonOfStars());
 		// TODO Auto-generated method stub
 
 		TipoGUI.PRINCIPAL.registrarGUI(PrincipalGUIEstiloLanzer.ID, () -> new PrincipalGUIEstiloLanzer());

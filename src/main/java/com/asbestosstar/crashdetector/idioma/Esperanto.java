@@ -12867,4 +12867,179 @@ public class Esperanto implements Idioma {
 		return "Altnivela Git — butono";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "Klastransigilo — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "Enigu la nomon de klaso ŝargita en la observata procezo per punktoj aŭ oblikvaj strekoj. CrashDetector petos ĝiajn nunajn bajtojn de la JVM, kaj la Serĉilo uzos ilin antaŭ la bajtoj el la JAR. La kopioj ekzistas nur en memoro kaj estas aŭtomate forigitaj kiam la procezo ŝanĝiĝas.";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "Nomo de klaso";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "Transigi klason";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "Forigi transigitajn klasojn";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "Petante " + nombreClase + " de la observata JVM...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "Klaso transigita: " + nombreClase + " (" + bytes + " bajtoj).";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "Ne eblis transigi la klason: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "Malfermi la klastransigilon";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "Generilo de flikaĵoj — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "Generilo de flikaĵoj";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "Kreas Java-projekton por CrashDetector-etendaĵo, permesas al AI redakti la flikaĵon per MCP kaj kompilas la JAR per la nuna classpath.";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "Projekta dosierujo";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "Projekta nomo";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "Baza pakaĵo";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "Cela klaso";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "JDK-vojo";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "Elekti…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "Elŝuti Red Hat JDK";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "Elŝuti Tribble/Tribblix JDK";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "Krei projekton";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "Kompili JAR";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "Malfermi dosierujon";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "Preta.";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "Kreante la projekton…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "Kompilante la projekton…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "Projekto kreita ĉe: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "JAR kompilita ĉe: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "Eraro: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "La elektita vojo ne enhavas validan JDK kun javac.";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "Post kreo de la projekto, iru al AI > MCP kaj startigu la MCP-servilon por ke la AI povu legi, redakti kaj kompili la flikaĵon.";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "Elekti projektan dosierujon";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "Elekti JDK";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "La dosierujo jam estas flikaĵa projekto. Ĉu ĝisdatigi la ŝablonajn dosierojn?";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "La elŝuta paĝo de JDK estis malfermita.";
+	}
+
 }

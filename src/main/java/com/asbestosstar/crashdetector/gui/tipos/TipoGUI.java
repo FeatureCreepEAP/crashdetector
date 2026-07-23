@@ -64,6 +64,8 @@ import com.asbestosstar.crashdetector.gui.tipos.rendimiento.AdministradorDeRendi
 import com.asbestosstar.crashdetector.gui.tipos.sampler.SamplerGUI;
 import com.asbestosstar.crashdetector.gui.tipos.scriptide.ScriptIDEGUI;
 import com.asbestosstar.crashdetector.gui.tipos.jgit.avanzado.ClienteGitAvanzadoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.transferidor_clases.TransferidorClasesGUI;
+import com.asbestosstar.crashdetector.gui.tipos.generador_parches.GeneradorParchesGUI;
 
 public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
@@ -1405,7 +1407,61 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return ClienteGitAvanzadoGUI.GUIS;
 		}
 	};
+
+	/**
+	 * Transferidor temporal de clases desde la JVM observada.
+	 *
+	 * No se añade a TIPOS_DE_GUI: se abre desde la consola del desarrollador.
+	 */
+	public static TipoGUI<TransferidorClasesGUI> TRANSFERIDOR_CLASES = new TipoGUI<TransferidorClasesGUI>() {
+		@Override
+		public String id() {
+			return "transferidor_clases";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.consolaAbrirTransferidorClases();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<TransferidorClasesGUI> gui) {
+			TransferidorClasesGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<TransferidorClasesGUI>> obtenerGUIs() {
+			return TransferidorClasesGUI.GUIS;
+		}
+	};
+
+	/**
+	 * Generador de proyectos Java para extensiones de parches.
+	 */
+	public static TipoGUI<GeneradorParchesGUI> GENERADOR_DE_PARCHES = new TipoGUI<GeneradorParchesGUI>() {
+		@Override
+		public String id() {
+			return "generador_de_parches";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.generadorParchesBotonSidebar();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<GeneradorParchesGUI> gui) {
+			GeneradorParchesGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<GeneradorParchesGUI>> obtenerGUIs() {
+			return GeneradorParchesGUI.GUIS;
+		}
+	};
+
 	static {
+		TIPOS_DE_GUI.add(GENERADOR_DE_PARCHES);
 		TIPOS_DE_GUI.add(PRINCIPAL);
 		TIPOS_DE_GUI.add(GREPR);
 		TIPOS_DE_GUI.add(ARBOL_DE_MODS);

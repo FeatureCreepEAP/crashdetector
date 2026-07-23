@@ -12723,4 +12723,179 @@ public class Portuges implements Idioma {
 		return "Git avançado — botão";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "Transferidor de classes — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "Digite o nome de uma classe carregada no processo observado usando pontos ou barras. O CrashDetector solicitará os bytes atuais à JVM, e o Buscador os usará antes dos bytes do JAR. Essas cópias existem apenas na memória e são removidas automaticamente quando o processo muda.";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "Nome da classe";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "Transferir classe";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "Limpar classes transferidas";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "Solicitando " + nombreClase + " à JVM observada...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "Classe transferida: " + nombreClase + " (" + bytes + " bytes).";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "Não foi possível transferir a classe: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "Abrir transferidor de classes";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "Gerador de patches — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "Gerador de patches";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "Cria um projeto Java para uma extensão do CrashDetector, permite que uma IA edite o patch por MCP e compila o JAR com o classpath atual.";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "Pasta do projeto";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "Nome do projeto";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "Pacote base";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "Classe alvo";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "Caminho do JDK";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "Selecionar…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "Baixar Red Hat JDK";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "Baixar Tribble/Tribblix JDK";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "Criar projeto";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "Compilar JAR";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "Abrir pasta";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "Pronto.";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "Criando o projeto…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "Compilando o projeto…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "Projeto criado em: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "JAR compilado em: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "Erro: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "O caminho selecionado não contém um JDK válido com javac.";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "Depois de criar o projeto, vá para AI > MCP e inicie o servidor MCP para que a IA possa ler, editar e compilar o patch.";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "Selecionar pasta do projeto";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "Selecionar JDK";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "A pasta já é um projeto de patch. Atualizar os arquivos do modelo?";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "A página de download do JDK foi aberta.";
+	}
+
 }

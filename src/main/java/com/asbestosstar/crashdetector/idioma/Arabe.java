@@ -12769,4 +12769,179 @@ public class Arabe implements Idioma {
 		return "Git المتقدم — الزر";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "ناقل الفئات — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "اكتب اسم فئة محمّلة في العملية المراقبة باستخدام النقاط أو الشرطات المائلة. سيطلب CrashDetector بايتاتها الحالية من JVM، وسيستخدمها الباحث قبل بايتات ملف JAR. تبقى هذه النسخ في الذاكرة فقط وتُحذف تلقائيًا عند تغيّر العملية.";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "اسم الفئة";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "نقل الفئة";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "مسح الفئات المنقولة";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "جارٍ طلب " + nombreClase + " من JVM المراقبة...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "تم نقل الفئة: " + nombreClase + " ‏(" + bytes + " بايت).";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "تعذر نقل الفئة: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "فتح ناقل الفئات";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "مولّد الرقع — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "مولّد الرقع";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "ينشئ مشروع Java لامتداد CrashDetector، ويتيح للذكاء الاصطناعي تعديل الرقعة عبر MCP، ثم يترجم ملف JAR باستخدام classpath الحالي.";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "مجلد المشروع";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "اسم المشروع";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "الحزمة الأساسية";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "الفئة المستهدفة";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "مسار JDK";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "اختيار…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "تنزيل Red Hat JDK";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "تنزيل Tribble/Tribblix JDK";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "إنشاء المشروع";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "ترجمة JAR";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "فتح المجلد";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "جاهز.";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "جارٍ إنشاء المشروع…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "جارٍ ترجمة المشروع…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "تم إنشاء المشروع في: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "تم إنشاء JAR في: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "خطأ: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "المسار المحدد لا يحتوي على JDK صالح يتضمن javac.";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "بعد إنشاء المشروع، انتقل إلى AI > MCP وشغّل خادم MCP ليتمكن الذكاء الاصطناعي من قراءة الرقعة وتعديلها وترجمتها.";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "اختيار مجلد المشروع";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "اختيار JDK";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "المجلد مشروع رقعة بالفعل. هل تريد تحديث ملفات القالب؟";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "تم فتح صفحة تنزيل JDK.";
+	}
+
 }

@@ -11,6 +11,12 @@ public final class RespuestaControlJVM {
 	public static final String CODIGO_GC_ACEPTADO = "GC_ACEPTADO";
 	public static final String CODIGO_HEAP_DUMP_CREADO = "HEAP_DUMP_CREADO";
 	public static final String CODIGO_CRASH_ACEPTADO = "CRASH_ACEPTADO";
+	public static final String CODIGO_CLASE_TRANSFERIDA = "CLASE_TRANSFERIDA";
+	public static final String CODIGO_CLASE_NO_ENCONTRADA = "CLASE_NO_ENCONTRADA";
+	public static final String CODIGO_INSTRUMENTACION_NO_DISPONIBLE = "INSTRUMENTACION_NO_DISPONIBLE";
+	public static final String CODIGO_RETRANSFORMACION_NO_DISPONIBLE = "RETRANSFORMACION_NO_DISPONIBLE";
+	public static final String CODIGO_CLASE_NO_MODIFICABLE = "CLASE_NO_MODIFICABLE";
+	public static final String CODIGO_DATOS_INVALIDOS = "DATOS_INVALIDOS";
 	public static final String CODIGO_NO_DISPONIBLE = "NO_DISPONIBLE";
 	public static final String CODIGO_NO_AUTORIZADO = "NO_AUTORIZADO";
 	public static final String CODIGO_ERROR = "ERROR";
@@ -18,11 +24,17 @@ public final class RespuestaControlJVM {
 	private final boolean correcta;
 	private final String codigo;
 	private final String detalle;
+	private final byte[] datos;
 
 	public RespuestaControlJVM(boolean correcta, String codigo, String detalle) {
+		this(correcta, codigo, detalle, null);
+	}
+
+	public RespuestaControlJVM(boolean correcta, String codigo, String detalle, byte[] datos) {
 		this.correcta = correcta;
 		this.codigo = codigo == null ? CODIGO_ERROR : codigo;
 		this.detalle = detalle == null ? "" : detalle;
+		this.datos = datos == null ? null : datos.clone();
 	}
 
 	public boolean esCorrecta() {
@@ -35,6 +47,18 @@ public final class RespuestaControlJVM {
 
 	public String detalle() {
 		return detalle;
+	}
+
+	public boolean tieneDatos() {
+		return datos != null && datos.length > 0;
+	}
+
+	public byte[] datos() {
+		return datos == null ? null : datos.clone();
+	}
+
+	public int longitudDatos() {
+		return datos == null ? 0 : datos.length;
 	}
 
 	/**
@@ -52,6 +76,14 @@ public final class RespuestaControlJVM {
 		}
 		if (CODIGO_CRASH_ACEPTADO.equals(codigo)) {
 			return MonitorDePID.idioma.controlJVMCrashAceptado();
+		}
+		if (CODIGO_CLASE_TRANSFERIDA.equals(codigo)) {
+			return MonitorDePID.idioma.transferidorClasesExito(detalle, longitudDatos());
+		}
+		if (CODIGO_CLASE_NO_ENCONTRADA.equals(codigo) || CODIGO_INSTRUMENTACION_NO_DISPONIBLE.equals(codigo)
+				|| CODIGO_RETRANSFORMACION_NO_DISPONIBLE.equals(codigo) || CODIGO_CLASE_NO_MODIFICABLE.equals(codigo)
+				|| CODIGO_DATOS_INVALIDOS.equals(codigo)) {
+			return MonitorDePID.idioma.transferidorClasesError(codigo + (detalle.isEmpty() ? "" : ": " + detalle));
 		}
 		if (CODIGO_NO_DISPONIBLE.equals(codigo)) {
 			return MonitorDePID.idioma.controlJVMNoDisponible();

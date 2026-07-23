@@ -12672,4 +12672,179 @@ public class Persa implements Idioma {
 		return "Git پیشرفته — دکمه";
 	}
 
+	@Override
+	public String transferidorClasesTitulo() {
+		return "انتقال‌دهنده کلاس — Eon of Stars";
+	}
+
+	@Override
+	public String transferidorClasesDescripcion() {
+		return "نام کلاسی را که در فرایند تحت نظارت بارگذاری شده است با نقطه یا اسلش وارد کنید. CrashDetector بایت‌های فعلی آن را از JVM درخواست می‌کند و جستجوگر آن‌ها را پیش از بایت‌های JAR به‌کار می‌برد. این نسخه‌ها فقط در حافظه هستند و با تغییر فرایند خودکار حذف می‌شوند.";
+	}
+
+	@Override
+	public String transferidorClasesNombreClase() {
+		return "نام کلاس";
+	}
+
+	@Override
+	public String transferidorClasesTransferir() {
+		return "انتقال کلاس";
+	}
+
+	@Override
+	public String transferidorClasesLimpiar() {
+		return "پاک کردن کلاس‌های منتقل‌شده";
+	}
+
+	@Override
+	public String transferidorClasesSolicitando(String nombreClase) {
+		return "در حال درخواست " + nombreClase + " از JVM تحت نظارت...";
+	}
+
+	@Override
+	public String transferidorClasesExito(String nombreClase, int bytes) {
+		return "کلاس منتقل شد: " + nombreClase + " (" + bytes + " بایت).";
+	}
+
+	@Override
+	public String transferidorClasesError(String detalle) {
+		return "کلاس منتقل نشد: " + detalle;
+	}
+
+	@Override
+	public String consolaAbrirTransferidorClases() {
+		return "باز کردن انتقال‌دهنده کلاس";
+	}
+
+	@Override
+	public String generadorParchesTitulo() {
+		return "سازندهٔ وصله — JKT48V";
+	}
+
+	@Override
+	public String generadorParchesBotonSidebar() {
+		return "سازندهٔ وصله";
+	}
+
+	@Override
+	public String generadorParchesDescripcion() {
+		return "یک پروژهٔ Java برای افزونهٔ CrashDetector می‌سازد، به هوش مصنوعی اجازه می‌دهد وصله را از طریق MCP ویرایش کند و JAR را با classpath فعلی کامپایل می‌کند.";
+	}
+
+	@Override
+	public String generadorParchesDirectorio() {
+		return "پوشهٔ پروژه";
+	}
+
+	@Override
+	public String generadorParchesNombre() {
+		return "نام پروژه";
+	}
+
+	@Override
+	public String generadorParchesPaquete() {
+		return "بستهٔ پایه";
+	}
+
+	@Override
+	public String generadorParchesClaseObjetivo() {
+		return "کلاس هدف";
+	}
+
+	@Override
+	public String generadorParchesJdk() {
+		return "مسیر JDK";
+	}
+
+	@Override
+	public String generadorParchesSeleccionar() {
+		return "انتخاب…";
+	}
+
+	@Override
+	public String generadorParchesDescargarRedHat() {
+		return "دریافت Red Hat JDK";
+	}
+
+	@Override
+	public String generadorParchesDescargarTribble() {
+		return "دریافت Tribble/Tribblix JDK";
+	}
+
+	@Override
+	public String generadorParchesCrear() {
+		return "ساخت پروژه";
+	}
+
+	@Override
+	public String generadorParchesCompilar() {
+		return "کامپایل JAR";
+	}
+
+	@Override
+	public String generadorParchesAbrirCarpeta() {
+		return "باز کردن پوشه";
+	}
+
+	@Override
+	public String generadorParchesListo() {
+		return "آماده.";
+	}
+
+	@Override
+	public String generadorParchesCreando() {
+		return "در حال ساخت پروژه…";
+	}
+
+	@Override
+	public String generadorParchesCompilando() {
+		return "در حال کامپایل پروژه…";
+	}
+
+	@Override
+	public String generadorParchesCreado(String ruta) {
+		return "پروژه ساخته شد: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesCompilado(String ruta) {
+		return "JAR کامپایل شد: " + ruta;
+	}
+
+	@Override
+	public String generadorParchesError(String detalle) {
+		return "خطا: " + detalle;
+	}
+
+	@Override
+	public String generadorParchesJdkInvalido() {
+		return "مسیر انتخاب‌شده JDK معتبر دارای javac نیست.";
+	}
+
+	@Override
+	public String generadorParchesMcpInstruccion() {
+		return "پس از ساخت پروژه، به AI > MCP بروید و سرور MCP را راه‌اندازی کنید تا هوش مصنوعی بتواند وصله را بخواند، ویرایش و کامپایل کند.";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarDirectorioTitulo() {
+		return "انتخاب پوشهٔ پروژه";
+	}
+
+	@Override
+	public String generadorParchesSeleccionarJdkTitulo() {
+		return "انتخاب JDK";
+	}
+
+	@Override
+	public String generadorParchesProyectoExiste() {
+		return "این پوشه از قبل پروژهٔ وصله است. فایل‌های الگو به‌روزرسانی شوند؟";
+	}
+
+	@Override
+	public String generadorParchesDescargaAbierta() {
+		return "صفحهٔ دریافت JDK باز شد.";
+	}
+
 }
