@@ -13091,386 +13091,378 @@ public class Ingles implements Idioma {
 	public String generadorParchesDescargaAbierta() {
 		return "The JDK download page was opened.";
 	}
-	
-	
-    /* ======================== Mail reader ======================== */
-
-    @Override
-    public String lectorCorreoTipo() {
-        return "Mail reader";
-    }
-
-    @Override
-    public String correoTitulo() {
-        return "Netscape Mail Reader";
-    }
-
-    @Override
-    public String correoAgregarCuenta() {
-        return "Add account";
-    }
-
-    @Override
-    public String correoEditarCuenta() {
-        return "Edit account";
-    }
-
-    @Override
-    public String correoEliminarCuenta() {
-        return "Delete account";
-    }
-
-    @Override
-    public String correoActualizar() {
-        return "Update";
-    }
-
-    @Override
-    public String correoActualizarTodas() {
-        return "Update all";
-    }
-
-    @Override
-    public String correoCerrar() {
-        return "Close and lock";
-    }
-
-    @Override
-    public String correoDescargarDependencias() {
-        return "Download mail dependencies";
-    }
-
-    @Override
-    public String correoEstadoDependenciasCargadas(String diagnostico) {
-        return "Mail dependencies detected [" + diagnostico + "]";
-    }
-
-    @Override
-    public String correoEstadoDependenciasNoCargadas(String diagnostico) {
-        return "Mail dependencies not loaded [" + diagnostico
-                + "]. Download them and restart CrashDetector if they still do not appear.";
-    }
-
-    @Override
-    public String correoDependenciasDescargadasReiniciar() {
-        return "Mail dependencies downloaded. If they still do not appear as loaded, restart CrashDetector.";
-    }
-
-    @Override
-    public String correoErrorDescargandoDependencias(String error) {
-        return "Could not download mail dependencies: " + error;
-    }
-
-    @Override
-    public String correoBuscar() {
-        return "Search:";
-    }
-
-    @Override
-    public String correoBuscarAyuda() {
-        return "Searches in sender, recipients, subject, and encrypted local content.";
-    }
-
-    @Override
-    public String correoCuentas() {
-        return "Accounts";
-    }
-
-    @Override
-    public String correoCuentaServidor(String usuario, String servidor) {
-        return usuario + " @ " + servidor;
-    }
-
-    @Override
-    public String correoMensajes() {
-        return "Messages";
-    }
-
-    @Override
-    public String correoContenido() {
-        return "Text content";
-    }
-
-    @Override
-    public String correoCitas() {
-        return "Zawinski's Law";
-    }
-
-    @Override
-    public String correoDe() {
-        return "From:";
-    }
-
-    @Override
-    public String correoPara() {
-        return "To:";
-    }
-
-    @Override
-    public String correoAsunto() {
-        return "Subject:";
-    }
-
-    @Override
-    public String correoFecha() {
-        return "Date:";
-    }
-
-    @Override
-    public String correoColumnaEstado() {
-        return "Status";
-    }
-
-    @Override
-    public String correoColumnaDe() {
-        return "From";
-    }
-
-    @Override
-    public String correoColumnaAsunto() {
-        return "Subject";
-    }
-
-    @Override
-    public String correoColumnaFecha() {
-        return "Date";
-    }
-
-    @Override
-    public String correoLeido() {
-        return "Read";
-    }
-
-    @Override
-    public String correoNoLeido() {
-        return "New";
-    }
-
-    @Override
-    public String correoSeleccioneMensaje() {
-        return "Select a message to read it.";
-    }
-
-    @Override
-    public String correoEstadoListo() {
-        return "Vault unlocked. Ready.";
-    }
-
-    @Override
-    public String correoSinCuentas() {
-        return "No accounts configured.";
-    }
-
-    @Override
-    public String correoConectando(String cuenta) {
-        return "Connecting securely to " + cuenta + "…";
-    }
-
-    @Override
-    public String correoMensajesActualizados(int cantidad) {
-        return "Update complete: " + cantidad + " messages read from the server.";
-    }
-
-    @Override
-    public String correoCuentaGuardada() {
-        return "Account and cache saved to the encrypted vault.";
-    }
-
-    @Override
-    public String correoAdvertenciaPrivacidad() {
-        return "Privacy and security warning: mail may contain personal data, secrets, malicious links, and tracking content. This reader does not load remote HTML and encrypts the cache and credentials, but messages and passwords exist decrypted in memory while the vault is open. Use a unique vault password and, when the provider allows, an app password instead of your main password. This initial implementation does not perform the interactive OAuth flow. Backups, swap, memory dumps, or a compromised machine may still expose data.";
-    }
-
-    @Override
-    public String correoCitaUno() {
-        return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
-    }
-
-    @Override
-    public String correoCitaDos() {
-        return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
-    }
-
-    @Override
-    public String correoClaveBoveda() {
-        return "Vault password:";
-    }
-
-    @Override
-    public String correoConfirmarClave() {
-        return "Confirm password:";
-    }
-
-    @Override
-    public String correoCrearBovedaTitulo() {
-        return "Create encrypted mail vault";
-    }
-
-    @Override
-    public String correoDesbloquearBovedaTitulo() {
-        return "Unlock mail vault";
-    }
-
-    @Override
-    public String correoClaveCorta() {
-        return "The vault password must be at least 12 characters long.";
-    }
-
-    @Override
-    public String correoClavesNoCoinciden() {
-        return "The vault passwords do not match.";
-    }
-
-    @Override
-    public String correoClaveBovedaIncorrecta() {
-        return "The vault password is incorrect or the file has been tampered with.";
-    }
-
-    @Override
-    public String correoNombreCuenta() {
-        return "Account name:";
-    }
-
-    @Override
-    public String correoServidorImap() {
-        return "IMAP server:";
-    }
-
-    @Override
-    public String correoPuerto() {
-        return "IMAPS port:";
-    }
-
-    @Override
-    public String correoUsuario() {
-        return "User or address:";
-    }
-
-    @Override
-    public String correoSecreto() {
-        return "App password:";
-    }
-
-    @Override
-    public String correoSecretoAyuda() {
-        return "For an existing account, leave this field empty to keep the current encrypted secret.";
-    }
-
-    @Override
-    public String correoCarpeta() {
-        return "IMAP folder:";
-    }
-
-    @Override
-    public String correoCarpetaPredeterminada() {
-        return "INBOX";
-    }
-
-    @Override
-    public String correoCuentaInvalida() {
-        return "The account is invalid. Complete name, server, port, user, secret, and folder.";
-    }
-
-    @Override
-    public String correoPuertoInvalido() {
-        return "The IMAPS port must be a number between 1 and 65535.";
-    }
-
-    @Override
-    public String correoConfirmarEliminar(String cuenta) {
-        return "Delete the account \"" + cuenta + "\" and all its local encrypted messages?";
-    }
-
-    @Override
-    public String correoErrorTitulo() {
-        return "Mail reader error";
-    }
-
-    @Override
-    public String correoErrorConexion() {
-        return "Could not read mail via IMAPS. Check the server, port, user, app password, and IMAP permissions.";
-    }
-
-    @Override
-    public String correoErrorBoveda() {
-        return "Could not open or save the encrypted mail vault.";
-    }
-
-    @Override
-    public String correoColorFondo() {
-        return "Mail: background colour";
-    }
-
-    @Override
-    public String correoColorTexto() {
-        return "Mail: text colour";
-    }
-
-    @Override
-    public String correoColorCabecera() {
-        return "Mail: header colour";
-    }
-
-    @Override
-    public String correoColorTextoCabecera() {
-        return "Mail: header text";
-    }
-
-    @Override
-    public String correoColorBarra() {
-        return "Mail: bar colour";
-    }
-
-    @Override
-    public String correoColorBoton() {
-        return "Mail: button colour";
-    }
-
-    @Override
-    public String correoColorCaja() {
-        return "Mail: box colour";
-    }
-
-    @Override
-    public String correoColorSeleccion() {
-        return "Mail: selection colour";
-    }
-
-    @Override
-    public String correoColorTextoSeleccion() {
-        return "Mail: selected text";
-    }
-
-    @Override
-    public String correoColorAviso() {
-        return "Mail: notice background";
-    }
-
-    @Override
-    public String correoColorTextoAviso() {
-        return "Mail: notice text";
-    }
-
-    @Override
-    public String correoColorBordeClaro() {
-        return "Mail: light border";
-    }
-
-    @Override
-    public String correoColorBordeOscuro() {
-        return "Mail: dark border";
-    }
-
-    @Override
-    public String correoColorCitas() {
-        return "Mail: quotes background";
-    }
-	
-	
-	
-	
-	
-	
-	
+
+	/* ======================== Mail reader ======================== */
+
+	@Override
+	public String lectorCorreoTipo() {
+		return "Mail reader";
+	}
+
+	@Override
+	public String correoTitulo() {
+		return "Netscape Mail Reader";
+	}
+
+	@Override
+	public String correoAgregarCuenta() {
+		return "Add account";
+	}
+
+	@Override
+	public String correoEditarCuenta() {
+		return "Edit account";
+	}
+
+	@Override
+	public String correoEliminarCuenta() {
+		return "Delete account";
+	}
+
+	@Override
+	public String correoActualizar() {
+		return "Update";
+	}
+
+	@Override
+	public String correoActualizarTodas() {
+		return "Update all";
+	}
+
+	@Override
+	public String correoCerrar() {
+		return "Close and lock";
+	}
+
+	@Override
+	public String correoDescargarDependencias() {
+		return "Download mail dependencies";
+	}
+
+	@Override
+	public String correoEstadoDependenciasCargadas(String diagnostico) {
+		return "Mail dependencies detected [" + diagnostico + "]";
+	}
+
+	@Override
+	public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+		return "Mail dependencies not loaded [" + diagnostico
+				+ "]. Download them and restart CrashDetector if they still do not appear.";
+	}
+
+	@Override
+	public String correoDependenciasDescargadasReiniciar() {
+		return "Mail dependencies downloaded. If they still do not appear as loaded, restart CrashDetector.";
+	}
+
+	@Override
+	public String correoErrorDescargandoDependencias(String error) {
+		return "Could not download mail dependencies: " + error;
+	}
+
+	@Override
+	public String correoBuscar() {
+		return "Search:";
+	}
+
+	@Override
+	public String correoBuscarAyuda() {
+		return "Searches in sender, recipients, subject, and encrypted local content.";
+	}
+
+	@Override
+	public String correoCuentas() {
+		return "Accounts";
+	}
+
+	@Override
+	public String correoCuentaServidor(String usuario, String servidor) {
+		return usuario + " @ " + servidor;
+	}
+
+	@Override
+	public String correoMensajes() {
+		return "Messages";
+	}
+
+	@Override
+	public String correoContenido() {
+		return "Text content";
+	}
+
+	@Override
+	public String correoCitas() {
+		return "Zawinski's Law";
+	}
+
+	@Override
+	public String correoDe() {
+		return "From:";
+	}
+
+	@Override
+	public String correoPara() {
+		return "To:";
+	}
+
+	@Override
+	public String correoAsunto() {
+		return "Subject:";
+	}
+
+	@Override
+	public String correoFecha() {
+		return "Date:";
+	}
+
+	@Override
+	public String correoColumnaEstado() {
+		return "Status";
+	}
+
+	@Override
+	public String correoColumnaDe() {
+		return "From";
+	}
+
+	@Override
+	public String correoColumnaAsunto() {
+		return "Subject";
+	}
+
+	@Override
+	public String correoColumnaFecha() {
+		return "Date";
+	}
+
+	@Override
+	public String correoLeido() {
+		return "Read";
+	}
+
+	@Override
+	public String correoNoLeido() {
+		return "New";
+	}
+
+	@Override
+	public String correoSeleccioneMensaje() {
+		return "Select a message to read it.";
+	}
+
+	@Override
+	public String correoEstadoListo() {
+		return "Vault unlocked. Ready.";
+	}
+
+	@Override
+	public String correoSinCuentas() {
+		return "No accounts configured.";
+	}
+
+	@Override
+	public String correoConectando(String cuenta) {
+		return "Connecting securely to " + cuenta + "…";
+	}
+
+	@Override
+	public String correoMensajesActualizados(int cantidad) {
+		return "Update complete: " + cantidad + " messages read from the server.";
+	}
+
+	@Override
+	public String correoCuentaGuardada() {
+		return "Account and cache saved to the encrypted vault.";
+	}
+
+	@Override
+	public String correoAdvertenciaPrivacidad() {
+		return "Privacy and security warning: mail may contain personal data, secrets, malicious links, and tracking content. This reader does not load remote HTML and encrypts the cache and credentials, but messages and passwords exist decrypted in memory while the vault is open. Use a unique vault password and, when the provider allows, an app password instead of your main password. This initial implementation does not perform the interactive OAuth flow. Backups, swap, memory dumps, or a compromised machine may still expose data.";
+	}
+
+	@Override
+	public String correoCitaUno() {
+		return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+	}
+
+	@Override
+	public String correoCitaDos() {
+		return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+	}
+
+	@Override
+	public String correoClaveBoveda() {
+		return "Vault password:";
+	}
+
+	@Override
+	public String correoConfirmarClave() {
+		return "Confirm password:";
+	}
+
+	@Override
+	public String correoCrearBovedaTitulo() {
+		return "Create encrypted mail vault";
+	}
+
+	@Override
+	public String correoDesbloquearBovedaTitulo() {
+		return "Unlock mail vault";
+	}
+
+	@Override
+	public String correoClaveCorta() {
+		return "The vault password must be at least 12 characters long.";
+	}
+
+	@Override
+	public String correoClavesNoCoinciden() {
+		return "The vault passwords do not match.";
+	}
+
+	@Override
+	public String correoClaveBovedaIncorrecta() {
+		return "The vault password is incorrect or the file has been tampered with.";
+	}
+
+	@Override
+	public String correoNombreCuenta() {
+		return "Account name:";
+	}
+
+	@Override
+	public String correoServidorImap() {
+		return "IMAP server:";
+	}
+
+	@Override
+	public String correoPuerto() {
+		return "IMAPS port:";
+	}
+
+	@Override
+	public String correoUsuario() {
+		return "User or address:";
+	}
+
+	@Override
+	public String correoSecreto() {
+		return "App password:";
+	}
+
+	@Override
+	public String correoSecretoAyuda() {
+		return "For an existing account, leave this field empty to keep the current encrypted secret.";
+	}
+
+	@Override
+	public String correoCarpeta() {
+		return "IMAP folder:";
+	}
+
+	@Override
+	public String correoCarpetaPredeterminada() {
+		return "INBOX";
+	}
+
+	@Override
+	public String correoCuentaInvalida() {
+		return "The account is invalid. Complete name, server, port, user, secret, and folder.";
+	}
+
+	@Override
+	public String correoPuertoInvalido() {
+		return "The IMAPS port must be a number between 1 and 65535.";
+	}
+
+	@Override
+	public String correoConfirmarEliminar(String cuenta) {
+		return "Delete the account \"" + cuenta + "\" and all its local encrypted messages?";
+	}
+
+	@Override
+	public String correoErrorTitulo() {
+		return "Mail reader error";
+	}
+
+	@Override
+	public String correoErrorConexion() {
+		return "Could not read mail via IMAPS. Check the server, port, user, app password, and IMAP permissions.";
+	}
+
+	@Override
+	public String correoErrorBoveda() {
+		return "Could not open or save the encrypted mail vault.";
+	}
+
+	@Override
+	public String correoColorFondo() {
+		return "Mail: background colour";
+	}
+
+	@Override
+	public String correoColorTexto() {
+		return "Mail: text colour";
+	}
+
+	@Override
+	public String correoColorCabecera() {
+		return "Mail: header colour";
+	}
+
+	@Override
+	public String correoColorTextoCabecera() {
+		return "Mail: header text";
+	}
+
+	@Override
+	public String correoColorBarra() {
+		return "Mail: bar colour";
+	}
+
+	@Override
+	public String correoColorBoton() {
+		return "Mail: button colour";
+	}
+
+	@Override
+	public String correoColorCaja() {
+		return "Mail: box colour";
+	}
+
+	@Override
+	public String correoColorSeleccion() {
+		return "Mail: selection colour";
+	}
+
+	@Override
+	public String correoColorTextoSeleccion() {
+		return "Mail: selected text";
+	}
+
+	@Override
+	public String correoColorAviso() {
+		return "Mail: notice background";
+	}
+
+	@Override
+	public String correoColorTextoAviso() {
+		return "Mail: notice text";
+	}
+
+	@Override
+	public String correoColorBordeClaro() {
+		return "Mail: light border";
+	}
+
+	@Override
+	public String correoColorBordeOscuro() {
+		return "Mail: dark border";
+	}
+
+	@Override
+	public String correoColorCitas() {
+		return "Mail: quotes background";
+	}
 
 }

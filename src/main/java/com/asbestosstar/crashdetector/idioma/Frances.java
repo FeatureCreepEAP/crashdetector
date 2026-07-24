@@ -13614,393 +13614,377 @@ public class Frances implements Idioma {
 	public String generadorParchesDescargaAbierta() {
 		return "La page de téléchargement du JDK a été ouverte.";
 	}
-    /* ======================== Lecteur de courrier ======================== */
-
-    @Override
-    public String lectorCorreoTipo() {
-        return "Lecteur de courrier";
-    }
-
-    @Override
-    public String correoTitulo() {
-        return "Netscape Mail Reader";
-    }
-
-    @Override
-    public String correoAgregarCuenta() {
-        return "Ajouter un compte";
-    }
-
-    @Override
-    public String correoEditarCuenta() {
-        return "Modifier le compte";
-    }
-
-    @Override
-    public String correoEliminarCuenta() {
-        return "Supprimer le compte";
-    }
-
-    @Override
-    public String correoActualizar() {
-        return "Mettre à jour";
-    }
-
-    @Override
-    public String correoActualizarTodas() {
-        return "Tout mettre à jour";
-    }
-
-    @Override
-    public String correoCerrar() {
-        return "Fermer et verrouiller";
-    }
-
-    @Override
-    public String correoDescargarDependencias() {
-        return "Télécharger les dépendances de courrier";
-    }
-
-    @Override
-    public String correoEstadoDependenciasCargadas(String diagnostico) {
-        return "Dépendances de courrier détectées [" + diagnostico + "]";
-    }
-
-    @Override
-    public String correoEstadoDependenciasNoCargadas(String diagnostico) {
-        return "Dépendances de courrier non chargées [" + diagnostico
-                + "]. Téléchargez-les et redémarrez CrashDetector si elles continuent de ne pas apparaître.";
-    }
-
-    @Override
-    public String correoDependenciasDescargadasReiniciar() {
-        return "Dépendances de courrier téléchargées. Si elles n'apparaissent toujours pas chargées, redémarrez CrashDetector.";
-    }
-
-    @Override
-    public String correoErrorDescargandoDependencias(String error) {
-        return "Impossible de télécharger les dépendances de courrier : " + error;
-    }
-
-    @Override
-    public String correoBuscar() {
-        return "Rechercher :";
-    }
-
-    @Override
-    public String correoBuscarAyuda() {
-        return "Recherche dans l'expéditeur, les destinataires, l'objet et le contenu local chiffré.";
-    }
-
-    @Override
-    public String correoCuentas() {
-        return "Comptes";
-    }
-
-    @Override
-    public String correoCuentaServidor(String usuario, String servidor) {
-        return usuario + " @ " + servidor;
-    }
-
-    @Override
-    public String correoMensajes() {
-        return "Messages";
-    }
-
-    @Override
-    public String correoContenido() {
-        return "Contenu texte";
-    }
-
-    @Override
-    public String correoCitas() {
-        return "Loi de Zawinski";
-    }
-
-    @Override
-    public String correoDe() {
-        return "De :";
-    }
-
-    @Override
-    public String correoPara() {
-        return "À :";
-    }
-
-    @Override
-    public String correoAsunto() {
-        return "Objet :";
-    }
-
-    @Override
-    public String correoFecha() {
-        return "Date :";
-    }
-
-    @Override
-    public String correoColumnaEstado() {
-        return "État";
-    }
-
-    @Override
-    public String correoColumnaDe() {
-        return "De";
-    }
-
-    @Override
-    public String correoColumnaAsunto() {
-        return "Objet";
-    }
-
-    @Override
-    public String correoColumnaFecha() {
-        return "Date";
-    }
-
-    @Override
-    public String correoLeido() {
-        return "Lu";
-    }
-
-    @Override
-    public String correoNoLeido() {
-        return "Nouveau";
-    }
-
-    @Override
-    public String correoSeleccioneMensaje() {
-        return "Sélectionnez un message pour le lire.";
-    }
-
-    @Override
-    public String correoEstadoListo() {
-        return "Coffre déverrouillé. Prêt.";
-    }
-
-    @Override
-    public String correoSinCuentas() {
-        return "Aucun compte configuré.";
-    }
-
-    @Override
-    public String correoConectando(String cuenta) {
-        return "Connexion sécurisée à " + cuenta + "…";
-    }
-
-    @Override
-    public String correoMensajesActualizados(int cantidad) {
-        return "Mise à jour terminée : " + cantidad + " messages lus depuis le serveur.";
-    }
-
-    @Override
-    public String correoCuentaGuardada() {
-        return "Compte et cache enregistrés dans le coffre chiffré.";
-    }
-
-    @Override
-    public String correoAdvertenciaPrivacidad() {
-        return "Avertissement de confidentialité et de sécurité : le courrier peut contenir des données personnelles, des secrets, des liens malveillants et du contenu de suivi. Ce lecteur ne charge pas de HTML distant et chiffre le cache et les identifiants, mais les messages et mots de passe existent en clair en mémoire tant que le coffre est ouvert. Utilisez un mot de passe unique pour le coffre et, lorsque le fournisseur le permet, un mot de passe d'application au lieu de votre mot de passe principal. Cette implémentation initiale n'effectue pas le flux interactif OAuth. Les sauvegardes, le swap, les vidages de mémoire ou une machine compromise peuvent encore exposer des données.";
-    }
-
-    @Override
-    public String correoCitaUno() {
-        return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
-    }
-
-    @Override
-    public String correoCitaDos() {
-        return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
-    }
-
-    @Override
-    public String correoClaveBoveda() {
-        return "Mot de passe du coffre :";
-    }
-
-    @Override
-    public String correoConfirmarClave() {
-        return "Confirmer le mot de passe :";
-    }
-
-    @Override
-    public String correoCrearBovedaTitulo() {
-        return "Créer un coffre de courrier chiffré";
-    }
-
-    @Override
-    public String correoDesbloquearBovedaTitulo() {
-        return "Déverrouiller le coffre de courrier";
-    }
-
-    @Override
-    public String correoClaveCorta() {
-        return "Le mot de passe du coffre doit comporter au moins 12 caractères.";
-    }
-
-    @Override
-    public String correoClavesNoCoinciden() {
-        return "Les mots de passe du coffre ne correspondent pas.";
-    }
-
-    @Override
-    public String correoClaveBovedaIncorrecta() {
-        return "Le mot de passe du coffre est incorrect ou le fichier a été altéré.";
-    }
-
-    @Override
-    public String correoNombreCuenta() {
-        return "Nom du compte :";
-    }
-
-    @Override
-    public String correoServidorImap() {
-        return "Serveur IMAP :";
-    }
-
-    @Override
-    public String correoPuerto() {
-        return "Port IMAPS :";
-    }
-
-    @Override
-    public String correoUsuario() {
-        return "Utilisateur ou adresse :";
-    }
-
-    @Override
-    public String correoSecreto() {
-        return "Mot de passe d'application :";
-    }
-
-    @Override
-    public String correoSecretoAyuda() {
-        return "Pour un compte existant, laissez ce champ vide pour conserver le secret chiffré actuel.";
-    }
-
-    @Override
-    public String correoCarpeta() {
-        return "Dossier IMAP :";
-    }
-
-    @Override
-    public String correoCarpetaPredeterminada() {
-        return "INBOX";
-    }
-
-    @Override
-    public String correoCuentaInvalida() {
-        return "Le compte n'est pas valide. Remplissez le nom, le serveur, le port, l'utilisateur, le secret et le dossier.";
-    }
-
-    @Override
-    public String correoPuertoInvalido() {
-        return "Le port IMAPS doit être un nombre entre 1 et 65535.";
-    }
-
-    @Override
-    public String correoConfirmarEliminar(String cuenta) {
-        return "Supprimer le compte \"" + cuenta + "\" et tous ses messages locaux chiffrés ?";
-    }
-
-    @Override
-    public String correoErrorTitulo() {
-        return "Erreur du lecteur de courrier";
-    }
-
-    @Override
-    public String correoErrorConexion() {
-        return "Impossible de lire le courrier par IMAPS. Vérifiez le serveur, le port, l'utilisateur, le mot de passe d'application et les autorisations IMAP.";
-    }
-
-    @Override
-    public String correoErrorBoveda() {
-        return "Impossible d'ouvrir ou d'enregistrer le coffre de courrier chiffré.";
-    }
-
-    @Override
-    public String correoColorFondo() {
-        return "Courrier : couleur de fond";
-    }
-
-    @Override
-    public String correoColorTexto() {
-        return "Courrier : couleur de texte";
-    }
-
-    @Override
-    public String correoColorCabecera() {
-        return "Courrier : couleur d'en-tête";
-    }
-
-    @Override
-    public String correoColorTextoCabecera() {
-        return "Courrier : texte d'en-tête";
-    }
-
-    @Override
-    public String correoColorBarra() {
-        return "Courrier : couleur de barre";
-    }
-
-    @Override
-    public String correoColorBoton() {
-        return "Courrier : couleur de bouton";
-    }
-
-    @Override
-    public String correoColorCaja() {
-        return "Courrier : couleur des boîtes";
-    }
-
-    @Override
-    public String correoColorSeleccion() {
-        return "Courrier : couleur de sélection";
-    }
-
-    @Override
-    public String correoColorTextoSeleccion() {
-        return "Courrier : texte sélectionné";
-    }
-
-    @Override
-    public String correoColorAviso() {
-        return "Courrier : fond de l'avis";
-    }
-
-    @Override
-    public String correoColorTextoAviso() {
-        return "Courrier : texte de l'avis";
-    }
-
-    @Override
-    public String correoColorBordeClaro() {
-        return "Courrier : bordure claire";
-    }
-
-    @Override
-    public String correoColorBordeOscuro() {
-        return "Courrier : bordure sombre";
-    }
-
-    @Override
-    public String correoColorCitas() {
-        return "Courrier : fond des citations";
-    }
-    
-    
-    
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/* ======================== Lecteur de courrier ======================== */
+
+	@Override
+	public String lectorCorreoTipo() {
+		return "Lecteur de courrier";
+	}
+
+	@Override
+	public String correoTitulo() {
+		return "Netscape Mail Reader";
+	}
+
+	@Override
+	public String correoAgregarCuenta() {
+		return "Ajouter un compte";
+	}
+
+	@Override
+	public String correoEditarCuenta() {
+		return "Modifier le compte";
+	}
+
+	@Override
+	public String correoEliminarCuenta() {
+		return "Supprimer le compte";
+	}
+
+	@Override
+	public String correoActualizar() {
+		return "Mettre à jour";
+	}
+
+	@Override
+	public String correoActualizarTodas() {
+		return "Tout mettre à jour";
+	}
+
+	@Override
+	public String correoCerrar() {
+		return "Fermer et verrouiller";
+	}
+
+	@Override
+	public String correoDescargarDependencias() {
+		return "Télécharger les dépendances de courrier";
+	}
+
+	@Override
+	public String correoEstadoDependenciasCargadas(String diagnostico) {
+		return "Dépendances de courrier détectées [" + diagnostico + "]";
+	}
+
+	@Override
+	public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+		return "Dépendances de courrier non chargées [" + diagnostico
+				+ "]. Téléchargez-les et redémarrez CrashDetector si elles continuent de ne pas apparaître.";
+	}
+
+	@Override
+	public String correoDependenciasDescargadasReiniciar() {
+		return "Dépendances de courrier téléchargées. Si elles n'apparaissent toujours pas chargées, redémarrez CrashDetector.";
+	}
+
+	@Override
+	public String correoErrorDescargandoDependencias(String error) {
+		return "Impossible de télécharger les dépendances de courrier : " + error;
+	}
+
+	@Override
+	public String correoBuscar() {
+		return "Rechercher :";
+	}
+
+	@Override
+	public String correoBuscarAyuda() {
+		return "Recherche dans l'expéditeur, les destinataires, l'objet et le contenu local chiffré.";
+	}
+
+	@Override
+	public String correoCuentas() {
+		return "Comptes";
+	}
+
+	@Override
+	public String correoCuentaServidor(String usuario, String servidor) {
+		return usuario + " @ " + servidor;
+	}
+
+	@Override
+	public String correoMensajes() {
+		return "Messages";
+	}
+
+	@Override
+	public String correoContenido() {
+		return "Contenu texte";
+	}
+
+	@Override
+	public String correoCitas() {
+		return "Loi de Zawinski";
+	}
+
+	@Override
+	public String correoDe() {
+		return "De :";
+	}
+
+	@Override
+	public String correoPara() {
+		return "À :";
+	}
+
+	@Override
+	public String correoAsunto() {
+		return "Objet :";
+	}
+
+	@Override
+	public String correoFecha() {
+		return "Date :";
+	}
+
+	@Override
+	public String correoColumnaEstado() {
+		return "État";
+	}
+
+	@Override
+	public String correoColumnaDe() {
+		return "De";
+	}
+
+	@Override
+	public String correoColumnaAsunto() {
+		return "Objet";
+	}
+
+	@Override
+	public String correoColumnaFecha() {
+		return "Date";
+	}
+
+	@Override
+	public String correoLeido() {
+		return "Lu";
+	}
+
+	@Override
+	public String correoNoLeido() {
+		return "Nouveau";
+	}
+
+	@Override
+	public String correoSeleccioneMensaje() {
+		return "Sélectionnez un message pour le lire.";
+	}
+
+	@Override
+	public String correoEstadoListo() {
+		return "Coffre déverrouillé. Prêt.";
+	}
+
+	@Override
+	public String correoSinCuentas() {
+		return "Aucun compte configuré.";
+	}
+
+	@Override
+	public String correoConectando(String cuenta) {
+		return "Connexion sécurisée à " + cuenta + "…";
+	}
+
+	@Override
+	public String correoMensajesActualizados(int cantidad) {
+		return "Mise à jour terminée : " + cantidad + " messages lus depuis le serveur.";
+	}
+
+	@Override
+	public String correoCuentaGuardada() {
+		return "Compte et cache enregistrés dans le coffre chiffré.";
+	}
+
+	@Override
+	public String correoAdvertenciaPrivacidad() {
+		return "Avertissement de confidentialité et de sécurité : le courrier peut contenir des données personnelles, des secrets, des liens malveillants et du contenu de suivi. Ce lecteur ne charge pas de HTML distant et chiffre le cache et les identifiants, mais les messages et mots de passe existent en clair en mémoire tant que le coffre est ouvert. Utilisez un mot de passe unique pour le coffre et, lorsque le fournisseur le permet, un mot de passe d'application au lieu de votre mot de passe principal. Cette implémentation initiale n'effectue pas le flux interactif OAuth. Les sauvegardes, le swap, les vidages de mémoire ou une machine compromise peuvent encore exposer des données.";
+	}
+
+	@Override
+	public String correoCitaUno() {
+		return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+	}
+
+	@Override
+	public String correoCitaDos() {
+		return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+	}
+
+	@Override
+	public String correoClaveBoveda() {
+		return "Mot de passe du coffre :";
+	}
+
+	@Override
+	public String correoConfirmarClave() {
+		return "Confirmer le mot de passe :";
+	}
+
+	@Override
+	public String correoCrearBovedaTitulo() {
+		return "Créer un coffre de courrier chiffré";
+	}
+
+	@Override
+	public String correoDesbloquearBovedaTitulo() {
+		return "Déverrouiller le coffre de courrier";
+	}
+
+	@Override
+	public String correoClaveCorta() {
+		return "Le mot de passe du coffre doit comporter au moins 12 caractères.";
+	}
+
+	@Override
+	public String correoClavesNoCoinciden() {
+		return "Les mots de passe du coffre ne correspondent pas.";
+	}
+
+	@Override
+	public String correoClaveBovedaIncorrecta() {
+		return "Le mot de passe du coffre est incorrect ou le fichier a été altéré.";
+	}
+
+	@Override
+	public String correoNombreCuenta() {
+		return "Nom du compte :";
+	}
+
+	@Override
+	public String correoServidorImap() {
+		return "Serveur IMAP :";
+	}
+
+	@Override
+	public String correoPuerto() {
+		return "Port IMAPS :";
+	}
+
+	@Override
+	public String correoUsuario() {
+		return "Utilisateur ou adresse :";
+	}
+
+	@Override
+	public String correoSecreto() {
+		return "Mot de passe d'application :";
+	}
+
+	@Override
+	public String correoSecretoAyuda() {
+		return "Pour un compte existant, laissez ce champ vide pour conserver le secret chiffré actuel.";
+	}
+
+	@Override
+	public String correoCarpeta() {
+		return "Dossier IMAP :";
+	}
+
+	@Override
+	public String correoCarpetaPredeterminada() {
+		return "INBOX";
+	}
+
+	@Override
+	public String correoCuentaInvalida() {
+		return "Le compte n'est pas valide. Remplissez le nom, le serveur, le port, l'utilisateur, le secret et le dossier.";
+	}
+
+	@Override
+	public String correoPuertoInvalido() {
+		return "Le port IMAPS doit être un nombre entre 1 et 65535.";
+	}
+
+	@Override
+	public String correoConfirmarEliminar(String cuenta) {
+		return "Supprimer le compte \"" + cuenta + "\" et tous ses messages locaux chiffrés ?";
+	}
+
+	@Override
+	public String correoErrorTitulo() {
+		return "Erreur du lecteur de courrier";
+	}
+
+	@Override
+	public String correoErrorConexion() {
+		return "Impossible de lire le courrier par IMAPS. Vérifiez le serveur, le port, l'utilisateur, le mot de passe d'application et les autorisations IMAP.";
+	}
+
+	@Override
+	public String correoErrorBoveda() {
+		return "Impossible d'ouvrir ou d'enregistrer le coffre de courrier chiffré.";
+	}
+
+	@Override
+	public String correoColorFondo() {
+		return "Courrier : couleur de fond";
+	}
+
+	@Override
+	public String correoColorTexto() {
+		return "Courrier : couleur de texte";
+	}
+
+	@Override
+	public String correoColorCabecera() {
+		return "Courrier : couleur d'en-tête";
+	}
+
+	@Override
+	public String correoColorTextoCabecera() {
+		return "Courrier : texte d'en-tête";
+	}
+
+	@Override
+	public String correoColorBarra() {
+		return "Courrier : couleur de barre";
+	}
+
+	@Override
+	public String correoColorBoton() {
+		return "Courrier : couleur de bouton";
+	}
+
+	@Override
+	public String correoColorCaja() {
+		return "Courrier : couleur des boîtes";
+	}
+
+	@Override
+	public String correoColorSeleccion() {
+		return "Courrier : couleur de sélection";
+	}
+
+	@Override
+	public String correoColorTextoSeleccion() {
+		return "Courrier : texte sélectionné";
+	}
+
+	@Override
+	public String correoColorAviso() {
+		return "Courrier : fond de l'avis";
+	}
+
+	@Override
+	public String correoColorTextoAviso() {
+		return "Courrier : texte de l'avis";
+	}
+
+	@Override
+	public String correoColorBordeClaro() {
+		return "Courrier : bordure claire";
+	}
+
+	@Override
+	public String correoColorBordeOscuro() {
+		return "Courrier : bordure sombre";
+	}
+
+	@Override
+	public String correoColorCitas() {
+		return "Courrier : fond des citations";
+	}
 
 }

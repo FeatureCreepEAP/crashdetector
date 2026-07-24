@@ -9,3 +9,10 @@ logs/
 .idea/*
 .output.txt
 build.log
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/

@@ -1352,7 +1352,6 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
-
 	/**
 	 * Lector de correo IMAPS con almacenamiento local cifrado.
 	 */

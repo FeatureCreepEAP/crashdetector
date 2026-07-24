@@ -13334,323 +13334,301 @@ public class Suajili implements Idioma {
 		return "Ukurasa wa kupakua JDK umefunguliwa.";
 	}
 
-	
-	
 	public String lectorCorreoTipo() {
-	    return "Kisomaji barua pepe";
+		return "Kisomaji barua pepe";
 	}
 
 	public String correoTitulo() {
-	    return "Netscape Mail Reader";
+		return "Netscape Mail Reader";
 	}
 
 	public String correoAgregarCuenta() {
-	    return "Ongeza akaunti";
+		return "Ongeza akaunti";
 	}
 
 	public String correoEditarCuenta() {
-	    return "Hariri akaunti";
+		return "Hariri akaunti";
 	}
 
 	public String correoEliminarCuenta() {
-	    return "Futa akaunti";
+		return "Futa akaunti";
 	}
 
 	public String correoActualizar() {
-	    return "Sasisha";
+		return "Sasisha";
 	}
 
 	public String correoActualizarTodas() {
-	    return "Sasisha zote";
+		return "Sasisha zote";
 	}
 
 	public String correoCerrar() {
-	    return "Funga na ufunge";
+		return "Funga na ufunge";
 	}
 
 	public String correoDescargarDependencias() {
-	    return "Pakua tegemezi za barua pepe";
+		return "Pakua tegemezi za barua pepe";
 	}
 
 	public String correoEstadoDependenciasCargadas(String diagnostico) {
-	    return "Tegemezi za barua pepe zimegunduliwa [" + diagnostico + "]";
+		return "Tegemezi za barua pepe zimegunduliwa [" + diagnostico + "]";
 	}
 
 	public String correoEstadoDependenciasNoCargadas(String diagnostico) {
-	    return "Tegemezi za barua pepe hazijapakia [" + diagnostico
-	            + "]. Zipakue na uanzishe upya CrashDetector ikiwa bado hazijaonekana.";
+		return "Tegemezi za barua pepe hazijapakia [" + diagnostico
+				+ "]. Zipakue na uanzishe upya CrashDetector ikiwa bado hazijaonekana.";
 	}
 
 	public String correoDependenciasDescargadasReiniciar() {
-	    return "Tegemezi za barua pepe zimepakuliwa. Ikiwa bado hazijaonekana zimepakia, anzishe upya CrashDetector.";
+		return "Tegemezi za barua pepe zimepakuliwa. Ikiwa bado hazijaonekana zimepakia, anzishe upya CrashDetector.";
 	}
 
 	public String correoErrorDescargandoDependencias(String error) {
-	    return "Haikuweza kupakua tegemezi za barua pepe: " + error;
+		return "Haikuweza kupakua tegemezi za barua pepe: " + error;
 	}
 
 	public String correoBuscar() {
-	    return "Tafuta:";
+		return "Tafuta:";
 	}
 
 	public String correoBuscarAyuda() {
-	    return "Inatafuta katika mtumaji, wapokeaji, mada na maudhui ya ndani yaliyosimbwa.";
+		return "Inatafuta katika mtumaji, wapokeaji, mada na maudhui ya ndani yaliyosimbwa.";
 	}
 
 	public String correoCuentas() {
-	    return "Akaunti";
+		return "Akaunti";
 	}
 
 	public String correoCuentaServidor(String usuario, String servidor) {
-	    return usuario + " @ " + servidor;
+		return usuario + " @ " + servidor;
 	}
 
 	public String correoMensajes() {
-	    return "Ujumbe";
+		return "Ujumbe";
 	}
 
 	public String correoContenido() {
-	    return "Maudhui ya maandishi";
+		return "Maudhui ya maandishi";
 	}
 
 	public String correoCitas() {
-	    return "Sheria ya Zawinski";
+		return "Sheria ya Zawinski";
 	}
 
 	public String correoDe() {
-	    return "Kutoka:";
+		return "Kutoka:";
 	}
 
 	public String correoPara() {
-	    return "Kwa:";
+		return "Kwa:";
 	}
 
 	public String correoAsunto() {
-	    return "Mada:";
+		return "Mada:";
 	}
 
 	public String correoFecha() {
-	    return "Tarehe:";
+		return "Tarehe:";
 	}
 
 	public String correoColumnaEstado() {
-	    return "Hali";
+		return "Hali";
 	}
 
 	public String correoColumnaDe() {
-	    return "Kutoka";
+		return "Kutoka";
 	}
 
 	public String correoColumnaAsunto() {
-	    return "Mada";
+		return "Mada";
 	}
 
 	public String correoColumnaFecha() {
-	    return "Tarehe";
+		return "Tarehe";
 	}
 
 	public String correoLeido() {
-	    return "Imesomwa";
+		return "Imesomwa";
 	}
 
 	public String correoNoLeido() {
-	    return "Mpya";
+		return "Mpya";
 	}
 
 	public String correoSeleccioneMensaje() {
-	    return "Chagua ujumbe wa kusoma.";
+		return "Chagua ujumbe wa kusoma.";
 	}
 
 	public String correoEstadoListo() {
-	    return "Hazina imefunguliwa. Tayari.";
+		return "Hazina imefunguliwa. Tayari.";
 	}
 
 	public String correoSinCuentas() {
-	    return "Hakuna akaunti zilizosanidiwa.";
+		return "Hakuna akaunti zilizosanidiwa.";
 	}
 
 	public String correoConectando(String cuenta) {
-	    return "Inaunganisha kwa usalama kwa " + cuenta + "…";
+		return "Inaunganisha kwa usalama kwa " + cuenta + "…";
 	}
 
 	public String correoMensajesActualizados(int cantidad) {
-	    return "Usasishaji umekamilika: " + cantidad + " ujumbe umesomwa kutoka kwenye seva.";
+		return "Usasishaji umekamilika: " + cantidad + " ujumbe umesomwa kutoka kwenye seva.";
 	}
 
 	public String correoCuentaGuardada() {
-	    return "Akaunti na kashe zimehifadhiwa katika hazina iliyosimbwa.";
+		return "Akaunti na kashe zimehifadhiwa katika hazina iliyosimbwa.";
 	}
 
 	public String correoAdvertenciaPrivacidad() {
-	    return "Onyo la faragha na usalama: barua pepe inaweza kuwa na data za kibinafsi, siri, viungo vyenye hatari na maudhui ya kufuatilia. Kisomaji hiki hakipakii HTML ya mbali na husimba kashe na vitambulisho, lakini ujumbe na nenosiri zipo zimesuluhishwa katika kumbukumbu wakati hazina iko wazi. Tumia nenosiri la kipekee la hazina na, wakati mtoaji anaporuhusu, tumia nenosiri la programu badala ya nenosiri lako kuu. Utekelezaji huu wa awali hauifanyi mtiririko wa OAuth wa mwingiliano. Nakala za hifadhi, swap, dump za kumbukumbu au mashine iliyovamiwa b zinaweza kufichua data.";
+		return "Onyo la faragha na usalama: barua pepe inaweza kuwa na data za kibinafsi, siri, viungo vyenye hatari na maudhui ya kufuatilia. Kisomaji hiki hakipakii HTML ya mbali na husimba kashe na vitambulisho, lakini ujumbe na nenosiri zipo zimesuluhishwa katika kumbukumbu wakati hazina iko wazi. Tumia nenosiri la kipekee la hazina na, wakati mtoaji anaporuhusu, tumia nenosiri la programu badala ya nenosiri lako kuu. Utekelezaji huu wa awali hauifanyi mtiririko wa OAuth wa mwingiliano. Nakala za hifadhi, swap, dump za kumbukumbu au mashine iliyovamiwa b zinaweza kufichua data.";
 	}
 
 	public String correoCitaUno() {
-	    return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+		return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
 	}
 
 	public String correoCitaDos() {
-	    return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+		return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
 	}
 
 	public String correoClaveBoveda() {
-	    return "Nenosiri la hazina:";
+		return "Nenosiri la hazina:";
 	}
 
 	public String correoConfirmarClave() {
-	    return "Thibitisha nenosiri:";
+		return "Thibitisha nenosiri:";
 	}
 
 	public String correoCrearBovedaTitulo() {
-	    return "Unda hazina ya barua pepe iliyosimbwa";
+		return "Unda hazina ya barua pepe iliyosimbwa";
 	}
 
 	public String correoDesbloquearBovedaTitulo() {
-	    return "Fungua hazina ya barua pepe";
+		return "Fungua hazina ya barua pepe";
 	}
 
 	public String correoClaveCorta() {
-	    return "Nenosiri la hazina lazima liwe na angalau herufi 12.";
+		return "Nenosiri la hazina lazima liwe na angalau herufi 12.";
 	}
 
 	public String correoClavesNoCoinciden() {
-	    return "Manenosiri ya hazina hayalingani.";
+		return "Manenosiri ya hazina hayalingani.";
 	}
 
 	public String correoClaveBovedaIncorrecta() {
-	    return "Nenosiri la hazina si sahihi au faili imebadilishwa.";
+		return "Nenosiri la hazina si sahihi au faili imebadilishwa.";
 	}
 
 	public String correoNombreCuenta() {
-	    return "Jina la akaunti:";
+		return "Jina la akaunti:";
 	}
 
 	public String correoServidorImap() {
-	    return "Seva ya IMAP:";
+		return "Seva ya IMAP:";
 	}
 
 	public String correoPuerto() {
-	    return "Bandari ya IMAPS:";
+		return "Bandari ya IMAPS:";
 	}
 
 	public String correoUsuario() {
-	    return "Mtumiaji au anwani:";
+		return "Mtumiaji au anwani:";
 	}
 
 	public String correoSecreto() {
-	    return "Nenosiri la programu:";
+		return "Nenosiri la programu:";
 	}
 
 	public String correoSecretoAyuda() {
-	    return "Katika akaunti iliyopo, acha sehemu hii tupu ili kuhifadhi siri iliyosimbwa ya sasa.";
+		return "Katika akaunti iliyopo, acha sehemu hii tupu ili kuhifadhi siri iliyosimbwa ya sasa.";
 	}
 
 	public String correoCarpeta() {
-	    return "Folda ya IMAP:";
+		return "Folda ya IMAP:";
 	}
 
 	public String correoCarpetaPredeterminada() {
-	    return "INBOX";
+		return "INBOX";
 	}
 
 	public String correoCuentaInvalida() {
-	    return "Akaunti si halali. Jaza jina, seva, bandari, mtumiaji, siri na folda.";
+		return "Akaunti si halali. Jaza jina, seva, bandari, mtumiaji, siri na folda.";
 	}
 
 	public String correoPuertoInvalido() {
-	    return "Bandari ya IMAPS lazima iwe nambari kati ya 1 na 65535.";
+		return "Bandari ya IMAPS lazima iwe nambari kati ya 1 na 65535.";
 	}
 
 	public String correoConfirmarEliminar(String cuenta) {
-	    return "Futa akaunti \"" + cuenta + "\" na ujumbe wake wote wa ndani uliosimbwa?";
+		return "Futa akaunti \"" + cuenta + "\" na ujumbe wake wote wa ndani uliosimbwa?";
 	}
 
 	public String correoErrorTitulo() {
-	    return "Hitilafu ya kisomaji barua pepe";
+		return "Hitilafu ya kisomaji barua pepe";
 	}
 
 	public String correoErrorConexion() {
-	    return "Haikuweza kusoma barua pepe kupitia IMAPS. Angalia seva, bandari, mtumiaji, nenosiri la programu na ruhusa za IMAP.";
+		return "Haikuweza kusoma barua pepe kupitia IMAPS. Angalia seva, bandari, mtumiaji, nenosiri la programu na ruhusa za IMAP.";
 	}
 
 	public String correoErrorBoveda() {
-	    return "Haikuweza kufungua au kuhifadhi hazina ya barua pepe iliyosimbwa.";
+		return "Haikuweza kufungua au kuhifadhi hazina ya barua pepe iliyosimbwa.";
 	}
 
 	public String correoColorFondo() {
-	    return "Barua pepe: rangi ya mandhari";
+		return "Barua pepe: rangi ya mandhari";
 	}
 
 	public String correoColorTexto() {
-	    return "Barua pepe: rangi ya maandishi";
+		return "Barua pepe: rangi ya maandishi";
 	}
 
 	public String correoColorCabecera() {
-	    return "Barua pepe: rangi ya kichwa";
+		return "Barua pepe: rangi ya kichwa";
 	}
 
 	public String correoColorTextoCabecera() {
-	    return "Barua pepe: maandishi ya kichwa";
+		return "Barua pepe: maandishi ya kichwa";
 	}
 
 	public String correoColorBarra() {
-	    return "Barua pepe: rangi ya upau";
+		return "Barua pepe: rangi ya upau";
 	}
 
 	public String correoColorBoton() {
-	    return "Barua pepe: rangi ya kitufe";
+		return "Barua pepe: rangi ya kitufe";
 	}
 
 	public String correoColorCaja() {
-	    return "Barua pepe: rangi ya visanduku";
+		return "Barua pepe: rangi ya visanduku";
 	}
 
 	public String correoColorSeleccion() {
-	    return "Barua pepe: rangi ya uteuzi";
+		return "Barua pepe: rangi ya uteuzi";
 	}
 
 	public String correoColorTextoSeleccion() {
-	    return "Barua pepe: maandishi yaliyochaguliwa";
+		return "Barua pepe: maandishi yaliyochaguliwa";
 	}
 
 	public String correoColorAviso() {
-	    return "Barua pepe: mandhari ya onyo";
+		return "Barua pepe: mandhari ya onyo";
 	}
 
 	public String correoColorTextoAviso() {
-	    return "Barua pepe: maandishi ya onyo";
+		return "Barua pepe: maandishi ya onyo";
 	}
 
 	public String correoColorBordeClaro() {
-	    return "Barua pepe: mpaka nyepesi";
+		return "Barua pepe: mpaka nyepesi";
 	}
 
 	public String correoColorBordeOscuro() {
-	    return "Barua pepe: mpaka mzito";
+		return "Barua pepe: mpaka mzito";
 	}
 
 	public String correoColorCitas() {
-	    return "Barua pepe: mandhari ya nukuu";
+		return "Barua pepe: mandhari ya nukuu";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

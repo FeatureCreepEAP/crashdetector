@@ -45,7 +45,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
-import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaLegacy;
+import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaIkeEveland;
 
 /**
  * Clase abstracta que define la funcionalidad base para el diálogo de
@@ -209,8 +209,8 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 //	}
 
 	public void compartirInstanciaOModpack(ActionEvent e) {
-		TipoGUI.COMPARTIR_INSTANCIA.obtenerGUIPredeterminado(CompartirInstanciaLegacy.ID, CompartirInstanciaLegacy::new)
-				.init();
+		TipoGUI.COMPARTIR_INSTANCIA
+				.obtenerGUIPredeterminado(CompartirInstanciaIkeEveland.ID, CompartirInstanciaIkeEveland::new).init();
 	}
 
 	public void actualizarComboSitios(String apiNombre, Set<String> sitios, String sitioSeleccionado) {

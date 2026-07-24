@@ -12656,382 +12656,377 @@ public class Japones implements Idioma {
 	public String generadorParchesDescargaAbierta() {
 		return "JDKのダウンロードページを開きました。";
 	}
-	
-	
-    /* ======================== メールリーダー ======================== */
-
-    @Override
-    public String lectorCorreoTipo() {
-        return "メールリーダー";
-    }
-
-    @Override
-    public String correoTitulo() {
-        return "Netscape メールリーダー";
-    }
-
-    @Override
-    public String correoAgregarCuenta() {
-        return "アカウントを追加";
-    }
-
-    @Override
-    public String correoEditarCuenta() {
-        return "アカウントを編集";
-    }
-
-    @Override
-    public String correoEliminarCuenta() {
-        return "アカウントを削除";
-    }
-
-    @Override
-    public String correoActualizar() {
-        return "更新";
-    }
-
-    @Override
-    public String correoActualizarTodas() {
-        return "すべて更新";
-    }
-
-    @Override
-    public String correoCerrar() {
-        return "閉じてロック";
-    }
-
-    @Override
-    public String correoDescargarDependencias() {
-        return "メール依存関係をダウンロード";
-    }
-
-    @Override
-    public String correoEstadoDependenciasCargadas(String diagnostico) {
-        return "メール依存関係が検出されました [" + diagnostico + "]";
-    }
-
-    @Override
-    public String correoEstadoDependenciasNoCargadas(String diagnostico) {
-        return "メール依存関係が読み込まれていません [" + diagnostico
-                + "]。それでも表示されない場合は、ダウンロードして CrashDetector を再起動してください。";
-    }
-
-    @Override
-    public String correoDependenciasDescargadasReiniciar() {
-        return "メール依存関係がダウンロードされました。それでも読み込まれたとして表示されない場合は、CrashDetector を再起動してください。";
-    }
-
-    @Override
-    public String correoErrorDescargandoDependencias(String error) {
-        return "メール依存関係をダウンロードできませんでした: " + error;
-    }
-
-    @Override
-    public String correoBuscar() {
-        return "検索:";
-    }
-
-    @Override
-    public String correoBuscarAyuda() {
-        return "送信者、受信者、件名、およびローカル暗号化コンテンツを検索します。";
-    }
-
-    @Override
-    public String correoCuentas() {
-        return "アカウント";
-    }
-
-    @Override
-    public String correoCuentaServidor(String usuario, String servidor) {
-        return usuario + " @ " + servidor;
-    }
-
-    @Override
-    public String correoMensajes() {
-        return "メッセージ";
-    }
-
-    @Override
-    public String correoContenido() {
-        return "テキストコンテンツ";
-    }
-
-    @Override
-    public String correoCitas() {
-        return "ザウィンスキーの法則";
-    }
-
-    @Override
-    public String correoDe() {
-        return "From:";
-    }
-
-    @Override
-    public String correoPara() {
-        return "To:";
-    }
-
-    @Override
-    public String correoAsunto() {
-        return "件名:";
-    }
-
-    @Override
-    public String correoFecha() {
-        return "日付:";
-    }
-
-    @Override
-    public String correoColumnaEstado() {
-        return "状態";
-    }
-
-    @Override
-    public String correoColumnaDe() {
-        return "From";
-    }
-
-    @Override
-    public String correoColumnaAsunto() {
-        return "件名";
-    }
-
-    @Override
-    public String correoColumnaFecha() {
-        return "日付";
-    }
-
-    @Override
-    public String correoLeido() {
-        return "既読";
-    }
-
-    @Override
-    public String correoNoLeido() {
-        return "新着";
-    }
-
-    @Override
-    public String correoSeleccioneMensaje() {
-        return "読むメッセージを選択してください。";
-    }
-
-    @Override
-    public String correoEstadoListo() {
-        return "ボールト解除済み。準備完了。";
-    }
-
-    @Override
-    public String correoSinCuentas() {
-        return "設定されたアカウントがありません。";
-    }
-
-    @Override
-    public String correoConectando(String cuenta) {
-        return "" + cuenta + " に安全に接続中…";
-    }
-
-    @Override
-    public String correoMensajesActualizados(int cantidad) {
-        return "更新完了: サーバーから " + cantidad + " 件のメッセージを読み取りました。";
-    }
-
-    @Override
-    public String correoCuentaGuardada() {
-        return "アカウントとキャッシュが暗号化されたボールトに保存されました。";
-    }
-
-    @Override
-    public String correoAdvertenciaPrivacidad() {
-        return "プライバシーとセキュリティの警告: メールには個人データ、秘密、悪意のあるリンク、およびトラッキングコンテンツが含まれる可能性があります。このリーダーはリモート HTML をロードせず、キャッシュと資格情報を暗号化しますが、ボールトが開いている間、メッセージとパスワードはメモリ内で復号化された状態で存在します。固有のボールトパスワードを使用し、プロバイダーが許可する場合は、メインパスワードではなくアプリパスワードを使用してください。この初期実装では、インタラクティブな OAuth フローを実行しません。バックアップ、スワップ、メモリダンプ、または侵害されたマシンは依然としてデータを公開する可能性があります。";
-    }
-
-    @Override
-    public String correoCitaUno() {
-        return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
-    }
-
-    @Override
-    public String correoCitaDos() {
-        return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
-    }
-
-    @Override
-    public String correoClaveBoveda() {
-        return "ボールトパスワード:";
-    }
-
-    @Override
-    public String correoConfirmarClave() {
-        return "パスワードの確認:";
-    }
-
-    @Override
-    public String correoCrearBovedaTitulo() {
-        return "暗号化されたメールボールトを作成";
-    }
-
-    @Override
-    public String correoDesbloquearBovedaTitulo() {
-        return "メールボールトを解除";
-    }
-
-    @Override
-    public String correoClaveCorta() {
-        return "ボールトパスワードは少なくとも 12 文字である必要があります。";
-    }
-
-    @Override
-    public String correoClavesNoCoinciden() {
-        return "ボールトパスワードが一致しません。";
-    }
-
-    @Override
-    public String correoClaveBovedaIncorrecta() {
-        return "ボールトパスワードが正しくないか、ファイルが改ざんされています。";
-    }
-
-    @Override
-    public String correoNombreCuenta() {
-        return "アカウント名:";
-    }
-
-    @Override
-    public String correoServidorImap() {
-        return "IMAP サーバー:";
-    }
-
-    @Override
-    public String correoPuerto() {
-        return "IMAPS ポート:";
-    }
-
-    @Override
-    public String correoUsuario() {
-        return "ユーザーまたはアドレス:";
-    }
-
-    @Override
-    public String correoSecreto() {
-        return "アプリパスワード:";
-    }
-
-    @Override
-    public String correoSecretoAyuda() {
-        return "既存のアカウントの場合、現在の暗号化されたシークレットを保持するためにこのフィールドを空のままにしてください。";
-    }
-
-    @Override
-    public String correoCarpeta() {
-        return "IMAP フォルダ:";
-    }
-
-    @Override
-    public String correoCarpetaPredeterminada() {
-        return "INBOX";
-    }
-
-    @Override
-    public String correoCuentaInvalida() {
-        return "アカウントが無効です。名前、サーバー、ポート、ユーザー、シークレット、およびフォルダを入力してください。";
-    }
-
-    @Override
-    public String correoPuertoInvalido() {
-        return "IMAPS ポートは 1 から 65535 の間の数値である必要があります。";
-    }
-
-    @Override
-    public String correoConfirmarEliminar(String cuenta) {
-        return "アカウント \"" + cuenta + "\" とそのすべてのローカル暗号化メッセージを削除しますか？";
-    }
-
-    @Override
-    public String correoErrorTitulo() {
-        return "メールリーダーエラー";
-    }
-
-    @Override
-    public String correoErrorConexion() {
-        return "IMAPS でメールを読み取れませんでした。サーバー、ポート、ユーザー、アプリパスワード、および IMAP 権限を確認してください。";
-    }
-
-    @Override
-    public String correoErrorBoveda() {
-        return "暗号化されたメールボールトを開くか保存できませんでした。";
-    }
-
-    @Override
-    public String correoColorFondo() {
-        return "メール: 背景色";
-    }
-
-    @Override
-    public String correoColorTexto() {
-        return "メール: テキスト色";
-    }
-
-    @Override
-    public String correoColorCabecera() {
-        return "メール: ヘッダー色";
-    }
-
-    @Override
-    public String correoColorTextoCabecera() {
-        return "メール: ヘッダーテキスト";
-    }
-
-    @Override
-    public String correoColorBarra() {
-        return "メール: バーの色";
-    }
-
-    @Override
-    public String correoColorBoton() {
-        return "メール: ボタン色";
-    }
-
-    @Override
-    public String correoColorCaja() {
-        return "メール: ボックス色";
-    }
-
-    @Override
-    public String correoColorSeleccion() {
-        return "メール: 選択色";
-    }
-
-    @Override
-    public String correoColorTextoSeleccion() {
-        return "メール: 選択されたテキスト";
-    }
-
-    @Override
-    public String correoColorAviso() {
-        return "メール: 通知背景";
-    }
-
-    @Override
-    public String correoColorTextoAviso() {
-        return "メール: 通知テキスト";
-    }
-
-    @Override
-    public String correoColorBordeClaro() {
-        return "メール: 明るい境界線";
-    }
-
-    @Override
-    public String correoColorBordeOscuro() {
-        return "メール: 暗い境界線";
-    }
-
-    @Override
-    public String correoColorCitas() {
-        return "メール: 引用背景";
-    }
-	
-	
-	
+
+	/* ======================== メールリーダー ======================== */
+
+	@Override
+	public String lectorCorreoTipo() {
+		return "メールリーダー";
+	}
+
+	@Override
+	public String correoTitulo() {
+		return "Netscape メールリーダー";
+	}
+
+	@Override
+	public String correoAgregarCuenta() {
+		return "アカウントを追加";
+	}
+
+	@Override
+	public String correoEditarCuenta() {
+		return "アカウントを編集";
+	}
+
+	@Override
+	public String correoEliminarCuenta() {
+		return "アカウントを削除";
+	}
+
+	@Override
+	public String correoActualizar() {
+		return "更新";
+	}
+
+	@Override
+	public String correoActualizarTodas() {
+		return "すべて更新";
+	}
+
+	@Override
+	public String correoCerrar() {
+		return "閉じてロック";
+	}
+
+	@Override
+	public String correoDescargarDependencias() {
+		return "メール依存関係をダウンロード";
+	}
+
+	@Override
+	public String correoEstadoDependenciasCargadas(String diagnostico) {
+		return "メール依存関係が検出されました [" + diagnostico + "]";
+	}
+
+	@Override
+	public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+		return "メール依存関係が読み込まれていません [" + diagnostico + "]。それでも表示されない場合は、ダウンロードして CrashDetector を再起動してください。";
+	}
+
+	@Override
+	public String correoDependenciasDescargadasReiniciar() {
+		return "メール依存関係がダウンロードされました。それでも読み込まれたとして表示されない場合は、CrashDetector を再起動してください。";
+	}
+
+	@Override
+	public String correoErrorDescargandoDependencias(String error) {
+		return "メール依存関係をダウンロードできませんでした: " + error;
+	}
+
+	@Override
+	public String correoBuscar() {
+		return "検索:";
+	}
+
+	@Override
+	public String correoBuscarAyuda() {
+		return "送信者、受信者、件名、およびローカル暗号化コンテンツを検索します。";
+	}
+
+	@Override
+	public String correoCuentas() {
+		return "アカウント";
+	}
+
+	@Override
+	public String correoCuentaServidor(String usuario, String servidor) {
+		return usuario + " @ " + servidor;
+	}
+
+	@Override
+	public String correoMensajes() {
+		return "メッセージ";
+	}
+
+	@Override
+	public String correoContenido() {
+		return "テキストコンテンツ";
+	}
+
+	@Override
+	public String correoCitas() {
+		return "ザウィンスキーの法則";
+	}
+
+	@Override
+	public String correoDe() {
+		return "From:";
+	}
+
+	@Override
+	public String correoPara() {
+		return "To:";
+	}
+
+	@Override
+	public String correoAsunto() {
+		return "件名:";
+	}
+
+	@Override
+	public String correoFecha() {
+		return "日付:";
+	}
+
+	@Override
+	public String correoColumnaEstado() {
+		return "状態";
+	}
+
+	@Override
+	public String correoColumnaDe() {
+		return "From";
+	}
+
+	@Override
+	public String correoColumnaAsunto() {
+		return "件名";
+	}
+
+	@Override
+	public String correoColumnaFecha() {
+		return "日付";
+	}
+
+	@Override
+	public String correoLeido() {
+		return "既読";
+	}
+
+	@Override
+	public String correoNoLeido() {
+		return "新着";
+	}
+
+	@Override
+	public String correoSeleccioneMensaje() {
+		return "読むメッセージを選択してください。";
+	}
+
+	@Override
+	public String correoEstadoListo() {
+		return "ボールト解除済み。準備完了。";
+	}
+
+	@Override
+	public String correoSinCuentas() {
+		return "設定されたアカウントがありません。";
+	}
+
+	@Override
+	public String correoConectando(String cuenta) {
+		return "" + cuenta + " に安全に接続中…";
+	}
+
+	@Override
+	public String correoMensajesActualizados(int cantidad) {
+		return "更新完了: サーバーから " + cantidad + " 件のメッセージを読み取りました。";
+	}
+
+	@Override
+	public String correoCuentaGuardada() {
+		return "アカウントとキャッシュが暗号化されたボールトに保存されました。";
+	}
+
+	@Override
+	public String correoAdvertenciaPrivacidad() {
+		return "プライバシーとセキュリティの警告: メールには個人データ、秘密、悪意のあるリンク、およびトラッキングコンテンツが含まれる可能性があります。このリーダーはリモート HTML をロードせず、キャッシュと資格情報を暗号化しますが、ボールトが開いている間、メッセージとパスワードはメモリ内で復号化された状態で存在します。固有のボールトパスワードを使用し、プロバイダーが許可する場合は、メインパスワードではなくアプリパスワードを使用してください。この初期実装では、インタラクティブな OAuth フローを実行しません。バックアップ、スワップ、メモリダンプ、または侵害されたマシンは依然としてデータを公開する可能性があります。";
+	}
+
+	@Override
+	public String correoCitaUno() {
+		return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+	}
+
+	@Override
+	public String correoCitaDos() {
+		return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+	}
+
+	@Override
+	public String correoClaveBoveda() {
+		return "ボールトパスワード:";
+	}
+
+	@Override
+	public String correoConfirmarClave() {
+		return "パスワードの確認:";
+	}
+
+	@Override
+	public String correoCrearBovedaTitulo() {
+		return "暗号化されたメールボールトを作成";
+	}
+
+	@Override
+	public String correoDesbloquearBovedaTitulo() {
+		return "メールボールトを解除";
+	}
+
+	@Override
+	public String correoClaveCorta() {
+		return "ボールトパスワードは少なくとも 12 文字である必要があります。";
+	}
+
+	@Override
+	public String correoClavesNoCoinciden() {
+		return "ボールトパスワードが一致しません。";
+	}
+
+	@Override
+	public String correoClaveBovedaIncorrecta() {
+		return "ボールトパスワードが正しくないか、ファイルが改ざんされています。";
+	}
+
+	@Override
+	public String correoNombreCuenta() {
+		return "アカウント名:";
+	}
+
+	@Override
+	public String correoServidorImap() {
+		return "IMAP サーバー:";
+	}
+
+	@Override
+	public String correoPuerto() {
+		return "IMAPS ポート:";
+	}
+
+	@Override
+	public String correoUsuario() {
+		return "ユーザーまたはアドレス:";
+	}
+
+	@Override
+	public String correoSecreto() {
+		return "アプリパスワード:";
+	}
+
+	@Override
+	public String correoSecretoAyuda() {
+		return "既存のアカウントの場合、現在の暗号化されたシークレットを保持するためにこのフィールドを空のままにしてください。";
+	}
+
+	@Override
+	public String correoCarpeta() {
+		return "IMAP フォルダ:";
+	}
+
+	@Override
+	public String correoCarpetaPredeterminada() {
+		return "INBOX";
+	}
+
+	@Override
+	public String correoCuentaInvalida() {
+		return "アカウントが無効です。名前、サーバー、ポート、ユーザー、シークレット、およびフォルダを入力してください。";
+	}
+
+	@Override
+	public String correoPuertoInvalido() {
+		return "IMAPS ポートは 1 から 65535 の間の数値である必要があります。";
+	}
+
+	@Override
+	public String correoConfirmarEliminar(String cuenta) {
+		return "アカウント \"" + cuenta + "\" とそのすべてのローカル暗号化メッセージを削除しますか？";
+	}
+
+	@Override
+	public String correoErrorTitulo() {
+		return "メールリーダーエラー";
+	}
+
+	@Override
+	public String correoErrorConexion() {
+		return "IMAPS でメールを読み取れませんでした。サーバー、ポート、ユーザー、アプリパスワード、および IMAP 権限を確認してください。";
+	}
+
+	@Override
+	public String correoErrorBoveda() {
+		return "暗号化されたメールボールトを開くか保存できませんでした。";
+	}
+
+	@Override
+	public String correoColorFondo() {
+		return "メール: 背景色";
+	}
+
+	@Override
+	public String correoColorTexto() {
+		return "メール: テキスト色";
+	}
+
+	@Override
+	public String correoColorCabecera() {
+		return "メール: ヘッダー色";
+	}
+
+	@Override
+	public String correoColorTextoCabecera() {
+		return "メール: ヘッダーテキスト";
+	}
+
+	@Override
+	public String correoColorBarra() {
+		return "メール: バーの色";
+	}
+
+	@Override
+	public String correoColorBoton() {
+		return "メール: ボタン色";
+	}
+
+	@Override
+	public String correoColorCaja() {
+		return "メール: ボックス色";
+	}
+
+	@Override
+	public String correoColorSeleccion() {
+		return "メール: 選択色";
+	}
+
+	@Override
+	public String correoColorTextoSeleccion() {
+		return "メール: 選択されたテキスト";
+	}
+
+	@Override
+	public String correoColorAviso() {
+		return "メール: 通知背景";
+	}
+
+	@Override
+	public String correoColorTextoAviso() {
+		return "メール: 通知テキスト";
+	}
+
+	@Override
+	public String correoColorBordeClaro() {
+		return "メール: 明るい境界線";
+	}
+
+	@Override
+	public String correoColorBordeOscuro() {
+		return "メール: 暗い境界線";
+	}
+
+	@Override
+	public String correoColorCitas() {
+		return "メール: 引用背景";
+	}
 
 }

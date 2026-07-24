@@ -12652,387 +12652,377 @@ public class Coreano implements Idioma {
 	public String generadorParchesDescargaAbierta() {
 		return "JDK 다운로드 페이지를 열었습니다.";
 	}
-	
-    /* ======================== 메일 리더 ======================== */
-
-    @Override
-    public String lectorCorreoTipo() {
-        return "메일 리더";
-    }
-
-    @Override
-    public String correoTitulo() {
-        return "Netscape 메일 리더";
-    }
-
-    @Override
-    public String correoAgregarCuenta() {
-        return "계정 추가";
-    }
-
-    @Override
-    public String correoEditarCuenta() {
-        return "계정 편집";
-    }
-
-    @Override
-    public String correoEliminarCuenta() {
-        return "계정 삭제";
-    }
-
-    @Override
-    public String correoActualizar() {
-        return "업데이트";
-    }
-
-    @Override
-    public String correoActualizarTodas() {
-        return "모두 업데이트";
-    }
-
-    @Override
-    public String correoCerrar() {
-        return "닫기 및 잠금";
-    }
-
-    @Override
-    public String correoDescargarDependencias() {
-        return "메일 의존성 다운로드";
-    }
-
-    @Override
-    public String correoEstadoDependenciasCargadas(String diagnostico) {
-        return "메일 의존성 감지됨 [" + diagnostico + "]";
-    }
-
-    @Override
-    public String correoEstadoDependenciasNoCargadas(String diagnostico) {
-        return "메일 의존성이 로드되지 않았습니다 [" + diagnostico
-                + "]. 여전히 나타나지 않으면 다운로드하고 CrashDetector를 재시작하십시오.";
-    }
-
-    @Override
-    public String correoDependenciasDescargadasReiniciar() {
-        return "메일 의존성이 다운로드되었습니다. 여전히 로드되지 않은 것으로 표시되면 CrashDetector를 재시작하십시오.";
-    }
-
-    @Override
-    public String correoErrorDescargandoDependencias(String error) {
-        return "메일 의존성을 다운로드할 수 없습니다: " + error;
-    }
-
-    @Override
-    public String correoBuscar() {
-        return "검색:";
-    }
-
-    @Override
-    public String correoBuscarAyuda() {
-        return "발신자, 수신자, 제목 및 로컬 암호화된 내용에서 검색합니다.";
-    }
-
-    @Override
-    public String correoCuentas() {
-        return "계정";
-    }
-
-    @Override
-    public String correoCuentaServidor(String usuario, String servidor) {
-        return usuario + " @ " + servidor;
-    }
-
-    @Override
-    public String correoMensajes() {
-        return "메시지";
-    }
-
-    @Override
-    public String correoContenido() {
-        return "텍스트 내용";
-    }
-
-    @Override
-    public String correoCitas() {
-        return "자윈스키의 법칙";
-    }
-
-    @Override
-    public String correoDe() {
-        return "보낸 사람:";
-    }
-
-    @Override
-    public String correoPara() {
-        return "받는 사람:";
-    }
-
-    @Override
-    public String correoAsunto() {
-        return "제목:";
-    }
-
-    @Override
-    public String correoFecha() {
-        return "날짜:";
-    }
-
-    @Override
-    public String correoColumnaEstado() {
-        return "상태";
-    }
-
-    @Override
-    public String correoColumnaDe() {
-        return "보낸 사람";
-    }
-
-    @Override
-    public String correoColumnaAsunto() {
-        return "제목";
-    }
-
-    @Override
-    public String correoColumnaFecha() {
-        return "날짜";
-    }
-
-    @Override
-    public String correoLeido() {
-        return "읽음";
-    }
-
-    @Override
-    public String correoNoLeido() {
-        return "새 메시지";
-    }
-
-    @Override
-    public String correoSeleccioneMensaje() {
-        return "읽을 메시지를 선택하십시오.";
-    }
-
-    @Override
-    public String correoEstadoListo() {
-        return "금고 잠금 해제됨. 준비 완료.";
-    }
-
-    @Override
-    public String correoSinCuentas() {
-        return "구성된 계정이 없습니다.";
-    }
-
-    @Override
-    public String correoConectando(String cuenta) {
-        return "" + cuenta + "에 안전하게 연결 중…";
-    }
-
-    @Override
-    public String correoMensajesActualizados(int cantidad) {
-        return "업데이트 완료: 서버에서 " + cantidad + "개의 메시지를 읽었습니다.";
-    }
-
-    @Override
-    public String correoCuentaGuardada() {
-        return "계정 및 캐시가 암호화된 금고에 저장되었습니다.";
-    }
-
-    @Override
-    public String correoAdvertenciaPrivacidad() {
-        return "개인정보 보호 및 보안 경고: 메일에는 개인 데이터, 비밀, 악성 링크 및 추적 콘텐츠가 포함될 수 있습니다. 이 리더는 원격 HTML을 로드하지 않으며 캐시와 자격 증명을 암호화하지만, 금고가 열려 있는 동안 메시지와 비밀번호는 메모리에서 복호화된 상태로 존재합니다. 고유한 금고 비밀번호를 사용하고, 제공자가 허용하는 경우 주 비밀번호 대신 앱 비밀번호를 사용하십시오. 이 초기 구현은 상호 작용형 OAuth 흐름을 수행하지 않습니다. 백업, 스왑, 메모리 덤프 또는 손상된 기계는 여전히 데이터를 노출시킬 수 있습니다.";
-    }
-
-    @Override
-    public String correoCitaUno() {
-        return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
-    }
-
-    @Override
-    public String correoCitaDos() {
-        return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
-    }
-
-    @Override
-    public String correoClaveBoveda() {
-        return "금고 비밀번호:";
-    }
-
-    @Override
-    public String correoConfirmarClave() {
-        return "비밀번호 확인:";
-    }
-
-    @Override
-    public String correoCrearBovedaTitulo() {
-        return "암호화된 메일 금고 생성";
-    }
-
-    @Override
-    public String correoDesbloquearBovedaTitulo() {
-        return "메일 금고 잠금 해제";
-    }
-
-    @Override
-    public String correoClaveCorta() {
-        return "금고 비밀번호는 최소 12자 이상이어야 합니다.";
-    }
-
-    @Override
-    public String correoClavesNoCoinciden() {
-        return "금고 비밀번호가 일치하지 않습니다.";
-    }
-
-    @Override
-    public String correoClaveBovedaIncorrecta() {
-        return "금고 비밀번호가 잘못되었거나 파일이 변경되었습니다.";
-    }
-
-    @Override
-    public String correoNombreCuenta() {
-        return "계정 이름:";
-    }
-
-    @Override
-    public String correoServidorImap() {
-        return "IMAP 서버:";
-    }
-
-    @Override
-    public String correoPuerto() {
-        return "IMAPS 포트:";
-    }
-
-    @Override
-    public String correoUsuario() {
-        return "사용자 또는 주소:";
-    }
-
-    @Override
-    public String correoSecreto() {
-        return "앱 비밀번호:";
-    }
-
-    @Override
-    public String correoSecretoAyuda() {
-        return "기존 계정의 경우, 현재 암호화된 비밀을 유지하려면 이 필드를 비워 두십시오.";
-    }
-
-    @Override
-    public String correoCarpeta() {
-        return "IMAP 폴더:";
-    }
-
-    @Override
-    public String correoCarpetaPredeterminada() {
-        return "INBOX";
-    }
-
-    @Override
-    public String correoCuentaInvalida() {
-        return "계정이 유효하지 않습니다. 이름, 서버, 포트, 사용자, 비밀 및 폴더를 입력하십시오.";
-    }
-
-    @Override
-    public String correoPuertoInvalido() {
-        return "IMAPS 포트는 1에서 65535 사이의 숫자여야 합니다.";
-    }
-
-    @Override
-    public String correoConfirmarEliminar(String cuenta) {
-        return "계정 \"" + cuenta + "\"과 모든 로컬 암호화된 메시지를 삭제하시겠습니까?";
-    }
-
-    @Override
-    public String correoErrorTitulo() {
-        return "메일 리더 오류";
-    }
-
-    @Override
-    public String correoErrorConexion() {
-        return "IMAPS로 메일을 읽을 수 없습니다. 서버, 포트, 사용자, 앱 비밀번호 및 IMAP 권한을 확인하십시오.";
-    }
-
-    @Override
-    public String correoErrorBoveda() {
-        return "암호화된 메일 금고를 열거나 저장할 수 없습니다.";
-    }
-
-    @Override
-    public String correoColorFondo() {
-        return "메일: 배경색";
-    }
-
-    @Override
-    public String correoColorTexto() {
-        return "메일: 텍스트 색상";
-    }
-
-    @Override
-    public String correoColorCabecera() {
-        return "메일: 헤더 색상";
-    }
-
-    @Override
-    public String correoColorTextoCabecera() {
-        return "메일: 헤더 텍스트";
-    }
-
-    @Override
-    public String correoColorBarra() {
-        return "메일: 막대 색상";
-    }
-
-    @Override
-    public String correoColorBoton() {
-        return "메일: 버튼 색상";
-    }
-
-    @Override
-    public String correoColorCaja() {
-        return "메일: 상자 색상";
-    }
-
-    @Override
-    public String correoColorSeleccion() {
-        return "메일: 선택 색상";
-    }
-
-    @Override
-    public String correoColorTextoSeleccion() {
-        return "메일: 선택된 텍스트";
-    }
-
-    @Override
-    public String correoColorAviso() {
-        return "메일: 알림 배경";
-    }
-
-    @Override
-    public String correoColorTextoAviso() {
-        return "메일: 알림 텍스트";
-    }
-
-    @Override
-    public String correoColorBordeClaro() {
-        return "메일: 밝은 테두리";
-    }
-
-    @Override
-    public String correoColorBordeOscuro() {
-        return "메일: 어두운 테두리";
-    }
-
-    @Override
-    public String correoColorCitas() {
-        return "메일: 인용구 배경";
-    }
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	/* ======================== 메일 리더 ======================== */
+
+	@Override
+	public String lectorCorreoTipo() {
+		return "메일 리더";
+	}
+
+	@Override
+	public String correoTitulo() {
+		return "Netscape 메일 리더";
+	}
+
+	@Override
+	public String correoAgregarCuenta() {
+		return "계정 추가";
+	}
+
+	@Override
+	public String correoEditarCuenta() {
+		return "계정 편집";
+	}
+
+	@Override
+	public String correoEliminarCuenta() {
+		return "계정 삭제";
+	}
+
+	@Override
+	public String correoActualizar() {
+		return "업데이트";
+	}
+
+	@Override
+	public String correoActualizarTodas() {
+		return "모두 업데이트";
+	}
+
+	@Override
+	public String correoCerrar() {
+		return "닫기 및 잠금";
+	}
+
+	@Override
+	public String correoDescargarDependencias() {
+		return "메일 의존성 다운로드";
+	}
+
+	@Override
+	public String correoEstadoDependenciasCargadas(String diagnostico) {
+		return "메일 의존성 감지됨 [" + diagnostico + "]";
+	}
+
+	@Override
+	public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+		return "메일 의존성이 로드되지 않았습니다 [" + diagnostico + "]. 여전히 나타나지 않으면 다운로드하고 CrashDetector를 재시작하십시오.";
+	}
+
+	@Override
+	public String correoDependenciasDescargadasReiniciar() {
+		return "메일 의존성이 다운로드되었습니다. 여전히 로드되지 않은 것으로 표시되면 CrashDetector를 재시작하십시오.";
+	}
+
+	@Override
+	public String correoErrorDescargandoDependencias(String error) {
+		return "메일 의존성을 다운로드할 수 없습니다: " + error;
+	}
+
+	@Override
+	public String correoBuscar() {
+		return "검색:";
+	}
+
+	@Override
+	public String correoBuscarAyuda() {
+		return "발신자, 수신자, 제목 및 로컬 암호화된 내용에서 검색합니다.";
+	}
+
+	@Override
+	public String correoCuentas() {
+		return "계정";
+	}
+
+	@Override
+	public String correoCuentaServidor(String usuario, String servidor) {
+		return usuario + " @ " + servidor;
+	}
+
+	@Override
+	public String correoMensajes() {
+		return "메시지";
+	}
+
+	@Override
+	public String correoContenido() {
+		return "텍스트 내용";
+	}
+
+	@Override
+	public String correoCitas() {
+		return "자윈스키의 법칙";
+	}
+
+	@Override
+	public String correoDe() {
+		return "보낸 사람:";
+	}
+
+	@Override
+	public String correoPara() {
+		return "받는 사람:";
+	}
+
+	@Override
+	public String correoAsunto() {
+		return "제목:";
+	}
+
+	@Override
+	public String correoFecha() {
+		return "날짜:";
+	}
+
+	@Override
+	public String correoColumnaEstado() {
+		return "상태";
+	}
+
+	@Override
+	public String correoColumnaDe() {
+		return "보낸 사람";
+	}
+
+	@Override
+	public String correoColumnaAsunto() {
+		return "제목";
+	}
+
+	@Override
+	public String correoColumnaFecha() {
+		return "날짜";
+	}
+
+	@Override
+	public String correoLeido() {
+		return "읽음";
+	}
+
+	@Override
+	public String correoNoLeido() {
+		return "새 메시지";
+	}
+
+	@Override
+	public String correoSeleccioneMensaje() {
+		return "읽을 메시지를 선택하십시오.";
+	}
+
+	@Override
+	public String correoEstadoListo() {
+		return "금고 잠금 해제됨. 준비 완료.";
+	}
+
+	@Override
+	public String correoSinCuentas() {
+		return "구성된 계정이 없습니다.";
+	}
+
+	@Override
+	public String correoConectando(String cuenta) {
+		return "" + cuenta + "에 안전하게 연결 중…";
+	}
+
+	@Override
+	public String correoMensajesActualizados(int cantidad) {
+		return "업데이트 완료: 서버에서 " + cantidad + "개의 메시지를 읽었습니다.";
+	}
+
+	@Override
+	public String correoCuentaGuardada() {
+		return "계정 및 캐시가 암호화된 금고에 저장되었습니다.";
+	}
+
+	@Override
+	public String correoAdvertenciaPrivacidad() {
+		return "개인정보 보호 및 보안 경고: 메일에는 개인 데이터, 비밀, 악성 링크 및 추적 콘텐츠가 포함될 수 있습니다. 이 리더는 원격 HTML을 로드하지 않으며 캐시와 자격 증명을 암호화하지만, 금고가 열려 있는 동안 메시지와 비밀번호는 메모리에서 복호화된 상태로 존재합니다. 고유한 금고 비밀번호를 사용하고, 제공자가 허용하는 경우 주 비밀번호 대신 앱 비밀번호를 사용하십시오. 이 초기 구현은 상호 작용형 OAuth 흐름을 수행하지 않습니다. 백업, 스왑, 메모리 덤프 또는 손상된 기계는 여전히 데이터를 노출시킬 수 있습니다.";
+	}
+
+	@Override
+	public String correoCitaUno() {
+		return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+	}
+
+	@Override
+	public String correoCitaDos() {
+		return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+	}
+
+	@Override
+	public String correoClaveBoveda() {
+		return "금고 비밀번호:";
+	}
+
+	@Override
+	public String correoConfirmarClave() {
+		return "비밀번호 확인:";
+	}
+
+	@Override
+	public String correoCrearBovedaTitulo() {
+		return "암호화된 메일 금고 생성";
+	}
+
+	@Override
+	public String correoDesbloquearBovedaTitulo() {
+		return "메일 금고 잠금 해제";
+	}
+
+	@Override
+	public String correoClaveCorta() {
+		return "금고 비밀번호는 최소 12자 이상이어야 합니다.";
+	}
+
+	@Override
+	public String correoClavesNoCoinciden() {
+		return "금고 비밀번호가 일치하지 않습니다.";
+	}
+
+	@Override
+	public String correoClaveBovedaIncorrecta() {
+		return "금고 비밀번호가 잘못되었거나 파일이 변경되었습니다.";
+	}
+
+	@Override
+	public String correoNombreCuenta() {
+		return "계정 이름:";
+	}
+
+	@Override
+	public String correoServidorImap() {
+		return "IMAP 서버:";
+	}
+
+	@Override
+	public String correoPuerto() {
+		return "IMAPS 포트:";
+	}
+
+	@Override
+	public String correoUsuario() {
+		return "사용자 또는 주소:";
+	}
+
+	@Override
+	public String correoSecreto() {
+		return "앱 비밀번호:";
+	}
+
+	@Override
+	public String correoSecretoAyuda() {
+		return "기존 계정의 경우, 현재 암호화된 비밀을 유지하려면 이 필드를 비워 두십시오.";
+	}
+
+	@Override
+	public String correoCarpeta() {
+		return "IMAP 폴더:";
+	}
+
+	@Override
+	public String correoCarpetaPredeterminada() {
+		return "INBOX";
+	}
+
+	@Override
+	public String correoCuentaInvalida() {
+		return "계정이 유효하지 않습니다. 이름, 서버, 포트, 사용자, 비밀 및 폴더를 입력하십시오.";
+	}
+
+	@Override
+	public String correoPuertoInvalido() {
+		return "IMAPS 포트는 1에서 65535 사이의 숫자여야 합니다.";
+	}
+
+	@Override
+	public String correoConfirmarEliminar(String cuenta) {
+		return "계정 \"" + cuenta + "\"과 모든 로컬 암호화된 메시지를 삭제하시겠습니까?";
+	}
+
+	@Override
+	public String correoErrorTitulo() {
+		return "메일 리더 오류";
+	}
+
+	@Override
+	public String correoErrorConexion() {
+		return "IMAPS로 메일을 읽을 수 없습니다. 서버, 포트, 사용자, 앱 비밀번호 및 IMAP 권한을 확인하십시오.";
+	}
+
+	@Override
+	public String correoErrorBoveda() {
+		return "암호화된 메일 금고를 열거나 저장할 수 없습니다.";
+	}
+
+	@Override
+	public String correoColorFondo() {
+		return "메일: 배경색";
+	}
+
+	@Override
+	public String correoColorTexto() {
+		return "메일: 텍스트 색상";
+	}
+
+	@Override
+	public String correoColorCabecera() {
+		return "메일: 헤더 색상";
+	}
+
+	@Override
+	public String correoColorTextoCabecera() {
+		return "메일: 헤더 텍스트";
+	}
+
+	@Override
+	public String correoColorBarra() {
+		return "메일: 막대 색상";
+	}
+
+	@Override
+	public String correoColorBoton() {
+		return "메일: 버튼 색상";
+	}
+
+	@Override
+	public String correoColorCaja() {
+		return "메일: 상자 색상";
+	}
+
+	@Override
+	public String correoColorSeleccion() {
+		return "메일: 선택 색상";
+	}
+
+	@Override
+	public String correoColorTextoSeleccion() {
+		return "메일: 선택된 텍스트";
+	}
+
+	@Override
+	public String correoColorAviso() {
+		return "메일: 알림 배경";
+	}
+
+	@Override
+	public String correoColorTextoAviso() {
+		return "메일: 알림 텍스트";
+	}
+
+	@Override
+	public String correoColorBordeClaro() {
+		return "메일: 밝은 테두리";
+	}
+
+	@Override
+	public String correoColorBordeOscuro() {
+		return "메일: 어두운 테두리";
+	}
+
+	@Override
+	public String correoColorCitas() {
+		return "메일: 인용구 배경";
+	}
 
 }

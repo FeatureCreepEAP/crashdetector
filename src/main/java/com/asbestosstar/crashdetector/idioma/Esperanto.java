@@ -13041,389 +13041,378 @@ public class Esperanto implements Idioma {
 	public String generadorParchesDescargaAbierta() {
 		return "La elŝuta paĝo de JDK estis malfermita.";
 	}
-	
-    /* ======================== Legilo de retpoŝto ======================== */
-
-    @Override
-    public String lectorCorreoTipo() {
-        return "Legilo de retpoŝto";
-    }
-
-    @Override
-    public String correoTitulo() {
-        return "Netscape Mail Reader";
-    }
-
-    @Override
-    public String correoAgregarCuenta() {
-        return "Aldoni konton";
-    }
-
-    @Override
-    public String correoEditarCuenta() {
-        return "Redakti konton";
-    }
-
-    @Override
-    public String correoEliminarCuenta() {
-        return "Forigi konton";
-    }
-
-    @Override
-    public String correoActualizar() {
-        return "Ĝisdatigi";
-    }
-
-    @Override
-    public String correoActualizarTodas() {
-        return "Ĝisdatigi ĉiujn";
-    }
-
-    @Override
-    public String correoCerrar() {
-        return "Fermi kaj ŝlosi";
-    }
-
-    @Override
-    public String correoDescargarDependencias() {
-        return "Elŝuti dependecojn de retpoŝto";
-    }
-
-    @Override
-    public String correoEstadoDependenciasCargadas(String diagnostico) {
-        return "Dependecoj de retpoŝto detektitaj [" + diagnostico + "]";
-    }
-
-    @Override
-    public String correoEstadoDependenciasNoCargadas(String diagnostico) {
-        return "Dependecoj de retpoŝto ne ŝargitaj [" + diagnostico
-                + "]. Elŝutu ilin kaj restartigu CrashDetector se ili daŭre ne aperas.";
-    }
-
-    @Override
-    public String correoDependenciasDescargadasReiniciar() {
-        return "Dependecoj de retpoŝto elŝutitaj. Se ili ankoraŭ ne aperas ŝargitaj, restartigu CrashDetector.";
-    }
-
-    @Override
-    public String correoErrorDescargandoDependencias(String error) {
-        return "Ne eblis elŝuti la dependecojn de retpoŝto: " + error;
-    }
-
-    @Override
-    public String correoBuscar() {
-        return "Serĉi:";
-    }
-
-    @Override
-    public String correoBuscarAyuda() {
-        return "Serĉas en sendinto, ricevontoj, temo kaj loka enhavo ĉifrita.";
-    }
-
-    @Override
-    public String correoCuentas() {
-        return "Kontoj";
-    }
-
-    @Override
-    public String correoCuentaServidor(String usuario, String servidor) {
-        return usuario + " @ " + servidor;
-    }
-
-    @Override
-    public String correoMensajes() {
-        return "Mesaĝoj";
-    }
-
-    @Override
-    public String correoContenido() {
-        return "Teksta enhavo";
-    }
-
-    @Override
-    public String correoCitas() {
-        return "Leĝo de Zawinski";
-    }
-
-    @Override
-    public String correoDe() {
-        return "De:";
-    }
-
-    @Override
-    public String correoPara() {
-        return "Al:";
-    }
-
-    @Override
-    public String correoAsunto() {
-        return "Temo:";
-    }
-
-    @Override
-    public String correoFecha() {
-        return "Dato:";
-    }
-
-    @Override
-    public String correoColumnaEstado() {
-        return "Stato";
-    }
-
-    @Override
-    public String correoColumnaDe() {
-        return "De";
-    }
-
-    @Override
-    public String correoColumnaAsunto() {
-        return "Temo";
-    }
-
-    @Override
-    public String correoColumnaFecha() {
-        return "Dato";
-    }
-
-    @Override
-    public String correoLeido() {
-        return "Legita";
-    }
-
-    @Override
-    public String correoNoLeido() {
-        return "Nova";
-    }
-
-    @Override
-    public String correoSeleccioneMensaje() {
-        return "Elektu mesaĝon por legi ĝin.";
-    }
-
-    @Override
-    public String correoEstadoListo() {
-        return "Trezonejo malŝlosita. Preta.";
-    }
-
-    @Override
-    public String correoSinCuentas() {
-        return "Ne estas agorditaj kontoj.";
-    }
-
-    @Override
-    public String correoConectando(String cuenta) {
-        return "Sekure konektante al " + cuenta + "…";
-    }
-
-    @Override
-    public String correoMensajesActualizados(int cantidad) {
-        return "Ĝisdatigo kompletigita: " + cantidad + " mesaĝoj legitaj de la servilo.";
-    }
-
-    @Override
-    public String correoCuentaGuardada() {
-        return "Konto kaj kaŝmemoro konservitaj en la ĉifrita trezonejo.";
-    }
-
-    @Override
-    public String correoAdvertenciaPrivacidad() {
-        return "Averto pri privateco kaj sekureco: retpoŝto povas enhavi personajn datumojn, sekretojn, malicajn ligilojn kaj spuradan enhavon. Ĉi tiu legilo ne ŝargas malproksiman HTML kaj ĉifras la kaŝmemoron kaj akreditilojn, sed la mesaĝoj kaj pasvortoj ekzistas malĉifritaj en memoro dum la trezonejo estas malfermita. Uzu unikan pasvorton por la trezonejo kaj, kiam la provizanto permesas, uzu aplikaĵan pasvorton anstataŭ vian ĉefan pasvorton. Ĉi tiu komenca realigo ne plenumas la interagan fluon de OAuth. Sekurkopioj, swap, memoreldumpoj aŭ kompromitita maŝino ankoraŭ povas malkaŝi datumojn.";
-    }
-
-    @Override
-    public String correoCitaUno() {
-        return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
-    }
-
-    @Override
-    public String correoCitaDos() {
-        return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
-    }
-
-    @Override
-    public String correoClaveBoveda() {
-        return "Pasvorto de la trezonejo:";
-    }
-
-    @Override
-    public String correoConfirmarClave() {
-        return "Konfirmi pasvorton:";
-    }
-
-    @Override
-    public String correoCrearBovedaTitulo() {
-        return "Krei ĉifritan trezonejon de retpoŝto";
-    }
-
-    @Override
-    public String correoDesbloquearBovedaTitulo() {
-        return "Malŝlosi trezonejon de retpoŝto";
-    }
-
-    @Override
-    public String correoClaveCorta() {
-        return "La pasvorto de la trezonejo devas havi almenaŭ 12 signojn.";
-    }
-
-    @Override
-    public String correoClavesNoCoinciden() {
-        return "La pasvortoj de la trezonejo ne kongruas.";
-    }
-
-    @Override
-    public String correoClaveBovedaIncorrecta() {
-        return "La pasvorto de la trezonejo estas malĝusta aŭ la dosiero estis ŝanĝita.";
-    }
-
-    @Override
-    public String correoNombreCuenta() {
-        return "Nomo de la konto:";
-    }
-
-    @Override
-    public String correoServidorImap() {
-        return "Servilo IMAP:";
-    }
-
-    @Override
-    public String correoPuerto() {
-        return "Pordo IMAPS:";
-    }
-
-    @Override
-    public String correoUsuario() {
-        return "Uzanto aŭ adreso:";
-    }
-
-    @Override
-    public String correoSecreto() {
-        return "Aplikaĵa pasvorto:";
-    }
-
-    @Override
-    public String correoSecretoAyuda() {
-        return "En ekzistanta konto, lasu ĉi tiun kampon malplena por konservi la nunan ĉifritan sekreton.";
-    }
-
-    @Override
-    public String correoCarpeta() {
-        return "Dosierujo IMAP:";
-    }
-
-    @Override
-    public String correoCarpetaPredeterminada() {
-        return "INBOX";
-    }
-
-    @Override
-    public String correoCuentaInvalida() {
-        return "La konto ne validas. Kompletigu nomon, servilon, pordon, uzanton, sekreton kaj dosierujon.";
-    }
-
-    @Override
-    public String correoPuertoInvalido() {
-        return "La pordo IMAPS devas esti numero inter 1 kaj 65535.";
-    }
-
-    @Override
-    public String correoConfirmarEliminar(String cuenta) {
-        return "Ĉu forigi la konton \"" + cuenta + "\" kaj ĉiujn ĝiajn lokajn ĉifritajn mesaĝojn?";
-    }
-
-    @Override
-    public String correoErrorTitulo() {
-        return "Eraro de la legilo de retpoŝto";
-    }
-
-    @Override
-    public String correoErrorConexion() {
-        return "Ne eblis legi la retpoŝton per IMAPS. Kontrolu la servilon, pordon, uzanton, aplikaĵan pasvorton kaj permesojn IMAP.";
-    }
-
-    @Override
-    public String correoErrorBoveda() {
-        return "Ne eblis malfermi aŭ konservi la ĉifritan trezonejon de retpoŝto.";
-    }
-
-    @Override
-    public String correoColorFondo() {
-        return "Retpoŝto: fona koloro";
-    }
-
-    @Override
-    public String correoColorTexto() {
-        return "Retpoŝto: teksta koloro";
-    }
-
-    @Override
-    public String correoColorCabecera() {
-        return "Retpoŝto: kapkoloro";
-    }
-
-    @Override
-    public String correoColorTextoCabecera() {
-        return "Retpoŝto: teksto de kapo";
-    }
-
-    @Override
-    public String correoColorBarra() {
-        return "Retpoŝto: barokoloro";
-    }
-
-    @Override
-    public String correoColorBoton() {
-        return "Retpoŝto: butonkoloro";
-    }
-
-    @Override
-    public String correoColorCaja() {
-        return "Retpoŝto: koloro de skatoloj";
-    }
-
-    @Override
-    public String correoColorSeleccion() {
-        return "Retpoŝto: elektokoloro";
-    }
-
-    @Override
-    public String correoColorTextoSeleccion() {
-        return "Retpoŝto: elektita teksto";
-    }
-
-    @Override
-    public String correoColorAviso() {
-        return "Retpoŝto: fono de averto";
-    }
-
-    @Override
-    public String correoColorTextoAviso() {
-        return "Retpoŝto: teksto de averto";
-    }
-
-    @Override
-    public String correoColorBordeClaro() {
-        return "Retpoŝto: hela bordero";
-    }
-
-    @Override
-    public String correoColorBordeOscuro() {
-        return "Retpoŝto: malhela bordero";
-    }
-
-    @Override
-    public String correoColorCitas() {
-        return "Retpoŝto: fono de citaĵoj";
-    }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	/* ======================== Legilo de retpoŝto ======================== */
+
+	@Override
+	public String lectorCorreoTipo() {
+		return "Legilo de retpoŝto";
+	}
+
+	@Override
+	public String correoTitulo() {
+		return "Netscape Mail Reader";
+	}
+
+	@Override
+	public String correoAgregarCuenta() {
+		return "Aldoni konton";
+	}
+
+	@Override
+	public String correoEditarCuenta() {
+		return "Redakti konton";
+	}
+
+	@Override
+	public String correoEliminarCuenta() {
+		return "Forigi konton";
+	}
+
+	@Override
+	public String correoActualizar() {
+		return "Ĝisdatigi";
+	}
+
+	@Override
+	public String correoActualizarTodas() {
+		return "Ĝisdatigi ĉiujn";
+	}
+
+	@Override
+	public String correoCerrar() {
+		return "Fermi kaj ŝlosi";
+	}
+
+	@Override
+	public String correoDescargarDependencias() {
+		return "Elŝuti dependecojn de retpoŝto";
+	}
+
+	@Override
+	public String correoEstadoDependenciasCargadas(String diagnostico) {
+		return "Dependecoj de retpoŝto detektitaj [" + diagnostico + "]";
+	}
+
+	@Override
+	public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+		return "Dependecoj de retpoŝto ne ŝargitaj [" + diagnostico
+				+ "]. Elŝutu ilin kaj restartigu CrashDetector se ili daŭre ne aperas.";
+	}
+
+	@Override
+	public String correoDependenciasDescargadasReiniciar() {
+		return "Dependecoj de retpoŝto elŝutitaj. Se ili ankoraŭ ne aperas ŝargitaj, restartigu CrashDetector.";
+	}
+
+	@Override
+	public String correoErrorDescargandoDependencias(String error) {
+		return "Ne eblis elŝuti la dependecojn de retpoŝto: " + error;
+	}
+
+	@Override
+	public String correoBuscar() {
+		return "Serĉi:";
+	}
+
+	@Override
+	public String correoBuscarAyuda() {
+		return "Serĉas en sendinto, ricevontoj, temo kaj loka enhavo ĉifrita.";
+	}
+
+	@Override
+	public String correoCuentas() {
+		return "Kontoj";
+	}
+
+	@Override
+	public String correoCuentaServidor(String usuario, String servidor) {
+		return usuario + " @ " + servidor;
+	}
+
+	@Override
+	public String correoMensajes() {
+		return "Mesaĝoj";
+	}
+
+	@Override
+	public String correoContenido() {
+		return "Teksta enhavo";
+	}
+
+	@Override
+	public String correoCitas() {
+		return "Leĝo de Zawinski";
+	}
+
+	@Override
+	public String correoDe() {
+		return "De:";
+	}
+
+	@Override
+	public String correoPara() {
+		return "Al:";
+	}
+
+	@Override
+	public String correoAsunto() {
+		return "Temo:";
+	}
+
+	@Override
+	public String correoFecha() {
+		return "Dato:";
+	}
+
+	@Override
+	public String correoColumnaEstado() {
+		return "Stato";
+	}
+
+	@Override
+	public String correoColumnaDe() {
+		return "De";
+	}
+
+	@Override
+	public String correoColumnaAsunto() {
+		return "Temo";
+	}
+
+	@Override
+	public String correoColumnaFecha() {
+		return "Dato";
+	}
+
+	@Override
+	public String correoLeido() {
+		return "Legita";
+	}
+
+	@Override
+	public String correoNoLeido() {
+		return "Nova";
+	}
+
+	@Override
+	public String correoSeleccioneMensaje() {
+		return "Elektu mesaĝon por legi ĝin.";
+	}
+
+	@Override
+	public String correoEstadoListo() {
+		return "Trezonejo malŝlosita. Preta.";
+	}
+
+	@Override
+	public String correoSinCuentas() {
+		return "Ne estas agorditaj kontoj.";
+	}
+
+	@Override
+	public String correoConectando(String cuenta) {
+		return "Sekure konektante al " + cuenta + "…";
+	}
+
+	@Override
+	public String correoMensajesActualizados(int cantidad) {
+		return "Ĝisdatigo kompletigita: " + cantidad + " mesaĝoj legitaj de la servilo.";
+	}
+
+	@Override
+	public String correoCuentaGuardada() {
+		return "Konto kaj kaŝmemoro konservitaj en la ĉifrita trezonejo.";
+	}
+
+	@Override
+	public String correoAdvertenciaPrivacidad() {
+		return "Averto pri privateco kaj sekureco: retpoŝto povas enhavi personajn datumojn, sekretojn, malicajn ligilojn kaj spuradan enhavon. Ĉi tiu legilo ne ŝargas malproksiman HTML kaj ĉifras la kaŝmemoron kaj akreditilojn, sed la mesaĝoj kaj pasvortoj ekzistas malĉifritaj en memoro dum la trezonejo estas malfermita. Uzu unikan pasvorton por la trezonejo kaj, kiam la provizanto permesas, uzu aplikaĵan pasvorton anstataŭ vian ĉefan pasvorton. Ĉi tiu komenca realigo ne plenumas la interagan fluon de OAuth. Sekurkopioj, swap, memoreldumpoj aŭ kompromitita maŝino ankoraŭ povas malkaŝi datumojn.";
+	}
+
+	@Override
+	public String correoCitaUno() {
+		return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+	}
+
+	@Override
+	public String correoCitaDos() {
+		return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+	}
+
+	@Override
+	public String correoClaveBoveda() {
+		return "Pasvorto de la trezonejo:";
+	}
+
+	@Override
+	public String correoConfirmarClave() {
+		return "Konfirmi pasvorton:";
+	}
+
+	@Override
+	public String correoCrearBovedaTitulo() {
+		return "Krei ĉifritan trezonejon de retpoŝto";
+	}
+
+	@Override
+	public String correoDesbloquearBovedaTitulo() {
+		return "Malŝlosi trezonejon de retpoŝto";
+	}
+
+	@Override
+	public String correoClaveCorta() {
+		return "La pasvorto de la trezonejo devas havi almenaŭ 12 signojn.";
+	}
+
+	@Override
+	public String correoClavesNoCoinciden() {
+		return "La pasvortoj de la trezonejo ne kongruas.";
+	}
+
+	@Override
+	public String correoClaveBovedaIncorrecta() {
+		return "La pasvorto de la trezonejo estas malĝusta aŭ la dosiero estis ŝanĝita.";
+	}
+
+	@Override
+	public String correoNombreCuenta() {
+		return "Nomo de la konto:";
+	}
+
+	@Override
+	public String correoServidorImap() {
+		return "Servilo IMAP:";
+	}
+
+	@Override
+	public String correoPuerto() {
+		return "Pordo IMAPS:";
+	}
+
+	@Override
+	public String correoUsuario() {
+		return "Uzanto aŭ adreso:";
+	}
+
+	@Override
+	public String correoSecreto() {
+		return "Aplikaĵa pasvorto:";
+	}
+
+	@Override
+	public String correoSecretoAyuda() {
+		return "En ekzistanta konto, lasu ĉi tiun kampon malplena por konservi la nunan ĉifritan sekreton.";
+	}
+
+	@Override
+	public String correoCarpeta() {
+		return "Dosierujo IMAP:";
+	}
+
+	@Override
+	public String correoCarpetaPredeterminada() {
+		return "INBOX";
+	}
+
+	@Override
+	public String correoCuentaInvalida() {
+		return "La konto ne validas. Kompletigu nomon, servilon, pordon, uzanton, sekreton kaj dosierujon.";
+	}
+
+	@Override
+	public String correoPuertoInvalido() {
+		return "La pordo IMAPS devas esti numero inter 1 kaj 65535.";
+	}
+
+	@Override
+	public String correoConfirmarEliminar(String cuenta) {
+		return "Ĉu forigi la konton \"" + cuenta + "\" kaj ĉiujn ĝiajn lokajn ĉifritajn mesaĝojn?";
+	}
+
+	@Override
+	public String correoErrorTitulo() {
+		return "Eraro de la legilo de retpoŝto";
+	}
+
+	@Override
+	public String correoErrorConexion() {
+		return "Ne eblis legi la retpoŝton per IMAPS. Kontrolu la servilon, pordon, uzanton, aplikaĵan pasvorton kaj permesojn IMAP.";
+	}
+
+	@Override
+	public String correoErrorBoveda() {
+		return "Ne eblis malfermi aŭ konservi la ĉifritan trezonejon de retpoŝto.";
+	}
+
+	@Override
+	public String correoColorFondo() {
+		return "Retpoŝto: fona koloro";
+	}
+
+	@Override
+	public String correoColorTexto() {
+		return "Retpoŝto: teksta koloro";
+	}
+
+	@Override
+	public String correoColorCabecera() {
+		return "Retpoŝto: kapkoloro";
+	}
+
+	@Override
+	public String correoColorTextoCabecera() {
+		return "Retpoŝto: teksto de kapo";
+	}
+
+	@Override
+	public String correoColorBarra() {
+		return "Retpoŝto: barokoloro";
+	}
+
+	@Override
+	public String correoColorBoton() {
+		return "Retpoŝto: butonkoloro";
+	}
+
+	@Override
+	public String correoColorCaja() {
+		return "Retpoŝto: koloro de skatoloj";
+	}
+
+	@Override
+	public String correoColorSeleccion() {
+		return "Retpoŝto: elektokoloro";
+	}
+
+	@Override
+	public String correoColorTextoSeleccion() {
+		return "Retpoŝto: elektita teksto";
+	}
+
+	@Override
+	public String correoColorAviso() {
+		return "Retpoŝto: fono de averto";
+	}
+
+	@Override
+	public String correoColorTextoAviso() {
+		return "Retpoŝto: teksto de averto";
+	}
+
+	@Override
+	public String correoColorBordeClaro() {
+		return "Retpoŝto: hela bordero";
+	}
+
+	@Override
+	public String correoColorBordeOscuro() {
+		return "Retpoŝto: malhela bordero";
+	}
+
+	@Override
+	public String correoColorCitas() {
+		return "Retpoŝto: fono de citaĵoj";
+	}
 
 }

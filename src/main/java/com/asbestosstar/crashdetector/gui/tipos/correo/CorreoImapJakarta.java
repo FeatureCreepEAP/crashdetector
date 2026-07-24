@@ -82,8 +82,8 @@ public final class CorreoImapJakarta {
 				String cuerpo = limitar(extraerTextoSeguro(mensaje), cuerpoMaximoCaracteres);
 				boolean leido = mensaje.isSet(Flag.SEEN);
 
-				resultado.add(new MensajeCorreo(cuenta.id(), cuenta.carpeta(), uid, remitente, destinatarios,
-						asunto, fecha, cuerpo, leido));
+				resultado.add(new MensajeCorreo(cuenta.id(), cuenta.carpeta(), uid, remitente, destinatarios, asunto,
+						fecha, cuerpo, leido));
 			}
 			return resultado;
 		} finally {

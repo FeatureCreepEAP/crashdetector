@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.Image;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.WindowAdapter;
@@ -23,6 +24,7 @@ import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -44,34 +46,38 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
 /**
- * Implementación visual inspirada en Netscape Communicator/Messenger.
+ * Implementación visual inspirada en Ike Eveland, con base estructural similar
+ * al lector Netscape.
  */
 @SuppressWarnings("serial")
-public class LectorDeCorreoNetscape extends LectorDeCorreoGUI {
+public class LectorDeCorreoIkeEveland extends LectorDeCorreoGUI {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "lector_correo_netscape";
+	public static final String ID = "lector_correo_ike_eveland";
 
-	public final ConfigColor colorFondo = ConfigColor.de("correo.netscape.fondo", new Color(192, 192, 192));
-	public final ConfigColor colorTexto = ConfigColor.de("correo.netscape.texto", new Color(0, 0, 0));
-	public final ConfigColor colorCabecera = ConfigColor.de("correo.netscape.cabecera", new Color(0, 0, 128));
-	public final ConfigColor colorTextoCabecera = ConfigColor.de("correo.netscape.texto_cabecera",
+	public final ConfigColor colorFondo = ConfigColor.de("correo.ike_eveland.fondo", new Color(21, 24, 30));
+	public final ConfigColor colorTexto = ConfigColor.de("correo.ike_eveland.texto", new Color(237, 239, 244));
+	public final ConfigColor colorCabecera = ConfigColor.de("correo.ike_eveland.cabecera", new Color(44, 78, 141));
+	public final ConfigColor colorTextoCabecera = ConfigColor.de("correo.ike_eveland.texto_cabecera",
+			new Color(248, 248, 250));
+	public final ConfigColor colorBarra = ConfigColor.de("correo.ike_eveland.barra", new Color(42, 52, 72));
+	public final ConfigColor colorBoton = ConfigColor.de("correo.ike_eveland.boton", new Color(74, 96, 132));
+	public final ConfigColor colorCaja = ConfigColor.de("correo.ike_eveland.caja", new Color(247, 246, 244));
+	public final ConfigColor colorSeleccion = ConfigColor.de("correo.ike_eveland.seleccion", new Color(48, 87, 158));
+	public final ConfigColor colorTextoSeleccion = ConfigColor.de("correo.ike_eveland.texto_seleccion",
 			new Color(255, 255, 255));
-	public final ConfigColor colorBarra = ConfigColor.de("correo.netscape.barra", new Color(212, 208, 200));
-	public final ConfigColor colorBoton = ConfigColor.de("correo.netscape.boton", new Color(212, 208, 200));
-	public final ConfigColor colorCaja = ConfigColor.de("correo.netscape.caja", new Color(255, 255, 255));
-	public final ConfigColor colorSeleccion = ConfigColor.de("correo.netscape.seleccion", new Color(0, 0, 128));
-	public final ConfigColor colorTextoSeleccion = ConfigColor.de("correo.netscape.texto_seleccion",
-			new Color(255, 255, 255));
-	public final ConfigColor colorAviso = ConfigColor.de("correo.netscape.aviso", new Color(255, 255, 204));
-	public final ConfigColor colorTextoAviso = ConfigColor.de("correo.netscape.texto_aviso", new Color(96, 0, 0));
-	public final ConfigColor colorBordeClaro = ConfigColor.de("correo.netscape.borde_claro", new Color(255, 255, 255));
-	public final ConfigColor colorBordeOscuro = ConfigColor.de("correo.netscape.borde_oscuro", new Color(64, 64, 64));
-	public final ConfigColor colorCitas = ConfigColor.de("correo.netscape.citas", new Color(224, 224, 224));
+	public final ConfigColor colorAviso = ConfigColor.de("correo.ike_eveland.aviso", new Color(225, 213, 178));
+	public final ConfigColor colorTextoAviso = ConfigColor.de("correo.ike_eveland.texto_aviso", new Color(62, 44, 20));
+	public final ConfigColor colorBordeClaro = ConfigColor.de("correo.ike_eveland.borde_claro",
+			new Color(235, 229, 217));
+	public final ConfigColor colorBordeOscuro = ConfigColor.de("correo.ike_eveland.borde_oscuro",
+			new Color(55, 63, 80));
+	public final ConfigColor colorCitas = ConfigColor.de("correo.ike_eveland.citas", new Color(217, 224, 238));
 
 	private JPanel raiz;
 	private JPanel cabecera;
@@ -92,6 +98,7 @@ public class LectorDeCorreoNetscape extends LectorDeCorreoGUI {
 	private JLabel etiquetaPara;
 	private JLabel etiquetaAsunto;
 	private JLabel etiquetaFecha;
+	private JLabel imagenIke;
 
 	private JButton botonAgregar;
 	private JButton botonEditar;
@@ -174,15 +181,41 @@ public class LectorDeCorreoNetscape extends LectorDeCorreoGUI {
 	}
 
 	private JPanel crearCabecera() {
-		JPanel panel = new JPanel(new BorderLayout());
+		JPanel panel = new JPanel(new BorderLayout(10, 0));
 		panel.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createBevelBorder(BevelBorder.RAISED, colorBordeClaro.obtener(),
 						colorBordeClaro.obtener(), colorBordeOscuro.obtener(), colorBordeOscuro.obtener()),
 				BorderFactory.createEmptyBorder(7, 10, 7, 10)));
 		titulo = new JLabel(MonitorDePID.idioma.correoTitulo());
-		titulo.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+		titulo.setFont(new Font(Font.SERIF, Font.BOLD, 22));
 		panel.add(titulo, BorderLayout.WEST);
+
+		imagenIke = new JLabel();
+		imagenIke.setHorizontalAlignment(SwingConstants.CENTER);
+		imagenIke.setVerticalAlignment(SwingConstants.CENTER);
+		imagenIke.setBorder(
+				BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(colorBordeClaro.obtener(), 1),
+						BorderFactory.createEmptyBorder(3, 3, 3, 3)));
+		cargarImagenIke();
+		panel.add(imagenIke, BorderLayout.EAST);
 		return panel;
+	}
+
+	private ImageIcon crearIconoIke(int ancho, int alto) {
+		ImageIcon original = new ImageIcon(Statics.carpeta.resolve("imagenes/ike_eveland.png").toString());
+		if (original.getIconWidth() <= 0 || original.getIconHeight() <= 0) {
+			return null;
+		}
+		Image imagen = original.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+		return new ImageIcon(imagen);
+	}
+
+	private void cargarImagenIke() {
+		if (imagenIke == null) {
+			return;
+		}
+		imagenIke.setIcon(crearIconoIke(82, 118));
+		imagenIke.setPreferredSize(new Dimension(88, 124));
 	}
 
 	private JPanel crearBarraHerramientas() {
@@ -279,6 +312,17 @@ public class LectorDeCorreoNetscape extends LectorDeCorreoGUI {
 				aplicarFiltro();
 			}
 		});
+		JPanel marcoRetrato = new JPanel(new BorderLayout());
+		marcoRetrato.setBorder(
+				BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(colorBordeOscuro.obtener(), 1),
+						BorderFactory.createEmptyBorder(6, 6, 6, 6)));
+		JLabel retrato = new JLabel();
+		retrato.setHorizontalAlignment(SwingConstants.CENTER);
+		retrato.setVerticalAlignment(SwingConstants.CENTER);
+		retrato.setIcon(crearIconoIke(140, 198));
+		marcoRetrato.add(retrato, BorderLayout.CENTER);
+
+		panel.add(marcoRetrato, BorderLayout.NORTH);
 		panel.add(new JScrollPane(listaCuentas), BorderLayout.CENTER);
 		return panel;
 	}
@@ -735,6 +779,11 @@ public class LectorDeCorreoNetscape extends LectorDeCorreoGUI {
 		aplicarFondoRecursivo(raiz, colorFondo.obtener(), colorTexto.obtener());
 		cabecera.setBackground(colorCabecera.obtener());
 		titulo.setForeground(colorTextoCabecera.obtener());
+		if (imagenIke != null) {
+			imagenIke.setBackground(colorCabecera.obtener());
+			imagenIke.setOpaque(true);
+			cargarImagenIke();
+		}
 		barraHerramientas.setBackground(colorBarra.obtener());
 		panelAviso.setBackground(colorAviso.obtener());
 		aviso.setForeground(colorTextoAviso.obtener());

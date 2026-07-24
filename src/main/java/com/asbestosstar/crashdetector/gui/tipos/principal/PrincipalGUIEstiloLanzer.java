@@ -52,7 +52,7 @@ import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.elementos.ComboIdiomasConIcono;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
-import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
+import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirMomoseNina;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoBase;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 
@@ -483,8 +483,8 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		botonConfiguracion = añadirBotonImagen(panelBotonesDerecha,
 				Statics.carpeta.resolve("imagenes/boton_config.png").toString(), MonitorDePID.idioma.config());
 
-		DialogoCompartir comp = TipoGUI.DIALOGO_COMPARTIR.obtenerGUIPredeterminado(DialogoCompartirLegacy.ID,
-				() -> new DialogoCompartirLegacy());
+		DialogoCompartir comp = TipoGUI.DIALOGO_COMPARTIR.obtenerGUIPredeterminado(DialogoCompartirMomoseNina.ID,
+				() -> new DialogoCompartirMomoseNina());
 
 		btnCompartir.addActionListener(e -> comp.preperar(tiempoFallo));
 		btnActualizar.addActionListener(e -> recargar());

@@ -13105,313 +13105,302 @@ public class Vietnamita implements Idioma {
 	public String generadorParchesDescargaAbierta() {
 		return "Đã mở trang tải JDK.";
 	}
-	
-	
-	
+
 	public String lectorCorreoTipo() {
-	    return "Trình đọc email";
+		return "Trình đọc email";
 	}
 
 	public String correoTitulo() {
-	    return "Netscape Mail Reader";
+		return "Netscape Mail Reader";
 	}
 
 	public String correoAgregarCuenta() {
-	    return "Thêm tài khoản";
+		return "Thêm tài khoản";
 	}
 
 	public String correoEditarCuenta() {
-	    return "Chỉnh sửa tài khoản";
+		return "Chỉnh sửa tài khoản";
 	}
 
 	public String correoEliminarCuenta() {
-	    return "Xóa tài khoản";
+		return "Xóa tài khoản";
 	}
 
 	public String correoActualizar() {
-	    return "Cập nhật";
+		return "Cập nhật";
 	}
 
 	public String correoActualizarTodas() {
-	    return "Cập nhật tất cả";
+		return "Cập nhật tất cả";
 	}
 
 	public String correoCerrar() {
-	    return "Đóng và khóa";
+		return "Đóng và khóa";
 	}
 
 	public String correoDescargarDependencias() {
-	    return "Tải xuống dependencies của email";
+		return "Tải xuống dependencies của email";
 	}
 
 	public String correoEstadoDependenciasCargadas(String diagnostico) {
-	    return "Dependencies của email đã được phát hiện [" + diagnostico + "]";
+		return "Dependencies của email đã được phát hiện [" + diagnostico + "]";
 	}
 
 	public String correoEstadoDependenciasNoCargadas(String diagnostico) {
-	    return "Dependencies của email chưa được tải [" + diagnostico
-	            + "]. Hãy tải chúng và khởi động lại CrashDetector nếu chúng vẫn không xuất hiện.";
+		return "Dependencies của email chưa được tải [" + diagnostico
+				+ "]. Hãy tải chúng và khởi động lại CrashDetector nếu chúng vẫn không xuất hiện.";
 	}
 
 	public String correoDependenciasDescargadasReiniciar() {
-	    return "Dependencies của email đã được tải xuống. Nếu chúng vẫn chưa hiển thị là đã tải, hãy khởi động lại CrashDetector.";
+		return "Dependencies của email đã được tải xuống. Nếu chúng vẫn chưa hiển thị là đã tải, hãy khởi động lại CrashDetector.";
 	}
 
 	public String correoErrorDescargandoDependencias(String error) {
-	    return "Không thể tải xuống dependencies của email: " + error;
+		return "Không thể tải xuống dependencies của email: " + error;
 	}
 
 	public String correoBuscar() {
-	    return "Tìm kiếm:";
+		return "Tìm kiếm:";
 	}
 
 	public String correoBuscarAyuda() {
-	    return "Tìm kiếm trong người gửi, người nhận, chủ đề và nội dung cục bộ được mã hóa.";
+		return "Tìm kiếm trong người gửi, người nhận, chủ đề và nội dung cục bộ được mã hóa.";
 	}
 
 	public String correoCuentas() {
-	    return "Tài khoản";
+		return "Tài khoản";
 	}
 
 	public String correoCuentaServidor(String usuario, String servidor) {
-	    return usuario + " @ " + servidor;
+		return usuario + " @ " + servidor;
 	}
 
 	public String correoMensajes() {
-	    return "Tin nhắn";
+		return "Tin nhắn";
 	}
 
 	public String correoContenido() {
-	    return "Nội dung văn bản";
+		return "Nội dung văn bản";
 	}
 
 	public String correoCitas() {
-	    return "Luật của Zawinski";
+		return "Luật của Zawinski";
 	}
 
 	public String correoDe() {
-	    return "Từ:";
+		return "Từ:";
 	}
 
 	public String correoPara() {
-	    return "Đến:";
+		return "Đến:";
 	}
 
 	public String correoAsunto() {
-	    return "Chủ đề:";
+		return "Chủ đề:";
 	}
 
 	public String correoFecha() {
-	    return "Ngày:";
+		return "Ngày:";
 	}
 
 	public String correoColumnaEstado() {
-	    return "Trạng thái";
+		return "Trạng thái";
 	}
 
 	public String correoColumnaDe() {
-	    return "Từ";
+		return "Từ";
 	}
 
 	public String correoColumnaAsunto() {
-	    return "Chủ đề";
+		return "Chủ đề";
 	}
 
 	public String correoColumnaFecha() {
-	    return "Ngày";
+		return "Ngày";
 	}
 
 	public String correoLeido() {
-	    return "Đã đọc";
+		return "Đã đọc";
 	}
 
 	public String correoNoLeido() {
-	    return "Mới";
+		return "Mới";
 	}
 
 	public String correoSeleccioneMensaje() {
-	    return "Chọn một tin nhắn để đọc.";
+		return "Chọn một tin nhắn để đọc.";
 	}
 
 	public String correoEstadoListo() {
-	    return "Kho lưu trữ đã mở khóa. Sẵn sàng.";
+		return "Kho lưu trữ đã mở khóa. Sẵn sàng.";
 	}
 
 	public String correoSinCuentas() {
-	    return "Không có tài khoản nào được cấu hình.";
+		return "Không có tài khoản nào được cấu hình.";
 	}
 
 	public String correoConectando(String cuenta) {
-	    return "Đang kết nối an toàn đến " + cuenta + "…";
+		return "Đang kết nối an toàn đến " + cuenta + "…";
 	}
 
 	public String correoMensajesActualizados(int cantidad) {
-	    return "Cập nhật hoàn tất: " + cantidad + " tin nhắn đã được đọc từ máy chủ.";
+		return "Cập nhật hoàn tất: " + cantidad + " tin nhắn đã được đọc từ máy chủ.";
 	}
 
 	public String correoCuentaGuardada() {
-	    return "Tài khoản và bộ nhớ đệm đã được lưu vào kho lưu trữ được mã hóa.";
+		return "Tài khoản và bộ nhớ đệm đã được lưu vào kho lưu trữ được mã hóa.";
 	}
 
 	public String correoAdvertenciaPrivacidad() {
-	    return "Cảnh báo quyền riêng tư và bảo mật: email có thể chứa dữ liệu cá nhân, bí mật, liên kết độc hại và nội dung theo dõi. Trình đọc này không tải HTML từ xa và mã hóa bộ nhớ đệm và thông tin xác thực, nhưng tin nhắn và mật khẩu tồn tại ở dạng giải mã trong bộ nhớ khi kho lưu trữ đang mở. Sử dụng mật khẩu kho lưu trữ duy nhất và, khi nhà cung cấp cho phép, sử dụng mật khẩu ứng dụng thay vì mật khẩu chính của bạn. Việc triển khai ban đầu này không thực hiện luồng OAuth tương tác. Bản sao lưu, swap, dump bộ nhớ hoặc một máy bị xâm nhập vẫn có thể làm lộ dữ liệu.";
+		return "Cảnh báo quyền riêng tư và bảo mật: email có thể chứa dữ liệu cá nhân, bí mật, liên kết độc hại và nội dung theo dõi. Trình đọc này không tải HTML từ xa và mã hóa bộ nhớ đệm và thông tin xác thực, nhưng tin nhắn và mật khẩu tồn tại ở dạng giải mã trong bộ nhớ khi kho lưu trữ đang mở. Sử dụng mật khẩu kho lưu trữ duy nhất và, khi nhà cung cấp cho phép, sử dụng mật khẩu ứng dụng thay vì mật khẩu chính của bạn. Việc triển khai ban đầu này không thực hiện luồng OAuth tương tác. Bản sao lưu, swap, dump bộ nhớ hoặc một máy bị xâm nhập vẫn có thể làm lộ dữ liệu.";
 	}
 
 	public String correoCitaUno() {
-	    return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+		return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
 	}
 
 	public String correoCitaDos() {
-	    return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+		return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
 	}
 
 	public String correoClaveBoveda() {
-	    return "Mật khẩu kho lưu trữ:";
+		return "Mật khẩu kho lưu trữ:";
 	}
 
 	public String correoConfirmarClave() {
-	    return "Xác nhận mật khẩu:";
+		return "Xác nhận mật khẩu:";
 	}
 
 	public String correoCrearBovedaTitulo() {
-	    return "Tạo kho lưu trữ email được mã hóa";
+		return "Tạo kho lưu trữ email được mã hóa";
 	}
 
 	public String correoDesbloquearBovedaTitulo() {
-	    return "Mở khóa kho lưu trữ email";
+		return "Mở khóa kho lưu trữ email";
 	}
 
 	public String correoClaveCorta() {
-	    return "Mật khẩu kho lưu trữ phải có ít nhất 12 ký tự.";
+		return "Mật khẩu kho lưu trữ phải có ít nhất 12 ký tự.";
 	}
 
 	public String correoClavesNoCoinciden() {
-	    return "Mật khẩu kho lưu trữ không khớp.";
+		return "Mật khẩu kho lưu trữ không khớp.";
 	}
 
 	public String correoClaveBovedaIncorrecta() {
-	    return "Mật khẩu kho lưu trữ không đúng hoặc tệp đã bị thay đổi.";
+		return "Mật khẩu kho lưu trữ không đúng hoặc tệp đã bị thay đổi.";
 	}
 
 	public String correoNombreCuenta() {
-	    return "Tên tài khoản:";
+		return "Tên tài khoản:";
 	}
 
 	public String correoServidorImap() {
-	    return "Máy chủ IMAP:";
+		return "Máy chủ IMAP:";
 	}
 
 	public String correoPuerto() {
-	    return "Cổng IMAPS:";
+		return "Cổng IMAPS:";
 	}
 
 	public String correoUsuario() {
-	    return "Người dùng hoặc địa chỉ:";
+		return "Người dùng hoặc địa chỉ:";
 	}
 
 	public String correoSecreto() {
-	    return "Mật khẩu ứng dụng:";
+		return "Mật khẩu ứng dụng:";
 	}
 
 	public String correoSecretoAyuda() {
-	    return "Trong một tài khoản hiện có, hãy để trống trường này để giữ nguyên secret được mã hóa hiện tại.";
+		return "Trong một tài khoản hiện có, hãy để trống trường này để giữ nguyên secret được mã hóa hiện tại.";
 	}
 
 	public String correoCarpeta() {
-	    return "Thư mục IMAP:";
+		return "Thư mục IMAP:";
 	}
 
 	public String correoCarpetaPredeterminada() {
-	    return "INBOX";
+		return "INBOX";
 	}
 
 	public String correoCuentaInvalida() {
-	    return "Tài khoản không hợp lệ. Vui lòng điền tên, máy chủ, cổng, người dùng, secret và thư mục.";
+		return "Tài khoản không hợp lệ. Vui lòng điền tên, máy chủ, cổng, người dùng, secret và thư mục.";
 	}
 
 	public String correoPuertoInvalido() {
-	    return "Cổng IMAPS phải là số từ 1 đến 65535.";
+		return "Cổng IMAPS phải là số từ 1 đến 65535.";
 	}
 
 	public String correoConfirmarEliminar(String cuenta) {
-	    return "Xóa tài khoản \"" + cuenta + "\" và tất cả tin nhắn cục bộ được mã hóa của nó?";
+		return "Xóa tài khoản \"" + cuenta + "\" và tất cả tin nhắn cục bộ được mã hóa của nó?";
 	}
 
 	public String correoErrorTitulo() {
-	    return "Lỗi trình đọc email";
+		return "Lỗi trình đọc email";
 	}
 
 	public String correoErrorConexion() {
-	    return "Không thể đọc email qua IMAPS. Kiểm tra máy chủ, cổng, người dùng, mật khẩu ứng dụng và quyền IMAP.";
+		return "Không thể đọc email qua IMAPS. Kiểm tra máy chủ, cổng, người dùng, mật khẩu ứng dụng và quyền IMAP.";
 	}
 
 	public String correoErrorBoveda() {
-	    return "Không thể mở hoặc lưu kho lưu trữ email được mã hóa.";
+		return "Không thể mở hoặc lưu kho lưu trữ email được mã hóa.";
 	}
 
 	public String correoColorFondo() {
-	    return "Email: màu nền";
+		return "Email: màu nền";
 	}
 
 	public String correoColorTexto() {
-	    return "Email: màu văn bản";
+		return "Email: màu văn bản";
 	}
 
 	public String correoColorCabecera() {
-	    return "Email: màu tiêu đề";
+		return "Email: màu tiêu đề";
 	}
 
 	public String correoColorTextoCabecera() {
-	    return "Email: văn bản tiêu đề";
+		return "Email: văn bản tiêu đề";
 	}
 
 	public String correoColorBarra() {
-	    return "Email: màu thanh";
+		return "Email: màu thanh";
 	}
 
 	public String correoColorBoton() {
-	    return "Email: màu nút";
+		return "Email: màu nút";
 	}
 
 	public String correoColorCaja() {
-	    return "Email: màu hộp";
+		return "Email: màu hộp";
 	}
 
 	public String correoColorSeleccion() {
-	    return "Email: màu lựa chọn";
+		return "Email: màu lựa chọn";
 	}
 
 	public String correoColorTextoSeleccion() {
-	    return "Email: văn bản đã chọn";
+		return "Email: văn bản đã chọn";
 	}
 
 	public String correoColorAviso() {
-	    return "Email: nền cảnh báo";
+		return "Email: nền cảnh báo";
 	}
 
 	public String correoColorTextoAviso() {
-	    return "Email: văn bản cảnh báo";
+		return "Email: văn bản cảnh báo";
 	}
 
 	public String correoColorBordeClaro() {
-	    return "Email: viền sáng";
+		return "Email: viền sáng";
 	}
 
 	public String correoColorBordeOscuro() {
-	    return "Email: viền tối";
+		return "Email: viền tối";
 	}
 
 	public String correoColorCitas() {
-	    return "Email: nền trích dẫn";
+		return "Email: nền trích dẫn";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

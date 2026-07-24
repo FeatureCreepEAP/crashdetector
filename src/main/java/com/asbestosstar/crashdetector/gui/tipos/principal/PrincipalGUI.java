@@ -159,12 +159,9 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 				() -> new BitTorrentGUIHolostarsEN());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.GENERADOR_DE_PARCHES, GeneradorParchesJKT48V.ID,
 				() -> new GeneradorParchesJKT48V());
-		
+
 		registrarBotonDeBarraLateralDerecha(TipoGUI.LECTOR_CORREO, LectorDeCorreoNetscape.ID,
-				() -> new LectorDeCorreoNetscape());	
-		
-		
-		
+				() -> new LectorDeCorreoNetscape());
 
 	}
 

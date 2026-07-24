@@ -8,7 +8,6 @@ import java.awt.Image;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -51,7 +50,7 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.actualizador.ActualizadorModsMiwa;
-import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaLegacy;
+import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaIkeEveland;
 import com.asbestosstar.crashdetector.gui.tipos.importador.ImportadorModpackMausleepsVT;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 
@@ -295,7 +294,8 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		aplicarEstiloBotonAccion(botonExportar);
 		botonExportar.addActionListener(e -> {
 			TipoGUI.COMPARTIR_INSTANCIA
-					.obtenerGUIPredeterminado(CompartirInstanciaLegacy.ID, CompartirInstanciaLegacy::new).init();
+					.obtenerGUIPredeterminado(CompartirInstanciaIkeEveland.ID, CompartirInstanciaIkeEveland::new)
+					.init();
 		});
 		panel.add(botonExportar);
 

@@ -45,10 +45,6 @@ public abstract class LectorDeCorreoGUI extends JFrame implements BotonDeBarraLa
 
 	public static final Map<String, Supplier<LectorDeCorreoGUI>> GUIS = new HashMap<String, Supplier<LectorDeCorreoGUI>>();
 
-	static {
-		GUIS.put(LectorDeCorreoNetscape.ID, LectorDeCorreoNetscape::new);
-	}
-
 	private final BovedaCorreoSegura boveda = new BovedaCorreoSegura();
 	private final ExecutorService ejecutor = Executors.newSingleThreadExecutor(new ThreadFactory() {
 		@Override
@@ -154,8 +150,8 @@ public abstract class LectorDeCorreoGUI extends JFrame implements BotonDeBarraLa
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							mostrarErrorCorreo(MonitorDePID.idioma
-									.correoErrorDescargandoDependencias(t.getMessage()), t);
+							mostrarErrorCorreo(MonitorDePID.idioma.correoErrorDescargandoDependencias(t.getMessage()),
+									t);
 						}
 					});
 				} finally {
@@ -324,7 +320,8 @@ public abstract class LectorDeCorreoGUI extends JFrame implements BotonDeBarraLa
 	protected final void actualizarCuentaAsync(String cuentaId) {
 		if (!dependenciasCorreoDisponibles()) {
 			actualizarEstadoDependenciasCorreo();
-			mostrarErrorCorreo(MonitorDePID.idioma.correoEstadoDependenciasNoCargadas(diagnosticoDependenciasCorreo()), null);
+			mostrarErrorCorreo(MonitorDePID.idioma.correoEstadoDependenciasNoCargadas(diagnosticoDependenciasCorreo()),
+					null);
 			return;
 		}
 		CuentaCorreo interna = buscarCuentaInterna(cuentaId);
@@ -358,7 +355,8 @@ public abstract class LectorDeCorreoGUI extends JFrame implements BotonDeBarraLa
 				} catch (Throwable t) {
 					CrashDetectorLogger.logException(t);
 					if (!cerrando) {
-						SwingUtilities.invokeLater(() -> mostrarErrorCorreo(MonitorDePID.idioma.correoErrorConexion(), t));
+						SwingUtilities
+								.invokeLater(() -> mostrarErrorCorreo(MonitorDePID.idioma.correoErrorConexion(), t));
 					}
 				} finally {
 					cuenta.borrarSecreto();
@@ -373,7 +371,8 @@ public abstract class LectorDeCorreoGUI extends JFrame implements BotonDeBarraLa
 	protected final void actualizarTodasAsync() {
 		if (!dependenciasCorreoDisponibles()) {
 			actualizarEstadoDependenciasCorreo();
-			mostrarErrorCorreo(MonitorDePID.idioma.correoEstadoDependenciasNoCargadas(diagnosticoDependenciasCorreo()), null);
+			mostrarErrorCorreo(MonitorDePID.idioma.correoEstadoDependenciasNoCargadas(diagnosticoDependenciasCorreo()),
+					null);
 			return;
 		}
 		List<CuentaCorreo> cuentas = obtenerCuentas();
@@ -456,8 +455,8 @@ public abstract class LectorDeCorreoGUI extends JFrame implements BotonDeBarraLa
 	}
 
 	private void ordenarMensajes(List<MensajeCorreo> mensajes) {
-		mensajes.sort(Comparator.comparing(MensajeCorreo::fecha).reversed()
-				.thenComparing(MensajeCorreo::uid, Comparator.reverseOrder()));
+		mensajes.sort(Comparator.comparing(MensajeCorreo::fecha).reversed().thenComparing(MensajeCorreo::uid,
+				Comparator.reverseOrder()));
 	}
 
 	@Override

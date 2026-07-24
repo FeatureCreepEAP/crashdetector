@@ -54,13 +54,16 @@ import com.asbestosstar.crashdetector.gui.tipos.cdpaste.CDPasteHistorialGUIWilhe
 import com.asbestosstar.crashdetector.gui.tipos.cfr.BuscarParaCFR;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
+import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirMomoseNina;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirPrimitiva;
+import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaIkeEveland;
 import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.configmods.ConfigsModsGUIYunenoms;
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUITL;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
+import com.asbestosstar.crashdetector.gui.tipos.correo.LectorDeCorreoIkeEveland;
 import com.asbestosstar.crashdetector.gui.tipos.correo.LectorDeCorreoNetscape;
 import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUINimu;
 import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshabilitarVerificacionesAmaneKanata;
@@ -1163,6 +1166,7 @@ public class MonitorDePID {
 				() -> new EditorPlantillaPredeterminado());
 		TipoGUI.EDITOR_PLANTILLA.registrarGUI(EditorPlantillaModioNoche.ID, () -> new EditorPlantillaModioNoche());
 		TipoGUI.DIALOGO_COMPARTIR.registrarGUI(DialogoCompartirLegacy.ID, () -> new DialogoCompartirLegacy());
+		TipoGUI.DIALOGO_COMPARTIR.registrarGUI(DialogoCompartirMomoseNina.ID, () -> new DialogoCompartirMomoseNina());
 		TipoGUI.EDITOR_GUI.registrarGUI(CDSkinCape.ID, () -> new CDSkinCape());
 		TipoGUI.MOD_API_PANEL.registrarGUI(CDModsEstiloTL.ID, () -> new CDModsEstiloTL());
 		TipoGUI.CFR.registrarGUI(CfrSakuraRiddle.ID, () -> new CfrSakuraRiddle());
@@ -1189,6 +1193,7 @@ public class MonitorDePID {
 		TipoGUI.DEPMAP.registrarGUI(MapaDeDependenciasGUINimu.ID, MapaDeDependenciasGUINimu::new);
 		TipoGUI.GUARD.registrarGUI(GuardiaSketchyVT.ID, GuardiaSketchyVT::new);
 		TipoGUI.COMPARTIR_INSTANCIA.registrarGUI(CompartirInstanciaLegacy.ID, CompartirInstanciaLegacy::new);
+		TipoGUI.COMPARTIR_INSTANCIA.registrarGUI(CompartirInstanciaIkeEveland.ID, CompartirInstanciaIkeEveland::new);
 		TipoGUI.DOCS.registrarGUI(LectadorDeDocumentosStudyJuche.ID, LectadorDeDocumentosStudyJuche::new);
 		TipoGUI.IA.registrarGUI(IAGUILuotianyi.ID, IAGUILuotianyi::new);
 		TipoGUI.ACTUALIZADOR_MODS.registrarGUI(ActualizadorModsMiwa.ID, ActualizadorModsMiwa::new);
@@ -1217,6 +1222,7 @@ public class MonitorDePID {
 		TipoGUI.VISOR_HEAP_DUMP.registrarGUI(VisorHeapDumpIranFifa.ID, VisorHeapDumpIranFifa::new);
 		TipoGUI.BITTORRENT.registrarGUI(BitTorrentGUIHolostarsEN.ID, BitTorrentGUIHolostarsEN::new);
 		TipoGUI.LECTOR_CORREO.registrarGUI(LectorDeCorreoNetscape.ID, LectorDeCorreoNetscape::new);
+		TipoGUI.LECTOR_CORREO.registrarGUI(LectorDeCorreoIkeEveland.ID, LectorDeCorreoIkeEveland::new);
 
 	}
 

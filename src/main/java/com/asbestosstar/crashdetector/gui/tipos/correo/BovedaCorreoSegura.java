@@ -303,8 +303,8 @@ public final class BovedaCorreoSegura {
 				Instant fecha = Instant.ofEpochMilli(in.readLong());
 				String cuerpo = leerString(in);
 				boolean leido = in.readBoolean();
-				datos.mensajes.add(new MensajeCorreo(cuentaId, carpeta, uid, remitente, destinatarios, asunto,
-						fecha, cuerpo, leido));
+				datos.mensajes.add(new MensajeCorreo(cuentaId, carpeta, uid, remitente, destinatarios, asunto, fecha,
+						cuerpo, leido));
 			}
 
 			if (in.read() != -1) {

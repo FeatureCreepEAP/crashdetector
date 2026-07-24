@@ -12216,320 +12216,302 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String generadorParchesDescargaAbierta() {
 		return "Відкрито сторінку завантаження JDK.";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public String lectorCorreoTipo() {
-	    return "Поштовий клієнт";
+		return "Поштовий клієнт";
 	}
 
 	public String correoTitulo() {
-	    return "Netscape Mail Reader";
+		return "Netscape Mail Reader";
 	}
 
 	public String correoAgregarCuenta() {
-	    return "Додати обліковий запис";
+		return "Додати обліковий запис";
 	}
 
 	public String correoEditarCuenta() {
-	    return "Редагувати обліковий запис";
+		return "Редагувати обліковий запис";
 	}
 
 	public String correoEliminarCuenta() {
-	    return "Видалити обліковий запис";
+		return "Видалити обліковий запис";
 	}
 
 	public String correoActualizar() {
-	    return "Оновити";
+		return "Оновити";
 	}
 
 	public String correoActualizarTodas() {
-	    return "Оновити всі";
+		return "Оновити всі";
 	}
 
 	public String correoCerrar() {
-	    return "Закрити та заблокувати";
+		return "Закрити та заблокувати";
 	}
 
 	public String correoDescargarDependencias() {
-	    return "Завантажити залежності пошти";
+		return "Завантажити залежності пошти";
 	}
 
 	public String correoEstadoDependenciasCargadas(String diagnostico) {
-	    return "Залежності пошти виявлено [" + diagnostico + "]";
+		return "Залежності пошти виявлено [" + diagnostico + "]";
 	}
 
 	public String correoEstadoDependenciasNoCargadas(String diagnostico) {
-	    return "Залежності пошти не завантажено [" + diagnostico
-	            + "]. Завантажте їх і перезапустіть CrashDetector, якщо вони все ще не з'являються.";
+		return "Залежності пошти не завантажено [" + diagnostico
+				+ "]. Завантажте їх і перезапустіть CrashDetector, якщо вони все ще не з'являються.";
 	}
 
 	public String correoDependenciasDescargadasReiniciar() {
-	    return "Залежності пошти завантажено. Якщо вони все ще не відображаються як завантажені, перезапустіть CrashDetector.";
+		return "Залежності пошти завантажено. Якщо вони все ще не відображаються як завантажені, перезапустіть CrashDetector.";
 	}
 
 	public String correoErrorDescargandoDependencias(String error) {
-	    return "Не вдалося завантажити залежності пошти: " + error;
+		return "Не вдалося завантажити залежності пошти: " + error;
 	}
 
 	public String correoBuscar() {
-	    return "Пошук:";
+		return "Пошук:";
 	}
 
 	public String correoBuscarAyuda() {
-	    return "Шукає у відправнику, одержувачах, темі та зашифрованому локальному вмісті.";
+		return "Шукає у відправнику, одержувачах, темі та зашифрованому локальному вмісті.";
 	}
 
 	public String correoCuentas() {
-	    return "Облікові записи";
+		return "Облікові записи";
 	}
 
 	public String correoCuentaServidor(String usuario, String servidor) {
-	    return usuario + " @ " + servidor;
+		return usuario + " @ " + servidor;
 	}
 
 	public String correoMensajes() {
-	    return "Повідомлення";
+		return "Повідомлення";
 	}
 
 	public String correoContenido() {
-	    return "Текстовий вміст";
+		return "Текстовий вміст";
 	}
 
 	public String correoCitas() {
-	    return "Закон Завінскі";
+		return "Закон Завінскі";
 	}
 
 	public String correoDe() {
-	    return "Від:";
+		return "Від:";
 	}
 
 	public String correoPara() {
-	    return "Кому:";
+		return "Кому:";
 	}
 
 	public String correoAsunto() {
-	    return "Тема:";
+		return "Тема:";
 	}
 
 	public String correoFecha() {
-	    return "Дата:";
+		return "Дата:";
 	}
 
 	public String correoColumnaEstado() {
-	    return "Статус";
+		return "Статус";
 	}
 
 	public String correoColumnaDe() {
-	    return "Від";
+		return "Від";
 	}
 
 	public String correoColumnaAsunto() {
-	    return "Тема";
+		return "Тема";
 	}
 
 	public String correoColumnaFecha() {
-	    return "Дата";
+		return "Дата";
 	}
 
 	public String correoLeido() {
-	    return "Прочитано";
+		return "Прочитано";
 	}
 
 	public String correoNoLeido() {
-	    return "Нове";
+		return "Нове";
 	}
 
 	public String correoSeleccioneMensaje() {
-	    return "Виберіть повідомлення для читання.";
+		return "Виберіть повідомлення для читання.";
 	}
 
 	public String correoEstadoListo() {
-	    return "Сховище розблоковано. Готово.";
+		return "Сховище розблоковано. Готово.";
 	}
 
 	public String correoSinCuentas() {
-	    return "Немає налаштованих облікових записів.";
+		return "Немає налаштованих облікових записів.";
 	}
 
 	public String correoConectando(String cuenta) {
-	    return "Безпечне підключення до " + cuenta + "…";
+		return "Безпечне підключення до " + cuenta + "…";
 	}
 
 	public String correoMensajesActualizados(int cantidad) {
-	    return "Оновлення завершено: " + cantidad + " повідомлень прочитано з сервера.";
+		return "Оновлення завершено: " + cantidad + " повідомлень прочитано з сервера.";
 	}
 
 	public String correoCuentaGuardada() {
-	    return "Обліковий запис і кеш збережено в зашифрованому сховищі.";
+		return "Обліковий запис і кеш збережено в зашифрованому сховищі.";
 	}
 
 	public String correoAdvertenciaPrivacidad() {
-	    return "Попередження про конфіденційність і безпеку: пошта може містити особисті дані, секрети, шкідливі посилання та контент для відстеження. Цей клієнт не завантажує віддалений HTML і шифрує кеш та облікові дані, але повідомлення та паролі існують у розшифрованому вигляді в пам'яті, поки сховище відкрите. Використовуйте унікальний пароль сховища і, коли провайдер дозволяє, пароль програми замість основного пароля. Ця початкова реалізація не виконує інтерактивний потік OAuth. Резервні копії, swap, дампи пам'яті або зламована машина все ще можуть розкрити дані.";
+		return "Попередження про конфіденційність і безпеку: пошта може містити особисті дані, секрети, шкідливі посилання та контент для відстеження. Цей клієнт не завантажує віддалений HTML і шифрує кеш та облікові дані, але повідомлення та паролі існують у розшифрованому вигляді в пам'яті, поки сховище відкрите. Використовуйте унікальний пароль сховища і, коли провайдер дозволяє, пароль програми замість основного пароля. Ця початкова реалізація не виконує інтерактивний потік OAuth. Резервні копії, swap, дампи пам'яті або зламована машина все ще можуть розкрити дані.";
 	}
 
 	public String correoCitaUno() {
-	    return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+		return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
 	}
 
 	public String correoCitaDos() {
-	    return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+		return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
 	}
 
 	public String correoClaveBoveda() {
-	    return "Пароль сховища:";
+		return "Пароль сховища:";
 	}
 
 	public String correoConfirmarClave() {
-	    return "Підтвердити пароль:";
+		return "Підтвердити пароль:";
 	}
 
 	public String correoCrearBovedaTitulo() {
-	    return "Створити зашифроване поштове сховище";
+		return "Створити зашифроване поштове сховище";
 	}
 
 	public String correoDesbloquearBovedaTitulo() {
-	    return "Розблокувати поштове сховище";
+		return "Розблокувати поштове сховище";
 	}
 
 	public String correoClaveCorta() {
-	    return "Пароль сховища повинен містити щонайменше 12 символів.";
+		return "Пароль сховища повинен містити щонайменше 12 символів.";
 	}
 
 	public String correoClavesNoCoinciden() {
-	    return "Паролі сховища не збігаються.";
+		return "Паролі сховища не збігаються.";
 	}
 
 	public String correoClaveBovedaIncorrecta() {
-	    return "Пароль сховища неправильний або файл було змінено.";
+		return "Пароль сховища неправильний або файл було змінено.";
 	}
 
 	public String correoNombreCuenta() {
-	    return "Ім'я облікового запису:";
+		return "Ім'я облікового запису:";
 	}
 
 	public String correoServidorImap() {
-	    return "Сервер IMAP:";
+		return "Сервер IMAP:";
 	}
 
 	public String correoPuerto() {
-	    return "Порт IMAPS:";
+		return "Порт IMAPS:";
 	}
 
 	public String correoUsuario() {
-	    return "Користувач або адреса:";
+		return "Користувач або адреса:";
 	}
 
 	public String correoSecreto() {
-	    return "Пароль програми:";
+		return "Пароль програми:";
 	}
 
 	public String correoSecretoAyuda() {
-	    return "В існуючому обліковому записі залиште це поле порожнім, щоб зберегти поточний зашифрований секрет.";
+		return "В існуючому обліковому записі залиште це поле порожнім, щоб зберегти поточний зашифрований секрет.";
 	}
 
 	public String correoCarpeta() {
-	    return "Тека IMAP:";
+		return "Тека IMAP:";
 	}
 
 	public String correoCarpetaPredeterminada() {
-	    return "INBOX";
+		return "INBOX";
 	}
 
 	public String correoCuentaInvalida() {
-	    return "Обліковий запис недійсний. Заповніть ім'я, сервер, порт, користувача, секрет і теку.";
+		return "Обліковий запис недійсний. Заповніть ім'я, сервер, порт, користувача, секрет і теку.";
 	}
 
 	public String correoPuertoInvalido() {
-	    return "Порт IMAPS має бути числом від 1 до 65535.";
+		return "Порт IMAPS має бути числом від 1 до 65535.";
 	}
 
 	public String correoConfirmarEliminar(String cuenta) {
-	    return "Видалити обліковий запис \"" + cuenta + "\" і всі його локальні зашифровані повідомлення?";
+		return "Видалити обліковий запис \"" + cuenta + "\" і всі його локальні зашифровані повідомлення?";
 	}
 
 	public String correoErrorTitulo() {
-	    return "Помилка поштового клієнта";
+		return "Помилка поштового клієнта";
 	}
 
 	public String correoErrorConexion() {
-	    return "Не вдалося прочитати пошту через IMAPS. Перевірте сервер, порт, користувача, пароль програми та дозволи IMAP.";
+		return "Не вдалося прочитати пошту через IMAPS. Перевірте сервер, порт, користувача, пароль програми та дозволи IMAP.";
 	}
 
 	public String correoErrorBoveda() {
-	    return "Не вдалося відкрити або зберегти зашифроване поштове сховище.";
+		return "Не вдалося відкрити або зберегти зашифроване поштове сховище.";
 	}
 
 	public String correoColorFondo() {
-	    return "Пошта: колір тла";
+		return "Пошта: колір тла";
 	}
 
 	public String correoColorTexto() {
-	    return "Пошта: колір тексту";
+		return "Пошта: колір тексту";
 	}
 
 	public String correoColorCabecera() {
-	    return "Пошта: колір заголовка";
+		return "Пошта: колір заголовка";
 	}
 
 	public String correoColorTextoCabecera() {
-	    return "Пошта: текст заголовка";
+		return "Пошта: текст заголовка";
 	}
 
 	public String correoColorBarra() {
-	    return "Пошта: колір панелі";
+		return "Пошта: колір панелі";
 	}
 
 	public String correoColorBoton() {
-	    return "Пошта: колір кнопки";
+		return "Пошта: колір кнопки";
 	}
 
 	public String correoColorCaja() {
-	    return "Пошта: колір блоків";
+		return "Пошта: колір блоків";
 	}
 
 	public String correoColorSeleccion() {
-	    return "Пошта: колір виділення";
+		return "Пошта: колір виділення";
 	}
 
 	public String correoColorTextoSeleccion() {
-	    return "Пошта: виділений текст";
+		return "Пошта: виділений текст";
 	}
 
 	public String correoColorAviso() {
-	    return "Пошта: фон попередження";
+		return "Пошта: фон попередження";
 	}
 
 	public String correoColorTextoAviso() {
-	    return "Пошта: текст попередження";
+		return "Пошта: текст попередження";
 	}
 
 	public String correoColorBordeClaro() {
-	    return "Пошта: світла межа";
+		return "Пошта: світла межа";
 	}
 
 	public String correoColorBordeOscuro() {
-	    return "Пошта: темна межа";
+		return "Пошта: темна межа";
 	}
 
 	public String correoColorCitas() {
-	    return "Пошта: фон цитат";
+		return "Пошта: фон цитат";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
