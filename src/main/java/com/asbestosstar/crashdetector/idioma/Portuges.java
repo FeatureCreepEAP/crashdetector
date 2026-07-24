@@ -12898,4 +12898,313 @@ public class Portuges implements Idioma {
 		return "A página de download do JDK foi aberta.";
 	}
 
+	public String lectorCorreoTipo() {
+	    return "Leitor de e-mail";
+	}
+
+	public String correoTitulo() {
+	    return "Netscape Mail Reader";
+	}
+
+	public String correoAgregarCuenta() {
+	    return "Adicionar conta";
+	}
+
+	public String correoEditarCuenta() {
+	    return "Editar conta";
+	}
+
+	public String correoEliminarCuenta() {
+	    return "Excluir conta";
+	}
+
+	public String correoActualizar() {
+	    return "Atualizar";
+	}
+
+	public String correoActualizarTodas() {
+	    return "Atualizar todas";
+	}
+
+	public String correoCerrar() {
+	    return "Fechar e bloquear";
+	}
+
+	public String correoDescargarDependencias() {
+	    return "Baixar dependências de e-mail";
+	}
+
+	public String correoEstadoDependenciasCargadas(String diagnostico) {
+	    return "Dependências de e-mail detectadas [" + diagnostico + "]";
+	}
+
+	public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+	    return "Dependências de e-mail não carregadas [" + diagnostico
+	            + "]. Baixe-as e reinicie o CrashDetector se continuarem sem aparecer.";
+	}
+
+	public String correoDependenciasDescargadasReiniciar() {
+	    return "Dependências de e-mail baixadas. Se ainda não aparecerem carregadas, reinicie o CrashDetector.";
+	}
+
+	public String correoErrorDescargandoDependencias(String error) {
+	    return "Não foi possível baixar as dependências de e-mail: " + error;
+	}
+
+	public String correoBuscar() {
+	    return "Buscar:";
+	}
+
+	public String correoBuscarAyuda() {
+	    return "Busca no remetente, destinatários, assunto e conteúdo local criptografado.";
+	}
+
+	public String correoCuentas() {
+	    return "Contas";
+	}
+
+	public String correoCuentaServidor(String usuario, String servidor) {
+	    return usuario + " @ " + servidor;
+	}
+
+	public String correoMensajes() {
+	    return "Mensagens";
+	}
+
+	public String correoContenido() {
+	    return "Conteúdo de texto";
+	}
+
+	public String correoCitas() {
+	    return "Lei de Zawinski";
+	}
+
+	public String correoDe() {
+	    return "De:";
+	}
+
+	public String correoPara() {
+	    return "Para:";
+	}
+
+	public String correoAsunto() {
+	    return "Assunto:";
+	}
+
+	public String correoFecha() {
+	    return "Data:";
+	}
+
+	public String correoColumnaEstado() {
+	    return "Status";
+	}
+
+	public String correoColumnaDe() {
+	    return "De";
+	}
+
+	public String correoColumnaAsunto() {
+	    return "Assunto";
+	}
+
+	public String correoColumnaFecha() {
+	    return "Data";
+	}
+
+	public String correoLeido() {
+	    return "Lido";
+	}
+
+	public String correoNoLeido() {
+	    return "Novo";
+	}
+
+	public String correoSeleccioneMensaje() {
+	    return "Selecione uma mensagem para lê-la.";
+	}
+
+	public String correoEstadoListo() {
+	    return "Cofre desbloqueado. Pronto.";
+	}
+
+	public String correoSinCuentas() {
+	    return "Não há contas configuradas.";
+	}
+
+	public String correoConectando(String cuenta) {
+	    return "Conectando com segurança a " + cuenta + "…";
+	}
+
+	public String correoMensajesActualizados(int cantidad) {
+	    return "Atualização concluída: " + cantidad + " mensagens lidas do servidor.";
+	}
+
+	public String correoCuentaGuardada() {
+	    return "Conta e cache salvos no cofre criptografado.";
+	}
+
+	public String correoAdvertenciaPrivacidad() {
+	    return "Aviso de privacidade e segurança: o e-mail pode conter dados pessoais, segredos, links maliciosos e conteúdo de rastreamento. Este leitor não carrega HTML remoto e criptografa o cache e as credenciais, mas as mensagens e senhas existem descriptografadas na memória enquanto o cofre está aberto. Use uma senha de cofre única e, quando o provedor permitir, uma senha de aplicativo em vez da sua senha principal. Esta implementação inicial não realiza o fluxo interativo do OAuth. Backups, swap, dumps de memória ou uma máquina comprometida ainda podem expor dados.";
+	}
+
+	public String correoCitaUno() {
+	    return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+	}
+
+	public String correoCitaDos() {
+	    return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+	}
+
+	public String correoClaveBoveda() {
+	    return "Senha do cofre:";
+	}
+
+	public String correoConfirmarClave() {
+	    return "Confirmar senha:";
+	}
+
+	public String correoCrearBovedaTitulo() {
+	    return "Criar cofre de e-mail criptografado";
+	}
+
+	public String correoDesbloquearBovedaTitulo() {
+	    return "Desbloquear cofre de e-mail";
+	}
+
+	public String correoClaveCorta() {
+	    return "A senha do cofre deve ter pelo menos 12 caracteres.";
+	}
+
+	public String correoClavesNoCoinciden() {
+	    return "As senhas do cofre não coincidem.";
+	}
+
+	public String correoClaveBovedaIncorrecta() {
+	    return "A senha do cofre está incorreta ou o arquivo foi alterado.";
+	}
+
+	public String correoNombreCuenta() {
+	    return "Nome da conta:";
+	}
+
+	public String correoServidorImap() {
+	    return "Servidor IMAP:";
+	}
+
+	public String correoPuerto() {
+	    return "Porta IMAPS:";
+	}
+
+	public String correoUsuario() {
+	    return "Usuário ou endereço:";
+	}
+
+	public String correoSecreto() {
+	    return "Senha de aplicativo:";
+	}
+
+	public String correoSecretoAyuda() {
+	    return "Em uma conta existente, deixe este campo vazio para manter o segredo criptografado atual.";
+	}
+
+	public String correoCarpeta() {
+	    return "Pasta IMAP:";
+	}
+
+	public String correoCarpetaPredeterminada() {
+	    return "INBOX";
+	}
+
+	public String correoCuentaInvalida() {
+	    return "A conta não é válida. Preencha nome, servidor, porta, usuário, segredo e pasta.";
+	}
+
+	public String correoPuertoInvalido() {
+	    return "A porta IMAPS deve ser um número entre 1 e 65535.";
+	}
+
+	public String correoConfirmarEliminar(String cuenta) {
+	    return "Excluir a conta \"" + cuenta + "\" e todas as suas mensagens locais criptografadas?";
+	}
+
+	public String correoErrorTitulo() {
+	    return "Erro do leitor de e-mail";
+	}
+
+	public String correoErrorConexion() {
+	    return "Não foi possível ler o e-mail via IMAPS. Verifique o servidor, porta, usuário, senha de aplicativo e permissões IMAP.";
+	}
+
+	public String correoErrorBoveda() {
+	    return "Não foi possível abrir ou salvar o cofre de e-mail criptografado.";
+	}
+
+	public String correoColorFondo() {
+	    return "E-mail: cor de fundo";
+	}
+
+	public String correoColorTexto() {
+	    return "E-mail: cor do texto";
+	}
+
+	public String correoColorCabecera() {
+	    return "E-mail: cor do cabeçalho";
+	}
+
+	public String correoColorTextoCabecera() {
+	    return "E-mail: texto do cabeçalho";
+	}
+
+	public String correoColorBarra() {
+	    return "E-mail: cor da barra";
+	}
+
+	public String correoColorBoton() {
+	    return "E-mail: cor do botão";
+	}
+
+	public String correoColorCaja() {
+	    return "E-mail: cor das caixas";
+	}
+
+	public String correoColorSeleccion() {
+	    return "E-mail: cor de seleção";
+	}
+
+	public String correoColorTextoSeleccion() {
+	    return "E-mail: texto selecionado";
+	}
+
+	public String correoColorAviso() {
+	    return "E-mail: fundo do aviso";
+	}
+
+	public String correoColorTextoAviso() {
+	    return "E-mail: texto do aviso";
+	}
+
+	public String correoColorBordeClaro() {
+	    return "E-mail: borda clara";
+	}
+
+	public String correoColorBordeOscuro() {
+	    return "E-mail: borda escura";
+	}
+
+	public String correoColorCitas() {
+	    return "E-mail: fundo das citações";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

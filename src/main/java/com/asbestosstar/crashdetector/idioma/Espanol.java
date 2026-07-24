@@ -13757,4 +13757,377 @@ public class Espanol implements Idioma {
 		return "Se abrió la página de descarga del JDK.";
 	}
 
+	/* ======================== Lector de correo ======================== */
+
+	@Override
+	public String lectorCorreoTipo() {
+		return "Lector de correo";
+	}
+
+	@Override
+	public String correoTitulo() {
+		return "Netscape Mail Reader";
+	}
+
+	@Override
+	public String correoAgregarCuenta() {
+		return "Añadir cuenta";
+	}
+
+	@Override
+	public String correoEditarCuenta() {
+		return "Editar cuenta";
+	}
+
+	@Override
+	public String correoEliminarCuenta() {
+		return "Eliminar cuenta";
+	}
+
+	@Override
+	public String correoActualizar() {
+		return "Actualizar";
+	}
+
+	@Override
+	public String correoActualizarTodas() {
+		return "Actualizar todas";
+	}
+
+	@Override
+	public String correoCerrar() {
+		return "Cerrar y bloquear";
+	}
+
+	@Override
+	public String correoDescargarDependencias() {
+		return "Descargar dependencias de correo";
+	}
+
+	@Override
+	public String correoEstadoDependenciasCargadas(String diagnostico) {
+		return "Dependencias de correo detectadas [" + diagnostico + "]";
+	}
+
+	@Override
+	public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+		return "Dependencias de correo no cargadas [" + diagnostico
+				+ "]. Descárguelas y reinicie CrashDetector si continúan sin aparecer.";
+	}
+
+	@Override
+	public String correoDependenciasDescargadasReiniciar() {
+		return "Dependencias de correo descargadas. Si todavía no aparecen cargadas, reinicie CrashDetector.";
+	}
+
+	@Override
+	public String correoErrorDescargandoDependencias(String error) {
+		return "No se pudieron descargar las dependencias de correo: " + error;
+	}
+
+	@Override
+	public String correoBuscar() {
+		return "Buscar:";
+	}
+
+	@Override
+	public String correoBuscarAyuda() {
+		return "Busca en remitente, destinatarios, asunto y contenido local cifrado.";
+	}
+
+	@Override
+	public String correoCuentas() {
+		return "Cuentas";
+	}
+
+	@Override
+	public String correoCuentaServidor(String usuario, String servidor) {
+		return usuario + " @ " + servidor;
+	}
+
+	@Override
+	public String correoMensajes() {
+		return "Mensajes";
+	}
+
+	@Override
+	public String correoContenido() {
+		return "Contenido de texto";
+	}
+
+	@Override
+	public String correoCitas() {
+		return "Ley de Zawinski";
+	}
+
+	@Override
+	public String correoDe() {
+		return "De:";
+	}
+
+	@Override
+	public String correoPara() {
+		return "Para:";
+	}
+
+	@Override
+	public String correoAsunto() {
+		return "Asunto:";
+	}
+
+	@Override
+	public String correoFecha() {
+		return "Fecha:";
+	}
+
+	@Override
+	public String correoColumnaEstado() {
+		return "Estado";
+	}
+
+	@Override
+	public String correoColumnaDe() {
+		return "De";
+	}
+
+	@Override
+	public String correoColumnaAsunto() {
+		return "Asunto";
+	}
+
+	@Override
+	public String correoColumnaFecha() {
+		return "Fecha";
+	}
+
+	@Override
+	public String correoLeido() {
+		return "Leído";
+	}
+
+	@Override
+	public String correoNoLeido() {
+		return "Nuevo";
+	}
+
+	@Override
+	public String correoSeleccioneMensaje() {
+		return "Seleccione un mensaje para leerlo.";
+	}
+
+	@Override
+	public String correoEstadoListo() {
+		return "Bóveda desbloqueada. Listo.";
+	}
+
+	@Override
+	public String correoSinCuentas() {
+		return "No hay cuentas configuradas.";
+	}
+
+	@Override
+	public String correoConectando(String cuenta) {
+		return "Conectando de forma segura a " + cuenta + "…";
+	}
+
+	@Override
+	public String correoMensajesActualizados(int cantidad) {
+		return "Actualización completada: " + cantidad + " mensajes leídos del servidor.";
+	}
+
+	@Override
+	public String correoCuentaGuardada() {
+		return "Cuenta y caché guardadas en la bóveda cifrada.";
+	}
+
+	@Override
+	public String correoAdvertenciaPrivacidad() {
+		return "Advertencia de privacidad y seguridad: el correo puede contener datos personales, secretos, enlaces maliciosos y contenido de seguimiento. Este lector no carga HTML remoto y cifra la caché y las credenciales, pero los mensajes y contraseñas existen descifrados en memoria mientras la bóveda está abierta. Use una contraseña de bóveda única y, cuando el proveedor lo permita, una contraseña de aplicación en lugar de su contraseña principal. Esta implementación inicial no realiza el flujo interactivo de OAuth. Copias de seguridad, swap, volcados de memoria o una máquina comprometida todavía pueden exponer datos.";
+	}
+
+	@Override
+	public String correoCitaUno() {
+		return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+	}
+
+	@Override
+	public String correoCitaDos() {
+		return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+	}
+
+	@Override
+	public String correoClaveBoveda() {
+		return "Contraseña de la bóveda:";
+	}
+
+	@Override
+	public String correoConfirmarClave() {
+		return "Confirmar contraseña:";
+	}
+
+	@Override
+	public String correoCrearBovedaTitulo() {
+		return "Crear bóveda cifrada de correo";
+	}
+
+	@Override
+	public String correoDesbloquearBovedaTitulo() {
+		return "Desbloquear bóveda de correo";
+	}
+
+	@Override
+	public String correoClaveCorta() {
+		return "La contraseña de la bóveda debe tener al menos 12 caracteres.";
+	}
+
+	@Override
+	public String correoClavesNoCoinciden() {
+		return "Las contraseñas de la bóveda no coinciden.";
+	}
+
+	@Override
+	public String correoClaveBovedaIncorrecta() {
+		return "La contraseña de la bóveda es incorrecta o el archivo fue alterado.";
+	}
+
+	@Override
+	public String correoNombreCuenta() {
+		return "Nombre de la cuenta:";
+	}
+
+	@Override
+	public String correoServidorImap() {
+		return "Servidor IMAP:";
+	}
+
+	@Override
+	public String correoPuerto() {
+		return "Puerto IMAPS:";
+	}
+
+	@Override
+	public String correoUsuario() {
+		return "Usuario o dirección:";
+	}
+
+	@Override
+	public String correoSecreto() {
+		return "Contraseña de aplicación:";
+	}
+
+	@Override
+	public String correoSecretoAyuda() {
+		return "En una cuenta existente, deje este campo vacío para conservar el secreto cifrado actual.";
+	}
+
+	@Override
+	public String correoCarpeta() {
+		return "Carpeta IMAP:";
+	}
+
+	@Override
+	public String correoCarpetaPredeterminada() {
+		return "INBOX";
+	}
+
+	@Override
+	public String correoCuentaInvalida() {
+		return "La cuenta no es válida. Complete nombre, servidor, puerto, usuario, secreto y carpeta.";
+	}
+
+	@Override
+	public String correoPuertoInvalido() {
+		return "El puerto IMAPS debe ser un número entre 1 y 65535.";
+	}
+
+	@Override
+	public String correoConfirmarEliminar(String cuenta) {
+		return "¿Eliminar la cuenta \"" + cuenta + "\" y todos sus mensajes locales cifrados?";
+	}
+
+	@Override
+	public String correoErrorTitulo() {
+		return "Error del lector de correo";
+	}
+
+	@Override
+	public String correoErrorConexion() {
+		return "No se pudo leer el correo por IMAPS. Revise el servidor, puerto, usuario, contraseña de aplicación y permisos IMAP.";
+	}
+
+	@Override
+	public String correoErrorBoveda() {
+		return "No se pudo abrir o guardar la bóveda cifrada de correo.";
+	}
+
+	@Override
+	public String correoColorFondo() {
+		return "Correo: color de fondo";
+	}
+
+	@Override
+	public String correoColorTexto() {
+		return "Correo: color de texto";
+	}
+
+	@Override
+	public String correoColorCabecera() {
+		return "Correo: color de cabecera";
+	}
+
+	@Override
+	public String correoColorTextoCabecera() {
+		return "Correo: texto de cabecera";
+	}
+
+	@Override
+	public String correoColorBarra() {
+		return "Correo: color de barra";
+	}
+
+	@Override
+	public String correoColorBoton() {
+		return "Correo: color de botón";
+	}
+
+	@Override
+	public String correoColorCaja() {
+		return "Correo: color de cajas";
+	}
+
+	@Override
+	public String correoColorSeleccion() {
+		return "Correo: color de selección";
+	}
+
+	@Override
+	public String correoColorTextoSeleccion() {
+		return "Correo: texto seleccionado";
+	}
+
+	@Override
+	public String correoColorAviso() {
+		return "Correo: fondo del aviso";
+	}
+
+	@Override
+	public String correoColorTextoAviso() {
+		return "Correo: texto del aviso";
+	}
+
+	@Override
+	public String correoColorBordeClaro() {
+		return "Correo: borde claro";
+	}
+
+	@Override
+	public String correoColorBordeOscuro() {
+		return "Correo: borde oscuro";
+	}
+
+	@Override
+	public String correoColorCitas() {
+		return "Correo: fondo de las citas";
+	}
+
 }

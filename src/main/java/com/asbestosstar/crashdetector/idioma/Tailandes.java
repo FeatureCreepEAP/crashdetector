@@ -13074,5 +13074,316 @@ public class Tailandes implements Idioma {
 	public String generadorParchesDescargaAbierta() {
 		return "เปิดหน้าดาวน์โหลด JDK แล้ว";
 	}
+	
+	
+	
+	
+	
+	
+	public String lectorCorreoTipo() {
+	    return "โปรแกรมอ่านอีเมล";
+	}
+
+	public String correoTitulo() {
+	    return "Netscape Mail Reader";
+	}
+
+	public String correoAgregarCuenta() {
+	    return "เพิ่มบัญชี";
+	}
+
+	public String correoEditarCuenta() {
+	    return "แก้ไขบัญชี";
+	}
+
+	public String correoEliminarCuenta() {
+	    return "ลบบัญชี";
+	}
+
+	public String correoActualizar() {
+	    return "อัปเดต";
+	}
+
+	public String correoActualizarTodas() {
+	    return "อัปเดตทั้งหมด";
+	}
+
+	public String correoCerrar() {
+	    return "ปิดและล็อก";
+	}
+
+	public String correoDescargarDependencias() {
+	    return "ดาวน์โหลด dependencies ของอีเมล";
+	}
+
+	public String correoEstadoDependenciasCargadas(String diagnostico) {
+	    return "ตรวจพบ dependencies ของอีเมล [" + diagnostico + "]";
+	}
+
+	public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+	    return "dependencies ของอีเมลไม่ถูกโหลด [" + diagnostico
+	            + "]. ดาวน์โหลดและรีสตาร์ท CrashDetector หากยังไม่ปรากฏ";
+	}
+
+	public String correoDependenciasDescargadasReiniciar() {
+	    return "dependencies ของอีเมลถูกดาวน์โหลดแล้ว หากยังไม่ปรากฏว่าโหลดแล้ว ให้รีสตาร์ท CrashDetector";
+	}
+
+	public String correoErrorDescargandoDependencias(String error) {
+	    return "ไม่สามารถดาวน์โหลด dependencies ของอีเมลได้: " + error;
+	}
+
+	public String correoBuscar() {
+	    return "ค้นหา:";
+	}
+
+	public String correoBuscarAyuda() {
+	    return "ค้นหาในผู้ส่ง ผู้รับ หัวข้อ และเนื้อหาท้องถิ่นที่เข้ารหัส";
+	}
+
+	public String correoCuentas() {
+	    return "บัญชี";
+	}
+
+	public String correoCuentaServidor(String usuario, String servidor) {
+	    return usuario + " @ " + servidor;
+	}
+
+	public String correoMensajes() {
+	    return "ข้อความ";
+	}
+
+	public String correoContenido() {
+	    return "เนื้อหาข้อความ";
+	}
+
+	public String correoCitas() {
+	    return "กฎของ Zawinski";
+	}
+
+	public String correoDe() {
+	    return "จาก:";
+	}
+
+	public String correoPara() {
+	    return "ถึง:";
+	}
+
+	public String correoAsunto() {
+	    return "หัวข้อ:";
+	}
+
+	public String correoFecha() {
+	    return "วันที่:";
+	}
+
+	public String correoColumnaEstado() {
+	    return "สถานะ";
+	}
+
+	public String correoColumnaDe() {
+	    return "จาก";
+	}
+
+	public String correoColumnaAsunto() {
+	    return "หัวข้อ";
+	}
+
+	public String correoColumnaFecha() {
+	    return "วันที่";
+	}
+
+	public String correoLeido() {
+	    return "อ่านแล้ว";
+	}
+
+	public String correoNoLeido() {
+	    return "ใหม่";
+	}
+
+	public String correoSeleccioneMensaje() {
+	    return "เลือกข้อความเพื่ออ่าน";
+	}
+
+	public String correoEstadoListo() {
+	    return "ตู้เซฟปลดล็อกแล้ว พร้อมใช้งาน";
+	}
+
+	public String correoSinCuentas() {
+	    return "ไม่มีบัญชีที่กำหนดค่าไว้";
+	}
+
+	public String correoConectando(String cuenta) {
+	    return "กำลังเชื่อมต่ออย่างปลอดภัยไปยัง " + cuenta + "…";
+	}
+
+	public String correoMensajesActualizados(int cantidad) {
+	    return "การอัปเดตเสร็จสิ้น: อ่าน " + cantidad + " ข้อความจากเซิร์ฟเวอร์";
+	}
+
+	public String correoCuentaGuardada() {
+	    return "บัญชีและแคชถูกบันทึกในตู้เซฟที่เข้ารหัสแล้ว";
+	}
+
+	public String correoAdvertenciaPrivacidad() {
+	    return "คำเตือนความเป็นส่วนตัวและความปลอดภัย: อีเมลอาจมีข้อมูลส่วนบุคคล ความลับ ลิงก์ที่เป็นอันตราย และเนื้อหาติดตาม โปรแกรมอ่านนี้ไม่โหลด HTML ระยะไกลและเข้ารหัสแคชและข้อมูลรับรอง แต่ข้อความและรหัสผ่านอยู่ในหน่วยความจำแบบถอดรหัสขณะที่ตู้เซฟเปิดอยู่ ใช้รหัสผ่านตู้เซฟที่ไม่ซ้ำกัน และเมื่อผู้ให้บริการอนุญาต ให้ใช้รหัสผ่านแอปแทนรหัสผ่านหลัก การใช้งานเบื้องต้นนี้ไม่ดำเนินการโฟลว์ OAuth แบบโต้ตอบ การสำรองข้อมูล swap dump หน่วยความจำ หรือเครื่องที่ถูกบุกรุกยังคงสามารถเปิดเผยข้อมูลได้";
+	}
+
+	public String correoCitaUno() {
+	    return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+	}
+
+	public String correoCitaDos() {
+	    return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+	}
+
+	public String correoClaveBoveda() {
+	    return "รหัสผ่านตู้เซฟ:";
+	}
+
+	public String correoConfirmarClave() {
+	    return "ยืนยันรหัสผ่าน:";
+	}
+
+	public String correoCrearBovedaTitulo() {
+	    return "สร้างตู้เซฟอีเมลที่เข้ารหัส";
+	}
+
+	public String correoDesbloquearBovedaTitulo() {
+	    return "ปลดล็อกตู้เซฟอีเมล";
+	}
+
+	public String correoClaveCorta() {
+	    return "รหัสผ่านตู้เซฟต้องมีอย่างน้อย 12 ตัวอักษร";
+	}
+
+	public String correoClavesNoCoinciden() {
+	    return "รหัสผ่านตู้เซฟไม่ตรงกัน";
+	}
+
+	public String correoClaveBovedaIncorrecta() {
+	    return "รหัสผ่านตู้เซฟไม่ถูกต้องหรือไฟล์ถูกแก้ไข";
+	}
+
+	public String correoNombreCuenta() {
+	    return "ชื่อบัญชี:";
+	}
+
+	public String correoServidorImap() {
+	    return "เซิร์ฟเวอร์ IMAP:";
+	}
+
+	public String correoPuerto() {
+	    return "พอร์ต IMAPS:";
+	}
+
+	public String correoUsuario() {
+	    return "ผู้ใช้หรือที่อยู่:";
+	}
+
+	public String correoSecreto() {
+	    return "รหัสผ่านแอป:";
+	}
+
+	public String correoSecretoAyuda() {
+	    return "ในบัญชีที่มีอยู่ ปล่อยช่องนี้ว่างไว้เพื่อเก็บ secret ที่เข้ารหัสไว้ปัจจุบัน";
+	}
+
+	public String correoCarpeta() {
+	    return "โฟลเดอร์ IMAP:";
+	}
+
+	public String correoCarpetaPredeterminada() {
+	    return "INBOX";
+	}
+
+	public String correoCuentaInvalida() {
+	    return "บัญชีไม่ถูกต้อง กรุณากรอกชื่อ เซิร์ฟเวอร์ พอร์ต ผู้ใช้ secret และโฟลเดอร์";
+	}
+
+	public String correoPuertoInvalido() {
+	    return "พอร์ต IMAPS ต้องเป็นตัวเลขระหว่าง 1 ถึง 65535";
+	}
+
+	public String correoConfirmarEliminar(String cuenta) {
+	    return "ลบบัญชี \"" + cuenta + "\" และข้อความท้องถิ่นที่เข้ารหัสทั้งหมดหรือไม่?";
+	}
+
+	public String correoErrorTitulo() {
+	    return "ข้อผิดพลาดของโปรแกรมอ่านอีเมล";
+	}
+
+	public String correoErrorConexion() {
+	    return "ไม่สามารถอ่านอีเมลผ่าน IMAPS ได้ ตรวจสอบเซิร์ฟเวอร์ พอร์ต ผู้ใช้ รหัสผ่านแอป และสิทธิ์ IMAP";
+	}
+
+	public String correoErrorBoveda() {
+	    return "ไม่สามารถเปิดหรือบันทึกตู้เซฟอีเมลที่เข้ารหัสได้";
+	}
+
+	public String correoColorFondo() {
+	    return "อีเมล: สีพื้นหลัง";
+	}
+
+	public String correoColorTexto() {
+	    return "อีเมล: สีข้อความ";
+	}
+
+	public String correoColorCabecera() {
+	    return "อีเมล: สีส่วนหัว";
+	}
+
+	public String correoColorTextoCabecera() {
+	    return "อีเมล: ข้อความส่วนหัว";
+	}
+
+	public String correoColorBarra() {
+	    return "อีเมล: สีแถบ";
+	}
+
+	public String correoColorBoton() {
+	    return "อีเมล: สีปุ่ม";
+	}
+
+	public String correoColorCaja() {
+	    return "อีเมล: สีกล่อง";
+	}
+
+	public String correoColorSeleccion() {
+	    return "อีเมล: สีการเลือก";
+	}
+
+	public String correoColorTextoSeleccion() {
+	    return "อีเมล: ข้อความที่เลือก";
+	}
+
+	public String correoColorAviso() {
+	    return "อีเมล: พื้นหลังคำเตือน";
+	}
+
+	public String correoColorTextoAviso() {
+	    return "อีเมล: ข้อความคำเตือน";
+	}
+
+	public String correoColorBordeClaro() {
+	    return "อีเมล: ขอบสีอ่อน";
+	}
+
+	public String correoColorBordeOscuro() {
+	    return "อีเมล: ขอบสีเข้ม";
+	}
+
+	public String correoColorCitas() {
+	    return "อีเมล: พื้นหลังคำพูด";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

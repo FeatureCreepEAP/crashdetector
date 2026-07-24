@@ -26,6 +26,7 @@ import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.configmods.ConfigsModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoBase;
+import com.asbestosstar.crashdetector.gui.tipos.correo.LectorDeCorreoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshablicarVerificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.LectadorDeDocumentosGUI;
@@ -1351,6 +1352,32 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+
+	/**
+	 * Lector de correo IMAPS con almacenamiento local cifrado.
+	 */
+	public static TipoGUI<LectorDeCorreoGUI> LECTOR_CORREO = new TipoGUI<LectorDeCorreoGUI>() {
+		@Override
+		public String id() {
+			return "lector_correo";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.lectorCorreoTipo();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<LectorDeCorreoGUI> gui) {
+			LectorDeCorreoGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<LectorDeCorreoGUI>> obtenerGUIs() {
+			return LectorDeCorreoGUI.GUIS;
+		}
+	};
+
 	/**
 	 * Cliente BitTorrent para compartir archivos de soporte.
 	 */
@@ -1513,6 +1540,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(MCP);
 		TIPOS_DE_GUI.add(ESCANER_NUBE);
 		TIPOS_DE_GUI.add(VISOR_HEAP_DUMP);
+		TIPOS_DE_GUI.add(LECTOR_CORREO);
 		TIPOS_DE_GUI.add(BITTORRENT);
 
 	}

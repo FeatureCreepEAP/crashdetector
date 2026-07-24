@@ -13243,4 +13243,384 @@ public class Khmer implements Idioma {
 		return "បានបើកទំព័រទាញយក JDK។";
 	}
 
+    /* ======================== អ្នកអានអ៊ីមែល ======================== */
+
+    @Override
+    public String lectorCorreoTipo() {
+        return "អ្នកអានអ៊ីមែល";
+    }
+
+    @Override
+    public String correoTitulo() {
+        return "Netscape Mail Reader";
+    }
+
+    @Override
+    public String correoAgregarCuenta() {
+        return "បន្ថែមគណនី";
+    }
+
+    @Override
+    public String correoEditarCuenta() {
+        return "កែសម្រួលគណនី";
+    }
+
+    @Override
+    public String correoEliminarCuenta() {
+        return "លុបគណនី";
+    }
+
+    @Override
+    public String correoActualizar() {
+        return "ធ្វើបច្ចុប្បន្នភាព";
+    }
+
+    @Override
+    public String correoActualizarTodas() {
+        return "ធ្វើបច្ចុប្បន្នភាពទាំងអស់";
+    }
+
+    @Override
+    public String correoCerrar() {
+        return "បិទ និងចាក់សោ";
+    }
+
+    @Override
+    public String correoDescargarDependencias() {
+        return "ទាញយកការពឹងផ្អែកអ៊ីមែល";
+    }
+
+    @Override
+    public String correoEstadoDependenciasCargadas(String diagnostico) {
+        return "បានរកឃើញការពឹងផ្អែកអ៊ីមែល [" + diagnostico + "]";
+    }
+
+    @Override
+    public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+        return "ការពឹងផ្អែកអ៊ីមែលមិនបានផ្ទុក [" + diagnostico
+                + "]។ សូមទាញយកវា និងចាប់ផ្តើម CrashDetector ឡើងវិញ ប្រសិនបើវានៅតែមិនបង្ហាញ។";
+    }
+
+    @Override
+    public String correoDependenciasDescargadasReiniciar() {
+        return "ការពឹងផ្អែកអ៊ីមែលបានទាញយក។ ប្រសិនបើវានៅតែមិនបង្ហាញថាបានផ្ទុក សូមចាប់ផ្តើម CrashDetector ឡើងវិញ។";
+    }
+
+    @Override
+    public String correoErrorDescargandoDependencias(String error) {
+        return "មិនអាចទាញយកការពឹងផ្អែកអ៊ីមែលបាន៖ " + error;
+    }
+
+    @Override
+    public String correoBuscar() {
+        return "ស្វែងរក៖";
+    }
+
+    @Override
+    public String correoBuscarAyuda() {
+        return "ស្វែងរកនៅក្នុងអ្នកផ្ញើ អ្នកទទួល ប្រធានបទ និងមាតិកាមូលដ្ឋានដែលបានអ៊ិនគ្រីប។";
+    }
+
+    @Override
+    public String correoCuentas() {
+        return "គណនី";
+    }
+
+    @Override
+    public String correoCuentaServidor(String usuario, String servidor) {
+        return usuario + " @ " + servidor;
+    }
+
+    @Override
+    public String correoMensajes() {
+        return "សារ";
+    }
+
+    @Override
+    public String correoContenido() {
+        return "មាតិកាអត្ថបទ";
+    }
+
+    @Override
+    public String correoCitas() {
+        return "ច្បាប់របស់ Zawinski";
+    }
+
+    @Override
+    public String correoDe() {
+        return "ពី៖";
+    }
+
+    @Override
+    public String correoPara() {
+        return "ទៅ៖";
+    }
+
+    @Override
+    public String correoAsunto() {
+        return "ប្រធានបទ៖";
+    }
+
+    @Override
+    public String correoFecha() {
+        return "កាលបរិច្ឆេទ៖";
+    }
+
+    @Override
+    public String correoColumnaEstado() {
+        return "ស្ថានភាព";
+    }
+
+    @Override
+    public String correoColumnaDe() {
+        return "ពី";
+    }
+
+    @Override
+    public String correoColumnaAsunto() {
+        return "ប្រធានបទ";
+    }
+
+    @Override
+    public String correoColumnaFecha() {
+        return "កាលបរិច្ឆេទ";
+    }
+
+    @Override
+    public String correoLeido() {
+        return "បានអាន";
+    }
+
+    @Override
+    public String correoNoLeido() {
+        return "ថ្មី";
+    }
+
+    @Override
+    public String correoSeleccioneMensaje() {
+        return "សូមជ្រើសរើសសារមួយដើម្បីអាន។";
+    }
+
+    @Override
+    public String correoEstadoListo() {
+        return "ប្រអប់សុវត្ថិភាពបានបើក។ រួចរាល់។";
+    }
+
+    @Override
+    public String correoSinCuentas() {
+        return "គ្មានគណនីដែលបានកំណត់រចនាសម្ព័ន្ធ។";
+    }
+
+    @Override
+    public String correoConectando(String cuenta) {
+        return "កំពុងភ្ជាប់ដោយសុវត្ថិភាពទៅ " + cuenta + "…";
+    }
+
+    @Override
+    public String correoMensajesActualizados(int cantidad) {
+        return "ការធ្វើបច្ចុប្បន្នភាពបានបញ្ចប់៖ " + cantidad + " សារបានអានពីម៉ាស៊ីនមេ។";
+    }
+
+    @Override
+    public String correoCuentaGuardada() {
+        return "គណនី និង Cache ត្រូវបានរក្សាទុកនៅក្នុងប្រអប់សុវត្ថិភាពដែលបានអ៊ិនគ្រីប។";
+    }
+
+    @Override
+    public String correoAdvertenciaPrivacidad() {
+        return "ការព្រមានឯកជនភាព និងសុវត្ថិភាព៖ អ៊ីមែលអាចមានទិន្នន័យផ្ទាល់ខ្លួន អាថ៌ន៍ តំណភ្ជាប់ដែលមានគ្រោះថ្នាក់ និងមាតិកាតាមដាន។ កម្មវិធីអាននេះមិនផ្ទុក HTML ពីចម្ងាយទេ ហើយអ៊ិនគ្រីប Cache និងឥណទាន ប៉ុន្តែសារ និងពាក្យសម្ងាត់មាននៅក្នុងអង្គចងចាំក្នុងស្ថានភាពដែលបានដោះអ៊ិនគ្រីប នៅពេលដែលប្រអប់សុវត្ថិភាពបើក។ សូមប្រើពាក្យសម្ងាត់ប្រអប់សុវត្ថិភាពតែមួយគត់ ហើយនៅពេលដែលអ្នកផ្តល់សេវាអនុញ្ញាត សូមប្រើពាក្យសម្ងាត់កម្មវិធីជំនួសឱ្យពាក្យសម្ងាត់ចម្បងរបស់អ្នក។ ការអនុវត្តដំបូងនេះមិនអនុវត្តលំហូរ OAuth អន្តរកម្មទេ។ ការបម្រុងទុក Swap ការបញ្ចេញអង្គចងចាំ ឬម៉ាស៊ីនដែលត្រូវបានបំពាន នៅតែអាចបង្ហាញទិន្នន័យ។";
+    }
+
+    @Override
+    public String correoCitaUno() {
+        return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+    }
+
+    @Override
+    public String correoCitaDos() {
+        return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+    }
+
+    @Override
+    public String correoClaveBoveda() {
+        return "ពាក្យសម្ងាត់ប្រអប់សុវត្ថិភាព៖";
+    }
+
+    @Override
+    public String correoConfirmarClave() {
+        return "បញ្ជាក់ពាក្យសម្ងាត់៖";
+    }
+
+    @Override
+    public String correoCrearBovedaTitulo() {
+        return "បង្កើតប្រអប់សុវត្ថិភាពអ៊ីមែលដែលបានអ៊ិនគ្រីប";
+    }
+
+    @Override
+    public String correoDesbloquearBovedaTitulo() {
+        return "បើកប្រអប់សុវត្ថិភាពអ៊ីមែល";
+    }
+
+    @Override
+    public String correoClaveCorta() {
+        return "ពាក្យសម្ងាត់ប្រអប់សុវត្ថិភាពត្រូវតែមានយ៉ាងហោចណាស់ 12 តួអក្សរ។";
+    }
+
+    @Override
+    public String correoClavesNoCoinciden() {
+        return "ពាក្យសម្ងាត់ប្រអប់សុវត្ថិភាពមិនត្រូវគ្នា។";
+    }
+
+    @Override
+    public String correoClaveBovedaIncorrecta() {
+        return "ពាក្យសម្ងាត់ប្រអប់សុវត្ថិភាពមិនត្រឹមត្រូវ ឬឯកសារត្រូវបានកែប្រែ។";
+    }
+
+    @Override
+    public String correoNombreCuenta() {
+        return "ឈ្មោះគណនី៖";
+    }
+
+    @Override
+    public String correoServidorImap() {
+        return "ម៉ាស៊ីនមេ IMAP៖";
+    }
+
+    @Override
+    public String correoPuerto() {
+        return "ច្រក IMAPS៖";
+    }
+
+    @Override
+    public String correoUsuario() {
+        return "អ្នកប្រើប្រាស់ ឬអាសយដ្ឋាន៖";
+    }
+
+    @Override
+    public String correoSecreto() {
+        return "ពាក្យសម្ងាត់កម្មវិធី៖";
+    }
+
+    @Override
+    public String correoSecretoAyuda() {
+        return "សម្រាប់គណនីដែលមានស្រាប់ សូមទុកវាលនេះទទេ ដើម្បីរក្សាអាថ៌ន៍ដែលបានអ៊ិនគ្រីបបច្ចុប្បន្ន។";
+    }
+
+    @Override
+    public String correoCarpeta() {
+        return "ថត IMAP៖";
+    }
+
+    @Override
+    public String correoCarpetaPredeterminada() {
+        return "INBOX";
+    }
+
+    @Override
+    public String correoCuentaInvalida() {
+        return "គណនីមិនត្រឹមត្រូវ។ សូមបំពេញឈ្មោះ ម៉ាស៊ីនមេ ច្រក អ្នកប្រើប្រាស់ អាថ៌ន៍ និងថត។";
+    }
+
+    @Override
+    public String correoPuertoInvalido() {
+        return "ច្រក IMAPS ត្រូវតែជាលេខចន្លោះពី 1 ដល់ 65535។";
+    }
+
+    @Override
+    public String correoConfirmarEliminar(String cuenta) {
+        return "តើអ្នកចង់លុបគណនី \"" + cuenta + "\" និងសារមូលដ្ឋានដែលបានអ៊ិនគ្រីបទាំងអស់របស់វាទេ?";
+    }
+
+    @Override
+    public String correoErrorTitulo() {
+        return "កំហុសអ្នកអានអ៊ីមែល";
+    }
+
+    @Override
+    public String correoErrorConexion() {
+        return "មិនអាចអានអ៊ីមែលតាមរយៈ IMAPS បាន។ សូមពិនិត្យម៉ាស៊ីនមេ ច្រក អ្នកប្រើប្រាស់ ពាក្យសម្ងាត់កម្មវិធី និងសិទ្ធិ IMAP។";
+    }
+
+    @Override
+    public String correoErrorBoveda() {
+        return "មិនអាចបើក ឬរក្សាទុកប្រអប់សុវត្ថិភាពអ៊ីមែលដែលបានអ៊ិនគ្រីបបាន។";
+    }
+
+    @Override
+    public String correoColorFondo() {
+        return "អ៊ីមែល៖ ពណ៌ផ្ទៃខាងក្រោយ";
+    }
+
+    @Override
+    public String correoColorTexto() {
+        return "អ៊ីមែល៖ ពណ៌អត្ថបទ";
+    }
+
+    @Override
+    public String correoColorCabecera() {
+        return "អ៊ីមែល៖ ពណ៌ក្បាល";
+    }
+
+    @Override
+    public String correoColorTextoCabecera() {
+        return "អ៊ីមែល៖ អត្ថបទក្បាល";
+    }
+
+    @Override
+    public String correoColorBarra() {
+        return "អ៊ីមែល៖ ពណ៌របារ";
+    }
+
+    @Override
+    public String correoColorBoton() {
+        return "អ៊ីមែល៖ ពណ៌ប៊ូតុង";
+    }
+
+    @Override
+    public String correoColorCaja() {
+        return "អ៊ីមែល៖ ពណ៌ប្រអប់";
+    }
+
+    @Override
+    public String correoColorSeleccion() {
+        return "អ៊ីមែល៖ ពណ៌ការជ្រើសរើស";
+    }
+
+    @Override
+    public String correoColorTextoSeleccion() {
+        return "អ៊ីមែល៖ អត្ថបទដែលបានជ្រើសរើស";
+    }
+
+    @Override
+    public String correoColorAviso() {
+        return "អ៊ីមែល៖ ផ្ទៃខាងក្រោយនៃការជូនដំណឹង";
+    }
+
+    @Override
+    public String correoColorTextoAviso() {
+        return "អ៊ីមែល៖ អត្ថបទនៃការជូនដំណឹង";
+    }
+
+    @Override
+    public String correoColorBordeClaro() {
+        return "អ៊ីមែល៖ គែមភ្លឺ";
+    }
+
+    @Override
+    public String correoColorBordeOscuro() {
+        return "អ៊ីមែល៖ គែមងងឹត";
+    }
+
+    @Override
+    public String correoColorCitas() {
+        return "អ៊ីមែល៖ ផ្ទៃខាងក្រោយនៃការដកស្រង់";
+    }
+	
+	
+	
+	
+	
+	
+	
+	
 }

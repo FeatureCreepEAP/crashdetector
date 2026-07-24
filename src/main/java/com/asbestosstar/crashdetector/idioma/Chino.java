@@ -12423,5 +12423,387 @@ public class Chino implements Idioma {
 	public String generadorParchesDescargaAbierta() {
 		return "已打开 JDK 下载页面。";
 	}
+	
+	
+	
+    /* ======================== 邮件阅读器 ======================== */
+
+    @Override
+    public String lectorCorreoTipo() {
+        return "邮件阅读器";
+    }
+
+    @Override
+    public String correoTitulo() {
+        return "Netscape 邮件阅读器";
+    }
+
+    @Override
+    public String correoAgregarCuenta() {
+        return "添加账户";
+    }
+
+    @Override
+    public String correoEditarCuenta() {
+        return "编辑账户";
+    }
+
+    @Override
+    public String correoEliminarCuenta() {
+        return "删除账户";
+    }
+
+    @Override
+    public String correoActualizar() {
+        return "更新";
+    }
+
+    @Override
+    public String correoActualizarTodas() {
+        return "全部更新";
+    }
+
+    @Override
+    public String correoCerrar() {
+        return "关闭并锁定";
+    }
+
+    @Override
+    public String correoDescargarDependencias() {
+        return "下载邮件依赖项";
+    }
+
+    @Override
+    public String correoEstadoDependenciasCargadas(String diagnostico) {
+        return "检测到邮件依赖项 [" + diagnostico + "]";
+    }
+
+    @Override
+    public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+        return "未加载邮件依赖项 [" + diagnostico
+                + "]。如果它们仍然没有出现，请下载并重启 CrashDetector。";
+    }
+
+    @Override
+    public String correoDependenciasDescargadasReiniciar() {
+        return "邮件依赖项已下载。如果仍未显示已加载，请重启 CrashDetector。";
+    }
+
+    @Override
+    public String correoErrorDescargandoDependencias(String error) {
+        return "无法下载邮件依赖项：" + error;
+    }
+
+    @Override
+    public String correoBuscar() {
+        return "搜索：";
+    }
+
+    @Override
+    public String correoBuscarAyuda() {
+        return "在发件人、收件人、主题和本地加密内容中搜索。";
+    }
+
+    @Override
+    public String correoCuentas() {
+        return "账户";
+    }
+
+    @Override
+    public String correoCuentaServidor(String usuario, String servidor) {
+        return usuario + " @ " + servidor;
+    }
+
+    @Override
+    public String correoMensajes() {
+        return "消息";
+    }
+
+    @Override
+    public String correoContenido() {
+        return "文本内容";
+    }
+
+    @Override
+    public String correoCitas() {
+        return "扎温斯基定律";
+    }
+
+    @Override
+    public String correoDe() {
+        return "发件人：";
+    }
+
+    @Override
+    public String correoPara() {
+        return "收件人：";
+    }
+
+    @Override
+    public String correoAsunto() {
+        return "主题：";
+    }
+
+    @Override
+    public String correoFecha() {
+        return "日期：";
+    }
+
+    @Override
+    public String correoColumnaEstado() {
+        return "状态";
+    }
+
+    @Override
+    public String correoColumnaDe() {
+        return "发件人";
+    }
+
+    @Override
+    public String correoColumnaAsunto() {
+        return "主题";
+    }
+
+    @Override
+    public String correoColumnaFecha() {
+        return "日期";
+    }
+
+    @Override
+    public String correoLeido() {
+        return "已读";
+    }
+
+    @Override
+    public String correoNoLeido() {
+        return "新消息";
+    }
+
+    @Override
+    public String correoSeleccioneMensaje() {
+        return "选择一条消息进行阅读。";
+    }
+
+    @Override
+    public String correoEstadoListo() {
+        return "保险库已解锁。就绪。";
+    }
+
+    @Override
+    public String correoSinCuentas() {
+        return "没有配置的账户。";
+    }
+
+    @Override
+    public String correoConectando(String cuenta) {
+        return "正在安全连接到 " + cuenta + "…";
+    }
+
+    @Override
+    public String correoMensajesActualizados(int cantidad) {
+        return "更新完成：从服务器读取了 " + cantidad + " 条消息。";
+    }
+
+    @Override
+    public String correoCuentaGuardada() {
+        return "账户和缓存已保存到加密保险库。";
+    }
+
+    @Override
+    public String correoAdvertenciaPrivacidad() {
+        return "隐私和安全警告：邮件可能包含个人数据、秘密、恶意链接和跟踪内容。此阅读器不加载远程 HTML 并加密缓存和凭据，但在保险库打开时，消息和密码以解密形式存在于内存中。使用唯一的保险库密码，并在提供商允许时，使用应用密码而不是主密码。此初始实现不执行交互式 OAuth 流程。备份、交换、内存转储或受感染的机器仍可能暴露数据。";
+    }
+
+    @Override
+    public String correoCitaUno() {
+        return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+    }
+
+    @Override
+    public String correoCitaDos() {
+        return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+    }
+
+    @Override
+    public String correoClaveBoveda() {
+        return "保险库密码：";
+    }
+
+    @Override
+    public String correoConfirmarClave() {
+        return "确认密码：";
+    }
+
+    @Override
+    public String correoCrearBovedaTitulo() {
+        return "创建加密邮件保险库";
+    }
+
+    @Override
+    public String correoDesbloquearBovedaTitulo() {
+        return "解锁邮件保险库";
+    }
+
+    @Override
+    public String correoClaveCorta() {
+        return "保险库密码必须至少包含 12 个字符。";
+    }
+
+    @Override
+    public String correoClavesNoCoinciden() {
+        return "保险库密码不匹配。";
+    }
+
+    @Override
+    public String correoClaveBovedaIncorrecta() {
+        return "保险库密码不正确或文件已被篡改。";
+    }
+
+    @Override
+    public String correoNombreCuenta() {
+        return "账户名称：";
+    }
+
+    @Override
+    public String correoServidorImap() {
+        return "IMAP 服务器：";
+    }
+
+    @Override
+    public String correoPuerto() {
+        return "IMAPS 端口：";
+    }
+
+    @Override
+    public String correoUsuario() {
+        return "用户或地址：";
+    }
+
+    @Override
+    public String correoSecreto() {
+        return "应用密码：";
+    }
+
+    @Override
+    public String correoSecretoAyuda() {
+        return "对于现有账户，将此字段留空以保留当前加密的秘密。";
+    }
+
+    @Override
+    public String correoCarpeta() {
+        return "IMAP 文件夹：";
+    }
+
+    @Override
+    public String correoCarpetaPredeterminada() {
+        return "INBOX";
+    }
+
+    @Override
+    public String correoCuentaInvalida() {
+        return "账户无效。请填写名称、服务器、端口、用户、秘密和文件夹。";
+    }
+
+    @Override
+    public String correoPuertoInvalido() {
+        return "IMAPS 端口必须是 1 到 65535 之间的数字。";
+    }
+
+    @Override
+    public String correoConfirmarEliminar(String cuenta) {
+        return "是否删除账户 \"" + cuenta + "\" 及其所有本地加密消息？";
+    }
+
+    @Override
+    public String correoErrorTitulo() {
+        return "邮件阅读器错误";
+    }
+
+    @Override
+    public String correoErrorConexion() {
+        return "无法通过 IMAPS 读取邮件。请检查服务器、端口、用户、应用密码和 IMAP 权限。";
+    }
+
+    @Override
+    public String correoErrorBoveda() {
+        return "无法打开或保存加密邮件保险库。";
+    }
+
+    @Override
+    public String correoColorFondo() {
+        return "邮件：背景颜色";
+    }
+
+    @Override
+    public String correoColorTexto() {
+        return "邮件：文本颜色";
+    }
+
+    @Override
+    public String correoColorCabecera() {
+        return "邮件：标题颜色";
+    }
+
+    @Override
+    public String correoColorTextoCabecera() {
+        return "邮件：标题文本";
+    }
+
+    @Override
+    public String correoColorBarra() {
+        return "邮件：条形颜色";
+    }
+
+    @Override
+    public String correoColorBoton() {
+        return "邮件：按钮颜色";
+    }
+
+    @Override
+    public String correoColorCaja() {
+        return "邮件：框体颜色";
+    }
+
+    @Override
+    public String correoColorSeleccion() {
+        return "邮件：选择颜色";
+    }
+
+    @Override
+    public String correoColorTextoSeleccion() {
+        return "邮件：选中文本";
+    }
+
+    @Override
+    public String correoColorAviso() {
+        return "邮件：通知背景";
+    }
+
+    @Override
+    public String correoColorTextoAviso() {
+        return "邮件：通知文本";
+    }
+
+    @Override
+    public String correoColorBordeClaro() {
+        return "邮件：浅色边框";
+    }
+
+    @Override
+    public String correoColorBordeOscuro() {
+        return "邮件：深色边框";
+    }
+
+    @Override
+    public String correoColorCitas() {
+        return "邮件：引用背景";
+    }
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -5123,4 +5123,154 @@ public interface Idioma {
 
 	public String generadorParchesDescargaAbierta();
 
+	/* ======================== Lector de correo ======================== */
+
+	public String lectorCorreoTipo();
+
+	public String correoTitulo();
+
+	public String correoAgregarCuenta();
+
+	public String correoEditarCuenta();
+
+	public String correoEliminarCuenta();
+
+	public String correoActualizar();
+
+	public String correoActualizarTodas();
+
+	public String correoCerrar();
+
+	public String correoDescargarDependencias();
+
+	public String correoEstadoDependenciasCargadas(String diagnostico);
+
+	public String correoEstadoDependenciasNoCargadas(String diagnostico);
+
+	public String correoDependenciasDescargadasReiniciar();
+
+	public String correoErrorDescargandoDependencias(String error);
+
+	public String correoBuscar();
+
+	public String correoBuscarAyuda();
+
+	public String correoCuentas();
+
+	public String correoCuentaServidor(String usuario, String servidor);
+
+	public String correoMensajes();
+
+	public String correoContenido();
+
+	public String correoCitas();
+
+	public String correoDe();
+
+	public String correoPara();
+
+	public String correoAsunto();
+
+	public String correoFecha();
+
+	public String correoColumnaEstado();
+
+	public String correoColumnaDe();
+
+	public String correoColumnaAsunto();
+
+	public String correoColumnaFecha();
+
+	public String correoLeido();
+
+	public String correoNoLeido();
+
+	public String correoSeleccioneMensaje();
+
+	public String correoEstadoListo();
+
+	public String correoSinCuentas();
+
+	public String correoConectando(String cuenta);
+
+	public String correoMensajesActualizados(int cantidad);
+
+	public String correoCuentaGuardada();
+
+	public String correoAdvertenciaPrivacidad();
+
+	public String correoCitaUno();
+
+	public String correoCitaDos();
+
+	public String correoClaveBoveda();
+
+	public String correoConfirmarClave();
+
+	public String correoCrearBovedaTitulo();
+
+	public String correoDesbloquearBovedaTitulo();
+
+	public String correoClaveCorta();
+
+	public String correoClavesNoCoinciden();
+
+	public String correoClaveBovedaIncorrecta();
+
+	public String correoNombreCuenta();
+
+	public String correoServidorImap();
+
+	public String correoPuerto();
+
+	public String correoUsuario();
+
+	public String correoSecreto();
+
+	public String correoSecretoAyuda();
+
+	public String correoCarpeta();
+
+	public String correoCarpetaPredeterminada();
+
+	public String correoCuentaInvalida();
+
+	public String correoPuertoInvalido();
+
+	public String correoConfirmarEliminar(String cuenta);
+
+	public String correoErrorTitulo();
+
+	public String correoErrorConexion();
+
+	public String correoErrorBoveda();
+
+	public String correoColorFondo();
+
+	public String correoColorTexto();
+
+	public String correoColorCabecera();
+
+	public String correoColorTextoCabecera();
+
+	public String correoColorBarra();
+
+	public String correoColorBoton();
+
+	public String correoColorCaja();
+
+	public String correoColorSeleccion();
+
+	public String correoColorTextoSeleccion();
+
+	public String correoColorAviso();
+
+	public String correoColorTextoAviso();
+
+	public String correoColorBordeClaro();
+
+	public String correoColorBordeOscuro();
+
+	public String correoColorCitas();
+
 }

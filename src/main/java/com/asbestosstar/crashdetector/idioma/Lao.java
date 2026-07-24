@@ -13302,5 +13302,311 @@ public class Lao implements Idioma {
 	public String generadorParchesDescargaAbierta() {
 		return "ເປີດໜ້າດາວໂຫຼດ JDK ແລ້ວ.";
 	}
+	public String lectorCorreoTipo() {
+	    return "ອ່ານຈົດໝາຍ";
+	}
+
+	public String correoTitulo() {
+	    return "Netscape Mail Reader";
+	}
+
+	public String correoAgregarCuenta() {
+	    return "ເພີ່ມບັນຊີ";
+	}
+
+	public String correoEditarCuenta() {
+	    return "ແກ້ໄຂບັນຊີ";
+	}
+
+	public String correoEliminarCuenta() {
+	    return "ລຶບບັນຊີ";
+	}
+
+	public String correoActualizar() {
+	    return "ອັບເດດ";
+	}
+
+	public String correoActualizarTodas() {
+	    return "ອັບເດດທັງໝົດ";
+	}
+
+	public String correoCerrar() {
+	    return "ປິດ ແລະ ລັອກ";
+	}
+
+	public String correoDescargarDependencias() {
+	    return "ດາວໂຫລດ dependencies ຂອງຈົດໝາຍ";
+	}
+
+	public String correoEstadoDependenciasCargadas(String diagnostico) {
+	    return "Dependencies ຂອງຈົດໝາຍຖືກກວດພົບ [" + diagnostico + "]";
+	}
+
+	public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+	    return "Dependencies ຂອງຈົດໝາຍບໍ່ໄດ້ໂຫລດ [" + diagnostico
+	            + "]. ດາວໂຫລດມັນ ແລະ restart CrashDetector ຖ້າມັນຍັງບໍ່ປາກົດ.";
+	}
+
+	public String correoDependenciasDescargadasReiniciar() {
+	    return "Dependencies ຂອງຈົດໝາຍຖືກດາວໂຫລດແລ້ວ. ຖ້າມັນຍັງບໍ່ປາກົດວ່າໂຫລດແລ້ວ, ໃຫ້ restart CrashDetector.";
+	}
+
+	public String correoErrorDescargandoDependencias(String error) {
+	    return "ບໍ່ສາມາດດາວໂຫລດ dependencies ຂອງຈົດໝາຍໄດ້: " + error;
+	}
+
+	public String correoBuscar() {
+	    return "ຄົ້ນຫາ:";
+	}
+
+	public String correoBuscarAyuda() {
+	    return "ຄົ້ນຫາໃນຜູ້ສົ່ງ, ຜູ້ຮັບ, ຫົວຂໍ້ ແລະ ເນື້ອຫາທ້ອງຖິ່ນທີ່ຖືກເຂົ້າລະຫັດ.";
+	}
+
+	public String correoCuentas() {
+	    return "ບັນຊີ";
+	}
+
+	public String correoCuentaServidor(String usuario, String servidor) {
+	    return usuario + " @ " + servidor;
+	}
+
+	public String correoMensajes() {
+	    return "ຂໍ້ຄວາມ";
+	}
+
+	public String correoContenido() {
+	    return "ເນື້ອຫາຂໍ້ຄວາມ";
+	}
+
+	public String correoCitas() {
+	    return "ກົດໝາຍຂອງ Zawinski";
+	}
+
+	public String correoDe() {
+	    return "ຈາກ:";
+	}
+
+	public String correoPara() {
+	    return "ຮັບ:";
+	}
+
+	public String correoAsunto() {
+	    return "ຫົວຂໍ້:";
+	}
+
+	public String correoFecha() {
+	    return "ວັນທີ:";
+	}
+
+	public String correoColumnaEstado() {
+	    return "ສະຖານະ";
+	}
+
+	public String correoColumnaDe() {
+	    return "ຈາກ";
+	}
+
+	public String correoColumnaAsunto() {
+	    return "ຫົວຂໍ້";
+	}
+
+	public String correoColumnaFecha() {
+	    return "ວັນທີ";
+	}
+
+	public String correoLeido() {
+	    return "ອ່ານແລ້ວ";
+	}
+
+	public String correoNoLeido() {
+	    return "ໃໝ່";
+	}
+
+	public String correoSeleccioneMensaje() {
+	    return "ເລືອກຂໍ້ຄວາມເພື່ອອ່ານ.";
+	}
+
+	public String correoEstadoListo() {
+	    return "Vault ຖືກປົດລັອກແລ້ວ. ພ້ອມ.";
+	}
+
+	public String correoSinCuentas() {
+	    return "ບໍ່ມີບັນຊີທີ່ຕັ້ງຄ່າໄວ້.";
+	}
+
+	public String correoConectando(String cuenta) {
+	    return "ກຳລັງເຊື່ອມຕໍ່ຢ່າງປອດໄພໄປຍັງ " + cuenta + "…";
+	}
+
+	public String correoMensajesActualizados(int cantidad) {
+	    return "ການອັບເດດສຳເລັດ: " + cantidad + " ຂໍ້ຄວາມຖືກອ່ານຈາກ server.";
+	}
+
+	public String correoCuentaGuardada() {
+	    return "ບັນຊີ ແລະ cache ຖືກບັນທຶກໃນ vault ທີ່ເຂົ້າລະຫັດ.";
+	}
+
+	public String correoAdvertenciaPrivacidad() {
+	    return "ຄຳເຕືອນດ້ານຄວາມເປັນສ່ວນຕົວ ແລະ ຄວາມປອດໄພ: ຈົດໝາຍອາດມີຂໍ້ມູນສ່ວນຕົວ, ຄວາມລັບ, ລິ້ງທີ່ມີອັນຕະລາຍ ແລະ ເນື້ອຫາຕິດຕາມ. ຕົວອ່ານນີ້ບໍ່ໂຫລດ HTML ຈາກໄກ ແລະ ເຂົ້າລະຫັດ cache ແລະ ຂໍ້ມູນເຂົ້າສູ່ລະບົບ, ແຕ່ຂໍ້ຄວາມ ແລະ ລະຫັດຜ່ານຍັງຄົງຢູ່ໃນໜ່ວຍຄວາມຈຳແບບຖອດລະຫັດໃນຂະນະທີ່ vault ເປີດຢູ່. ໃຊ້ລະຫັດຜ່ານ vault ທີ່ເປັນເອກະລັກ ແລະ ເມື່ອຜູ້ໃຫ້ບໍລິການອະນຸຍາດ, ໃຊ້ລະຫັດຜ່ານແອັບແທນທີ່ຈະໃຊ້ລະຫັດຜ່ານຫຼັກ. ການຈັດຕັ້ງປະຕິບັດເບື້ອງຕົ້ນນີ້ບໍ່ດຳເນີນການໄຫຼ OAuth ແບບ interactive. ການສຳຮອງຂໍ້ມູນ, swap, dump ໜ່ວຍຄວາມຈຳ ຫຼື ເຄື່ອງທີ່ຖືກບຸກລຸກຍັງສາມາດເປີດເຜີຍຂໍ້ມູນໄດ້.";
+	}
+
+	public String correoCitaUno() {
+	    return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+	}
+
+	public String correoCitaDos() {
+	    return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+	}
+
+	public String correoClaveBoveda() {
+	    return "ລະຫັດຜ່ານ Vault:";
+	}
+
+	public String correoConfirmarClave() {
+	    return "ຢືນຢັນລະຫັດຜ່ານ:";
+	}
+
+	public String correoCrearBovedaTitulo() {
+	    return "ສ້າງ vault ຈົດໝາຍທີ່ເຂົ້າລະຫັດ";
+	}
+
+	public String correoDesbloquearBovedaTitulo() {
+	    return "ປົດລັອກ vault ຈົດໝາຍ";
+	}
+
+	public String correoClaveCorta() {
+	    return "ລະຫັດຜ່ານ Vault ຕ້ອງມີຢ່າງໜ້ອຍ 12 ຕົວອັກສອນ.";
+	}
+
+	public String correoClavesNoCoinciden() {
+	    return "ລະຫັດຜ່ານ Vault ບໍ່ກົງກັນ.";
+	}
+
+	public String correoClaveBovedaIncorrecta() {
+	    return "ລະຫັດຜ່ານ Vault ບໍ່ຖືກຕ້ອງ ຫຼື ໄຟລ໌ຖືກປ່ຽນແປງ.";
+	}
+
+	public String correoNombreCuenta() {
+	    return "ຊື່ບັນຊີ:";
+	}
+
+	public String correoServidorImap() {
+	    return "Server IMAP:";
+	}
+
+	public String correoPuerto() {
+	    return "Port IMAPS:";
+	}
+
+	public String correoUsuario() {
+	    return "ຜູ້ໃຊ້ ຫຼື ທີ່ຢູ່:";
+	}
+
+	public String correoSecreto() {
+	    return "ລະຫັດຜ່ານແອັບ:";
+	}
+
+	public String correoSecretoAyuda() {
+	    return "ໃນບັນຊີທີ່ມີຢູ່ແລ້ວ, ປ່ອຍຊ່ອງນີ້ວ່າງເພື່ອຮັກສາ secret ທີ່ເຂົ້າລະຫັດໄວ້.";
+	}
+
+	public String correoCarpeta() {
+	    return "ໂຟນເດີ IMAP:";
+	}
+
+	public String correoCarpetaPredeterminada() {
+	    return "INBOX";
+	}
+
+	public String correoCuentaInvalida() {
+	    return "ບັນຊີບໍ່ຖືກຕ້ອງ. ກະລຸນາຕື່ມຊື່, server, port, ຜູ້ໃຊ້, secret ແລະ ໂຟນເດີ.";
+	}
+
+	public String correoPuertoInvalido() {
+	    return "Port IMAPS ຕ້ອງເປັນຕົວເລກລະຫວ່າງ 1 ແລະ 65535.";
+	}
+
+	public String correoConfirmarEliminar(String cuenta) {
+	    return "ລຶບບັນຊີ \"" + cuenta + "\" ແລະ ຂໍ້ຄວາມທ້ອງຖິ່ນທີ່ເຂົ້າລະຫັດທັງໝົດບໍ່?";
+	}
+
+	public String correoErrorTitulo() {
+	    return "ຂໍ້ຜິດພາດຂອງຕົວອ່ານຈົດໝາຍ";
+	}
+
+	public String correoErrorConexion() {
+	    return "ບໍ່ສາມາດອ່ານຈົດໝາຍຜ່ານ IMAPS ໄດ້. ກວດສອບ server, port, ຜູ້ໃຊ້, ລະຫັດຜ່ານແອັບ ແລະ ສິດທິ IMAP.";
+	}
+
+	public String correoErrorBoveda() {
+	    return "ບໍ່ສາມາດເປີດ ຫຼື ບັນທຶກ vault ຈົດໝາຍທີ່ເຂົ້າລະຫັດໄດ້.";
+	}
+
+	public String correoColorFondo() {
+	    return "ຈົດໝາຍ: ສີພື້ນຫຼັງ";
+	}
+
+	public String correoColorTexto() {
+	    return "ຈົດໝາຍ: ສີຂໍ້ຄວາມ";
+	}
+
+	public String correoColorCabecera() {
+	    return "ຈົດໝາຍ: ສີຫົວຂໍ້";
+	}
+
+	public String correoColorTextoCabecera() {
+	    return "ຈົດໝາຍ: ຂໍ້ຄວາມຫົວຂໍ້";
+	}
+
+	public String correoColorBarra() {
+	    return "ຈົດໝາຍ: ສີແຖບ";
+	}
+
+	public String correoColorBoton() {
+	    return "ຈົດໝາຍ: ສີປຸ່ມ";
+	}
+
+	public String correoColorCaja() {
+	    return "ຈົດໝາຍ: ສີກ່ອງ";
+	}
+
+	public String correoColorSeleccion() {
+	    return "ຈົດໝາຍ: ສີການເລືອກ";
+	}
+
+	public String correoColorTextoSeleccion() {
+	    return "ຈົດໝາຍ: ຂໍ້ຄວາມທີ່ເລືອກ";
+	}
+
+	public String correoColorAviso() {
+	    return "ຈົດໝາຍ: ພື້ນຫຼັງຂໍ້ແຈ້ງເຕືອນ";
+	}
+
+	public String correoColorTextoAviso() {
+	    return "ຈົດໝາຍ: ຂໍ້ຄວາມຂໍ້ແຈ້ງເຕືອນ";
+	}
+
+	public String correoColorBordeClaro() {
+	    return "ຈົດໝາຍ: ຂອບສີອ່ອນ";
+	}
+
+	public String correoColorBordeOscuro() {
+	    return "ຈົດໝາຍ: ຂອບສີເຂັ້ມ";
+	}
+
+	public String correoColorCitas() {
+	    return "ຈົດໝາຍ: ພື້ນຫຼັງຂອງຄຳອ້າງອີງ";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

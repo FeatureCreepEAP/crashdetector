@@ -61,6 +61,7 @@ import com.asbestosstar.crashdetector.gui.tipos.configmods.ConfigsModsGUIYunenom
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUITL;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
+import com.asbestosstar.crashdetector.gui.tipos.correo.LectorDeCorreoNetscape;
 import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUINimu;
 import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshabilitarVerificacionesAmaneKanata;
 import com.asbestosstar.crashdetector.gui.tipos.docs.LectadorDeDocumentosMinimalista;
@@ -70,6 +71,7 @@ import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaPredeterminado;
 import com.asbestosstar.crashdetector.gui.tipos.editorgui.CDSkinCape;
 import com.asbestosstar.crashdetector.gui.tipos.escanernube.EscanerNubeParallelArtistProject;
+import com.asbestosstar.crashdetector.gui.tipos.generador_parches.GeneradorParchesJKT48V;
 import com.asbestosstar.crashdetector.gui.tipos.gpu.GPUFixOptimusPrime;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaSketchyVT;
@@ -82,6 +84,7 @@ import com.asbestosstar.crashdetector.gui.tipos.importador.ImportadorModpackMaus
 import com.asbestosstar.crashdetector.gui.tipos.jgit.BuscarParaJGit;
 import com.asbestosstar.crashdetector.gui.tipos.jgit.JGitAutoCommit;
 import com.asbestosstar.crashdetector.gui.tipos.jgit.JGitHubIzzy;
+import com.asbestosstar.crashdetector.gui.tipos.jgit.avanzado.ClienteGitAvanzadoWendyMizumi;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUIMaidMint;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUISylentBell;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
@@ -108,9 +111,7 @@ import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlaye
 import com.asbestosstar.crashdetector.gui.tipos.rendimiento.AdministradorDeRendimientoNightcore;
 import com.asbestosstar.crashdetector.gui.tipos.sampler.SamplerGUIEineLotta;
 import com.asbestosstar.crashdetector.gui.tipos.scriptide.ScriptIDEGUINiwaJPlus;
-import com.asbestosstar.crashdetector.gui.tipos.jgit.avanzado.ClienteGitAvanzadoWendyMizumi;
 import com.asbestosstar.crashdetector.gui.tipos.transferidor_clases.TransferidorClasesEonOfStars;
-import com.asbestosstar.crashdetector.gui.tipos.generador_parches.GeneradorParchesJKT48V;
 
 public class MonitorDePID {
 
@@ -1215,6 +1216,8 @@ public class MonitorDePID {
 		TipoGUI.ESCANER_NUBE.registrarGUI(EscanerNubeParallelArtistProject.ID, EscanerNubeParallelArtistProject::new);
 		TipoGUI.VISOR_HEAP_DUMP.registrarGUI(VisorHeapDumpIranFifa.ID, VisorHeapDumpIranFifa::new);
 		TipoGUI.BITTORRENT.registrarGUI(BitTorrentGUIHolostarsEN.ID, BitTorrentGUIHolostarsEN::new);
+		TipoGUI.LECTOR_CORREO.registrarGUI(LectorDeCorreoNetscape.ID, LectorDeCorreoNetscape::new);
+
 	}
 
 	/**

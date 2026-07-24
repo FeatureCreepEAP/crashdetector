@@ -43,6 +43,7 @@ import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.configmods.ConfigsModsGUIYunenoms;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoBase;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
+import com.asbestosstar.crashdetector.gui.tipos.correo.LectorDeCorreoNetscape;
 import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUINimu;
 import com.asbestosstar.crashdetector.gui.tipos.docs.LectadorDeDocumentosStudyJuche;
 import com.asbestosstar.crashdetector.gui.tipos.generador_parches.GeneradorParchesJKT48V;
@@ -158,6 +159,12 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 				() -> new BitTorrentGUIHolostarsEN());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.GENERADOR_DE_PARCHES, GeneradorParchesJKT48V.ID,
 				() -> new GeneradorParchesJKT48V());
+		
+		registrarBotonDeBarraLateralDerecha(TipoGUI.LECTOR_CORREO, LectorDeCorreoNetscape.ID,
+				() -> new LectorDeCorreoNetscape());	
+		
+		
+		
 
 	}
 

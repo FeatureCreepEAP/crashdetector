@@ -12943,5 +12943,384 @@ public class Arabe implements Idioma {
 	public String generadorParchesDescargaAbierta() {
 		return "تم فتح صفحة تنزيل JDK.";
 	}
+	
+	
+	
+    /* ======================== قارئ البريد الإلكتروني ======================== */
+
+    @Override
+    public String lectorCorreoTipo() {
+        return "قارئ البريد";
+    }
+
+    @Override
+    public String correoTitulo() {
+        return "قارئ بريد Netscape";
+    }
+
+    @Override
+    public String correoAgregarCuenta() {
+        return "إضافة حساب";
+    }
+
+    @Override
+    public String correoEditarCuenta() {
+        return "تعديل الحساب";
+    }
+
+    @Override
+    public String correoEliminarCuenta() {
+        return "حذف الحساب";
+    }
+
+    @Override
+    public String correoActualizar() {
+        return "تحديث";
+    }
+
+    @Override
+    public String correoActualizarTodas() {
+        return "تحديث الكل";
+    }
+
+    @Override
+    public String correoCerrar() {
+        return "إغلاق وقفل";
+    }
+
+    @Override
+    public String correoDescargarDependencias() {
+        return "تنزيل تبعيات البريد";
+    }
+
+    @Override
+    public String correoEstadoDependenciasCargadas(String diagnostico) {
+        return "تم اكتشاف تبعيات البريد [" + diagnostico + "]";
+    }
+
+    @Override
+    public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+        return "لم يتم تحميل تبعيات البريد [" + diagnostico
+                + "]. قم بتنزيلها وأعد تشغيل CrashDetector إذا استمرت في عدم الظهور.";
+    }
+
+    @Override
+    public String correoDependenciasDescargadasReiniciar() {
+        return "تم تنزيل تبعيات البريد. إذا لم تظهر محملة بعد، فأعد تشغيل CrashDetector.";
+    }
+
+    @Override
+    public String correoErrorDescargandoDependencias(String error) {
+        return "لا يمكن تنزيل تبعيات البريد: " + error;
+    }
+
+    @Override
+    public String correoBuscar() {
+        return "بحث:";
+    }
+
+    @Override
+    public String correoBuscarAyuda() {
+        return "يبحث في المرسل والمستلمين والموضوع والمحتوى المحلي المشفر.";
+    }
+
+    @Override
+    public String correoCuentas() {
+        return "الحسابات";
+    }
+
+    @Override
+    public String correoCuentaServidor(String usuario, String servidor) {
+        return usuario + " @ " + servidor;
+    }
+
+    @Override
+    public String correoMensajes() {
+        return "الرسائل";
+    }
+
+    @Override
+    public String correoContenido() {
+        return "محتوى النص";
+    }
+
+    @Override
+    public String correoCitas() {
+        return "قانون زاوينسكي";
+    }
+
+    @Override
+    public String correoDe() {
+        return "من:";
+    }
+
+    @Override
+    public String correoPara() {
+        return "إلى:";
+    }
+
+    @Override
+    public String correoAsunto() {
+        return "الموضوع:";
+    }
+
+    @Override
+    public String correoFecha() {
+        return "التاريخ:";
+    }
+
+    @Override
+    public String correoColumnaEstado() {
+        return "الحالة";
+    }
+
+    @Override
+    public String correoColumnaDe() {
+        return "من";
+    }
+
+    @Override
+    public String correoColumnaAsunto() {
+        return "الموضوع";
+    }
+
+    @Override
+    public String correoColumnaFecha() {
+        return "التاريخ";
+    }
+
+    @Override
+    public String correoLeido() {
+        return "مقروء";
+    }
+
+    @Override
+    public String correoNoLeido() {
+        return "جديد";
+    }
+
+    @Override
+    public String correoSeleccioneMensaje() {
+        return "حدد رسالة لقراءتها.";
+    }
+
+    @Override
+    public String correoEstadoListo() {
+        return "الخزنة مفتوحة. جاهز.";
+    }
+
+    @Override
+    public String correoSinCuentas() {
+        return "لا توجد حسابات مكونة.";
+    }
+
+    @Override
+    public String correoConectando(String cuenta) {
+        return "الاتصال الآمن بـ " + cuenta + "…";
+    }
+
+    @Override
+    public String correoMensajesActualizados(int cantidad) {
+        return "اكتمل التحديث: تمت قراءة " + cantidad + " رسائل من الخادم.";
+    }
+
+    @Override
+    public String correoCuentaGuardada() {
+        return "تم حفظ الحساب وذاكرة التخزين المؤقت في الخزنة المشفرة.";
+    }
+
+    @Override
+    public String correoAdvertenciaPrivacidad() {
+        return "تحذير الخصوصية والأمان: قد يحتوي البريد على بيانات شخصية، أسرار، روابط ضارة ومحتوى تتبع. لا يقوم هذا القارئ بتحميل HTML عن بُعد ويقوم بتشفير ذاكرة التخزين المؤقت وبيانات الاعتماد، لكن الرسائل وكلمات المرور موجودة مفككة التشفير في الذاكرة بينما تكون الخزنة مفتوحة. استخدم كلمة مرور فريدة للخزنة، وعندما يسمح المزود، استخدم كلمة مرور التطبيق بدلاً من كلمة المرور الرئيسية. هذا التنفيذ الأولي لا ينفذ تدفق OAuth التفاعلي. النسخ الاحتياطية، أو التبديل، أو تفريغ الذاكرة، أو الجهاز المخترق قد لا يزال يعرض البيانات.";
+    }
+
+    @Override
+    public String correoCitaUno() {
+        return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+    }
+
+    @Override
+    public String correoCitaDos() {
+        return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+    }
+
+    @Override
+    public String correoClaveBoveda() {
+        return "كلمة مرور الخزنة:";
+    }
+
+    @Override
+    public String correoConfirmarClave() {
+        return "تأكيد كلمة المرور:";
+    }
+
+    @Override
+    public String correoCrearBovedaTitulo() {
+        return "إنشاء خزنة بريد مشفرة";
+    }
+
+    @Override
+    public String correoDesbloquearBovedaTitulo() {
+        return "فتح خزنة البريد";
+    }
+
+    @Override
+    public String correoClaveCorta() {
+        return "يجب أن تتكون كلمة مرور الخزنة من 12 حرفاً على الأقل.";
+    }
+
+    @Override
+    public String correoClavesNoCoinciden() {
+        return "كلمات مرور الخزنة غير متطابقة.";
+    }
+
+    @Override
+    public String correoClaveBovedaIncorrecta() {
+        return "كلمة مرور الخزنة غير صحيحة أو تم تعديل الملف.";
+    }
+
+    @Override
+    public String correoNombreCuenta() {
+        return "اسم الحساب:";
+    }
+
+    @Override
+    public String correoServidorImap() {
+        return "خادم IMAP:";
+    }
+
+    @Override
+    public String correoPuerto() {
+        return "منفذ IMAPS:";
+    }
+
+    @Override
+    public String correoUsuario() {
+        return "المستخدم أو العنوان:";
+    }
+
+    @Override
+    public String correoSecreto() {
+        return "كلمة مرور التطبيق:";
+    }
+
+    @Override
+    public String correoSecretoAyuda() {
+        return "في حساب موجود، اترك هذا الحقل فارغاً للحفاظ على السر المشفر الحالي.";
+    }
+
+    @Override
+    public String correoCarpeta() {
+        return "مجلد IMAP:";
+    }
+
+    @Override
+    public String correoCarpetaPredeterminada() {
+        return "INBOX";
+    }
+
+    @Override
+    public String correoCuentaInvalida() {
+        return "الحساب غير صالح. أكمل الاسم، الخادم، المنفذ، المستخدم، السر والمجلد.";
+    }
+
+    @Override
+    public String correoPuertoInvalido() {
+        return "يجب أن يكون منفذ IMAPS رقماً بين 1 و 65535.";
+    }
+
+    @Override
+    public String correoConfirmarEliminar(String cuenta) {
+        return "هل تريد حذف الحساب \"" + cuenta + "\" وجميع رسائله المحلية المشفرة؟";
+    }
+
+    @Override
+    public String correoErrorTitulo() {
+        return "خطأ في قارئ البريد";
+    }
+
+    @Override
+    public String correoErrorConexion() {
+        return "لا يمكن قراءة البريد عبر IMAPS. تحقق من الخادم، المنفذ، المستخدم، كلمة مرور التطبيق وصلاحيات IMAP.";
+    }
+
+    @Override
+    public String correoErrorBoveda() {
+        return "لا يمكن فتح أو حفظ خزنة البريد المشفرة.";
+    }
+
+    @Override
+    public String correoColorFondo() {
+        return "البريد: لون الخلفية";
+    }
+
+    @Override
+    public String correoColorTexto() {
+        return "البريد: لون النص";
+    }
+
+    @Override
+    public String correoColorCabecera() {
+        return "البريد: لون الرأس";
+    }
+
+    @Override
+    public String correoColorTextoCabecera() {
+        return "البريد: نص الرأس";
+    }
+
+    @Override
+    public String correoColorBarra() {
+        return "البريد: لون الشريط";
+    }
+
+    @Override
+    public String correoColorBoton() {
+        return "البريد: لون الزر";
+    }
+
+    @Override
+    public String correoColorCaja() {
+        return "البريد: لون الصناديق";
+    }
+
+    @Override
+    public String correoColorSeleccion() {
+        return "البريد: لون التحديد";
+    }
+
+    @Override
+    public String correoColorTextoSeleccion() {
+        return "البريد: النص المحدد";
+    }
+
+    @Override
+    public String correoColorAviso() {
+        return "البريد: خلفية التنبيه";
+    }
+
+    @Override
+    public String correoColorTextoAviso() {
+        return "البريد: نص التنبيه";
+    }
+
+    @Override
+    public String correoColorBordeClaro() {
+        return "البريد: حدود فاتحة";
+    }
+
+    @Override
+    public String correoColorBordeOscuro() {
+        return "البريد: حدود داكنة";
+    }
+
+    @Override
+    public String correoColorCitas() {
+        return "البريد: خلفية الاقتباسات";
+    }
+	
+	
+	
+	
 
 }

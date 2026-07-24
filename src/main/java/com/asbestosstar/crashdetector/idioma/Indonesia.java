@@ -13625,5 +13625,382 @@ public class Indonesia implements Idioma {
 	public String generadorParchesDescargaAbierta() {
 		return "Halaman unduhan JDK telah dibuka.";
 	}
+	
+    /* ======================== Pembaca surat ======================== */
+
+    @Override
+    public String lectorCorreoTipo() {
+        return "Pembaca surat";
+    }
+
+    @Override
+    public String correoTitulo() {
+        return "Netscape Mail Reader";
+    }
+
+    @Override
+    public String correoAgregarCuenta() {
+        return "Tambah akun";
+    }
+
+    @Override
+    public String correoEditarCuenta() {
+        return "Edit akun";
+    }
+
+    @Override
+    public String correoEliminarCuenta() {
+        return "Hapus akun";
+    }
+
+    @Override
+    public String correoActualizar() {
+        return "Perbarui";
+    }
+
+    @Override
+    public String correoActualizarTodas() {
+        return "Perbarui semua";
+    }
+
+    @Override
+    public String correoCerrar() {
+        return "Tutup dan kunci";
+    }
+
+    @Override
+    public String correoDescargarDependencias() {
+        return "Unduh dependensi surat";
+    }
+
+    @Override
+    public String correoEstadoDependenciasCargadas(String diagnostico) {
+        return "Dependensi surat terdeteksi [" + diagnostico + "]";
+    }
+
+    @Override
+    public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+        return "Dependensi surat tidak dimuat [" + diagnostico
+                + "]. Unduh dan mulai ulang CrashDetector jika masih tidak muncul.";
+    }
+
+    @Override
+    public String correoDependenciasDescargadasReiniciar() {
+        return "Dependensi surat telah diunduh. Jika masih belum muncul sebagai dimuat, mulai ulang CrashDetector.";
+    }
+
+    @Override
+    public String correoErrorDescargandoDependencias(String error) {
+        return "Tidak dapat mengunduh dependensi surat: " + error;
+    }
+
+    @Override
+    public String correoBuscar() {
+        return "Cari:";
+    }
+
+    @Override
+    public String correoBuscarAyuda() {
+        return "Mencari di pengirim, penerima, subjek, dan konten lokal yang dienkripsi.";
+    }
+
+    @Override
+    public String correoCuentas() {
+        return "Akun";
+    }
+
+    @Override
+    public String correoCuentaServidor(String usuario, String servidor) {
+        return usuario + " @ " + servidor;
+    }
+
+    @Override
+    public String correoMensajes() {
+        return "Pesan";
+    }
+
+    @Override
+    public String correoContenido() {
+        return "Konten teks";
+    }
+
+    @Override
+    public String correoCitas() {
+        return "Hukum Zawinski";
+    }
+
+    @Override
+    public String correoDe() {
+        return "Dari:";
+    }
+
+    @Override
+    public String correoPara() {
+        return "Kepada:";
+    }
+
+    @Override
+    public String correoAsunto() {
+        return "Subjek:";
+    }
+
+    @Override
+    public String correoFecha() {
+        return "Tanggal:";
+    }
+
+    @Override
+    public String correoColumnaEstado() {
+        return "Status";
+    }
+
+    @Override
+    public String correoColumnaDe() {
+        return "Dari";
+    }
+
+    @Override
+    public String correoColumnaAsunto() {
+        return "Subjek";
+    }
+
+    @Override
+    public String correoColumnaFecha() {
+        return "Tanggal";
+    }
+
+    @Override
+    public String correoLeido() {
+        return "Dibaca";
+    }
+
+    @Override
+    public String correoNoLeido() {
+        return "Baru";
+    }
+
+    @Override
+    public String correoSeleccioneMensaje() {
+        return "Pilih pesan untuk membacanya.";
+    }
+
+    @Override
+    public String correoEstadoListo() {
+        return "Brankas terbuka. Siap.";
+    }
+
+    @Override
+    public String correoSinCuentas() {
+        return "Tidak ada akun yang dikonfigurasi.";
+    }
+
+    @Override
+    public String correoConectando(String cuenta) {
+        return "Menghubungkan secara aman ke " + cuenta + "…";
+    }
+
+    @Override
+    public String correoMensajesActualizados(int cantidad) {
+        return "Pembaruan selesai: " + Integer.toString(cantidad) + " pesan dibaca dari server.";
+    }
+
+    @Override
+    public String correoCuentaGuardada() {
+        return "Akun dan cache disimpan di brankas terenkripsi.";
+    }
+
+    @Override
+    public String correoAdvertenciaPrivacidad() {
+        return "Peringatan privasi dan keamanan: surat dapat berisi data pribadi, rahasia, tautan berbahaya, dan konten pelacakan. Pembaca ini tidak memuat HTML jarak jauh dan mengenkripsi cache serta kredensial, tetapi pesan dan kata sandi ada dalam bentuk dekripsi di memori saat brankas terbuka. Gunakan kata sandi brankas yang unik dan, ketika penyedia mengizinkan, gunakan kata sandi aplikasi daripada kata sandi utama Anda. Implementasi awal ini tidak melakukan aliran OAuth interaktif. Cadangan, swap, dump memori, atau mesin yang disusupi masih dapat mengekspos data.";
+    }
+
+    @Override
+    public String correoCitaUno() {
+        return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+    }
+
+    @Override
+    public String correoCitaDos() {
+        return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+    }
+
+    @Override
+    public String correoClaveBoveda() {
+        return "Kata sandi brankas:";
+    }
+
+    @Override
+    public String correoConfirmarClave() {
+        return "Konfirmasi kata sandi:";
+    }
+
+    @Override
+    public String correoCrearBovedaTitulo() {
+        return "Buat brankas surat terenkripsi";
+    }
+
+    @Override
+    public String correoDesbloquearBovedaTitulo() {
+        return "Buka kunci brankas surat";
+    }
+
+    @Override
+    public String correoClaveCorta() {
+        return "Kata sandi brankas harus memiliki setidaknya 12 karakter.";
+    }
+
+    @Override
+    public String correoClavesNoCoinciden() {
+        return "Kata sandi brankas tidak cocok.";
+    }
+
+    @Override
+    public String correoClaveBovedaIncorrecta() {
+        return "Kata sandi brankas salah atau file telah diubah.";
+    }
+
+    @Override
+    public String correoNombreCuenta() {
+        return "Nama akun:";
+    }
+
+    @Override
+    public String correoServidorImap() {
+        return "Server IMAP:";
+    }
+
+    @Override
+    public String correoPuerto() {
+        return "Port IMAPS:";
+    }
+
+    @Override
+    public String correoUsuario() {
+        return "Pengguna atau alamat:";
+    }
+
+    @Override
+    public String correoSecreto() {
+        return "Kata sandi aplikasi:";
+    }
+
+    @Override
+    public String correoSecretoAyuda() {
+        return "Untuk akun yang ada, biarkan bidang ini kosong untuk mempertahankan rahasia terenkripsi saat ini.";
+    }
+
+    @Override
+    public String correoCarpeta() {
+        return "Folder IMAP:";
+    }
+
+    @Override
+    public String correoCarpetaPredeterminada() {
+        return "INBOX";
+    }
+
+    @Override
+    public String correoCuentaInvalida() {
+        return "Akun tidak valid. Lengkapi nama, server, port, pengguna, rahasia, dan folder.";
+    }
+
+    @Override
+    public String correoPuertoInvalido() {
+        return "Port IMAPS harus berupa angka antara 1 dan 65535.";
+    }
+
+    @Override
+    public String correoConfirmarEliminar(String cuenta) {
+        return "Hapus akun \"" + cuenta + "\" dan semua pesan lokal terenkripsinya?";
+    }
+
+    @Override
+    public String correoErrorTitulo() {
+        return "Kesalahan pembaca surat";
+    }
+
+    @Override
+    public String correoErrorConexion() {
+        return "Tidak dapat membaca surat melalui IMAPS. Periksa server, port, pengguna, kata sandi aplikasi, dan izin IMAP.";
+    }
+
+    @Override
+    public String correoErrorBoveda() {
+        return "Tidak dapat membuka atau menyimpan brankas surat terenkripsi.";
+    }
+
+    @Override
+    public String correoColorFondo() {
+        return "Surat: warna latar belakang";
+    }
+
+    @Override
+    public String correoColorTexto() {
+        return "Surat: warna teks";
+    }
+
+    @Override
+    public String correoColorCabecera() {
+        return "Surat: warna header";
+    }
+
+    @Override
+    public String correoColorTextoCabecera() {
+        return "Surat: teks header";
+    }
+
+    @Override
+    public String correoColorBarra() {
+        return "Surat: warna bilah";
+    }
+
+    @Override
+    public String correoColorBoton() {
+        return "Surat: warna tombol";
+    }
+
+    @Override
+    public String correoColorCaja() {
+        return "Surat: warna kotak";
+    }
+
+    @Override
+    public String correoColorSeleccion() {
+        return "Surat: warna seleksi";
+    }
+
+    @Override
+    public String correoColorTextoSeleccion() {
+        return "Surat: teks terpilih";
+    }
+
+    @Override
+    public String correoColorAviso() {
+        return "Surat: latar belakang peringatan";
+    }
+
+    @Override
+    public String correoColorTextoAviso() {
+        return "Surat: teks peringatan";
+    }
+
+    @Override
+    public String correoColorBordeClaro() {
+        return "Surat: batas terang";
+    }
+
+    @Override
+    public String correoColorBordeOscuro() {
+        return "Surat: batas gelap";
+    }
+
+    @Override
+    public String correoColorCitas() {
+        return "Surat: latar belakang kutipan";
+    }
+	
+	
+	
+	
 
 }

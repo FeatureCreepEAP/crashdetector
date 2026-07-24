@@ -12892,4 +12892,324 @@ public class Ruso implements Idioma {
 		return "Открыта страница загрузки JDK.";
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public String lectorCorreoTipo() {
+	    return "Почтовый клиент";
+	}
+
+	public String correoTitulo() {
+	    return "Netscape Mail Reader";
+	}
+
+	public String correoAgregarCuenta() {
+	    return "Добавить аккаунт";
+	}
+
+	public String correoEditarCuenta() {
+	    return "Редактировать аккаунт";
+	}
+
+	public String correoEliminarCuenta() {
+	    return "Удалить аккаунт";
+	}
+
+	public String correoActualizar() {
+	    return "Обновить";
+	}
+
+	public String correoActualizarTodas() {
+	    return "Обновить все";
+	}
+
+	public String correoCerrar() {
+	    return "Закрыть и заблокировать";
+	}
+
+	public String correoDescargarDependencias() {
+	    return "Скачать зависимости почты";
+	}
+
+	public String correoEstadoDependenciasCargadas(String diagnostico) {
+	    return "Зависимости почты обнаружены [" + diagnostico + "]";
+	}
+
+	public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+	    return "Зависимости почты не загружены [" + diagnostico
+	            + "]. Скачайте их и перезапустите CrashDetector, если они по-прежнему не появляются.";
+	}
+
+	public String correoDependenciasDescargadasReiniciar() {
+	    return "Зависимости почты скачаны. Если они все еще не отображаются как загруженные, перезапустите CrashDetector.";
+	}
+
+	public String correoErrorDescargandoDependencias(String error) {
+	    return "Не удалось скачать зависимости почты: " + error;
+	}
+
+	public String correoBuscar() {
+	    return "Поиск:";
+	}
+
+	public String correoBuscarAyuda() {
+	    return "Ищет в отправителе, получателях, теме и зашифрованном локальном содержимом.";
+	}
+
+	public String correoCuentas() {
+	    return "Аккаунты";
+	}
+
+	public String correoCuentaServidor(String usuario, String servidor) {
+	    return usuario + " @ " + servidor;
+	}
+
+	public String correoMensajes() {
+	    return "Сообщения";
+	}
+
+	public String correoContenido() {
+	    return "Текстовое содержимое";
+	}
+
+	public String correoCitas() {
+	    return "Закон Завински";
+	}
+
+	public String correoDe() {
+	    return "От:";
+	}
+
+	public String correoPara() {
+	    return "Кому:";
+	}
+
+	public String correoAsunto() {
+	    return "Тема:";
+	}
+
+	public String correoFecha() {
+	    return "Дата:";
+	}
+
+	public String correoColumnaEstado() {
+	    return "Статус";
+	}
+
+	public String correoColumnaDe() {
+	    return "От";
+	}
+
+	public String correoColumnaAsunto() {
+	    return "Тема";
+	}
+
+	public String correoColumnaFecha() {
+	    return "Дата";
+	}
+
+	public String correoLeido() {
+	    return "Прочитано";
+	}
+
+	public String correoNoLeido() {
+	    return "Новое";
+	}
+
+	public String correoSeleccioneMensaje() {
+	    return "Выберите сообщение для чтения.";
+	}
+
+	public String correoEstadoListo() {
+	    return "Хранилище разблокировано. Готово.";
+	}
+
+	public String correoSinCuentas() {
+	    return "Нет настроенных аккаунтов.";
+	}
+
+	public String correoConectando(String cuenta) {
+	    return "Безопасное подключение к " + cuenta + "…";
+	}
+
+	public String correoMensajesActualizados(int cantidad) {
+	    return "Обновление завершено: " + cantidad + " сообщений прочитано с сервера.";
+	}
+
+	public String correoCuentaGuardada() {
+	    return "Аккаунт и кэш сохранены в зашифрованном хранилище.";
+	}
+
+	public String correoAdvertenciaPrivacidad() {
+	    return "Предупреждение о конфиденциальности и безопасности: почта может содержать личные данные, секреты, вредоносные ссылки и контент для отслеживания. Этот клиент не загружает удаленный HTML и шифрует кэш и учетные данные, но сообщения и пароли существуют в расшифрованном виде в памяти, пока хранилище открыто. Используйте уникальный пароль хранилища и, когда провайдер позволяет, пароль приложения вместо основного пароля. Эта начальная реализация не выполняет интерактивный поток OAuth. Резервные копии, swap, дампы памяти или взломанная машина все еще могут раскрыть данные.";
+	}
+
+	public String correoCitaUno() {
+	    return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+	}
+
+	public String correoCitaDos() {
+	    return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+	}
+
+	public String correoClaveBoveda() {
+	    return "Пароль хранилища:";
+	}
+
+	public String correoConfirmarClave() {
+	    return "Подтвердить пароль:";
+	}
+
+	public String correoCrearBovedaTitulo() {
+	    return "Создать зашифрованное почтовое хранилище";
+	}
+
+	public String correoDesbloquearBovedaTitulo() {
+	    return "Разблокировать почтовое хранилище";
+	}
+
+	public String correoClaveCorta() {
+	    return "Пароль хранилища должен содержать не менее 12 символов.";
+	}
+
+	public String correoClavesNoCoinciden() {
+	    return "Пароли хранилища не совпадают.";
+	}
+
+	public String correoClaveBovedaIncorrecta() {
+	    return "Пароль хранилища неверен или файл был изменен.";
+	}
+
+	public String correoNombreCuenta() {
+	    return "Имя аккаунта:";
+	}
+
+	public String correoServidorImap() {
+	    return "Сервер IMAP:";
+	}
+
+	public String correoPuerto() {
+	    return "Порт IMAPS:";
+	}
+
+	public String correoUsuario() {
+	    return "Пользователь или адрес:";
+	}
+
+	public String correoSecreto() {
+	    return "Пароль приложения:";
+	}
+
+	public String correoSecretoAyuda() {
+	    return "В существующем аккаунте оставьте это поле пустым, чтобы сохранить текущий зашифрованный секрет.";
+	}
+
+	public String correoCarpeta() {
+	    return "Папка IMAP:";
+	}
+
+	public String correoCarpetaPredeterminada() {
+	    return "INBOX";
+	}
+
+	public String correoCuentaInvalida() {
+	    return "Аккаунт недействителен. Заполните имя, сервер, порт, пользователя, секрет и папку.";
+	}
+
+	public String correoPuertoInvalido() {
+	    return "Порт IMAPS должен быть числом от 1 до 65535.";
+	}
+
+	public String correoConfirmarEliminar(String cuenta) {
+	    return "Удалить аккаунт \"" + cuenta + "\" и все его локальные зашифрованные сообщения?";
+	}
+
+	public String correoErrorTitulo() {
+	    return "Ошибка почтового клиента";
+	}
+
+	public String correoErrorConexion() {
+	    return "Не удалось прочитать почту через IMAPS. Проверьте сервер, порт, пользователя, пароль приложения и разрешения IMAP.";
+	}
+
+	public String correoErrorBoveda() {
+	    return "Не удалось открыть или сохранить зашифрованное почтовое хранилище.";
+	}
+
+	public String correoColorFondo() {
+	    return "Почта: цвет фона";
+	}
+
+	public String correoColorTexto() {
+	    return "Почта: цвет текста";
+	}
+
+	public String correoColorCabecera() {
+	    return "Почта: цвет заголовка";
+	}
+
+	public String correoColorTextoCabecera() {
+	    return "Почта: текст заголовка";
+	}
+
+	public String correoColorBarra() {
+	    return "Почта: цвет панели";
+	}
+
+	public String correoColorBoton() {
+	    return "Почта: цвет кнопки";
+	}
+
+	public String correoColorCaja() {
+	    return "Почта: цвет блоков";
+	}
+
+	public String correoColorSeleccion() {
+	    return "Почта: цвет выделения";
+	}
+
+	public String correoColorTextoSeleccion() {
+	    return "Почта: выделенный текст";
+	}
+
+	public String correoColorAviso() {
+	    return "Почта: фон предупреждения";
+	}
+
+	public String correoColorTextoAviso() {
+	    return "Почта: текст предупреждения";
+	}
+
+	public String correoColorBordeClaro() {
+	    return "Почта: светлая граница";
+	}
+
+	public String correoColorBordeOscuro() {
+	    return "Почта: темная граница";
+	}
+
+	public String correoColorCitas() {
+	    return "Почта: фон цитат";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

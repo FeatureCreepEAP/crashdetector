@@ -12847,4 +12847,318 @@ public class Persa implements Idioma {
 		return "صفحهٔ دریافت JDK باز شد.";
 	}
 
+	
+	public String lectorCorreoTipo() {
+	    return "خواننده ایمیل";
+	}
+
+	public String correoTitulo() {
+	    return "Netscape Mail Reader";
+	}
+
+	public String correoAgregarCuenta() {
+	    return "افزودن حساب";
+	}
+
+	public String correoEditarCuenta() {
+	    return "ویرایش حساب";
+	}
+
+	public String correoEliminarCuenta() {
+	    return "حذف حساب";
+	}
+
+	public String correoActualizar() {
+	    return "به‌روزرسانی";
+	}
+
+	public String correoActualizarTodas() {
+	    return "به‌روزرسانی همه";
+	}
+
+	public String correoCerrar() {
+	    return "بستن و قفل کردن";
+	}
+
+	public String correoDescargarDependencias() {
+	    return "دانلود وابستگی‌های ایمیل";
+	}
+
+	public String correoEstadoDependenciasCargadas(String diagnostico) {
+	    return "وابستگی‌های ایمیل شناسایی شدند [" + diagnostico + "]";
+	}
+
+	public String correoEstadoDependenciasNoCargadas(String diagnostico) {
+	    return "وابستگی‌های ایمیل بارگذاری نشدند [" + diagnostico
+	            + "]. آن‌ها را دانلود کنید و اگر همچنان ظاهر نشدند، CrashDetector را راه‌اندازی مجدد کنید.";
+	}
+
+	public String correoDependenciasDescargadasReiniciar() {
+	    return "وابستگی‌های ایمیل دانلود شدند. اگر هنوز بارگذاری نشده‌اند، CrashDetector را راه‌اندازی مجدد کنید.";
+	}
+
+	public String correoErrorDescargandoDependencias(String error) {
+	    return "دانلود وابستگی‌های ایمیل امکان‌پذیر نبود: " + error;
+	}
+
+	public String correoBuscar() {
+	    return "جستجو:";
+	}
+
+	public String correoBuscarAyuda() {
+	    return "در فرستنده، گیرندگان، موضوع و محتوای محلی رمزگذاری شده جستجو می‌کند.";
+	}
+
+	public String correoCuentas() {
+	    return "حساب‌ها";
+	}
+
+	public String correoCuentaServidor(String usuario, String servidor) {
+	    return usuario + " @ " + servidor;
+	}
+
+	public String correoMensajes() {
+	    return "پیام‌ها";
+	}
+
+	public String correoContenido() {
+	    return "محتوای متنی";
+	}
+
+	public String correoCitas() {
+	    return "قانون زاوینسکی";
+	}
+
+	public String correoDe() {
+	    return "از:";
+	}
+
+	public String correoPara() {
+	    return "به:";
+	}
+
+	public String correoAsunto() {
+	    return "موضوع:";
+	}
+
+	public String correoFecha() {
+	    return "تاریخ:";
+	}
+
+	public String correoColumnaEstado() {
+	    return "وضعیت";
+	}
+
+	public String correoColumnaDe() {
+	    return "از";
+	}
+
+	public String correoColumnaAsunto() {
+	    return "موضوع";
+	}
+
+	public String correoColumnaFecha() {
+	    return "تاریخ";
+	}
+
+	public String correoLeido() {
+	    return "خوانده شده";
+	}
+
+	public String correoNoLeido() {
+	    return "جدید";
+	}
+
+	public String correoSeleccioneMensaje() {
+	    return "یک پیام را برای خواندن انتخاب کنید.";
+	}
+
+	public String correoEstadoListo() {
+	    return "گاوصندوق باز شد. آماده.";
+	}
+
+	public String correoSinCuentas() {
+	    return "هیچ حسابی پیکربندی نشده است.";
+	}
+
+	public String correoConectando(String cuenta) {
+	    return "اتصال امن به " + cuenta + "…";
+	}
+
+	public String correoMensajesActualizados(int cantidad) {
+	    return "به‌روزرسانی تکمیل شد: " + cantidad + " پیام از سرور خوانده شد.";
+	}
+
+	public String correoCuentaGuardada() {
+	    return "حساب و کش در گاوصندوق رمزگذاری شده ذخیره شدند.";
+	}
+
+	public String correoAdvertenciaPrivacidad() {
+	    return "هشدار حریم خصوصی و امنیت: ایمیل ممکن است حاوی داده‌های شخصی، اسرار، لینک‌های مخرب و محتوای ردیابی باشد. این خواننده HTMLremote را بارگذاری نمی‌کند و کش و اعتبارنامه‌ها را رمزگذاری می‌کند، اما پیام‌ها و رمزهای عبور به صورت رمزگشایی شده در حافظه وجود دارند تا زمانی که گاوصندوق باز است. از یک رمز عبور منحصر به فرد برای گاوصندوق استفاده کنید و وقتی ارائه‌دهنده اجازه می‌دهد، به جای رمز عبور اصلی از رمز عبور برنامه استفاده کنید. این پیاده‌سازی اولیه جریان تعاملی OAuth را انجام نمی‌دهد. نسخه‌های پشتیبان، swap، دامپ‌های حافظه یا یک ماشین نفوذ شده همچنان می‌توانند داده‌ها را افشا کنند.";
+	}
+
+	public String correoCitaUno() {
+	    return "Every program attempts to expand until it can read mail. Those programs which cannot so expand are replaced by ones which can. -jwz";
+	}
+
+	public String correoCitaDos() {
+	    return "My point was not about copycats, it was about platformization. Apps that you \"live in\" all day have pressure to become everything and do everything. An app for editing text becomes an IDE, then an OS. An app for displaying hypertext documents becomes a mail reader, then an OS.-jwz";
+	}
+
+	public String correoClaveBoveda() {
+	    return "رمز عبور گاوصندوق:";
+	}
+
+	public String correoConfirmarClave() {
+	    return "تأیید رمز عبور:";
+	}
+
+	public String correoCrearBovedaTitulo() {
+	    return "ایجاد گاوصندوق رمزگذاری شده ایمیل";
+	}
+
+	public String correoDesbloquearBovedaTitulo() {
+	    return "باز کردن قفل گاوصندوق ایمیل";
+	}
+
+	public String correoClaveCorta() {
+	    return "رمز عبور گاوصندوق باید حداقل ۱۲ کاراکتر داشته باشد.";
+	}
+
+	public String correoClavesNoCoinciden() {
+	    return "رمزهای عبور گاوصندوق مطابقت ندارند.";
+	}
+
+	public String correoClaveBovedaIncorrecta() {
+	    return "رمز عبور گاوصندوق نادرست است یا فایل دستکاری شده است.";
+	}
+
+	public String correoNombreCuenta() {
+	    return "نام حساب:";
+	}
+
+	public String correoServidorImap() {
+	    return "سرور IMAP:";
+	}
+
+	public String correoPuerto() {
+	    return "پورت IMAPS:";
+	}
+
+	public String correoUsuario() {
+	    return "کاربر یا آدرس:";
+	}
+
+	public String correoSecreto() {
+	    return "رمز عبور برنامه:";
+	}
+
+	public String correoSecretoAyuda() {
+	    return "در یک حساب موجود، این فیلد را خالی بگذارید تا رمز فعلی رمزگذاری شده حفظ شود.";
+	}
+
+	public String correoCarpeta() {
+	    return "پوشه IMAP:";
+	}
+
+	public String correoCarpetaPredeterminada() {
+	    return "INBOX";
+	}
+
+	public String correoCuentaInvalida() {
+	    return "حساب نامعتبر است. نام، سرور، پورت، کاربر، رمز و پوشه را کامل کنید.";
+	}
+
+	public String correoPuertoInvalido() {
+	    return "پورت IMAPS باید عددی بین ۱ تا ۶۵۵۳۵ باشد.";
+	}
+
+	public String correoConfirmarEliminar(String cuenta) {
+	    return "آیا حساب \"" + cuenta + "\" و تمام پیام‌های محلی رمزگذاری شده آن حذف شوند؟";
+	}
+
+	public String correoErrorTitulo() {
+	    return "خطای خواننده ایمیل";
+	}
+
+	public String correoErrorConexion() {
+	    return "خواندن ایمیل از طریق IMAPS امکان‌پذیر نبود. سرور، پورت، کاربر، رمز عبور برنامه و مجوزهای IMAP را بررسی کنید.";
+	}
+
+	public String correoErrorBoveda() {
+	    return "باز کردن یا ذخیره گاوصندوق رمزگذاری شده ایمیل امکان‌پذیر نبود.";
+	}
+
+	public String correoColorFondo() {
+	    return "ایمیل: رنگ پس‌زمینه";
+	}
+
+	public String correoColorTexto() {
+	    return "ایمیل: رنگ متن";
+	}
+
+	public String correoColorCabecera() {
+	    return "ایمیل: رنگ هدر";
+	}
+
+	public String correoColorTextoCabecera() {
+	    return "ایمیل: متن هدر";
+	}
+
+	public String correoColorBarra() {
+	    return "ایمیل: رنگ نوار";
+	}
+
+	public String correoColorBoton() {
+	    return "ایمیل: رنگ دکمه";
+	}
+
+	public String correoColorCaja() {
+	    return "ایمیل: رنگ جعبه‌ها";
+	}
+
+	public String correoColorSeleccion() {
+	    return "ایمیل: رنگ انتخاب";
+	}
+
+	public String correoColorTextoSeleccion() {
+	    return "ایمیل: متن انتخاب شده";
+	}
+
+	public String correoColorAviso() {
+	    return "ایمیل: پس‌زمینه هشدار";
+	}
+
+	public String correoColorTextoAviso() {
+	    return "ایمیل: متن هشدار";
+	}
+
+	public String correoColorBordeClaro() {
+	    return "ایمیل: حاشیه روشن";
+	}
+
+	public String correoColorBordeOscuro() {
+	    return "ایمیل: حاشیه تیره";
+	}
+
+	public String correoColorCitas() {
+	    return "ایمیل: پس‌زمینه نقل‌قول‌ها";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
