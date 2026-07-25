@@ -73,19 +73,18 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 				return;
 			}
 			CrashDetectorLogger.log(consola.archivo.toString());
-			
-			
-			if(consola.contenido == null) {
+
+			if (consola.contenido == null) {
 				CrashDetectorLogger.log("contenido null");
 				return;
 			}
-			
-			if(consola.lineas_verificar == null) {
+
+			if (consola.lineas_verificar == null) {
 				CrashDetectorLogger.log("lineas_verificar null");
 				return;
 			}
-			
-			if(consola.contenido_verificar == null) {
+
+			if (consola.contenido_verificar == null) {
 				CrashDetectorLogger.log("contenido_verificar null");
 				return;
 			}

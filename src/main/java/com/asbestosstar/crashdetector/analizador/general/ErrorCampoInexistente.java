@@ -13,6 +13,8 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  */
 public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.analizador.Verificaciones {
 
+	private static final String PREFIJO_ERROR = "java.lang.NoSuchFieldError:";
+
 	private boolean activado = false;
 
 	private String mensaje = "";
@@ -36,37 +38,78 @@ public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.ana
 
 	@Override
 	public String[] patronesRapidos() {
-		return new String[] { "java.lang.NoSuchFieldError:" };
+		return new String[] { PREFIJO_ERROR };
 	}
 
 	@Override
 	public void verificarCoincidencia(com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia evento) {
+
+		if (evento == null || evento.consola == null || evento.linea == null) {
+
+			return;
+		}
+
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (linea == null || activado) {
+	public void verificarPorLinea(Consola consola, String linea, int numeroDeLinea) {
+
+		if (consola == null || linea == null || activado || !linea.contains(PREFIJO_ERROR)) {
+
 			return;
 		}
 
-		if (linea.contains("java.lang.NoSuchFieldError:")) {
-			this.lineaError = linea.trim();
-			this.nombreCampoDetectado = extraerCampoNoSuchField(linea);
+		this.lineaError = linea.trim();
+		this.nombreCampoDetectado = extraerCampoNoSuchField(linea);
+
+		if (nombreCampoDetectado == null || nombreCampoDetectado.isEmpty()) {
+
 			return;
 		}
 
-		if (this.nombreCampoDetectado == null || this.nombreCampoDetectado.isEmpty()) {
-			return;
-		}
-		this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		/*
+		 * El analizador rápido solamente llama verificarCoincidencia(...) para la línea
+		 * que contiene NoSuchFieldError.
+		 *
+		 * La implementación anterior hacía return después de guardar el campo y
+		 * esperaba que verificarPorLinea(...) fuera llamado otra vez para una línea
+		 * "at ...". Esa segunda llamada no ocurre porque "at " no es un patrón rápido.
+		 * Por eso nunca alcanzaba activado = true.
+		 */
+		String[] lineas = obtenerLineasVerificar(consola);
+
+		this.lineaStack = encontrarLineaStackCulpable(lineas, numeroDeLinea);
 
 		resetearBanderasMods();
-
-		this.lineaStack = encontrarLineaStackCulpable(consola.lineas_verificar, numero_de_linea);
 		detectarModDesdeStack(this.lineaStack);
 
+		/*
+		 * Preparar todos los datos antes de registrar el error, porque
+		 * agregarErrorALectador(...) puede consultar mensaje() inmediatamente.
+		 */
+		this.enlaceHtml = consola.agregarErrorALectador(numeroDeLinea, this);
+
 		this.activado = true;
+	}
+
+	private String[] obtenerLineasVerificar(Consola consola) {
+
+		if (consola == null) {
+			return null;
+		}
+
+		if (consola.lineas_verificar != null) {
+			return consola.lineas_verificar;
+		}
+
+		if (consola.contenido_verificar == null) {
+			return null;
+		}
+
+		consola.lineas_verificar = consola.contenido_verificar.split("\\r?\\n", -1);
+
+		return consola.lineas_verificar;
 	}
 
 	private String encontrarLineaStackCulpable(String[] lineas, int numeroDeLineaError) {
@@ -74,9 +117,11 @@ public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.ana
 			return "";
 		}
 
-		// numero_de_linea normalmente viene en base 1 desde el lector.
-		// La línea siguiente en el array es el mismo índice.
-		int inicio = numeroDeLineaError;
+		/*
+		 * numeroDeLineaError es base cero. La primera candidata del stack es la línea
+		 * inmediatamente posterior al NoSuchFieldError.
+		 */
+		int inicio = numeroDeLineaError + 1;
 
 		if (inicio < 0) {
 			inicio = 0;
@@ -119,11 +164,12 @@ public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.ana
 				continue;
 			}
 
-			mejorLinea = s;
-
-			if (esLineaModMuyProbable(s)) {
-				return mejorLinea;
-			}
+			/*
+			 * En un stack trace, la primera línea ajena al framework es normalmente la
+			 * llamada culpable. No continuar hasta una clase bridge generada, porque eso
+			 * puede ocultar el método fuente real situado en la primera entrada.
+			 */
+			return s;
 		}
 
 		if (!mejorLinea.isEmpty()) {
@@ -206,14 +252,13 @@ public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.ana
 	}
 
 	private String extraerCampoNoSuchField(String linea) {
-		String base = "java.lang.NoSuchFieldError:";
-		int idx = linea.indexOf(base);
+		int idx = linea.indexOf(PREFIJO_ERROR);
 
 		if (idx < 0) {
 			return "";
 		}
 
-		String resto = linea.substring(idx + base.length()).trim();
+		String resto = linea.substring(idx + PREFIJO_ERROR.length()).trim();
 
 		int primeraComilla = resto.indexOf('\'');
 		if (primeraComilla >= 0) {
