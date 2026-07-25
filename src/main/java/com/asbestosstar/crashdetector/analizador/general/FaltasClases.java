@@ -29,6 +29,14 @@ import com.asbestosstar.crashdetector.waifu.WaifuAPI;
 
 public class FaltasClases implements Verificaciones {
 
+	private static final String CLASS_NOT_FOUND = "java.lang.ClassNotFoundException:";
+
+	private static final String NO_CLASS_DEF_FOUND = "java.lang.NoClassDefFoundError:";
+
+	private static final String ERROR_LOADING_CLASS = "Error loading class:";
+
+	private static final String CLASS_METADATA_NOT_FOUND = "ClassMetadataNotFoundException:";
+
 	private boolean activado = false;
 	public boolean create = false;
 	public boolean epicfight = false;
@@ -167,86 +175,80 @@ public class FaltasClases implements Verificaciones {
 
 	@Override
 	public String[] patronesRapidos() {
-		return new String[] { "java.lang.ClassNotFoundException:", "java.lang.NoClassDefFoundError:",
-				"Error loading class:", "ClassMetadataNotFoundException" };
+		return new String[] { CLASS_NOT_FOUND, NO_CLASS_DEF_FOUND, ERROR_LOADING_CLASS, CLASS_METADATA_NOT_FOUND };
 	}
 
 	@Override
 	public void verificarCoincidencia(EventoDeCoincidencia evento) {
+
+		if (evento == null || evento.consola == null || evento.linea == null) {
+
+			return;
+		}
+
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
-	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
+	public void verificarPorLinea(Consola consola, String linea, int numeroDeLinea) {
 
-		if (linea == null || linea.isEmpty()) {
+		if (consola == null || linea == null || linea.isEmpty()) {
+
 			return;
 		}
 
-		if (!linea.contains("java.lang.ClassNotFoundException:") && !linea.contains("java.lang.NoClassDefFoundError:")
-				&& !linea.contains("Error loading class:")) {
+		boolean esClassNotFound = linea.contains(CLASS_NOT_FOUND);
+
+		boolean esNoClassDefFound = linea.contains(NO_CLASS_DEF_FOUND);
+
+		boolean esErrorLoadingClass = linea.contains(ERROR_LOADING_CLASS);
+
+		boolean esClassMetadataNotFound = linea.contains(CLASS_METADATA_NOT_FOUND);
+
+		if (!esClassNotFound && !esNoClassDefFound && !esErrorLoadingClass && !esClassMetadataNotFound) {
+
 			return;
 		}
 
-		String claseCruda = null;
+		if ((esClassNotFound || esNoClassDefFound) && (linea.contains("/WARN]") || linea.contains("Warn")
+				|| VerificacionDeStackTrace.esLineaDeAdvertenciaEstandar(linea))) {
 
-		if (linea.contains("java.lang.ClassNotFoundException:") || linea.contains("java.lang.NoClassDefFoundError:")) {
-
-			if (linea.contains("/WARN]") || linea.contains("Warn")
-					|| VerificacionDeStackTrace.esLineaDeAdvertenciaEstandar(linea)) {
-				return;
-			}
-
-			if (ignorarClaseOLinea(linea)) {
-				return;
-			}
-
-			int indiceDosPuntos = linea.indexOf(':');
-			if (indiceDosPuntos != -1 && linea.charAt(0) == '[' && indiceDosPuntos < 20) {
-				linea = linea.substring(indiceDosPuntos + 1).trim();
-			}
-
-			if (linea.contains("java.lang.ClassNotFoundException:")) {
-				int index = linea.indexOf("java.lang.ClassNotFoundException:");
-				String candidato = linea.substring(index + 33).trim();
-				if (!candidato.isEmpty()) {
-					claseCruda = primerTokenClase(candidato);
-				}
-			} else {
-				int index = linea.indexOf("java.lang.NoClassDefFoundError:");
-				String candidato = linea.substring(index + 31).trim();
-				if (!candidato.isEmpty()) {
-					claseCruda = primerTokenClase(candidato);
-				}
-			}
-
-		} else if (linea.contains("Error loading class:")) {
-			int index = linea.indexOf("Error loading class:");
-			String candidato = linea.substring(index + 20).trim();
-			if (!candidato.isEmpty()) {
-				claseCruda = primerTokenClase(candidato);
-			}
+			return;
 		}
 
-		if (claseCruda == null) {
+		if (ignorarClaseOLinea(linea)) {
+			return;
+		}
+
+		String lineaNormalizada = quitarPrefijoDeRegistro(linea);
+
+		String claseCruda = extraerClaseCruda(lineaNormalizada, esClassNotFound, esNoClassDefFound, esErrorLoadingClass,
+				esClassMetadataNotFound);
+
+		if (claseCruda == null || claseCruda.isEmpty()) {
+
 			return;
 		}
 
 		if (linea.contains("Valkyrian skies compatibility disabled")) {
+
 			return;
 		}
 
 		String claseFormateada = formatearClase(claseCruda);
 
 		if (!esNombreClaseValido(claseFormateada)) {
+
 			return;
 		}
 
 		if (esClaseNoRelevante(claseFormateada)) {
+
 			return;
 		}
 
 		if (!CLASES_GLOBALES_VISTAS.add(claseFormateada)) {
+
 			return;
 		}
 
@@ -254,13 +256,98 @@ public class FaltasClases implements Verificaciones {
 			return;
 		}
 
-		// No buscamos origen aquí. Solo guardamos datos baratos.
 		clases.put(claseFormateada, "");
-		lineaPorClase.put(claseFormateada, numero_de_linea);
+
+		lineaPorClase.put(claseFormateada, numeroDeLinea);
+
 		consolaPorClase.put(claseFormateada, consola);
-		enlacesPorClase.put(claseFormateada, consola.agregarErrorALectador(numero_de_linea, this));
+
+		enlacesPorClase.put(claseFormateada, consola.agregarErrorALectador(numeroDeLinea, this));
 
 		postProcesado = false;
+	}
+
+	private String quitarPrefijoDeRegistro(String linea) {
+
+		if (linea == null || linea.isEmpty()) {
+			return "";
+		}
+
+		int indiceDosPuntos = linea.indexOf(':');
+
+		if (indiceDosPuntos != -1 && linea.charAt(0) == '[' && indiceDosPuntos < 20) {
+
+			return linea.substring(indiceDosPuntos + 1).trim();
+		}
+
+		return linea;
+	}
+
+	private String extraerClaseCruda(String linea, boolean esClassNotFound, boolean esNoClassDefFound,
+			boolean esErrorLoadingClass, boolean esClassMetadataNotFound) {
+
+		if (linea == null || linea.isEmpty()) {
+			return null;
+		}
+
+		String candidato = null;
+
+		if (esClassNotFound) {
+			candidato = textoDespuesDe(linea, CLASS_NOT_FOUND);
+
+		} else if (esNoClassDefFound) {
+			candidato = textoDespuesDe(linea, NO_CLASS_DEF_FOUND);
+
+			if (candidato != null && candidato.startsWith("Could not initialize class ")) {
+
+				candidato = candidato.substring("Could not initialize class ".length()).trim();
+			}
+
+		} else if (esErrorLoadingClass) {
+			candidato = textoDespuesDe(linea, ERROR_LOADING_CLASS);
+
+		} else if (esClassMetadataNotFound) {
+			/*
+			 * Formato real:
+			 *
+			 * org.spongepowered.asm.mixin.throwables. ClassMetadataNotFoundException:
+			 * org.joml.Quaternionf
+			 *
+			 * El patrón ya despertaba el analizador rápido, pero la versión anterior no
+			 * incluía este caso en el filtro inicial ni tenía una rama para extraer la
+			 * clase. Por eso la línea era descartada inmediatamente.
+			 */
+			candidato = textoDespuesDe(linea, CLASS_METADATA_NOT_FOUND);
+		}
+
+		if (candidato == null || candidato.isEmpty()) {
+
+			return null;
+		}
+
+		return primerTokenClase(candidato);
+	}
+
+	private String textoDespuesDe(String texto, String marcador) {
+
+		if (texto == null || marcador == null) {
+
+			return null;
+		}
+
+		int indice = texto.indexOf(marcador);
+
+		if (indice < 0) {
+			return null;
+		}
+
+		int inicio = indice + marcador.length();
+
+		if (inicio >= texto.length()) {
+			return "";
+		}
+
+		return texto.substring(inicio).trim();
 	}
 
 	/**

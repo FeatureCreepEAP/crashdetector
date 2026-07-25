@@ -6,9 +6,12 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
+import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
+import com.asbestosstar.crashdetector.buscar.Buscador;
+import com.asbestosstar.crashdetector.cargador.Cargador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -86,6 +89,44 @@ public class ModIncompatibleConCargadorActivo implements Verificaciones {
 	public String[] patronesRapidos() {
 		// TODO Auto-generated method stub
 		return new String[0];
+	}
+
+	public void finalizarArchivo(Consola consola, EstadoAnalisisArchivo estado) {
+
+		if (Cargador.cargadores_activados == null || Cargador.cargadores_activados.isEmpty()) {
+			return;
+		}
+
+		Buscador.cargar();
+
+		modsIncompatibles.clear();
+
+		// Recorrer todos los mods detectados
+		for (ArchivoDeMod mod : Buscador.obtenerModsPrimerNivel()) {
+			boolean compatible = false;
+
+			// Verificar contra cada cargador activo
+			for (Cargador cargador : Cargador.cargadores_activados) {
+				if (cargador.modEsDeCargador(mod)) {
+					compatible = true;
+					break;
+				}
+			}
+
+			// Si no es compatible con ninguno, es sospechoso
+			if (!compatible) {
+
+				String nombreMod = mod.ubicacion_para_publicar();
+
+				modsIncompatibles.add(nombreMod);
+			}
+		}
+
+		if (!modsIncompatibles.isEmpty()) {
+			this.mensaje = MonitorDePID.idioma.modIncompatibleConCargadorActivo(modsIncompatibles);
+			this.activado = true;
+		}
+
 	}
 
 }
