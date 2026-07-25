@@ -1,9 +1,9 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -43,7 +43,9 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 		String linea = evento.linea;
 
 		if (linea.contains(SINYTRA_CONNECTOR) || linea.contains(SPECIAL_COMPATIBILITY_OPERATION)) {
+
 			connectorPresente = true;
+
 		}
 
 		verificarPorLinea(evento.consola, linea, evento.numeroDeLinea);
@@ -65,9 +67,36 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 		// Detecta el error específico de acceso ilegal entre módulos de Java
 		if (linea.contains(ILLEGAL_ACCESS_EXCEPTION) && linea.contains(UNSAFE_ACCESS)
 				&& linea.contains(JAVA_BASE_EXPORT)) {
-			mensaje = MonitorDePID.idioma.errorCompatibilidadC2ME() + Verificaciones.nl_html;
-			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-			activado = true;
+
+			if (consola == null) {
+				CrashDetectorLogger.log("Consola null");
+				return;
+			}
+			CrashDetectorLogger.log(consola.archivo.toString());
+			
+			
+			if(consola.contenido == null) {
+				CrashDetectorLogger.log("contenido null");
+				return;
+			}
+			
+			if(consola.lineas_verificar == null) {
+				CrashDetectorLogger.log("lineas_verificar null");
+				return;
+			}
+			
+			if(consola.contenido_verificar == null) {
+				CrashDetectorLogger.log("contenido_verificar null");
+				return;
+			}
+
+			if (consola.contenido_verificar.contains(C2ME)) {
+
+				mensaje = MonitorDePID.idioma.errorCompatibilidadC2ME() + Verificaciones.nl_html;
+				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+				activado = true;
+			}
+
 		}
 	}
 

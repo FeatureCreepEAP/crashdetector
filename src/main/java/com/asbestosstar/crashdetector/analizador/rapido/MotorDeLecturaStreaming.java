@@ -16,9 +16,12 @@ import java.util.Map;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.motor.MotorBusquedaBytes;
 import com.asbestosstar.crashdetector.analizador.rapido.motor.MotoresBusqueda;
+import com.asbestosstar.crashdetector.limpiador.LimpiadorDeRegistro;
+import com.asbestosstar.crashdetector.limpiador.LimpiadorNingun;
 
 public final class MotorDeLecturaStreaming {
 
@@ -76,127 +79,154 @@ public final class MotorDeLecturaStreaming {
 	public void procesarArchivo(Consola consola, List<Verificaciones> verificacionesPatrones,
 			List<Verificaciones> verificacionesLineales, EstadoAnalisisArchivo estado, ProcesadorVDSTAsync vdstAsync) {
 
-		inicializarAutomata(verificacionesPatrones);
-
-		Path path = consola.archivo;
-
-		if (path == null) {
+		if (consola == null || consola.archivo == null) {
 			return;
 		}
 
-		boolean necesitaStringPorLinea = verificacionesLineales != null && !verificacionesLineales.isEmpty();
-
-		boolean debeGuardarContenidoStreaming = consola != null
-				&& ((consola.contenido_verificar == null || consola.contenido_verificar.isEmpty())
-						|| (consola.lineas_verificar == null || consola.lineas_verificar.length == 0));
-
-		StringBuilder contenidoStreaming = debeGuardarContenidoStreaming ? new StringBuilder() : null;
-		List<String> lineasStreaming = debeGuardarContenidoStreaming ? new ArrayList<String>() : null;
-
-		try (RandomAccessFile raf = new RandomAccessFile(path.toFile(), "r"); FileChannel channel = raf.getChannel()) {
-
-			ByteBuffer buffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
-			byte[] heapBuffer = new byte[BUFFER_SIZE];
-
-			byte[] bufferResto = new byte[BUFFER_SIZE * 2];
-			int restoAnterior = 0;
-
-			int[] posicionesSaltoLinea = new int[4096];
-
-			long posicionGlobal = 0;
-			int numeroLineaActual = 0;
-
-			while (channel.read(buffer) != -1) {
-				((java.nio.Buffer) buffer).flip();
-
-				int bytesLeidos = buffer.remaining();
-				buffer.get(heapBuffer, 0, bytesLeidos);
-
-				int inicioActual = 0;
-
-				while (inicioActual < bytesLeidos) {
-					int totalPosiciones = motorBytes.buscar(heapBuffer, inicioActual, bytesLeidos, (byte) '\n',
-							posicionesSaltoLinea, posicionesSaltoLinea.length);
-
-					if (totalPosiciones <= 0) {
-						break;
-					}
-
-					for (int i = 0; i < totalPosiciones; i++) {
-						int finLinea = posicionesSaltoLinea[i];
-
-						if (restoAnterior > 0) {
-							int lenLinea = finLinea - inicioActual;
-
-							byte[] lineaCompleta = new byte[restoAnterior + lenLinea];
-
-							System.arraycopy(bufferResto, 0, lineaCompleta, 0, restoAnterior);
-							System.arraycopy(heapBuffer, inicioActual, lineaCompleta, restoAnterior, lenLinea);
-
-							if (debeGuardarContenidoStreaming) {
-								guardarLineaStreaming(lineaCompleta, 0, lineaCompleta.length, contenidoStreaming,
-										lineasStreaming);
-							}
-
-							procesarLinea(consola, lineaCompleta, 0, lineaCompleta.length, numeroLineaActual,
-									verificacionesLineales, necesitaStringPorLinea, estado, null, vdstAsync);
-
-							restoAnterior = 0;
-						} else {
-							if (debeGuardarContenidoStreaming) {
-								guardarLineaStreaming(heapBuffer, inicioActual, finLinea, contenidoStreaming,
-										lineasStreaming);
-							}
-
-							procesarLinea(consola, heapBuffer, inicioActual, finLinea, numeroLineaActual,
-									verificacionesLineales, necesitaStringPorLinea, estado, null, vdstAsync);
-						}
-
-						numeroLineaActual++;
-						inicioActual = finLinea + 1;
-					}
-
-					if (totalPosiciones < posicionesSaltoLinea.length) {
-						break;
-					}
-				}
-
-				if (inicioActual < bytesLeidos) {
-					restoAnterior = bytesLeidos - inicioActual;
-
-					if (restoAnterior > bufferResto.length) {
-						bufferResto = new byte[Math.max(restoAnterior, bufferResto.length * 2)];
-					}
-
-					System.arraycopy(heapBuffer, inicioActual, bufferResto, 0, restoAnterior);
-				}
-
-				posicionGlobal += bytesLeidos;
-				estado.bytesLeidos = posicionGlobal;
-				estado.lineasLeidas = numeroLineaActual;
-
-				((java.nio.Buffer) buffer).clear();
-			}
-
-			if (restoAnterior > 0) {
-				if (debeGuardarContenidoStreaming) {
-					guardarLineaStreaming(bufferResto, 0, restoAnterior, contenidoStreaming, lineasStreaming);
-				}
-
-				procesarLinea(consola, bufferResto, 0, restoAnterior, numeroLineaActual, verificacionesLineales,
-						necesitaStringPorLinea, estado, null, vdstAsync);
-
-				estado.lineasLeidas = numeroLineaActual + 1;
-			}
-
-			if (debeGuardarContenidoStreaming) {
-				consola.contenido_verificar = contenidoStreaming.toString();
-				consola.lineas_verificar = lineasStreaming.toArray(new String[0]);
-			}
-
+		/*
+		 * Antes de ejecutar verificarCoincidencia(...) o verificarPorLinea(...),
+		 * asegurar que los tres campos de contenido estén disponibles.
+		 *
+		 * - consola.contenido - consola.contenido_verificar - consola.lineas_verificar
+		 */
+		try {
+			asegurarContenidoDesdeArchivo(consola);
 		} catch (IOException e) {
 			CrashDetectorLogger.logException(e);
+			return;
 		}
+
+		if (consola.lineas_verificar == null) {
+			CrashDetectorLogger
+					.log("No se pudieron preparar lineas_verificar para: " + String.valueOf(consola.archivo));
+			return;
+		}
+
+		/*
+		 * Analizar exactamente lineas_verificar conserva la semántica de
+		 * Consola.finalizarContenido(...): respeta linea_original y los limpiadores.
+		 *
+		 * Además, los tres campos ya existen cuando una verificación consulta la
+		 * Consola durante verificarCoincidencia(...) o verificarPorLinea(...).
+		 */
+		procesarLineas(consola, consola.lineas_verificar, verificacionesPatrones, verificacionesLineales, estado,
+				vdstAsync);
+
+		try {
+			estado.bytesLeidos = java.nio.file.Files.size(consola.archivo);
+		} catch (IOException e) {
+			/*
+			 * El análisis ya terminó. Un fallo al consultar el tamaño solamente afecta la
+			 * estadística y no invalida los resultados.
+			 */
+			CrashDetectorLogger.logException(e);
+		}
+	}
+
+	/**
+	 * Completa únicamente los campos ausentes de Consola.
+	 *
+	 * contenido conserva el archivo original completo.
+	 *
+	 * contenido_verificar contiene el archivo desde linea_original y después de
+	 * aplicar el limpiador correspondiente.
+	 *
+	 * lineas_verificar se deriva de contenido_verificar.
+	 */
+	private void asegurarContenidoDesdeArchivo(Consola consola) throws IOException {
+
+		boolean faltaContenido = consola.contenido == null;
+
+		boolean faltaContenidoVerificar = consola.contenido_verificar == null;
+
+		boolean faltanLineasVerificar = consola.lineas_verificar == null;
+
+		if (!faltaContenido && !faltaContenidoVerificar && !faltanLineasVerificar) {
+
+			return;
+		}
+
+		String contenidoArchivo = consola.contenido;
+
+		if (contenidoArchivo == null) {
+			contenidoArchivo = MonitorDePID.leer_archivo(consola.archivo);
+		}
+
+		if (contenidoArchivo == null) {
+			contenidoArchivo = "";
+		}
+
+		if (faltaContenido) {
+			consola.contenido = contenidoArchivo;
+		}
+
+		if (faltaContenidoVerificar) {
+			String paraVerificar = construirContenidoParaVerificar(contenidoArchivo, consola.linea_original);
+
+			consola.contenido_verificar = aplicarLimpiador(consola, paraVerificar);
+		}
+
+		if (consola.contenido_verificar == null) {
+			consola.contenido_verificar = "";
+		}
+
+		if (faltanLineasVerificar) {
+			consola.lineas_verificar = consola.contenido_verificar.split("\\r?\\n", -1);
+		}
+	}
+
+	private String construirContenidoParaVerificar(String contenidoArchivo, int lineaOriginal) {
+
+		String[] lineas = contenidoArchivo.split("\\r?\\n", -1);
+
+		int inicio = Math.max(0, Math.min(lineaOriginal, lineas.length));
+
+		StringBuilder resultado = new StringBuilder(contenidoArchivo.length() + 64);
+
+		for (int i = inicio; i < lineas.length; i++) {
+			resultado.append(lineas[i]);
+
+			if (i < lineas.length - 1) {
+				resultado.append('\n');
+			}
+		}
+
+		return resultado.toString();
+	}
+
+	/**
+	 * Reproduce el comportamiento actual de Consola.finalizarContenido(...).
+	 *
+	 * Si más de un limpiador coincide, se conserva el resultado del último.
+	 */
+	private String aplicarLimpiador(Consola consola, String contenidoParaVerificar) {
+
+		boolean limpiado = false;
+		String resultado = contenidoParaVerificar;
+
+		for (LimpiadorDeRegistro limpiador : Consola.limpiadores) {
+
+			if (limpiador == null || !limpiador.predicado(consola.archivo)) {
+
+				continue;
+			}
+
+			String contenidoLimpio = limpiador.limpiarConsola(contenidoParaVerificar);
+
+			resultado = contenidoLimpio == null ? "" : contenidoLimpio;
+
+			consola.limpiador = limpiador;
+
+			limpiado = true;
+		}
+
+		if (!limpiado) {
+			consola.limpiador = new LimpiadorNingun();
+
+			resultado = contenidoParaVerificar;
+		}
+
+		return resultado == null ? "" : resultado;
 	}
 
 	private void guardarLineaStreaming(byte[] datos, int inicio, int fin, StringBuilder contenidoStreaming,
