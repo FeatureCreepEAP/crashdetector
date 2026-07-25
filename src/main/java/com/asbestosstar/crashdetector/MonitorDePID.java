@@ -30,6 +30,7 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.MotorAnalisisMultinucleo;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.ibmz.ZiipInit;
+import com.asbestosstar.crashdetector.bajo.hw.cpu.power.PowerNxInit;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.sparc.DaxInit;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.sparc.UmemInit;
 import com.asbestosstar.crashdetector.bajo.vectorapi.VectorAPIInit;
@@ -683,6 +684,11 @@ public class MonitorDePID {
 			if (ZiipInit.necesitaArgEspecialZiip()) {
 				comando.add(ZiipInit.obtenerArgEspecialZiip());
 				CrashDetectorLogger.log(ZiipInit.descripcion());
+			}
+
+			if (PowerNxInit.necesitaArgEspecialPowerNx()) {
+				comando.add(PowerNxInit.obtenerArgEspecialPowerNx());
+				CrashDetectorLogger.log(PowerNxInit.descripcion());
 			}
 
 			if (VectorAPIInit.necesitaArgEspecialVectorAPI()) {

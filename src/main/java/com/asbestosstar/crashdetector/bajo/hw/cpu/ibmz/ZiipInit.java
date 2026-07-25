@@ -6,8 +6,8 @@ import java.util.Locale;
  * Configuración de IBM zIIP para IBM Semeru Runtime sobre z/OS.
  *
  *
- * - zIIP es administrado por z/OS y por la JVM de IBM.
- * - El código Java elegible puede ser enviado automáticamente a zIIP.
+ * - zIIP es administrado por z/OS y por la JVM de IBM. - El código Java
+ * elegible puede ser enviado automáticamente a zIIP.
  */
 public final class ZiipInit {
 
@@ -19,19 +19,16 @@ public final class ZiipInit {
 	/**
 	 * Comprueba si la aplicación se está ejecutando sobre z/OS.
 	 *
-	 * zIIP es una característica de z/OS. No debe activarse solamente porque
-	 * la arquitectura sea s390x, ya que Linux sobre IBM Z utiliza un modelo
-	 * diferente de procesadores especializados.
+	 * zIIP es una característica de z/OS. No debe activarse solamente porque la
+	 * arquitectura sea s390x, ya que Linux sobre IBM Z utiliza un modelo diferente
+	 * de procesadores especializados.
 	 */
 	public static boolean esZos() {
 		String sistema = System.getProperty("os.name", "");
 
-		sistema = sistema
-				.trim()
-				.toLowerCase(Locale.ROOT);
+		sistema = sistema.trim().toLowerCase(Locale.ROOT);
 
-		return "z/os".equals(sistema)
-				|| sistema.contains("z/os");
+		return "z/os".equals(sistema) || sistema.contains("z/os");
 	}
 
 	/**
@@ -42,17 +39,9 @@ public final class ZiipInit {
 		String nombreJvm = System.getProperty("java.vm.name", "");
 		String nombreRuntime = System.getProperty("java.runtime.name", "");
 
-		String descripcion = (
-				fabricante
-				+ " "
-				+ nombreJvm
-				+ " "
-				+ nombreRuntime)
-				.toLowerCase(Locale.ROOT);
+		String descripcion = (fabricante + " " + nombreJvm + " " + nombreRuntime).toLowerCase(Locale.ROOT);
 
-		return descripcion.contains("ibm")
-				|| descripcion.contains("semeru")
-				|| descripcion.contains("openj9")
+		return descripcion.contains("ibm") || descripcion.contains("semeru") || descripcion.contains("openj9")
 				|| descripcion.contains("j9");
 	}
 
