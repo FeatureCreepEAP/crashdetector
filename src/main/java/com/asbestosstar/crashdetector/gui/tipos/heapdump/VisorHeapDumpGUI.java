@@ -43,6 +43,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
+import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.heapdump.AnalizadorHprofRapido;
 import com.asbestosstar.crashdetector.heapdump.EstadisticaHeap;
@@ -84,6 +85,14 @@ public abstract class VisorHeapDumpGUI extends JFrame implements BotonDeBarraLat
 	protected volatile ResultadoHeapDump resultadoActual;
 	protected volatile SwingWorker<ResultadoHeapDump, Avance> worker;
 	protected final AtomicBoolean cancelado = new AtomicBoolean(false);
+
+	/*
+	 * Overlay de carga compartido con el árbol de mods. Al utilizarlo como glass
+	 * pane cubre la ventana completa mientras se analiza el HPROF.
+	 */
+	protected ElementoOverlayCarga overlayCarga;
+	protected volatile boolean cargando;
+
 	protected boolean inicializada;
 
 	@Override
@@ -112,6 +121,7 @@ public abstract class VisorHeapDumpGUI extends JFrame implements BotonDeBarraLat
 		crearEstado();
 
 		setContentPane(panelRaiz);
+		inicializarOverlayCarga();
 		conectarEventos();
 		recargarTextos();
 		recargarApariencia();
@@ -416,11 +426,39 @@ public abstract class VisorHeapDumpGUI extends JFrame implements BotonDeBarraLat
 		}
 	}
 
+	/**
+	 * Instala el mismo overlay de carga utilizado por el árbol de mods.
+	 */
+	protected void inicializarOverlayCarga() {
+		overlayCarga = new ElementoOverlayCarga();
+		overlayCarga.setVisible(false);
+		getRootPane().setGlassPane(overlayCarga);
+	}
+
+	/**
+	 * Activa o desactiva el estado de análisis y el overlay de carga.
+	 */
 	protected void establecerCargando(boolean cargando) {
-		botonImportar.setEnabled(!cargando);
-		botonCancelar.setEnabled(cargando);
-		casillaIdentificarMods.setEnabled(!cargando);
-		progreso.setIndeterminate(false);
+		this.cargando = cargando;
+
+		if (botonImportar != null) {
+			botonImportar.setEnabled(!cargando);
+		}
+		if (botonCancelar != null) {
+			botonCancelar.setEnabled(cargando);
+		}
+		if (casillaIdentificarMods != null) {
+			casillaIdentificarMods.setEnabled(!cargando);
+		}
+		if (progreso != null) {
+			progreso.setIndeterminate(false);
+		}
+
+		if (overlayCarga != null) {
+			overlayCarga.setVisible(cargando);
+			overlayCarga.revalidate();
+			overlayCarga.repaint();
+		}
 	}
 
 	protected void recargarTextos() {

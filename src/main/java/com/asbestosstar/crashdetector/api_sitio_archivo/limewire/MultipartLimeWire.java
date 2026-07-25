@@ -77,27 +77,32 @@ public final class MultipartLimeWire {
 	}
 
 	private Inicio iniciar(EstadoComparticion e, MaterialArchivo material) throws IOException {
-		String bucket = "{" + "\"id\":\"" + ReplicacionLimeWire.escapar(e.idBucket) + "\"," + "\"sharingStatus\":\"NOT_SHARED\"," + "\"sharingPermission\":\"VIEWER\"," + "\"primaryEncryptionKeyId\":\""
-				+ ReplicacionLimeWire.escapar(e.idClaveArchivo) + "\"," + "\"contentItemIds\":[],"
-				+ "\"totalFileSize\":0," + "\"name\":\"" + ReplicacionLimeWire.escapar(e.nombreArchivo)
-				+ "\"," + "\"createdDate\":\"" + e.creada.toString() + "\"," + "\"deleted\":false,"
-				+ "\"expiresAt\":\"" + e.expira.toString() + "\"," + "\"pinned\":false" + "}";
+		String bucket = "{" + "\"id\":\"" + ReplicacionLimeWire.escapar(e.idBucket) + "\","
+				+ "\"sharingStatus\":\"NOT_SHARED\"," + "\"sharingPermission\":\"VIEWER\","
+				+ "\"primaryEncryptionKeyId\":\"" + ReplicacionLimeWire.escapar(e.idClaveArchivo) + "\","
+				+ "\"contentItemIds\":[]," + "\"totalFileSize\":0," + "\"name\":\""
+				+ ReplicacionLimeWire.escapar(e.nombreArchivo) + "\"," + "\"createdDate\":\"" + e.creada.toString()
+				+ "\"," + "\"deleted\":false," + "\"expiresAt\":\"" + e.expira.toString() + "\"," + "\"pinned\":false"
+				+ "}";
 
-		String contenido = "{" + "\"id\":\"" + ReplicacionLimeWire.escapar(e.idContenido) + "\"," + "\"originalSharingBucketId\":\""
-				+ ReplicacionLimeWire.escapar(e.idBucket) + "\"," + "\"s3Status\":\"PENDING\"," + "\"itemType\":\"OTHER\"," + "\"mediaType\":\"application/zip\"," + "\"size\":" + e.tamano + ","
-				+ "\"baseFileEncryptionKeyId\":\"" + ReplicacionLimeWire.escapar(e.idClaveArchivo) + "\"," + "\"ephemeralPublicKey\":\""
+		String contenido = "{" + "\"id\":\"" + ReplicacionLimeWire.escapar(e.idContenido) + "\","
+				+ "\"originalSharingBucketId\":\"" + ReplicacionLimeWire.escapar(e.idBucket) + "\","
+				+ "\"s3Status\":\"PENDING\"," + "\"itemType\":\"OTHER\"," + "\"mediaType\":\"application/zip\","
+				+ "\"size\":" + e.tamano + "," + "\"baseFileEncryptionKeyId\":\""
+				+ ReplicacionLimeWire.escapar(e.idClaveArchivo) + "\"," + "\"ephemeralPublicKey\":\""
 				+ ReplicacionLimeWire.escapar(material.clavePublicaEfimera()) + "\"," + "\"previews\":[],"
 				+ "\"createdDate\":\"" + e.creada.toString() + "\"," + "\"deleted\":false" + "}";
 
-		String clave = "{" + "\"id\":\"" + ReplicacionLimeWire.escapar(material.idClaveArchivo()) + "\"," + "\"publicKey\":\""
-				+ ReplicacionLimeWire.escapar(material.clavePublicaArchivo()) + "\"," + "\"privateKeys\":[{"
-				+ "\"encryptedPrivateKey\":\"" + ReplicacionLimeWire.escapar(material.clavePrivadaArchivoCifrada())
-				+ "\"," + "\"encryptedByKeyType\":\"USER_ENCRYPTION_KEY\"," + "\"encryptedByKeyId\":\""
+		String clave = "{" + "\"id\":\"" + ReplicacionLimeWire.escapar(material.idClaveArchivo()) + "\","
+				+ "\"publicKey\":\"" + ReplicacionLimeWire.escapar(material.clavePublicaArchivo()) + "\","
+				+ "\"privateKeys\":[{" + "\"encryptedPrivateKey\":\""
+				+ ReplicacionLimeWire.escapar(material.clavePrivadaArchivoCifrada()) + "\","
+				+ "\"encryptedByKeyType\":\"USER_ENCRYPTION_KEY\"," + "\"encryptedByKeyId\":\""
 				+ ReplicacionLimeWire.escapar(material.idClaveUsuario()) + "\"}]," + "\"deleted\":false,"
 				+ "\"createdDate\":\"" + e.creada.toString() + "\"" + "}";
 
-		String cuerpo = "{\"sharingBucket\":" + bucket + ",\"contentItem\":" + contenido
-				+ ",\"fileEncryptionKey\":" + clave + "}";
+		String cuerpo = "{\"sharingBucket\":" + bucket + ",\"contentItem\":" + contenido + ",\"fileEncryptionKey\":"
+				+ clave + "}";
 
 		Respuesta respuesta = http.postApiJson("/sharing/upload/s3/multipart", cuerpo);
 		respuesta.exigirExito("Iniciar multipart de LimeWire");
@@ -110,8 +115,8 @@ public final class MultipartLimeWire {
 	}
 
 	private String obtenerUrlParte(Inicio inicio, int numeroParte) throws IOException {
-		String ruta = "/sharing/upload/s3/multipart/" + codificarSegmento(inicio.uploadId) + "/" + numeroParte
-				+ "?key=" + codificarQuery(inicio.key);
+		String ruta = "/sharing/upload/s3/multipart/" + codificarSegmento(inicio.uploadId) + "/" + numeroParte + "?key="
+				+ codificarQuery(inicio.key);
 		Respuesta respuesta = http.getApi(ruta);
 		respuesta.exigirExito("Solicitar URL prefirmado de la parte " + numeroParte);
 		String metodo = ReplicacionLimeWire.extraerCadena(respuesta.cuerpo(), "method");

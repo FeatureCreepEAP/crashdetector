@@ -43,9 +43,8 @@ public final class CredencialesLimeWire implements AutoCloseable {
 		String cookie = obtenerOpcional(PROP_COOKIE_ADICIONAL, ENV_COOKIE_ADICIONAL);
 
 		if (vacio(token) || vacio(csrf) || vacio(cliente)) {
-			throw new ServicioNoSoportado(
-					"Faltan credenciales de LimeWire. Define " + ENV_TOKEN + ", " + ENV_CSRF + " y " + ENV_CLIENTE
-							+ " o sus propiedades equivalentes de la JVM.");
+			throw new ServicioNoSoportado("Faltan credenciales de LimeWire. Define " + ENV_TOKEN + ", " + ENV_CSRF
+					+ " y " + ENV_CLIENTE + " o sus propiedades equivalentes de la JVM.");
 		}
 
 		return new CredencialesLimeWire(token.toCharArray(), csrf.toCharArray(), cliente.toCharArray(),

@@ -1708,27 +1708,196 @@ public class MonitorDePID {
 	}
 
 	public static void establecerLookAndFeel() {
-		ConfigString lf = ConfigString.de("lf", "nativo");
-		String valor = lf.obtener();
+		ConfigString configuracionLookAndFeel = ConfigString.de("lf", "nativo");
 
+		String valor = configuracionLookAndFeel.obtener();
+
+		/*
+		 * Si la configuración no existe o está vacía, se utiliza la opción "nativo"
+		 * como valor predeterminado.
+		 */
 		if (valor == null || valor.trim().isEmpty()) {
-			valor = UIManager.getSystemLookAndFeelClassName();
+			valor = "nativo";
 		} else {
 			valor = valor.trim();
 		}
 
+		/*
+		 * Cuando el usuario selecciona "nativo", se determina primero cuál sería la
+		 * apariencia nativa del sistema.
+		 *
+		 * Si esa apariencia es GTK, se solicita GTK2. Si GTK2 no está disponible, se
+		 * utiliza Metal en vez de permitir que Java continúe con GTK3.
+		 */
 		if ("nativo".equalsIgnoreCase(valor)) {
-			valor = UIManager.getSystemLookAndFeelClassName();
+			establecerLookAndFeelNativo();
+			return;
 		}
 
 		try {
+			/*
+			 * El valor contiene el nombre completo de una clase Look and Feel seleccionada
+			 * expresamente por el usuario.
+			 */
 			UIManager.setLookAndFeel(valor);
-		} catch (Exception e) {
-			try {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			} catch (Exception ignorado) {
-				// Metal debería existir siempre en Swing.
+
+		} catch (Exception | LinkageError primeraExcepcion) {
+			/*
+			 * Si la apariencia seleccionada expresamente no puede cargarse, se intenta
+			 * utilizar la apariencia nativa.
+			 *
+			 * La apariencia nativa aplicará también la regla:
+			 *
+			 * GTK2 si está disponible; Metal si GTK2 no está disponible.
+			 */
+			establecerLookAndFeelNativo();
+		}
+	}
+
+	/**
+	 * Establece la apariencia nativa del sistema.
+	 *
+	 * Si la apariencia nativa utiliza GTK:
+	 *
+	 * - Solicita GTK2 en las versiones de Java que todavía lo admiten. - Si GTK2 no
+	 * puede cargarse, utiliza Metal. - No intenta cargar GTK3 como alternativa.
+	 *
+	 * Si la apariencia nativa no utiliza GTK, se carga normalmente.
+	 */
+	private static void establecerLookAndFeelNativo() {
+		String claseNativa = UIManager.getSystemLookAndFeelClassName();
+
+		/*
+		 * La comprobación se realiza sobre la clase nativa obtenida del propio JDK. Por
+		 * eso no es necesario mantener una lista de sistemas operativos como Linux,
+		 * Solaris, FreeBSD, OpenBSD, NetBSD, illumos o AIX.
+		 */
+		if (esLookAndFeelGTK(claseNativa)) {
+
+			/*
+			 * A partir de JDK 24, Swing ya no contiene soporte para GTK2.
+			 *
+			 * En esas versiones, establecer jdk.gtk.version=2.2 no seleccionaría GTK2; Java
+			 * continuaría utilizando GTK3. Como esta aplicación no desea GTK3 como
+			 * alternativa, se selecciona Metal directamente.
+			 */
+			if (obtenerVersionPrincipalJava() >= 24) {
+				establecerLookAndFeelMetal();
+				return;
 			}
+
+			/*
+			 * Se fuerza GTK2, incluso cuando el usuario haya establecido previamente
+			 * jdk.gtk.version=3.
+			 *
+			 * Esta aplicación define la política:
+			 *
+			 * GTK2 o Metal, pero nunca GTK3 cuando se selecciona "nativo".
+			 *
+			 * Esta propiedad debe establecerse antes de que GTK sea cargado por AWT o
+			 * Swing.
+			 */
+			System.setProperty("jdk.gtk.version", "2.2");
+
+			try {
+				/*
+				 * Intenta cargar la apariencia GTK nativa utilizando GTK2.
+				 *
+				 * Si la biblioteca GTK2 no existe, no puede cargarse o no es compatible con
+				 * esta compilación del JDK, el intento fallará y se seleccionará Metal.
+				 */
+				UIManager.setLookAndFeel(claseNativa);
+				return;
+
+			} catch (Exception | LinkageError errorGTK2) {
+				/*
+				 * No se elimina jdk.gtk.version ni se vuelve a intentar la apariencia nativa,
+				 * porque eso podría provocar que Java cargara GTK3.
+				 */
+				establecerLookAndFeelMetal();
+				return;
+			}
+		}
+
+		try {
+			/*
+			 * En Windows, macOS o cualquier sistema cuya apariencia nativa no sea GTK, se
+			 * carga normalmente la apariencia nativa correspondiente.
+			 */
+			UIManager.setLookAndFeel(claseNativa);
+
+		} catch (Exception | LinkageError errorNativo) {
+			/*
+			 * Si la apariencia nativa no puede cargarse, se utiliza Metal como alternativa
+			 * segura y multiplataforma.
+			 */
+			establecerLookAndFeelMetal();
+		}
+	}
+
+	/**
+	 * Determina si la clase que representa la apariencia nativa corresponde al Look
+	 * and Feel GTK.
+	 */
+	private static boolean esLookAndFeelGTK(String nombreClase) {
+		if (nombreClase == null) {
+			return false;
+		}
+
+		String nombreNormalizado = nombreClase.toLowerCase(java.util.Locale.ROOT);
+
+		return nombreNormalizado.contains(".gtk.") || nombreNormalizado.endsWith("gtklookandfeel");
+	}
+
+	/**
+	 * Establece expresamente Metal.
+	 *
+	 * No se utiliza getCrossPlatformLookAndFeelClassName() porque esa selección
+	 * puede ser modificada mediante propiedades del sistema. Aquí se desea
+	 * específicamente Metal.
+	 */
+	private static void establecerLookAndFeelMetal() {
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+
+		} catch (Exception | LinkageError ignorado) {
+			/*
+			 * Metal forma parte de Swing y normalmente siempre está disponible.
+			 *
+			 * Si ocurre un fallo extraordinario, Swing conservará la apariencia que ya
+			 * tuviera instalada y la aplicación podrá continuar.
+			 */
+		}
+	}
+
+	/**
+	 * Obtiene la versión principal de Java manteniendo compatibilidad con el
+	 * formato antiguo utilizado por Java 8:
+	 *
+	 * Java 8: "1.8" Java 17: "17" Java 24: "24"
+	 */
+	private static int obtenerVersionPrincipalJava() {
+		String version = System.getProperty("java.specification.version", "8");
+
+		try {
+			if (version.startsWith("1.")) {
+				version = version.substring(2);
+			}
+
+			int posicionPunto = version.indexOf('.');
+
+			if (posicionPunto >= 0) {
+				version = version.substring(0, posicionPunto);
+			}
+
+			return Integer.parseInt(version);
+
+		} catch (NumberFormatException excepcion) {
+			/*
+			 * Si una JVM utiliza un formato de versión desconocido, se supone
+			 * conservadoramente que es una versión moderna sin GTK2.
+			 */
+			return Integer.MAX_VALUE;
 		}
 	}
 

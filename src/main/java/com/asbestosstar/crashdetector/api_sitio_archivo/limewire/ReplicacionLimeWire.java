@@ -99,17 +99,17 @@ public final class ReplicacionLimeWire {
 		String estado = finalizado ? propiedad("crashdetector.limewire.sharingStatusFinal", "SHARED") : "NOT_SHARED";
 		String ids = finalizado ? "[\"" + escapar(e.idContenido) + "\"]" : "[]";
 		long total = finalizado ? e.tamano : 0L;
-		return "{" + "\"id\":\"" + escapar(e.idBucket) + "\"," + "\"sharingStatus\":\""
-				+ escapar(estado) + "\"," + "\"sharingPermission\":\"VIEWER\"," + "\"primaryEncryptionKeyId\":\""
-				+ escapar(e.idClaveArchivo) + "\"," + "\"contentItemIds\":" + ids + "," + "\"totalFileSize\":"
-				+ total + "," + "\"name\":\"" + escapar(e.nombreArchivo) + "\"," + "\"createdDate\":\""
-				+ e.creada.toString() + "\"," + "\"deleted\":false," + "\"expiresAt\":\"" + e.expira.toString()
-				+ "\"," + "\"pinned\":false" + "}";
+		return "{" + "\"id\":\"" + escapar(e.idBucket) + "\"," + "\"sharingStatus\":\"" + escapar(estado) + "\","
+				+ "\"sharingPermission\":\"VIEWER\"," + "\"primaryEncryptionKeyId\":\"" + escapar(e.idClaveArchivo)
+				+ "\"," + "\"contentItemIds\":" + ids + "," + "\"totalFileSize\":" + total + "," + "\"name\":\""
+				+ escapar(e.nombreArchivo) + "\"," + "\"createdDate\":\"" + e.creada.toString() + "\","
+				+ "\"deleted\":false," + "\"expiresAt\":\"" + e.expira.toString() + "\"," + "\"pinned\":false" + "}";
 	}
 
 	private String jsonContenido(EstadoComparticion e, MaterialArchivo material, String s3Status) {
 		return "{" + "\"id\":\"" + escapar(e.idContenido) + "\"," + "\"originalSharingBucketId\":\""
-				+ escapar(e.idBucket) + "\"," + "\"s3Status\":\"" + escapar(s3Status) + "\"," + "\"itemType\":\"OTHER\"," + "\"mediaType\":\"application/zip\"," + "\"size\":" + e.tamano + ","
+				+ escapar(e.idBucket) + "\"," + "\"s3Status\":\"" + escapar(s3Status) + "\","
+				+ "\"itemType\":\"OTHER\"," + "\"mediaType\":\"application/zip\"," + "\"size\":" + e.tamano + ","
 				+ "\"baseFileEncryptionKeyId\":\"" + escapar(e.idClaveArchivo) + "\"," + "\"ephemeralPublicKey\":\""
 				+ escapar(material.clavePublicaEfimera()) + "\"," + "\"previews\":[]," + "\"createdDate\":\""
 				+ e.creada.toString() + "\"," + "\"deleted\":false" + "}";
@@ -128,8 +128,7 @@ public final class ReplicacionLimeWire {
 		if (json == null || campo == null) {
 			return null;
 		}
-		Pattern p = Pattern.compile("\\\"" + Pattern.quote(campo)
-				+ "\\\"\\s*:\\s*\\\"((?:\\\\.|[^\\\"])*)\\\"");
+		Pattern p = Pattern.compile("\\\"" + Pattern.quote(campo) + "\\\"\\s*:\\s*\\\"((?:\\\\.|[^\\\"])*)\\\"");
 		Matcher m = p.matcher(json);
 		return m.find() ? desescapar(m.group(1)) : null;
 	}

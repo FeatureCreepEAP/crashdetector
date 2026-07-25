@@ -167,7 +167,8 @@ public final class CifradorLimeWire {
 		private final byte[] nonceBase;
 
 		private MaterialArchivo(String idClaveArchivo, String idClaveUsuario, String clavePublicaArchivo,
-				String clavePrivadaArchivoCifrada, String clavePublicaEfimera, byte[] claveContenido, byte[] nonceBase) {
+				String clavePrivadaArchivoCifrada, String clavePublicaEfimera, byte[] claveContenido,
+				byte[] nonceBase) {
 			this.idClaveArchivo = idClaveArchivo;
 			this.idClaveUsuario = idClaveUsuario;
 			this.clavePublicaArchivo = clavePublicaArchivo;

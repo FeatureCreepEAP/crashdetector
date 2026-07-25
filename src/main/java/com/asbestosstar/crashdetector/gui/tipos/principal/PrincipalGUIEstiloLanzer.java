@@ -524,7 +524,12 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		JPanel barraLateralDerecha = barraLateralDerechaRef;
 		barraLateralDerecha.setLayout(new BoxLayout(barraLateralDerecha, BoxLayout.Y_AXIS));
 		barraLateralDerecha.setBackground(colorBoton.obtener().darker());
-		barraLateralDerecha.setPreferredSize(new Dimension(250, 800));
+
+		/*
+		 * No se fuerza una altura de 800 píxeles. BoxLayout calcula la altura a partir
+		 * del contenido real y el JScrollPane proporciona el espacio visible.
+		 */
+		barraLateralDerecha.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
 		logoLabelRef = new JLabel();
 		logoLabelRef.setOpaque(true);
@@ -537,7 +542,8 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		Image logoEscalado = logoImg.getScaledInstance(120, -1, Image.SCALE_SMOOTH);
 		logoLabelRef.setIcon(new ImageIcon(logoEscalado));
 		logoLabelRef.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		logoLabelRef.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		/* Sin relleno adicional arriba o abajo del logotipo. */
+		logoLabelRef.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
 		estilizarBoton(botonVolver);
 		botonVolver.setEnabled(false);
@@ -546,7 +552,8 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		barraLateralDerecha.add(logoLabelRef);
 		barraLateralDerecha.add(botonVolver);
-		barraLateralDerecha.add(Box.createVerticalStrut(10));
+		/* Separación mínima entre Volver y el primer botón. */
+		barraLateralDerecha.add(Box.createVerticalStrut(1));
 
 		for (Entry<BiMap.DoubleKey<TipoGUI<? extends BotonDeBarraLateralDerecha>, String>, Supplier<BotonDeBarraLateralDerecha>> entrada : botons_de_barra_lateral_derecha
 				.entrySet()) {
@@ -560,8 +567,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 			JButton boton = new JButton(tipo.etiquetaDelBoton());
 			estilizarBoton(boton);
-			boton.setAlignmentX(Component.CENTER_ALIGNMENT);
-			boton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
 
 			if (tipo == TipoGUI.TODOS_QUICKFIXES) {
 				if (!CrashDetectorGUI.esMac()) {
@@ -575,10 +580,14 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 			botons_de_barra_lateral_derecha_initalizado.put(gui, boton);
 			barraLateralDerecha.add(boton);
-			barraLateralDerecha.add(Box.createVerticalStrut(6));
+			/* Separación mínima entre botones de la barra lateral. */
+			barraLateralDerecha.add(Box.createVerticalStrut(1));
 		}
 
-		barraLateralDerecha.add(Box.createVerticalGlue());
+		/*
+		 * No se añade VerticalGlue: evitamos crear un relleno expansible al final de la
+		 * lista de botones.
+		 */
 
 		scrollBarraLateralRef = new JScrollPane(barraLateralDerecha);
 		scrollBarraLateralRef.setBorder(BorderFactory.createEmptyBorder());

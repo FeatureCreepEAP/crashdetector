@@ -258,25 +258,34 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	}
 
 	public void estilizarBoton(JButton boton) {
+		final int altoBoton = 26;
+
 		if (!CrashDetectorGUI.esMac()) {
-			boton.setAlignmentX(Component.CENTER_ALIGNMENT);
 			boton.setBackground(colorBoton.obtener());
-			boton.setContentAreaFilled(true);
 			boton.setForeground(colorTexto.obtener());
+			boton.setOpaque(true);
+			boton.setContentAreaFilled(true);
+			boton.setBorderPainted(false);
 			boton.setFocusPainted(false);
-			boton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-			boton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+			boton.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+
+			/*
+			 * Elimina el relleno vertical excesivo de los botones de la barra lateral. Se
+			 * conserva un pequeño margen horizontal para que el texto no toque los bordes.
+			 */
+			boton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+			boton.setBorder(BorderFactory.createEmptyBorder(1, 8, 1, 8));
 		} else {
 			boton.setContentAreaFilled(false);
 		}
 
-		// Ancho flexible para que la barra lateral pueda redimensionarse sin forzar
-		// todos los botones a un ancho fijo exacto.
-		boton.setMinimumSize(new Dimension(160, 40));
-		boton.setPreferredSize(new Dimension(220, 40));
-		boton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-
-		// Con BoxLayout esto ayuda a que el botón pueda ocupar el ancho disponible.
+		/*
+		 * La altura compacta permite mostrar todos los botones en una pantalla de 1024
+		 * x 768 y deja espacio para añadir botones nuevos.
+		 */
+		boton.setMinimumSize(new Dimension(160, altoBoton));
+		boton.setPreferredSize(new Dimension(220, altoBoton));
+		boton.setMaximumSize(new Dimension(Integer.MAX_VALUE, altoBoton));
 		boton.setAlignmentX(Component.CENTER_ALIGNMENT);
 	}
 
