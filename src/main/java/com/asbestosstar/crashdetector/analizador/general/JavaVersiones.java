@@ -2,7 +2,9 @@ package com.asbestosstar.crashdetector.analizador.general;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,97 +19,159 @@ import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Detecta errores de versión de clase Java: UnsupportedClassVersionError,
- * clases compiladas con versiones más recientes que la JVM utilizada.
- * Optimizado: global barato + verificación por línea.
+ * Detecta:
+ *
+ * 1. Errores de versión de clase Java, como UnsupportedClassVersionError. 2. Un
+ * problematic frame que realmente pertenece a jvm.dll, libjvm.so o
+ * libjvm.dylib.
+ *
+ * El encabezado "Problematic frame:" por sí solo nunca activa la verificación.
  */
 public class JavaVersiones implements Verificaciones {
 
-	private boolean activado = false;
-	private boolean posibleErrorJava = false;
+	private static final int MAX_LINEAS_DESPUES_PROBLEMATIC_FRAME = 4;
 
-	private final Set<String> mensajes = new HashSet<>();
+	private boolean activado = false;
+
+	private final Set<String> mensajes = new HashSet<String>();
+	private final List<ArchivoDeMod> modsRelacionados = new ArrayList<ArchivoDeMod>();
+
+	private final Map<Consola, EstadoFrameProblematico> estadosFrame = new IdentityHashMap<Consola, EstadoFrameProblematico>();
+
 	private String claseConProblema = null;
 	private String enlace = null;
 
 	private static final String TEXTO_UNSUPPORTED_CLASS = "UnsupportedClassVersionError:";
+
 	private static final String TEXTO_JAVA22 = "Unsupported class file major version";
+
 	private static final String TEXTO_JAVA8 = "Unsupported major.minor version 52.0";
 
-	private final List<ArchivoDeMod> modsRelacionados = new ArrayList<>();
-
-	private boolean posibleFrameJavaProblematico = false;
-	private boolean dentroDeFrameProblematico = false;
-
 	private static final String TEXTO_PROBLEMATIC_FRAME = "Problematic frame:";
-	private static final String TEXTO_LIBJVM_LINUX = "libjvm.so";
-	private static final String TEXTO_JVM_WINDOWS = "jvm.dll";
+
+	/*
+	 * Se incluyen los corchetes porque las líneas reales del frame suelen ser:
+	 *
+	 * # C [libjvm.so+0x...] # V [jvm.dll+0x...]
+	 *
+	 * Esto evita aceptar menciones generales a la biblioteca en otras secciones del
+	 * hs_err.
+	 */
+	private static final String FRAME_LIBJVM_LINUX = "[libjvm.so";
+
+	private static final String FRAME_JVM_WINDOWS = "[jvm.dll";
+
+	private static final String FRAME_LIBJVM_MAC = "[libjvm.dylib";
 
 	@Override
 	public String[] patronesRapidos() {
 		return new String[] { TEXTO_UNSUPPORTED_CLASS, TEXTO_JAVA22, TEXTO_JAVA8, TEXTO_PROBLEMATIC_FRAME,
-				TEXTO_LIBJVM_LINUX, TEXTO_JVM_WINDOWS };
+				FRAME_LIBJVM_LINUX, FRAME_JVM_WINDOWS, FRAME_LIBJVM_MAC };
 	}
 
 	@Override
 	public void verificarCoincidencia(EventoDeCoincidencia evento) {
-		if (evento == null || evento.linea == null) {
+		if (evento == null || evento.consola == null || evento.linea == null) {
+
 			return;
-		}
-
-		if (lineaContieneErrorJava(evento.linea)) {
-			posibleErrorJava = true;
-		}
-
-		if (evento.linea.contains(TEXTO_PROBLEMATIC_FRAME) || evento.linea.contains(TEXTO_LIBJVM_LINUX)
-				|| evento.linea.contains(TEXTO_JVM_WINDOWS)) {
-			posibleFrameJavaProblematico = true;
 		}
 
 		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
 	}
 
-	// =========================
-	// Verificación por línea
-	// =========================
 	@Override
-	public void verificarPorLinea(Consola consola, String linea, int numero_de_linea) {
-		if (linea == null || linea.isEmpty() || activado)
+	public void verificarPorLinea(Consola consola, String linea, int numeroDeLinea) {
+
+		if (linea == null || linea.isEmpty() || consola == null || activado) {
+
 			return;
-
-		if (posibleFrameJavaProblematico) {
-			if (linea.contains(TEXTO_PROBLEMATIC_FRAME)) {
-				dentroDeFrameProblematico = true;
-				return;
-			}
-
-			if (dentroDeFrameProblematico) {
-				if (linea.contains(TEXTO_LIBJVM_LINUX) || linea.contains(TEXTO_JVM_WINDOWS)) {
-					mensajes.add(MonitorDePID.idioma.javaProblematica());
-					enlace = consola.agregarErrorALectador(numero_de_linea, this);
-					activado = true;
-					return;
-				}
-
-				// In hs_err_pid logs, the actual frame normally appears shortly after:
-				// # Problematic frame:
-				// # C [libjvm.so+...]
-				// If we reach a new section before finding libjvm/jvm.dll, stop tracking.
-				if (empiezaConSinEspacios(linea, "---------------") || empiezaConSinEspacios(linea, "Stack:")
-						|| empiezaConSinEspacios(linea, "Native frames:")
-						|| empiezaConSinEspacios(linea, "Java frames:") || empiezaConSinEspacios(linea, "siginfo:")
-						|| empiezaConSinEspacios(linea, "Registers:")) {
-					dentroDeFrameProblematico = false;
-				}
-			}
 		}
 
-		if (!posibleErrorJava)
+		verificarFrameProblematico(consola, linea, numeroDeLinea);
+
+		if (activado) {
 			return;
+		}
+
+		verificarVersionDeClase(consola, linea, numeroDeLinea);
+	}
+
+	/**
+	 * Registra el encabezado y solamente activa la verificación cuando una línea de
+	 * frame JVM aparece inmediatamente después.
+	 */
+	private void verificarFrameProblematico(Consola consola, String linea, int numeroDeLinea) {
+
+		EstadoFrameProblematico estado = obtenerEstadoFrame(consola);
+
+		if (linea.contains(TEXTO_PROBLEMATIC_FRAME)) {
+			/*
+			 * El encabezado no identifica la biblioteca causante. Solamente abre una
+			 * ventana corta en la que se espera la línea del frame.
+			 */
+			estado.lineaEncabezado = numeroDeLinea;
+
+			return;
+		}
+
+		if (!lineaContieneFrameJvm(linea)) {
+			return;
+		}
+
+		if (!estaDespuesDelEncabezado(estado.lineaEncabezado, numeroDeLinea)) {
+
+			/*
+			 * Una mención a libjvm/jvm.dll fuera de la sección "Problematic frame:" no
+			 * cuenta.
+			 */
+			return;
+		}
+
+		mensajes.add(MonitorDePID.idioma.javaProblematica());
+
+		enlace = consola.agregarErrorALectador(numeroDeLinea, this);
+
+		activado = true;
+		estadosFrame.clear();
+	}
+
+	private EstadoFrameProblematico obtenerEstadoFrame(Consola consola) {
+
+		EstadoFrameProblematico estado = estadosFrame.get(consola);
+
+		if (estado == null) {
+			estado = new EstadoFrameProblematico();
+			estadosFrame.put(consola, estado);
+		}
+
+		return estado;
+	}
+
+	/**
+	 * La línea real del frame debe aparecer después del encabezado y dentro de una
+	 * distancia corta.
+	 */
+	private boolean estaDespuesDelEncabezado(int lineaEncabezado, int lineaActual) {
+
+		if (lineaEncabezado < 0 || lineaActual <= lineaEncabezado) {
+
+			return false;
+		}
+
+		return lineaActual - lineaEncabezado <= MAX_LINEAS_DESPUES_PROBLEMATIC_FRAME;
+	}
+
+	private boolean lineaContieneFrameJvm(String linea) {
+
+		return linea.contains(FRAME_LIBJVM_LINUX) || linea.contains(FRAME_JVM_WINDOWS)
+				|| linea.contains(FRAME_LIBJVM_MAC);
+	}
+
+	private void verificarVersionDeClase(Consola consola, String linea, int numeroDeLinea) {
 
 		if (linea.contains(TEXTO_UNSUPPORTED_CLASS)) {
-			// Extraer nombre de clase
 			String clase = extraerClase(linea);
+
 			if (clase != null) {
 				claseConProblema = clase;
 
@@ -115,26 +179,29 @@ public class JavaVersiones implements Verificaciones {
 
 				mensajes.add(MonitorDePID.idioma.javaObsoleta() + " JVM: " + determinarVersionJava(linea));
 
-				enlace = consola.agregarErrorALectador(numero_de_linea, this);
+				enlace = consola.agregarErrorALectador(numeroDeLinea, this);
+
 				activado = true;
+				return;
 			}
 		}
 
 		if (linea.contains(TEXTO_JAVA22)) {
 			mensajes.add(MonitorDePID.idioma.java22());
-			enlace = consola.agregarErrorALectador(numero_de_linea, this);
+
+			enlace = consola.agregarErrorALectador(numeroDeLinea, this);
+
 			activado = true;
+			return;
 		}
 
 		if (linea.contains(TEXTO_JAVA8)) {
 			mensajes.add(MonitorDePID.idioma.errorJava8Requerido());
-			enlace = consola.agregarErrorALectador(numero_de_linea, this);
+
+			enlace = consola.agregarErrorALectador(numeroDeLinea, this);
+
 			activado = true;
 		}
-	}
-
-	private boolean lineaContieneErrorJava(String linea) {
-		return linea.contains(TEXTO_UNSUPPORTED_CLASS) || linea.contains(TEXTO_JAVA22) || linea.contains(TEXTO_JAVA8);
 	}
 
 	private void buscarModsRelacionados() {
@@ -145,12 +212,14 @@ public class JavaVersiones implements Verificaciones {
 
 			agregarResultados(claseConProblema);
 			agregarResultados(claseConProblema.replace('.', '/'));
+
 		} catch (Throwable ignorado) {
 		}
 	}
 
 	private void agregarResultados(String termino) {
 		if (termino == null || sinEspaciosLaterales(termino).isEmpty()) {
+
 			return;
 		}
 
@@ -160,11 +229,13 @@ public class JavaVersiones implements Verificaciones {
 			if (encontrados != null) {
 				modsRelacionados.addAll(encontrados);
 			}
+
 		} catch (Throwable ignorado) {
 		}
 	}
 
 	private String formatearMods(List<ArchivoDeMod> mods) {
+
 		if (mods == null || mods.isEmpty()) {
 			return "";
 		}
@@ -173,116 +244,118 @@ public class JavaVersiones implements Verificaciones {
 				.distinct().collect(Collectors.joining(", "));
 	}
 
-	// =========================
-	// Helpers
-	// =========================
 	private String extraerClase(String linea) {
-		if (linea == null)
+		if (linea == null) {
 			return null;
+		}
 
-		int start = linea.indexOf(TEXTO_UNSUPPORTED_CLASS);
-		if (start < 0)
+		int inicio = linea.indexOf(TEXTO_UNSUPPORTED_CLASS);
+
+		if (inicio < 0) {
 			return null;
+		}
 
-		start += TEXTO_UNSUPPORTED_CLASS.length();
+		inicio += TEXTO_UNSUPPORTED_CLASS.length();
 
-		while (start < linea.length() && Character.isWhitespace(linea.charAt(start)))
-			start++;
+		while (inicio < linea.length() && Character.isWhitespace(linea.charAt(inicio))) {
 
-		if (start >= linea.length())
+			inicio++;
+		}
+
+		if (inicio >= linea.length()) {
 			return null;
+		}
 
-		int fin = linea.indexOf(" has been compiled", start);
-		if (fin < 0)
+		int fin = linea.indexOf(" has been compiled", inicio);
+
+		if (fin < 0) {
 			fin = linea.length();
+		}
 
-		return sinEspaciosLaterales(linea.substring(start, fin).replace("/", "."));
+		return sinEspaciosLaterales(linea.substring(inicio, fin).replace("/", "."));
 	}
 
 	private String determinarVersionJava(String linea) {
-		int idx = linea.indexOf("class file version");
-		if (idx < 0)
+
+		int indice = linea.indexOf("class file version");
+
+		if (indice < 0) {
 			return MonitorDePID.idioma.desconocida();
+		}
 
-		int start = idx + "class file version".length();
+		int inicio = indice + "class file version".length();
 
-		while (start < linea.length() && !Character.isDigit(linea.charAt(start)))
-			start++;
+		while (inicio < linea.length() && !Character.isDigit(linea.charAt(inicio))) {
 
-		if (start >= linea.length())
+			inicio++;
+		}
+
+		if (inicio >= linea.length()) {
 			return MonitorDePID.idioma.desconocida();
+		}
 
-		int end = start;
-		while (end < linea.length() && Character.isDigit(linea.charAt(end)))
-			end++;
+		int fin = inicio;
 
-		String versionClase = linea.substring(start, end);
+		while (fin < linea.length() && Character.isDigit(linea.charAt(fin))) {
+
+			fin++;
+		}
+
+		String versionClase = linea.substring(inicio, fin);
 
 		try {
-			int versionNum = Integer.parseInt(versionClase);
+			int versionNumero = Integer.parseInt(versionClase);
 
-			// Control de versiones antiguas (Mapeo manual para el formato "1.x")
-			switch (versionNum) {
+			switch (versionNumero) {
 			case 52:
 				return "1.8";
+
 			case 51:
 				return "1.7";
+
 			case 50:
 				return "1.6";
+
+			default:
+				break;
 			}
 
-			// Fórmula para Java 9 (versión de clase 53) en adelante.
-			// Restando 44 obtenemos el número de Java correcto de forma dinámica.
-			// Ejemplos:
-			// Versión 65 - 44 = Java 21
-			// Versión 74 - 44 = Java 30
-			if (versionNum >= 53) {
-				return String.valueOf(versionNum - 44);
+			/*
+			 * Java 9 corresponde a la versión de clase 53.
+			 */
+			if (versionNumero >= 53) {
+				return String.valueOf(versionNumero - 44);
 			}
-		} catch (NumberFormatException e) {
+
+		} catch (NumberFormatException excepcion) {
 			return MonitorDePID.idioma.desconocida() + " (" + versionClase + ")";
 		}
 
 		return MonitorDePID.idioma.desconocida() + " (" + versionClase + ")";
 	}
 
-	private boolean empiezaConSinEspacios(String texto, String prefijo) {
-		if (texto == null || prefijo == null)
-			return false;
-
-		int inicio = 0;
-
-		while (inicio < texto.length() && Character.isWhitespace(texto.charAt(inicio))) {
-			inicio++;
-		}
-
-		if (texto.length() - inicio < prefijo.length())
-			return false;
-
-		return texto.regionMatches(inicio, prefijo, 0, prefijo.length());
-	}
-
 	private String sinEspaciosLaterales(String texto) {
-		if (texto == null)
+
+		if (texto == null) {
 			return "";
+		}
 
 		int inicio = 0;
 		int fin = texto.length();
 
 		while (inicio < fin && Character.isWhitespace(texto.charAt(inicio))) {
+
 			inicio++;
 		}
 
 		while (fin > inicio && Character.isWhitespace(texto.charAt(fin - 1))) {
+
 			fin--;
 		}
 
 		return texto.substring(inicio, fin);
 	}
 
-	// =========================
-	// Métodos estándar de Verificaciones
-	// =========================
 	@Override
 	public Verificaciones nueva() {
 		return new JavaVersiones();
@@ -300,17 +373,18 @@ public class JavaVersiones implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		if (mensajes.isEmpty())
+		if (mensajes.isEmpty()) {
 			return "";
+		}
 
 		StringBuilder html = new StringBuilder("<ul>");
 
-		for (String msg : mensajes) {
-			html.append("<li>").append(msg).append("</li>");
+		for (String mensaje : mensajes) {
+			html.append("<li>").append(mensaje).append("</li>");
 		}
 
 		if (claseConProblema != null) {
-			html.append("<li><b>" + MonitorDePID.idioma.clase() + ":</b> ").append(claseConProblema);
+			html.append("<li><b>").append(MonitorDePID.idioma.clase()).append(":</b> ").append(claseConProblema);
 
 			String mods = formatearMods(modsRelacionados);
 
@@ -338,7 +412,9 @@ public class JavaVersiones implements Verificaciones {
 	@Override
 	public QuickFix solucion() {
 		Builder builder = new QuickFix.Builder(nombre());
+
 		builder.agregarEtiqueta(MonitorDePID.idioma.solucionParaJavaInstallar());
+
 		return builder.construir();
 	}
 
@@ -360,5 +436,13 @@ public class JavaVersiones implements Verificaciones {
 	@Override
 	public boolean recomendadoParaCorperata() {
 		return true;
+	}
+
+	/**
+	 * Estado del encabezado "Problematic frame:" de una sola Consola.
+	 */
+	private static final class EstadoFrameProblematico {
+
+		private int lineaEncabezado = -1;
 	}
 }
