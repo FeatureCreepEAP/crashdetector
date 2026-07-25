@@ -9,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -43,6 +42,7 @@ import javax.swing.tree.TreePath;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
+import com.asbestosstar.crashdetector.api_sitio_archivo.LimeWireCom;
 import com.asbestosstar.crashdetector.api_sitio_archivo.SitioBitTorrent;
 import com.asbestosstar.crashdetector.api_sitio_archivo.SitioDeArchivoAPI;
 import com.asbestosstar.crashdetector.api_sitio_archivo.SitioDeArchivoAPI.ObservadorDeTransferencia;
@@ -51,9 +51,9 @@ import com.asbestosstar.crashdetector.dto.modpack.CopiaDeSeguridadDeArchivos;
 import com.asbestosstar.crashdetector.dto.modpack.ProveedorMods;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
+import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.bittorrent.BitTorrentGUI;
 import com.asbestosstar.crashdetector.gui.tipos.bittorrent.BitTorrentGUIHolostarsEN;
-import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
 
 /**
@@ -76,6 +76,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 	static {
 		SitioDeArchivoAPI.SERVICIOS_REGISTRADOS.put("wormhole.app", new WormholeApp());
 		SitioDeArchivoAPI.SERVICIOS_REGISTRADOS.put("bittorrent", new SitioBitTorrent());
+		SitioDeArchivoAPI.SERVICIOS_REGISTRADOS.put("limewire", new LimeWireCom());
 	}
 
 	public JTextArea areaPolitica;
