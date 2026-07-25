@@ -29,6 +29,7 @@ import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.MotorAnalisisMultinucleo;
+import com.asbestosstar.crashdetector.bajo.hw.cpu.ibmz.ZiipInit;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.sparc.DaxInit;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.sparc.UmemInit;
 import com.asbestosstar.crashdetector.bajo.vectorapi.VectorAPIInit;
@@ -672,6 +673,16 @@ public class MonitorDePID {
 
 			if (DaxInit.necesitaArgEspecialDax()) {
 				comando.add(DaxInit.obtenerArgEspecialDax());
+			}
+
+			/*
+			 * En IBM Semeru/OpenJ9 sobre z/OS, permite que la JVM entregue a zIIP el
+			 * trabajo Java que sea elegible. Debe agregarse antes de -cp y de la clase
+			 * principal del proceso monitor.
+			 */
+			if (ZiipInit.necesitaArgEspecialZiip()) {
+				comando.add(ZiipInit.obtenerArgEspecialZiip());
+				CrashDetectorLogger.log(ZiipInit.descripcion());
 			}
 
 			if (VectorAPIInit.necesitaArgEspecialVectorAPI()) {
