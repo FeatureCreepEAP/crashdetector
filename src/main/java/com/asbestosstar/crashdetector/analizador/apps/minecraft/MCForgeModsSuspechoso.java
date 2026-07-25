@@ -26,6 +26,12 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 		boolean encontradoModSospechoso = false;
 		boolean encontradoStacktrace = false;
 		boolean encontradoModSection = false;
+
+		/*
+		 * verificarCoincidencia(...) puede ser llamado muchas veces para la misma
+		 * Consola. El contenido completo solamente debe recorrerse una vez.
+		 */
+		boolean contenidoCompletoProcesado = false;
 	}
 
 	private final Map<Consola, EstadoConsola> estadosPorConsola = new HashMap<>();
@@ -36,21 +42,81 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 
 	@Override
 	public String[] patronesRapidos() {
-		return new String[] { "Suspected Mod:", "Suspected Mods:", "-- MOD ", "Failed to create mod instance. ModID:",
-				"for modid ", "Mod ID:", "ModID:", "modid=", "dispatch" };
+		return new String[] { "Suspected Mod:", "Suspected Mods:", "-- MOD ", "-- Mod ", "Mod loading issue for:",
+				"Failed to create mod instance. ModID:", "for modid ", "Mod ID:", "ModID:", "modid=", "dispatch" };
 	}
 
 	@Override
 	public void verificarCoincidencia(EventoDeCoincidencia evento) {
-		EstadoConsola estado = obtenerEstado(evento.consola);
+		if (evento == null || evento.consola == null || evento.linea == null) {
+			return;
+		}
+
+		Consola consola = evento.consola;
+		EstadoConsola estado = obtenerEstado(consola);
 		estado.posibleForgeModSospechoso = true;
-		verificarPorLinea(evento.consola, evento.linea, evento.numeroDeLinea);
+
+		/*
+		 * El método rápido solamente entrega las líneas que coinciden con un patrón.
+		 * Sin embargo, procesarArchivo(...) ya debe haber materializado:
+		 *
+		 * - contenido_verificar - lineas_verificar
+		 *
+		 * Por eso, en la primera coincidencia recorremos lineas_verificar completas.
+		 * Así recuperamos el comportamiento correcto del analizador anterior sin
+		 * depender del método global antiguo.
+		 */
+		if (!estado.contenidoCompletoProcesado && procesarContenidoCompletoDisponible(consola, estado)) {
+
+			return;
+		}
+
+		/*
+		 * Respaldo para análisis en vivo o para una Consola que todavía no tenga el
+		 * contenido completo materializado.
+		 */
+		procesarLinea(consola, estado, evento.linea, evento.numeroDeLinea);
 	}
 
 	@Override
 	public boolean verificar(Consola consola) {
-		EstadoConsola estado = estadosPorConsola.get(consola);
-		return estado != null && estado.posibleForgeModSospechoso;
+		/*
+		 * La detección se realiza en verificarCoincidencia(...). Este método solamente
+		 * se conserva porque forma parte de la interfaz actual; no se utiliza para
+		 * volver al formato antiguo de análisis global.
+		 */
+		return false;
+	}
+
+	/**
+	 * Recorre una sola vez las líneas completas ya preparadas por procesarArchivo.
+	 *
+	 * @return true cuando había contenido completo y fue procesado
+	 */
+	private boolean procesarContenidoCompletoDisponible(Consola consola, EstadoConsola estado) {
+
+		String[] lineas = consola.lineas_verificar;
+
+		if (lineas == null && consola.contenido_verificar != null) {
+			lineas = consola.contenido_verificar.split("\\r?\\n", -1);
+			consola.lineas_verificar = lineas;
+		}
+
+		if (lineas == null) {
+			return false;
+		}
+
+		/*
+		 * Marcar antes del bucle evita que una llamada indirecta o repetida vuelva a
+		 * recorrer el mismo archivo.
+		 */
+		estado.contenidoCompletoProcesado = true;
+
+		for (int i = 0; i < lineas.length; i++) {
+			procesarLinea(consola, estado, lineas[i], i);
+		}
+
+		return true;
 	}
 
 	@Override
@@ -59,8 +125,16 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 			return;
 		}
 
-		EstadoConsola estado = obtenerEstado(consola);
-		if (estado == null) {
+		procesarLinea(consola, obtenerEstado(consola), lineaOriginal, numero_de_linea);
+	}
+
+	/**
+	 * Parser común utilizado tanto por verificarCoincidencia(...) como por el
+	 * respaldo lineal.
+	 */
+	private void procesarLinea(Consola consola, EstadoConsola estado, String lineaOriginal, int numero_de_linea) {
+
+		if (consola == null || estado == null || lineaOriginal == null) {
 			return;
 		}
 
@@ -99,10 +173,14 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 			return;
 		}
 
-		String modDeFilaSuspected = extraerFilaSuspectedModDirecta(linea);
-		if (modDeFilaSuspected != null) {
-			registrarMod(consola, numero_de_linea, modDeFilaSuspected);
-			return;
+		if (estado.encontradoModSospechoso) {
+			String modDeFilaSuspected = extraerFilaSuspectedModDirecta(linea);
+
+			if (modDeFilaSuspected != null) {
+				registrarMod(consola, numero_de_linea, modDeFilaSuspected);
+
+				return;
+			}
 		}
 
 		if (esLineaDebugOTrace(linea)) {
