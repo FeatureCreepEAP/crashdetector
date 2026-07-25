@@ -3,7 +3,6 @@ package com.asbestosstar.crashdetector.gui.tipos.compartir;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -13,7 +12,9 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.io.File;
+import java.net.URL;
 import java.time.Instant;
+import java.util.concurrent.ExecutionException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -36,12 +37,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.WindowConstants;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.ConfigMundial;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.GeneradorDeInformacion;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
@@ -51,6 +54,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.canario.CanarioDeOrdenJudicialGUI1984;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI;
@@ -98,6 +102,7 @@ public class DialogoCompartirMomoseNina extends DialogoCompartir {
 	private JButton botonToggleLogs;
 	private JButton botonTogglePrivacidad;
 	private JTextArea textoResumen;
+	private ElementoOverlayCarga overlayCarga;
 
 	private JPanel contenidoLogs;
 	private JPanel contenidoPrivacidad;
@@ -152,6 +157,7 @@ public class DialogoCompartirMomoseNina extends DialogoCompartir {
 		panelPrincipal.add(new JScrollPane(panelContenido), BorderLayout.CENTER);
 
 		add(panelPrincipal, BorderLayout.CENTER);
+		inicializarOverlayCarga();
 
 		cargarConsolas();
 		reconstruirFilasLogs();
@@ -228,19 +234,7 @@ public class DialogoCompartirMomoseNina extends DialogoCompartir {
 				BorderFactory.createEmptyBorder(12, 12, 12, 12)));
 
 		botonCompartirTodos = new JButton(MonitorDePID.idioma.botonDeCompartirInforme());
-		botonCompartirTodos.addActionListener(e -> ejecutarConConsentimiento(new Runnable() {
-			@Override
-			public void run() {
-				setEnviando(true);
-				try {
-					compartirSeleccionados(e);
-				} catch (Throwable t) {
-					mostrarError(MonitorDePID.idioma.error_inesperado_al_compartir(), t);
-				} finally {
-					setEnviando(false);
-				}
-			}
-		}));
+		botonCompartirTodos.addActionListener(e -> ejecutarConConsentimiento(() -> compartirSeleccionadosAsync()));
 		ajustarBotonPrincipal(botonCompartirTodos, true);
 		panel.add(botonCompartirTodos);
 
@@ -466,40 +460,199 @@ public class DialogoCompartirMomoseNina extends DialogoCompartir {
 		}
 	}
 
-	private void compartirLogIndividual(FilaLog fila) {
-		ejecutarConConsentimiento(new Runnable() {
-			@Override
-			public void run() {
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-				try {
-					List<String> urls = fila.consola.obtainerEnlaces();
-					String celda = (urls == null || urls.isEmpty()) ? "" : String.join("\n", urls);
-					fila.enlace.setText(celda);
-					if (modeloTabla != null && fila.index < modeloTabla.getRowCount()) {
-						modeloTabla.setValueAt(celda, fila.index, 4);
-					}
-					if (campoEnlaceReporte != null) {
-						campoEnlaceReporte.setText(celda);
-					}
-					if (celda != null && !celda.isEmpty()) {
-						copiarAlPortapapeles(celda);
-						mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
-					}
-				} catch (DemasiadoGrande ex) {
-					mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), ex);
-				} catch (ErrorConPublicar ex) {
-					mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(ex.problema), ex);
-				} catch (NoAPIdeRegistro ex) {
-					mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), ex);
-				} catch (LimteDeTasa ex) {
-					mostrarError(MonitorDePID.idioma.limite_de_solicitudes(), ex);
-				} catch (Throwable t) {
-					mostrarError(MonitorDePID.idioma.error_inesperado_al_generar_enlaces(), t);
-				} finally {
-					setCursor(Cursor.getDefaultCursor());
+	private void inicializarOverlayCarga() {
+		overlayCarga = new ElementoOverlayCarga();
+		getRootPane().setGlassPane(overlayCarga);
+		overlayCarga.setVisible(false);
+	}
+
+	@Override
+	public void setEnviando(boolean enviando) {
+		if (!SwingUtilities.isEventDispatchThread()) {
+			SwingUtilities.invokeLater(() -> setEnviando(enviando));
+			return;
+		}
+
+		super.setEnviando(enviando);
+
+		if (botonToggleLogs != null) {
+			botonToggleLogs.setEnabled(!enviando);
+		}
+		if (botonTogglePrivacidad != null) {
+			botonTogglePrivacidad.setEnabled(!enviando);
+		}
+
+		for (FilaLog fila : filasLogs) {
+			fila.incluir.setEnabled(!enviando);
+			fila.abrir.setEnabled(!enviando);
+			fila.compartir.setEnabled(!enviando);
+		}
+
+		if (overlayCarga != null) {
+			if (enviando) {
+				overlayCarga.recargarContenido();
+			}
+			overlayCarga.setVisible(enviando);
+			overlayCarga.revalidate();
+			overlayCarga.repaint();
+		}
+	}
+
+	private void compartirSeleccionadosAsync() {
+		final ArrayList<Consola> seleccionados = new ArrayList<Consola>();
+		final ArrayList<Integer> filasSeleccionadas = new ArrayList<Integer>();
+
+		if (modeloTabla != null) {
+			for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+				if (Boolean.TRUE.equals(modeloTabla.getValueAt(i, 0))) {
+					seleccionados.add(MonitorDePID.consolas.get(i));
+					filasSeleccionadas.add(Integer.valueOf(i));
 				}
 			}
+		}
+
+		if (seleccionados.isEmpty()) {
+			return;
+		}
+
+		setEnviando(true);
+
+		new SwingWorker<ResultadoCargaLogs, Void>() {
+			@Override
+			protected ResultadoCargaLogs doInBackground() throws Exception {
+				String enlaceReporte = GeneradorDeInformacion.compartir(seleccionados, instant);
+				List<String> enlacesPorFila = new ArrayList<String>(seleccionados.size());
+
+				for (Consola consola : seleccionados) {
+					List<String> urls = consola.obtainerEnlaces();
+					enlacesPorFila.add(urls == null || urls.isEmpty() ? "" : String.join(" ", urls));
+				}
+
+				return new ResultadoCargaLogs(enlaceReporte, filasSeleccionadas, enlacesPorFila);
+			}
+
+			@Override
+			protected void done() {
+				try {
+					ResultadoCargaLogs resultado = get();
+
+					if (campoEnlaceReporte != null) {
+						campoEnlaceReporte.setText(resultado.enlaceReporte);
+					}
+					MonitorDePID.enlace = resultado.enlaceReporte;
+
+					for (int i = 0; i < resultado.filas.size(); i++) {
+						int filaModelo = resultado.filas.get(i).intValue();
+						String enlaces = resultado.enlacesPorFila.get(i);
+
+						if (modeloTabla != null && filaModelo < modeloTabla.getRowCount()) {
+							modeloTabla.setValueAt(enlaces, filaModelo, 4);
+						}
+						if (filaModelo >= 0 && filaModelo < filasLogs.size()) {
+							filasLogs.get(filaModelo).enlace.setText(enlaces);
+						}
+					}
+
+					abrirOCopiarEnlace(resultado.enlaceReporte);
+				} catch (InterruptedException ex) {
+					Thread.currentThread().interrupt();
+					mostrarError(MonitorDePID.idioma.error_inesperado_al_compartir(), ex);
+				} catch (ExecutionException ex) {
+					mostrarErrorCarga(ex.getCause(), false);
+				} finally {
+					setEnviando(false);
+				}
+			}
+		}.execute();
+	}
+
+	private void compartirLogIndividual(FilaLog fila) {
+		ejecutarConConsentimiento(() -> {
+			setEnviando(true);
+
+			new SwingWorker<List<String>, Void>() {
+				@Override
+				protected List<String> doInBackground() throws Exception {
+					return fila.consola.obtainerEnlaces();
+				}
+
+				@Override
+				protected void done() {
+					try {
+						List<String> urls = get();
+						String celda = urls == null || urls.isEmpty() ? "" : String.join("\n", urls);
+
+						fila.enlace.setText(celda);
+						if (modeloTabla != null && fila.index < modeloTabla.getRowCount()) {
+							modeloTabla.setValueAt(celda, fila.index, 4);
+						}
+						if (campoEnlaceReporte != null) {
+							campoEnlaceReporte.setText(celda);
+						}
+						if (!celda.isEmpty()) {
+							copiarAlPortapapeles(celda);
+							mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
+						}
+					} catch (InterruptedException ex) {
+						Thread.currentThread().interrupt();
+						mostrarError(MonitorDePID.idioma.error_inesperado_al_generar_enlaces(), ex);
+					} catch (ExecutionException ex) {
+						mostrarErrorCarga(ex.getCause(), true);
+					} finally {
+						setEnviando(false);
+					}
+				}
+			}.execute();
 		});
+	}
+
+	private void abrirOCopiarEnlace(String enlace) {
+		if (enlace == null || enlace.isEmpty()) {
+			return;
+		}
+
+		try {
+			if (Desktop.isDesktopSupported()) {
+				Desktop.getDesktop().browse(new URL(enlace).toURI());
+			} else {
+				copiarAlPortapapeles(enlace);
+				mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
+			}
+		} catch (Exception ex) {
+			copiarAlPortapapeles(enlace);
+			mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
+			CrashDetectorLogger.logException(ex);
+		}
+	}
+
+	private void mostrarErrorCarga(Throwable causa, boolean generandoEnlaces) {
+		Throwable error = causa == null ? new IllegalStateException("Error de carga desconocido") : causa;
+
+		if (error instanceof DemasiadoGrande) {
+			mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), error);
+		} else if (error instanceof ErrorConPublicar) {
+			ErrorConPublicar errorPublicacion = (ErrorConPublicar) error;
+			mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(errorPublicacion.problema), errorPublicacion);
+		} else if (error instanceof NoAPIdeRegistro) {
+			mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), error);
+		} else if (error instanceof LimteDeTasa) {
+			mostrarError(MonitorDePID.idioma.limite_de_solicitudes(), error);
+		} else {
+			mostrarError(generandoEnlaces ? MonitorDePID.idioma.error_inesperado_al_generar_enlaces()
+					: MonitorDePID.idioma.error_inesperado_al_compartir(), error);
+		}
+	}
+
+	private static final class ResultadoCargaLogs {
+		final String enlaceReporte;
+		final List<Integer> filas;
+		final List<String> enlacesPorFila;
+
+		ResultadoCargaLogs(String enlaceReporte, List<Integer> filas, List<String> enlacesPorFila) {
+			this.enlaceReporte = enlaceReporte;
+			this.filas = new ArrayList<Integer>(filas);
+			this.enlacesPorFila = new ArrayList<String>(enlacesPorFila);
+		}
 	}
 
 	private void abrirArchivo(Consola consola) {
@@ -636,6 +789,9 @@ public class DialogoCompartirMomoseNina extends DialogoCompartir {
 		}
 		for (FilaLog fila : filasLogs) {
 			fila.aplicarApariencia();
+		}
+		if (overlayCarga != null) {
+			overlayCarga.recargarContenido();
 		}
 		estilizarSeccion(botonToggleLogs);
 		estilizarSeccion(botonTogglePrivacidad);
