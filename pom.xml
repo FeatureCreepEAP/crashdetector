@@ -689,7 +689,7 @@
         <dependency>
             <groupId>com.asbestosstar</groupId>
             <artifactId>tlmodloader</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
             <scope>provided</scope>
         </dependency>
 

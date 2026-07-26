@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.app.lanzermod.tlauncher;
 
+import com.asbestosstar.tlmodloader.TLMixinBootstrap.ICoremodTransformer;
+
 /**
  * Transformador de bytes ejecutado antes de Mixin.
  *
@@ -7,9 +9,7 @@ package com.asbestosstar.crashdetector.app.lanzermod.tlauncher;
  * marcador hace que la transformación sea idempotente si el cargador solicita
  * los bytes de la misma clase más de una vez.
  */
-public final class CrashDetectorByteCoremod
-//implements ICoremodTransformer
-{
+public final class CrashDetectorByteCoremod implements ICoremodTransformer {
 
 	// @Override
 	public byte[] transform(String nombreClase, byte[] bytesClase) {
