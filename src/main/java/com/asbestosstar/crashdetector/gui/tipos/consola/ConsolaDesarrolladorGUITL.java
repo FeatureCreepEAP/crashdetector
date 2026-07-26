@@ -93,7 +93,7 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 	private static final String ICONO_GC = "imagenes/gc.png";
 	private static final String ICONO_GC_COUNT_BINFACE = "imagenes/count_binface.png";
 	private static final String ICONO_HEAP_DUMP = "imagenes/heapdump.png";
-	private static final String ICONO_TRANSFERIDOR_CLASES = "imagenes/eon_of_stars.png";
+	private static final String ICONO_TRANSFERIDOR_CLASES = "imagenes/clase_ipc.png";
 	private static final String ICONO_BAJAR = "imagenes/consola_bajar.png";
 	private static final String ICONO_LOGS = "imagenes/consola_logs.png";
 	private static final String ICONO_STOP = "imagenes/consola_stop.png";

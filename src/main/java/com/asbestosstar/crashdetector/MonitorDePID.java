@@ -423,6 +423,7 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/gc.png", Statics.carpeta.resolve("imagenes/gc.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/ike_eveland.png",
 				Statics.carpeta.resolve("imagenes/ike_eveland.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/clase_ipc.png", Statics.carpeta.resolve("imagenes/clase_ipc.png").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/AbrolDeMods.md",
 				Statics.carpeta.resolve("docs/espanol/minecraft/AbrolDeMods.md").toFile());
