@@ -14173,4 +14173,177 @@ public class Suajili implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "Kiolesura hiki husaidia kupata mod ambazo huenda ni za upande wa mteja pekee ili ziondolewe kwenye kifurushi cha seva. Kwa sasa ni mbinu ya Universalator pekee iliyotekelezwa.";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "Uchanganuzi huu ni wa ushauri. Kagua matokeo kabla ya kuondoa mod. Mbinu nyingine mbili bado hazijatekelezwa.";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "Tumia Universalator kupata mod za mteja za kuondoa";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "Kagua metadata za ndani za faili za mod";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "Kagua metadata za faili za Modrinth na CurseForge";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "bado haijatekelezwa";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "Mbinu za utafutaji";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "Changanua mod za mteja";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "Onyesha upya";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "Tayari.";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "Inachanganua mod... tafadhali subiri.";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "Mod zinazowezekana kuwa za mteja";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "Ripoti";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "Hakuna mod zinazoonekana kuwa za mteja pekee zilizopatikana.";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "Chagua mod za kuondoa...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "Chagua mod za kuondoa";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "Chagua mod unazotaka kuondoa kwenye kifurushi cha seva. Kwa usalama zitahamishwa kwenda kwenye folda ya nakala badala ya kufutwa kimya kimya.";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "Mod zimehamishwa kwenda kwenye folda ya nakala";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "Hakuna mod iliyochaguliwa.";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "Hitilafu wakati wa kuchanganua mod.";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "Hitilafu wakati wa kuondoa mod zilizochaguliwa.";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "Uhakika";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "Sababu";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "metadata inatangaza mazingira ya mteja";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "metadata inaonyesha matumizi ya upande wa mteja";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "jina linafanana na viashiria vya mod za mteja";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "Rangi ya usuli";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "Rangi ya paneli";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "Rangi ya maandishi";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "Rangi ya msisitizo";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "Rangi ya mpaka";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "Rangi ya onyo";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "Rangi ya mafanikio";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "Rangi ya uteuzi";
+		}
+		return "Rangi";
+	}
 }

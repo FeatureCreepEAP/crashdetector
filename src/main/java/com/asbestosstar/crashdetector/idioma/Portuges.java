@@ -13737,4 +13737,177 @@ public class Portuges implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "Esta interface ajuda a encontrar mods que provavelmente são apenas do cliente para removê-los de um pacote de servidor. No momento, somente o método Universalator está implementado.";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "A análise é apenas orientativa. Revise o resultado antes de remover um mod. Os outros dois métodos ainda não foram implementados.";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "Usar o Universalator para encontrar mods do cliente para remover";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "Examinar os metadados locais dos arquivos de mod";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "Examinar os metadados de arquivos do Modrinth e CurseForge";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "ainda não implementado";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "Métodos de pesquisa";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "Examinar mods do cliente";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "Atualizar visualização";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "Pronto.";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "Examinando mods... aguarde.";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "Prováveis mods do cliente";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "Relatório";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "Nenhum mod que pareça ser apenas do cliente foi encontrado.";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "Escolher mods para remover...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "Escolher mods para remover";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "Selecione os mods que deseja remover do pacote do servidor. Por segurança, eles serão movidos para uma pasta de backup em vez de serem apagados silenciosamente.";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "Mods movidos para a pasta de backup";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "Nenhum mod foi selecionado.";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "Erro ao examinar os mods.";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "Erro ao remover os mods selecionados.";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "Confiança";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "Motivos";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "os metadados declaram ambiente de cliente";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "os metadados indicam uso no lado do cliente";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "o nome corresponde às heurísticas de mods do cliente";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "Cor de fundo";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "Cor do painel";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "Cor do texto";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "Cor de destaque";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "Cor da borda";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "Cor de aviso";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "Cor de sucesso";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "Cor de seleção";
+		}
+		return "Cor";
+	}
 }

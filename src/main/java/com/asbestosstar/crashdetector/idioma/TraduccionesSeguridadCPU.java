@@ -1317,4 +1317,5 @@ final class TraduccionesSeguridadCPU {
 	private static String normalizar(String codigo) {
 		return codigo == null ? "" : codigo.trim().toLowerCase(Locale.ROOT);
 	}
+
 }

@@ -1401,4 +1401,177 @@ public class Malayo extends Indonesia {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "GUI ini membantu mencari mod yang berkemungkinan hanya untuk klien supaya boleh dikeluarkan daripada pek pelayan. Buat masa ini hanya kaedah Universalator dilaksanakan.";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "Imbasan ini hanyalah panduan. Semak hasil sebelum mengeluarkan mod. Dua kaedah lain belum dilaksanakan.";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "Gunakan Universalator untuk mencari mod klien yang hendak dikeluarkan";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "Semak metadata tempatan fail mod";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "Semak metadata fail Modrinth dan CurseForge";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "belum dilaksanakan";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "Kaedah carian";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "Imbas mod klien";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "Segarkan paparan";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "Sedia.";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "Sedang mengimbas mod... sila tunggu.";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "Mod klien yang berkemungkinan";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "Laporan";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "Tiada mod yang kelihatan khusus untuk klien ditemui.";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "Pilih mod untuk dikeluarkan...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "Pilih mod untuk dikeluarkan";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "Pilih mod yang hendak dikeluarkan daripada pek pelayan. Untuk keselamatan, mod akan dipindahkan ke folder sandaran dan bukan dipadam secara senyap.";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "Mod dipindahkan ke folder sandaran";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "Tiada mod dipilih.";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "Ralat semasa mengimbas mod.";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "Ralat semasa mengeluarkan mod yang dipilih.";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "Keyakinan";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "Sebab";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "metadata mengisytiharkan persekitaran klien";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "metadata menunjukkan penggunaan sisi klien";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "nama sepadan dengan heuristik mod klien";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "Warna latar";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "Warna panel";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "Warna teks";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "Warna aksen";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "Warna sempadan";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "Warna amaran";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "Warna kejayaan";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "Warna pilihan";
+		}
+		return "Warna";
+	}
 }

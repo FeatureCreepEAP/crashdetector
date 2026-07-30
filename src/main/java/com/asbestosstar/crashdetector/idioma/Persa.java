@@ -13686,4 +13686,177 @@ public class Persa implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "این رابط کمک می‌کند مودهایی که احتمالاً فقط سمت کلاینت هستند پیدا شوند تا از بستهٔ سرور حذف شوند. فعلاً فقط روش Universalator پیاده‌سازی شده است.";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "نتیجهٔ اسکن راهنماست. پیش از حذف مود، نتیجه را بررسی کنید. دو روش دیگر هنوز پیاده‌سازی نشده‌اند.";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "استفاده از Universalator برای یافتن مودهای سمت کلاینت جهت حذف";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "بررسی فرادادهٔ محلی فایل‌های مود";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "بررسی فرادادهٔ فایل‌های Modrinth و CurseForge";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "هنوز پیاده‌سازی نشده";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "روش‌های جستجو";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "اسکن مودهای سمت کلاینت";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "تازه‌سازی نما";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "آماده.";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "در حال اسکن مودها... لطفاً صبر کنید.";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "مودهای احتمالی سمت کلاینت";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "گزارش";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "هیچ مودی که فقط سمت کلاینت به نظر برسد پیدا نشد.";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "انتخاب مودها برای حذف...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "انتخاب مودها برای حذف";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "مودهایی را که می‌خواهید از بستهٔ سرور حذف شوند انتخاب کنید. برای ایمنی، به پوشهٔ پشتیبان منتقل می‌شوند و مستقیماً حذف نخواهند شد.";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "مودها به پوشهٔ پشتیبان منتقل شدند";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "هیچ مودی انتخاب نشده است.";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "خطا هنگام اسکن مودها.";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "خطا هنگام حذف مودهای انتخاب‌شده.";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "اطمینان";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "دلایل";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "فراداده محیط کلاینت را اعلام می‌کند";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "فراداده استفادهٔ سمت کلاینت را نشان می‌دهد";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "نام با الگوی مودهای سمت کلاینت مطابقت دارد";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "رنگ پس‌زمینه";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "رنگ پنل";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "رنگ متن";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "رنگ تأکیدی";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "رنگ حاشیه";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "رنگ هشدار";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "رنگ موفقیت";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "رنگ انتخاب";
+		}
+		return "رنگ";
+	}
 }

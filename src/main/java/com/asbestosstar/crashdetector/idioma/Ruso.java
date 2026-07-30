@@ -13731,4 +13731,177 @@ public class Ruso implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "Этот интерфейс помогает найти моды, которые, вероятно, нужны только клиенту, чтобы удалить их из серверной сборки. Сейчас реализован только метод Universalator.";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "Результат сканирования носит рекомендательный характер. Проверьте его перед удалением мода. Два других метода пока не реализованы.";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "Использовать Universalator для поиска клиентских модов, которые нужно удалить";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "Проверить локальные метаданные файлов модов";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "Проверить метаданные файлов Modrinth и CurseForge";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "ещё не реализовано";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "Методы поиска";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "Сканировать клиентские моды";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "Обновить вид";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "Готово.";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "Сканирование модов... подождите.";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "Вероятные клиентские моды";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "Отчёт";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "Моды, похожие на исключительно клиентские, не найдены.";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "Выбрать моды для удаления...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "Выбрать моды для удаления";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "Выберите моды, которые нужно убрать из серверной сборки. Для безопасности они будут перемещены в папку резервных копий, а не удалены безвозвратно.";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "Моды перемещены в папку резервных копий";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "Ни один мод не выбран.";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "Ошибка при сканировании модов.";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "Ошибка при удалении выбранных модов.";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "Уверенность";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "Причины";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "метаданные объявляют клиентское окружение";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "метаданные указывают на использование на клиенте";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "имя соответствует признакам клиентского мода";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "Цвет фона";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "Цвет панели";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "Цвет текста";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "Цвет акцента";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "Цвет границы";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "Цвет предупреждения";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "Цвет успеха";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "Цвет выделения";
+		}
+		return "Цвет";
+	}
 }

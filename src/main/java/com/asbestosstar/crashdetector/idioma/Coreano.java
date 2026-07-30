@@ -13567,4 +13567,177 @@ public class Coreano implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "이 GUI는 서버 팩에서 제거할 수 있도록 클라이언트 전용일 가능성이 높은 모드를 찾습니다. 현재는 Universalator 방식만 구현되어 있습니다.";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "검사 결과는 참고용입니다. 모드를 제거하기 전에 결과를 확인하십시오. 다른 두 방식은 아직 구현되지 않았습니다.";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "Universalator로 제거할 클라이언트 모드 찾기";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "로컬 모드 파일 메타데이터 검사";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "Modrinth 및 CurseForge 파일 메타데이터 검사";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "아직 구현되지 않음";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "검색 방식";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "클라이언트 모드 검사";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "보기 새로 고침";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "준비됨.";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "모드를 검사하는 중입니다... 잠시 기다리십시오.";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "클라이언트 전용 가능성이 높은 모드";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "보고서";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "클라이언트 전용으로 보이는 모드를 찾지 못했습니다.";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "제거할 모드 선택...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "제거할 모드 선택";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "서버 팩에서 제거할 모드를 선택하십시오. 안전을 위해 삭제하지 않고 백업 폴더로 이동합니다.";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "모드를 백업 폴더로 이동했습니다";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "선택한 모드가 없습니다.";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "모드 검사 중 오류가 발생했습니다.";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "선택한 모드 제거 중 오류가 발생했습니다.";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "신뢰도";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "이유";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "메타데이터가 클라이언트 환경을 선언함";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "메타데이터가 클라이언트 사용을 나타냄";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "이름이 클라이언트 모드 휴리스틱과 일치함";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "배경색";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "패널색";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "텍스트색";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "강조색";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "테두리색";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "경고색";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "성공색";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "선택색";
+		}
+		return "색상";
+	}
 }

@@ -13859,4 +13859,177 @@ public class Arabe implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "تساعد هذه الواجهة في العثور على التعديلات التي يُرجح أنها خاصة بالعميل لإزالتها من حزمة الخادم. طريقة Universalator وحدها مطبقة حاليًا.";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "الفحص إرشادي. راجع النتائج قبل إزالة أي تعديل. الطريقتان الأخريان غير مطبقتين بعد.";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "استخدام Universalator للعثور على تعديلات العميل المراد إزالتها";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "فحص البيانات الوصفية المحلية لملفات التعديل";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "فحص بيانات ملفات Modrinth وCurseForge";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "غير مطبق بعد";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "طرق البحث";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "فحص تعديلات العميل";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "تحديث العرض";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "جاهز.";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "جارٍ فحص التعديلات... يرجى الانتظار.";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "تعديلات عميل محتملة";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "التقرير";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "لم يتم العثور على تعديلات تبدو خاصة بالعميل فقط.";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "اختيار تعديلات لإزالتها...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "اختيار التعديلات المراد إزالتها";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "اختر التعديلات التي تريد إزالتها من حزمة الخادم. ستُنقل إلى مجلد نسخ احتياطي بدل حذفها بصمت.";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "تم نقل التعديلات إلى مجلد النسخ الاحتياطي";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "لم يتم اختيار أي تعديل.";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "حدث خطأ أثناء فحص التعديلات.";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "حدث خطأ أثناء إزالة التعديلات المحددة.";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "الثقة";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "الأسباب";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "تعلن البيانات الوصفية عن بيئة عميل";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "تشير البيانات الوصفية إلى استخدام خاص بالعميل";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "يتطابق الاسم مع مؤشرات تعديلات العميل";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "لون الخلفية";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "لون اللوحة";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "لون النص";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "لون التمييز";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "لون الحدود";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "لون التحذير";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "لون النجاح";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "لون التحديد";
+		}
+		return "لون";
+	}
 }

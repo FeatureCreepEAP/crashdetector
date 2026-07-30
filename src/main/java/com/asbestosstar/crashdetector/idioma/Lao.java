@@ -14142,4 +14142,177 @@ public class Lao implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "GUI ນີ້ຊ່ວຍຊອກຫາ mod ທີ່ນ່າຈະເປັນຝັ່ງ client ເທົ່ານັ້ນ ເພື່ອນຳອອກຈາກ server pack. ຕອນນີ້ມີພຽງວິທີ Universalator ທີ່ໃຊ້ໄດ້.";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "ຜົນສະແກນເປັນພຽງຄຳແນະນຳ. ກວດສອບກ່ອນນຳ mod ອອກ. ອີກສອງວິທີຍັງບໍ່ໄດ້ພັດທະນາ.";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "ໃຊ້ Universalator ເພື່ອຊອກຫາ mod ຝັ່ງ client ທີ່ຈະນຳອອກ";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "ກວດ metadata ໃນໄຟລ໌ mod ພາຍໃນເຄື່ອງ";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "ກວດ metadata ຂອງໄຟລ໌ Modrinth ແລະ CurseForge";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "ຍັງບໍ່ໄດ້ພັດທະນາ";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "ວິທີຄົ້ນຫາ";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "ສະແກນ mod ຝັ່ງ client";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "ໂຫຼດມຸມມອງໃໝ່";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "ພ້ອມ.";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "ກຳລັງສະແກນ mod... ກະລຸນາລໍຖ້າ.";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "mod ຝັ່ງ client ທີ່ອາດເປັນໄປໄດ້";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "ລາຍງານ";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "ບໍ່ພົບ mod ທີ່ເບິ່ງຄືວ່າເປັນຝັ່ງ client ເທົ່ານັ້ນ.";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "ເລືອກ mod ທີ່ຈະນຳອອກ...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "ເລືອກ mod ທີ່ຈະນຳອອກ";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "ເລືອກ mod ທີ່ຈະນຳອອກຈາກ server pack. ເພື່ອຄວາມປອດໄພ ມັນຈະຖືກຍ້າຍໄປໂຟນເດີສຳຮອງ ແທນການລຶບ.";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "ຍ້າຍ mod ໄປໂຟນເດີສຳຮອງແລ້ວ";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "ບໍ່ໄດ້ເລືອກ mod.";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "ເກີດຂໍ້ຜິດພາດຂະນະສະແກນ mod.";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "ເກີດຂໍ້ຜິດພາດຂະນະນຳ mod ທີ່ເລືອກອອກ.";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "ຄວາມໝັ້ນໃຈ";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "ເຫດຜົນ";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "metadata ລະບຸສະພາບແວດລ້ອມ client";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "metadata ບອກວ່າໃຊ້ຝັ່ງ client";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "ຊື່ກົງກັບລັກສະນະ mod ຝັ່ງ client";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "ສີພື້ນຫຼັງ";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "ສີແຜງ";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "ສີຂໍ້ຄວາມ";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "ສີເນັ້ນ";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "ສີຂອບ";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "ສີເຕືອນ";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "ສີສຳເລັດ";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "ສີເລືອກ";
+		}
+		return "ສີ";
+	}
 }

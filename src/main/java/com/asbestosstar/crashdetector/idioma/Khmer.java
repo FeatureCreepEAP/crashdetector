@@ -14158,4 +14158,177 @@ public class Khmer implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "ផ្ទាំងនេះជួយស្វែងរក mod ដែលប្រហែលជាសម្រាប់ client តែប៉ុណ្ណោះ ដើម្បីយកចេញពី server pack។ បច្ចុប្បន្នមានតែវិធី Universalator ប៉ុណ្ណោះដែលបានអនុវត្ត។";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "លទ្ធផលស្កេនគ្រាន់តែជាការណែនាំ។ សូមពិនិត្យមុនយក mod ចេញ។ វិធីពីរផ្សេងទៀតមិនទាន់បានអនុវត្តទេ។";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "ប្រើ Universalator ដើម្បីរក mod client ដែលត្រូវយកចេញ";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "ពិនិត្យ metadata មូលដ្ឋានរបស់ឯកសារ mod";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "ពិនិត្យ metadata ឯកសាររបស់ Modrinth និង CurseForge";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "មិនទាន់បានអនុវត្ត";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "វិធីស្វែងរក";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "ស្កេន mod client";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "ផ្ទុកទិដ្ឋភាពឡើងវិញ";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "រួចរាល់។";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "កំពុងស្កេន mod... សូមរង់ចាំ។";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "mod client ដែលអាចមាន";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "របាយការណ៍";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "រកមិនឃើញ mod ដែលមើលទៅសម្រាប់ client តែប៉ុណ្ណោះទេ។";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "ជ្រើស mod ដើម្បីយកចេញ...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "ជ្រើស mod ដើម្បីយកចេញ";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "ជ្រើស mod ដែលអ្នកចង់យកចេញពី server pack។ ដើម្បីសុវត្ថិភាព វានឹងត្រូវផ្លាស់ទីទៅថតបម្រុងទុក ជំនួសឱ្យការលុបដោយស្ងៀមស្ងាត់។";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "mod ត្រូវបានផ្លាស់ទីទៅថតបម្រុងទុក";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "មិនបានជ្រើស mod ណាមួយទេ។";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "មានកំហុសពេលស្កេន mod។";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "មានកំហុសពេលយក mod ដែលបានជ្រើសចេញ។";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "កម្រិតទុកចិត្ត";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "មូលហេតុ";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "metadata ប្រកាសបរិស្ថាន client";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "metadata បង្ហាញការប្រើប្រាស់ខាង client";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "ឈ្មោះត្រូវនឹងលក្ខណៈសម្គាល់ mod client";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "ពណ៌ផ្ទៃខាងក្រោយ";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "ពណ៌ផ្ទាំង";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "ពណ៌អក្សរ";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "ពណ៌សង្កត់";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "ពណ៌ស៊ុម";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "ពណ៌ព្រមាន";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "ពណ៌ជោគជ័យ";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "ពណ៌ជម្រើស";
+		}
+		return "ពណ៌";
+	}
 }

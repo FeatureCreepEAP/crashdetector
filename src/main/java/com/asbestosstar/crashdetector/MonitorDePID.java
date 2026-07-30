@@ -121,6 +121,7 @@ import com.asbestosstar.crashdetector.gui.tipos.transferidor_clases.Transferidor
 import com.asbestosstar.crashdetector.gui.tipos.hardware.PoliticaHardwareGUIVallure;
 
 import com.asbestosstar.crashdetector.gui.tipos.busquedabinaria.BusquedaBinariaModsGUIAnyaNyabyss;
+import com.asbestosstar.crashdetector.gui.tipos.universalator.UniversalatorGUIJellyStara;
 
 public class MonitorDePID {
 
@@ -432,6 +433,8 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/vallure.png", Statics.carpeta.resolve("imagenes/vallure.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/anya_nyabyss.png",
 				Statics.carpeta.resolve("imagenes/anya_nyabyss.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/jelly_stara.png",
+				Statics.carpeta.resolve("imagenes/jelly_stara.png").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/AbrolDeMods.md",
 				Statics.carpeta.resolve("docs/espanol/minecraft/AbrolDeMods.md").toFile());
@@ -1251,6 +1254,7 @@ public class MonitorDePID {
 		TipoGUI.VISOR_HEAP_DUMP.registrarGUI(VisorHeapDumpIranFifa.ID, VisorHeapDumpIranFifa::new);
 		TipoGUI.BITTORRENT.registrarGUI(BitTorrentGUIHolostarsEN.ID, BitTorrentGUIHolostarsEN::new);
 		TipoGUI.LECTOR_CORREO.registrarGUI(LectorDeCorreoNetscape.ID, LectorDeCorreoNetscape::new);
+		TipoGUI.UNIVERSALATOR.registrarGUI(UniversalatorGUIJellyStara.ID, UniversalatorGUIJellyStara::new);
 		TipoGUI.LECTOR_CORREO.registrarGUI(LectorDeCorreoIkeEveland.ID, LectorDeCorreoIkeEveland::new);
 
 	}

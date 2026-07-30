@@ -520,4 +520,5 @@ final class TraduccionesPoliticaHardware {
 			return ES;
 		}
 	}
+
 }

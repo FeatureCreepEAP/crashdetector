@@ -13056,4 +13056,177 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "Цей інтерфейс допомагає знайти моди, які, ймовірно, потрібні лише клієнту, щоб прибрати їх із серверної збірки. Наразі реалізовано лише метод Universalator.";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "Результат сканування має рекомендаційний характер. Перевірте його перед вилученням мода. Два інші методи ще не реалізовані.";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "Використати Universalator для пошуку клієнтських модів, які треба вилучити";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "Перевірити локальні метадані файлів модів";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "Перевірити метадані файлів Modrinth і CurseForge";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "ще не реалізовано";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "Методи пошуку";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "Сканувати клієнтські моди";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "Оновити вигляд";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "Готово.";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "Сканування модів... зачекайте.";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "Ймовірні клієнтські моди";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "Звіт";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "Модів, схожих на суто клієнтські, не знайдено.";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "Вибрати моди для вилучення...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "Вибрати моди для вилучення";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "Виберіть моди, які потрібно прибрати із серверної збірки. Для безпеки їх буде переміщено до папки резервних копій, а не видалено безповоротно.";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "Моди переміщено до папки резервних копій";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "Жодного мода не вибрано.";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "Помилка під час сканування модів.";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "Помилка під час вилучення вибраних модів.";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "Упевненість";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "Причини";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "метадані оголошують клієнтське середовище";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "метадані вказують на використання на клієнті";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "назва відповідає ознакам клієнтського мода";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "Колір тла";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "Колір панелі";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "Колір тексту";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "Колір акценту";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "Колір межі";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "Колір попередження";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "Колір успіху";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "Колір виділення";
+		}
+		return "Колір";
+	}
 }

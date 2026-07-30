@@ -13945,4 +13945,177 @@ public class Vietnamita implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "GUI này giúp tìm các mod có khả năng chỉ dành cho phía máy khách để loại chúng khỏi gói máy chủ. Hiện chỉ phương pháp Universalator được triển khai.";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "Kết quả quét chỉ mang tính hướng dẫn. Hãy kiểm tra trước khi loại mod. Hai phương pháp còn lại chưa được triển khai.";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "Dùng Universalator để tìm mod phía máy khách cần loại bỏ";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "Kiểm tra metadata cục bộ của tệp mod";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "Kiểm tra metadata tệp trên Modrinth và CurseForge";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "chưa được triển khai";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "Phương pháp tìm kiếm";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "Quét mod phía máy khách";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "Làm mới giao diện";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "Sẵn sàng.";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "Đang quét mod... vui lòng chờ.";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "Mod có thể chỉ dành cho máy khách";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "Báo cáo";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "Không tìm thấy mod nào có vẻ chỉ dành cho phía máy khách.";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "Chọn mod để loại bỏ...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "Chọn mod để loại bỏ";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "Chọn các mod cần loại khỏi gói máy chủ. Để an toàn, chúng sẽ được chuyển vào thư mục sao lưu thay vì bị xóa âm thầm.";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "Đã chuyển mod vào thư mục sao lưu";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "Chưa chọn mod nào.";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "Lỗi khi quét mod.";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "Lỗi khi loại bỏ các mod đã chọn.";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "Độ tin cậy";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "Lý do";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "metadata khai báo môi trường máy khách";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "metadata cho biết mod dùng ở phía máy khách";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "tên khớp với dấu hiệu của mod phía máy khách";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "Màu nền";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "Màu bảng";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "Màu chữ";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "Màu nhấn";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "Màu viền";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "Màu cảnh báo";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "Màu thành công";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "Màu lựa chọn";
+		}
+		return "Màu";
+	}
 }

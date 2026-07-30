@@ -14901,4 +14901,177 @@ public class Espanol implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "Esta GUI ayuda a encontrar mods que probablemente sean solo del cliente para quitarlos de un pack de servidor. Solo el método Universalator está implementado por ahora.";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "El análisis es orientativo. Revise el resultado antes de quitar un mod. Los otros dos métodos todavía no están implementados.";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "Usar Universalator para buscar mods del lado cliente para quitar";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "Buscar en los metadatos locales de los archivos del mod";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "Buscar en los metadatos de archivos de Modrinth y CurseForge";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "todavía no implementado";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "Métodos de búsqueda";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "Escanear mods del cliente";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "Actualizar vista";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "Listo.";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "Escaneando mods... espere.";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "Mods cliente probables";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "Reporte";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "No se encontraron mods que parezcan ser únicamente del cliente.";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "Elegir mods para quitar...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "Elegir mods para quitar";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "Seleccione los mods que quiera quitar del pack del servidor. Por seguridad se moverán a una carpeta de respaldo en vez de borrarse silenciosamente.";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "Mods movidos a la carpeta de respaldo";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "No seleccionó ningún mod.";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "Error al escanear los mods.";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "Error al quitar los mods seleccionados.";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "Confianza";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "Razones";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "el metadato declara entorno cliente";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "los metadatos indican que es de lado cliente";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "el nombre coincide con heurísticas de mods cliente";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "Color de fondo";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "Color de panel";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "Color de texto";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "Color de acento";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "Color de borde";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "Color de advertencia";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "Color de éxito";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "Color de selección";
+		}
+		return "Color";
+	}
 }

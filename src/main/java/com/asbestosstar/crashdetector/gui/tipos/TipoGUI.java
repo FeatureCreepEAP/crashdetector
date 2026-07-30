@@ -71,6 +71,7 @@ import com.asbestosstar.crashdetector.gui.tipos.generador_parches.GeneradorParch
 import com.asbestosstar.crashdetector.gui.tipos.hardware.PoliticaHardwareGUI;
 
 import com.asbestosstar.crashdetector.gui.tipos.busquedabinaria.BusquedaBinariaModsGUI;
+import com.asbestosstar.crashdetector.gui.tipos.universalator.UniversalatorGUI;
 
 public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
@@ -1543,6 +1544,31 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+	/**
+	 * GUI de Universalator
+	 */
+	public static TipoGUI<UniversalatorGUI> UNIVERSALATOR = new TipoGUI<UniversalatorGUI>() {
+		@Override
+		public String id() {
+			return "universalator";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.universalatorBoton();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<UniversalatorGUI> gui) {
+			UniversalatorGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<UniversalatorGUI>> obtenerGUIs() {
+			return UniversalatorGUI.GUIS;
+		}
+	};
+
 	static {
 		TIPOS_DE_GUI.add(BUSQUEDA_BINARIA_MODS);
 		TIPOS_DE_GUI.add(GENERADOR_DE_PARCHES);
@@ -1599,6 +1625,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(ESCANER_NUBE);
 		TIPOS_DE_GUI.add(VISOR_HEAP_DUMP);
 		TIPOS_DE_GUI.add(LECTOR_CORREO);
+		TIPOS_DE_GUI.add(UNIVERSALATOR);
 		TIPOS_DE_GUI.add(BITTORRENT);
 
 	}

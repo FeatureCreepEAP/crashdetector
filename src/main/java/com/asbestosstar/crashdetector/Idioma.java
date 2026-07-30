@@ -5477,4 +5477,63 @@ public interface Idioma {
 
 	public String busquedaBinariaModsColor(String clave);
 
+	public String universalatorBoton();
+
+	public String universalatorTitulo();
+
+	public String universalatorCita();
+
+	public String universalatorDescripcion();
+
+	public String universalatorAdvertenciaSoloCliente();
+
+	public String universalatorMetodoUniversalator();
+
+	public String universalatorMetodoMetadatosLocales();
+
+	public String universalatorMetodoMetadatosRemotos();
+
+	public String universalatorNoImplementado();
+
+	public String universalatorMetodosTitulo();
+
+	public String universalatorEscanear();
+
+	public String universalatorActualizar();
+
+	public String universalatorEstadoListo();
+
+	public String universalatorEstadoEscaneando();
+
+	public String universalatorResultadoTitulo();
+
+	public String universalatorReporteTitulo();
+
+	public String universalatorSinResultados();
+
+	public String universalatorBotonElegirEliminar();
+
+	public String universalatorDialogoElegirMods();
+
+	public String universalatorConfirmarEliminar();
+
+	public String universalatorEliminadosExito();
+
+	public String universalatorNadaSeleccionado();
+
+	public String universalatorErrorEscaneo();
+
+	public String universalatorErrorEliminar();
+
+	public String universalatorConfianza();
+
+	public String universalatorRazones();
+
+	public String universalatorRazonEntornoCliente();
+
+	public String universalatorRazonMetadatosCliente();
+
+	public String universalatorRazonHeuristicaNombre();
+
+	public String universalatorColor(String clave);
 }

@@ -13571,4 +13571,177 @@ public class Japones implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "この GUI は、サーバーパックから除外するためにクライアント専用と思われる Mod を検出します。現在実装されているのは Universalator 方式だけです。";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "このスキャン結果は参考情報です。Mod を除外する前に確認してください。ほかの 2 つの方式はまだ実装されていません。";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "Universalator で除外するクライアント Mod を探す";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "ローカルの Mod ファイルメタデータを調べる";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "Modrinth と CurseForge のファイルメタデータを調べる";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "未実装";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "検索方法";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "クライアント Mod をスキャン";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "表示を更新";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "準備完了。";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "Mod をスキャンしています。お待ちください。";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "クライアント専用の可能性がある Mod";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "レポート";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "クライアント専用と思われる Mod は見つかりませんでした。";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "除外する Mod を選択...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "除外する Mod を選択";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "サーバーパックから除外する Mod を選択してください。安全のため、直接削除せずバックアップフォルダーへ移動します。";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "Mod をバックアップフォルダーへ移動しました";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "Mod が選択されていません。";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "Mod のスキャン中にエラーが発生しました。";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "選択した Mod の除外中にエラーが発生しました。";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "信頼度";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "理由";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "メタデータがクライアント環境を宣言している";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "メタデータがクライアント側利用を示している";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "名前がクライアント Mod の判定条件に一致する";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "背景色";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "パネル色";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "文字色";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "アクセント色";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "境界色";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "警告色";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "成功色";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "選択色";
+		}
+		return "色";
+	}
 }

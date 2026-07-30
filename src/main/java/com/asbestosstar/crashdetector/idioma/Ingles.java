@@ -14007,4 +14007,177 @@ public class Ingles implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "This GUI helps find mods that are probably client-side only so they can be removed from a server pack. Only the Universalator method is currently implemented.";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "This scan is advisory. Review the result before removing a mod. The other two methods are not implemented yet.";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "Use Universalator to find client-side mods to remove";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "Look through local mod-file metadata";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "Look through Modrinth and CurseForge file metadata";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "not implemented yet";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "Search methods";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "Scan for client-side mods";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "Refresh view";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "Ready.";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "Scanning mods... please wait.";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "Likely client-side mods";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "Report";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "No likely client-side-only mods were found.";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "Choose mods to remove...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "Choose mods to remove";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "Select the mods you want to remove from the server pack. For safety they will be moved to a backup folder instead of being silently deleted.";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "Mods moved to the backup folder";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "No mods were selected.";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "Error while scanning mods.";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "Error while removing the selected mods.";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "Confidence";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "Reasons";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "metadata declares a client environment";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "metadata indicates client-side usage";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "name matches client-side mod heuristics";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "Background colour";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "Panel colour";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "Text colour";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "Accent colour";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "Border colour";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "Warning colour";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "Success colour";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "Selection colour";
+		}
+		return "Colour";
+	}
 }

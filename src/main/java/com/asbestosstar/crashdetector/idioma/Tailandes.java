@@ -13914,4 +13914,177 @@ public class Tailandes implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "GUI นี้ช่วยค้นหา mod ที่น่าจะใช้เฉพาะฝั่งไคลเอนต์ เพื่อนำออกจากชุดเซิร์ฟเวอร์ ขณะนี้มีเพียงวิธี Universalator ที่ใช้งานได้";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "ผลการสแกนเป็นเพียงคำแนะนำ โปรดตรวจสอบก่อนนำ mod ออก อีกสองวิธียังไม่ได้พัฒนา";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "ใช้ Universalator เพื่อค้นหา mod ฝั่งไคลเอนต์ที่จะนำออก";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "ตรวจ metadata ภายในไฟล์ mod";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "ตรวจ metadata ไฟล์จาก Modrinth และ CurseForge";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "ยังไม่ได้พัฒนา";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "วิธีค้นหา";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "สแกน mod ฝั่งไคลเอนต์";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "รีเฟรชมุมมอง";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "พร้อม";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "กำลังสแกน mod... โปรดรอ";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "mod ที่น่าจะเป็นฝั่งไคลเอนต์";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "รายงาน";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "ไม่พบ mod ที่ดูเหมือนใช้เฉพาะฝั่งไคลเอนต์";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "เลือก mod ที่จะนำออก...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "เลือก mod ที่จะนำออก";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "เลือก mod ที่ต้องการนำออกจากชุดเซิร์ฟเวอร์ เพื่อความปลอดภัย mod จะถูกย้ายไปยังโฟลเดอร์สำรองแทนการลบทันที";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "ย้าย mod ไปยังโฟลเดอร์สำรองแล้ว";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "ไม่ได้เลือก mod";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "เกิดข้อผิดพลาดขณะสแกน mod";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "เกิดข้อผิดพลาดขณะนำ mod ที่เลือกออก";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "ความมั่นใจ";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "เหตุผล";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "metadata ระบุสภาพแวดล้อมไคลเอนต์";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "metadata ระบุว่าใช้ฝั่งไคลเอนต์";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "ชื่อตรงกับเกณฑ์ของ mod ฝั่งไคลเอนต์";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "สีพื้นหลัง";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "สีแผง";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "สีข้อความ";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "สีเน้น";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "สีขอบ";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "สีคำเตือน";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "สีสำเร็จ";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "สีการเลือก";
+		}
+		return "สี";
+	}
 }

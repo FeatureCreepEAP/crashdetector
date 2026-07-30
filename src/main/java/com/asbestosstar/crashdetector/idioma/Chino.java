@@ -13338,4 +13338,177 @@ public class Chino implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "此界面用于查找可能仅在客户端使用的模组，以便从服务器整合包中移除。目前只有 Universalator 方法已实现。";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "扫描结果仅供参考。移除模组前请检查结果。其他两种方法尚未实现。";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "使用 Universalator 查找要移除的客户端模组";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "检查模组文件的本地元数据";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "检查 Modrinth 和 CurseForge 文件元数据";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "尚未实现";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "搜索方法";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "扫描客户端模组";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "刷新视图";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "就绪。";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "正在扫描模组，请稍候。";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "可能的客户端模组";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "报告";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "未发现看起来仅在客户端使用的模组。";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "选择要移除的模组...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "选择要移除的模组";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "请选择要从服务器整合包中移除的模组。为安全起见，它们会被移动到备份文件夹，而不是直接删除。";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "模组已移动到备份文件夹";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "未选择任何模组。";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "扫描模组时出错。";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "移除所选模组时出错。";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "可信度";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "原因";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "元数据声明了客户端环境";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "元数据表明其用于客户端";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "名称符合客户端模组特征";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "背景颜色";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "面板颜色";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "文字颜色";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "强调色";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "边框颜色";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "警告颜色";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "成功颜色";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "选择颜色";
+		}
+		return "颜色";
+	}
 }

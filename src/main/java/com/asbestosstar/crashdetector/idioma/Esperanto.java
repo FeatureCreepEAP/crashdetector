@@ -13957,4 +13957,177 @@ public class Esperanto implements Idioma {
 		}
 	}
 
+	@Override
+	public String universalatorBoton() {
+		return "Universalator";
+	}
+
+	@Override
+	public String universalatorTitulo() {
+		return "Universalator - JellyStara";
+	}
+
+	@Override
+	public String universalatorCita() {
+		return "\"If you are ever feeling stressed out making a server pack, just remember the universalator tool can make the job a whole lot easier-JellyStara , but not actually\"";
+	}
+
+	@Override
+	public String universalatorDescripcion() {
+		return "Ĉi tiu interfaco helpas trovi modifaĵojn verŝajne nur klientajn por forigi ilin el servila pakaĵo. Nuntempe nur la metodo Universalator estas efektivigita.";
+	}
+
+	@Override
+	public String universalatorAdvertenciaSoloCliente() {
+		return "La skano estas nur konsila. Kontrolu la rezultojn antaŭ ol forigi modifaĵon. La aliaj du metodoj ankoraŭ ne estas efektivigitaj.";
+	}
+
+	@Override
+	public String universalatorMetodoUniversalator() {
+		return "Uzi Universalator por trovi klientajn modifaĵojn por forigi";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosLocales() {
+		return "Kontroli lokajn metadatenojn de modifaĵdosieroj";
+	}
+
+	@Override
+	public String universalatorMetodoMetadatosRemotos() {
+		return "Kontroli metadatenojn de dosieroj ĉe Modrinth kaj CurseForge";
+	}
+
+	@Override
+	public String universalatorNoImplementado() {
+		return "ankoraŭ ne efektivigita";
+	}
+
+	@Override
+	public String universalatorMetodosTitulo() {
+		return "Serĉmetodoj";
+	}
+
+	@Override
+	public String universalatorEscanear() {
+		return "Skani klientajn modifaĵojn";
+	}
+
+	@Override
+	public String universalatorActualizar() {
+		return "Refreŝigi vidon";
+	}
+
+	@Override
+	public String universalatorEstadoListo() {
+		return "Preta.";
+	}
+
+	@Override
+	public String universalatorEstadoEscaneando() {
+		return "Skanado de modifaĵoj... bonvolu atendi.";
+	}
+
+	@Override
+	public String universalatorResultadoTitulo() {
+		return "Verŝajnaj klientaj modifaĵoj";
+	}
+
+	@Override
+	public String universalatorReporteTitulo() {
+		return "Raporto";
+	}
+
+	@Override
+	public String universalatorSinResultados() {
+		return "Neniuj verŝajne nur klientaj modifaĵoj estis trovitaj.";
+	}
+
+	@Override
+	public String universalatorBotonElegirEliminar() {
+		return "Elekti modifaĵojn por forigi...";
+	}
+
+	@Override
+	public String universalatorDialogoElegirMods() {
+		return "Elekti modifaĵojn por forigi";
+	}
+
+	@Override
+	public String universalatorConfirmarEliminar() {
+		return "Elektu la modifaĵojn forigotajn el la servila pakaĵo. Por sekureco ili estos movitaj al rezerva dosierujo anstataŭ silente forigitaj.";
+	}
+
+	@Override
+	public String universalatorEliminadosExito() {
+		return "Modifaĵoj movitaj al la rezerva dosierujo";
+	}
+
+	@Override
+	public String universalatorNadaSeleccionado() {
+		return "Neniu modifaĵo estis elektita.";
+	}
+
+	@Override
+	public String universalatorErrorEscaneo() {
+		return "Eraro dum skanado de modifaĵoj.";
+	}
+
+	@Override
+	public String universalatorErrorEliminar() {
+		return "Eraro dum forigo de la elektitaj modifaĵoj.";
+	}
+
+	@Override
+	public String universalatorConfianza() {
+		return "Fidindeco";
+	}
+
+	@Override
+	public String universalatorRazones() {
+		return "Kialoj";
+	}
+
+	@Override
+	public String universalatorRazonEntornoCliente() {
+		return "metadatenoj deklaras klientan medion";
+	}
+
+	@Override
+	public String universalatorRazonMetadatosCliente() {
+		return "metadatenoj indikas klientan uzon";
+	}
+
+	@Override
+	public String universalatorRazonHeuristicaNombre() {
+		return "la nomo kongruas kun klient-modifaĵaj indikoj";
+	}
+
+	@Override
+	public String universalatorColor(String clave) {
+		if ("fondo".equalsIgnoreCase(clave)) {
+			return "Fona koloro";
+		}
+		if ("panel".equalsIgnoreCase(clave)) {
+			return "Panela koloro";
+		}
+		if ("texto".equalsIgnoreCase(clave)) {
+			return "Teksta koloro";
+		}
+		if ("acento".equalsIgnoreCase(clave)) {
+			return "Akcenta koloro";
+		}
+		if ("borde".equalsIgnoreCase(clave)) {
+			return "Randa koloro";
+		}
+		if ("advertencia".equalsIgnoreCase(clave)) {
+			return "Averta koloro";
+		}
+		if ("exito".equalsIgnoreCase(clave)) {
+			return "Sukcesa koloro";
+		}
+		if ("seleccion".equalsIgnoreCase(clave)) {
+			return "Elekta koloro";
+		}
+		return "Koloro";
+	}
 }
