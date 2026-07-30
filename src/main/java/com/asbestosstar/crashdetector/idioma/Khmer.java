@@ -14003,4 +14003,11 @@ public class Khmer implements Idioma {
 		return "<p><b>បានរកឃើញ Windows 10 កំណែ 1903 ដែលមានបច្ចុប្បន្នភាព KB4515384 ប៉ុន្តែមិនមានការកែតម្រូវដែលគេស្គាល់។ KB4515384 អាចធ្វើឱ្យសំឡេងក្នុងហ្គេមខ្លះស្រាលជាងមុន ខុសប្រក្រតី ឬបាត់ឆានែលសំឡេង។ Microsoft បានកែបញ្ហានេះនៅក្នុង KB4517211។ សូមដំឡើងបច្ចុប្បន្នភាពសរុប Windows ថ្មីជាងនេះ មុនពេលប្តូរ mod ឬកម្មវិធីបញ្ជាសំឡេង។</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "រក្សាបង្អួចមេឱ្យនៅខាងលើជានិច្ច";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

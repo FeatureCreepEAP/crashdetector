@@ -13576,4 +13576,11 @@ public class Ruso implements Idioma {
 		return "<p><b>Обнаружена Windows 10 версии 1903 с установленным обновлением KB4515384 и без известного исправления. KB4515384 может привести к тому, что звук в некоторых играх станет тише, изменится или потеряет отдельные каналы. Microsoft исправила эту проблему в KB4517211. Установите более новое накопительное обновление Windows, прежде чем менять моды или аудиодрайверы.</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "Всегда показывать главное окно поверх остальных";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

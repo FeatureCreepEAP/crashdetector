@@ -13531,4 +13531,11 @@ public class Persa implements Idioma {
 		return "<p><b>Windows 10 نسخهٔ 1903 همراه با به‌روزرسانی KB4515384 و بدون اصلاح شناخته‌شده شناسایی شد. KB4515384 ممکن است باعث شود صدای بعضی بازی‌ها کم‌تر، متفاوت یا دارای کانال‌های صوتی مفقود باشد. Microsoft این مشکل را در KB4517211 اصلاح کرد. پیش از تغییر مودها یا درایورهای صدا، یک به‌روزرسانی تجمعی جدیدتر Windows نصب کنید.</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "پنجرهٔ اصلی همیشه در بالا باشد";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

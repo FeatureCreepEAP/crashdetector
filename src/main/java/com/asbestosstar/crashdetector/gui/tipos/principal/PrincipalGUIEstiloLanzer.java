@@ -759,6 +759,9 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	 */
 	@Override
 	public void recargarApariencia() {
+		// ACTIVAR_GUI_SIEMPRE_ENCIMA_EN_RECARGA_INICIO
+		aplicarSiempreEncima();
+		// ACTIVAR_GUI_SIEMPRE_ENCIMA_EN_RECARGA_FIN
 
 		boolean esMac = CrashDetectorGUI.esMac();
 
@@ -1063,6 +1066,11 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		elementos.add(lanzerColorCajaTexto);
 		elementos.add(lanzerColorEnlace);
 		elementos.add(lanzerColorBotonBaraLateral);
+
+		// ELEMENTO_GUI_SIEMPRE_ENCIMA_INICIO
+		GUI_SIEMPRE_ENCIMA.establecerNombreParaMostrar(() -> MonitorDePID.idioma.guiPrincipalSiempreEncima());
+		elementos.add(GUI_SIEMPRE_ENCIMA);
+		// ELEMENTO_GUI_SIEMPRE_ENCIMA_FIN
 
 		return elementos;
 	}

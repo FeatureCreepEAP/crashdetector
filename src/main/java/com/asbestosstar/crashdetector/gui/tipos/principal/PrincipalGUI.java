@@ -68,6 +68,8 @@ import com.asbestosstar.crashdetector.gui.tipos.scriptide.ScriptIDEGUINiwaJPlus;
 import com.asbestosstar.crashdetector.lanzer.CDLauncher;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 
+import com.asbestosstar.crashdetector.config.ConfigBoolean;
+
 /**
  * Base técnica: - Crea y configura el visor (JEditorPane/JScrollPane) y
  * listeners. - NO asume layout; delega toda la construcción visual a
@@ -78,6 +80,15 @@ import com.asbestosstar.crashdetector.mapas.BiMap;
 public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 
 	public static Map<String, Supplier<PrincipalGUI>> GUIS = new HashMap<>();
+
+	// CONFIG_GUI_SIEMPRE_ENCIMA_INICIO
+	/**
+	 * Opción global de la GUI principal. Está desactivada por defecto para no
+	 * modificar el comportamiento normal del gestor de ventanas.
+	 */
+	public static final ConfigBoolean GUI_SIEMPRE_ENCIMA = ConfigBoolean.de("gui.principal.siempre_encima", false);
+	// CONFIG_GUI_SIEMPRE_ENCIMA_FIN
+
 	public Instant tiempoFallo;
 
 //	public ConfigColor colorFondo = ConfigColor.de("gui.principal.color.fondo",
@@ -179,8 +190,33 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		ManagerDiscord.comenzar();
 		CrashDetectorLogger.log("en constructir");
 		inicializarInterfaz();
+		// ACTIVAR_GUI_SIEMPRE_ENCIMA_INICIO
+		aplicarSiempreEncima();
+		// ACTIVAR_GUI_SIEMPRE_ENCIMA_FIN
 		this.setVisible(true);
 	}
+
+	// APLICAR_GUI_SIEMPRE_ENCIMA_INICIO
+	/**
+	 * Aplica la preferencia de mantener la ventana principal encima.
+	 *
+	 * No usa código nativo. Si el entorno gráfico no admite esta característica,
+	 * conserva el comportamiento normal de la ventana.
+	 */
+	public void aplicarSiempreEncima() {
+		boolean siempreEncima = GUI_SIEMPRE_ENCIMA.obtener();
+
+		try {
+			if (!siempreEncima || isAlwaysOnTopSupported()) {
+				setAlwaysOnTop(siempreEncima);
+			} else {
+				CrashDetectorLogger.log("El entorno gráfico no admite mantener la ventana principal siempre encima.");
+			}
+		} catch (SecurityException excepcion) {
+			CrashDetectorLogger.logException(excepcion);
+		}
+	}
+	// APLICAR_GUI_SIEMPRE_ENCIMA_FIN
 
 	/**
 	 * Registrar Botons de la barra lateral

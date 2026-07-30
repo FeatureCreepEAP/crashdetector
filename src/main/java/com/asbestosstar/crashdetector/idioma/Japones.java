@@ -13416,4 +13416,11 @@ public class Japones implements Idioma {
 		return "<p><b>Windows 10 バージョン 1903 に KB4515384 がインストールされており、既知の修正が適用されていない可能性があります。KB4515384 により、一部のゲームで音が小さくなったり、通常と異なって聞こえたり、音声チャンネルが欠落したりすることがあります。Microsoft は KB4517211 でこの問題を修正しました。MOD やオーディオドライバーを変更する前に、より新しい Windows 累積更新プログラムをインストールしてください。</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "メインウィンドウを常に手前に表示";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

@@ -13790,4 +13790,11 @@ public class Vietnamita implements Idioma {
 		return "<p><b>Đã phát hiện Windows 10 phiên bản 1903 có bản cập nhật KB4515384 nhưng chưa có bản sửa lỗi đã biết. KB4515384 có thể khiến âm thanh trong một số trò chơi nhỏ hơn, khác thường hoặc bị mất kênh. Microsoft đã sửa vấn đề này trong KB4517211. Hãy cài đặt bản cập nhật tích lũy Windows mới hơn trước khi thay đổi mod hoặc trình điều khiển âm thanh.</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "Luôn giữ cửa sổ chính ở trên cùng";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

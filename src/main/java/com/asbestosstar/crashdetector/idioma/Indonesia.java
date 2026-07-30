@@ -14386,4 +14386,11 @@ public class Indonesia implements Idioma {
 		return "<p><b>Windows 10 versi 1903 terdeteksi dengan pembaruan KB4515384 dan tanpa perbaikan yang diketahui. KB4515384 dapat menyebabkan audio pada beberapa gim terdengar lebih pelan, berbeda, atau kehilangan kanal. Microsoft memperbaiki masalah ini dalam KB4517211. Pasang pembaruan kumulatif Windows yang lebih baru sebelum mengubah mod atau driver audio.</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "Selalu tampilkan jendela utama di atas";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

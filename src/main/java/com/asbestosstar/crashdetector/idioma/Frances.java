@@ -14374,4 +14374,11 @@ public class Frances implements Idioma {
 		return "<p><b>Windows 10 version 1903 a été détecté avec la mise à jour KB4515384 et sans le correctif connu. KB4515384 peut rendre le son de certains jeux plus faible, différent ou provoquer l'absence de certains canaux. Microsoft a corrigé ce problème dans KB4517211. Installez une mise à jour cumulative Windows plus récente avant de modifier les mods ou les pilotes audio.</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "Garder la fenêtre principale toujours au premier plan";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

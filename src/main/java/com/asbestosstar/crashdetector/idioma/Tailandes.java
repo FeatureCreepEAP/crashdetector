@@ -13759,4 +13759,11 @@ public class Tailandes implements Idioma {
 		return "<p><b>ตรวจพบ Windows 10 เวอร์ชัน 1903 ที่ติดตั้ง KB4515384 แต่ยังไม่มีการแก้ไขที่ทราบ KB4515384 อาจทำให้เสียงในบางเกมเบาลง แตกต่างไป หรือมีช่องเสียงหายไป Microsoft แก้ไขปัญหานี้ใน KB4517211 โปรดติดตั้งการอัปเดตสะสมของ Windows ที่ใหม่กว่าก่อนเปลี่ยนม็อดหรือไดรเวอร์เสียง</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "ให้หน้าต่างหลักอยู่ด้านบนเสมอ";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

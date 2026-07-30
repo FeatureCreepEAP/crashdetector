@@ -13852,4 +13852,11 @@ public class Ingles implements Idioma {
 		return "<p><b>Windows 10 version 1903 was detected with update KB4515384 and without the known correction. KB4515384 can cause audio in some games to sound quieter, different, or to have missing channels. Microsoft corrected this problem in KB4517211. Install a later Windows cumulative update before changing mods or audio drivers.</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "Keep the main window always on top";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

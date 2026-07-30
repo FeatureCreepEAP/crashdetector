@@ -13412,4 +13412,11 @@ public class Coreano implements Idioma {
 		return "<p><b>Windows 10 버전 1903에 KB4515384가 설치되어 있고 알려진 수정 업데이트는 없는 것으로 감지되었습니다. KB4515384는 일부 게임의 소리가 더 작거나 다르게 들리거나 일부 채널이 누락되게 할 수 있습니다. Microsoft는 KB4517211에서 이 문제를 수정했습니다. 모드나 오디오 드라이버를 변경하기 전에 더 최신 Windows 누적 업데이트를 설치하십시오.</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "기본 창을 항상 위에 표시";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

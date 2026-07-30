@@ -12901,4 +12901,11 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "<p><b>Виявлено Windows 10 версії 1903 з установленим оновленням KB4515384 і без відомого виправлення. KB4515384 може призвести до того, що звук у деяких іграх стане тихішим, іншим або втратить окремі канали. Microsoft виправила цю проблему в KB4517211. Установіть новіше сукупне оновлення Windows, перш ніж змінювати моди або аудіодрайвери.</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "Завжди показувати головне вікно поверх інших";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

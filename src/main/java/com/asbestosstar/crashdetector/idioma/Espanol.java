@@ -14746,4 +14746,11 @@ public class Espanol implements Idioma {
 		return "<p><b>Se detectó Windows 10 versión 1903 con la actualización KB4515384 y sin la corrección conocida. KB4515384 puede causar que el audio de algunos juegos suene más bajo, diferente o con canales ausentes. Microsoft corrigió este problema en KB4517211. Instala una actualización acumulativa posterior de Windows antes de cambiar mods o controladores de audio.</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "Mantener la ventana principal siempre encima";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

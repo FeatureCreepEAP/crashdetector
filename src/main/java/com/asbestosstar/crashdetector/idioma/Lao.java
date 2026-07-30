@@ -13987,4 +13987,11 @@ public class Lao implements Idioma {
 		return "<p><b>ກວດພົບ Windows 10 ຮຸ່ນ 1903 ທີ່ມີອັບເດດ KB4515384 ແຕ່ບໍ່ມີການແກ້ໄຂທີ່ຮູ້ຈັກ. KB4515384 ອາດເຮັດໃຫ້ສຽງໃນບາງເກມເບົາລົງ, ແຕກຕ່າງ ຫຼືຂາດຊ່ອງສຽງ. Microsoft ໄດ້ແກ້ບັນຫານີ້ໃນ KB4517211. ຕິດຕັ້ງອັບເດດສະສົມ Windows ທີ່ໃໝ່ກວ່າ ກ່ອນປ່ຽນ mod ຫຼືໄດເວີສຽງ.</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "ໃຫ້ໜ້າຕ່າງຫຼັກຢູ່ເທິງສຸດສະເໝີ";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

@@ -14018,4 +14018,11 @@ public class Suajili implements Idioma {
 		return "<p><b>Windows 10 toleo la 1903 imegunduliwa ikiwa na sasisho KB4515384 bila marekebisho yanayojulikana. KB4515384 inaweza kufanya sauti ya baadhi ya michezo iwe ya chini, tofauti, au ikose baadhi ya njia za sauti. Microsoft ilirekebisha tatizo hili katika KB4517211. Sakinisha sasisho limbikizi jipya zaidi la Windows kabla ya kubadilisha modi au viendeshaji vya sauti.</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "Weka dirisha kuu juu ya madirisha mengine kila wakati";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

@@ -5436,4 +5436,8 @@ public interface Idioma {
 	 */
 	public String errorSistemaSonidoKB4515384();
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	public String guiPrincipalSiempreEncima();
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

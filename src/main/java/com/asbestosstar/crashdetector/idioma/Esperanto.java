@@ -13802,4 +13802,11 @@ public class Esperanto implements Idioma {
 		return "<p><b>Windows 10 versio 1903 estis detektita kun la ĝisdatigo KB4515384 kaj sen la konata korekto. KB4515384 povas igi la sonon de kelkaj ludoj pli mallaŭta, malsama aŭ kun mankantaj kanaloj. Microsoft korektis ĉi tiun problemon en KB4517211. Instalu pli novan akumulan ĝisdatigon de Windows antaŭ ol ŝanĝi modifojn aŭ sonpelilojn.</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "Teni la ĉefan fenestron ĉiam supre";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

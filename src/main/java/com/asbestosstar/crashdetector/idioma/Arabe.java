@@ -13704,4 +13704,11 @@ public class Arabe implements Idioma {
 		return "<p><b>تم اكتشاف Windows 10 الإصدار 1903 مع التحديث KB4515384 ومن دون التصحيح المعروف. قد يتسبب KB4515384 في أن يكون صوت بعض الألعاب أخفض أو مختلفًا أو أن تختفي بعض القنوات الصوتية. صححت Microsoft هذه المشكلة في KB4517211. ثبّت تحديثًا تراكميًا أحدث لنظام Windows قبل تغيير التعديلات أو برامج تشغيل الصوت.</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "إبقاء النافذة الرئيسية دائمًا في المقدمة";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }

@@ -13183,4 +13183,11 @@ public class Chino implements Idioma {
 		return "<p><b>检测到 Windows 10 版本 1903 已安装 KB4515384，但未检测到已知修复。KB4515384 可能导致某些游戏的声音变小、听起来异常或缺少声道。Microsoft 已在 KB4517211 中修复此问题。在更改模组或音频驱动程序之前，请先安装更高版本的 Windows 累积更新。</b></p>";
 	}
 
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_INICIO
+	@Override
+	public String guiPrincipalSiempreEncima() {
+		return "让主窗口始终置顶";
+	}
+	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
+
 }
