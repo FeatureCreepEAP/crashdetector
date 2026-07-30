@@ -5440,4 +5440,41 @@ public interface Idioma {
 	public String guiPrincipalSiempreEncima();
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_IDIOMA
+	public String busquedaBinariaModsBotonLateral();
+
+	public String busquedaBinariaModsTitulo();
+
+	public String busquedaBinariaModsDescripcion();
+
+	public String busquedaBinariaModsAdvertenciaVariosMods();
+
+	public String busquedaBinariaModsProteccionDependencias();
+
+	public String busquedaBinariaModsIniciar();
+
+	public String busquedaBinariaModsProblemaPersiste();
+
+	public String busquedaBinariaModsProblemaDesaparecio();
+
+	public String busquedaBinariaModsRestaurar();
+
+	public String busquedaBinariaModsCandidatos();
+
+	public String busquedaBinariaModsDesactivados();
+
+	public String busquedaBinariaModsHistorial();
+
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle);
+
+	public String busquedaBinariaModsConfirmacion();
+
+	public String busquedaBinariaModsResultadoUnico(String mod);
+
+	public String busquedaBinariaModsResultadoGrupo(String mods);
+
+	public String busquedaBinariaModsError(String detalle);
+
+	public String busquedaBinariaModsColor(String clave);
+
 }

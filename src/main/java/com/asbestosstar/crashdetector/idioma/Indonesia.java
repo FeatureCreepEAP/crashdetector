@@ -14393,4 +14393,152 @@ public class Indonesia implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "Pencarian biner mod";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "Pencarian biner mod — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "Menonaktifkan sementara sekitar separuh mod, meluncurkan ulang gim dengan CDLauncher, lalu mempersempit daftar tersangka berdasarkan hasil setiap pengujian.";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "Penting: pencarian ini mengasumsikan satu mod menyebabkan masalah. Hasilnya tidak dapat diandalkan bila dua mod atau lebih menyebabkannya secara terpisah, atau bila kegagalan bergantung pada interaksi beberapa mod.";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "Perlindungan dependensi: bila sebuah dependensi dinonaktifkan, mod yang bergantung padanya juga dinonaktifkan. Mod yang tetap aktif tidak akan kehilangan dependensi yang terdeteksi.";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "Mulai pencarian";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "Masalah tetap terjadi";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "Masalah menghilang";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "Pulihkan semua mod";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "Mod kandidat";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "Mod yang dinonaktifkan untuk pengujian ini";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "Riwayat pengujian";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "Tidak ada pencarian aktif.";
+		case "recuperacion":
+			return "Ada sesi yang terputus. Pulihkan mod sebelum melanjutkan.";
+		case "escaneando":
+			return "Menganalisis mod dan dependensi…";
+		case "juego_activo":
+			return "Gim hasil peluncuran ulang sudah berjalan.";
+		case "restaurando":
+			return "Memulihkan mod…";
+		case "preparando":
+			return "Menyiapkan putaran " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "Meluncurkan ulang gim untuk putaran " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "Gim berjalan untuk putaran " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "Gim telah berakhir. Nyatakan apakah masalah tetap terjadi atau menghilang.";
+		case "ronda_persiste":
+			return "Putaran ditandai: masalah tetap terjadi.";
+		case "ronda_desaparece":
+			return "Putaran ditandai: masalah menghilang.";
+		case "restaurado":
+			return "Semua mod telah dipulihkan.";
+		case "sin_mods":
+			return "Diperlukan sedikitnya dua mod aktif.";
+		case "sin_division":
+			return "Sisa mod tidak dapat dibagi tanpa merusak dependensi yang terdeteksi.";
+		case "inconsistente":
+			return "Hasil tidak konsisten. Biasanya ini berarti ada beberapa penyebab atau interaksi antar-mod.";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "Alat akan mengganti nama berkas mod sementara dan meluncurkan ulang gim. Manifes pemulihan akan dibuat. Lanjutkan?";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "Mod tersangka berhasil diisolasi: " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "Kelompok dependensi ini tidak dapat dipisahkan: " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "Galat pencarian biner: " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "Warna latar";
+		case "panel":
+			return "Warna panel";
+		case "texto":
+			return "Warna teks";
+		case "acento":
+			return "Warna aksen";
+		case "advertencia":
+			return "Warna peringatan";
+		case "exito":
+			return "Warna berhasil";
+		case "borde":
+			return "Warna batas";
+		case "seleccion":
+			return "Warna pilihan";
+		default:
+			return clave;
+		}
+	}
+
 }

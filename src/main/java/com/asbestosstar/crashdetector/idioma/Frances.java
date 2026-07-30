@@ -14381,4 +14381,152 @@ public class Frances implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "Recherche binaire des mods";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "Recherche binaire des mods — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "Désactive temporairement environ la moitié des mods, relance le jeu avec CDLauncher et réduit la liste des suspects selon le résultat de chaque test.";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "Important : cette recherche suppose qu’un seul mod provoque le problème. Elle n’est pas fiable si plusieurs mods le provoquent séparément ou si la panne dépend d’une interaction entre plusieurs mods.";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "Protection des dépendances : si une dépendance est désactivée, ses dépendants le sont aussi. Aucun mod laissé actif ne perdra une dépendance détectée.";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "Démarrer la recherche";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "Le problème persiste";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "Le problème a disparu";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "Restaurer tous les mods";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "Mods candidats";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "Mods désactivés pour ce test";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "Historique des tests";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "Aucune recherche n’est active.";
+		case "recuperacion":
+			return "Une session interrompue existe. Restaurez les mods avant de continuer.";
+		case "escaneando":
+			return "Analyse des mods et des dépendances…";
+		case "juego_activo":
+			return "Un jeu relancé est déjà en cours.";
+		case "restaurando":
+			return "Restauration des mods…";
+		case "preparando":
+			return "Préparation de la manche " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "Relance du jeu pour la manche " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "Jeu en cours pour la manche " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "Le jeu est terminé. Indiquez si le problème persiste ou a disparu.";
+		case "ronda_persiste":
+			return "Manche marquée : le problème persiste.";
+		case "ronda_desaparece":
+			return "Manche marquée : le problème a disparu.";
+		case "restaurado":
+			return "Tous les mods ont été restaurés.";
+		case "sin_mods":
+			return "Au moins deux mods actifs sont nécessaires.";
+		case "sin_division":
+			return "L’ensemble restant ne peut pas être divisé sans casser les dépendances détectées.";
+		case "inconsistente":
+			return "Les résultats sont incohérents. Cela indique souvent plusieurs causes ou une interaction entre mods.";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "L’outil renommera temporairement les fichiers de mods et relancera le jeu. Un manifeste de récupération sera créé. Continuer ?";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "Mod suspect isolé : " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "Ce groupe de dépendances n’a pas pu être séparé : " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "Erreur de recherche binaire : " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "Couleur de fond";
+		case "panel":
+			return "Couleur des panneaux";
+		case "texto":
+			return "Couleur du texte";
+		case "acento":
+			return "Couleur d’accent";
+		case "advertencia":
+			return "Couleur d’avertissement";
+		case "exito":
+			return "Couleur de réussite";
+		case "borde":
+			return "Couleur des bordures";
+		case "seleccion":
+			return "Couleur de sélection";
+		default:
+			return clave;
+		}
+	}
+
 }

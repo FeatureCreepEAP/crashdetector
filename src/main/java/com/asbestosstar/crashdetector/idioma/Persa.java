@@ -13538,4 +13538,152 @@ public class Persa implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "جست‌وجوی دودویی ماد";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "جست‌وجوی دودویی مادها — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "حدود نیمی از مادها را موقتاً غیرفعال می‌کند، بازی را با CDLauncher دوباره اجرا می‌کند و بر اساس نتیجه هر آزمون فهرست مظنون‌ها را کوچک‌تر می‌کند.";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "مهم: این جست‌وجو فرض می‌کند یک ماد علت مشکل است. اگر دو یا چند ماد جداگانه مشکل ایجاد کنند یا خرابی وابسته به تعامل چند ماد باشد، نتیجه قابل اعتماد نیست.";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "حفاظت از وابستگی‌ها: با غیرفعال شدن یک وابستگی، مادهای وابسته به آن نیز غیرفعال می‌شوند. هیچ ماد فعال، وابستگی شناسایی‌شده خود را از دست نمی‌دهد.";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "شروع جست‌وجو";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "مشکل ادامه دارد";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "مشکل ناپدید شد";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "بازیابی همه مادها";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "مادهای نامزد";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "مادهای غیرفعال در این آزمون";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "تاریخچه آزمون";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "جست‌وجوی فعالی وجود ندارد.";
+		case "recuperacion":
+			return "یک نشست ناتمام وجود دارد. پیش از ادامه مادها را بازیابی کنید.";
+		case "escaneando":
+			return "در حال تحلیل مادها و وابستگی‌ها…";
+		case "juego_activo":
+			return "یک بازی دوباره‌اجراشده هم‌اکنون فعال است.";
+		case "restaurando":
+			return "در حال بازیابی مادها…";
+		case "preparando":
+			return "آماده‌سازی دور " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "اجرای دوباره بازی برای دور " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "بازی در حال اجرا برای دور " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "بازی پایان یافت. مشخص کنید مشکل ادامه داشت یا ناپدید شد.";
+		case "ronda_persiste":
+			return "نتیجه دور: مشکل ادامه دارد.";
+		case "ronda_desaparece":
+			return "نتیجه دور: مشکل ناپدید شد.";
+		case "restaurado":
+			return "همه مادها بازیابی شدند.";
+		case "sin_mods":
+			return "حداقل دو ماد فعال لازم است.";
+		case "sin_division":
+			return "مجموعه باقی‌مانده بدون شکستن وابستگی‌های شناسایی‌شده قابل تقسیم نیست.";
+		case "inconsistente":
+			return "نتایج ناسازگارند. معمولاً چند علت یا تعامل بین مادها وجود دارد.";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "ابزار فایل‌های ماد را موقتاً تغییرنام می‌دهد و بازی را دوباره اجرا می‌کند. یک فهرست بازیابی ساخته می‌شود. ادامه می‌دهید؟";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "ماد مظنون جدا شد: " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "این گروه وابستگی قابل جداسازی نبود: " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "خطای جست‌وجوی دودویی: " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "رنگ پس‌زمینه";
+		case "panel":
+			return "رنگ پنل";
+		case "texto":
+			return "رنگ متن";
+		case "acento":
+			return "رنگ تأکید";
+		case "advertencia":
+			return "رنگ هشدار";
+		case "exito":
+			return "رنگ موفقیت";
+		case "borde":
+			return "رنگ حاشیه";
+		case "seleccion":
+			return "رنگ انتخاب";
+		default:
+			return clave;
+		}
+	}
+
 }

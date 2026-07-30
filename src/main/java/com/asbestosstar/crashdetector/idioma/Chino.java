@@ -13190,4 +13190,152 @@ public class Chino implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "模组二分查找";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "模组二分查找 — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "临时停用大约一半模组，使用 CDLauncher 重新启动游戏，并根据每轮测试结果缩小可疑模组范围。";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "重要：此查找假设问题由单个模组引起。如果两个或更多模组分别引发问题，或故障依赖多个模组之间的交互，结果将不可靠。";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "依赖保护：停用某个依赖时，也会停用依赖它的模组。保持启用的模组不会失去已检测到的依赖。";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "开始查找";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "问题仍然存在";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "问题已消失";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "恢复所有模组";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "候选模组";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "本轮停用的模组";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "测试历史";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "当前没有活动的查找。";
+		case "recuperacion":
+			return "存在中断的会话。继续前请先恢复模组。";
+		case "escaneando":
+			return "正在分析模组和依赖…";
+		case "juego_activo":
+			return "已有重新启动的游戏正在运行。";
+		case "restaurando":
+			return "正在恢复模组…";
+		case "preparando":
+			return "正在准备第 " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "正在为第 " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "游戏正在运行，第 " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "游戏已结束。请选择问题仍然存在还是已经消失。";
+		case "ronda_persiste":
+			return "本轮结果：问题仍然存在。";
+		case "ronda_desaparece":
+			return "本轮结果：问题已消失。";
+		case "restaurado":
+			return "所有模组已恢复。";
+		case "sin_mods":
+			return "至少需要两个活动模组。";
+		case "sin_division":
+			return "无法在不破坏已检测依赖的情况下继续拆分。";
+		case "inconsistente":
+			return "结果不一致。这通常表示存在多个原因或模组交互。";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "工具将临时重命名模组文件并重新启动游戏，同时创建恢复清单。是否继续？";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "已定位可疑模组：" + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "无法拆分此依赖组：" + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "二分查找错误：" + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "背景颜色";
+		case "panel":
+			return "面板颜色";
+		case "texto":
+			return "文本颜色";
+		case "acento":
+			return "强调颜色";
+		case "advertencia":
+			return "警告颜色";
+		case "exito":
+			return "成功颜色";
+		case "borde":
+			return "边框颜色";
+		case "seleccion":
+			return "选择颜色";
+		default:
+			return clave;
+		}
+	}
+
 }

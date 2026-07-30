@@ -13766,4 +13766,152 @@ public class Tailandes implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "ค้นหาม็อดแบบทวิภาค";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "ค้นหาม็อดแบบทวิภาค — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "ปิดใช้งานม็อดประมาณครึ่งหนึ่งชั่วคราว เปิดเกมใหม่ด้วย CDLauncher และลดรายชื่อม็อดต้องสงสัยตามผลของแต่ละการทดสอบ";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "สำคัญ: การค้นหานี้สมมติว่าม็อดเดียวเป็นสาเหตุ หากมีม็อดตั้งแต่สองตัวขึ้นไปก่อปัญหาแยกกัน หรือปัญหาเกิดจากปฏิสัมพันธ์ระหว่างหลายม็อด ผลลัพธ์จะไม่น่าเชื่อถือ";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "การป้องกันการพึ่งพา: เมื่อปิดการพึ่งพา ม็อดที่พึ่งพาสิ่งนั้นจะถูกปิดด้วย ม็อดที่ยังเปิดอยู่จะไม่สูญเสียการพึ่งพาที่ตรวจพบ";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "เริ่มค้นหา";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "ปัญหายังคงอยู่";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "ปัญหาหายไป";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "กู้คืนม็อดทั้งหมด";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "ม็อดผู้ต้องสงสัย";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "ม็อดที่ปิดในรอบนี้";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "ประวัติการทดสอบ";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "ไม่มีการค้นหาที่ทำงานอยู่";
+		case "recuperacion":
+			return "พบเซสชันที่ถูกขัดจังหวะ โปรดกู้คืนม็อดก่อนดำเนินการต่อ";
+		case "escaneando":
+			return "กำลังวิเคราะห์ม็อดและการพึ่งพา…";
+		case "juego_activo":
+			return "มีเกมที่เปิดใหม่กำลังทำงานอยู่แล้ว";
+		case "restaurando":
+			return "กำลังกู้คืนม็อด…";
+		case "preparando":
+			return "กำลังเตรียมรอบ " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "กำลังเปิดเกมใหม่สำหรับรอบ " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "เกมกำลังทำงานสำหรับรอบ " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "เกมสิ้นสุดแล้ว โปรดระบุว่าปัญหายังคงอยู่หรือหายไป";
+		case "ronda_persiste":
+			return "ผลรอบ: ปัญหายังคงอยู่";
+		case "ronda_desaparece":
+			return "ผลรอบ: ปัญหาหายไป";
+		case "restaurado":
+			return "กู้คืนม็อดทั้งหมดแล้ว";
+		case "sin_mods":
+			return "ต้องมีม็อดที่เปิดใช้งานอย่างน้อยสองตัว";
+		case "sin_division":
+			return "ไม่สามารถแบ่งชุดที่เหลือโดยไม่ทำลายการพึ่งพาที่ตรวจพบ";
+		case "inconsistente":
+			return "ผลลัพธ์ไม่สอดคล้องกัน มักหมายถึงมีหลายสาเหตุหรือมีปฏิสัมพันธ์ระหว่างม็อด";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "เครื่องมือจะเปลี่ยนชื่อไฟล์ม็อดชั่วคราวและเปิดเกมใหม่ พร้อมสร้างรายการกู้คืน ดำเนินการต่อหรือไม่?";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "แยกม็อดต้องสงสัยได้แล้ว: " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "ไม่สามารถแยกกลุ่มการพึ่งพานี้ได้: " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "ข้อผิดพลาดการค้นหาแบบทวิภาค: " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "สีพื้นหลัง";
+		case "panel":
+			return "สีแผง";
+		case "texto":
+			return "สีข้อความ";
+		case "acento":
+			return "สีเน้น";
+		case "advertencia":
+			return "สีคำเตือน";
+		case "exito":
+			return "สีสำเร็จ";
+		case "borde":
+			return "สีขอบ";
+		case "seleccion":
+			return "สีการเลือก";
+		default:
+			return clave;
+		}
+	}
+
 }

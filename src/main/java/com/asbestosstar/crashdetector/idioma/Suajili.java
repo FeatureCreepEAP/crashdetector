@@ -14025,4 +14025,152 @@ public class Suajili implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "Utafutaji wa nusu wa modi";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "Utafutaji wa nusu wa modi — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "Huzima kwa muda karibu nusu ya modi, huzindua tena mchezo kwa CDLauncher na hupunguza orodha ya watuhumiwa kulingana na matokeo ya kila jaribio.";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "Muhimu: utafutaji huu hudhani kuwa modi moja ndiyo chanzo. Si wa kuaminika ikiwa modi mbili au zaidi husababisha tatizo kila moja peke yake, au ikiwa hitilafu hutegemea mwingiliano wa modi kadhaa.";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "Ulinzi wa vitegemezi: kitegemezi kikizimwa, modi zinazokitegemea pia huzimwa. Modi inayobaki hai haitapoteza kitegemezi kilichogunduliwa.";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "Anza utafutaji";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "Tatizo bado lipo";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "Tatizo limetoweka";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "Rejesha modi zote";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "Modi zinazoshukiwa";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "Modi zilizozimwa katika jaribio hili";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "Historia ya majaribio";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "Hakuna utafutaji unaoendelea.";
+		case "recuperacion":
+			return "Kuna kipindi kilichokatizwa. Rejesha modi kabla ya kuendelea.";
+		case "escaneando":
+			return "Inachanganua modi na vitegemezi…";
+		case "juego_activo":
+			return "Mchezo uliozinduliwa tena tayari unaendelea.";
+		case "restaurando":
+			return "Inarejesha modi…";
+		case "preparando":
+			return "Inaandaa raundi " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "Inazindua tena mchezo kwa raundi " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "Mchezo unaendelea kwa raundi " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "Mchezo umeisha. Eleza kama tatizo liliendelea au lilitoweka.";
+		case "ronda_persiste":
+			return "Raundi imewekwa: tatizo bado lipo.";
+		case "ronda_desaparece":
+			return "Raundi imewekwa: tatizo limetoweka.";
+		case "restaurado":
+			return "Modi zote zimerejeshwa.";
+		case "sin_mods":
+			return "Angalau modi mbili hai zinahitajika.";
+		case "sin_division":
+			return "Seti iliyobaki haiwezi kugawanywa bila kuvunja vitegemezi vilivyogunduliwa.";
+		case "inconsistente":
+			return "Matokeo hayalingani. Mara nyingi hii humaanisha sababu nyingi au mwingiliano wa modi.";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "Zana itabadilisha majina ya faili za modi kwa muda na kuzindua tena mchezo. Orodha ya urejeshaji itaundwa. Endelea?";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "Modi inayoshukiwa imetengwa: " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "Kundi hili la vitegemezi halikuweza kutenganishwa: " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "Hitilafu ya utafutaji wa nusu: " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "Rangi ya mandharinyuma";
+		case "panel":
+			return "Rangi ya paneli";
+		case "texto":
+			return "Rangi ya maandishi";
+		case "acento":
+			return "Rangi ya mkazo";
+		case "advertencia":
+			return "Rangi ya onyo";
+		case "exito":
+			return "Rangi ya mafanikio";
+		case "borde":
+			return "Rangi ya mipaka";
+		case "seleccion":
+			return "Rangi ya uteuzi";
+		default:
+			return clave;
+		}
+	}
+
 }

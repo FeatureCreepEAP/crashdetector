@@ -70,6 +70,8 @@ import com.asbestosstar.crashdetector.mapas.BiMap;
 
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 
+import com.asbestosstar.crashdetector.gui.tipos.busquedabinaria.BusquedaBinariaModsGUIAnyaNyabyss;
+
 /**
  * Base técnica: - Crea y configura el visor (JEditorPane/JScrollPane) y
  * listeners. - NO asume layout; delega toda la construcción visual a
@@ -174,6 +176,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		registrarBotonDeBarraLateralDerecha(TipoGUI.LECTOR_CORREO, LectorDeCorreoNetscape.ID,
 				() -> new LectorDeCorreoNetscape());
 
+		registrarBotonDeBarraLateralDerecha(TipoGUI.BUSQUEDA_BINARIA_MODS, BusquedaBinariaModsGUIAnyaNyabyss.ID,
+				BusquedaBinariaModsGUIAnyaNyabyss::new);
 	}
 
 	public PrincipalGUI() {

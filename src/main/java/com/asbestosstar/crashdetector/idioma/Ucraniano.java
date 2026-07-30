@@ -12908,4 +12908,152 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "Двійковий пошук мода";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "Двійковий пошук модів — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "Тимчасово вимикає приблизно половину модів, перезапускає гру через CDLauncher і звужує список підозрюваних за результатом кожної перевірки.";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "Важливо: пошук припускає, що проблему спричиняє один мод. Він ненадійний, якщо два чи більше модів спричиняють її окремо або якщо збій залежить від взаємодії кількох модів.";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "Захист залежностей: якщо залежність вимикається, її залежні моди також вимикаються. Жоден активний мод не втратить виявлену залежність.";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "Почати пошук";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "Проблема лишилася";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "Проблема зникла";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "Відновити всі моди";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "Моди-кандидати";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "Моди, вимкнені в цій перевірці";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "Історія перевірок";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "Активного пошуку немає.";
+		case "recuperacion":
+			return "Є перерваний сеанс. Спочатку відновіть моди.";
+		case "escaneando":
+			return "Аналіз модів і залежностей…";
+		case "juego_activo":
+			return "Перезапущена гра вже працює.";
+		case "restaurando":
+			return "Відновлення модів…";
+		case "preparando":
+			return "Підготовка раунду " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "Перезапуск гри для раунду " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "Гра працює для раунду " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "Гра завершилася. Вкажіть, чи проблема лишилася.";
+		case "ronda_persiste":
+			return "Раунд позначено: проблема лишилася.";
+		case "ronda_desaparece":
+			return "Раунд позначено: проблема зникла.";
+		case "restaurado":
+			return "Усі моди відновлено.";
+		case "sin_mods":
+			return "Потрібно щонайменше два активні моди.";
+		case "sin_division":
+			return "Залишок неможливо поділити без порушення виявлених залежностей.";
+		case "inconsistente":
+			return "Результати суперечливі. Зазвичай це означає кілька причин або взаємодію модів.";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "Інструмент тимчасово перейменує файли модів і перезапустить гру. Буде створено маніфест відновлення. Продовжити?";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "Підозрілий мод ізольовано: " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "Не вдалося розділити цю групу залежностей: " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "Помилка двійкового пошуку: " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "Колір тла";
+		case "panel":
+			return "Колір панелей";
+		case "texto":
+			return "Колір тексту";
+		case "acento":
+			return "Колір акценту";
+		case "advertencia":
+			return "Колір попередження";
+		case "exito":
+			return "Колір успіху";
+		case "borde":
+			return "Колір меж";
+		case "seleccion":
+			return "Колір виділення";
+		default:
+			return clave;
+		}
+	}
+
 }

@@ -13583,4 +13583,152 @@ public class Ruso implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "Двоичный поиск мода";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "Двоичный поиск модов — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "Временно отключает примерно половину модов, перезапускает игру через CDLauncher и сужает список подозреваемых по результату каждого теста.";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "Важно: поиск предполагает, что проблему вызывает один мод. Он ненадёжен, если проблему независимо вызывают два или более модов либо если сбой зависит от их взаимодействия.";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "Защита зависимостей: при отключении зависимости также отключаются зависящие от неё моды. Ни один оставленный включённым мод не потеряет обнаруженную зависимость.";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "Начать поиск";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "Проблема осталась";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "Проблема исчезла";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "Восстановить все моды";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "Моды-кандидаты";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "Отключённые в этом тесте моды";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "История тестов";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "Активного поиска нет.";
+		case "recuperacion":
+			return "Обнаружен прерванный сеанс. Сначала восстановите моды.";
+		case "escaneando":
+			return "Анализ модов и зависимостей…";
+		case "juego_activo":
+			return "Перезапущенная игра уже работает.";
+		case "restaurando":
+			return "Восстановление модов…";
+		case "preparando":
+			return "Подготовка раунда " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "Перезапуск игры для раунда " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "Игра запущена для раунда " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "Игра завершилась. Укажите, осталась ли проблема.";
+		case "ronda_persiste":
+			return "Раунд отмечен: проблема осталась.";
+		case "ronda_desaparece":
+			return "Раунд отмечен: проблема исчезла.";
+		case "restaurado":
+			return "Все моды восстановлены.";
+		case "sin_mods":
+			return "Нужно не менее двух активных модов.";
+		case "sin_division":
+			return "Оставшийся набор нельзя разделить без нарушения обнаруженных зависимостей.";
+		case "inconsistente":
+			return "Результаты противоречивы. Обычно это означает несколько причин или взаимодействие модов.";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "Инструмент временно переименует файлы модов и перезапустит игру. Будет создан файл восстановления. Продолжить?";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "Подозреваемый мод найден: " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "Не удалось разделить эту группу зависимостей: " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "Ошибка двоичного поиска: " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "Цвет фона";
+		case "panel":
+			return "Цвет панелей";
+		case "texto":
+			return "Цвет текста";
+		case "acento":
+			return "Цвет акцента";
+		case "advertencia":
+			return "Цвет предупреждения";
+		case "exito":
+			return "Цвет успеха";
+		case "borde":
+			return "Цвет границ";
+		case "seleccion":
+			return "Цвет выделения";
+		default:
+			return clave;
+		}
+	}
+
 }

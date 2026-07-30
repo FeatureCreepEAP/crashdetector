@@ -70,6 +70,8 @@ import com.asbestosstar.crashdetector.gui.tipos.generador_parches.GeneradorParch
 
 import com.asbestosstar.crashdetector.gui.tipos.hardware.PoliticaHardwareGUI;
 
+import com.asbestosstar.crashdetector.gui.tipos.busquedabinaria.BusquedaBinariaModsGUI;
+
 public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
 	/**
@@ -1513,7 +1515,36 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+	// CD_BINARY_SEARCH_TIPOGUI
+	public static TipoGUI<BusquedaBinariaModsGUI> BUSQUEDA_BINARIA_MODS = new TipoGUI<BusquedaBinariaModsGUI>() {
+		@Override
+		public String id() {
+			return "busqueda_binaria_mods";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.busquedaBinariaModsBotonLateral();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<BusquedaBinariaModsGUI> gui) {
+			BusquedaBinariaModsGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<BusquedaBinariaModsGUI>> obtenerGUIs() {
+			return BusquedaBinariaModsGUI.GUIS;
+		}
+
+		@Override
+		public boolean requireBuscador() {
+			return true;
+		}
+	};
+
 	static {
+		TIPOS_DE_GUI.add(BUSQUEDA_BINARIA_MODS);
 		TIPOS_DE_GUI.add(GENERADOR_DE_PARCHES);
 		TIPOS_DE_GUI.add(PRINCIPAL);
 		TIPOS_DE_GUI.add(GREPR);

@@ -13711,4 +13711,152 @@ public class Arabe implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "البحث الثنائي عن المود";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "البحث الثنائي عن المودات — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "يعطّل مؤقتًا نحو نصف المودات، ويعيد تشغيل اللعبة بواسطة CDLauncher، ثم يضيّق قائمة المودات المشتبه بها وفق نتيجة كل اختبار.";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "مهم: يفترض هذا البحث أن مودًا واحدًا يسبب المشكلة. لا تكون النتيجة موثوقة إذا سببت مودات متعددة المشكلة كلٌ على حدة، أو إذا كان العطل ناتجًا عن تفاعل عدة مودات.";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "حماية الاعتماديات: عند تعطيل اعتمادية تُعطّل المودات التي تعتمد عليها أيضًا. لن يفقد أي مود متروك مفعّلًا اعتمادية تم اكتشافها.";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "بدء البحث";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "المشكلة ما زالت موجودة";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "اختفت المشكلة";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "استعادة جميع المودات";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "المودات المرشحة";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "المودات المعطلة في هذا الاختبار";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "سجل الاختبارات";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "لا يوجد بحث نشط.";
+		case "recuperacion":
+			return "توجد جلسة منقطعة. استعد المودات قبل المتابعة.";
+		case "escaneando":
+			return "جارٍ تحليل المودات والاعتماديات…";
+		case "juego_activo":
+			return "هناك لعبة معاد تشغيلها تعمل بالفعل.";
+		case "restaurando":
+			return "جارٍ استعادة المودات…";
+		case "preparando":
+			return "جارٍ إعداد الجولة " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "جارٍ إعادة تشغيل اللعبة للجولة " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "اللعبة تعمل للجولة " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "انتهت اللعبة. حدد هل استمرت المشكلة أم اختفت.";
+		case "ronda_persiste":
+			return "نتيجة الجولة: المشكلة مستمرة.";
+		case "ronda_desaparece":
+			return "نتيجة الجولة: المشكلة اختفت.";
+		case "restaurado":
+			return "تمت استعادة جميع المودات.";
+		case "sin_mods":
+			return "يلزم وجود مودين نشطين على الأقل.";
+		case "sin_division":
+			return "لا يمكن تقسيم المجموعة المتبقية دون كسر الاعتماديات المكتشفة.";
+		case "inconsistente":
+			return "النتائج غير متسقة. غالبًا ما يعني ذلك وجود أسباب متعددة أو تفاعل بين المودات.";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "ستعيد الأداة تسمية ملفات المودات مؤقتًا وتعيد تشغيل اللعبة، وستنشئ بيان استعادة. هل تريد المتابعة؟";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "تم عزل المود المشتبه به: " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "تعذر فصل مجموعة الاعتماديات هذه: " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "خطأ في البحث الثنائي: " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "لون الخلفية";
+		case "panel":
+			return "لون اللوحات";
+		case "texto":
+			return "لون النص";
+		case "acento":
+			return "لون التمييز";
+		case "advertencia":
+			return "لون التحذير";
+		case "exito":
+			return "لون النجاح";
+		case "borde":
+			return "لون الحدود";
+		case "seleccion":
+			return "لون التحديد";
+		default:
+			return clave;
+		}
+	}
+
 }

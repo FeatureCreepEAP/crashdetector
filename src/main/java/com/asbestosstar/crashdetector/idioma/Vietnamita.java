@@ -13797,4 +13797,152 @@ public class Vietnamita implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "Tìm kiếm nhị phân mod";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "Tìm kiếm nhị phân mod — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "Tạm thời vô hiệu hóa khoảng một nửa số mod, khởi chạy lại trò chơi bằng CDLauncher và thu hẹp danh sách nghi vấn theo kết quả từng lần thử.";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "Quan trọng: phép tìm kiếm này giả định chỉ một mod gây ra sự cố. Nó không đáng tin cậy khi hai hay nhiều mod gây lỗi độc lập, hoặc khi lỗi phụ thuộc vào tương tác giữa nhiều mod.";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "Bảo vệ phụ thuộc: nếu một phụ thuộc bị vô hiệu hóa, các mod phụ thuộc vào nó cũng bị vô hiệu hóa. Mod còn hoạt động sẽ không mất phụ thuộc đã phát hiện.";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "Bắt đầu tìm kiếm";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "Sự cố vẫn còn";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "Sự cố đã biến mất";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "Khôi phục tất cả mod";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "Mod ứng viên";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "Mod bị vô hiệu hóa trong lần thử này";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "Lịch sử thử nghiệm";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "Không có tìm kiếm đang hoạt động.";
+		case "recuperacion":
+			return "Có phiên bị gián đoạn. Hãy khôi phục mod trước khi tiếp tục.";
+		case "escaneando":
+			return "Đang phân tích mod và phụ thuộc…";
+		case "juego_activo":
+			return "Một trò chơi đã khởi chạy lại đang chạy.";
+		case "restaurando":
+			return "Đang khôi phục mod…";
+		case "preparando":
+			return "Đang chuẩn bị vòng " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "Đang khởi chạy lại trò chơi cho vòng " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "Trò chơi đang chạy cho vòng " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "Trò chơi đã kết thúc. Hãy cho biết sự cố còn hay đã biến mất.";
+		case "ronda_persiste":
+			return "Kết quả vòng: sự cố vẫn còn.";
+		case "ronda_desaparece":
+			return "Kết quả vòng: sự cố đã biến mất.";
+		case "restaurado":
+			return "Tất cả mod đã được khôi phục.";
+		case "sin_mods":
+			return "Cần ít nhất hai mod đang hoạt động.";
+		case "sin_division":
+			return "Không thể chia tập còn lại mà không phá vỡ phụ thuộc đã phát hiện.";
+		case "inconsistente":
+			return "Kết quả không nhất quán. Thường là do nhiều nguyên nhân hoặc tương tác giữa các mod.";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "Công cụ sẽ tạm đổi tên tệp mod và khởi chạy lại trò chơi. Một bản kê khôi phục sẽ được tạo. Tiếp tục?";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "Đã cô lập mod nghi vấn: " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "Không thể tách nhóm phụ thuộc này: " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "Lỗi tìm kiếm nhị phân: " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "Màu nền";
+		case "panel":
+			return "Màu bảng";
+		case "texto":
+			return "Màu chữ";
+		case "acento":
+			return "Màu nhấn";
+		case "advertencia":
+			return "Màu cảnh báo";
+		case "exito":
+			return "Màu thành công";
+		case "borde":
+			return "Màu viền";
+		case "seleccion":
+			return "Màu lựa chọn";
+		default:
+			return clave;
+		}
+	}
+
 }

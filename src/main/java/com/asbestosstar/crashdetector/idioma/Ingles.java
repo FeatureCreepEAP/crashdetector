@@ -13859,4 +13859,152 @@ public class Ingles implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "Binary mod search";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "Binary mod search — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "Temporarily disables approximately half of the mods, relaunches the game with CDLauncher, and narrows the suspect set from the result of each test.";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "Important: this search assumes that one mod causes the problem. It is not reliable when two or more mods cause it independently, or when the failure depends on an interaction between several mods.";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "Dependency protection: when a dependency is disabled, its dependants are disabled as well. No mod left enabled will lose a detected dependency.";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "Start search";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "The problem persists";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "The problem disappeared";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "Restore all mods";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "Candidate mods";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "Mods disabled for this test";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "Test history";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "No search is active.";
+		case "recuperacion":
+			return "An interrupted session exists. Restore the mods before continuing.";
+		case "escaneando":
+			return "Analysing mods and dependencies…";
+		case "juego_activo":
+			return "A relaunched game is already running.";
+		case "restaurando":
+			return "Restoring the mods…";
+		case "preparando":
+			return "Preparing round " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "Relaunching the game for round " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "Game running for round " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "The game has ended. State whether the problem persisted or disappeared.";
+		case "ronda_persiste":
+			return "Round marked: the problem persists.";
+		case "ronda_desaparece":
+			return "Round marked: the problem disappeared.";
+		case "restaurado":
+			return "All mods were restored.";
+		case "sin_mods":
+			return "At least two active mods are required.";
+		case "sin_division":
+			return "The remaining set cannot be divided without breaking detected dependencies.";
+		case "inconsistente":
+			return "The results are inconsistent. This commonly means multiple causes or an interaction between mods.";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "The tool will temporarily rename mod files and relaunch the game. A recovery manifest will be created. Continue?";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "Suspect mod isolated: " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "This dependency group could not be separated: " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "Binary-search error: " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "Background colour";
+		case "panel":
+			return "Panel colour";
+		case "texto":
+			return "Text colour";
+		case "acento":
+			return "Accent colour";
+		case "advertencia":
+			return "Warning colour";
+		case "exito":
+			return "Success colour";
+		case "borde":
+			return "Border colour";
+		case "seleccion":
+			return "Selection colour";
+		default:
+			return clave;
+		}
+	}
+
 }

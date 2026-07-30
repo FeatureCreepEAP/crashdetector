@@ -120,6 +120,8 @@ import com.asbestosstar.crashdetector.gui.tipos.transferidor_clases.Transferidor
 
 import com.asbestosstar.crashdetector.gui.tipos.hardware.PoliticaHardwareGUIVallure;
 
+import com.asbestosstar.crashdetector.gui.tipos.busquedabinaria.BusquedaBinariaModsGUIAnyaNyabyss;
+
 public class MonitorDePID {
 
 	public static final String mensaje_de_registro_lanzer_completo = "Puedes ignorar esta linea, solo es para CrashDetector, este mensaje es siempre en espanol";
@@ -1166,6 +1168,8 @@ public class MonitorDePID {
 	}
 
 	public static void registrarGUISPredeterminado() {
+		TipoGUI.BUSQUEDA_BINARIA_MODS.registrarGUI(BusquedaBinariaModsGUIAnyaNyabyss.ID,
+				BusquedaBinariaModsGUIAnyaNyabyss::new);
 		TipoGUI.POLITICA_HARDWARE.registrarGUI(PoliticaHardwareGUIVallure.ID, PoliticaHardwareGUIVallure::new);
 		TipoGUI.GENERADOR_DE_PARCHES.registrarGUI(GeneradorParchesJKT48V.ID, () -> new GeneradorParchesJKT48V());
 		TipoGUI.TRANSFERIDOR_CLASES.registrarGUI(TransferidorClasesEonOfStars.ID,

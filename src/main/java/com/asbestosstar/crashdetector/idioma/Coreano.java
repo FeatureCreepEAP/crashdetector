@@ -13419,4 +13419,152 @@ public class Coreano implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "모드 이진 검색";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "모드 이진 검색 — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "모드의 약 절반을 임시로 비활성화하고 CDLauncher로 게임을 다시 실행한 뒤 각 시험 결과에 따라 의심 모드를 좁힙니다.";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "중요: 이 검색은 하나의 모드가 문제를 일으킨다고 가정합니다. 둘 이상의 모드가 각각 문제를 일으키거나 여러 모드의 상호 작용이 원인인 경우 신뢰할 수 없습니다.";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "의존성 보호: 의존성을 비활성화하면 그것을 필요로 하는 모드도 함께 비활성화됩니다. 활성 상태로 남는 모드는 감지된 의존성을 잃지 않습니다.";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "검색 시작";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "문제가 계속됨";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "문제가 사라짐";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "모든 모드 복원";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "후보 모드";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "이번 시험에서 비활성화된 모드";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "시험 기록";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "활성 검색이 없습니다.";
+		case "recuperacion":
+			return "중단된 세션이 있습니다. 계속하기 전에 모드를 복원하십시오.";
+		case "escaneando":
+			return "모드와 의존성을 분석 중…";
+		case "juego_activo":
+			return "다시 실행된 게임이 이미 실행 중입니다.";
+		case "restaurando":
+			return "모드 복원 중…";
+		case "preparando":
+			return "라운드 준비 중: " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "게임 재실행 중, 라운드: " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "게임 실행 중, 라운드: " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "게임이 끝났습니다. 문제가 계속되었는지 사라졌는지 선택하십시오.";
+		case "ronda_persiste":
+			return "라운드 결과: 문제가 계속됩니다.";
+		case "ronda_desaparece":
+			return "라운드 결과: 문제가 사라졌습니다.";
+		case "restaurado":
+			return "모든 모드를 복원했습니다.";
+		case "sin_mods":
+			return "활성 모드가 최소 두 개 필요합니다.";
+		case "sin_division":
+			return "감지된 의존성을 깨뜨리지 않고 남은 집합을 나눌 수 없습니다.";
+		case "inconsistente":
+			return "결과가 일관되지 않습니다. 여러 원인이나 모드 상호 작용일 수 있습니다.";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "모드 파일의 이름을 임시로 바꾸고 게임을 다시 실행합니다. 복구 목록도 만듭니다. 계속하시겠습니까?";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "의심 모드를 격리했습니다: " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "이 의존성 그룹을 분리할 수 없습니다: " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "이진 검색 오류: " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "배경색";
+		case "panel":
+			return "패널색";
+		case "texto":
+			return "글자색";
+		case "acento":
+			return "강조색";
+		case "advertencia":
+			return "경고색";
+		case "exito":
+			return "성공색";
+		case "borde":
+			return "테두리색";
+		case "seleccion":
+			return "선택색";
+		default:
+			return clave;
+		}
+	}
+
 }

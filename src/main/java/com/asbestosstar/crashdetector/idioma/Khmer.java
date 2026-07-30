@@ -14010,4 +14010,152 @@ public class Khmer implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "ស្វែងរកម៉ូដជាពាក់កណ្ដាល";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "ស្វែងរកម៉ូដជាពាក់កណ្ដាល — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "បិទម៉ូដប្រហែលពាក់កណ្ដាលជាបណ្ដោះអាសន្ន បើកហ្គេមឡើងវិញដោយ CDLauncher ហើយបង្រួមបញ្ជីម៉ូដសង្ស័យតាមលទ្ធផលនៃការសាកល្បងនីមួយៗ។";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "សំខាន់៖ ការស្វែងរកនេះសន្មតថាម៉ូដតែមួយបង្កបញ្ហា។ វាមិនអាចទុកចិត្តបានទេ បើម៉ូដពីរ ឬច្រើនបង្កបញ្ហាដាច់ដោយឡែក ឬបញ្ហាពឹងផ្អែកលើអន្តរកម្មរវាងម៉ូដជាច្រើន។";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "ការពារភាពអាស្រ័យ៖ បើបិទភាពអាស្រ័យ ម៉ូដដែលពឹងលើវាក៏ត្រូវបិទដែរ។ ម៉ូដដែលនៅបើកនឹងមិនបាត់ភាពអាស្រ័យដែលបានរកឃើញទេ។";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "ចាប់ផ្ដើមស្វែងរក";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "បញ្ហានៅតែមាន";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "បញ្ហាបានបាត់";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "ស្ដារម៉ូដទាំងអស់";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "ម៉ូដសង្ស័យ";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "ម៉ូដដែលបានបិទក្នុងការសាកល្បងនេះ";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "ប្រវត្តិសាកល្បង";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "មិនមានការស្វែងរកសកម្មទេ។";
+		case "recuperacion":
+			return "មានសម័យដែលបានផ្អាក។ សូមស្ដារម៉ូដមុនបន្ត។";
+		case "escaneando":
+			return "កំពុងវិភាគម៉ូដ និងភាពអាស្រ័យ…";
+		case "juego_activo":
+			return "ហ្គេមដែលបានបើកឡើងវិញកំពុងដំណើរការ។";
+		case "restaurando":
+			return "កំពុងស្ដារម៉ូដ…";
+		case "preparando":
+			return "កំពុងរៀបចំជុំទី " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "កំពុងបើកហ្គេមឡើងវិញសម្រាប់ជុំទី " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "ហ្គេមកំពុងដំណើរការសម្រាប់ជុំទី " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "ហ្គេមបានបញ្ចប់។ សូមបញ្ជាក់ថាបញ្ហានៅតែមាន ឬបានបាត់។";
+		case "ronda_persiste":
+			return "លទ្ធផលជុំ៖ បញ្ហានៅតែមាន។";
+		case "ronda_desaparece":
+			return "លទ្ធផលជុំ៖ បញ្ហាបានបាត់។";
+		case "restaurado":
+			return "ម៉ូដទាំងអស់ត្រូវបានស្ដារ។";
+		case "sin_mods":
+			return "ត្រូវការម៉ូដសកម្មយ៉ាងតិចពីរ។";
+		case "sin_division":
+			return "មិនអាចបែងចែកសំណុំដែលនៅសល់ដោយមិនបំបែកភាពអាស្រ័យបានទេ។";
+		case "inconsistente":
+			return "លទ្ធផលមិនស៊ីគ្នា។ ជាទូទៅមានមូលហេតុច្រើន ឬអន្តរកម្មរវាងម៉ូដ។";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "ឧបករណ៍នឹងប្ដូរឈ្មោះឯកសារម៉ូដជាបណ្ដោះអាសន្ន និងបើកហ្គេមឡើងវិញ។ បញ្ជីស្ដារនឹងត្រូវបង្កើត។ បន្តឬទេ?";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "បានកំណត់ម៉ូដសង្ស័យ៖ " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "មិនអាចបំបែកក្រុមភាពអាស្រ័យនេះបាន៖ " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "កំហុសស្វែងរកជាពាក់កណ្ដាល៖ " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "ពណ៌ផ្ទៃក្រោយ";
+		case "panel":
+			return "ពណ៌ផ្ទាំង";
+		case "texto":
+			return "ពណ៌អក្សរ";
+		case "acento":
+			return "ពណ៌រំលេច";
+		case "advertencia":
+			return "ពណ៌ព្រមាន";
+		case "exito":
+			return "ពណ៌ជោគជ័យ";
+		case "borde":
+			return "ពណ៌ស៊ុម";
+		case "seleccion":
+			return "ពណ៌ជ្រើសរើស";
+		default:
+			return clave;
+		}
+	}
+
 }

@@ -13423,4 +13423,152 @@ public class Japones implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "Mod の二分探索";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "Mod の二分探索 — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "Mod の約半分を一時的に無効化し、CDLauncher でゲームを再起動して、各テスト結果から疑わしい Mod を絞り込みます。";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "重要: この検索は、問題の原因が 1 個の Mod であることを前提とします。複数の Mod が別々に問題を起こす場合や、複数 Mod の相互作用が原因の場合は信頼できません。";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "依存関係を保護します。依存先を無効化する場合、その依存先を必要とする Mod も無効化します。有効なままの Mod が検出済みの依存先を失うことはありません。";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "検索を開始";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "問題が残っている";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "問題が消えた";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "すべての Mod を復元";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "候補 Mod";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "今回無効化した Mod";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "テスト履歴";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "実行中の検索はありません。";
+		case "recuperacion":
+			return "中断されたセッションがあります。続行前に Mod を復元してください。";
+		case "escaneando":
+			return "Mod と依存関係を解析中…";
+		case "juego_activo":
+			return "再起動されたゲームがすでに実行中です。";
+		case "restaurando":
+			return "Mod を復元中…";
+		case "preparando":
+			return "ラウンドを準備中: " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "ゲームを再起動中。ラウンド: " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "ゲーム実行中。ラウンド: " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "ゲームが終了しました。問題が残ったか消えたかを選択してください。";
+		case "ronda_persiste":
+			return "結果: 問題が残っています。";
+		case "ronda_desaparece":
+			return "結果: 問題が消えました。";
+		case "restaurado":
+			return "すべての Mod を復元しました。";
+		case "sin_mods":
+			return "有効な Mod が 2 個以上必要です。";
+		case "sin_division":
+			return "検出済みの依存関係を壊さずに残りを分割できません。";
+		case "inconsistente":
+			return "結果が矛盾しています。複数の原因または Mod 間の相互作用が考えられます。";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "Mod ファイルを一時的に改名してゲームを再起動します。復旧用マニフェストも作成します。続行しますか？";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "疑わしい Mod を特定しました: " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "この依存グループは分離できませんでした: " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "二分探索エラー: " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "背景色";
+		case "panel":
+			return "パネル色";
+		case "texto":
+			return "文字色";
+		case "acento":
+			return "アクセント色";
+		case "advertencia":
+			return "警告色";
+		case "exito":
+			return "成功色";
+		case "borde":
+			return "境界色";
+		case "seleccion":
+			return "選択色";
+		default:
+			return clave;
+		}
+	}
+
 }

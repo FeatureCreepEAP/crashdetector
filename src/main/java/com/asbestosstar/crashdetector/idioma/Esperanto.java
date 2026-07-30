@@ -13809,4 +13809,152 @@ public class Esperanto implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "Duuma serĉo de modifaĵo";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "Duuma serĉo de modifaĵoj — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "Provizore malŝaltas proksimume duonon de la modifaĵoj, relanĉas la ludon per CDLauncher kaj malvastigas la suspektataron laŭ ĉiu provo.";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "Grave: ĉi tiu serĉo supozas, ke unu modifaĵo kaŭzas la problemon. Ĝi ne estas fidinda kiam pluraj modifaĵoj kaŭzas ĝin aparte aŭ kiam la fiasko dependas de ilia interago.";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "Protekto de dependecoj: kiam dependeco estas malŝaltita, ankaŭ ĝiaj dependantoj estas malŝaltitaj. Neniu aktiva modifaĵo perdos detektitan dependecon.";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "Komenci serĉon";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "La problemo restas";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "La problemo malaperis";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "Restaŭri ĉiujn modifaĵojn";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "Kandidataj modifaĵoj";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "Modifaĵoj malŝaltitaj en ĉi tiu provo";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "Historio de provoj";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "Neniu serĉo estas aktiva.";
+		case "recuperacion":
+			return "Ekzistas interrompita seanco. Restaŭru la modifaĵojn antaŭ daŭrigi.";
+		case "escaneando":
+			return "Analizado de modifaĵoj kaj dependecoj…";
+		case "juego_activo":
+			return "Relanĉita ludo jam funkcias.";
+		case "restaurando":
+			return "Restaŭrado de modifaĵoj…";
+		case "preparando":
+			return "Preparado de rondo " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "Relanĉado de la ludo por rondo " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "Ludo funkcias por rondo " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "La ludo finiĝis. Indiku ĉu la problemo restis aŭ malaperis.";
+		case "ronda_persiste":
+			return "Rondo markita: la problemo restas.";
+		case "ronda_desaparece":
+			return "Rondo markita: la problemo malaperis.";
+		case "restaurado":
+			return "Ĉiuj modifaĵoj estis restaŭritaj.";
+		case "sin_mods":
+			return "Necesas almenaŭ du aktivaj modifaĵoj.";
+		case "sin_division":
+			return "La restanta aro ne povas esti dividita sen rompi detektitajn dependecojn.";
+		case "inconsistente":
+			return "La rezultoj estas nekongruaj. Tio ofte signifas plurajn kaŭzojn aŭ interagon inter modifaĵoj.";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "La ilo provizore renomos modifaĵajn dosierojn kaj relanĉos la ludon. Reakira manifesto estos kreita. Ĉu daŭrigi?";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "Suspektata modifaĵo izolita: " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "Ĉi tiu dependeca grupo ne povis esti apartigita: " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "Eraro de duuma serĉo: " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "Fona koloro";
+		case "panel":
+			return "Panela koloro";
+		case "texto":
+			return "Teksta koloro";
+		case "acento":
+			return "Akcenta koloro";
+		case "advertencia":
+			return "Averta koloro";
+		case "exito":
+			return "Sukcesa koloro";
+		case "borde":
+			return "Randa koloro";
+		case "seleccion":
+			return "Elekta koloro";
+		default:
+			return clave;
+		}
+	}
+
 }

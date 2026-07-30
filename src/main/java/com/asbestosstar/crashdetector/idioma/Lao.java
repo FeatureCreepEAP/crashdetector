@@ -13994,4 +13994,152 @@ public class Lao implements Idioma {
 	}
 	// IDIOMA_GUI_SIEMPRE_ENCIMA_FIN
 
+	// CD_BINARY_SEARCH_TRANSLATIONS
+
+	@Override
+	public String busquedaBinariaModsBotonLateral() {
+		return "ຄົ້ນຫາມອດແບບແບ່ງເຄິ່ງ";
+	}
+
+	@Override
+	public String busquedaBinariaModsTitulo() {
+		return "ຄົ້ນຫາມອດແບບແບ່ງເຄິ່ງ — Anya Nyabyss";
+	}
+
+	@Override
+	public String busquedaBinariaModsDescripcion() {
+		return "ປິດມອດປະມານເຄິ່ງໜຶ່ງຊົ່ວຄາວ ເປີດເກມໃໝ່ດ້ວຍ CDLauncher ແລະຫຼຸດລາຍຊື່ມອດທີ່ສົງໄສຕາມຜົນຂອງແຕ່ລະການທົດສອບ.";
+	}
+
+	@Override
+	public String busquedaBinariaModsAdvertenciaVariosMods() {
+		return "ສຳຄັນ: ການຄົ້ນຫານີ້ສົມມຸດວ່າມອດດຽວເຮັດໃຫ້ເກີດບັນຫາ. ມັນບໍ່ໜ້າເຊື່ອຖືຖ້າມີຫຼາຍມອດເຮັດໃຫ້ເກີດບັນຫາແຍກກັນ ຫຼືບັນຫາເກີດຈາກການໂຕ້ຕອບຂອງຫຼາຍມອດ.";
+	}
+
+	@Override
+	public String busquedaBinariaModsProteccionDependencias() {
+		return "ປ້ອງກັນການພຶ່ງພາ: ເມື່ອປິດ dependency ມອດທີ່ພຶ່ງພາມັນກໍຈະຖືກປິດ. ມອດທີ່ຍັງເປີດຈະບໍ່ເສຍ dependency ທີ່ກວດພົບ.";
+	}
+
+	@Override
+	public String busquedaBinariaModsIniciar() {
+		return "ເລີ່ມຄົ້ນຫາ";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaPersiste() {
+		return "ບັນຫາຍັງຢູ່";
+	}
+
+	@Override
+	public String busquedaBinariaModsProblemaDesaparecio() {
+		return "ບັນຫາຫາຍໄປ";
+	}
+
+	@Override
+	public String busquedaBinariaModsRestaurar() {
+		return "ກູ້ຄືນມອດທັງໝົດ";
+	}
+
+	@Override
+	public String busquedaBinariaModsCandidatos() {
+		return "ມອດທີ່ສົງໄສ";
+	}
+
+	@Override
+	public String busquedaBinariaModsDesactivados() {
+		return "ມອດທີ່ປິດໃນການທົດສອບນີ້";
+	}
+
+	@Override
+	public String busquedaBinariaModsHistorial() {
+		return "ປະຫວັດການທົດສອບ";
+	}
+
+	@Override
+	public String busquedaBinariaModsEstado(String clave, int ronda, int candidatos, int desactivados, String detalle) {
+		if (clave == null)
+			return detalle == null ? "" : detalle;
+		switch (clave) {
+		case "sin_sesion":
+			return "ບໍ່ມີການຄົ້ນຫາທີ່ກຳລັງເຮັດ.";
+		case "recuperacion":
+			return "ມີ session ທີ່ຖືກຂັດຈັງຫວະ. ກູ້ຄືນມອດກ່ອນສືບຕໍ່.";
+		case "escaneando":
+			return "ກຳລັງວິເຄາະມອດ ແລະ dependency…";
+		case "juego_activo":
+			return "ເກມທີ່ເປີດໃໝ່ກຳລັງເຮັດວຽກ.";
+		case "restaurando":
+			return "ກຳລັງກູ້ຄືນມອດ…";
+		case "preparando":
+			return "ກຳລັງກະກຽມຮອບ " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "lanzando":
+			return "ກຳລັງເປີດເກມໃໝ່ສຳລັບຮອບ " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "juego":
+			return "ເກມກຳລັງເຮັດວຽກສຳລັບຮອບ " + ronda + " (" + candidatos + " / " + desactivados + ")";
+		case "esperando":
+			return "ເກມສິ້ນສຸດແລ້ວ. ລະບຸວ່າບັນຫາຍັງຢູ່ ຫຼືຫາຍໄປ.";
+		case "ronda_persiste":
+			return "ຜົນຮອບ: ບັນຫາຍັງຢູ່.";
+		case "ronda_desaparece":
+			return "ຜົນຮອບ: ບັນຫາຫາຍໄປ.";
+		case "restaurado":
+			return "ກູ້ຄືນມອດທັງໝົດແລ້ວ.";
+		case "sin_mods":
+			return "ຕ້ອງມີມອດທີ່ເປີດຢ່າງໜ້ອຍສອງອັນ.";
+		case "sin_division":
+			return "ບໍ່ສາມາດແບ່ງຊຸດທີ່ເຫຼືອໂດຍບໍ່ທຳລາຍ dependency ທີ່ກວດພົບ.";
+		case "inconsistente":
+			return "ຜົນບໍ່ສອດຄ່ອງ. ມັກໝາຍເຖິງຫຼາຍສາເຫດ ຫຼືການໂຕ້ຕອບລະຫວ່າງມອດ.";
+		default:
+			return detalle == null ? "" : detalle;
+		}
+	}
+
+	@Override
+	public String busquedaBinariaModsConfirmacion() {
+		return "ເຄື່ອງມືຈະປ່ຽນຊື່ໄຟລ໌ມອດຊົ່ວຄາວ ແລະເປີດເກມໃໝ່. ຈະສ້າງລາຍການກູ້ຄືນ. ສືບຕໍ່ບໍ?";
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoUnico(String mod) {
+		return "ແຍກມອດທີ່ສົງໄສໄດ້ແລ້ວ: " + mod;
+	}
+
+	@Override
+	public String busquedaBinariaModsResultadoGrupo(String mods) {
+		return "ບໍ່ສາມາດແຍກກຸ່ມ dependency ນີ້ໄດ້: " + mods;
+	}
+
+	@Override
+	public String busquedaBinariaModsError(String detalle) {
+		return "ຂໍ້ຜິດພາດການຄົ້ນຫາ: " + detalle;
+	}
+
+	@Override
+	public String busquedaBinariaModsColor(String clave) {
+		if (clave == null)
+			return "";
+		switch (clave) {
+		case "fondo":
+			return "ສີພື້ນຫຼັງ";
+		case "panel":
+			return "ສີແຜງ";
+		case "texto":
+			return "ສີຂໍ້ຄວາມ";
+		case "acento":
+			return "ສີເນັ້ນ";
+		case "advertencia":
+			return "ສີເຕືອນ";
+		case "exito":
+			return "ສີສຳເລັດ";
+		case "borde":
+			return "ສີຂອບ";
+		case "seleccion":
+			return "ສີການເລືອກ";
+		default:
+			return clave;
+		}
+	}
+
 }
