@@ -68,6 +68,8 @@ import com.asbestosstar.crashdetector.gui.tipos.jgit.avanzado.ClienteGitAvanzado
 import com.asbestosstar.crashdetector.gui.tipos.transferidor_clases.TransferidorClasesGUI;
 import com.asbestosstar.crashdetector.gui.tipos.generador_parches.GeneradorParchesGUI;
 
+import com.asbestosstar.crashdetector.gui.tipos.hardware.PoliticaHardwareGUI;
+
 public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
 	/**
@@ -531,6 +533,31 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public boolean requireBuscador() {
 			// TODO Auto-generated method stub
 			return true;
+		}
+	};
+
+	/**
+	 * Editor de la política corporativa de sistemas operativos y hardware.
+	 */
+	public static TipoGUI<PoliticaHardwareGUI> POLITICA_HARDWARE = new TipoGUI<PoliticaHardwareGUI>() {
+		@Override
+		public String id() {
+			return "politica_hardware";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.politicaHardwareBotonCorporativo();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<PoliticaHardwareGUI> gui) {
+			PoliticaHardwareGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<PoliticaHardwareGUI>> obtenerGUIs() {
+			return PoliticaHardwareGUI.GUIS;
 		}
 	};
 
@@ -1505,6 +1532,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(MOD_API_PANEL);
 		TIPOS_DE_GUI.add(CFR);
 		TIPOS_DE_GUI.add(CORPO);
+		TIPOS_DE_GUI.add(POLITICA_HARDWARE);
 		TIPOS_DE_GUI.add(DESHABLICAR_VERIFICACIONES);
 		TIPOS_DE_GUI.add(LANZER_MALO);
 		TIPOS_DE_GUI.add(LANZER_BUENO);

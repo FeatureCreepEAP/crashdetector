@@ -118,6 +118,8 @@ import com.asbestosstar.crashdetector.gui.tipos.sampler.SamplerGUIEineLotta;
 import com.asbestosstar.crashdetector.gui.tipos.scriptide.ScriptIDEGUINiwaJPlus;
 import com.asbestosstar.crashdetector.gui.tipos.transferidor_clases.TransferidorClasesEonOfStars;
 
+import com.asbestosstar.crashdetector.gui.tipos.hardware.PoliticaHardwareGUIVallure;
+
 public class MonitorDePID {
 
 	public static final String mensaje_de_registro_lanzer_completo = "Puedes ignorar esta linea, solo es para CrashDetector, este mensaje es siempre en espanol";
@@ -424,6 +426,10 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/ike_eveland.png",
 				Statics.carpeta.resolve("imagenes/ike_eveland.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/clase_ipc.png", Statics.carpeta.resolve("imagenes/clase_ipc.png").toFile());
+
+		copiarACarpetaDesdeJar("/imagenes/vallure.png", Statics.carpeta.resolve("imagenes/vallure.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/anya_nyabyss.png",
+				Statics.carpeta.resolve("imagenes/anya_nyabyss.png").toFile());
 
 		copiarACarpetaDesdeJar("/docs/espanol/minecraft/AbrolDeMods.md",
 				Statics.carpeta.resolve("docs/espanol/minecraft/AbrolDeMods.md").toFile());
@@ -1160,6 +1166,7 @@ public class MonitorDePID {
 	}
 
 	public static void registrarGUISPredeterminado() {
+		TipoGUI.POLITICA_HARDWARE.registrarGUI(PoliticaHardwareGUIVallure.ID, PoliticaHardwareGUIVallure::new);
 		TipoGUI.GENERADOR_DE_PARCHES.registrarGUI(GeneradorParchesJKT48V.ID, () -> new GeneradorParchesJKT48V());
 		TipoGUI.TRANSFERIDOR_CLASES.registrarGUI(TransferidorClasesEonOfStars.ID,
 				() -> new TransferidorClasesEonOfStars());

@@ -13158,4 +13158,258 @@ public class Coreano implements Idioma {
 		return TraduccionesSeguridadCPU.mensaje("ko", clave, argumentos);
 	}
 
+	// --- Política corporativa de hardware y sistemas operativos ---
+
+	@Override
+	public String politicaHardwareTitulo() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.TITULO);
+	}
+
+	@Override
+	public String politicaHardwareBotonCorporativo() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.BOTON);
+	}
+
+	@Override
+	public String politicaHardwareDescripcion() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.DESCRIPCION);
+	}
+
+	@Override
+	public String politicaHardwareSistemasOperativos() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.SISTEMAS);
+	}
+
+	@Override
+	public String politicaHardwareProcesadores() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.PROCESADORES);
+	}
+
+	@Override
+	public String politicaHardwareArquitecturas() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.ARQUITECTURAS);
+	}
+
+	@Override
+	public String politicaHardwareBuscar() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.BUSCAR);
+	}
+
+	@Override
+	public String politicaHardwareFamilia() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.FAMILIA);
+	}
+
+	@Override
+	public String politicaHardwarePlataforma() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.PLATAFORMA);
+	}
+
+	@Override
+	public String politicaHardwareSugerencia() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.SUGERENCIA);
+	}
+
+	@Override
+	public String politicaHardwarePoliticaCorporativa() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.POLITICA);
+	}
+
+	@Override
+	public String politicaHardwareSinRegla() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.SIN_REGLA);
+	}
+
+	@Override
+	public String politicaHardwareRecomendado() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.RECOMENDADO);
+	}
+
+	@Override
+	public String politicaHardwareNeutral() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.NEUTRAL);
+	}
+
+	@Override
+	public String politicaHardwareDesaconsejado() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.DESACONSEJADO);
+	}
+
+	@Override
+	public String politicaHardwareAplicarSugerencias() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.APLICAR);
+	}
+
+	@Override
+	public String politicaHardwareLimpiarPolitica() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.LIMPIAR);
+	}
+
+	@Override
+	public String politicaHardwareRequisitosMinimos() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.REQUISITOS);
+	}
+
+	@Override
+	public String politicaHardwareRamMinima() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.RAM_MINIMA);
+	}
+
+	@Override
+	public String politicaHardwareGhzMinimos() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.GHZ_MINIMOS);
+	}
+
+	@Override
+	public String politicaHardwareHilosMinimos() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.HILOS_MINIMOS);
+	}
+
+	@Override
+	public String politicaHardwareCeroDesactiva() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.CERO);
+	}
+
+	@Override
+	public String politicaHardwareLeyenda() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.LEYENDA);
+	}
+
+	@Override
+	public String politicaHardwareConfirmarSugerencias() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.CONFIRMAR_SUGERENCIAS);
+	}
+
+	@Override
+	public String politicaHardwareConfirmarLimpiar() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.CONFIRMAR_LIMPIAR);
+	}
+
+	@Override
+	public String politicaHardwareMostrarReglas() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.MOSTRAR_REGLAS);
+	}
+
+	@Override
+	public String politicaHardwareGuardado() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.GUARDADO);
+	}
+
+	@Override
+	public String politicaHardwareNombreVerificacion() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.NOMBRE_VERIFICACION);
+	}
+
+	@Override
+	public String politicaHardwareAdvertenciaTitulo() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.TITULO_ADVERTENCIA);
+	}
+
+	@Override
+	public String politicaHardwareAdvertenciaDetalle(String detalles) {
+		return TraduccionesPoliticaHardware.f(codigo(), TraduccionesPoliticaHardware.DETALLE_ADVERTENCIA, detalles);
+	}
+
+	@Override
+	public String politicaHardwareDetalleSO(String actual) {
+		return TraduccionesPoliticaHardware.f(codigo(), TraduccionesPoliticaHardware.DETALLE_SO, actual);
+	}
+
+	@Override
+	public String politicaHardwareDetalleCPU(String actual) {
+		return TraduccionesPoliticaHardware.f(codigo(), TraduccionesPoliticaHardware.DETALLE_CPU, actual);
+	}
+
+	@Override
+	public String politicaHardwareDetalleArquitectura(String actual) {
+		return TraduccionesPoliticaHardware.f(codigo(), TraduccionesPoliticaHardware.DETALLE_ARQUITECTURA, actual);
+	}
+
+	@Override
+	public String politicaHardwareDetalleRAM(String actual, String minimo) {
+		return TraduccionesPoliticaHardware.f(codigo(), TraduccionesPoliticaHardware.DETALLE_RAM, actual, minimo);
+	}
+
+	@Override
+	public String politicaHardwareDetalleGHz(String actual, String minimo) {
+		return TraduccionesPoliticaHardware.f(codigo(), TraduccionesPoliticaHardware.DETALLE_GHZ, actual, minimo);
+	}
+
+	@Override
+	public String politicaHardwareDetalleHilos(String actual, String minimo) {
+		return TraduccionesPoliticaHardware.f(codigo(), TraduccionesPoliticaHardware.DETALLE_HILOS, actual, minimo);
+	}
+
+	@Override
+	public String politicaHardwareContactoAdministrador() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.CONTACTO);
+	}
+
+	@Override
+	public String politicaHardwareNoDetectado() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.NO_DETECTADO);
+	}
+
+	@Override
+	public String politicaHardwareDetectorActual(String sistema, String cpu, String arquitectura, String ram,
+			String ghz, String hilos) {
+		return TraduccionesPoliticaHardware.f(codigo(), TraduccionesPoliticaHardware.DETECTOR, sistema, cpu,
+				arquitectura, ram, ghz, hilos);
+	}
+
+	@Override
+	public String politicaHardwareColorFondo() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.COLOR_FONDO);
+	}
+
+	@Override
+	public String politicaHardwareColorPanel() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.COLOR_PANEL);
+	}
+
+	@Override
+	public String politicaHardwareColorTexto() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.COLOR_TEXTO);
+	}
+
+	@Override
+	public String politicaHardwareColorBoton() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.COLOR_BOTON);
+	}
+
+	@Override
+	public String politicaHardwareColorRecomendado() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.COLOR_RECOMENDADO);
+	}
+
+	@Override
+	public String politicaHardwareColorNeutral() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.COLOR_NEUTRAL);
+	}
+
+	@Override
+	public String politicaHardwareColorDesaconsejado() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.COLOR_DESACONSEJADO);
+	}
+
+	@Override
+	public String politicaHardwareColorBorde() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.COLOR_BORDE);
+	}
+
+	@Override
+	public String politicaHardwareColorSeleccion() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.COLOR_SELECCION);
+	}
+
+	@Override
+	public String politicaHardwareColorTextoSeleccion() {
+		return TraduccionesPoliticaHardware.t(codigo(), TraduccionesPoliticaHardware.COLOR_TEXTO_SELECCION);
+	}
+
+	@Override
+	public String errorSistemaSonidoKB4515384() {
+		return "<p><b>Windows 10 버전 1903에 KB4515384가 설치되어 있고 알려진 수정 업데이트는 없는 것으로 감지되었습니다. KB4515384는 일부 게임의 소리가 더 작거나 다르게 들리거나 일부 채널이 누락되게 할 수 있습니다. Microsoft는 KB4517211에서 이 문제를 수정했습니다. 모드나 오디오 드라이버를 변경하기 전에 더 최신 Windows 누적 업데이트를 설치하십시오.</b></p>";
+	}
+
 }

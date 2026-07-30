@@ -22,6 +22,7 @@ import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUISylen
 import com.asbestosstar.crashdetector.gui.tipos.miranda.DerechosPiratasGUIOnePiece;
 import com.asbestosstar.crashdetector.gui.tipos.modsbuenas.ModsBuenasGUIReiBubbles;
 import com.asbestosstar.crashdetector.gui.tipos.modsmalas.GUIModsMalasRimaEvenstar;
+import com.asbestosstar.crashdetector.gui.tipos.hardware.PoliticaHardwareGUIVallure;
 
 public abstract class CorpoBase extends JDialog implements CrashDetectorGUI, BotonDeBarraLateralDerecha {
 	public static Map<String, Supplier<CorpoBase>> GUIS = new HashMap<String, Supplier<CorpoBase>>();
@@ -96,6 +97,11 @@ public abstract class CorpoBase extends JDialog implements CrashDetectorGUI, Bot
 	public static void abrirAntiManipulacion() {
 		TipoGUI.ANTI_MANIPULACION
 				.obtenerGUIPredeterminado(AntiManipulacionGUIPanko.ID, () -> new AntiManipulacionGUIPanko()).init();
+	}
+
+	public static void abrirPoliticaHardware() {
+		TipoGUI.POLITICA_HARDWARE
+				.obtenerGUIPredeterminado(PoliticaHardwareGUIVallure.ID, PoliticaHardwareGUIVallure::new).init();
 	}
 
 	public static void escribirSuprimirConsolaCD(boolean valor) {

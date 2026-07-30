@@ -5330,4 +5330,110 @@ public interface Idioma {
 
 	public String mensajeSeguridadCPU(String clave, String... argumentos);
 
+	// --- Política corporativa de hardware y sistemas operativos ---
+	public String politicaHardwareTitulo();
+
+	public String politicaHardwareBotonCorporativo();
+
+	public String politicaHardwareDescripcion();
+
+	public String politicaHardwareSistemasOperativos();
+
+	public String politicaHardwareProcesadores();
+
+	public String politicaHardwareArquitecturas();
+
+	public String politicaHardwareBuscar();
+
+	public String politicaHardwareFamilia();
+
+	public String politicaHardwarePlataforma();
+
+	public String politicaHardwareSugerencia();
+
+	public String politicaHardwarePoliticaCorporativa();
+
+	public String politicaHardwareSinRegla();
+
+	public String politicaHardwareRecomendado();
+
+	public String politicaHardwareNeutral();
+
+	public String politicaHardwareDesaconsejado();
+
+	public String politicaHardwareAplicarSugerencias();
+
+	public String politicaHardwareLimpiarPolitica();
+
+	public String politicaHardwareRequisitosMinimos();
+
+	public String politicaHardwareRamMinima();
+
+	public String politicaHardwareGhzMinimos();
+
+	public String politicaHardwareHilosMinimos();
+
+	public String politicaHardwareCeroDesactiva();
+
+	public String politicaHardwareLeyenda();
+
+	public String politicaHardwareConfirmarSugerencias();
+
+	public String politicaHardwareConfirmarLimpiar();
+
+	public String politicaHardwareMostrarReglas();
+
+	public String politicaHardwareGuardado();
+
+	public String politicaHardwareNombreVerificacion();
+
+	public String politicaHardwareAdvertenciaTitulo();
+
+	public String politicaHardwareAdvertenciaDetalle(String detalles);
+
+	public String politicaHardwareDetalleSO(String actual);
+
+	public String politicaHardwareDetalleCPU(String actual);
+
+	public String politicaHardwareDetalleArquitectura(String actual);
+
+	public String politicaHardwareDetalleRAM(String actual, String minimo);
+
+	public String politicaHardwareDetalleGHz(String actual, String minimo);
+
+	public String politicaHardwareDetalleHilos(String actual, String minimo);
+
+	public String politicaHardwareContactoAdministrador();
+
+	public String politicaHardwareNoDetectado();
+
+	public String politicaHardwareDetectorActual(String sistema, String cpu, String arquitectura, String ram,
+			String ghz, String hilos);
+
+	public String politicaHardwareColorFondo();
+
+	public String politicaHardwareColorPanel();
+
+	public String politicaHardwareColorTexto();
+
+	public String politicaHardwareColorBoton();
+
+	public String politicaHardwareColorRecomendado();
+
+	public String politicaHardwareColorNeutral();
+
+	public String politicaHardwareColorDesaconsejado();
+
+	public String politicaHardwareColorBorde();
+
+	public String politicaHardwareColorSeleccion();
+
+	public String politicaHardwareColorTextoSeleccion();
+
+	/**
+	 * Advertencia específica para el problema de audio de Windows 10 1903 asociado
+	 * con KB4515384.
+	 */
+	public String errorSistemaSonidoKB4515384();
+
 }

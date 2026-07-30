@@ -43,10 +43,12 @@ import com.asbestosstar.crashdetector.analizador.general.FallosEjecucionTareas;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModAnimado;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModuleJPMS;
 import com.asbestosstar.crashdetector.analizador.general.FaltasClases;
+import com.asbestosstar.crashdetector.analizador.general.HardwareFueraDePolitica;
 import com.asbestosstar.crashdetector.analizador.general.JPMSIllegalAccess;
 import com.asbestosstar.crashdetector.analizador.general.JavaVersiones;
 import com.asbestosstar.crashdetector.analizador.general.LanzerDesAnimado;
 import com.asbestosstar.crashdetector.analizador.general.LanzerNoAnimado;
+import com.asbestosstar.crashdetector.analizador.general.Meltdown;
 import com.asbestosstar.crashdetector.analizador.general.ModIncompatibleConCargadorActivo;
 import com.asbestosstar.crashdetector.analizador.general.ModulesDuplicadosJavaModulePlatform;
 import com.asbestosstar.crashdetector.analizador.general.NoTieneMemoria;
@@ -56,13 +58,13 @@ import com.asbestosstar.crashdetector.analizador.general.PreferIPV4Trace;
 import com.asbestosstar.crashdetector.analizador.general.ProblemaSafeFetch32JDK17;
 import com.asbestosstar.crashdetector.analizador.general.RaptorLakeInestable;
 import com.asbestosstar.crashdetector.analizador.general.RutaCaracteresInvalidos;
+import com.asbestosstar.crashdetector.analizador.general.Spectre;
 import com.asbestosstar.crashdetector.analizador.general.SpongeMixinClaseMalUbicada;
 import com.asbestosstar.crashdetector.analizador.general.SpongeMixinConfigsProblematicos;
 import com.asbestosstar.crashdetector.analizador.general.TienesModDesAnimado;
 import com.asbestosstar.crashdetector.analizador.general.VerificacionGPU;
 import com.asbestosstar.crashdetector.analizador.general.VersionInvalidaSemver;
 import com.asbestosstar.crashdetector.analizador.rapido.MotorAnalisisMultinucleo;
-import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.config.ConfigStringArray;
 
 public class Analizador {
@@ -315,7 +317,8 @@ public class Analizador {
 		verificaciones.add(new ErrorSimpleRadioLexiconfig());
 		verificaciones.add(new ErrorMobAITweaks());
 		verificaciones.add(new VerificacionGPU());
-		verificaciones.add(new RaptorLakeInestable());// TODO Spectre y Meltdown
+		verificaciones.add(new RaptorLakeInestable());
+
 		verificaciones.add(new ProblemaAzureLibAnimaciones());
 		verificaciones.add(new ProblemaDecocraftNatureEssentialPartnerMod());
 		verificaciones.add(new TetraDeserializadorModeloEstatico());
@@ -343,6 +346,9 @@ public class Analizador {
 		verificaciones.add(new ErrorJvmDllCurseForgeG1());
 		verificaciones.add(new ErrorArchivoUsadoPorOtroProceso());
 		verificaciones.add(new ErrorBetterEndPaletaChunkAgua());
+		verificaciones.add(new Spectre());
+		verificaciones.add(new Meltdown());
+		verificaciones.add(new ErrorSistemaSonido());
 
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());
@@ -350,6 +356,7 @@ public class Analizador {
 		verificaciones.add(new FaltaModAnimado());
 		verificaciones.add(new TienesModDesAnimado());
 		verificaciones.add(new AntiManipulacion());
+		verificaciones.add(new HardwareFueraDePolitica());
 
 		verificaciones.addAll(CargadorDeCodice.cargarVerificaciones());
 

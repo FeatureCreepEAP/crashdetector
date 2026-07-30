@@ -73,7 +73,8 @@ public class CorpoSAO extends CorpoBase {
 	private JButton botonAntiTamper;
 	private JButton botonFirmas; // New button for signatures
 	private JButton botonDerechosMaranda; // New button for Maranda rights
-	private JButton botonVerificaciones; // New button for verifications
+	private JButton botonVerificaciones;
+	private JButton botonPoliticaHardware; // New button for verifications
 	private JPanel panelDerechos; // Panel to hold the Maranda rights button
 	private JCheckBox checkSuprimirConsolaCD;
 	private JCheckBox checkSuprimirVDST;
@@ -268,6 +269,13 @@ public class CorpoSAO extends CorpoBase {
 		panelBotones.add(botonVerificaciones, gbc);
 
 		gbc.gridx = 0;
+		gbc.gridy = 4;
+		gbc.gridwidth = 2;
+		gbc.weightx = 1.0;
+		botonPoliticaHardware = new JButton(MonitorDePID.idioma.politicaHardwareBotonCorporativo());
+		panelBotones.add(botonPoliticaHardware, gbc);
+
+		gbc.gridx = 0;
 		gbc.gridy = 6;
 		gbc.weightx = 0.3;
 		JLabel labelMostrarSelectorAplicacion = new JLabel(MonitorDePID.idioma.mostrarSelectorAplicacionPrincipal());
@@ -397,6 +405,7 @@ public class CorpoSAO extends CorpoBase {
 		estilizarBoton(botonFirmas);
 		estilizarBoton(botonDerechosMaranda);
 		estilizarBoton(botonVerificaciones);
+		estilizarBoton(botonPoliticaHardware);
 
 		// Estilizar campo de texto
 		estilizarCampo(campoNombreHerramienta);
@@ -527,6 +536,10 @@ public class CorpoSAO extends CorpoBase {
 
 		botonVerificaciones.addActionListener(e -> {
 			abrirVerificaciones();
+		});
+
+		botonPoliticaHardware.addActionListener(e -> {
+			abrirPoliticaHardware();
 		});
 
 		botonDerechosMaranda.addActionListener(e -> {

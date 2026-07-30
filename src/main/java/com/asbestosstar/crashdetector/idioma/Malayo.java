@@ -1240,4 +1240,9 @@ public class Malayo extends Indonesia {
 		return "Git lanjutan — butang";
 	}
 
+	@Override
+	public String errorSistemaSonidoKB4515384() {
+		return "<p><b>Windows 10 versi 1903 dikesan dengan kemas kini KB4515384 dan tanpa pembetulan yang diketahui. KB4515384 boleh menyebabkan audio dalam sesetengah permainan menjadi lebih perlahan, berbeza, atau kehilangan saluran. Microsoft membetulkan masalah ini dalam KB4517211. Pasang kemas kini kumulatif Windows yang lebih baharu sebelum menukar mod atau pemacu audio.</b></p>";
+	}
+
 }
