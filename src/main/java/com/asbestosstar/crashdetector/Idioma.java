@@ -5273,4 +5273,61 @@ public interface Idioma {
 
 	public String correoColorCitas();
 
+	// ==========================================================
+	// SEGURIDAD DE CPU: MELTDOWN Y SPECTRE
+	// Sin implementaciones predeterminadas: cada idioma debe traducirlas.
+	// ==========================================================
+
+	public String nombreVerificacionMeltdown();
+
+	public String nombreVerificacionSpectre();
+
+	public String desactivarVerificacionMeltdown();
+
+	public String desactivarVerificacionSpectre();
+
+	public String abrirDocumentacionOficialSeguridadCPU();
+
+	public String errorComprobacionSeguridadCPU(String verificacion, String detalle);
+
+	public String nombreVulnerabilidadMeltdown();
+
+	public String nombreVulnerabilidadSpectre();
+
+	public String tituloProteccionProcesador(String vulnerabilidad);
+
+	public String etiquetaSeguridadCpuCPU();
+
+	public String etiquetaSeguridadCpuFabricante();
+
+	public String etiquetaSeguridadCpuArquitectura();
+
+	public String etiquetaSeguridadCpuSistemaOperativo();
+
+	public String etiquetaSeguridadCpuAfectado();
+
+	public String etiquetaSeguridadCpuEstadoGeneral();
+
+	public String etiquetaSeguridadCpuMitigacionSO();
+
+	public String etiquetaSeguridadCpuMicrocodigoFirmware();
+
+	public String etiquetaSeguridadCpuRevisionDetectada();
+
+	public String etiquetaSeguridadCpuNota();
+
+	public String etiquetaSeguridadCpuEvidencia();
+
+	public String etiquetaSeguridadCpuAccionRecomendada();
+
+	public String estadoAfectacionSeguridadCPU(String estado);
+
+	public String estadoMitigacionSeguridadCPU(String estado);
+
+	public String estadoComponenteSeguridadCPU(String estado);
+
+	public String notaSeguridadCpuRegistroRemoto();
+
+	public String mensajeSeguridadCPU(String clave, String... argumentos);
+
 }

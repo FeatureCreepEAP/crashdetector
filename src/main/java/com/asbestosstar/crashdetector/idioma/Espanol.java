@@ -9,6 +9,7 @@ import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.bajo.hw.cpu.seguridad.ClavesTextoSeguridadCPU;
 
 public class Espanol implements Idioma {
 	Config config = Config.obtenerInstancia();
@@ -14128,6 +14129,367 @@ public class Espanol implements Idioma {
 	@Override
 	public String correoColorCitas() {
 		return "Correo: fondo de las citas";
+	}
+
+	// ==========================================================
+	// SEGURIDAD DE CPU: MELTDOWN Y SPECTRE
+	// ==========================================================
+
+	@Override
+	public String nombreVerificacionMeltdown() {
+		return "Meltdown: mitigación del procesador";
+	}
+
+	@Override
+	public String nombreVerificacionSpectre() {
+		return "Spectre V1/V2: mitigación del procesador";
+	}
+
+	@Override
+	public String desactivarVerificacionMeltdown() {
+		return "No volver a comprobar Meltdown";
+	}
+
+	@Override
+	public String desactivarVerificacionSpectre() {
+		return "No volver a comprobar Spectre";
+	}
+
+	@Override
+	public String abrirDocumentacionOficialSeguridadCPU() {
+		return "Abrir documentación oficial";
+	}
+
+	@Override
+	public String errorComprobacionSeguridadCPU(String verificacion, String detalle) {
+		return "No se pudo completar " + verificacion + ": " + detalle;
+	}
+
+	@Override
+	public String nombreVulnerabilidadMeltdown() {
+		return "Meltdown (CVE-2017-5754)";
+	}
+
+	@Override
+	public String nombreVulnerabilidadSpectre() {
+		return "Spectre V1/V2 (CVE-2017-5753, CVE-2017-5715)";
+	}
+
+	@Override
+	public String tituloProteccionProcesador(String vulnerabilidad) {
+		return vulnerabilidad + ": protección del procesador";
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuCPU() {
+		return "CPU";
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuFabricante() {
+		return "Fabricante";
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuArquitectura() {
+		return "Arquitectura";
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuSistemaOperativo() {
+		return "Sistema operativo";
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuAfectado() {
+		return "Afectación del CPU";
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuEstadoGeneral() {
+		return "Estado general";
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuMitigacionSO() {
+		return "Mitigación del SO";
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuMicrocodigoFirmware() {
+		return "Microcódigo/firmware";
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuRevisionDetectada() {
+		return "Revisión detectada";
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuNota() {
+		return "Nota";
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuEvidencia() {
+		return "Evidencia";
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuAccionRecomendada() {
+		return "Acción recomendada";
+	}
+
+	@Override
+	public String estadoAfectacionSeguridadCPU(String estado) {
+		if ("AFECTADO".equals(estado)) {
+			return "Afectado";
+		}
+		if ("POSIBLEMENTE_AFECTADO".equals(estado)) {
+			return "Posiblemente afectado";
+		}
+		if ("NO_AFECTADO".equals(estado)) {
+			return "No afectado";
+		}
+		return "Desconocido";
+	}
+
+	@Override
+	public String estadoMitigacionSeguridadCPU(String estado) {
+		if ("MITIGADO".equals(estado)) {
+			return "Mitigado";
+		}
+		if ("PARCIAL".equals(estado)) {
+			return "Parcialmente mitigado";
+		}
+		if ("VULNERABLE".equals(estado)) {
+			return "Vulnerable";
+		}
+		if ("NO_APLICA".equals(estado)) {
+			return "No aplica";
+		}
+		return "Desconocido";
+	}
+
+	@Override
+	public String estadoComponenteSeguridadCPU(String estado) {
+		if ("PRESENTE".equals(estado)) {
+			return "Presente";
+		}
+		if ("AUSENTE".equals(estado)) {
+			return "Ausente";
+		}
+		if ("NO_NECESARIO".equals(estado)) {
+			return "No necesario";
+		}
+		return "Desconocido";
+	}
+
+	@Override
+	public String notaSeguridadCpuRegistroRemoto() {
+		return "El CPU del registro no coincide con el equipo donde se ejecuta el detector. "
+				+ "No se atribuyó al registro el estado de parches del equipo local.";
+	}
+
+	@Override
+	public String mensajeSeguridadCPU(String clave, String... argumentos) {
+		String a0 = argumentoSeguridadCPU(argumentos, 0);
+
+		switch (clave) {
+		case ClavesTextoSeguridadCPU.REGISTRO_CPU_DISTINTO_EVIDENCIA:
+			return "El CPU del registro no coincide con el CPU local; no se consultaron los parches del equipo local.";
+		case ClavesTextoSeguridadCPU.REGISTRO_CPU_DISTINTO_ACCION:
+			return "Ejecuta la comprobación en la máquina que produjo el registro.";
+		case ClavesTextoSeguridadCPU.SO_NO_DETERMINADO_REGISTRO:
+			return "No determinado para el registro";
+		case ClavesTextoSeguridadCPU.DRAGONFLY_SIN_INTERFAZ:
+			return "DragonFly BSD no ofrece una interfaz portátil y estable equivalente a los archivos de vulnerabilidades de Linux.";
+		case ClavesTextoSeguridadCPU.DRAGONFLY_ACCION:
+			return "Actualiza el sistema, el firmware del fabricante y revisa los mensajes de arranque del kernel.";
+		case ClavesTextoSeguridadCPU.ZOS_SIN_INTERFAZ:
+			return "z/OS requiere comprobar los APAR/PTF instalados y el nivel de microcódigo del CPC; Java no expone un indicador universal.";
+		case ClavesTextoSeguridadCPU.ZOS_ACCION:
+			return "Verifica SMP/E, los APAR de IBM correspondientes al nivel de z/OS y el mantenimiento del CPC.";
+		case ClavesTextoSeguridadCPU.IBMI_SIN_INTERFAZ:
+			return "IBM i requiere verificar los grupos PTF y el firmware del sistema Power; no existe un indicador portátil visible desde Java.";
+		case ClavesTextoSeguridadCPU.IBMI_ACCION:
+			return "Revisa el nivel de IBM i, los grupos PTF de seguridad y el firmware mediante IBM Navigator o ASMI.";
+		case ClavesTextoSeguridadCPU.HPUX_SIN_INTERFAZ:
+			return "HP-UX no proporciona una interfaz Java universal para confirmar estas mitigaciones.";
+		case ClavesTextoSeguridadCPU.HPUX_ACCION:
+			return "Comprueba el boletín de HPE para el modelo exacto, el Quality Pack y el firmware. Itanium no está afectado por el Meltdown original.";
+		case ClavesTextoSeguridadCPU.SO_SIN_INTERFAZ:
+			return "No se conoce una interfaz nativa de mitigaciones para este sistema operativo.";
+		case ClavesTextoSeguridadCPU.SO_SIN_INTERFAZ_ACCION:
+			return "Actualiza el sistema operativo, BIOS/UEFI o firmware y consulta al fabricante del CPU.";
+		case ClavesTextoSeguridadCPU.LINUX_MELTDOWN_SIN_SYSFS:
+			return "El kernel no expone /sys/devices/system/cpu/vulnerabilities/meltdown.";
+		case ClavesTextoSeguridadCPU.LINUX_MELTDOWN_SIN_SYSFS_ACCION:
+			return "Actualiza el kernel. Comprueba también que sysfs esté montado y accesible.";
+		case ClavesTextoSeguridadCPU.LINUX_SPECTRE_SIN_SYSFS:
+			return "El kernel no expone los archivos spectre_v1 ni spectre_v2 en sysfs.";
+		case ClavesTextoSeguridadCPU.LINUX_SPECTRE_SIN_SYSFS_ACCION:
+			return "Actualiza el kernel y el paquete de microcódigo o firmware de la distribución.";
+		case ClavesTextoSeguridadCPU.LINUX_SPECTRE_MITIGADO_ACCION:
+			return "No se requiere ninguna acción para las variantes originales que el kernel reporta como mitigadas.";
+		case ClavesTextoSeguridadCPU.LINUX_SPECTRE_ACTUALIZAR_ACCION:
+			return "Instala un kernel actualizado y el paquete de microcódigo o firmware del fabricante; reinicia y vuelve a comprobar sysfs.";
+		case ClavesTextoSeguridadCPU.LINUX_CPU_NO_AFECTADO:
+			return "El kernel informa que el procesador no está afectado.";
+		case ClavesTextoSeguridadCPU.LINUX_MITIGACION_ACTIVA:
+			return "La mitigación del kernel está activa.";
+		case ClavesTextoSeguridadCPU.LINUX_KERNEL_VULNERABLE_ACCION:
+			return "Instala un kernel actualizado y reinicia. Revisa si las mitigaciones fueron desactivadas mediante parámetros de arranque.";
+		case ClavesTextoSeguridadCPU.LINUX_REVISAR_SYSFS_ACCION:
+			return "Actualiza el kernel y revisa manualmente el valor expuesto por sysfs.";
+		case ClavesTextoSeguridadCPU.NO_DISPONIBLE:
+			return "no disponible";
+		case ClavesTextoSeguridadCPU.WINDOWS_SPECULATIONCONTROL_AUSENTE:
+			return "No está disponible el módulo PowerShell SpeculationControl; el registro por sí solo no demuestra que la protección esté activa.";
+		case ClavesTextoSeguridadCPU.WINDOWS_SPECULATIONCONTROL_ACCION:
+			return "Instala o proporciona el módulo SpeculationControl de Microsoft y ejecuta Get-SpeculationControlSettings como administrador.";
+		case ClavesTextoSeguridadCPU.WINDOWS_MELTDOWN_HARDWARE:
+			return "Windows informa protección directa de hardware o que KVA Shadow no es necesario.";
+		case ClavesTextoSeguridadCPU.WINDOWS_KVA_ACTIVO:
+			return "Kernel VA Shadow está presente y habilitado.";
+		case ClavesTextoSeguridadCPU.WINDOWS_KVA_ACTUALIZAR:
+			return "Instala las actualizaciones acumulativas de Windows y asegúrate de que Kernel VA Shadow esté habilitado.";
+		case ClavesTextoSeguridadCPU.WINDOWS_REVISAR_MELTDOWN:
+			return "Revisa manualmente la sección CVE-2017-5754 de Get-SpeculationControlSettings.";
+		case ClavesTextoSeguridadCPU.WINDOWS_BTI_ACTIVO:
+			return "La protección BTI de Windows está presente y habilitada.";
+		case ClavesTextoSeguridadCPU.WINDOWS_BTI_ACTUALIZAR:
+			return "Instala la actualización BIOS/UEFI del fabricante y las actualizaciones acumulativas de Windows. En Windows Server, habilita las mitigaciones según la política de Microsoft.";
+		case ClavesTextoSeguridadCPU.WINDOWS_REVISAR_SPECTRE:
+			return "Revisa manualmente la sección CVE-2017-5715 de Get-SpeculationControlSettings.";
+		case ClavesTextoSeguridadCPU.MACOS_VERSION_NO_INTERPRETADA:
+			return "No se pudo interpretar la versión obtenida mediante sw_vers u os.version.";
+		case ClavesTextoSeguridadCPU.MACOS_ACTUALIZAR:
+			return "Instala todas las actualizaciones disponibles de macOS.";
+		case ClavesTextoSeguridadCPU.MACOS_POSTERIOR_PARCHES_ORIGINALES:
+			return "La versión es posterior a las actualizaciones originales de Apple para Meltdown y Spectre.";
+		case ClavesTextoSeguridadCPU.MACOS_MELTDOWN_10132:
+			return "Apple incluyó la mitigación de Meltdown desde macOS High Sierra 10.13.2.";
+		case ClavesTextoSeguridadCPU.MACOS_SECURITY_UPDATE_EVIDENCIA:
+			return "Security Update 2018-001 aparece en el historial de software.";
+		case ClavesTextoSeguridadCPU.MACOS_SECURITY_UPDATE_INSTALADO:
+			return "La actualización específica de Apple está instalada.";
+		case ClavesTextoSeguridadCPU.MACOS_MELTDOWN_ANTIGUO_ACCION:
+			return "Actualiza a una versión compatible de macOS o instala Security Update 2018-001 cuando corresponda.";
+		case ClavesTextoSeguridadCPU.MACOS_SPECTRE_SUPLEMENTAL:
+			return "La versión es posterior a la actualización suplementaria 10.13.2 para Spectre.";
+		case ClavesTextoSeguridadCPU.MACOS_SPECTRE_SAFARI_PARCIAL:
+			return "Safari/WebKit tiene la mitigación publicada, pero no existe una interfaz pública que confirme cada mitigación del kernel y firmware.";
+		case ClavesTextoSeguridadCPU.MACOS_SPECTRE_SAFARI_1102:
+			return "Apple publicó mitigaciones de Spectre en Safari 11.0.2; actualiza también el sistema completo.";
+		case ClavesTextoSeguridadCPU.MACOS_SPECTRE_ACTUALIZAR:
+			return "Instala una versión actual de macOS y Safari.";
+		case ClavesTextoSeguridadCPU.FREEBSD_PTI_HABILITAR:
+			return "Habilita PTI cuando el CPU lo requiera y actualiza FreeBSD.";
+		case ClavesTextoSeguridadCPU.FREEBSD_PTI_NO_LEIDO:
+			return "No se pudo leer vm.pmap.pti. El sysctl puede no existir en esta arquitectura o versión.";
+		case ClavesTextoSeguridadCPU.FREEBSD_PTI_REVISAR:
+			return "Actualiza FreeBSD y revisa dmesg, vm.pmap.pti y la asesoría FreeBSD-SA-18:03.";
+		case ClavesTextoSeguridadCPU.FREEBSD_SPECTRE_MITIGADO:
+			return "Spectre V2 aparece mitigado. FreeBSD no proporciona aquí un único indicador completo para Spectre V1.";
+		case ClavesTextoSeguridadCPU.FREEBSD_IBRS_DESHABILITADO:
+			return "IBRS está deshabilitado explícitamente. Actualiza FreeBSD y el microcódigo y no desactives la mitigación cuando el CPU la requiera.";
+		case ClavesTextoSeguridadCPU.FREEBSD_IBRS_INACTIVO:
+			return "IBRS no está activo, pero el kernel podría estar usando Retpoline o el CPU podría no requerir IBRS. Revisa dmesg y la configuración del kernel.";
+		case ClavesTextoSeguridadCPU.FREEBSD_IBRS_NO_ENCONTRADO:
+			return "No se encontraron los sysctl conocidos de IBRS o mitigaciones.";
+		case ClavesTextoSeguridadCPU.FREEBSD_IBRS_REVISAR:
+			return "Actualiza FreeBSD y comprueba dmesg, hw.ibrs_active y los sysctl machdep.mitigations.*.";
+		case ClavesTextoSeguridadCPU.NETBSD_SVS_HABILITAR:
+			return "Habilita SVS y actualiza NetBSD.";
+		case ClavesTextoSeguridadCPU.NETBSD_SVS_NO_LEIDO:
+			return "No se pudo leer machdep.svs.enabled.";
+		case ClavesTextoSeguridadCPU.NETBSD_SVS_REVISAR:
+			return "Actualiza NetBSD y verifica si la arquitectura dispone de SVS.";
+		case ClavesTextoSeguridadCPU.NETBSD_SPECTRE_MITIGADO:
+			return "Spectre V2 está mitigado. NetBSD no ofrece en este nodo una confirmación global de Spectre V1.";
+		case ClavesTextoSeguridadCPU.NETBSD_SPECTRE_HABILITAR:
+			return "Habilita una mitigación Spectre V2 compatible y actualiza el kernel y el microcódigo.";
+		case ClavesTextoSeguridadCPU.NETBSD_SPECTRE_NO_LEIDO:
+			return "No se pudieron leer los nodos machdep.spectre_v2.*.";
+		case ClavesTextoSeguridadCPU.NETBSD_SPECTRE_REVISAR:
+			return "Actualiza NetBSD y revisa los sysctl de spectre_v2.";
+		case ClavesTextoSeguridadCPU.OPENBSD_VERSION_NO_LEIDA:
+			return "No se pudo leer la versión de OpenBSD.";
+		case ClavesTextoSeguridadCPU.OPENBSD_ACTUALIZAR:
+			return "Actualiza OpenBSD a una versión soportada.";
+		case ClavesTextoSeguridadCPU.OPENBSD_MELTDOWN_INCLUIDO:
+			return "La rama incluye las mitigaciones publicadas para Meltdown en x86.";
+		case ClavesTextoSeguridadCPU.OPENBSD_SPECTRE_PARCIAL:
+			return "La rama incluye Retpoline y SpectreRSB. OpenBSD no expone un único estado de ejecución para todas las rutas de Spectre V1/V2.";
+		case ClavesTextoSeguridadCPU.OPENBSD_ANTIGUO_ACCION:
+			return "Actualiza a una versión soportada; OpenBSD 6.4 incorporó mitigaciones relevantes adicionales.";
+		case ClavesTextoSeguridadCPU.SOLARIS_SXADM_AUSENTE:
+			return "sxadm no está disponible o el sistema es anterior a la interfaz de mitigaciones de Solaris 11.4.";
+		case ClavesTextoSeguridadCPU.SOLARIS_SXADM_ACCION:
+			return "Instala los SRU/CPU de Oracle y el firmware del sistema; comprueba sxadm status después del reinicio.";
+		case ClavesTextoSeguridadCPU.SOLARIS_RDCL_HARDWARE:
+			return "Solaris informa que el hardware evita la exposición RDCL.";
+		case ClavesTextoSeguridadCPU.SOLARIS_KPTI_ACTIVO:
+			return "KPTI está habilitado.";
+		case ClavesTextoSeguridadCPU.SOLARIS_KPTI_ACTIVAR:
+			return "Habilita KPTI cuando sea necesario e instala los SRU y firmware recomendados.";
+		case ClavesTextoSeguridadCPU.SOLARIS_MELTDOWN_REVISAR:
+			return "Revisa las extensiones KPTI y RDCL_NO mediante sxadm status.";
+		case ClavesTextoSeguridadCPU.SOLARIS_V2_ACTIVO:
+			return "Solaris informa una mitigación V2 de hardware o firmware habilitada.";
+		case ClavesTextoSeguridadCPU.SOLARIS_EXTENSION_ACTIVAR:
+			return "Habilita la extensión aplicable, instala firmware/SRU y reinicia.";
+		case ClavesTextoSeguridadCPU.SOLARIS_V2_REVISAR:
+			return "Revisa HW_BTI en SPARC o IBRS/IBPB en x86. Un firmware antiguo puede impedir que sxadm comunique el estado.";
+		case ClavesTextoSeguridadCPU.AIX_ACTUALIZAR:
+			return "Actualiza AIX/VIOS y el firmware Power. IBM requiere ambas partes para estas mitigaciones.";
+		case ClavesTextoSeguridadCPU.AIX_CONTROL_ESPECULATIVO_REVISAR:
+			return "El nivel del SO parece suficientemente reciente, pero Java no puede confirmar si Speculative Execution Control está habilitado en HMC/ASMI. Verifica esa opción y el nivel mínimo de firmware del modelo.";
+		case ClavesTextoSeguridadCPU.XINUOS_SIN_ESTADO_RUNTIME:
+			return "UnixWare/OpenServer no expone un indicador de ejecución fiable equivalente a sysfs, sxadm o SpeculationControl. La presencia de patchck o de un paquete no demuestra por sí sola que la mitigación esté activa.";
+		case ClavesTextoSeguridadCPU.XINUOS_ACCION_PATCHCK:
+			return "Instala todas las actualizaciones soportadas de Xinuos y el BIOS o firmware del fabricante. Revisa patchck -u como administrador, reinicia y confirma los CVE con el soporte de Xinuos; el detector no ejecuta patchck -u automáticamente.";
+		case ClavesTextoSeguridadCPU.XINUOS_CPU_NO_AFECTADO:
+			return "La clasificación conservadora indica que este CPU no está afectado por esta vulnerabilidad original; no se requiere un parche específico para ella.";
+		case ClavesTextoSeguridadCPU.DESCONOCIDO:
+			return "Desconocido";
+		case ClavesTextoSeguridadCPU.DESCONOCIDA:
+			return "Desconocida";
+		case ClavesTextoSeguridadCPU.FABRICANTE_ARM_COMPATIBLE:
+			return "Arm o licenciatario de Arm";
+		case ClavesTextoSeguridadCPU.FABRICANTE_MIPS_COMPATIBLE:
+			return "MIPS o licenciatario de MIPS";
+		case ClavesTextoSeguridadCPU.ARQUITECTURA_X86_REGISTRO:
+			return "x86/x64 (no determinada por el registro)";
+		case ClavesTextoSeguridadCPU.NO_EXPUESTO_PROC_CPUINFO:
+			return "No expuesto por /proc/cpuinfo";
+		case ClavesTextoSeguridadCPU.NO_EXPUESTO_SO:
+			return "No expuesto por el sistema operativo";
+		case ClavesTextoSeguridadCPU.NO_EXPUESTO_APPLE:
+			return "No expuesto por Apple";
+		case ClavesTextoSeguridadCPU.NO_DISPONIBLE_AIX:
+			return "No disponible; AIX Diagnostics puede no estar instalado";
+		case ClavesTextoSeguridadCPU.SIN_INTERFAZ_PORTATIL:
+			return "No existe una interfaz portátil para esta plataforma";
+		case ClavesTextoSeguridadCPU.NO_EXPUESTO_REGISTRO:
+			return "No expuesto por el registro de Windows";
+		case ClavesTextoSeguridadCPU.NO_EXPUESTO_REGISTRO_REMOTO:
+			return "No expuesto por el registro analizado";
+		case ClavesTextoSeguridadCPU.ERROR_LEER_RUTA:
+			return "No se pudo leer " + a0;
+		case ClavesTextoSeguridadCPU.TEXTO_DESCONOCIDO:
+			return "Texto de seguridad del CPU no traducido: " + a0;
+		default:
+			return "Texto de seguridad del CPU no traducido: " + clave;
+		}
+	}
+
+	private String argumentoSeguridadCPU(String[] argumentos, int indice) {
+		if (argumentos == null || indice < 0 || indice >= argumentos.length || argumentos[indice] == null) {
+			return "";
+		}
+		return argumentos[indice];
 	}
 
 }

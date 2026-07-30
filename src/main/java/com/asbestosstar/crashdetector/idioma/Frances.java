@@ -13987,4 +13987,137 @@ public class Frances implements Idioma {
 		return "Courrier : fond des citations";
 	}
 
+	// MÉTODOS AGREGADOS POR patch_idiomas_seguridad_cpu.py
+	// Todas las cadenas visibles se resuelven mediante TraduccionesSeguridadCPU.
+
+	@Override
+	public String nombreVerificacionMeltdown() {
+		return TraduccionesSeguridadCPU.texto("fr", "check_meltdown");
+	}
+
+	@Override
+	public String nombreVerificacionSpectre() {
+		return TraduccionesSeguridadCPU.texto("fr", "check_spectre");
+	}
+
+	@Override
+	public String desactivarVerificacionMeltdown() {
+		return TraduccionesSeguridadCPU.texto("fr", "disable_meltdown");
+	}
+
+	@Override
+	public String desactivarVerificacionSpectre() {
+		return TraduccionesSeguridadCPU.texto("fr", "disable_spectre");
+	}
+
+	@Override
+	public String abrirDocumentacionOficialSeguridadCPU() {
+		return TraduccionesSeguridadCPU.texto("fr", "open_docs");
+	}
+
+	@Override
+	public String errorComprobacionSeguridadCPU(String verificacion, String detalle) {
+		return TraduccionesSeguridadCPU.texto("fr", "check_error", verificacion, detalle);
+	}
+
+	@Override
+	public String nombreVulnerabilidadMeltdown() {
+		return "Meltdown (CVE-2017-5754)";
+	}
+
+	@Override
+	public String nombreVulnerabilidadSpectre() {
+		return "Spectre V1/V2 (CVE-2017-5753, CVE-2017-5715)";
+	}
+
+	@Override
+	public String tituloProteccionProcesador(String vulnerabilidad) {
+		return TraduccionesSeguridadCPU.texto("fr", "title_protection", vulnerabilidad);
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuCPU() {
+		return TraduccionesSeguridadCPU.texto("fr", "label_cpu");
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuFabricante() {
+		return TraduccionesSeguridadCPU.texto("fr", "label_vendor");
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuArquitectura() {
+		return TraduccionesSeguridadCPU.texto("fr", "label_arch");
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuSistemaOperativo() {
+		return TraduccionesSeguridadCPU.texto("fr", "label_os");
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuAfectado() {
+		return TraduccionesSeguridadCPU.texto("fr", "label_affected");
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuEstadoGeneral() {
+		return TraduccionesSeguridadCPU.texto("fr", "label_overall");
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuMitigacionSO() {
+		return TraduccionesSeguridadCPU.texto("fr", "label_os_mitigation");
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuMicrocodigoFirmware() {
+		return TraduccionesSeguridadCPU.texto("fr", "label_microcode");
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuRevisionDetectada() {
+		return TraduccionesSeguridadCPU.texto("fr", "label_revision");
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuNota() {
+		return TraduccionesSeguridadCPU.texto("fr", "label_note");
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuEvidencia() {
+		return TraduccionesSeguridadCPU.texto("fr", "label_evidence");
+	}
+
+	@Override
+	public String etiquetaSeguridadCpuAccionRecomendada() {
+		return TraduccionesSeguridadCPU.texto("fr", "label_action");
+	}
+
+	@Override
+	public String estadoAfectacionSeguridadCPU(String estado) {
+		return TraduccionesSeguridadCPU.estadoAfectacion("fr", estado);
+	}
+
+	@Override
+	public String estadoMitigacionSeguridadCPU(String estado) {
+		return TraduccionesSeguridadCPU.estadoMitigacion("fr", estado);
+	}
+
+	@Override
+	public String estadoComponenteSeguridadCPU(String estado) {
+		return TraduccionesSeguridadCPU.estadoComponente("fr", estado);
+	}
+
+	@Override
+	public String notaSeguridadCpuRegistroRemoto() {
+		return TraduccionesSeguridadCPU.texto("fr", "remote_note");
+	}
+
+	@Override
+	public String mensajeSeguridadCPU(String clave, String... argumentos) {
+		return TraduccionesSeguridadCPU.mensaje("fr", clave, argumentos);
+	}
+
 }
