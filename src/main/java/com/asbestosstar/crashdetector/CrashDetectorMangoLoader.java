@@ -4,11 +4,13 @@ import java.io.File;
 import java.lang.instrument.IllegalClassFormatException;
 import java.nio.file.Path;
 
-import org.mangorage.loader.api.IClassTransformer;
-import org.mangorage.loader.api.TransformResult;
-import org.mangorage.loader.api.TransformerFlag;
+//import org.mangorage.loader.api.IClassTransformer;
+//import org.mangorage.loader.api.TransformResult;
+//import org.mangorage.loader.api.TransformerFlag;
 
-public class CrashDetectorMangoLoader implements IClassTransformer {
+public class CrashDetectorMangoLoader
+//implements IClassTransformer 
+{
 	static {
 		CargadoresComun.init(new Path[] { new File("mods/").toPath() }, CargadoresComun.CDOrigin.MANGOMODLOADER);
 		Transformaciones.init();
@@ -16,26 +18,26 @@ public class CrashDetectorMangoLoader implements IClassTransformer {
 
 	static Transformaciones trans = new Transformaciones();
 
-	@Override
+	// @Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return "crashdetector";
 	}
 
-	@Override
-	public TransformResult transform(String arg0, byte[] arg1) {
-		// TODO Auto-generated method stub
-
-		// return null;
-		try {
-			return new TransformResult(trans.transform(this.getClass().getClassLoader(), arg0, null,
-					this.getClass().getProtectionDomain(), arg1), TransformerFlag.FULL_REWRITE);
-		} catch (IllegalClassFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return TransformResult.none(arg1);
-
-	}
+//	@Override
+//	public TransformResult transform(String arg0, byte[] arg1) {
+//		// TODO Auto-generated method stub
+//
+//		// return null;
+//		try {
+//			return new TransformResult(trans.transform(this.getClass().getClassLoader(), arg0, null,
+//					this.getClass().getProtectionDomain(), arg1), TransformerFlag.FULL_REWRITE);
+//		} catch (IllegalClassFormatException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return TransformResult.none(arg1);
+//
+//	}
 
 }
