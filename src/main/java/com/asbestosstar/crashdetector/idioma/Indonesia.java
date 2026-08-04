@@ -14714,4 +14714,29 @@ public class Indonesia implements Idioma {
 		}
 		return "Warna";
 	}
+
+	@Override
+	public String mensajeWatchdogCierreClientePostMain() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+				+ "Minecraft terlalu lama untuk menutup.</b>" + "<p>Game menghasilkan:</p>"
+				+ "<code>java.lang.Error: Watchdog (Client shutdown from post-main)</code>"
+				+ "<p>Laporan ini muncul ketika proses Minecraft tetap aktif selama "
+				+ "kira-kira 15 detik setelah memulai penutupan.</p>"
+				+ "<p><b>Ini biasanya bukan masalah serius dengan sendirinya.</b> "
+				+ "Ini dapat berarti bahwa mod, thread, atau tugas pembersihan membutuhkan waktu terlalu lama "
+				+ "untuk selesai selama penutupan.</p>"
+				+ "<p>Ini juga dapat berupa laporan sekunder yang dihasilkan saat game sudah "
+				+ "menutup setelah kegagalan lain.</p>" + "<p><b>Apa yang harus dilakukan:</b></p>" + "<ul>"
+				+ "<li>Jika game menutup dengan benar dan hanya terjadi sekali, Anda dapat mengabaikannya.</li>"
+				+ "<li>Jika terjadi berulang kali, periksa kesalahan sebelumnya di " + "<code>latest.log</code>.</li>"
+				+ "<li>Cari mod yang menjaga tugas, koneksi, atau proses tetap aktif selama penutupan.</li>"
+				+ "<li>Jangan berasumsi bahwa thread terakhir yang ditampilkan di dump adalah penyebabnya.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreWatchdogCierreClientePostMain() {
+		return "Penutupan klien lambat (Watchdog post-main)";
+	}
+
 }

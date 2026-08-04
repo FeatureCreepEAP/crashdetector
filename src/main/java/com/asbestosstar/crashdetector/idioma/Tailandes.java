@@ -14087,4 +14087,23 @@ public class Tailandes implements Idioma {
 		}
 		return "สี";
 	}
+
+	public String mensajeWatchdogCierreClientePostMain() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "Minecraft ใช้เวลานานเกินไปในการปิด</b>"
+				+ "<p>เกมได้สร้าง:</p>" + "<code>java.lang.Error: Watchdog (Client shutdown from post-main)</code>"
+				+ "<p>รายงานนี้ปรากฏเมื่อกระบวนการของ Minecraft ยังคงทำงานอยู่ประมาณ " + "15 วินาทีหลังจากเริ่มปิด</p>"
+				+ "<p><b>โดยปกติแล้วนี่ไม่ใช่ปัญหาร้ายแรงในตัวมันเอง</b> "
+				+ "อาจหมายความว่า mod, thread หรืองานทำความสะอาดใช้เวลานานเกินไป " + "ในการเสร็จสิ้นระหว่างการปิด</p>"
+				+ "<p>อาจเป็นรายงานรองที่สร้างขึ้นในขณะที่เกมกำลัง " + "ปิดหลังจากความผิดพลาดอื่น</p>"
+				+ "<p><b>สิ่งที่ควรทำ:</b></p>" + "<ul>"
+				+ "<li>หากเกมปิดอย่างถูกต้องและเกิดขึ้นเพียงครั้งเดียว คุณสามารถเพิกเฉยได้</li>"
+				+ "<li>หากเกิดขึ้นซ้ำๆ ให้ตรวจสอบข้อผิดพลาดก่อนหน้าใน " + "<code>latest.log</code></li>"
+				+ "<li>ค้นหา mods ที่รักษางาน การเชื่อมต่อ หรือกระบวนการที่ทำงานอยู่ระหว่างการปิด</li>"
+				+ "<li>อย่าสันนิษฐานว่า thread สุดท้ายที่แสดงใน dump เป็นผู้รับผิดชอบอย่างแน่นอน</li>" + "</ul>";
+	}
+
+	public String nombreWatchdogCierreClientePostMain() {
+		return "การปิดไคลเอนต์ช้า (Watchdog post-main)";
+	}
+
 }

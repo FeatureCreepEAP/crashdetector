@@ -14118,4 +14118,27 @@ public class Vietnamita implements Idioma {
 		}
 		return "Màu";
 	}
+
+	public String mensajeWatchdogCierreClientePostMain() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+				+ "Minecraft mất quá nhiều thời gian để đóng.</b>" + "<p>Trò chơi đã tạo ra:</p>"
+				+ "<code>java.lang.Error: Watchdog (Client shutdown from post-main)</code>"
+				+ "<p>Thông báo này xuất hiện khi quá trình Minecraft vẫn hoạt động khoảng "
+				+ "15 giây sau khi bắt đầu đóng.</p>"
+				+ "<p><b>Điều này thường không đại diện cho một vấn đề nghiêm trọng tự nó.</b> "
+				+ "Nó có thể có nghĩa là một mod, luồng hoặc tác vụ dọn dẹp mất quá nhiều thời gian "
+				+ "để hoàn tất trong quá trình đóng.</p>"
+				+ "<p>Nó cũng có thể là một thông báo phụ được tạo ra khi trò chơi đang " + "đóng sau một lỗi khác.</p>"
+				+ "<p><b>Cần làm gì:</b></p>" + "<ul>"
+				+ "<li>Nếu trò chơi đóng đúng cách và chỉ xảy ra một lần, bạn có thể bỏ qua.</li>"
+				+ "<li>Nếu xảy ra lặp đi lặp lại, kiểm tra các lỗi trước đó trong " + "<code>latest.log</code>.</li>"
+				+ "<li>Tìm các mod duy trì tác vụ, kết nối hoặc quá trình hoạt động trong quá trình đóng.</li>"
+				+ "<li>Đừng giả định rằng luồng cuối cùng được hiển thị trong dump nhất thiết phải chịu trách nhiệm.</li>"
+				+ "</ul>";
+	}
+
+	public String nombreWatchdogCierreClientePostMain() {
+		return "Đóng client chậm (Watchdog post-main)";
+	}
+
 }

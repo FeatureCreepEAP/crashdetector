@@ -13740,4 +13740,23 @@ public class Coreano implements Idioma {
 		}
 		return "색상";
 	}
+
+	@Override
+	public String mensajeWatchdogCierreClientePostMain() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "Minecraft가 종료되는 데 너무 오래 걸렸습니다.</b>"
+				+ "<p>게임이 다음을 생성했습니다:</p>" + "<code>java.lang.Error: Watchdog (Client shutdown from post-main)</code>"
+				+ "<p>이 보고서는 Minecraft 프로세스가 종료 시작 후 " + "약 15초 동안 계속 활성 상태로 유지될 때 나타납니다.</p>"
+				+ "<p><b>이것은 일반적으로 그 자체로 심각한 문제를 나타내지 않습니다.</b> " + "이는 종료 중에 모드, 스레드 또는 정리 작업이 완료되는 데 "
+				+ "너무 오래 걸렸음을 의미할 수 있습니다.</p>" + "<p>또한 다른 오류 후 게임이 이미 종료되고 있는 동안 " + "생성된 보조 보고일 수도 있습니다.</p>"
+				+ "<p><b>조치 방법:</b></p>" + "<ul>" + "<li>게임이 올바르게 종료되었고 한 번만 발생했다면 무시해도 됩니다.</li>" + "<li>반복적으로 발생하면 "
+				+ "<code>latest.log</code>에서 이전 오류를 확인하십시오.</li>"
+				+ "<li>종료 중에 작업, 연결 또는 프로세스를 활성 상태로 유지하는 모드를 찾으십시오.</li>"
+				+ "<li>덤프에 표시된 마지막 스레드가 반드시 책임자가 있다고 가정하지 마십시오.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreWatchdogCierreClientePostMain() {
+		return "클라이언트 종료 지연 (Watchdog post-main)";
+	}
+
 }

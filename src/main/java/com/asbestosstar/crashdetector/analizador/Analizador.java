@@ -349,6 +349,7 @@ public class Analizador {
 		verificaciones.add(new Spectre());
 		verificaciones.add(new Meltdown());
 		verificaciones.add(new ErrorSistemaSonido());
+		verificaciones.add(new WatchdogCierreClientePostMain());
 
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());

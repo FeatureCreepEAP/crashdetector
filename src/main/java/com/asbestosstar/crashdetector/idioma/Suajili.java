@@ -14346,4 +14346,27 @@ public class Suajili implements Idioma {
 		}
 		return "Rangi";
 	}
+
+	public String mensajeWatchdogCierreClientePostMain() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+				+ "Minecraft ilichukua muda mrefu sana kufunga.</b>" + "<p>Mchezo ulitengeneza:</p>"
+				+ "<code>java.lang.Error: Watchdog (Client shutdown from post-main)</code>"
+				+ "<p>Ripoti hii inaonekana wakati mchakato wa Minecraft unaendelea kuwa hai kwa takriban "
+				+ "sekunde 15 baada ya kuanza kufunga.</p>"
+				+ "<p><b>Hii kwa kawaida haiwakilishi tatizo kubwa peke yake.</b> "
+				+ "Inaweza kumaanisha kuwa mod, thread au kazi ya kusafisha ilichukua muda mrefu sana "
+				+ "kukamilisha wakati wa kufunga.</p>"
+				+ "<p>Pia inaweza kuwa ripoti ya sekondari iliyotengenezwa wakati mchezo ulikuwa "
+				+ "ukifungwa baada ya hitilafu nyingine.</p>" + "<p><b>Nini cha kufanya:</b></p>" + "<ul>"
+				+ "<li>Ikiwa mchezo ulifungwa vizuri na ilitokea mara moja tu, unaweza kupuuza.</li>"
+				+ "<li>Ikiwa inatokea mara kwa mara, angalia makosa yaliyotangulia katika "
+				+ "<code>latest.log</code>.</li>"
+				+ "<li>Tafuta mods zinazoshikilia kazi, miunganisho au michakato hai wakati wa kufunga.</li>"
+				+ "<li>Usidhani kuwa thread ya mwisho iliyoonyeshwa kwenye dump ndiyowajibikai lazima.</li>" + "</ul>";
+	}
+
+	public String nombreWatchdogCierreClientePostMain() {
+		return "Kufungwa polepole kwa mteja (Watchdog post-main)";
+	}
+
 }

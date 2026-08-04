@@ -13744,4 +13744,23 @@ public class Japones implements Idioma {
 		}
 		return "色";
 	}
+
+	@Override
+	public String mensajeWatchdogCierreClientePostMain() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "Minecraft の終了に時間がかかりすぎました。</b>"
+				+ "<p>ゲームが以下を生成しました：</p>" + "<code>java.lang.Error: Watchdog (Client shutdown from post-main)</code>"
+				+ "<p>このレポートは、Minecraft プロセスがシャットダウン開始後、" + "約 15 秒間アクティブなままである場合に表示されます。</p>"
+				+ "<p><b>これは通常、それ自体では深刻な問題を表すものではありません。</b> " + "シャットダウン中に Mod、スレッド、またはクリーンアップタスクが完了するまでに"
+				+ "時間がかかりすぎたことを意味する可能性があります。</p>" + "<p>また、別のクラッシュ後にゲームがすでに終了している間に" + "生成された二次的なレポートである可能性もあります。</p>"
+				+ "<p><b>対処方法：</b></p>" + "<ul>" + "<li>ゲームが正しく終了し、1 回だけ発生した場合は無視できます。</li>" + "<li>繰り返し発生する場合は、"
+				+ "<code>latest.log</code> の以前のエラーを確認してください。</li>"
+				+ "<li>シャットダウン中にタスク、接続、またはプロセスをアクティブに保つ Mod を探してください。</li>"
+				+ "<li>ダンプに表示されている最後のスレッドが必ずしも責任者であると想定しないでください。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreWatchdogCierreClientePostMain() {
+		return "クライアントの終了遅延（Watchdog post-main）";
+	}
+
 }

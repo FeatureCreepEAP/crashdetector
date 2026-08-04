@@ -14130,4 +14130,26 @@ public class Esperanto implements Idioma {
 		}
 		return "Koloro";
 	}
+
+	@Override
+	public String mensajeWatchdogCierreClientePostMain() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "Minecraft tro malfruis por fermiĝi.</b>"
+				+ "<p>La ludo generis:</p>" + "<code>java.lang.Error: Watchdog (Client shutdown from post-main)</code>"
+				+ "<p>Ĉi tiu raporto aperas kiam la procezo de Minecraft daŭre aktivas dum "
+				+ "proksimume 15 sekundoj post komenci la fermon.</p>"
+				+ "<p><b>Ĉi tio normale ne reprezentas gravan problemon per si mem.</b> "
+				+ "Ĝi povas signifi, ke modo, fadeno aŭ puriga tasko tro malfruis " + "por finiĝi dum la fermo.</p>"
+				+ "<p>Ĝi ankaŭ povas esti duaranga raporto generita dum la ludo jam " + "fermiĝis post alia paneo.</p>"
+				+ "<p><b>Kion fari:</b></p>" + "<ul>"
+				+ "<li>Se la ludo fermiĝis ĝuste kaj nur okazis unufoje, vi povas ignori ĝin.</li>"
+				+ "<li>Se ĝi ripetiĝas, kontrolu la antaŭajn erarojn en " + "<code>latest.log</code>.</li>"
+				+ "<li>Serĉu modojn, kiuj tenas taskojn, konektojn aŭ procezojn aktivaj dum la fermo.</li>"
+				+ "<li>Ne supozu, ke la lasta fadeno montrita en la dumpo nepre estas la respondeculo.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreWatchdogCierreClientePostMain() {
+		return "Malrapida fermo de kliento (Watchdog post-main)";
+	}
+
 }

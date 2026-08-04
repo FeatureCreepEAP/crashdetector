@@ -14315,4 +14315,23 @@ public class Lao implements Idioma {
 		}
 		return "ສີ";
 	}
+
+	public String mensajeWatchdogCierreClientePostMain() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "Minecraft ໃຊ້ເວລາດົນເກີນໄປໃນການປິດ.</b>"
+				+ "<p>ເກມໄດ້ສ້າງ:</p>" + "<code>java.lang.Error: Watchdog (Client shutdown from post-main)</code>"
+				+ "<p>ລາຍງານນີ້ປາກົດເມື່ອຂະບວນການຂອງ Minecraft ຍັງຄົງເຮັດວຽກຢູ່ປະມານ " + "15 ວິນາທີຫຼັງຈາກເລີ່ມປິດ.</p>"
+				+ "<p><b>ນີ້ປົກກະຕິບໍ່ແມ່ນບັນຫາຮ້າຍແຮງໂດຍຕົວມັນເອງ.</b> "
+				+ "ມັນອາດໝາຍຄວາມວ່າ mod, thread ຫຼືວຽກທຳຄວາມສະອາດໃຊ້ເວລາດົນເກີນໄປ " + "ໃນການສຳເລັດໃນລະຫວ່າງການປິດ.</p>"
+				+ "<p>ມັນຍັງອາດເປັນລາຍງານຮອງທີ່ຖືກສ້າງຂຶ້ນໃນຂະນະທີ່ເກມກຳລັງ " + "ປິດຫຼັງຈາກຄວາມຜິດພາດອື່ນ.</p>"
+				+ "<p><b>ສິ່ງທີ່ຄວນເຮັດ:</b></p>" + "<ul>"
+				+ "<li>ຖ້າເກມປິດຢ່າງຖືກຕ້ອງ ແລະ ເກີດຂຶ້ນພຽງຄັ້ງດຽວ, ທ່ານສາມາດບໍ່ສົນໃຈມັນ.</li>"
+				+ "<li>ຖ້າມັນເກີດຂຶ້ນຊ້ຳໆ, ກວດສອບຄວາມຜິດພາດກ່ອນໜ້ານີ້ໃນ " + "<code>latest.log</code>.</li>"
+				+ "<li>ຊອກຫາ mods ທີ່ຮັກສາວຽກ, ການເຊື່ອມຕໍ່ ຫຼື ຂະບວນການທີ່ເຮັດວຽກຢູ່ໃນລະຫວ່າງການປິດ.</li>"
+				+ "<li>ຢ່າສົມມຸດວ່າ thread ສຸດທ້າຍທີ່ສະແດງໃນ dump ແມ່ນຜູ້ຮັບຜິດຊອບຢ່າງແນ່ນອນ.</li>" + "</ul>";
+	}
+
+	public String nombreWatchdogCierreClientePostMain() {
+		return "ການປິດລູກຄ້າຊ້າ (Watchdog post-main)";
+	}
+
 }

@@ -14180,4 +14180,28 @@ public class Ingles implements Idioma {
 		}
 		return "Colour";
 	}
+
+	@Override
+	public String mensajeWatchdogCierreClientePostMain() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "Minecraft took too long to close.</b>"
+				+ "<p>The game generated:</p>"
+				+ "<code>java.lang.Error: Watchdog (Client shutdown from post-main)</code>"
+				+ "<p>This report appears when the Minecraft process remains active for "
+				+ "approximately 15 seconds after shutdown begins.</p>"
+				+ "<p><b>This normally does not represent a serious problem on its own.</b> "
+				+ "It may mean that a mod, a thread, or a cleanup task took too long "
+				+ "to finish during shutdown.</p>"
+				+ "<p>It may also be a secondary report generated while the game was already "
+				+ "closing after another crash.</p>" + "<p><b>What to do:</b></p>" + "<ul>"
+				+ "<li>If the game closed correctly and this only happened once, you can ignore it.</li>"
+				+ "<li>If it occurs repeatedly, check previous errors in " + "<code>latest.log</code>.</li>"
+				+ "<li>Look for mods that keep tasks, connections, or processes active during shutdown.</li>"
+				+ "<li>Do not assume that the last thread shown in the dump is necessarily responsible.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreWatchdogCierreClientePostMain() {
+		return "Slow client shutdown (Watchdog post-main)";
+	}
+
 }

@@ -5536,4 +5536,8 @@ public interface Idioma {
 	public String universalatorRazonHeuristicaNombre();
 
 	public String universalatorColor(String clave);
+
+	public String mensajeWatchdogCierreClientePostMain();
+
+	public String nombreWatchdogCierreClientePostMain();
 }

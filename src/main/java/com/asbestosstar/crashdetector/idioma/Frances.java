@@ -14702,4 +14702,29 @@ public class Frances implements Idioma {
 		}
 		return "Couleur";
 	}
+
+	@Override
+	public String mensajeWatchdogCierreClientePostMain() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+				+ "Minecraft a mis trop de temps à se fermer.</b>" + "<p>Le jeu a généré :</p>"
+				+ "<code>java.lang.Error: Watchdog (Client shutdown from post-main)</code>"
+				+ "<p>Ce rapport apparaît lorsque le processus de Minecraft reste actif pendant "
+				+ "environ 15 secondes après le début de la fermeture.</p>"
+				+ "<p><b>Cela ne représente normalement pas un problème grave en soi.</b> "
+				+ "Cela peut signifier qu'un mod, un thread ou une tâche de nettoyage a mis trop de temps "
+				+ "à se terminer pendant la fermeture.</p>"
+				+ "<p>Il peut également s'agir d'un rapport secondaire généré alors que le jeu "
+				+ "était déjà en train de se fermer après un autre plantage.</p>" + "<p><b>Que faire :</b></p>" + "<ul>"
+				+ "<li>Si le jeu s'est fermé correctement et que cela ne s'est produit qu'une fois, vous pouvez l'ignorer.</li>"
+				+ "<li>Si cela se reproduit, vérifiez les erreurs précédentes dans " + "<code>latest.log</code>.</li>"
+				+ "<li>Recherchez les mods qui maintiennent des tâches, des connexions ou des processus actifs pendant la fermeture.</li>"
+				+ "<li>Ne supposez pas que le dernier thread affiché dans le dump est nécessairement le responsable.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreWatchdogCierreClientePostMain() {
+		return "Fermeture lente du client (Watchdog post-main)";
+	}
+
 }

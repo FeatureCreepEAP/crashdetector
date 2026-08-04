@@ -13511,4 +13511,21 @@ public class Chino implements Idioma {
 		}
 		return "颜色";
 	}
+
+	@Override
+	public String mensajeWatchdogCierreClientePostMain() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "Minecraft 关闭耗时过长。</b>" + "<p>游戏生成了：</p>"
+				+ "<code>java.lang.Error: Watchdog (Client shutdown from post-main)</code>"
+				+ "<p>当 Minecraft 进程在启动关闭后继续活动约 " + "15 秒时，会出现此报告。</p>" + "<p><b>这通常本身并不代表严重问题。</b> "
+				+ "这可能意味着某个模组、线程或清理任务在关闭期间耗时过长" + "才完成。</p>" + "<p>这也可能是在游戏因另一个故障已经关闭时" + "生成的次要报告。</p>"
+				+ "<p><b>应对措施：</b></p>" + "<ul>" + "<li>如果游戏正常关闭且仅发生一次，可以忽略。</li>" + "<li>如果反复发生，请检查 "
+				+ "<code>latest.log</code> 中之前的错误。</li>" + "<li>查找在关闭期间保持任务、连接或进程处于活动状态的模组。</li>"
+				+ "<li>不要假设转储中显示的最后一个线程一定是责任方。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreWatchdogCierreClientePostMain() {
+		return "客户端关闭缓慢（Watchdog post-main）";
+	}
+
 }

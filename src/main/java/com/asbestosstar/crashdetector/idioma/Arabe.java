@@ -14032,4 +14032,26 @@ public class Arabe implements Idioma {
 		}
 		return "لون";
 	}
+
+	@Override
+	public String mensajeWatchdogCierreClientePostMain() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+				+ "استغرق Minecraft وقتاً طويلاً جداً للإغلاق.</b>" + "<p>أنشأت اللعبة:</p>"
+				+ "<code>java.lang.Error: Watchdog (Client shutdown from post-main)</code>"
+				+ "<p>يظهر هذا التقرير عندما تظل عملية Minecraft نشطة لمدة " + "15 ثانية تقريباً بعد بدء الإغلاق.</p>"
+				+ "<p><b>هذا عادة لا يمثل مشكلة خطيرة بحد ذاته.</b> "
+				+ "قد يعني أن إضافة أو خيطاً أو مهمة تنظيف استغرقت وقتاً طويلاً " + "للانتهاء أثناء الإغلاق.</p>"
+				+ "<p>قد يكون أيضاً تقريراً ثانوياً تم إنشاؤه بينما كانت اللعبة " + "تغلق بالفعل بعد عطل آخر.</p>"
+				+ "<p><b>ماذا تفعل:</b></p>" + "<ul>"
+				+ "<li>إذا أغلقت اللعبة بشكل صحيح وحدث ذلك مرة واحدة فقط، يمكنك تجاهله.</li>"
+				+ "<li>إذا تكرر حدوثه، راجع الأخطاء السابقة في " + "<code>latest.log</code>.</li>"
+				+ "<li>ابحث عن الإضافات التي تبقي المهام أو الاتصالات أو العمليات نشطة أثناء الإغلاق.</li>"
+				+ "<li>لا تفترض أن الخيط الأخير المعروض في التفريغ هو بالضرورة المسؤول.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreWatchdogCierreClientePostMain() {
+		return "إغلاق بطيء للعميل (Watchdog post-main)";
+	}
+
 }
