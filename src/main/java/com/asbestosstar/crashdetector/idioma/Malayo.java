@@ -1601,4 +1601,14 @@ public class Malayo extends Indonesia {
 	public String paso3_access_transformers_toml_invalido() {
 		return "Jika anda pembangun mod, buka <b>META-INF/mods.toml</b> dan semak <b>accessTransformers</b>. Ralat ini menunjukkan <b>[[accessTransformers]]</b> digunakan sedangkan versi Forge ini menjangkakan <b>[accessTransformers]</b>; buang satu pasangan kurungan siku seperti yang dinyatakan oleh pengecualian.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "Tampal URL atau HTML laporan Crash Assistant atau CrashDetector di sini. CrashDetector akan mencari pautan log yang disokong dalam laporan dan mengimportnya secara automatik.";
+	}
 }

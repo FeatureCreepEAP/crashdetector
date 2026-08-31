@@ -14765,4 +14765,14 @@ public class Indonesia implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "Jika Anda pengembang mod, buka <b>META-INF/mods.toml</b> dan periksa <b>accessTransformers</b>. Kesalahan ini menunjukkan <b>[[accessTransformers]]</b> digunakan saat versi Forge ini mengharapkan <b>[accessTransformers]</b>; hapus satu pasang kurung siku seperti yang dijelaskan oleh exception.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "Tempel URL atau HTML laporan Crash Assistant atau CrashDetector di sini. CrashDetector akan mencari tautan log yang didukung di dalam laporan dan mengimpornya secara otomatis.";
+	}
 }

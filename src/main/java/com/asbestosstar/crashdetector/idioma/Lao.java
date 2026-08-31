@@ -14360,4 +14360,14 @@ public class Lao implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "ຖ້າທ່ານເປັນນັກພັດທະນາ mod ໃຫ້ເປີດ <b>META-INF/mods.toml</b> ແລະກວດ <b>accessTransformers</b>. ຂໍ້ຜິດພາດນີ້ຊີ້ວ່າໃຊ້ <b>[[accessTransformers]]</b> ໃນຂະນະທີ່ Forge ລຸ້ນນີ້ຄາດຫວັງ <b>[accessTransformers]</b>; ໃຫ້ລຶບວົງເລັບສີ່ຫຼ່ຽມອອກໜຶ່ງຄູ່ຕາມຂໍ້ຄວາມ exception.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "ວາງ URL ຫຼື HTML ຂອງລາຍງານ Crash Assistant ຫຼື CrashDetector ທີ່ນີ້. CrashDetector ຈະຊອກຫາລິ້ງ log ທີ່ຮອງຮັບພາຍໃນລາຍງານ ແລະນຳເຂົ້າໂດຍອັດຕະໂນມັດ.";
+	}
 }

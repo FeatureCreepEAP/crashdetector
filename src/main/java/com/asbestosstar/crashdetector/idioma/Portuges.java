@@ -13958,4 +13958,14 @@ public class Portuges implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "Se você desenvolve o mod, abra <b>META-INF/mods.toml</b> e revise <b>accessTransformers</b>. O erro indica que foi usado <b>[[accessTransformers]]</b> quando esta versão do Forge espera <b>[accessTransformers]</b>; remova um par de colchetes, como a própria exceção informa.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "Cole aqui a URL ou o HTML de um relatório do Crash Assistant ou CrashDetector. O CrashDetector localizará os links de registros compatíveis dentro do relatório e os importará automaticamente.";
+	}
 }

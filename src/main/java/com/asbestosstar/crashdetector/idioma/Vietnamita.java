@@ -14167,4 +14167,14 @@ public class Vietnamita implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "Nếu bạn là nhà phát triển mod, mở <b>META-INF/mods.toml</b> và kiểm tra <b>accessTransformers</b>. Lỗi này cho biết đã dùng <b>[[accessTransformers]]</b> trong khi phiên bản Forge này yêu cầu <b>[accessTransformers]</b>; hãy bỏ một cặp dấu ngoặc vuông như thông báo ngoại lệ hướng dẫn.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "Dán URL hoặc HTML của báo cáo Crash Assistant hoặc CrashDetector vào đây. CrashDetector sẽ tìm các liên kết nhật ký được hỗ trợ trong báo cáo và tự động nhập chúng.";
+	}
 }

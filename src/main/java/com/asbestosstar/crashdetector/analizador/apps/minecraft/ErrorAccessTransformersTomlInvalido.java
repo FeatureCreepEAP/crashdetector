@@ -15,16 +15,14 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Puede llegar en una sola línea o dividido en varias líneas cercanas:
  *
- * InvalidModFileException
- * The configuration path [accessTransformers] is invalid
- * I wasn't expecting a multi-object list - remove one of the [[ ]]
+ * InvalidModFileException The configuration path [accessTransformers] is
+ * invalid I wasn't expecting a multi-object list - remove one of the [[ ]]
  * (/nombre-del-mod.jar)
  */
 public class ErrorAccessTransformersTomlInvalido implements Verificaciones {
 
 	private static final String INVALID_MOD_FILE_EXCEPTION = "InvalidModFileException";
-	private static final String RUTA_ACCESS_TRANSFORMERS =
-			"The configuration path [accessTransformers] is invalid";
+	private static final String RUTA_ACCESS_TRANSFORMERS = "The configuration path [accessTransformers] is invalid";
 	private static final String MULTI_OBJECT_LIST = "multi-object list";
 	private static final String QUITAR_DOBLE_CORCHETE = "remove one of the [[ ]]";
 
@@ -45,12 +43,8 @@ public class ErrorAccessTransformersTomlInvalido implements Verificaciones {
 
 	@Override
 	public String[] patronesRapidos() {
-		return new String[] {
-				INVALID_MOD_FILE_EXCEPTION,
-				RUTA_ACCESS_TRANSFORMERS,
-				MULTI_OBJECT_LIST,
-				QUITAR_DOBLE_CORCHETE
-		};
+		return new String[] { INVALID_MOD_FILE_EXCEPTION, RUTA_ACCESS_TRANSFORMERS, MULTI_OBJECT_LIST,
+				QUITAR_DOBLE_CORCHETE };
 	}
 
 	@Override
@@ -110,15 +104,13 @@ public class ErrorAccessTransformersTomlInvalido implements Verificaciones {
 			return -1;
 		}
 
-		int minimo = Math.min(lineaInvalidModFile,
-				Math.min(lineaAccessTransformers, lineaMultiObject));
-		int maximo = Math.max(lineaInvalidModFile,
-				Math.max(lineaAccessTransformers, lineaMultiObject));
+		int minimo = Math.min(lineaInvalidModFile, Math.min(lineaAccessTransformers, lineaMultiObject));
+		int maximo = Math.max(lineaInvalidModFile, Math.max(lineaAccessTransformers, lineaMultiObject));
 
 		if (maximo - minimo > MAX_DISTANCIA_LINEAS) {
 			/*
-			 * Descartar estado demasiado viejo y conservar únicamente la señal más
-			 * reciente para permitir detectar otro bloque más adelante.
+			 * Descartar estado demasiado viejo y conservar únicamente la señal más reciente
+			 * para permitir detectar otro bloque más adelante.
 			 */
 			int masReciente = maximo;
 
@@ -144,14 +136,12 @@ public class ErrorAccessTransformersTomlInvalido implements Verificaciones {
 	 * lineas_verificar ya disponibles.
 	 */
 	private String buscarJarCerca(Consola consola, int centro) {
-		if (consola == null || consola.lineas_verificar == null
-				|| consola.lineas_verificar.length == 0) {
+		if (consola == null || consola.lineas_verificar == null || consola.lineas_verificar.length == 0) {
 			return "";
 		}
 
 		int inicio = Math.max(0, centro - MAX_DISTANCIA_LINEAS);
-		int fin = Math.min(consola.lineas_verificar.length - 1,
-				centro + MAX_DISTANCIA_LINEAS);
+		int fin = Math.min(consola.lineas_verificar.length - 1, centro + MAX_DISTANCIA_LINEAS);
 
 		for (int i = inicio; i <= fin; i++) {
 			String jar = extraerNombreJar(consola.lineas_verificar[i]);
@@ -182,12 +172,7 @@ public class ErrorAccessTransformersTomlInvalido implements Verificaciones {
 		while (inicio >= 0) {
 			char c = linea.charAt(inicio);
 
-			if (Character.isWhitespace(c)
-					|| c == '('
-					|| c == '['
-					|| c == '{'
-					|| c == '\''
-					|| c == '"') {
+			if (Character.isWhitespace(c) || c == '(' || c == '[' || c == '{' || c == '\'' || c == '"') {
 				break;
 			}
 
@@ -201,9 +186,7 @@ public class ErrorAccessTransformersTomlInvalido implements Verificaciones {
 			candidato = candidato.substring(barra + 1);
 		}
 
-		return candidato.toLowerCase(Locale.ROOT).endsWith(".jar")
-				? candidato
-				: "";
+		return candidato.toLowerCase(Locale.ROOT).endsWith(".jar") ? candidato : "";
 	}
 
 	@Override
@@ -227,9 +210,7 @@ public class ErrorAccessTransformersTomlInvalido implements Verificaciones {
 			return "";
 		}
 
-		return MonitorDePID.idioma.errorAccessTransformersTomlInvalido(nombreJar)
-				+ Verificaciones.nl_html
-				+ enlaceHtml;
+		return MonitorDePID.idioma.errorAccessTransformersTomlInvalido(nombreJar) + Verificaciones.nl_html + enlaceHtml;
 	}
 
 	@Override
@@ -244,13 +225,9 @@ public class ErrorAccessTransformersTomlInvalido implements Verificaciones {
 		}
 
 		return new QuickFix.Builder(nombre())
-				.agregarEtiqueta(MonitorDePID.idioma
-						.paso1_access_transformers_toml_invalido(nombreJar))
-				.agregarEtiqueta(MonitorDePID.idioma
-						.paso2_access_transformers_toml_invalido(nombreJar))
-				.agregarEtiqueta(MonitorDePID.idioma
-						.paso3_access_transformers_toml_invalido())
-				.construir();
+				.agregarEtiqueta(MonitorDePID.idioma.paso1_access_transformers_toml_invalido(nombreJar))
+				.agregarEtiqueta(MonitorDePID.idioma.paso2_access_transformers_toml_invalido(nombreJar))
+				.agregarEtiqueta(MonitorDePID.idioma.paso3_access_transformers_toml_invalido()).construir();
 	}
 
 	@Override

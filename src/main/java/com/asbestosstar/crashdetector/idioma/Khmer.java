@@ -14380,4 +14380,14 @@ public class Khmer implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "ប្រសិនបើអ្នកជាអ្នកអភិវឌ្ឍ mod សូមបើក <b>META-INF/mods.toml</b> ហើយពិនិត្យ <b>accessTransformers</b>។ កំហុសនេះបង្ហាញថា <b>[[accessTransformers]]</b> ត្រូវបានប្រើ ខណៈដែល Forge កំណែនេះរំពឹង <b>[accessTransformers]</b>។ សូមដកសញ្ញាវង់ក្រចកការ៉េមួយគូចេញតាមដែល exception បញ្ជាក់។";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "បិទភ្ជាប់ URL ឬ HTML នៃរបាយការណ៍ Crash Assistant ឬ CrashDetector នៅទីនេះ។ CrashDetector នឹងស្វែងរកតំណកំណត់ហេតុដែលគាំទ្រនៅក្នុងរបាយការណ៍ ហើយនាំចូលដោយស្វ័យប្រវត្តិ។";
+	}
 }

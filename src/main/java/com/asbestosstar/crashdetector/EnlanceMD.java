@@ -2,14 +2,20 @@ package com.asbestosstar.crashdetector;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -18,6 +24,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 
 public class EnlanceMD {
 
@@ -38,6 +45,14 @@ public class EnlanceMD {
 	 */
 	private static final Pattern PATRON_ENLACE_MD = Pattern
 			.compile(Pattern.quote("[") + "([^\\]]+)" + Pattern.quote("](") + "<?([^)>]+)>?" + Pattern.quote(")"));
+
+	private static final Pattern PATRON_URL_DESNUDA = Pattern.compile("https?://[^\\s<>\"']+");
+	private static final Pattern PATRON_ANCLA_HTML = Pattern
+			.compile("(?is)<a\\b([^>]*)href\\s*=\\s*(['\"])(.*?)\\2([^>]*)>(.*?)</a>");
+	private static final int LIMITE_HTML_INFORME = 8 * 1024 * 1024;
+
+	// INFORME_UN_SOLO_NIVEL_V3
+	private static final int REDIRECCIONES_MAX_INFORME = 8;
 
 	/**
 	 * Patrones de nombres de archivos de log/crash comúnmente compartidos.
@@ -170,12 +185,473 @@ public class EnlanceMD {
 	 * Extrae todos los enlaces Markdown presentes en el texto.
 	 */
 	private static List<Enlace> extraerEnlacesMarkdown(String textoDeMensaje) {
-		Matcher m = PATRON_ENLACE_MD.matcher(textoDeMensaje == null ? "" : textoDeMensaje);
+		String texto = textoDeMensaje == null ? "" : textoDeMensaje;
 		List<Enlace> enlaces = new ArrayList<>();
+		Set<String> urlsVistas = new LinkedHashSet<>();
+
+		Matcher m = PATRON_ENLACE_MD.matcher(texto);
 		while (m.find()) {
-			enlaces.add(new Enlace(m.group(1), m.group(2)));
+			String url = limpiarURLExtraida(m.group(2));
+			if (!url.isEmpty() && urlsVistas.add(url)) {
+				enlaces.add(new Enlace(m.group(1), url));
+			}
 		}
+
+		Matcher desnuda = PATRON_URL_DESNUDA.matcher(texto);
+		while (desnuda.find()) {
+			String url = limpiarURLExtraida(desnuda.group());
+			if (!url.isEmpty() && urlsVistas.add(url)) {
+				enlaces.add(new Enlace(url, url));
+			}
+		}
+
 		return enlaces;
+	}
+
+	/**
+	 * Importa un informe de Crash Assistant o CrashDetector. Puede recibir una URL,
+	 * varias URLs o HTML ya pegado. El informe no se analiza como log: sólo se
+	 * extraen enlaces que representen registros compatibles.
+	 */
+	public static void guardarInforme(String textoOUrl) {
+		String entrada = textoOUrl == null ? "" : textoOUrl.trim();
+		if (entrada.isEmpty()) {
+			return;
+		}
+
+		StringBuilder markdown = new StringBuilder();
+		Set<String> logsEncontrados = new LinkedHashSet<>();
+
+		/*
+		 * HTML pegado directamente: analizar únicamente ese documento. No volver a
+		 * tratar todas las URLs encontradas dentro como entradas iniciales.
+		 */
+		if (pareceHtmlInforme(entrada)) {
+			procesarDocumentoInformeUnNivel(entrada, detectarBaseParaHtmlPegado(entrada), markdown, logsEncontrados);
+		} else {
+			/*
+			 * Cada URL escrita por el usuario se inspecciona una sola vez.
+			 */
+			for (String urlInicial : extraerUrlsTexto(entrada)) {
+				procesarUrlInicialInforme(urlInicial, markdown, logsEncontrados);
+			}
+		}
+
+		if (markdown.length() > 0) {
+			guardar(markdown.toString());
+		} else {
+			CrashDetectorLogger.log("Informe: no se encontraron enlaces directos de log compatibles.");
+		}
+	}
+
+	private static final class PaginaInformeDescargada {
+		final String urlFinal;
+		final String contenido;
+		final String contentType;
+
+		PaginaInformeDescargada(String urlFinal, String contenido, String contentType) {
+			this.urlFinal = urlFinal == null ? "" : urlFinal;
+			this.contenido = contenido == null ? "" : contenido;
+			this.contentType = contentType == null ? "" : contentType;
+		}
+	}
+
+	private static void procesarUrlInicialInforme(String urlInicial, StringBuilder markdown,
+			Set<String> logsEncontrados) {
+
+		String url = normalizarURLHttp(urlInicial);
+		if (url.isEmpty()) {
+			return;
+		}
+
+		if (!DescargarRegistors.esURLInformeColeccion(url) && esLogDirectoInforme(url, "")) {
+			registrarLogInforme(markdown, logsEncontrados, nombreSugeridoParaUrl(url), url);
+			return;
+		}
+
+		try {
+			PaginaInformeDescargada pagina = descargarPaginaInformeUnaVez(url);
+			if (pagina == null) {
+				return;
+			}
+
+			if (!DescargarRegistors.esURLInformeColeccion(pagina.urlFinal)
+					&& esLogDirectoInforme(pagina.urlFinal, "")) {
+				registrarLogInforme(markdown, logsEncontrados, nombreSugeridoParaUrl(pagina.urlFinal), pagina.urlFinal);
+				return;
+			}
+
+			if (!esContenidoInspeccionableInforme(pagina.contentType, pagina.contenido)) {
+				return;
+			}
+
+			procesarDocumentoInformeUnNivel(pagina.contenido, pagina.urlFinal, markdown, logsEncontrados);
+		} catch (Throwable e) {
+			CrashDetectorLogger.log("Informe: no se pudo inspeccionar " + url + " - " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Examina únicamente los enlaces directos de este documento. Nunca descarga los
+	 * enlaces encontrados como páginas adicionales.
+	 */
+	private static void procesarDocumentoInformeUnNivel(String contenido, String baseUrl, StringBuilder markdown,
+			Set<String> logsEncontrados) {
+
+		if (contenido == null || contenido.isEmpty()) {
+			return;
+		}
+
+		Set<String> urlsVistas = new LinkedHashSet<>();
+
+		Matcher ancla = PATRON_ANCLA_HTML.matcher(contenido);
+		while (ancla.find()) {
+			String atributos = (ancla.group(1) == null ? "" : ancla.group(1)) + " "
+					+ (ancla.group(4) == null ? "" : ancla.group(4));
+
+			String href = extraerHrefHttpInforme(ancla.group(3));
+			if (href.isEmpty()) {
+				continue;
+			}
+
+			String url = resolverUrl(baseUrl, href);
+			if (url.isEmpty() || !urlsVistas.add(url)) {
+				continue;
+			}
+
+			if (DescargarRegistors.esURLInformeColeccion(url)) {
+				continue;
+			}
+
+			String nombre = extraerAtributoHtml(atributos, "data-file-name");
+			if (nombre.isEmpty()) {
+				nombre = limpiarTextoHtml(ancla.group(5));
+			}
+
+			if (!esLogDirectoInforme(url, nombre)) {
+				continue;
+			}
+
+			if (nombre.isEmpty() || !contieneNombreLog(nombre)) {
+				nombre = nombreSugeridoParaUrl(url);
+			}
+
+			registrarLogInforme(markdown, logsEncontrados, nombre, url);
+		}
+
+		/*
+		 * URLs desnudas sí se reconocen, pero sólo si ellas mismas ya son logs. No se
+		 * descargan ni se siguen.
+		 */
+		Matcher desnuda = PATRON_URL_DESNUDA.matcher(contenido);
+		while (desnuda.find()) {
+			String url = limpiarURLExtraida(desnuda.group());
+
+			if (url.isEmpty() || !urlsVistas.add(url) || DescargarRegistors.esURLInformeColeccion(url)
+					|| !esLogDirectoInforme(url, "")) {
+				continue;
+			}
+
+			registrarLogInforme(markdown, logsEncontrados, nombreSugeridoParaUrl(url), url);
+		}
+	}
+
+	private static boolean esLogDirectoInforme(String url, String nombreVisible) {
+		if (url == null || url.isEmpty() || DescargarRegistors.esURLInformeColeccion(url)) {
+			return false;
+		}
+
+		if (DescargarRegistors.esURLSoportada(url) || DescargarRegistors.esURLSecureLoggerArchivo(url)
+				|| DescargarRegistors.pareceRegistro(url)) {
+			return true;
+		}
+
+		return nombreVisible != null && contieneNombreLog(nombreVisible);
+	}
+
+	/**
+	 * Normaliza href normales y copias como: [https://host/log](https://host/log)
+	 */
+	private static String extraerHrefHttpInforme(String href) {
+		if (href == null) {
+			return "";
+		}
+
+		String h = decodificarHtmlBasico(href.trim());
+
+		if (h.isEmpty() || h.startsWith("#") || h.startsWith("javascript:") || h.startsWith("mailto:")
+				|| h.contains("view-source:")) {
+			return "";
+		}
+
+		Matcher markdown = Pattern.compile("\\]\\((https?://[^)\\s]+)\\)").matcher(h);
+		if (markdown.find()) {
+			return limpiarURLExtraida(markdown.group(1));
+		}
+
+		if (h.startsWith("http://") || h.startsWith("https://") || h.startsWith("/") || h.startsWith("./")
+				|| h.startsWith("../")) {
+			return h;
+		}
+
+		Matcher url = PATRON_URL_DESNUDA.matcher(h);
+		if (url.find()) {
+			return limpiarURLExtraida(url.group());
+		}
+
+		return "";
+	}
+
+	private static boolean pareceHtmlInforme(String texto) {
+		if (texto == null) {
+			return false;
+		}
+		String t = texto.toLowerCase(java.util.Locale.ROOT);
+		return t.contains("<html") || t.contains("<!doctype html") || t.contains("<a ") || t.contains("href=");
+	}
+
+	private static List<String> extraerUrlsTexto(String texto) {
+		List<String> urls = new ArrayList<>();
+		Set<String> vistas = new LinkedHashSet<>();
+		Matcher m = PATRON_URL_DESNUDA.matcher(texto == null ? "" : texto);
+
+		while (m.find()) {
+			String url = limpiarURLExtraida(m.group());
+			if (!url.isEmpty() && vistas.add(url)) {
+				urls.add(url);
+			}
+		}
+
+		return urls;
+	}
+
+	private static String limpiarURLExtraida(String url) {
+		if (url == null) {
+			return "";
+		}
+
+		String u = decodificarHtmlBasico(url.trim());
+
+		while (!u.isEmpty()) {
+			char ultimo = u.charAt(u.length() - 1);
+			if (ultimo == '.' || ultimo == ',' || ultimo == ';' || ultimo == ')' || ultimo == ']' || ultimo == '}'
+					|| ultimo == '"' || ultimo == '\'') {
+				u = u.substring(0, u.length() - 1);
+			} else {
+				break;
+			}
+		}
+
+		return normalizarURLHttp(u);
+	}
+
+	private static String normalizarURLHttp(String url) {
+		if (url == null) {
+			return "";
+		}
+
+		String u = url.trim();
+		if (!(u.startsWith("http://") || u.startsWith("https://"))) {
+			return "";
+		}
+
+		try {
+			URL parsed = new URL(u);
+			String protocolo = parsed.getProtocol();
+			if (!"http".equalsIgnoreCase(protocolo) && !"https".equalsIgnoreCase(protocolo)) {
+				return "";
+			}
+			return parsed.toString();
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
+	private static boolean esContenidoInspeccionableInforme(String contentType, String contenido) {
+
+		String tipo = contentType == null ? "" : contentType.toLowerCase(java.util.Locale.ROOT);
+
+		if (tipo.contains("text/") || tipo.contains("html") || tipo.contains("json") || tipo.contains("xml")
+				|| tipo.isEmpty()) {
+			return true;
+		}
+
+		return pareceHtmlInforme(contenido);
+	}
+
+	private static void registrarLogInforme(StringBuilder markdown, Set<String> logsEncontrados, String nombre,
+			String url) {
+
+		String normalizada = normalizarURLHttp(url);
+		if (normalizada.isEmpty() || !logsEncontrados.add(normalizada)) {
+			return;
+		}
+
+		agregarEnlaceInformeMarkdown(markdown, nombre, normalizada);
+	}
+
+	private static String detectarBaseParaHtmlPegado(String html) {
+		if (html == null) {
+			return "";
+		}
+
+		String minus = html.toLowerCase(java.util.Locale.ROOT);
+
+		if (minus.contains("crash assistant paste") || minus.contains("id=\"paste-array\"")
+				|| minus.contains("class=\"content paste-array\"")) {
+			return "https://paste.kostromdan.dev/";
+		}
+
+		Matcher base = Pattern.compile("(?is)<base\\b[^>]*href\\s*=\\s*(['\"])(https?://.*?)\\1").matcher(html);
+
+		if (base.find()) {
+			return base.group(2);
+		}
+
+		return "";
+	}
+
+	private static PaginaInformeDescargada descargarPaginaInformeUnaVez(String url) throws IOException {
+
+		String actual = normalizarURLHttp(url);
+		if (actual.isEmpty()) {
+			throw new IOException("URL HTTP inválida");
+		}
+
+		for (int redireccion = 0; redireccion <= REDIRECCIONES_MAX_INFORME; redireccion++) {
+
+			HttpURLConnection conexion = null;
+
+			try {
+				conexion = (HttpURLConnection) new URL(actual).openConnection();
+				conexion.setInstanceFollowRedirects(false);
+				conexion.setRequestMethod("GET");
+				conexion.setConnectTimeout(10000);
+				conexion.setReadTimeout(20000);
+				conexion.setRequestProperty("User-Agent", "CrashDetector-Informe/3.0");
+				conexion.setRequestProperty("Accept",
+						"text/html,text/plain,application/xhtml+xml," + "application/json,application/xml,*/*;q=0.1");
+
+				int codigo = conexion.getResponseCode();
+
+				if (codigo == 301 || codigo == 302 || codigo == 303 || codigo == 307 || codigo == 308) {
+
+					String location = conexion.getHeaderField("Location");
+					String siguiente = resolverUrl(actual, location);
+
+					if (siguiente.isEmpty()) {
+						throw new IOException("Redirección HTTP sin Location válido");
+					}
+
+					actual = siguiente;
+					continue;
+				}
+
+				if (codigo < 200 || codigo >= 300) {
+					throw new IOException("HTTP " + codigo);
+				}
+
+				String contentType = conexion.getContentType();
+				String encoding = conexion.getContentEncoding();
+				InputStream raw = conexion.getInputStream();
+				InputStream entrada = raw;
+
+				if (encoding != null && encoding.toLowerCase(java.util.Locale.ROOT).contains("gzip")) {
+					entrada = new GZIPInputStream(raw);
+				}
+
+				StringBuilder contenido = new StringBuilder();
+
+				try (java.io.BufferedReader reader = new java.io.BufferedReader(
+						new java.io.InputStreamReader(entrada, StandardCharsets.UTF_8))) {
+
+					char[] buffer = new char[8192];
+					int leidos;
+
+					while ((leidos = reader.read(buffer)) != -1) {
+						int restantes = LIMITE_HTML_INFORME - contenido.length();
+
+						if (restantes <= 0) {
+							break;
+						}
+
+						int copiar = Math.min(restantes, leidos);
+						contenido.append(buffer, 0, copiar);
+
+						if (copiar < leidos) {
+							break;
+						}
+					}
+				}
+
+				return new PaginaInformeDescargada(actual, contenido.toString(), contentType);
+			} finally {
+				if (conexion != null) {
+					conexion.disconnect();
+				}
+			}
+		}
+
+		throw new IOException("Demasiadas redirecciones HTTP");
+	}
+
+	private static void agregarEnlaceInformeMarkdown(StringBuilder markdown, String nombre, String url) {
+		if (nombre == null || nombre.trim().isEmpty()) {
+			nombre = nombreSugeridoParaUrl(url);
+		}
+		markdown.append('[').append(nombre.replace("[", "").replace("]", "")).append("](").append(url).append(')')
+				.append('\n');
+	}
+
+	private static String nombreSugeridoParaUrl(String url) {
+		String id = DescargarRegistors.extraerIDRegistro(url);
+		if (id != null && !id.trim().isEmpty()) {
+			return "registro_" + id.trim() + ".log";
+		}
+		return "registro_generico_" + contadorGenerico.getAndIncrement() + ".log";
+	}
+
+	private static String resolverUrl(String baseUrl, String href) {
+		if (href == null) {
+			return "";
+		}
+		String h = href.trim();
+		if (h.isEmpty() || h.startsWith("#") || h.startsWith("javascript:") || h.startsWith("mailto:")) {
+			return "";
+		}
+		try {
+			if (baseUrl != null && !baseUrl.trim().isEmpty()) {
+				return new URL(new URL(baseUrl), h).toString();
+			}
+			return new URL(h).toString();
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
+	private static String extraerAtributoHtml(String atributos, String nombre) {
+		if (atributos == null || atributos.isEmpty()) {
+			return "";
+		}
+		Pattern p = Pattern.compile("(?is)" + Pattern.quote(nombre) + "\\s*=\\s*(['\"])(.*?)\\1");
+		Matcher m = p.matcher(atributos);
+		return m.find() ? decodificarHtmlBasico(m.group(2)).trim() : "";
+	}
+
+	private static String limpiarTextoHtml(String html) {
+		if (html == null) {
+			return "";
+		}
+		String sinTags = html.replaceAll("(?is)<[^>]+>", " ");
+		return normalizarEspacios(decodificarHtmlBasico(sinTags));
+	}
+
+	private static String decodificarHtmlBasico(String s) {
+		if (s == null) {
+			return "";
+		}
+		return s.replace("&amp;", "&").replace("&quot;", "\"").replace("&#39;", "'").replace("&lt;", "<")
+				.replace("&gt;", ">");
 	}
 
 	/**
@@ -206,15 +682,24 @@ public class EnlanceMD {
 	 * nombre lógico de log, el enlace se descarta.
 	 */
 	private static Fragmento construirFragmento(Enlace enlace) {
-		String fuenteDeNombre = contieneNombreLog(enlace.texto) ? enlace.texto : enlace.url;
-		if (!contieneNombreLog(fuenteDeNombre)) {
+		if (enlace == null || enlace.url == null || DescargarRegistors.esURLInformeColeccion(enlace.url)) {
 			return null;
 		}
 
-		String nombreBase = extraerNombreLog(fuenteDeNombre);
+		String fuenteDeNombre = contieneNombreLog(enlace.texto) ? enlace.texto : enlace.url;
+		String nombreBase;
+
+		if (contieneNombreLog(fuenteDeNombre)) {
+			nombreBase = extraerNombreLog(fuenteDeNombre);
+		} else if (DescargarRegistors.esURLSoportada(enlace.url)
+				|| DescargarRegistors.esURLSecureLoggerArchivo(enlace.url)) {
+			nombreBase = nombreSugeridoParaUrl(enlace.url);
+		} else {
+			return null;
+		}
+
 		TipoFragmento tipo = detectarTipoFragmento(enlace.texto);
 		int indiceParte = extraerIndiceParte(enlace.texto);
-
 		return new Fragmento(enlace, nombreBase, tipo, indiceParte);
 	}
 
@@ -446,26 +931,144 @@ public class EnlanceMD {
 	 * Descarga el archivo al destino. Usa DescargarRegistors si soporta la URL.
 	 */
 	private static void descargarArchivo(String url, File destino) throws IOException {
-		if (DescargarRegistors.esURLSoportada(url)) {
-			List<String> urls = Collections.singletonList(url);
-			List<File> descargados = DescargarRegistors.descargarYGuardarRegistros(urls, destino.getParentFile());
-			if (descargados.isEmpty()) {
-				throw new IOException("No se pudo descargar: " + url);
+		/*
+		 * Toda la normalización (mclo.gs, GnomeBot, Kostromdan, PastesDev, Bytebin, CD
+		 * Paste, MMD, KDAN y SecureLogger) vive en un solo sitio.
+		 */
+		DescargarRegistors.descargarArchivo(url, destino);
+	}
+
+	/** Extrae el primer archivo regular de un .tar.gz de SecureLogger. */
+	private static void descargarSecureLoggerTarGz(String url, File destino) throws IOException {
+		HttpURLConnection conexion = null;
+		try {
+			conexion = (HttpURLConnection) new URL(url).openConnection();
+			conexion.setRequestMethod("GET");
+			conexion.setConnectTimeout(10000);
+			conexion.setReadTimeout(30000);
+			conexion.setRequestProperty("User-Agent", "CrashDetector-EnlanceMD/1.0");
+			int codigo = conexion.getResponseCode();
+			if (codigo < 200 || codigo >= 300) {
+				throw new IOException("HTTP " + codigo);
+			}
+			try (InputStream raw = conexion.getInputStream(); GZIPInputStream gzip = new GZIPInputStream(raw)) {
+				extraerPrimerArchivoTar(gzip, destino);
+			}
+		} finally {
+			if (conexion != null) {
+				conexion.disconnect();
+			}
+		}
+	}
+
+	private static void extraerPrimerArchivoTar(InputStream tar, File destino) throws IOException {
+		byte[] cabecera = new byte[512];
+		while (true) {
+			int leidos = leerExactamenteHastaEOF(tar, cabecera, 0, cabecera.length);
+			if (leidos == 0) {
+				throw new IOException("TAR vacío");
+			}
+			if (leidos != cabecera.length) {
+				throw new IOException("Cabecera TAR incompleta");
+			}
+			if (bloqueTarCero(cabecera)) {
+				throw new IOException("TAR sin archivo regular");
 			}
 
-			File origen = descargados.get(0);
-			if (!origen.equals(destino)) {
-				if (!origen.renameTo(destino)) {
-					Files.copy(origen.toPath(), destino.toPath());
-					try {
-						origen.delete();
-					} catch (Exception ignorado) {
-					}
+			long tamano = leerOctalTar(cabecera, 124, 12);
+			int tipo = cabecera[156] & 0xff;
+			boolean regular = tipo == 0 || tipo == '0';
+
+			if (regular) {
+				try (OutputStream out = Files.newOutputStream(destino.toPath())) {
+					copiarExactamente(tar, out, tamano);
 				}
+				saltarExactamente(tar, paddingTar(tamano));
+				return;
 			}
-		} else {
-			DescargarRegistors.descargarArchivo(url, destino);
+
+			saltarExactamente(tar, tamano);
+			saltarExactamente(tar, paddingTar(tamano));
 		}
+	}
+
+	private static int leerExactamenteHastaEOF(InputStream in, byte[] buffer, int off, int len) throws IOException {
+		int total = 0;
+		while (total < len) {
+			int n = in.read(buffer, off + total, len - total);
+			if (n < 0) {
+				break;
+			}
+			if (n > 0) {
+				total += n;
+			}
+		}
+		return total;
+	}
+
+	private static void copiarExactamente(InputStream in, OutputStream out, long cantidad) throws IOException {
+		byte[] buffer = new byte[8192];
+		long restante = cantidad;
+		while (restante > 0) {
+			int pedir = (int) Math.min(buffer.length, restante);
+			int n = in.read(buffer, 0, pedir);
+			if (n < 0) {
+				throw new IOException("TAR truncado");
+			}
+			if (n > 0) {
+				out.write(buffer, 0, n);
+				restante -= n;
+			}
+		}
+	}
+
+	private static void saltarExactamente(InputStream in, long cantidad) throws IOException {
+		long restante = cantidad;
+		while (restante > 0) {
+			long n = in.skip(restante);
+			if (n > 0) {
+				restante -= n;
+				continue;
+			}
+			if (in.read() < 0) {
+				throw new IOException("TAR truncado");
+			}
+			restante--;
+		}
+	}
+
+	private static long paddingTar(long tamano) {
+		long resto = tamano % 512L;
+		return resto == 0L ? 0L : 512L - resto;
+	}
+
+	private static boolean bloqueTarCero(byte[] bloque) {
+		for (byte b : bloque) {
+			if (b != 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static long leerOctalTar(byte[] bloque, int inicio, int largo) throws IOException {
+		long valor = 0L;
+		boolean vioDigito = false;
+		for (int i = inicio; i < inicio + largo && i < bloque.length; i++) {
+			int c = bloque[i] & 0xff;
+			if (c == 0 || c == ' ' || c == '\t') {
+				if (vioDigito) {
+					break;
+				}
+				continue;
+			}
+			if (c < '0' || c > '7') {
+				throw new IOException("Tamaño TAR inválido");
+			}
+			vioDigito = true;
+			valor = (valor << 3) + (c - '0');
+		}
+		return valor;
 	}
 
 	/**

@@ -14080,4 +14080,14 @@ public class Arabe implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "إذا كنت مطور المود، افتح <b>META-INF/mods.toml</b> وراجع <b>accessTransformers</b>. يشير الخطأ إلى استخدام <b>[[accessTransformers]]</b> بينما يتوقع إصدار Forge هذا <b>[accessTransformers]</b>؛ احذف زوجاً واحداً من الأقواس المربعة كما توضح رسالة الاستثناء.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "الصق هنا رابط URL أو HTML لتقرير Crash Assistant أو CrashDetector. سيبحث CrashDetector داخل التقرير عن روابط السجلات المدعومة ويستوردها تلقائياً.";
+	}
 }

@@ -14230,4 +14230,14 @@ public class Ingles implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "If you are the mod developer, open <b>META-INF/mods.toml</b> and inspect <b>accessTransformers</b>. This error indicates that <b>[[accessTransformers]]</b> was used where this Forge version expects <b>[accessTransformers]</b>; remove one pair of brackets as the exception instructs.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "Paste a Crash Assistant or CrashDetector report URL or HTML here. CrashDetector will find supported log links inside the report and import them automatically.";
+	}
 }

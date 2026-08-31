@@ -14132,4 +14132,14 @@ public class Tailandes implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "หากคุณเป็นผู้พัฒนาม็อด ให้เปิด <b>META-INF/mods.toml</b> และตรวจสอบ <b>accessTransformers</b> ข้อผิดพลาดนี้หมายถึงมีการใช้ <b>[[accessTransformers]]</b> ในตำแหน่งที่ Forge เวอร์ชันนี้ต้องการ <b>[accessTransformers]</b> ให้ลบวงเล็บเหลี่ยมออกหนึ่งคู่ตามที่ exception ระบุ";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "วาง URL หรือ HTML ของรายงาน Crash Assistant หรือ CrashDetector ที่นี่ CrashDetector จะค้นหาลิงก์บันทึกที่รองรับภายในรายงานและนำเข้าโดยอัตโนมัติ";
+	}
 }

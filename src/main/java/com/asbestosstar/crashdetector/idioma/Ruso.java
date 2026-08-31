@@ -13953,4 +13953,14 @@ public class Ruso implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "Если вы разработчик мода, откройте <b>META-INF/mods.toml</b> и проверьте <b>accessTransformers</b>. Ошибка означает, что использовано <b>[[accessTransformers]]</b>, тогда как эта версия Forge ожидает <b>[accessTransformers]</b>; удалите одну пару квадратных скобок, как указано в исключении.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "Вставьте сюда URL или HTML отчёта Crash Assistant или CrashDetector. CrashDetector найдёт в отчёте поддерживаемые ссылки на логи и автоматически импортирует их.";
+	}
 }

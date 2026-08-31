@@ -13784,4 +13784,14 @@ public class Coreano implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "모드 개발자라면 <b>META-INF/mods.toml</b>의 <b>accessTransformers</b>를 확인하세요. 이 오류는 이 Forge 버전이 <b>[accessTransformers]</b>를 기대하는 곳에 <b>[[accessTransformers]]</b>가 사용되었음을 의미합니다. 예외 메시지의 지시대로 대괄호 한 쌍을 제거하세요.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "Crash Assistant 또는 CrashDetector 보고서의 URL이나 HTML을 여기에 붙여넣으세요. CrashDetector가 보고서 안의 지원되는 로그 링크를 찾아 자동으로 가져옵니다.";
+	}
 }

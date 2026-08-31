@@ -13788,4 +13788,14 @@ public class Japones implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "MOD 開発者の場合は <b>META-INF/mods.toml</b> の <b>accessTransformers</b> を確認してください。このエラーは、この Forge バージョンが <b>[accessTransformers]</b> を要求している場所で <b>[[accessTransformers]]</b> が使われたことを示します。例外の指示どおり角括弧を 1 組削除してください。";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "Crash Assistant または CrashDetector のレポート URL または HTML をここに貼り付けてください。CrashDetector がレポート内の対応ログリンクを見つけて自動的にインポートします。";
+	}
 }

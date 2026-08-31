@@ -1010,6 +1010,10 @@ public interface Idioma {
 
 	public String descripcionLinksMarkdown();
 
+	public String opcionInforme();
+
+	public String descripcionInforme();
+
 	public String imagenNoEncontrada();
 
 	public String faltar_de_clases_create();

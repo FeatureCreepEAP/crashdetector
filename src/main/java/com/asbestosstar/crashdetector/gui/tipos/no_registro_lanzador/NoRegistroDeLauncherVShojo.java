@@ -140,7 +140,7 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 		filaControles.setBackground(colorFondoVentana.obtener());
 
 		selector = new JComboBox<>(new String[] { GEN, CURSE, PRISM, HMCL, FENIX, ATL, GD, BATTLY, NIGHTWORLD, MCSERVER,
-				ENLACE_MD, MEGABYTES_DE_GALIMATIAS });
+				ENLACE_MD, MonitorDePID.idioma.opcionInforme(), MEGABYTES_DE_GALIMATIAS });
 		estilizarCombo(selector);
 		selector.setPreferredSize(new Dimension(360, 34));
 		selector.addActionListener(new java.awt.event.ActionListener() {

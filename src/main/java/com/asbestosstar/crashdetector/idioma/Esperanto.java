@@ -14178,4 +14178,14 @@ public class Esperanto implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "Se vi estas la programisto de la mod, malfermu <b>META-INF/mods.toml</b> kaj kontrolu <b>accessTransformers</b>. La eraro montras ke <b>[[accessTransformers]]</b> estis uzita kie ĉi tiu versio de Forge atendas <b>[accessTransformers]</b>; forigu unu paron da rektaj krampoj laŭ la instrukcio de la escepto.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "Algluu ĉi tie la URL-on aŭ HTML-on de raporto de Crash Assistant aŭ CrashDetector. CrashDetector trovos subtenatajn ligilojn al protokoloj en la raporto kaj aŭtomate importos ilin.";
+	}
 }

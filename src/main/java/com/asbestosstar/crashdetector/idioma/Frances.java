@@ -14753,4 +14753,14 @@ public class Frances implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "Si vous développez le mod, ouvrez <b>META-INF/mods.toml</b> et vérifiez <b>accessTransformers</b>. Cette erreur indique que <b>[[accessTransformers]]</b> a été utilisé alors que cette version de Forge attend <b>[accessTransformers]</b> ; retirez une paire de crochets comme l'indique l'exception.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "Collez ici l’URL ou le HTML d’un rapport Crash Assistant ou CrashDetector. CrashDetector recherchera les liens de journaux compatibles dans le rapport et les importera automatiquement.";
+	}
 }

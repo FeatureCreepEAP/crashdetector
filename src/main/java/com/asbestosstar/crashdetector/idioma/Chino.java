@@ -13553,4 +13553,14 @@ public class Chino implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "如果你是模组开发者，请打开 <b>META-INF/mods.toml</b> 并检查 <b>accessTransformers</b>。此错误表示使用了 <b>[[accessTransformers]]</b>，而当前 Forge 版本要求 <b>[accessTransformers]</b>；请按照异常信息删除一对方括号。";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "在此粘贴 Crash Assistant 或 CrashDetector 报告的 URL 或 HTML。CrashDetector 会查找报告中的受支持日志链接并自动导入。";
+	}
 }

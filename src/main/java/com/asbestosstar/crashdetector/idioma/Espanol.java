@@ -15125,4 +15125,14 @@ public class Espanol implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "Si eres el desarrollador del mod, abre <b>META-INF/mods.toml</b> y revisa <b>accessTransformers</b>. Este error indica que se usó <b>[[accessTransformers]]</b> cuando esta versión de Forge espera <b>[accessTransformers]</b>; elimina un par de corchetes, tal como indica la excepción.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "Pegue aquí la URL o el HTML de un informe de Crash Assistant o CrashDetector. CrashDetector buscará dentro del informe los enlaces a registros compatibles y los importará automáticamente.";
+	}
 }

@@ -159,6 +159,10 @@ public abstract class NoRegistroLanzadorGUI extends JFrame implements CrashDetec
 		} else if (ENLACE_MD.equals(tipo)) {
 			desc = MonitorDePID.idioma.descripcionLinksMarkdown();
 			icono = null;
+		} else if (MonitorDePID.idioma.opcionInforme().equals(tipo)) {
+			desc = MonitorDePID.idioma.descripcionInforme();
+			icono = null;
+			mostrarArea = true;
 		} else if (BATTLY.equals(tipo)) {
 			desc = MonitorDePID.idioma.noRegistroDeBattly();
 			icono = cargarIconoAyudaFlexible("/imagenes/battly.png");
@@ -293,6 +297,17 @@ public abstract class NoRegistroLanzadorGUI extends JFrame implements CrashDetec
 					CrashDetectorLogger.log("EnlaceMD: iniciando guardado");
 					EnlanceMD.guardar(contenido);
 					CrashDetectorLogger.log("EnlaceMD: guardado completo");
+				}
+			}, overlayMensaje());
+			return;
+		} else if (MonitorDePID.idioma.opcionInforme().equals(tipo)) {
+			String contenido = (areaTexto != null) ? areaTexto.getText() : "";
+			ejecutarConOverlayDescarga(new Runnable() {
+				@Override
+				public void run() {
+					CrashDetectorLogger.log("Informe: iniciando importación");
+					EnlanceMD.guardarInforme(contenido);
+					CrashDetectorLogger.log("Informe: importación completa");
 				}
 			}, overlayMensaje());
 			return;

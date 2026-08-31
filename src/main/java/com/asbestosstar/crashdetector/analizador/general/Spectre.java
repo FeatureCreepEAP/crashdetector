@@ -32,6 +32,22 @@ public final class Spectre extends VerificacionVulnerabilidadCPUBase {
 		hayProblema = true;
 	}
 
+	/**
+	 * Spectre sólo muestra una razón cuando la evaluación pertenece al equipo local
+	 * y la mitigación es explícitamente VULNERABLE o PARCIAL. CPU remoto, CPU
+	 * desconocido y mitigación DESCONOCIDA no bastan para avisar.
+	 */
+	@Override
+	protected boolean debeMostrarResultado(ResultadoVulnerabilidadCPU resultado) {
+		if (resultado == null || !resultado.correspondeAlEquipoLocal()) {
+			return false;
+		}
+
+		ResultadoVulnerabilidadCPU.EstadoMitigacion estado = resultado.getEstadoMitigacion();
+		return estado == ResultadoVulnerabilidadCPU.EstadoMitigacion.VULNERABLE
+				|| estado == ResultadoVulnerabilidadCPU.EstadoMitigacion.PARCIAL;
+	}
+
 	@Override
 	protected String nombreVisible() {
 		return MonitorDePID.idioma.nombreVerificacionSpectre();

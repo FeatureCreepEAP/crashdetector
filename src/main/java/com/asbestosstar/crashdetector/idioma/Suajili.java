@@ -14395,4 +14395,14 @@ public class Suajili implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "Ikiwa wewe ni msanidi wa mod, fungua <b>META-INF/mods.toml</b> na ukague <b>accessTransformers</b>. Hitilafu inaonyesha kuwa <b>[[accessTransformers]]</b> imetumiwa wakati Forge hii inatarajia <b>[accessTransformers]</b>; ondoa jozi moja ya mabano ya mraba kama exception inavyoelekeza.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "Bandika hapa URL au HTML ya ripoti ya Crash Assistant au CrashDetector. CrashDetector itatafuta viungo vya log vinavyotumika ndani ya ripoti na kuviingiza kiotomatiki.";
+	}
 }

@@ -13907,4 +13907,14 @@ public class Persa implements Idioma {
 	public String paso3_access_transformers_toml_invalido() {
 		return "اگر توسعه‌دهندهٔ مود هستید، فایل <b>META-INF/mods.toml</b> را باز کرده و <b>accessTransformers</b> را بررسی کنید. این خطا نشان می‌دهد <b>[[accessTransformers]]</b> استفاده شده در حالی که این نسخهٔ Forge انتظار <b>[accessTransformers]</b> را دارد؛ طبق پیام استثنا یک جفت براکت را حذف کنید.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "نشانی یا HTML گزارش Crash Assistant یا CrashDetector را اینجا جای‌گذاری کنید. CrashDetector پیوندهای لاگ پشتیبانی‌شده داخل گزارش را پیدا کرده و به‌طور خودکار وارد می‌کند.";
+	}
 }

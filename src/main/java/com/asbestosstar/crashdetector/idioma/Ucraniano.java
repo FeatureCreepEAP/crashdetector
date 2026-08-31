@@ -13276,4 +13276,14 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String paso3_access_transformers_toml_invalido() {
 		return "Якщо ви розробник мода, відкрийте <b>META-INF/mods.toml</b> і перевірте <b>accessTransformers</b>. Помилка означає, що використано <b>[[accessTransformers]]</b>, тоді як ця версія Forge очікує <b>[accessTransformers]</b>; видаліть одну пару квадратних дужок, як вказано у винятку.";
 	}
+
+	@Override
+	public String opcionInforme() {
+		return "Informe";
+	}
+
+	@Override
+	public String descripcionInforme() {
+		return "Вставте сюди URL або HTML звіту Crash Assistant чи CrashDetector. CrashDetector знайде у звіті підтримувані посилання на логи та автоматично імпортує їх.";
+	}
 }

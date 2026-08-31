@@ -44,6 +44,11 @@ abstract class VerificacionVulnerabilidadCPUBase implements Verificaciones {
 
 	protected abstract String textoDesactivar();
 
+	/** Hook opcional para verificaciones con política más conservadora. */
+	protected boolean debeMostrarResultado(ResultadoVulnerabilidadCPU resultado) {
+		return true;
+	}
+
 	@Override
 	public final String[] patronesRapidos() {
 		return new String[] { TEXTO_PROCESSOR_NAME };
@@ -82,6 +87,10 @@ abstract class VerificacionVulnerabilidadCPUBase implements Verificaciones {
 		}
 
 		CrashDetectorLogger.log(resultado.construirResumenTexto());
+
+		if (!debeMostrarResultado(resultado)) {
+			return;
+		}
 
 		// Si está mitigado o el CPU no está afectado, se deja constancia en el log,
 		// pero no se presenta una advertencia al usuario.
