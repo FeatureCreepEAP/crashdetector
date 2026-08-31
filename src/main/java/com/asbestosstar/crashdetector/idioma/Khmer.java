@@ -14390,4 +14390,54 @@ public class Khmer implements Idioma {
 	public String descripcionInforme() {
 		return "បិទភ្ជាប់ URL ឬ HTML នៃរបាយការណ៍ Crash Assistant ឬ CrashDetector នៅទីនេះ។ CrashDetector នឹងស្វែងរកតំណកំណត់ហេតុដែលគាំទ្រនៅក្នុងរបាយការណ៍ ហើយនាំចូលដោយស្វ័យប្រវត្តិ។";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "ស្វែងរកសន្ទស្សន៍ NeoForge Waifu តាម GraphQL។ សំណួរដែលបានកំណត់ជាមុនគ្របដណ្ដប់ប្រតិបត្តិការសំខាន់ៗនៃ schema ហើយកម្មវិធីកែសម្រួលកម្រិតខ្ពស់អាចដំណើរការសំណួរ GraphQL ត្រឹមត្រូវណាមួយបាន។";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "គួរឱ្យសោកស្តាយ NeoForge Waifu មិនទាន់មាន mascot waifu នៅឡើយទេ។";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "ប្រភេទសំណួរ";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "ឈ្មោះប្រតិបត្តិការ";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "អថេរ JSON";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "សំណួរ GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "ដំណើរការសំណួរ";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "បង្ហាញកម្មវិធីកែសម្រួល GraphQL កម្រិតខ្ពស់";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "NeoForge Waifu ក្នុង CrashDetector អនុញ្ញាតតែសំណួរ GraphQL សម្រាប់អានប៉ុណ្ណោះ។";
+	}
 }

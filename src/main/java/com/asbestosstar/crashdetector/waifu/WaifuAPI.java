@@ -242,6 +242,198 @@ public class WaifuAPI {
 		return respuesta.toString();
 	}
 
+	/**
+	 * Ejecuta una consulta GraphQL arbitraria de solo lectura contra NeoForge
+	 * Waifu.
+	 *
+	 * Este método es intencionalmente genérico para no limitar CrashDetector a los
+	 * presets conocidos en el momento de compilación. Si el esquema de Waifu
+	 * permite una combinación de campos de Query, el llamador puede enviarla aquí.
+	 *
+	 * Las operaciones mutation y subscription se rechazan localmente. NeoForge
+	 * Waifu expone al menos una mutación administrativa y esta integración está
+	 * diseñada exclusivamente como explorador de lectura.
+	 *
+	 * @param consulta        Documento GraphQL que se enviará.
+	 * @param nombreOperacion Nombre de operación opcional. Puede ser null o vacío.
+	 * @param variablesJson   Objeto JSON con variables. Si es null o vacío usa {}.
+	 * @return Respuesta JSON cruda del servidor.
+	 * @throws IOException Si la consulta es inválida localmente, intenta escribir o
+	 *                     la petición HTTP falla.
+	 */
+	public static String ejecutarConsultaGraphQL(String consulta, String nombreOperacion, String variablesJson)
+			throws IOException {
+
+		if (consulta == null || consulta.trim().isEmpty()) {
+			throw new IOException("La consulta GraphQL está vacía.");
+		}
+
+		if (!esConsultaGraphQLSoloLectura(consulta)) {
+			throw new IOException("NeoForge Waifu en CrashDetector sólo permite consultas GraphQL de lectura.");
+		}
+
+		String variables = variablesJson == null || variablesJson.trim().isEmpty() ? "{}" : variablesJson.trim();
+
+		try {
+			Json.Nodo nodoVariables = Json.leer(variables);
+			if (nodoVariables == null || !nodoVariables.esObjeto()) {
+				throw new IllegalArgumentException("Las variables GraphQL deben ser un objeto JSON.");
+			}
+		} catch (Exception e) {
+			throw new IOException("Las variables GraphQL no contienen un objeto JSON válido.", e);
+		}
+
+		URL url = new URL(GRAPHQL_URL);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+		conn.setRequestMethod("POST");
+		conn.setConnectTimeout(15000);
+		conn.setReadTimeout(45000);
+		conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+		conn.setRequestProperty("Accept", "application/json");
+		conn.setRequestProperty("User-Agent", Statics.nombre_cd.obtener() + "/WaifuAPI");
+		conn.setDoOutput(true);
+
+		StringBuilder cuerpo = new StringBuilder();
+		cuerpo.append("{\"query\":\"").append(escaparJson(consulta)).append("\"");
+
+		if (nombreOperacion != null && !nombreOperacion.trim().isEmpty()) {
+			cuerpo.append(",\"operationName\":\"").append(escaparJson(nombreOperacion.trim())).append("\"");
+		}
+
+		cuerpo.append(",\"variables\":").append(variables).append("}");
+
+		CrashDetectorLogger.log("WaifuAPI: ejecutando consulta GraphQL genérica de solo lectura");
+		CrashDetectorLogger.log("WaifuAPI: operación = " + (nombreOperacion == null ? "" : nombreOperacion));
+
+		try {
+			try (OutputStream os = conn.getOutputStream()) {
+				byte[] bytes = cuerpo.toString().getBytes(StandardCharsets.UTF_8);
+				os.write(bytes, 0, bytes.length);
+			}
+
+			int codigo = conn.getResponseCode();
+			java.io.InputStream stream = codigo >= 200 && codigo < 300 ? conn.getInputStream() : conn.getErrorStream();
+
+			if (stream == null) {
+				throw new IOException("NeoForge Waifu devolvió HTTP " + codigo + " sin cuerpo.");
+			}
+
+			StringBuilder respuesta = new StringBuilder();
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))) {
+				String linea;
+				while ((linea = br.readLine()) != null) {
+					respuesta.append(linea).append('\n');
+				}
+			}
+
+			String textoRespuesta = respuesta.toString().trim();
+			CrashDetectorLogger.log(
+					"WaifuAPI: respuesta GraphQL genérica HTTP " + codigo + ", longitud=" + textoRespuesta.length());
+
+			if (codigo < 200 || codigo >= 300) {
+				throw new IOException("Error HTTP " + codigo + ": " + limitar(textoRespuesta, 12000));
+			}
+
+			return textoRespuesta;
+		} finally {
+			conn.disconnect();
+		}
+	}
+
+	/**
+	 * Determina si un documento GraphQL contiene únicamente operaciones de lectura.
+	 * Se examinan tokens fuera de comentarios y cadenas normales o de bloque para
+	 * evitar falsos positivos por texto que diga "mutation".
+	 */
+	public static boolean esConsultaGraphQLSoloLectura(String consulta) {
+		if (consulta == null) {
+			return false;
+		}
+
+		boolean enCadena = false;
+		boolean enCadenaBloque = false;
+		boolean escapado = false;
+		boolean enComentario = false;
+
+		for (int i = 0; i < consulta.length();) {
+			char c = consulta.charAt(i);
+
+			if (enComentario) {
+				if (c == '\n' || c == '\r') {
+					enComentario = false;
+				}
+				i++;
+				continue;
+			}
+
+			if (enCadenaBloque) {
+				if (c == '"' && i + 2 < consulta.length() && consulta.charAt(i + 1) == '"'
+						&& consulta.charAt(i + 2) == '"') {
+					enCadenaBloque = false;
+					i += 3;
+				} else {
+					i++;
+				}
+				continue;
+			}
+
+			if (enCadena) {
+				if (escapado) {
+					escapado = false;
+				} else if (c == '\\') {
+					escapado = true;
+				} else if (c == '"') {
+					enCadena = false;
+				}
+				i++;
+				continue;
+			}
+
+			if (c == '#') {
+				enComentario = true;
+				i++;
+				continue;
+			}
+
+			if (c == '"' && i + 2 < consulta.length() && consulta.charAt(i + 1) == '"'
+					&& consulta.charAt(i + 2) == '"') {
+				enCadenaBloque = true;
+				i += 3;
+				continue;
+			}
+
+			if (c == '"') {
+				enCadena = true;
+				escapado = false;
+				i++;
+				continue;
+			}
+
+			if (c == '_' || Character.isLetter(c)) {
+				int inicio = i++;
+				while (i < consulta.length()) {
+					char siguiente = consulta.charAt(i);
+					if (siguiente == '_' || Character.isLetterOrDigit(siguiente)) {
+						i++;
+					} else {
+						break;
+					}
+				}
+
+				String token = consulta.substring(inicio, i);
+				if ("mutation".equals(token) || "subscription".equals(token)) {
+					return false;
+				}
+				continue;
+			}
+
+			i++;
+		}
+
+		return true;
+	}
+
 	private static String obtenerPrimerModId(Json.Nodo node) {
 
 		Json.Nodo modIds = node.obtener("modIds");

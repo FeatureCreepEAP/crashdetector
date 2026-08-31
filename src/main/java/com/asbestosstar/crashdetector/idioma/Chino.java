@@ -13563,4 +13563,54 @@ public class Chino implements Idioma {
 	public String descripcionInforme() {
 		return "在此粘贴 Crash Assistant 或 CrashDetector 报告的 URL 或 HTML。CrashDetector 会查找报告中的受支持日志链接并自动导入。";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "通过 GraphQL 查询 NeoForge Waifu 索引。预设查询覆盖架构的主要操作，高级编辑器可执行任何有效的 GraphQL 查询。";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "遗憾的是，NeoForge Waifu 目前还没有 waifu 吉祥物。";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "查询类型";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "操作名称";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "JSON 变量";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "GraphQL 查询";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "执行查询";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "显示高级 GraphQL 编辑器";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "CrashDetector 中的 NeoForge Waifu 只允许只读 GraphQL 查询。";
+	}
 }

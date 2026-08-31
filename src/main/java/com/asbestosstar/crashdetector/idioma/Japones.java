@@ -13798,4 +13798,54 @@ public class Japones implements Idioma {
 	public String descripcionInforme() {
 		return "Crash Assistant または CrashDetector のレポート URL または HTML をここに貼り付けてください。CrashDetector がレポート内の対応ログリンクを見つけて自動的にインポートします。";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "GraphQL を使用して NeoForge Waifu のインデックスを検索します。定義済みクエリはスキーマの主要操作をカバーし、高度なエディターでは有効な GraphQL クエリを自由に実行できます。";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "残念ながら、NeoForge Waifu にはまだ waifu マスコットがありません。";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "クエリの種類";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "操作名";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "JSON 変数";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "GraphQL クエリ";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "クエリを実行";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "高度な GraphQL エディターを表示";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "CrashDetector の NeoForge Waifu では、読み取り専用の GraphQL クエリのみ実行できます。";
+	}
 }

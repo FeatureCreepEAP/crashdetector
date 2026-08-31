@@ -13794,4 +13794,54 @@ public class Coreano implements Idioma {
 	public String descripcionInforme() {
 		return "Crash Assistant 또는 CrashDetector 보고서의 URL이나 HTML을 여기에 붙여넣으세요. CrashDetector가 보고서 안의 지원되는 로그 링크를 찾아 자동으로 가져옵니다.";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "GraphQL을 통해 NeoForge Waifu 인덱스를 조회합니다. 사전 정의된 쿼리는 스키마의 주요 작업을 다루며, 고급 편집기에서는 유효한 GraphQL 쿼리를 직접 실행할 수 있습니다.";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "안타깝게도 NeoForge Waifu에는 아직 waifu 마스코트가 없습니다.";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "쿼리 유형";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "작업 이름";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "JSON 변수";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "GraphQL 쿼리";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "쿼리 실행";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "고급 GraphQL 편집기 표시";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "CrashDetector의 NeoForge Waifu에서는 읽기 전용 GraphQL 쿼리만 허용됩니다.";
+	}
 }

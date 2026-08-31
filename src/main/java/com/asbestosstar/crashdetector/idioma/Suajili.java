@@ -14405,4 +14405,54 @@ public class Suajili implements Idioma {
 	public String descripcionInforme() {
 		return "Bandika hapa URL au HTML ya ripoti ya Crash Assistant au CrashDetector. CrashDetector itatafuta viungo vya log vinavyotumika ndani ya ripoti na kuviingiza kiotomatiki.";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "Tafuta faharasa ya NeoForge Waifu kupitia GraphQL. Hoja zilizotayarishwa zinashughulikia shughuli kuu za schema, na kihariri cha hali ya juu kinaweza kuendesha hoja yoyote halali ya GraphQL.";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "Kwa bahati mbaya, NeoForge Waifu bado haina maskoti waifu.";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "Aina ya hoja";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "Jina la operesheni";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "Vigezo vya JSON";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "Hoja ya GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "Endesha hoja";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "Onyesha kihariri cha GraphQL cha hali ya juu";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "NeoForge Waifu katika CrashDetector inaruhusu hoja za GraphQL za kusoma pekee.";
+	}
 }

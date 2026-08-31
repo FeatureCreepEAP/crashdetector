@@ -84,6 +84,7 @@ import com.asbestosstar.crashdetector.gui.tipos.heapdump.VisorHeapDumpIranFifa;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaModsGUILegacy;
 import com.asbestosstar.crashdetector.gui.tipos.ia.IAGUILuotianyi;
+import com.asbestosstar.crashdetector.gui.tipos.waifu.NeoForgeWaifuGUISinMascota;
 import com.asbestosstar.crashdetector.gui.tipos.importador.DialogoConflictoImportacionYumeiriReyu;
 import com.asbestosstar.crashdetector.gui.tipos.importador.ImportadorModpackMausleepsVT;
 import com.asbestosstar.crashdetector.gui.tipos.jgit.BuscarParaJGit;
@@ -1228,6 +1229,7 @@ public class MonitorDePID {
 		TipoGUI.COMPARTIR_INSTANCIA.registrarGUI(CompartirInstanciaIkeEveland.ID, CompartirInstanciaIkeEveland::new);
 		TipoGUI.DOCS.registrarGUI(LectadorDeDocumentosStudyJuche.ID, LectadorDeDocumentosStudyJuche::new);
 		TipoGUI.IA.registrarGUI(IAGUILuotianyi.ID, IAGUILuotianyi::new);
+		TipoGUI.NEOFORGE_WAIFU.registrarGUI(NeoForgeWaifuGUISinMascota.ID, NeoForgeWaifuGUISinMascota::new);
 		TipoGUI.ACTUALIZADOR_MODS.registrarGUI(ActualizadorModsMiwa.ID, ActualizadorModsMiwa::new);
 		TipoGUI.IMPORTADOR_CONFLICTO.registrarGUI(DialogoConflictoImportacionYumeiriReyu.ID,
 				DialogoConflictoImportacionYumeiriReyu::new);

@@ -13917,4 +13917,54 @@ public class Persa implements Idioma {
 	public String descripcionInforme() {
 		return "نشانی یا HTML گزارش Crash Assistant یا CrashDetector را اینجا جای‌گذاری کنید. CrashDetector پیوندهای لاگ پشتیبانی‌شده داخل گزارش را پیدا کرده و به‌طور خودکار وارد می‌کند.";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "نمایه NeoForge Waifu را با GraphQL جست‌وجو کنید. پرس‌وجوهای از پیش تعریف‌شده عملیات اصلی طرح‌واره را پوشش می‌دهند و ویرایشگر پیشرفته می‌تواند هر پرس‌وجوی معتبر GraphQL را اجرا کند.";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "متأسفانه NeoForge Waifu هنوز یک نماد waifu ندارد.";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "نوع پرس‌وجو";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "نام عملیات";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "متغیرهای JSON";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "پرس‌وجوی GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "اجرای پرس‌وجو";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "نمایش ویرایشگر پیشرفته GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "NeoForge Waifu در CrashDetector فقط پرس‌وجوهای فقط‌خواندنی GraphQL را مجاز می‌داند.";
+	}
 }

@@ -14370,4 +14370,54 @@ public class Lao implements Idioma {
 	public String descripcionInforme() {
 		return "ວາງ URL ຫຼື HTML ຂອງລາຍງານ Crash Assistant ຫຼື CrashDetector ທີ່ນີ້. CrashDetector ຈະຊອກຫາລິ້ງ log ທີ່ຮອງຮັບພາຍໃນລາຍງານ ແລະນຳເຂົ້າໂດຍອັດຕະໂນມັດ.";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "ຄົ້ນຫາດັດຊະນີ NeoForge Waifu ຜ່ານ GraphQL. ຄຳສັ່ງທີ່ກຳນົດໄວ້ຄອບຄຸມການເຮັດວຽກຫຼັກຂອງ schema ແລະຕົວແກ້ໄຂຂັ້ນສູງສາມາດຮັນຄຳສັ່ງ GraphQL ທີ່ຖືກຕ້ອງໄດ້ທຸກແບບ.";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "ໜ້າເສຍດາຍ ຕອນນີ້ NeoForge Waifu ຍັງບໍ່ມີ mascot waifu.";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "ປະເພດຄຳສັ່ງ";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "ຊື່ການເຮັດວຽກ";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "ຕົວແປ JSON";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "ຄຳສັ່ງ GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "ຮັນຄຳສັ່ງ";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "ສະແດງຕົວແກ້ໄຂ GraphQL ຂັ້ນສູງ";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "NeoForge Waifu ໃນ CrashDetector ອະນຸຍາດສະເພາະຄຳສັ່ງ GraphQL ແບບອ່ານຢ່າງດຽວ.";
+	}
 }

@@ -40,6 +40,7 @@ import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaGUI;
 import com.asbestosstar.crashdetector.gui.tipos.heapdump.VisorHeapDumpGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.ia.IAGUI;
+import com.asbestosstar.crashdetector.gui.tipos.waifu.NeoForgeWaifuGUI;
 import com.asbestosstar.crashdetector.gui.tipos.importador.DialogoConflictoImportacionGUI;
 import com.asbestosstar.crashdetector.gui.tipos.importador.ImportadorModpackGUI;
 import com.asbestosstar.crashdetector.gui.tipos.jgit.JGitHubBase;
@@ -1056,6 +1057,28 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+	public static TipoGUI<NeoForgeWaifuGUI> NEOFORGE_WAIFU = new TipoGUI<NeoForgeWaifuGUI>() {
+		@Override
+		public String id() {
+			return "neoforge_waifu";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.neoforgeWaifuTitulo();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<NeoForgeWaifuGUI> gui) {
+			NeoForgeWaifuGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<NeoForgeWaifuGUI>> obtenerGUIs() {
+			return NeoForgeWaifuGUI.GUIS;
+		}
+	};
+
 	public static TipoGUI<ActualizadorModsGUI> ACTUALIZADOR_MODS = new TipoGUI<ActualizadorModsGUI>() {
 		@Override
 		public String id() {
@@ -1610,6 +1633,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(COMPARTIR_INSTANCIA);
 		TIPOS_DE_GUI.add(DOCS);
 		TIPOS_DE_GUI.add(IA);
+		TIPOS_DE_GUI.add(NEOFORGE_WAIFU);
 		TIPOS_DE_GUI.add(ACTUALIZADOR_MODS);
 		TIPOS_DE_GUI.add(IMPORTADOR_CONFLICTO);
 		TIPOS_DE_GUI.add(IMPORTADOR_MODPACK);

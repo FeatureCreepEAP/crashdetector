@@ -13286,4 +13286,54 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String descripcionInforme() {
 		return "Вставте сюди URL або HTML звіту Crash Assistant чи CrashDetector. CrashDetector знайде у звіті підтримувані посилання на логи та автоматично імпортує їх.";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "Виконуйте запити до індексу NeoForge Waifu через GraphQL. Готові запити охоплюють основні операції схеми, а розширений редактор дає змогу виконати будь-який коректний GraphQL-запит.";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "На жаль, NeoForge Waifu поки що не має waifu-маскота.";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "Тип запиту";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "Назва операції";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "Змінні JSON";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "Запит GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "Виконати запит";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "Показати розширений редактор GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "NeoForge Waifu у CrashDetector дозволяє лише GraphQL-запити тільки для читання.";
+	}
 }

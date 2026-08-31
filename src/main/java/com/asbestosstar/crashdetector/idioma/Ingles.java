@@ -14240,4 +14240,54 @@ public class Ingles implements Idioma {
 	public String descripcionInforme() {
 		return "Paste a Crash Assistant or CrashDetector report URL or HTML here. CrashDetector will find supported log links inside the report and import them automatically.";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "Query the NeoForge Waifu index through GraphQL. The predefined queries cover the main schema operations, and the advanced editor can execute any valid read-only GraphQL query.";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "Unfortunately, there is no waifu mascot for NeoForge Waifu yet.";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "Query type";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "Operation name";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "JSON variables";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "GraphQL query";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "Run query";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "Show advanced GraphQL editor";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "NeoForge Waifu in CrashDetector only allows read-only GraphQL queries.";
+	}
 }

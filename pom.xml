@@ -1,323 +1,325 @@
 <project
-    xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.asbestosstar</groupId>
-    <artifactId>crashdetector</artifactId>
-    <version>2.3.2</version>
-    <packaging>jar</packaging>
+	xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.asbestosstar</groupId>
+	<artifactId>crashdetector</artifactId>
+	<version>2.4</version>
+	<packaging>jar</packaging>
 
 
-    <!-- Add necessary metadata for Maven Central -->
-    <name>CrashDetector</name>
-    <description>Detects Crashes in JVM Apps.</description>
-    <url>https://pagure.io/CrashDetectorMC</url>
+	<!-- Add necessary metadata for Maven Central -->
+	<name>CrashDetector</name>
+	<description>Detects Crashes in JVM Apps.</description>
+	<url>https://pagure.io/CrashDetectorMC</url>
 
-    <licenses>
-        <license>
-            <name>Public Domain</name>
-            <url>https://pagure.io/CrashDetectorMC/blob/main/f/LICENSE</url>
-        </license>
-    </licenses>
-
-
-    <developers>
-        <developer>
-            <name>Asbestosstar</name>
-            <email>asbestosstar@asbestosstar.com</email>
-            <organization>Asbestosstar</organization>
-            <organizationUrl>https://asbestosstar.com</organizationUrl>
-        </developer>
-    </developers>
-
-    <scm>
-        <connection>scm:git:https://pagure.io/CrashDetectorMC.git</connection>
-        <developerConnection>scm:git:ssh://git@pagure.io/CrashDetectorMC.git</developerConnection>
-        <url>https://pagure.io/CrashDetectorMC</url>
-    </scm>
+	<licenses>
+		<license>
+			<name>Public Domain</name>
+			<url>https://pagure.io/CrashDetectorMC/blob/main/f/LICENSE</url>
+		</license>
+	</licenses>
 
 
-    
+	<developers>
+		<developer>
+			<name>Asbestosstar</name>
+			<email>asbestosstar@asbestosstar.com</email>
+			<organization>Asbestosstar</organization>
+			<organizationUrl>https://asbestosstar.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:https://pagure.io/CrashDetectorMC.git</connection>
+		<developerConnection>scm:git:ssh://git@pagure.io/CrashDetectorMC.git</developerConnection>
+		<url>https://pagure.io/CrashDetectorMC</url>
+	</scm>
 
 
-    <build>
-        <plugins>
+	<build>
+		<plugins>
 
-            <!-- Add the Maven Compiler Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <compilerArgs>
-                        <!-- Disable annotation processing -->
-                        <arg>-proc:none</arg>
-                        <!-- Suppress the warning message -->
-                        <arg>-Xlint:-options</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
-
-
-            <plugin>
-                <groupId>com.asbestosstar</groupId>
-                <artifactId>modlauncher-bytecode-compat-maven-plugin</artifactId>
-                <version>0.0.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>inject-compat-methods</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <patches>
-                        <patch>
-                            <className>
-                                com.asbestosstar.crashdetector.CrashDetectorModLauncher</className>
-                            <failIfMissingClass>true</failIfMissingClass>
-                            <methods>
-                                <method>
-                                    <name>beginScanning</name>
-                                    <descriptor>
-                                        (Lcpw/mods/modlauncher/api/IEnvironment;)V</descriptor>
-                                    <access>public</access>
-                                    <kind>NO_OP_VOID</kind>
-                                </method>
-                            </methods>
-                        </patch>
-
-                        <patch>
-                            <className>
-                                com.asbestosstar.crashdetector.TransformacionesCPW</className>
-                            <failIfMissingClass>true</failIfMissingClass>
-                            <methods>
-                                <method>
-                                    <name>getTargetType</name>
-                                    <descriptor>
-                                        ()Lcpw/mods/modlauncher/api/TargetType;</descriptor>
-                                    <access>public</access>
-                                    <kind>RETURN_STATIC_FIELD</kind>
-                                    <fieldOwner>
-                                        cpw.mods.modlauncher.api.TargetType</fieldOwner>
-                                    <fieldName>CLASS</fieldName>
-                                    <fieldDescriptor>
-                                        Lcpw/mods/modlauncher/api/TargetType;</fieldDescriptor>
-                                </method>
-                            </methods>
-                        </patch>
-                    </patches>
-                </configuration>
-            </plugin>
+			<!-- Add the Maven Compiler Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.13.0</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<compilerArgs>
+						<!-- Disable annotation processing -->
+						<arg>-proc:none</arg>
+						<!-- Suppress the warning message -->
+						<arg>-Xlint:-options</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
 
 
-            <!-- other plugins omitted -->
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.2</version>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <Premain-Class>
-                                com.asbestosstar.crashdetector.CrashDetectorFCMC
-                            </Premain-Class>
-                                <Main-Class>com.asbestosstar.crashdetector.app.CrashDetectorApp</Main-Class>
+			<plugin>
+				<groupId>com.asbestosstar</groupId>
+				<artifactId>modlauncher-bytecode-compat-maven-plugin</artifactId>
+				<version>0.0.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>inject-compat-methods</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<patches>
+						<patch>
+							<className>
+								com.asbestosstar.crashdetector.CrashDetectorModLauncher</className>
+							<failIfMissingClass>true</failIfMissingClass>
+							<methods>
+								<method>
+									<name>beginScanning</name>
+									<descriptor>
+										(Lcpw/mods/modlauncher/api/IEnvironment;)V</descriptor>
+									<access>public</access>
+									<kind>NO_OP_VOID</kind>
+								</method>
+							</methods>
+						</patch>
 
-                            <Can-Redefine-Classes>true</Can-Redefine-Classes>
-                            <Can-Retransform-Classes>true</Can-Retransform-Classes>
-                            <FMLModType>LIBRARY</FMLModType><!-- para NeoForge
+						<patch>
+							<className>
+								com.asbestosstar.crashdetector.TransformacionesCPW</className>
+							<failIfMissingClass>true</failIfMissingClass>
+							<methods>
+								<method>
+									<name>getTargetType</name>
+									<descriptor>
+										()Lcpw/mods/modlauncher/api/TargetType;</descriptor>
+									<access>public</access>
+									<kind>RETURN_STATIC_FIELD</kind>
+									<fieldOwner>
+										cpw.mods.modlauncher.api.TargetType</fieldOwner>
+									<fieldName>CLASS</fieldName>
+									<fieldDescriptor>
+										Lcpw/mods/modlauncher/api/TargetType;</fieldDescriptor>
+								</method>
+							</methods>
+						</patch>
+					</patches>
+				</configuration>
+			</plugin>
+
+
+			<!-- other plugins omitted -->
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.4.2</version>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Premain-Class>
+								com.asbestosstar.crashdetector.CrashDetectorFCMC
+							</Premain-Class>
+							<Main-Class>
+								com.asbestosstar.crashdetector.app.CrashDetectorApp</Main-Class>
+
+							<Can-Redefine-Classes>true</Can-Redefine-Classes>
+							<Can-Retransform-Classes>true</Can-Retransform-Classes>
+							<FMLModType>LIBRARY</FMLModType><!-- para NeoForge
                             1.21.9 -->
 
 
-                            <FMLCorePluginContainsFMLMod>true</FMLCorePluginContainsFMLMod>
-                            <FMLCorePlugin>
-                                com.asbestosstar.crashdetector.CrashDetectorMCForge</FMLCorePlugin>
+							<FMLCorePluginContainsFMLMod>true</FMLCorePluginContainsFMLMod>
+							<FMLCorePlugin>
+								com.asbestosstar.crashdetector.CrashDetectorMCForge</FMLCorePlugin>
 
-                            <TransformerClass>
-                                com.asbestosstar.crashdetector.CrashDetectorMeddle</TransformerClass>
-                            <MixinConfigs>
-                                crashdetectorfabricmctrancformaciones.mixins.json</MixinConfigs>
-
-
-                        </manifestEntries>
-                    </archive>
-                </configuration>
-            </plugin>
+							<TransformerClass>
+								com.asbestosstar.crashdetector.CrashDetectorMeddle</TransformerClass>
+							<MixinConfigs>
+								crashdetectorfabricmctrancformaciones.mixins.json</MixinConfigs>
 
 
-            <!-- ========= PLUGINS DE PUBLICACION PARA MAVEN CENTRAL ========= -->
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
 
-            <!-- Adjuntar fuentes -->
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-source-plugin</artifactId>
-    <version>3.3.1</version>
-    <executions>
-        <execution>
-            <id>attach-sources</id>
-            <phase>verify</phase>
-            <goals>
-                <goal>jar-no-fork</goal>
-            </goals>
-        </execution>
-    </executions>
-</plugin>
 
-            <!-- Adjuntar Javadoc -->
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-javadoc-plugin</artifactId>
-    <version>3.8.0</version>
-    <executions>
-        <execution>
-            <id>attach-javadocs</id>
-            <phase>verify</phase>
-            <goals>
-                <goal>jar</goal>
-            </goals>
-        </execution>
-    </executions>
-    <configuration>
-        <failOnError>false</failOnError>
-        <quiet>true</quiet>
-        <source>8</source>
-        <additionalJOption>-Xdoclint:none</additionalJOption>
-    </configuration>
-</plugin>
+			<!-- ========= PLUGINS DE PUBLICACION PARA MAVEN CENTRAL ========= -->
 
-            <!-- Firmar artefactos con GPG, requerido para Maven Central -->
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-gpg-plugin</artifactId>
-    <version>3.2.7</version>
-    <executions>
-        <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-                <goal>sign</goal>
-            </goals>
-            <configuration>
-                <gpgArguments>
-                    <arg>--pinentry-mode</arg>
-                    <arg>loopback</arg>
-                </gpgArguments>
-            </configuration>
-        </execution>
-    </executions>
-</plugin>
+			<!-- Adjuntar fuentes -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.3.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-            <!-- Publicar al nuevo Sonatype Central Publisher Portal -->
-<plugin>
-    <groupId>org.sonatype.central</groupId>
-    <artifactId>central-publishing-maven-plugin</artifactId>
-    <version>0.10.0</version>
-    <extensions>true</extensions>
-    <configuration>
-        <publishingServerId>central</publishingServerId>
-        <autoPublish>true</autoPublish>
-        <waitUntil>published</waitUntil>
-    </configuration>
-</plugin>
+			<!-- Adjuntar Javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.8.0</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<failOnError>false</failOnError>
+					<quiet>true</quiet>
+					<source>8</source>
+					<additionalJOption>-Xdoclint:none</additionalJOption>
+				</configuration>
+			</plugin>
 
-            <!-- ========= FIN PLUGINS DE PUBLICACION ========= -->
-            
-            
-            
-            
-            
-            
-        </plugins>
-    </build>
-    <dependencies>
-        <!-- Gson Dependency -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.10.1</version>
-            
-            <scope>provided</scope>
-            
-        </dependency>
+			<!-- Firmar artefactos con GPG, requerido para Maven Central -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>3.2.7</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+						<configuration>
+							<gpgArguments>
+								<arg>--pinentry-mode</arg>
+								<arg>loopback</arg>
+							</gpgArguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
-        <!-- Guava Dependency -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>31.1-jre</version>
-            
-            <scope>provided</scope>
-            
-            
-        </dependency>
+			<!-- Publicar al nuevo Sonatype Central Publisher Portal -->
+			<plugin>
+				<groupId>org.sonatype.central</groupId>
+				<artifactId>central-publishing-maven-plugin</artifactId>
+				<version>0.10.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<publishingServerId>central</publishingServerId>
+					<autoPublish>true</autoPublish>
+					<waitUntil>published</waitUntil>
+				</configuration>
+			</plugin>
 
-        <!-- Existing Dependencies -->
-        <dependency>
-            <groupId>net.fabricmc</groupId>
-            <artifactId>fabric-loader</artifactId>
-            <version>0.15.7</version>
-            
-            <scope>provided</scope>
-            
-            
-        </dependency>
+			<!-- ========= FIN PLUGINS DE PUBLICACION ========= -->
 
-        <!-- https://mvnrepository.com/artifact/cpw.mods/modlauncher -->
-        <dependency>
-            <groupId>cpw.mods</groupId>
-            <artifactId>modlauncher</artifactId>
-            <version>11.0.5</version>
-            
-            <scope>provided</scope>
-            
-        </dependency>
 
-        <dependency>
+		</plugins>
+	</build>
+	<dependencies>
+		<!-- Gson Dependency -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.10.1</version>
 
-            <groupId>cpw.mods</groupId>
+			<scope>provided</scope>
 
-            <artifactId>modlauncher</artifactId>
+		</dependency>
 
-            <version>0.10.0</version>
+		<!-- Guava Dependency -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>31.1-jre</version>
 
-            <classifier>api</classifier>
-            
-            <scope>provided</scope>
+			<scope>provided</scope>
 
-        </dependency>
 
-        <dependency>
+		</dependency>
 
-            <groupId>cpw.mods</groupId>
+		<!-- Existing Dependencies -->
+		<dependency>
+			<groupId>net.fabricmc</groupId>
+			<artifactId>fabric-loader</artifactId>
+			<version>0.15.7</version>
 
-            <artifactId>grossjava9hacks</artifactId>
+			<scope>provided</scope>
 
-            <version>1.3.3</version>
-            
-            <scope>provided</scope>
 
-        </dependency>
-        <dependency>
-            <groupId>net.minecraftforge</groupId>
-            <artifactId>forgespi</artifactId>
-            <version>6.0.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spongepowered</groupId>
-            <artifactId>mixin</artifactId>
-            <version>0.8.5</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.asbestosstar</groupId>
-            <artifactId>featurecreep-loader</artifactId>
-            <version>4.0pre19</version>
-            <scope>provided</scope>
-        </dependency>
+		</dependency>
 
-        <!--	<dependency>
+		<!-- https://mvnrepository.com/artifact/cpw.mods/modlauncher -->
+		<dependency>
+			<groupId>cpw.mods</groupId>
+			<artifactId>modlauncher</artifactId>
+			<version>11.0.5</version>
+
+			<scope>provided</scope>
+
+		</dependency>
+
+		<dependency>
+			<groupId>cpw.mods</groupId>
+			<artifactId>modlauncher</artifactId>
+			<version>0.10.0</version>
+			<classifier>api</classifier>
+			<scope>provided</scope>
+
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+
+			<groupId>cpw.mods</groupId>
+
+			<artifactId>grossjava9hacks</artifactId>
+
+			<version>1.3.3</version>
+
+			<scope>provided</scope>
+
+		</dependency>
+		<dependency>
+			<groupId>net.minecraftforge</groupId>
+			<artifactId>forgespi</artifactId>
+			<version>6.0.0</version>
+			<scope>provided</scope>
+
+			<exclusions>
+				<exclusion>
+					<groupId>cpw.mods</groupId>
+					<artifactId>modlauncher</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.spongepowered</groupId>
+			<artifactId>mixin</artifactId>
+			<version>0.8.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.asbestosstar</groupId>
+			<artifactId>featurecreep-loader</artifactId>
+			<version>4.0pre19</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!--	<dependency>
             <groupId>com.kaolinmc</groupId>
             <artifactId>tooling-api</artifactId>
             <version>1.1.3-SNAPSHOT</version>
@@ -325,50 +327,50 @@
         </dependency> -->
 
 
-        <!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
-        <dependency>
-            <groupId>org.javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.27.0-GA</version>
-            <scope>provided</scope>
-        </dependency>
+		<!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.27.0-GA</version>
+			<scope>provided</scope>
+		</dependency>
 
 
-        <!-- https://mvnrepository.com/artifact/org.jboss/jboss-dmr -->
-        <dependency>
-            <groupId>org.jboss</groupId>
-            <artifactId>jboss-dmr</artifactId>
-            <version>1.6.1.Final</version>
-            <scope>provided</scope>
-        </dependency>
+		<!-- https://mvnrepository.com/artifact/org.jboss/jboss-dmr -->
+		<dependency>
+			<groupId>org.jboss</groupId>
+			<artifactId>jboss-dmr</artifactId>
+			<version>1.6.1.Final</version>
+			<scope>provided</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>com.electronwill.night-config</groupId>
-            <artifactId>toml</artifactId>
-            <version>3.6.0</version>
-            <scope>provided</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>net.neoforged.fancymodloader</groupId>
-            <artifactId>loader</artifactId>
-            <version>10.0.14</version>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>com.electronwill.night-config</groupId>
+			<artifactId>toml</artifactId>
+			<version>3.6.0</version>
+			<scope>provided</scope>
+		</dependency>
 
 
-        <!--
+		<dependency>
+			<groupId>net.neoforged.fancymodloader</groupId>
+			<artifactId>loader</artifactId>
+			<version>10.0.14</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<!--
         https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.20.0</version>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.20.0</version>
+			<scope>provided</scope>
+		</dependency>
 
 
-        <!-- existe porque una limitacion de nivel src para servicio modlauncher
+		<!-- existe porque una limitacion de nivel src para servicio modlauncher
         . TODO publicar en Central
         <dependency>
             <groupId>com.github.Asbestosstar</groupId>
@@ -376,7 +378,7 @@
             <version>0</version>
             <scope>provided</scope>
         </dependency>-->
-       <!-- <dependency>
+		<!-- <dependency>
             <groupId>org.mangorage</groupId>
             <artifactId>mangomodloader-api</artifactId>
             <version>1.1.3</version>
@@ -384,407 +386,362 @@
         </dependency> -->
 
 
-        <!-- https://mvnrepository.com/artifact/io.github.CDAGaming/DiscordIPC -->
-        <dependency>
-            <groupId>io.github.CDAGaming</groupId>
-            <artifactId>DiscordIPC</artifactId>
-            <version>0.10.2</version>
-            <scope>provided</scope>
-        </dependency>
-
-
-        <!-- https://mvnrepository.com/artifact/net.fabricmc/cfr -->
-        <dependency>
-            <groupId>net.fabricmc</groupId>
-            <artifactId>cfr</artifactId>
-            <version>0.2.2</version>
-            <scope>provided</scope>
-        </dependency>
-
-
-        <!-- Source: https://mvnrepository.com/artifact/org.lwjgl/lwjgl-glfw -->
-        <dependency>
-            <groupId>org.lwjgl</groupId>
-            <artifactId>lwjgl-glfw</artifactId>
-            <version>3.1.4</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Source: https://mvnrepository.com/artifact/org.lwjgl/lwjgl-opengl -->
-        <dependency>
-            <groupId>org.lwjgl</groupId>
-            <artifactId>lwjgl-opengl</artifactId>
-            <version>3.1.4</version>
-            <scope>provided</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>com.asbestosstar</groupId>
-            <artifactId>rift-init-listener</artifactId>
-            <version>0.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>net.minecraft</groupId>
-            <artifactId>launchwrapper</artifactId>
-            <version>1.12</version>
-            <scope>provided</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>net.minecraftforge</groupId>
-            <artifactId>forge</artifactId>
-            <version>1.12-14.21.1.2443</version>
-            <classifier>universal</classifier>
-            <scope>provided</scope>
-        </dependency>
-
-
-     <dependency>
-    <groupId>io.papermc.paper</groupId>
-    <artifactId>paper-api</artifactId>
-    <version>26.1.1.build.10-alpha</version>
-    <scope>provided</scope>
-</dependency>
-
-
-
-        <dependency>
-            <groupId>com.github.FyberOptic</groupId>
-            <artifactId>Meddle</artifactId>
-            <version>1.3</version>
-            <scope>provided</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>com.unascribed</groupId>
-            <artifactId>nilloader</artifactId>
-            <version>1.3.5</version>
-            <scope>provided</scope>
-        </dependency>
-
-
-
-
-<dependency>
-    <groupId>org.eclipse.jgit</groupId>
-    <artifactId>org.eclipse.jgit</artifactId>
-    <version>5.13.3.202401111512-r</version>
-    <scope>provided</scope>
-</dependency>
-
-<dependency>
-    <groupId>org.eclipse.jgit</groupId>
-    <artifactId>org.eclipse.jgit.ssh.apache</artifactId>
-    <version>5.13.3.202401111512-r</version>
-    <scope>provided</scope>
-</dependency>
-
-
-
-<dependency>
-    <groupId>org.eclipse.jgit</groupId>
-    <artifactId>org.eclipse.jgit.http.apache</artifactId>
-    <version>5.13.3.202401111512-r</version>
-    <scope>provided</scope>
-</dependency>
-
-<dependency>
-    <groupId>org.eclipse.jgit</groupId>
-    <artifactId>org.eclipse.jgit.ui</artifactId>
-    <version>5.13.3.202401111512-r</version>
-    <scope>provided</scope>
-</dependency>
-
-<dependency>
-    <groupId>org.eclipse.jgit</groupId>
-    <artifactId>org.eclipse.jgit.archive</artifactId>
-    <version>5.13.3.202401111512-r</version>
-    <scope>provided</scope>
-</dependency>
-
-<dependency>
-    <groupId>org.eclipse.jgit</groupId>
-    <artifactId>org.eclipse.jgit.lfs</artifactId>
-    <version>5.13.3.202401111512-r</version>
-    <scope>provided</scope>
-</dependency>
-
-<dependency>
-    <groupId>org.eclipse.jgit</groupId>
-    <artifactId>org.eclipse.jgit.gpg.bc</artifactId>
-    <version>5.13.3.202401111512-r</version>
-    <scope>provided</scope>
-</dependency>
-
-
-        <!-- Source: https://mvnrepository.com/artifact/net.canarymod/CanaryLib -->
-<dependency>
-    <groupId>net.canarymod</groupId>
-    <artifactId>CanaryLib</artifactId>
-    <version>1.2.0</version>
-    <scope>provided</scope>
-</dependency>
-
-
-        <!-- Source: https://mvnrepository.com/artifact/net.canarymod/CanaryLib -->
-<dependency>
-    <groupId>curse.maven</groupId>
-    <artifactId>litlaunch-api-358829</artifactId>
-    <version>3406077</version>
-    <scope>provided</scope>
-</dependency>
-
-<dependency>
-    <groupId>com.asbestosstar</groupId>
-    <artifactId>risugamis-modloader-abstract-basemod</artifactId>
-    <version>0.0.1</version>
-    <scope>provided</scope>
-</dependency>
-
-
-<dependency>
-    <groupId>com.asbestosstar</groupId>
-    <artifactId>hmod-plugin-base</artifactId>
-    <version>0.0.1</version>
-    <scope>provided</scope>
-</dependency>
-
-
-    <dependency>
-        <groupId>cuchaz</groupId>
-        <artifactId>m3l</artifactId>
-        <version>1.8.3-0.4b</version>
-        <scope>provided</scope>
-    </dependency>
-
-
-<dependency>
-        <groupId>org.spongepowered</groupId>
-        <artifactId>spongeapi</artifactId>
-        <version>8.0.0</version>
-        <scope>provided</scope>
-    </dependency>
-
-
-<dependency>
-        <groupId>maven.modrinth</groupId>
-        <artifactId>loadercomplex</artifactId>
-        <version>0.1.1</version>
-        <scope>provided</scope>
-    </dependency>
-
-
-
-
-
-<dependency>
-    <groupId>com.asbestosstar</groupId>
-    <artifactId>flintloader-flintmodule-stub</artifactId>
-    <version>0.0.1</version>
-        <scope>provided</scope>
-
-</dependency>
-
-
-
-
-
-<dependency>
-    <groupId>com.asbestosstar</groupId>
-    <artifactId>ifmlloadingplugin-172</artifactId>
-    <version>0.0.1</version>
-        <scope>provided</scope>
-
-</dependency>
-
-
-
-
-
-  <dependency>
-        <groupId>de.marhali</groupId>
-        <artifactId>json5-java</artifactId>
-        <version>3.0.0</version>
-            <scope>provided</scope>
-
-    </dependency>
-
-
-        <!-- Source: https://mvnrepository.com/artifact/org.apache.commons/commons-configuration2 -->
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-configuration2</artifactId>
-    <version>2.15.0</version>
-    <scope>provided</scope>
-
-</dependency>
-
-
-        <!-- Source: https://mvnrepository.com/artifact/org.ini4j/ini4j -->
-<dependency>
-    <groupId>org.ini4j</groupId>
-    <artifactId>ini4j</artifactId>
-    <version>0.5.4</version>
-    <scope>provided</scope>
-</dependency>
-
-
-
-
-<dependency>
-    <groupId>com.github.Querz</groupId>
-    <artifactId>NBT</artifactId>
-    <version>6.1</version>
-        <scope>provided</scope>
-</dependency>
-
-
-    <dependency>
-        <groupId>org.eclipse.lsp4j</groupId>
-        <artifactId>org.eclipse.lsp4j</artifactId>
-        <version>1.0.0</version>
-            <scope>provided</scope> <!-- only loaded if classes exist -->
-
-    </dependency>
-    <dependency>
-        <groupId>org.eclipse.lsp4j</groupId>
-        <artifactId>org.eclipse.lsp4j.jsonrpc</artifactId>
-        <version>1.0.0</version>
-            <scope>provided</scope> <!-- only loaded if classes exist -->
-
-    </dependency>
-
-        <!-- Source: https://mvnrepository.com/artifact/io.modelcontextprotocol.sdk/mcp -->
-<dependency>
-    <groupId>io.modelcontextprotocol.sdk</groupId>
-    <artifactId>mcp</artifactId>
-    <version>1.1.3</version>
-    <scope>provided</scope>
-</dependency>
-
-
-
-<dependency>
-    <groupId>com.asbestosstar</groupId>
-    <artifactId>comoraclestream-dax-stub</artifactId>
-    <version>0.0.1</version>
-        <scope>provided</scope>
-</dependency>
-
-        <!-- TLauncher Jar Dependency -->
-<dependency>
-    <groupId>com.asbestosstar.stub</groupId>
-    <artifactId>original-tlauncher</artifactId>
-    <version>2.9371</version>
-    <scope>provided</scope>
-</dependency>
-
-        <!-- TLModLoader Dependency -->
-        <dependency>
-            <groupId>com.asbestosstar</groupId>
-            <artifactId>tlmodloader</artifactId>
-            <version>1.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-
-
-
-
-<dependency>
-    <groupId>com.asbestosstar</groupId>
-    <artifactId>vectorapistubs</artifactId>
-    <version>1.0.0</version>
-    <scope>provided</scope>
-</dependency>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-        <!-- Compiles CorreoImapJakarta. Runtime access is gated by CorreoImapOpcional. -->
-        <dependency>
-            <groupId>org.eclipse.angus</groupId>
-            <artifactId>jakarta.mail</artifactId>
-            <version>2.0.4</version>
-            <optional>true</optional>
-        </dependency>
-</dependencies>
-
-
-    <repositories>
-
-
-        <repository>
-            <id>central</id>
-            <url>https://repo1.maven.org/maven2/</url>
-        </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://www.jitpack.io</url>
-        </repository>
-
-        <repository>
-            <id>cursemaven</id>
-            <name>cursemaven</name>
-            <url>https://cursemaven.com</url>
-        </repository>
-        <repository>
-            <id>kaolinmc</id>
-            <name>kaolinmc</name>
-            <url>https://maven.kaolinmc.com/snapshots</url>
-        </repository>
-      <!--  <repository>
+		<!-- https://mvnrepository.com/artifact/io.github.CDAGaming/DiscordIPC -->
+		<dependency>
+			<groupId>io.github.CDAGaming</groupId>
+			<artifactId>DiscordIPC</artifactId>
+			<version>0.10.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/net.fabricmc/cfr -->
+		<dependency>
+			<groupId>net.fabricmc</groupId>
+			<artifactId>cfr</artifactId>
+			<version>0.2.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<!-- Source: https://mvnrepository.com/artifact/org.lwjgl/lwjgl-glfw -->
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-glfw</artifactId>
+			<version>3.1.4</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Source: https://mvnrepository.com/artifact/org.lwjgl/lwjgl-opengl -->
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-opengl</artifactId>
+			<version>3.1.4</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.asbestosstar</groupId>
+			<artifactId>rift-init-listener</artifactId>
+			<version>0.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>net.minecraft</groupId>
+			<artifactId>launchwrapper</artifactId>
+			<version>1.12</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>net.minecraftforge</groupId>
+			<artifactId>forge</artifactId>
+			<version>1.12-14.21.1.2443</version>
+			<classifier>universal</classifier>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>io.papermc.paper</groupId>
+			<artifactId>paper-api</artifactId>
+			<version>26.1.1.build.10-alpha</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.github.FyberOptic</groupId>
+			<artifactId>Meddle</artifactId>
+			<version>1.3</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.unascribed</groupId>
+			<artifactId>nilloader</artifactId>
+			<version>1.3.5</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit</artifactId>
+			<version>5.13.3.202401111512-r</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit.ssh.apache</artifactId>
+			<version>5.13.3.202401111512-r</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit.http.apache</artifactId>
+			<version>5.13.3.202401111512-r</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit.ui</artifactId>
+			<version>5.13.3.202401111512-r</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit.archive</artifactId>
+			<version>5.13.3.202401111512-r</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit.lfs</artifactId>
+			<version>5.13.3.202401111512-r</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit.gpg.bc</artifactId>
+			<version>5.13.3.202401111512-r</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<!-- Source: https://mvnrepository.com/artifact/net.canarymod/CanaryLib -->
+		<dependency>
+			<groupId>net.canarymod</groupId>
+			<artifactId>CanaryLib</artifactId>
+			<version>1.2.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<!-- Source: https://mvnrepository.com/artifact/net.canarymod/CanaryLib -->
+		<dependency>
+			<groupId>curse.maven</groupId>
+			<artifactId>litlaunch-api-358829</artifactId>
+			<version>3406077</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.asbestosstar</groupId>
+			<artifactId>risugamis-modloader-abstract-basemod</artifactId>
+			<version>0.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.asbestosstar</groupId>
+			<artifactId>hmod-plugin-base</artifactId>
+			<version>0.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>cuchaz</groupId>
+			<artifactId>m3l</artifactId>
+			<version>1.8.3-0.4b</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.spongepowered</groupId>
+			<artifactId>spongeapi</artifactId>
+			<version>8.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>maven.modrinth</groupId>
+			<artifactId>loadercomplex</artifactId>
+			<version>0.1.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.asbestosstar</groupId>
+			<artifactId>flintloader-flintmodule-stub</artifactId>
+			<version>0.0.1</version>
+			<scope>provided</scope>
+
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.asbestosstar</groupId>
+			<artifactId>ifmlloadingplugin-172</artifactId>
+			<version>0.0.1</version>
+			<scope>provided</scope>
+
+		</dependency>
+
+
+		<dependency>
+			<groupId>de.marhali</groupId>
+			<artifactId>json5-java</artifactId>
+			<version>3.0.0</version>
+			<scope>provided</scope>
+
+		</dependency>
+
+
+		<!-- Source:
+		https://mvnrepository.com/artifact/org.apache.commons/commons-configuration2 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-configuration2</artifactId>
+			<version>2.15.0</version>
+			<scope>provided</scope>
+
+		</dependency>
+
+
+		<!-- Source: https://mvnrepository.com/artifact/org.ini4j/ini4j -->
+		<dependency>
+			<groupId>org.ini4j</groupId>
+			<artifactId>ini4j</artifactId>
+			<version>0.5.4</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.github.Querz</groupId>
+			<artifactId>NBT</artifactId>
+			<version>6.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.eclipse.lsp4j</groupId>
+			<artifactId>org.eclipse.lsp4j</artifactId>
+			<version>1.0.0</version>
+			<scope>provided</scope> <!-- only loaded if classes exist -->
+
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.lsp4j</groupId>
+			<artifactId>org.eclipse.lsp4j.jsonrpc</artifactId>
+			<version>1.0.0</version>
+			<scope>provided</scope> <!-- only loaded if classes exist -->
+
+		</dependency>
+
+		<!-- Source:
+		https://mvnrepository.com/artifact/io.modelcontextprotocol.sdk/mcp -->
+		<dependency>
+			<groupId>io.modelcontextprotocol.sdk</groupId>
+			<artifactId>mcp</artifactId>
+			<version>1.1.3</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.asbestosstar</groupId>
+			<artifactId>comoraclestream-dax-stub</artifactId>
+			<version>0.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- TLauncher Jar Dependency -->
+		<dependency>
+			<groupId>com.asbestosstar.stub</groupId>
+			<artifactId>original-tlauncher</artifactId>
+			<version>2.9371</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- TLModLoader Dependency -->
+		<dependency>
+			<groupId>com.asbestosstar</groupId>
+			<artifactId>tlmodloader</artifactId>
+			<version>1.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.asbestosstar</groupId>
+			<artifactId>vectorapistubs</artifactId>
+			<version>1.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<!-- Compiles CorreoImapJakarta. Runtime access is gated by
+		CorreoImapOpcional. -->
+		<dependency>
+			<groupId>org.eclipse.angus</groupId>
+			<artifactId>jakarta.mail</artifactId>
+			<version>2.0.4</version>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+
+
+	<repositories>
+
+
+		<repository>
+			<id>central</id>
+			<url>https://repo1.maven.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://www.jitpack.io</url>
+		</repository>
+
+		<repository>
+			<id>cursemaven</id>
+			<name>cursemaven</name>
+			<url>https://cursemaven.com</url>
+		</repository>
+		<repository>
+			<id>kaolinmc</id>
+			<name>kaolinmc</name>
+			<url>https://maven.kaolinmc.com/snapshots</url>
+		</repository>
+		<!--  <repository>
             <id>mangorage</id>
             <name>mangorage</name>
             <url>https://maven.mangorage.org/releases/</url>
         </repository>-->
-        <repository>
-            <id>velocity</id>
-            <name>velocity</name>
-            <url>https://repo.papermc.io/repository/maven-public/</url>
-        </repository>
+		<repository>
+			<id>velocity</id>
+			<name>velocity</name>
+			<url>https://repo.papermc.io/repository/maven-public/</url>
+		</repository>
 
 
-        <repository>
-            <id>nf</id>
-            <name>nf</name>
-            <url>https://maven.neoforged.net/releases/</url>
-        </repository>
+		<repository>
+			<id>nf</id>
+			<name>nf</name>
+			<url>https://maven.neoforged.net/releases/</url>
+		</repository>
 
-        <!-- 
+		<!-- 
 
         <repository>
             <id>carm</id>
@@ -793,71 +750,68 @@
         </repository>
 -->
 
-        <repository>
-            <id>MCForge</id>
-            <name>MCForge</name>
-            <url>https://files.minecraftforge.net/maven/</url>
-        </repository>
+		<repository>
+			<id>MCForge</id>
+			<name>MCForge</name>
+			<url>https://files.minecraftforge.net/maven/</url>
+		</repository>
 
-        <repository>
-            <id>TLauncher</id>
-            <name>TLauncher</name>
-            <url>https://res.tlauncher.org/unb/libraries/</url>
-        </repository>
-
-
-
-        <repository>
-            <id>SleepingTown</id>
-            <name>SleepingTown</name>
-            <url>https://repo.sleeping.town</url>
-        </repository>
+		<repository>
+			<id>TLauncher</id>
+			<name>TLauncher</name>
+			<url>https://res.tlauncher.org/unb/libraries/</url>
+		</repository>
 
 
-        <repository>
-            <id>Neptune</id>
-            <name>Neptune</name>
-            <url>https://repo.neptunepowered.org/maven/</url>
-        </repository>
+		<repository>
+			<id>SleepingTown</id>
+			<name>SleepingTown</name>
+			<url>https://repo.sleeping.town</url>
+		</repository>
 
-    <repository>
-                <id>cuchazinteractive</id>
-        <name>cuchazinteractive</name>
-        <url>https://maven.cuchazinteractive.com/</url>
-    </repository>
 
- 
-<repository>
-        <id>spongepowered-repo</id>
-                <name>spongepowered</name>
-        <url>https://repo.spongepowered.org/repository/maven-public/</url>
-    </repository> 
- 
- <repository>
-        <id>modrinth</id>
-                <name>modrinth</name>
-        <url>https://api.modrinth.com/maven/</url>
-    </repository> 
-  
+		<repository>
+			<id>Neptune</id>
+			<name>Neptune</name>
+			<url>https://repo.neptunepowered.org/maven/</url>
+		</repository>
 
-    </repositories>
-    <properties>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
+		<repository>
+			<id>cuchazinteractive</id>
+			<name>cuchazinteractive</name>
+			<url>https://maven.cuchazinteractive.com/</url>
+		</repository>
 
-    </properties>
-    
-    
-    
-    <profiles>
-    <profile>
-        <id>dev</id>
-        <properties>
-            <gpg.skip>true</gpg.skip>
-        </properties>
-    </profile>
-</profiles>
-    
-    
-    
+
+		<repository>
+			<id>spongepowered-repo</id>
+			<name>spongepowered</name>
+			<url>https://repo.spongepowered.org/repository/maven-public/</url>
+		</repository>
+
+		<repository>
+			<id>modrinth</id>
+			<name>modrinth</name>
+			<url>https://api.modrinth.com/maven/</url>
+		</repository>
+
+
+	</repositories>
+	<properties>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+
+	</properties>
+
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<gpg.skip>true</gpg.skip>
+			</properties>
+		</profile>
+	</profiles>
+
+
 </project>

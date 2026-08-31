@@ -13968,4 +13968,54 @@ public class Portuges implements Idioma {
 	public String descripcionInforme() {
 		return "Cole aqui a URL ou o HTML de um relatório do Crash Assistant ou CrashDetector. O CrashDetector localizará os links de registros compatíveis dentro do relatório e os importará automaticamente.";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "Consulte o índice do NeoForge Waifu por GraphQL. As consultas predefinidas cobrem as principais operações do esquema, e o editor avançado permite executar qualquer consulta GraphQL válida.";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "Infelizmente, ainda não existe uma mascote waifu para o NeoForge Waifu.";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "Tipo de consulta";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "Nome da operação";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "Variáveis JSON";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "Consulta GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "Executar consulta";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "Mostrar editor GraphQL avançado";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "O NeoForge Waifu no CrashDetector permite apenas consultas GraphQL somente de leitura.";
+	}
 }

@@ -14142,4 +14142,54 @@ public class Tailandes implements Idioma {
 	public String descripcionInforme() {
 		return "วาง URL หรือ HTML ของรายงาน Crash Assistant หรือ CrashDetector ที่นี่ CrashDetector จะค้นหาลิงก์บันทึกที่รองรับภายในรายงานและนำเข้าโดยอัตโนมัติ";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "ค้นหาดัชนี NeoForge Waifu ผ่าน GraphQL คิวรีที่เตรียมไว้ครอบคลุมการทำงานหลักของสคีมา และตัวแก้ไขขั้นสูงสามารถเรียกใช้คิวรี GraphQL ที่ถูกต้องได้ทุกแบบ";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "น่าเสียดายที่ NeoForge Waifu ยังไม่มีมาสคอต waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "ประเภทคิวรี";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "ชื่อการทำงาน";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "ตัวแปร JSON";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "คิวรี GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "เรียกใช้คิวรี";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "แสดงตัวแก้ไข GraphQL ขั้นสูง";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "NeoForge Waifu ใน CrashDetector อนุญาตเฉพาะคิวรี GraphQL แบบอ่านอย่างเดียวเท่านั้น";
+	}
 }

@@ -5554,4 +5554,24 @@ public interface Idioma {
 	public String mensajeWatchdogCierreClientePostMain();
 
 	public String nombreWatchdogCierreClientePostMain();
+
+	public String neoforgeWaifuTitulo();
+
+	public String neoforgeWaifuDescripcion();
+
+	public String neoforgeWaifuSinMascota();
+
+	public String neoforgeWaifuTipoConsulta();
+
+	public String neoforgeWaifuNombreOperacion();
+
+	public String neoforgeWaifuVariablesJson();
+
+	public String neoforgeWaifuConsultaGraphql();
+
+	public String neoforgeWaifuEjecutar();
+
+	public String neoforgeWaifuMostrarEditorAvanzado();
+
+	public String neoforgeWaifuSoloLectura();
 }

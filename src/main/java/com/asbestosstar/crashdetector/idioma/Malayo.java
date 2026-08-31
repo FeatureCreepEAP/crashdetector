@@ -1611,4 +1611,54 @@ public class Malayo extends Indonesia {
 	public String descripcionInforme() {
 		return "Tampal URL atau HTML laporan Crash Assistant atau CrashDetector di sini. CrashDetector akan mencari pautan log yang disokong dalam laporan dan mengimportnya secara automatik.";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "Kueri indeks NeoForge Waifu melalui GraphQL. Kueri pratetap meliputi operasi utama skema, manakala editor lanjutan boleh menjalankan sebarang kueri GraphQL yang sah.";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "Malangnya, NeoForge Waifu masih belum mempunyai maskot waifu.";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "Jenis kueri";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "Nama operasi";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "Pemboleh ubah JSON";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "Kueri GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "Jalankan kueri";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "Tunjukkan editor GraphQL lanjutan";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "NeoForge Waifu dalam CrashDetector hanya membenarkan kueri GraphQL baca sahaja.";
+	}
 }

@@ -14090,4 +14090,54 @@ public class Arabe implements Idioma {
 	public String descripcionInforme() {
 		return "الصق هنا رابط URL أو HTML لتقرير Crash Assistant أو CrashDetector. سيبحث CrashDetector داخل التقرير عن روابط السجلات المدعومة ويستوردها تلقائياً.";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "استعلم عن فهرس NeoForge Waifu عبر GraphQL. تغطي الاستعلامات الجاهزة العمليات الرئيسية في المخطط، ويتيح المحرر المتقدم تنفيذ أي استعلام GraphQL صالح.";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "للأسف، لا توجد حتى الآن تميمة waifu خاصة بـ NeoForge Waifu.";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "نوع الاستعلام";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "اسم العملية";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "متغيرات JSON";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "استعلام GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "تنفيذ الاستعلام";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "إظهار محرر GraphQL المتقدم";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "يسمح NeoForge Waifu في CrashDetector باستعلامات GraphQL للقراءة فقط.";
+	}
 }

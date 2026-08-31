@@ -14775,4 +14775,54 @@ public class Indonesia implements Idioma {
 	public String descripcionInforme() {
 		return "Tempel URL atau HTML laporan Crash Assistant atau CrashDetector di sini. CrashDetector akan mencari tautan log yang didukung di dalam laporan dan mengimpornya secara otomatis.";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "Kueri indeks NeoForge Waifu melalui GraphQL. Kueri bawaan mencakup operasi utama skema, sedangkan editor lanjutan dapat menjalankan kueri GraphQL valid apa pun.";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "Sayangnya, NeoForge Waifu belum memiliki maskot waifu.";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "Jenis kueri";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "Nama operasi";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "Variabel JSON";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "Kueri GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "Jalankan kueri";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "Tampilkan editor GraphQL lanjutan";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "NeoForge Waifu di CrashDetector hanya mengizinkan kueri GraphQL baca-saja.";
+	}
 }

@@ -14188,4 +14188,54 @@ public class Esperanto implements Idioma {
 	public String descripcionInforme() {
 		return "Algluu ĉi tie la URL-on aŭ HTML-on de raporto de Crash Assistant aŭ CrashDetector. CrashDetector trovos subtenatajn ligilojn al protokoloj en la raporto kaj aŭtomate importos ilin.";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "Demandu la indekson de NeoForge Waifu per GraphQL. La antaŭdifinitaj demandoj kovras la ĉefajn operaciojn de la skemo, kaj la altnivela redaktilo povas ruli ajnan validan GraphQL-demandon.";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "Bedaŭrinde NeoForge Waifu ankoraŭ ne havas waifu-maskoton.";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "Tipo de demando";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "Nomo de operacio";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "JSON-variabloj";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "GraphQL-demando";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "Ruli demandon";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "Montri altnivelan GraphQL-redaktilon";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "NeoForge Waifu en CrashDetector permesas nur nurlegajn GraphQL-demandojn.";
+	}
 }

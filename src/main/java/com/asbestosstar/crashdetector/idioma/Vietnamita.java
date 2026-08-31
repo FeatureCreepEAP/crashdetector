@@ -14177,4 +14177,54 @@ public class Vietnamita implements Idioma {
 	public String descripcionInforme() {
 		return "Dán URL hoặc HTML của báo cáo Crash Assistant hoặc CrashDetector vào đây. CrashDetector sẽ tìm các liên kết nhật ký được hỗ trợ trong báo cáo và tự động nhập chúng.";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "Truy vấn chỉ mục NeoForge Waifu bằng GraphQL. Các truy vấn dựng sẵn bao phủ những thao tác chính của lược đồ, còn trình soạn thảo nâng cao có thể chạy mọi truy vấn GraphQL hợp lệ.";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "Rất tiếc, NeoForge Waifu hiện vẫn chưa có linh vật waifu.";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "Loại truy vấn";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "Tên thao tác";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "Biến JSON";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "Truy vấn GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "Chạy truy vấn";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "Hiện trình soạn thảo GraphQL nâng cao";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "NeoForge Waifu trong CrashDetector chỉ cho phép các truy vấn GraphQL chỉ đọc.";
+	}
 }

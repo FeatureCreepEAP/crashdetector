@@ -13963,4 +13963,54 @@ public class Ruso implements Idioma {
 	public String descripcionInforme() {
 		return "Вставьте сюда URL или HTML отчёта Crash Assistant или CrashDetector. CrashDetector найдёт в отчёте поддерживаемые ссылки на логи и автоматически импортирует их.";
 	}
+
+	@Override
+	public String neoforgeWaifuTitulo() {
+		return "NeoForge Waifu";
+	}
+
+	@Override
+	public String neoforgeWaifuDescripcion() {
+		return "Запрашивайте индекс NeoForge Waifu через GraphQL. Готовые запросы охватывают основные операции схемы, а расширенный редактор позволяет выполнять любой допустимый GraphQL-запрос.";
+	}
+
+	@Override
+	public String neoforgeWaifuSinMascota() {
+		return "К сожалению, у NeoForge Waifu пока нет waifu-маскота.";
+	}
+
+	@Override
+	public String neoforgeWaifuTipoConsulta() {
+		return "Тип запроса";
+	}
+
+	@Override
+	public String neoforgeWaifuNombreOperacion() {
+		return "Имя операции";
+	}
+
+	@Override
+	public String neoforgeWaifuVariablesJson() {
+		return "Переменные JSON";
+	}
+
+	@Override
+	public String neoforgeWaifuConsultaGraphql() {
+		return "Запрос GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuEjecutar() {
+		return "Выполнить запрос";
+	}
+
+	@Override
+	public String neoforgeWaifuMostrarEditorAvanzado() {
+		return "Показать расширенный редактор GraphQL";
+	}
+
+	@Override
+	public String neoforgeWaifuSoloLectura() {
+		return "NeoForge Waifu в CrashDetector разрешает только GraphQL-запросы для чтения.";
+	}
 }
