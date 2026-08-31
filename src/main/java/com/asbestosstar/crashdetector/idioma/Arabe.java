@@ -14054,4 +14054,30 @@ public class Arabe implements Idioma {
 		return "إغلاق بطيء للعميل (Watchdog post-main)";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "خطأ حرج في المود <b>" + nombreJar
+				+ "</b>. رفض Forge قسم <b>accessTransformers</b> في بيانات المود لأنه مُعرّف كقائمة متعددة الكائنات بينما كان يتوقع جدولاً واحداً.";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "بنية accessTransformers غير صالحة في mods.toml";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "المود المسبب للمشكلة هو <b>" + nombreJar + "</b>.";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "إذا كنت لاعباً فقط، حدّث أو أعد تثبيت <b>" + nombreJar
+				+ "</b> أو استخدم إصداراً من المود مخصصاً تماماً لإصدار Minecraft وForge لديك.";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "إذا كنت مطور المود، افتح <b>META-INF/mods.toml</b> وراجع <b>accessTransformers</b>. يشير الخطأ إلى استخدام <b>[[accessTransformers]]</b> بينما يتوقع إصدار Forge هذا <b>[accessTransformers]</b>؛ احذف زوجاً واحداً من الأقواس المربعة كما توضح رسالة الاستثناء.";
+	}
 }

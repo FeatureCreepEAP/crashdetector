@@ -14739,4 +14739,30 @@ public class Indonesia implements Idioma {
 		return "Penutupan klien lambat (Watchdog post-main)";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "Kesalahan kritis pada mod <b>" + nombreJar
+				+ "</b>. Forge menolak bagian metadata <b>accessTransformers</b> karena dideklarasikan sebagai daftar multi-objek padahal Forge mengharapkan satu tabel.";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "Struktur accessTransformers tidak valid di mods.toml";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "Mod yang bermasalah adalah <b>" + nombreJar + "</b>.";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "Jika Anda hanya bermain, perbarui atau instal ulang <b>" + nombreJar
+				+ "</b>, atau gunakan versi mod yang dibuat untuk versi Minecraft dan Forge Anda.";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "Jika Anda pengembang mod, buka <b>META-INF/mods.toml</b> dan periksa <b>accessTransformers</b>. Kesalahan ini menunjukkan <b>[[accessTransformers]]</b> digunakan saat versi Forge ini mengharapkan <b>[accessTransformers]</b>; hapus satu pasang kurung siku seperti yang dijelaskan oleh exception.";
+	}
 }

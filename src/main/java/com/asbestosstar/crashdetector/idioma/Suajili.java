@@ -14369,4 +14369,30 @@ public class Suajili implements Idioma {
 		return "Kufungwa polepole kwa mteja (Watchdog post-main)";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "Hitilafu kubwa katika mod <b>" + nombreJar
+				+ "</b>. Forge imekataa sehemu ya <b>accessTransformers</b> katika metadata ya mod kwa sababu imetangazwa kama orodha ya vitu vingi badala ya jedwali moja.";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "Muundo batili wa accessTransformers katika mods.toml";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "Mod yenye tatizo ni <b>" + nombreJar + "</b>.";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "Ikiwa wewe ni mchezaji tu, sasisha au sakinisha upya <b>" + nombreJar
+				+ "</b>, au tumia toleo la mod lililotengenezwa kwa toleo lako halisi la Minecraft na Forge.";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "Ikiwa wewe ni msanidi wa mod, fungua <b>META-INF/mods.toml</b> na ukague <b>accessTransformers</b>. Hitilafu inaonyesha kuwa <b>[[accessTransformers]]</b> imetumiwa wakati Forge hii inatarajia <b>[accessTransformers]</b>; ondoa jozi moja ya mabano ya mraba kama exception inavyoelekeza.";
+	}
 }

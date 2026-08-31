@@ -14727,4 +14727,30 @@ public class Frances implements Idioma {
 		return "Fermeture lente du client (Watchdog post-main)";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "Erreur critique dans le mod <b>" + nombreJar
+				+ "</b>. Forge a rejeté la section <b>accessTransformers</b> des métadonnées du mod car elle est déclarée comme une liste de plusieurs objets alors qu'une seule table était attendue.";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "Structure accessTransformers invalide dans mods.toml";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "Le mod problématique est <b>" + nombreJar + "</b>.";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "Si vous jouez simplement, mettez à jour ou réinstallez <b>" + nombreJar
+				+ "</b>, ou utilisez une version conçue pour votre version exacte de Minecraft et Forge.";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "Si vous développez le mod, ouvrez <b>META-INF/mods.toml</b> et vérifiez <b>accessTransformers</b>. Cette erreur indique que <b>[[accessTransformers]]</b> a été utilisé alors que cette version de Forge attend <b>[accessTransformers]</b> ; retirez une paire de crochets comme l'indique l'exception.";
+	}
 }

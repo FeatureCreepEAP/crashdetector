@@ -13250,4 +13250,30 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Повільне закриття клієнта (Watchdog post-main)";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "Критична помилка в моді <b>" + nombreJar
+				+ "</b>. Forge відхилив секцію <b>accessTransformers</b> у метаданих мода, оскільки її оголошено як список із кількох об'єктів, хоча очікувалася одна таблиця.";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "Невірна структура accessTransformers у mods.toml";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "Проблемний мод: <b>" + nombreJar + "</b>.";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "Якщо ви просто граєте, оновіть або перевстановіть <b>" + nombreJar
+				+ "</b> чи використайте версію мода, призначену саме для вашої версії Minecraft і Forge.";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "Якщо ви розробник мода, відкрийте <b>META-INF/mods.toml</b> і перевірте <b>accessTransformers</b>. Помилка означає, що використано <b>[[accessTransformers]]</b>, тоді як ця версія Forge очікує <b>[accessTransformers]</b>; видаліть одну пару квадратних дужок, як вказано у винятку.";
+	}
 }

@@ -13528,4 +13528,29 @@ public class Chino implements Idioma {
 		return "客户端关闭缓慢（Watchdog post-main）";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "模组 <b>" + nombreJar
+				+ "</b> 出现严重错误。Forge 拒绝了模组元数据中的 <b>accessTransformers</b> 部分，因为它被声明为多对象列表，而当前 Forge 版本期望的是单个表。";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "mods.toml 中的 accessTransformers 结构无效";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "有问题的模组是 <b>" + nombreJar + "</b>。";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "如果你只是玩家，请更新或重新安装 <b>" + nombreJar + "</b>，或者使用与你当前 Minecraft 和 Forge 版本完全匹配的模组版本。";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "如果你是模组开发者，请打开 <b>META-INF/mods.toml</b> 并检查 <b>accessTransformers</b>。此错误表示使用了 <b>[[accessTransformers]]</b>，而当前 Forge 版本要求 <b>[accessTransformers]</b>；请按照异常信息删除一对方括号。";
+	}
 }

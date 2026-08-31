@@ -14152,4 +14152,30 @@ public class Esperanto implements Idioma {
 		return "Malrapida fermo de kliento (Watchdog post-main)";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "Grava eraro en la mod <b>" + nombreJar
+				+ "</b>. Forge malakceptis la sekcion <b>accessTransformers</b> en la metadatumoj de la mod, ĉar ĝi estas deklarita kiel plur-objekta listo kie unu sola tabelo estis atendata.";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "Nevalida strukturo de accessTransformers en mods.toml";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "La problemeca mod estas <b>" + nombreJar + "</b>.";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "Se vi nur ludas, ĝisdatigu aŭ reinstalu <b>" + nombreJar
+				+ "</b>, aŭ uzu version de la mod faritan por via preciza versio de Minecraft kaj Forge.";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "Se vi estas la programisto de la mod, malfermu <b>META-INF/mods.toml</b> kaj kontrolu <b>accessTransformers</b>. La eraro montras ke <b>[[accessTransformers]]</b> estis uzita kie ĉi tiu versio de Forge atendas <b>[accessTransformers]</b>; forigu unu paron da rektaj krampoj laŭ la instrukcio de la escepto.";
+	}
 }

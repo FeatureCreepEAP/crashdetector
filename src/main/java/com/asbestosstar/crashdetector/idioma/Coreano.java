@@ -13759,4 +13759,29 @@ public class Coreano implements Idioma {
 		return "클라이언트 종료 지연 (Watchdog post-main)";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "모드 <b>" + nombreJar
+				+ "</b>에서 치명적인 오류가 발생했습니다. Forge가 단일 테이블을 예상했지만 <b>accessTransformers</b> 메타데이터가 다중 객체 목록으로 선언되어 있어 거부했습니다.";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "mods.toml의 잘못된 accessTransformers 구조";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "문제가 있는 모드는 <b>" + nombreJar + "</b>입니다.";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "플레이어라면 <b>" + nombreJar + "</b>을 업데이트하거나 다시 설치하고, 현재 Minecraft 및 Forge 버전에 맞는 모드 버전을 사용하세요.";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "모드 개발자라면 <b>META-INF/mods.toml</b>의 <b>accessTransformers</b>를 확인하세요. 이 오류는 이 Forge 버전이 <b>[accessTransformers]</b>를 기대하는 곳에 <b>[[accessTransformers]]</b>가 사용되었음을 의미합니다. 예외 메시지의 지시대로 대괄호 한 쌍을 제거하세요.";
+	}
 }

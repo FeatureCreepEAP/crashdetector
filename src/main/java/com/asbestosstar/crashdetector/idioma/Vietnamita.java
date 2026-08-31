@@ -14141,4 +14141,30 @@ public class Vietnamita implements Idioma {
 		return "Đóng client chậm (Watchdog post-main)";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "Lỗi nghiêm trọng trong mod <b>" + nombreJar
+				+ "</b>. Forge từ chối phần <b>accessTransformers</b> trong metadata của mod vì nó được khai báo dưới dạng danh sách nhiều đối tượng trong khi Forge mong đợi một bảng duy nhất.";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "Cấu trúc accessTransformers không hợp lệ trong mods.toml";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "Mod gây lỗi là <b>" + nombreJar + "</b>.";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "Nếu bạn chỉ chơi game, hãy cập nhật hoặc cài lại <b>" + nombreJar
+				+ "</b>, hoặc dùng phiên bản mod dành đúng cho phiên bản Minecraft và Forge hiện tại.";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "Nếu bạn là nhà phát triển mod, mở <b>META-INF/mods.toml</b> và kiểm tra <b>accessTransformers</b>. Lỗi này cho biết đã dùng <b>[[accessTransformers]]</b> trong khi phiên bản Forge này yêu cầu <b>[accessTransformers]</b>; hãy bỏ một cặp dấu ngoặc vuông như thông báo ngoại lệ hướng dẫn.";
+	}
 }

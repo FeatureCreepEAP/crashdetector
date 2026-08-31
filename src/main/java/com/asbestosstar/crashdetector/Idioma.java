@@ -1398,6 +1398,16 @@ public interface Idioma {
 
 	public String paso3_access_transformer_invalido();
 
+	public String errorAccessTransformersTomlInvalido(String nombreJar);
+
+	public String nombre_de_error_access_transformers_toml_invalido();
+
+	public String paso1_access_transformers_toml_invalido(String nombreJar);
+
+	public String paso2_access_transformers_toml_invalido(String nombreJar);
+
+	public String paso3_access_transformers_toml_invalido();
+
 	public String errorDiscrepanciaModID(String nombreMod);
 
 	public String nombre_de_error_discrepancia_mod_id();

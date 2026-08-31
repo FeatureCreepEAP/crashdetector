@@ -14354,4 +14354,30 @@ public class Khmer implements Idioma {
 		return "ការបិទកម្មវិធីយឺត (Watchdog post-main)";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "កំហុសធ្ងន់ធ្ងរនៅក្នុង mod <b>" + nombreJar
+				+ "</b>។ Forge បានបដិសេធផ្នែក <b>accessTransformers</b> ក្នុង metadata របស់ mod ព្រោះវាត្រូវបានប្រកាសជាបញ្ជីវត្ថុច្រើន ខណៈដែល Forge រំពឹងតារាងតែមួយ។";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "រចនាសម្ព័ន្ធ accessTransformers មិនត្រឹមត្រូវក្នុង mods.toml";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "Mod ដែលមានបញ្ហាគឺ <b>" + nombreJar + "</b>។";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "ប្រសិនបើអ្នកគ្រាន់តែលេង សូមអាប់ដេត ឬដំឡើង <b>" + nombreJar
+				+ "</b> ឡើងវិញ ឬប្រើកំណែ mod ដែលត្រូវនឹងកំណែ Minecraft និង Forge របស់អ្នក។";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "ប្រសិនបើអ្នកជាអ្នកអភិវឌ្ឍ mod សូមបើក <b>META-INF/mods.toml</b> ហើយពិនិត្យ <b>accessTransformers</b>។ កំហុសនេះបង្ហាញថា <b>[[accessTransformers]]</b> ត្រូវបានប្រើ ខណៈដែល Forge កំណែនេះរំពឹង <b>[accessTransformers]</b>។ សូមដកសញ្ញាវង់ក្រចកការ៉េមួយគូចេញតាមដែល exception បញ្ជាក់។";
+	}
 }

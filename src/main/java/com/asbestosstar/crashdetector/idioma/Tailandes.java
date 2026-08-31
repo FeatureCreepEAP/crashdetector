@@ -14106,4 +14106,30 @@ public class Tailandes implements Idioma {
 		return "การปิดไคลเอนต์ช้า (Watchdog post-main)";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "เกิดข้อผิดพลาดร้ายแรงในม็อด <b>" + nombreJar
+				+ "</b> Forge ปฏิเสธส่วน <b>accessTransformers</b> ในข้อมูลเมตาของม็อด เพราะถูกประกาศเป็นรายการหลายออบเจ็กต์ ทั้งที่ Forge คาดว่าจะเป็นตารางเดียว";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "โครงสร้าง accessTransformers ใน mods.toml ไม่ถูกต้อง";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "ม็อดที่มีปัญหาคือ <b>" + nombreJar + "</b>";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "หากคุณเป็นผู้เล่น ให้ลองอัปเดตหรือติดตั้ง <b>" + nombreJar
+				+ "</b> ใหม่ หรือใช้เวอร์ชันของม็อดที่สร้างมาสำหรับ Minecraft และ Forge เวอร์ชันที่คุณใช้อยู่";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "หากคุณเป็นผู้พัฒนาม็อด ให้เปิด <b>META-INF/mods.toml</b> และตรวจสอบ <b>accessTransformers</b> ข้อผิดพลาดนี้หมายถึงมีการใช้ <b>[[accessTransformers]]</b> ในตำแหน่งที่ Forge เวอร์ชันนี้ต้องการ <b>[accessTransformers]</b> ให้ลบวงเล็บเหลี่ยมออกหนึ่งคู่ตามที่ exception ระบุ";
+	}
 }

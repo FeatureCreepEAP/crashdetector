@@ -13763,4 +13763,29 @@ public class Japones implements Idioma {
 		return "クライアントの終了遅延（Watchdog post-main）";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "MOD <b>" + nombreJar
+				+ "</b> で重大なエラーが発生しました。Forge は単一のテーブルを期待していましたが、MOD メタデータの <b>accessTransformers</b> が複数オブジェクトのリストとして宣言されているため拒否しました。";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "mods.toml の accessTransformers 構造が無効です";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "問題のある MOD は <b>" + nombreJar + "</b> です。";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "プレイヤーの場合は <b>" + nombreJar + "</b> を更新または再インストールし、使用中の Minecraft と Forge の正確なバージョン向けの MOD を使用してください。";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "MOD 開発者の場合は <b>META-INF/mods.toml</b> の <b>accessTransformers</b> を確認してください。このエラーは、この Forge バージョンが <b>[accessTransformers]</b> を要求している場所で <b>[[accessTransformers]]</b> が使われたことを示します。例外の指示どおり角括弧を 1 組削除してください。";
+	}
 }

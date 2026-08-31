@@ -13881,4 +13881,30 @@ public class Persa implements Idioma {
 		return "بسته شدن کند کلاینت (Watchdog post-main)";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "خطای بحرانی در مود <b>" + nombreJar
+				+ "</b>. Forge بخش <b>accessTransformers</b> در فرادادهٔ مود را رد کرد، زیرا به‌صورت فهرست چندشیئی تعریف شده است در حالی که یک جدول تکی انتظار می‌رفت.";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "ساختار نامعتبر accessTransformers در mods.toml";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "مود مشکل‌دار <b>" + nombreJar + "</b> است.";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "اگر فقط بازی می‌کنید، <b>" + nombreJar
+				+ "</b> را به‌روزرسانی یا دوباره نصب کنید، یا نسخه‌ای از مود را استفاده کنید که دقیقاً برای نسخهٔ Minecraft و Forge شما ساخته شده است.";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "اگر توسعه‌دهندهٔ مود هستید، فایل <b>META-INF/mods.toml</b> را باز کرده و <b>accessTransformers</b> را بررسی کنید. این خطا نشان می‌دهد <b>[[accessTransformers]]</b> استفاده شده در حالی که این نسخهٔ Forge انتظار <b>[accessTransformers]</b> را دارد؛ طبق پیام استثنا یک جفت براکت را حذف کنید.";
+	}
 }

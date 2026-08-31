@@ -14334,4 +14334,30 @@ public class Lao implements Idioma {
 		return "ການປິດລູກຄ້າຊ້າ (Watchdog post-main)";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "ຂໍ້ຜິດພາດຮ້າຍແຮງໃນ mod <b>" + nombreJar
+				+ "</b>. Forge ປະຕິເສດສ່ວນ <b>accessTransformers</b> ໃນ metadata ຂອງ mod ເພາະຖືກປະກາດເປັນລາຍການຫຼາຍວັດຖຸ ໃນຂະນະທີ່ Forge ຄາດຫວັງຕາຕະລາງດຽວ.";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "ໂຄງສ້າງ accessTransformers ໃນ mods.toml ບໍ່ຖືກຕ້ອງ";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "Mod ທີ່ມີບັນຫາແມ່ນ <b>" + nombreJar + "</b>.";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "ຖ້າທ່ານເປັນຜູ້ຫຼິ້ນ ໃຫ້ອັບເດດ ຫຼື ຕິດຕັ້ງ <b>" + nombreJar
+				+ "</b> ໃໝ່ ຫຼືໃຊ້ລຸ້ນ mod ທີ່ກົງກັບ Minecraft ແລະ Forge ຂອງທ່ານ.";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "ຖ້າທ່ານເປັນນັກພັດທະນາ mod ໃຫ້ເປີດ <b>META-INF/mods.toml</b> ແລະກວດ <b>accessTransformers</b>. ຂໍ້ຜິດພາດນີ້ຊີ້ວ່າໃຊ້ <b>[[accessTransformers]]</b> ໃນຂະນະທີ່ Forge ລຸ້ນນີ້ຄາດຫວັງ <b>[accessTransformers]</b>; ໃຫ້ລຶບວົງເລັບສີ່ຫຼ່ຽມອອກໜຶ່ງຄູ່ຕາມຂໍ້ຄວາມ exception.";
+	}
 }

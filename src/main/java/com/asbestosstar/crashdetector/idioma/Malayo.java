@@ -1574,4 +1574,31 @@ public class Malayo extends Indonesia {
 		}
 		return "Warna";
 	}
+
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "Ralat kritikal pada mod <b>" + nombreJar
+				+ "</b>. Forge menolak bahagian metadata <b>accessTransformers</b> kerana ia diisytiharkan sebagai senarai berbilang objek sedangkan Forge menjangkakan satu jadual sahaja.";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "Struktur accessTransformers tidak sah dalam mods.toml";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "Mod yang bermasalah ialah <b>" + nombreJar + "</b>.";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "Jika anda hanya bermain, kemas kini atau pasang semula <b>" + nombreJar
+				+ "</b>, atau gunakan versi mod yang dibina untuk versi Minecraft dan Forge anda.";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "Jika anda pembangun mod, buka <b>META-INF/mods.toml</b> dan semak <b>accessTransformers</b>. Ralat ini menunjukkan <b>[[accessTransformers]]</b> digunakan sedangkan versi Forge ini menjangkakan <b>[accessTransformers]</b>; buang satu pasangan kurungan siku seperti yang dinyatakan oleh pengecualian.";
+	}
 }

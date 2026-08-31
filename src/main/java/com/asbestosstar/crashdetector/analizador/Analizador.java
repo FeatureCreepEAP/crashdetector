@@ -186,6 +186,7 @@ public class Analizador {
 		verificaciones.add(new ErrorCaracteresInvalidosEnNombre());
 		verificaciones.add(new ErrorDependenciaModFaltante());
 		verificaciones.add(new ErrorAccessTransformerInvalido());
+		verificaciones.add(new ErrorAccessTransformersTomlInvalido());
 		verificaciones.add(new ErrorDiscrepanciaModID());
 		verificaciones.add(new ErrorCargaClaseEntornoInvalido());
 		verificaciones.add(new ErrorMetadataModsTomlFaltante());

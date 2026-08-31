@@ -13927,4 +13927,30 @@ public class Ruso implements Idioma {
 		return "Медленное закрытие клиента (Watchdog post-main)";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "Критическая ошибка в моде <b>" + nombreJar
+				+ "</b>. Forge отклонил раздел <b>accessTransformers</b> в метаданных мода, потому что он объявлен как список из нескольких объектов, тогда как ожидалась одна таблица.";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "Неверная структура accessTransformers в mods.toml";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "Проблемный мод: <b>" + nombreJar + "</b>.";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "Если вы просто играете, обновите или переустановите <b>" + nombreJar
+				+ "</b> либо используйте версию мода, предназначенную именно для вашей версии Minecraft и Forge.";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "Если вы разработчик мода, откройте <b>META-INF/mods.toml</b> и проверьте <b>accessTransformers</b>. Ошибка означает, что использовано <b>[[accessTransformers]]</b>, тогда как эта версия Forge ожидает <b>[accessTransformers]</b>; удалите одну пару квадратных скобок, как указано в исключении.";
+	}
 }

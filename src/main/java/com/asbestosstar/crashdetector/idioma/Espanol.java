@@ -15099,4 +15099,30 @@ public class Espanol implements Idioma {
 		return "Cierre lento del cliente (Watchdog post-main)";
 	}
 
+	@Override
+	public String errorAccessTransformersTomlInvalido(String nombreJar) {
+		return "Error crítico con el mod <b>" + nombreJar
+				+ "</b>. Forge rechazó la sección <b>accessTransformers</b> de los metadatos del mod porque está declarada como una lista multiobjeto donde esperaba una sola tabla.";
+	}
+
+	@Override
+	public String nombre_de_error_access_transformers_toml_invalido() {
+		return "Estructura inválida de accessTransformers en mods.toml";
+	}
+
+	@Override
+	public String paso1_access_transformers_toml_invalido(String nombreJar) {
+		return "El mod problemático es <b>" + nombreJar + "</b>.";
+	}
+
+	@Override
+	public String paso2_access_transformers_toml_invalido(String nombreJar) {
+		return "Si sólo estás jugando, actualiza o reinstala <b>" + nombreJar
+				+ "</b>, o usa una versión del mod creada para tu versión exacta de Minecraft y Forge.";
+	}
+
+	@Override
+	public String paso3_access_transformers_toml_invalido() {
+		return "Si eres el desarrollador del mod, abre <b>META-INF/mods.toml</b> y revisa <b>accessTransformers</b>. Este error indica que se usó <b>[[accessTransformers]]</b> cuando esta versión de Forge espera <b>[accessTransformers]</b>; elimina un par de corchetes, tal como indica la excepción.";
+	}
 }
