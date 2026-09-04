@@ -3,7 +3,9 @@
 set -euo pipefail
 
 DIRECTORIO_TARGET="target"
+
 PREFIJO_NUBE="com/asbestosstar/crashdetector/nube/"
+PREFIJO_LANZERMOD="com/asbestosstar/crashdetector/app/"
 
 if [[ ! -d "$DIRECTORIO_TARGET" ]]; then
     echo "Error: no existe '$DIRECTORIO_TARGET'."
@@ -37,27 +39,31 @@ while IFS= read -r -d '' jar_original; do
 
     temporal="$(mktemp)"
 
+    #
+    # Encontrar todo lo que pertenezca a:
+    #
+    #   com/asbestosstar/crashdetector/nube/**
+    #   com/asbestosstar/crashdetector/app/lanzermod/**
+    #
     unzip -Z1 "$jar_curseforge" \
-        | grep "^${PREFIJO_NUBE}" \
+        | grep -E "^(${PREFIJO_NUBE}|${PREFIJO_LANZERMOD})" \
         > "$temporal" || true
 
     if [[ -s "$temporal" ]]; then
         cantidad="$(wc -l < "$temporal" | tr -d ' ')"
 
-        echo "  Encontradas $cantidad entradas de .nube."
+        echo "  Encontradas $cantidad entradas para eliminar."
 
-        #
-        # Eliminar cada entrada utilizando exactamente el nombre
-        # que existe dentro del JAR.
-        #
         while IFS= read -r entrada; do
             [[ -z "$entrada" ]] && continue
             zip -dq "$jar_curseforge" "$entrada"
         done < "$temporal"
 
-        echo "  Eliminado completamente: ${PREFIJO_NUBE}**"
+        echo "  Eliminado completamente:"
+        echo "    ${PREFIJO_NUBE}**"
+        echo "    ${PREFIJO_LANZERMOD}**"
     else
-        echo "  El paquete .nube no estaba presente."
+        echo "  Los paquetes excluidos no estaban presentes."
     fi
 
     rm -f "$temporal"
@@ -67,12 +73,12 @@ while IFS= read -r -d '' jar_original; do
     #
     restantes="$(
         unzip -Z1 "$jar_curseforge" \
-            | grep "^${PREFIJO_NUBE}" || true
+            | grep -E "^(${PREFIJO_NUBE}|${PREFIJO_LANZERMOD})" || true
     )"
 
     if [[ -n "$restantes" ]]; then
         echo
-        echo "ERROR: todavía existen entradas de .nube:"
+        echo "ERROR: todavía existen entradas que deberían haberse eliminado:"
         printf '%s\n' "$restantes"
 
         rm -f -- "$jar_curseforge"
@@ -81,7 +87,7 @@ while IFS= read -r -d '' jar_original; do
 
     creados=$((creados + 1))
 
-    echo "  Verificación: .nube no existe en el JAR."
+    echo "  Verificación: paquetes excluidos ausentes."
     echo "  OK"
     echo
 

@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.management.ManagementFactory;
 import java.net.URI;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -146,6 +148,7 @@ public class MonitorDePID {
 
 	private static final String CARPETA_LOGS_TEXTO_CLI = "logs_cli_temporales";
 	private static final String PREFIJO_LOG_TEXTO_CLI = "log-texto-cli-";
+	private static final String CARPETA_JARS_TEMPORALES_WINDOWS = "temp_jars";
 
 	/**
 	 * Referencia al hilo que ejecuta el análisis en vivo (streaming). Puede ser
@@ -673,6 +676,18 @@ public class MonitorDePID {
 		try {
 			String cp = obtenerClassPath(jar);
 
+			/*
+			 * Windows mantiene bloqueados los JAR que están en el classpath de una JVM.
+			 * Para que el proceso monitor no deje bloqueados los JAR originales, únicamente
+			 * en Windows se crea un classpath equivalente usando copias dentro de
+			 * Statics.carpeta_mundial_como_archivo/temp_jars.
+			 *
+			 * Si ya existe una copia con el mismo nombre y el mismo SHA-256, se reutiliza.
+			 * Si el nombre no existe, se copia. Si existe el mismo nombre pero cambió el
+			 * SHA-256, se reemplaza.
+			 */
+			cp = prepararClasspathTemporalWindows(cp);
+
 			List<String> comando = new ArrayList<String>();
 			comando.add(javaBinary);
 			comando.add(obtenerXMXPorMitadDeRAM());
@@ -1043,6 +1058,130 @@ public class MonitorDePID {
 				// No ocultamos el error principal por un fallo de limpieza.
 			}
 		}
+	}
+
+
+	/**
+	 * En Windows, crea para el proceso monitor un classpath basado en copias de
+	 * todos los JAR del classpath original.
+	 *
+	 * Esto evita que la JVM del monitor mantenga abiertos los JAR originales y
+	 * bloquee su borrado, renombrado o reemplazo. En cualquier otro sistema
+	 * operativo devuelve exactamente el classpath recibido y no copia nada.
+	 */
+	private static String prepararClasspathTemporalWindows(String classPath) throws IOException {
+		if (!esWindows() || classPath == null || classPath.trim().isEmpty()) {
+			return classPath;
+		}
+
+		File carpetaJarsTemporales = new File(Statics.carpeta_mundial_como_archivo,
+				CARPETA_JARS_TEMPORALES_WINDOWS);
+
+		if (!carpetaJarsTemporales.exists() && !carpetaJarsTemporales.mkdirs()
+				&& !carpetaJarsTemporales.isDirectory()) {
+			throw new IOException("No se pudo crear la carpeta temporal de JAR: "
+					+ carpetaJarsTemporales.getAbsolutePath());
+		}
+
+		String[] partes = classPath.split(java.util.regex.Pattern.quote(File.pathSeparator), -1);
+		StringBuilder classPathTemporal = new StringBuilder();
+
+		for (String parte : partes) {
+			String entradaFinal = parte;
+
+			if (parte != null && !parte.trim().isEmpty()) {
+				File archivo = new File(parte);
+
+				if (archivo.isFile() && archivo.getName().toLowerCase().endsWith(".jar")) {
+					File copia = new File(carpetaJarsTemporales, archivo.getName());
+					copiarJarWindowsSiHaceFalta(archivo, copia);
+					entradaFinal = copia.getAbsolutePath();
+				}
+			}
+
+			if (classPathTemporal.length() > 0) {
+				classPathTemporal.append(File.pathSeparator);
+			}
+
+			if (entradaFinal != null) {
+				classPathTemporal.append(entradaFinal);
+			}
+		}
+
+		String resultado = classPathTemporal.toString();
+		CrashDetectorLogger.log("Classpath temporal de Windows para MonitorDePID: " + resultado);
+		return resultado;
+	}
+
+	/**
+	 * Copia un JAR al almacén temporal de Windows siguiendo estas reglas:
+	 *
+	 * - Si no existe un archivo con ese nombre, lo copia.
+	 * - Si existe y tiene el mismo SHA-256, lo reutiliza sin escribirlo otra vez.
+	 * - Si existe pero el SHA-256 es distinto, lo reemplaza.
+	 */
+	private static void copiarJarWindowsSiHaceFalta(File origen, File destino) throws IOException {
+		if (origen == null || !origen.exists() || !origen.isFile()) {
+			throw new IOException("El JAR de origen no existe: "
+					+ (origen == null ? "null" : origen.getAbsolutePath()));
+		}
+
+		if (destino.exists()) {
+			String hashOrigen = calcularSHA256(origen);
+			String hashDestino = calcularSHA256(destino);
+
+			if (hashOrigen.equalsIgnoreCase(hashDestino)) {
+				CrashDetectorLogger.log("Reutilizando JAR temporal de Windows: "
+						+ destino.getAbsolutePath());
+				return;
+			}
+
+			CrashDetectorLogger.log("El JAR temporal cambió; reemplazando: "
+					+ destino.getAbsolutePath());
+		} else {
+			CrashDetectorLogger.log("Copiando JAR temporal de Windows: "
+					+ origen.getAbsolutePath() + " -> " + destino.getAbsolutePath());
+		}
+
+		Files.copy(origen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING,
+				StandardCopyOption.COPY_ATTRIBUTES);
+	}
+
+	/**
+	 * Calcula SHA-256 sin cargar el JAR completo en memoria.
+	 */
+	private static String calcularSHA256(File archivo) throws IOException {
+		final MessageDigest digest;
+
+		try {
+			digest = MessageDigest.getInstance("SHA-256");
+		} catch (NoSuchAlgorithmException e) {
+			throw new IOException("SHA-256 no está disponible en esta JVM.", e);
+		}
+
+		byte[] buffer = new byte[64 * 1024];
+
+		try (InputStream entrada = Files.newInputStream(archivo.toPath())) {
+			int leidos;
+
+			while ((leidos = entrada.read(buffer)) != -1) {
+				digest.update(buffer, 0, leidos);
+			}
+		}
+
+		byte[] hash = digest.digest();
+		StringBuilder hexadecimal = new StringBuilder(hash.length * 2);
+
+		for (byte b : hash) {
+			hexadecimal.append(String.format("%02x", b & 0xff));
+		}
+
+		return hexadecimal.toString();
+	}
+
+	private static boolean esWindows() {
+		String os = System.getProperty("os.name", "");
+		return os.toLowerCase().contains("win");
 	}
 
 	public static String obtenerClassPath(String jar) {
