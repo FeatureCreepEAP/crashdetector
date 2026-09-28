@@ -15,8 +15,23 @@ public class ControlifyRemoveReloadingScreen implements Verificaciones {
 	// Enlace a la línea del log donde ocurre el error
 	private String enlace = "";
 
+	/*
+	 * El conflicto real necesita DOS señales a la vez:
+	 *
+	 * 1) La línea propia de Controlify (error de inicialización de su config).
+	 * 2) La línea del mixin de Remove Reloading Screen ($rrls$init).
+	 *
+	 * OJO: la línea "handler$...$rrls$init" la genera el mixin de Remove
+	 * Reloading Screen y aparece en la traza aunque Controlify NO esté
+	 * instalado. Por eso no basta con ver $rrls$init para culpar a un conflicto:
+	 * exigimos que ambas señales estén presentes.
+	 */
 	private static final String CONTROLIFY_CONFIG_READY = "Attempted to fetch default config before DefaultConfigManager was ready!";
 	private static final String RRLS_INIT = "$rrls$init";
+
+	// Marca si ya vimos la señal de Controlify y la de Remove Reloading Screen
+	private boolean vioControlify = false;
+	private boolean vioRrls = false;
 
 	@Override
 	public String[] patronesRapidos() {
@@ -38,16 +53,20 @@ public class ControlifyRemoveReloadingScreen implements Verificaciones {
 			return;
 		}
 
-		// Verificación precisa: normalmente esta línea es el síntoma más claro del
-		// problema de inicialización causado por el conflicto.
+		// Señal propia de Controlify: su config no estaba lista.
 		if (linea.contains(CONTROLIFY_CONFIG_READY)) {
-			activar(consola, num);
-			return;
+			vioControlify = true;
 		}
 
-		// Alternativa: si el lector encuentra primero la línea transformada por
-		// Remove Reloading Screen, también podemos enlazar ahí.
+		// Señal de Remove Reloading Screen: línea transformada por su mixin.
 		if (linea.contains(RRLS_INIT)) {
+			vioRrls = true;
+		}
+
+		// Solo es un conflicto real si aparecen AMBAS señales. Si solo vemos
+		// $rrls$init (o solo la de Controlify) no activamos nada, evitando el
+		// falso positivo cuando Controlify no existe.
+		if (vioControlify && vioRrls) {
 			activar(consola, num);
 		}
 	}
