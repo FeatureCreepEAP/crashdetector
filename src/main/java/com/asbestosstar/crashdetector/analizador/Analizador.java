@@ -344,6 +344,7 @@ public class Analizador {
 		verificaciones.add(new ErrorMetodoFinalSobrescrito());
 		verificaciones.add(new CrashProvocadoPorComando());
 		verificaciones.add(new ErrorJvmDllC2Sodium());
+		verificaciones.add(new ConflictoOverridesOpcionesSodium());
 		verificaciones.add(new ErrorJvmDllCurseForgeG1());
 		verificaciones.add(new ErrorArchivoUsadoPorOtroProceso());
 		verificaciones.add(new ErrorBetterEndPaletaChunkAgua());

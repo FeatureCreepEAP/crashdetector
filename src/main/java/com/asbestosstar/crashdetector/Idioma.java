@@ -4474,6 +4474,10 @@ public interface Idioma {
 
 	public String nombreErrorJvmDllC2Sodium();
 
+	public String nombreConflictoOverridesOpcionesSodium();
+
+	public String mensajeConflictoOverridesOpcionesSodium(String opcion, String fuentes);
+
 	public String mensajeErrorJvmDllCurseForgeG1(boolean posibleOverwolf);
 
 	public String nombreErrorJvmDllCurseForgeG1();

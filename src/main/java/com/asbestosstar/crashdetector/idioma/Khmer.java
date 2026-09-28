@@ -11638,6 +11638,16 @@ public class Khmer implements Idioma {
 	}
 
 	@Override
+	public String nombreConflictoOverridesOpcionesSodium() {
+		return "Mod que anulan opciones de Sodium";
+	}
+
+	@Override
+	public String mensajeConflictoOverridesOpcionesSodium(String opcion, String fuentes) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "Dos o mas mods intentan anular la misma opcion de Sodium y el juego se cerro.</b>" + "<p>El registro contiene <b>java.lang.IllegalArgumentException</b> con <b>Multiple overrides for option</b>. Ocurre cuando dos mods asignan un valor a la misma opcion de configuracion de <b>Sodium</b>.</p>" + "<p>Opcion en conflicto: <b>" + opcion + "</b></p>" + "<p>Mods que la anulan: <b>" + fuentes + "</b></p>" + "<p><b>Solucion recomendada:</b></p><ul>" + "<li>Elimina uno de los mods listados arriba; normalmente basta con dejar solo uno que cambie opciones de Sodium.</li>" + "<li>Revisa los mods de optimizacion, ya que muchos (por ejemplo <b>Chloride</b>, <b>CWB</b>) tocan las mismas opciones.</li>" + "</ul>" + "<p>Esta comprobacion cubre cualquier mod que anule opciones de Sodium.</p>";
+	}
+
+	@Override
 	public String nombreErrorJvmDllC2Sodium() {
 		return "កំហុស native របស់ Java ជាមួយ Sodium / Embeddium";
 	}

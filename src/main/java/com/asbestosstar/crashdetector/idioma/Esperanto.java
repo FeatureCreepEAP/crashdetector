@@ -11438,6 +11438,16 @@ public class Esperanto implements Idioma {
 	}
 
 	@Override
+	public String nombreConflictoOverridesOpcionesSodium() {
+		return "Modoj anstatauigantaj Sodium-opciojn";
+	}
+
+	@Override
+	public String mensajeConflictoOverridesOpcionesSodium(String opcion, String fuentes) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "Du au pli da modoj provas anstatauigi la saman Sodium-opcion kaj la ludo fermis.</b>" + "<p>La protokolo enhavas <b>java.lang.IllegalArgumentException</b> kun <b>Multiple overrides for option</b>. Tio okazas kiam du modoj agordas valoron por la sama <b>Sodium</b>-agorda opcio (au rilataj modoj kiel <b>Embeddium</b>, <b>Rubidium</b> au <b>Chloride</b>).</p>" + "<p>Konflikta opcio: <b>" + opcion + "</b></p>" + "<p>Modoj anstatauigantaj gin: <b>" + fuentes + "</b></p>" + "<p><b>Rekomendata solvo:</b></p><ul>" + "<li>Forigu unu el la supre listigitaj modoj; kutime suficas restigi nur unu modon sangantan Sodium-opciojn.</li>" + "<li>Kontrolu optimumigajn modojn, car multaj el ili (ekzemple <b>Chloride</b>, <b>CWB</b>) sangas la samajn opciojn.</li>" + "</ul>" + "<p>Ci tiu kontrolo kovras ciun modon anstatauigantan Sodium-opciojn.</p>";
+	}
+
+	@Override
 	public String nombreErrorJvmDllC2Sodium() {
 		return "Neta eraro de Java kun Sodium / Embeddium";
 	}

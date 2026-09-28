@@ -11651,6 +11651,16 @@ public class Vietnamita implements Idioma {
 	}
 
 	@Override
+	public String nombreConflictoOverridesOpcionesSodium() {
+		return "Mod ghi de tuy chon Sodium";
+	}
+
+	@Override
+	public String mensajeConflictoOverridesOpcionesSodium(String opcion, String fuentes) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "Hai hoac nhieu mod dang co gang ghi de cung mot tuy chon Sodium va tro choi da dong.</b>" + "<p>Nhat ky co <b>java.lang.IllegalArgumentException</b> voi noi dung <b>Multiple overrides for option</b>. Dieu nay xay ra khi hai mod dat gia tri cho cung mot tuy chon cau hinh <b>Sodium</b> (hoac cac mod lien quan nhu <b>Embeddium</b>, <b>Rubidium</b> hoac <b>Chloride</b>).</p>" + "<p>Tuy chon xung dot: <b>" + opcion + "</b></p>" + "<p>Mod ghi de no: <b>" + fuentes + "</b></p>" + "<p><b>Cach khac phuc de xuat:</b></p><ul>" + "<li>Go mot trong cac mod duoc liet ke o tren; thuong chi can giu lai mot mod thay doi tuy chon Sodium la du.</li>" + "<li>Kiem tra cac mod toi uu hoa, vi nhieu mod (vi du <b>Chloride</b>, <b>CWB</b>) thay doi cung cac tuy chon.</li>" + "</ul>" + "<p>Kiem tra nay bao quat moi mod ghi de tuy chon Sodium.</p>";
+	}
+
+	@Override
 	public String nombreErrorJvmDllC2Sodium() {
 		return "Lỗi native của Java với Sodium / Embeddium";
 	}

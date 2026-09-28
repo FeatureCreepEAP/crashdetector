@@ -11878,6 +11878,16 @@ public class Suajili implements Idioma {
 	}
 
 	@Override
+	public String nombreConflictoOverridesOpcionesSodium() {
+		return "Modi zinazobatilisha chaguo za Sodium";
+	}
+
+	@Override
+	public String mensajeConflictoOverridesOpcionesSodium(String opcion, String fuentes) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "Modi mbili au zaidi zinajaribu kubatilisha chaguo moja la Sodium na mchezo ulifungwa.</b>" + "<p>Kumbukumbu ina <b>java.lang.IllegalArgumentException</b> yenye maandishi <b>Multiple overrides for option</b>. Hii hutokea wakati modi mbili zinaweka thamani kwa chaguo moja la usanidi la <b>Sodium</b> (au modi zinazohusiana kama <b>Embeddium</b>, <b>Rubidium</b> au <b>Chloride</b>).</p>" + "<p>Chaguo linalogongana: <b>" + opcion + "</b></p>" + "<p>Modi zinazobatilisha: <b>" + fuentes + "</b></p>" + "<p><b>Suluhisho linalopendekezwa:</b></p><ul>" + "<li>Ondoa moja ya modi zilizoorodheshwa juu; kwa kawaida inatosha kubakiza modi moja tu inayobadilisha chaguo za Sodium.</li>" + "<li>Angalia modi za uboreshaji, kwa kuwa nyingi (kwa mfano <b>Chloride</b>, <b>CWB</b>) hubadilisha chaguo zilezile.</li>" + "</ul>" + "<p>Ukaguzi huu unashughulikia modi yoyote inayobatilisha chaguo za Sodium.</p>";
+	}
+
+	@Override
 	public String nombreErrorJvmDllC2Sodium() {
 		return "Hitilafu ya asili ya Java na Sodium / Embeddium";
 	}

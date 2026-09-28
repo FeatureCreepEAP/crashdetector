@@ -11488,6 +11488,16 @@ public class Ingles implements Idioma {
 	}
 
 	@Override
+	public String nombreConflictoOverridesOpcionesSodium() {
+		return "Mods overriding Sodium options";
+	}
+
+	@Override
+	public String mensajeConflictoOverridesOpcionesSodium(String opcion, String fuentes) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "Two or more mods are trying to override the same Sodium option and the game crashed.</b>" + "<p>The log contains a <b>java.lang.IllegalArgumentException</b> with <b>Multiple overrides for option</b>. This happens when two mods set a value for the same <b>Sodium</b> option (or related mods such as <b>Embeddium</b>, <b>Rubidium</b> or <b>Chloride</b>).</p>" + "<p>Conflicting option: <b>" + opcion + "</b></p>" + "<p>Mods overriding it: <b>" + fuentes + "</b></p>" + "<p>Sodium cannot decide which value to use, throws the exception and the game cannot continue.</p>" + "<p><b>Recommended fix:</b></p><ul>" + "<li>Remove one of the mods listed above; usually keeping only one mod that changes Sodium options is enough.</li>" + "<li>Review performance mods, since many of them (for example <b>Chloride</b>, <b>CWB</b> or Sodium settings packs) touch the same options.</li>" + "<li>If both mods serve different purposes, look for a version or modpack where they do not clash.</li>" + "<li>As a last resort, report it to the author of the mod that adds the duplicate option.</li>" + "</ul>" + "<p>This check covers any mod that overrides Sodium options, not only Chloride and CWB.</p>";
+	}
+
+	@Override
 	public String nombreErrorJvmDllC2Sodium() {
 		return "Native Java failure with Sodium / Embeddium";
 	}

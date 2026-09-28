@@ -11441,6 +11441,16 @@ public class Portuges implements Idioma {
 	}
 
 	@Override
+	public String nombreConflictoOverridesOpcionesSodium() {
+		return "Mods que substituem opcoes do Sodium";
+	}
+
+	@Override
+	public String mensajeConflictoOverridesOpcionesSodium(String opcion, String fuentes) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "Dois ou mais mods estao tentando substituir a mesma opcao do Sodium e o jogo fechou.</b>" + "<p>O log contem um <b>java.lang.IllegalArgumentException</b> com <b>Multiple overrides for option</b>. Isso acontece quando dois mods definem um valor para a mesma opcao de configuracao do <b>Sodium</b> (ou de mods relacionados como <b>Embeddium</b>, <b>Rubidium</b> ou <b>Chloride</b>).</p>" + "<p>Opcao em conflito: <b>" + opcion + "</b></p>" + "<p>Mods que a substituem: <b>" + fuentes + "</b></p>" + "<p><b>Solucao recomendada:</b></p><ul>" + "<li>Remova um dos mods indicados acima; geralmente basta manter apenas um dos que alteram opcoes do Sodium.</li>" + "<li>Revise os mods de otimizacao, pois muitos deles (por exemplo <b>Chloride</b>, <b>CWB</b>) alteram as mesmas opcoes.</li>" + "</ul>" + "<p>Esta verificacao cobre qualquer mod que substitua opcoes do Sodium.</p>";
+	}
+
+	@Override
 	public String nombreErrorJvmDllC2Sodium() {
 		return "Falha nativa do Java com Sodium / Embeddium";
 	}

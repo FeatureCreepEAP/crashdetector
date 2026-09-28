@@ -11435,6 +11435,16 @@ public class Ruso implements Idioma {
 	}
 
 	@Override
+	public String nombreConflictoOverridesOpcionesSodium() {
+		return "Mody pereopredelyayushchie nastrojki Sodium";
+	}
+
+	@Override
+	public String mensajeConflictoOverridesOpcionesSodium(String opcion, String fuentes) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "Dva ili bolee moda pytayutsya pereopredelit odnu i tu zhe nastrojku Sodium, i igra zakrylas.</b>" + "<p>V loge est <b>java.lang.IllegalArgumentException</b> s tekstom <b>Multiple overrides for option</b>. Eto proiskhodit, kogda dva moda zadayut znachenie dlya odnoj i toj zhe nastrojki <b>Sodium</b> (ili svyazannykh modov, takikh kak <b>Embeddium</b>, <b>Rubidium</b> ili <b>Chloride</b>).</p>" + "<p>Konfliktuyushchaya nastrojka: <b>" + opcion + "</b></p>" + "<p>Mody, kotorye eyo pereopredelyayut: <b>" + fuentes + "</b></p>" + "<p><b>Rekomenduemoe reshenie:</b></p><ul>" + "<li>Udalite odin iz modov, ukazannykh vyshe; obychno dostatochno ostavit tolko odin mod, izmenyayushchij nastrojki Sodium.</li>" + "<li>Proverte mody optimizatsii, tak kak mnogie iz nikh (naprimer <b>Chloride</b>, <b>CWB</b>) izmenyayut te zhe nastrojki.</li>" + "</ul>" + "<p>Eta proverka okhvatyvaet lyuboj mod, pereopredelyayushchij nastrojki Sodium.</p>";
+	}
+
+	@Override
 	public String nombreErrorJvmDllC2Sodium() {
 		return "Нативный сбой Java с Sodium / Embeddium";
 	}

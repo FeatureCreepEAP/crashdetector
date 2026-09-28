@@ -12021,6 +12021,16 @@ public class Indonesia implements Idioma {
 	}
 
 	@Override
+	public String nombreConflictoOverridesOpcionesSodium() {
+		return "Mod yang menimpa opsi Sodium";
+	}
+
+	@Override
+	public String mensajeConflictoOverridesOpcionesSodium(String opcion, String fuentes) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "Dua mod atau lebih mencoba menimpa opsi Sodium yang sama dan game tertutup.</b>" + "<p>Log berisi <b>java.lang.IllegalArgumentException</b> dengan teks <b>Multiple overrides for option</b>. Ini terjadi ketika dua mod menetapkan nilai untuk opsi konfigurasi <b>Sodium</b> yang sama (atau mod terkait seperti <b>Embeddium</b>, <b>Rubidium</b>, atau <b>Chloride</b>).</p>" + "<p>Opsi yang bentrok: <b>" + opcion + "</b></p>" + "<p>Mod yang menimpanya: <b>" + fuentes + "</b></p>" + "<p><b>Solusi yang disarankan:</b></p><ul>" + "<li>Hapus salah satu mod yang tercantum di atas; biasanya cukup menyisakan satu mod yang mengubah opsi Sodium.</li>" + "<li>Periksa mod optimasi, karena banyak di antaranya (misalnya <b>Chloride</b>, <b>CWB</b>) mengubah opsi yang sama.</li>" + "</ul>" + "<p>Pemeriksaan ini mencakup semua mod yang menimpa opsi Sodium.</p>";
+	}
+
+	@Override
 	public String nombreErrorJvmDllC2Sodium() {
 		return "Kesalahan native Java dengan Sodium / Embeddium";
 	}

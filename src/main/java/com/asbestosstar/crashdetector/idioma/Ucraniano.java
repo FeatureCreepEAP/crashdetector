@@ -10762,6 +10762,16 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	}
 
 	@Override
+	public String nombreConflictoOverridesOpcionesSodium() {
+		return "Mody shcho perevyznachayut nalashtuvannya Sodium";
+	}
+
+	@Override
+	public String mensajeConflictoOverridesOpcionesSodium(String opcion, String fuentes) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "Dva abo bilsh modiv namagayutsya perevyznachyty odne j te same nalashtuvannya Sodium, i gra zakrylasya.</b>" + "<p>U lozi ye <b>java.lang.IllegalArgumentException</b> z tekstom <b>Multiple overrides for option</b>. Tse traplyayetsya, koly dva mody zadayut znachennya dlya odnogo j togo samogo nalashtuvannya <b>Sodium</b> (abo povyazanykh modiv, takykh yak <b>Embeddium</b>, <b>Rubidium</b> abo <b>Chloride</b>).</p>" + "<p>Konfliktne nalashtuvannya: <b>" + opcion + "</b></p>" + "<p>Mody, shcho jogo perevyznachayut: <b>" + fuentes + "</b></p>" + "<p><b>Rekomendovane rishennya:</b></p><ul>" + "<li>Vydalit odyn iz zaznachenykh vyshche modiv; zazvychaj dostatno zalyshyty lyshe odyn mod, yakyj zminyuye nalashtuvannya Sodium.</li>" + "<li>Perevirte mody optymizatsiyi, adzhe bagato z nykh (napryklad <b>Chloride</b>, <b>CWB</b>) zminyuyut ti sami nalashtuvannya.</li>" + "</ul>" + "<p>Tsya perevirka okhoplyuye bud-yakyj mod, shcho perevyznachaye nalashtuvannya Sodium.</p>";
+	}
+
+	@Override
 	public String nombreErrorJvmDllC2Sodium() {
 		return "Нативний збій Java з Sodium / Embeddium";
 	}
