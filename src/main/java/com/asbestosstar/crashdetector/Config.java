@@ -29,8 +29,14 @@ public class Config {
 	public static final String VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO = "https://securelogger.net/save/log?";
 
 	// Ruta al archivo de configuración
-	private static final String RUTA_ARCHIVO_CONFIG = Statics.carpeta.resolve("crashdetector_config.properties")
-			.toString();
+	/*
+	 * No usar Statics aquí: Statics registra ConfigString durante su propia
+	 * inicialización y ese acceso circular puede observar archivoConfig como null.
+	 * La ruta conserva la ubicación relativa predeterminada sin depender del orden
+	 * de inicialización de las clases.
+	 */
+	private static final String RUTA_ARCHIVO_CONFIG = new File("crash_detector",
+			"crashdetector_config.properties").getPath();
 	public static File archivoConfig = new File(RUTA_ARCHIVO_CONFIG);
 
 	// Propiedades de configuración

@@ -53,6 +53,8 @@ import com.asbestosstar.crashdetector.analizador.general.ModIncompatibleConCarga
 import com.asbestosstar.crashdetector.analizador.general.ModulesDuplicadosJavaModulePlatform;
 import com.asbestosstar.crashdetector.analizador.general.NoTieneMemoria;
 import com.asbestosstar.crashdetector.analizador.general.NullPointer;
+import com.asbestosstar.crashdetector.analizador.general.EjemploErrorDePrueba;
+import com.asbestosstar.crashdetector.analizador.general.EjemploAdvertenciaDePrueba;
 import com.asbestosstar.crashdetector.analizador.general.OpcionesJavaGCInvalidas;
 import com.asbestosstar.crashdetector.analizador.general.PreferIPV4Trace;
 import com.asbestosstar.crashdetector.analizador.general.ProblemaSafeFetch32JDK17;
@@ -148,6 +150,8 @@ public class Analizador {
 		verificaciones.add(new Theseus());
 		verificaciones.add(new CursedConsola());
 		verificaciones.add(new NullPointer());
+		verificaciones.add(new EjemploErrorDePrueba());
+		verificaciones.add(new EjemploAdvertenciaDePrueba());
 		verificaciones.add(new ContenidoDeTrazos());
 		verificaciones.add(new AuditorTransformer());
 		verificaciones.add(new AdvertenciaFaltasClases());

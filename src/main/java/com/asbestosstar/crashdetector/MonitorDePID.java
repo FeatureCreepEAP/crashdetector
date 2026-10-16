@@ -143,8 +143,40 @@ public class MonitorDePID {
 	 */
 	private static volatile boolean devolverResultadoCLI = false;
 
+	/** Códigos públicos del transporte CLI, independientes de la fachada app. */
+	public static final int CODIGO_EXITO = 0;
+	public static final int CODIGO_ENTRADA_INVALIDA = 2;
+	public static final int CODIGO_FALLO_MONITOR = 3;
+	public static final int CODIGO_INFORME_INVALIDO = 4;
+
+	private static volatile int codigoSalidaCLI = CODIGO_EXITO;
+
+	public static int obtenerCodigoSalidaCLI() {
+		return codigoSalidaCLI;
+	}
+
+	public static void restablecerCodigoSalidaCLI() {
+		codigoSalidaCLI = CODIGO_EXITO;
+	}
+
+	/** Conserva solo los códigos públicos conocidos del transporte CLI. */
+	public static void marcarFalloMonitor(int codigo) {
+		if (codigo == CODIGO_ENTRADA_INVALIDA || codigo == CODIGO_FALLO_MONITOR
+				|| codigo == CODIGO_INFORME_INVALIDO) {
+			codigoSalidaCLI = codigo;
+		} else {
+			codigoSalidaCLI = CODIGO_FALLO_MONITOR;
+		}
+	}
+
+	/** Compatibilidad para rutas que solo comunican un fallo del monitor. */
+	public static void marcarFalloMonitor() {
+		marcarFalloMonitor(CODIGO_FALLO_MONITOR);
+	}
+
 	private static final List<String> archivosLogCLI = new ArrayList<String>();
 	private static final List<String> archivosLogTextoTemporalesCLI = new ArrayList<String>();
+	private static final List<String> archivosMarkdownCLI = new ArrayList<String>();
 
 	private static final String CARPETA_LOGS_TEXTO_CLI = "logs_cli_temporales";
 	private static final String PREFIJO_LOG_TEXTO_CLI = "log-texto-cli-";
@@ -213,6 +245,7 @@ public class MonitorDePID {
 		if (args.length > 0 && "--monitor".equalsIgnoreCase(args[0])) {
 			if (args.length < 2) {
 				System.err.println("Error interno: falta el PID después de --monitor.");
+					salirMonitorCLI(3);
 				return;
 			}
 
@@ -221,14 +254,19 @@ public class MonitorDePID {
 				pidMonitor = Long.parseLong(args[1]);
 			} catch (NumberFormatException e) {
 				System.err.println("Error: PID no válido: " + args[1]);
+					salirMonitorCLI(3);
 				return;
 			}
 
 			if (!configurarProcesoMonitorDesdeCLI(args, 2)) {
-				return;
+					 salirMonitorCLI(2);
+					 return;
 			}
 
 			monitor_proceso(pidMonitor);
+			if (devolverResultadoCLI && codigoSalidaCLI != 0) {
+				System.exit(codigoSalidaCLI);
+			}
 			return;
 		}
 
@@ -491,8 +529,8 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/INTEGRACIONES_DE_CONTENEDORES.md",
 				Statics.carpeta.resolve("docs/ingles/minecraft/INTEGRACIONES_DE_CONTENEDORES.md").toFile());
 
-		copiarACarpetaDesdeJar("/docs/ingles/minecraft/RESULTADO_CLI_SIN_INTERFAZ_GRAFICA.md",
-				Statics.carpeta.resolve("docs/ingles/minecraft/RESULTADO_CLI_SIN_INTERFAZ_GRAFICA.md").toFile());
+		copiarACarpetaDesdeJar("/docs/espanol/minecraft/RESULTADO_CLI_SIN_INTERFAZ_GRAFICA.md",
+				Statics.carpeta.resolve("docs/espanol/minecraft/RESULTADO_CLI_SIN_INTERFAZ_GRAFICA.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Lag.md",
 				Statics.carpeta.resolve("docs/ingles/minecraft/Lag.md").toFile());
@@ -557,6 +595,15 @@ public class MonitorDePID {
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/HEADLESS_CLI_RESULT.md",
 				Statics.carpeta.resolve("docs/ingles/minecraft/HEADLESS_CLI_RESULT.md").toFile());
+
+		copiarACarpetaDesdeJar("/docs/espanol/minecraft/cli.md",
+				Statics.carpeta.resolve("docs/espanol/minecraft/cli.md").toFile());
+		copiarACarpetaDesdeJar("/docs/ingles/minecraft/cli.md",
+				Statics.carpeta.resolve("docs/ingles/minecraft/cli.md").toFile());
+			copiarACarpetaDesdeJar("/docs/espanol/minecraft/Pruebas.md",
+					Statics.carpeta.resolve("docs/espanol/minecraft/Pruebas.md").toFile());
+			copiarACarpetaDesdeJar("/docs/ingles/minecraft/Tests.md",
+					Statics.carpeta.resolve("docs/ingles/minecraft/Tests.md").toFile());
 
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Lag.md",
 				Statics.carpeta.resolve("docs/ingles/minecraft/Lag.md").toFile());
@@ -698,6 +745,9 @@ public class MonitorDePID {
 			 */
 			if (devolverResultadoCLI) {
 				comando.add("-Djava.awt.headless=true");
+					if (EnlanceMD.estaActivadoModoSinRed()) {
+						comando.add("-Dcrashdetector.markdown.sin_red=true");
+					}
 			}
 
 			if (DaxInit.necesitaArgEspecialDax()) {
@@ -759,6 +809,11 @@ public class MonitorDePID {
 				comando.add(rutaLogTemporal);
 			}
 
+			for (String rutaMarkdown : archivosMarkdownCLI) {
+				comando.add("--markdown");
+				comando.add(rutaMarkdown);
+			}
+
 			ProcessBuilder pb = new ProcessBuilder(comando);
 			/*
 			 * No usamos inheritIO(): stdin debe seguir siendo PIPE para Entregar. stdout y
@@ -794,6 +849,7 @@ public class MonitorDePID {
 			 */
 			archivosLogCLI.clear();
 			archivosLogTextoTemporalesCLI.clear();
+			archivosMarkdownCLI.clear();
 
 			/*
 			 * En modo CLI el monitor no espera la muerte de este proceso: analiza
@@ -804,6 +860,7 @@ public class MonitorDePID {
 				int codigoSalidaMonitor = esperarExitCode(monitorProcess);
 				if (codigoSalidaMonitor != 0) {
 					System.err.println("El proceso monitor terminó con código " + codigoSalidaMonitor + ".");
+						marcarFalloMonitor(codigoSalidaMonitor);
 				}
 			}
 
@@ -812,9 +869,13 @@ public class MonitorDePID {
 			 * Si el monitor no pudo arrancar, nadie consumirá los temporales.
 			 */
 			archivosLogCLI.clear();
+			archivosMarkdownCLI.clear();
 			limpiarArchivosTemporalesTextoCLI();
 			System.out.println("error con comenzando el proceso CD");
 			e.printStackTrace();
+			if (devolverResultadoCLI) {
+				marcarFalloMonitor();
+			}
 		}
 		if (!devolverResultadoCLI) {
 			System.out.println("completa con comenzando el proceso CD");
@@ -829,6 +890,14 @@ public class MonitorDePID {
 	 * ser responsabilidad de MonitorDePID y se eliminarán si el monitor no puede
 	 * iniciarse.
 	 */
+	public static synchronized void configurarMarkdownCLI(String ruta) {
+		archivosMarkdownCLI.clear();
+		if (ruta != null && !ruta.trim().isEmpty()) {
+			archivosMarkdownCLI.add(ruta);
+		}
+		solicitarResultadoCLI();
+	}
+
 	public static synchronized void configurarEntradasCLI(List<String> rutas, List<String> rutasTemporales) {
 		limpiarArchivosTemporalesTextoCLI();
 		archivosLogCLI.clear();
@@ -881,6 +950,7 @@ public class MonitorDePID {
 	private static boolean configurarProcesoMonitorDesdeCLI(String[] args, int primerIndice) {
 		List<String> rutasRecibidas = new ArrayList<String>();
 		List<String> rutasTemporalesRecibidas = new ArrayList<String>();
+		List<String> rutasMarkdownRecibidas = new ArrayList<String>();
 
 		for (int i = primerIndice; i < args.length; i++) {
 			String argumento = args[i];
@@ -917,6 +987,15 @@ public class MonitorDePID {
 				continue;
 			}
 
+			if ("--markdown".equalsIgnoreCase(argumento)) {
+				if (i + 1 >= args.length) {
+					System.err.println("Error: falta la ruta después de --markdown.");
+					return false;
+				}
+				rutasMarkdownRecibidas.add(args[++i]);
+				continue;
+			}
+
 			System.err.println("Error: argumento interno desconocido del monitor: " + argumento);
 			eliminarArchivosTemporalesRecibidos(rutasTemporalesRecibidas);
 			return false;
@@ -924,7 +1003,30 @@ public class MonitorDePID {
 
 		if ((!rutasRecibidas.isEmpty() || !rutasTemporalesRecibidas.isEmpty())
 				&& !inyectarLogsEnEsteProceso(rutasRecibidas, rutasTemporalesRecibidas)) {
+			codigoSalidaCLI = CODIGO_ENTRADA_INVALIDA;
 			return false;
+		}
+
+		if (!rutasMarkdownRecibidas.isEmpty()) {
+			for (String rutaMarkdown : rutasMarkdownRecibidas) {
+				try {
+					String markdown = leer_archivo(new File(rutaMarkdown).getCanonicalFile().toPath());
+					EnlanceMD.ResultadoMarkdown resultado = EnlanceMD.guardarConResultado(markdown);
+						if (resultado.obtenerEnlacesExtraidos() == 0 || resultado.obtenerEnlacesCompatibles() == 0) {
+							codigoSalidaCLI = CODIGO_ENTRADA_INVALIDA;
+							System.err.println("El Markdown no contiene enlaces de registros compatibles.");
+						} else if (resultado.obtenerGruposExitosos() == 0) {
+							codigoSalidaCLI = CODIGO_FALLO_MONITOR;
+							System.err.println("Fallaron todas las descargas de registros Markdown.");
+						} else if (resultado.obtenerGruposFallidos() > 0) {
+							System.err.println("Algunas descargas de registros Markdown fallaron.");
+						}
+				} catch (IOException e) {
+					System.err.println("Error al preparar el Markdown: " + e.getMessage());
+					codigoSalidaCLI = CODIGO_ENTRADA_INVALIDA;
+					return false;
+				}
+			}
 		}
 
 		return true;
@@ -1442,6 +1544,7 @@ public class MonitorDePID {
 	}
 
 	public static void monitor_proceso(long pid) {
+		/* El código puede haber sido fijado al preparar Markdown antes de entrar aquí. */
 		// List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
 		abrirConsola();
 		ProxySysOutSysErrCDProceso.init();
@@ -1580,11 +1683,15 @@ public class MonitorDePID {
 				if (GraphicsEnvironment.isHeadless()) {
 					CrashDetectorLogger.log("headless ");
 
-					if (activar()) {
-						System.out.println(idioma.local_headless(enlace));
+					if (devolverResultadoCLI && !esInformeCLIValido(local)) {
+						codigoSalidaCLI = CODIGO_INFORME_INVALIDO;
+						System.err.println("CrashDetector no pudo validar el informe HTML generado.");
+					} else {
+						if (activar()) {
+							System.out.println(idioma.local_headless(enlace));
+						}
+						imprimirLocalEnStdout();
 					}
-
-					imprimirLocalEnStdout();
 					fin(latch);
 				}
 
@@ -1635,6 +1742,30 @@ public class MonitorDePID {
 	 * La llamada a flush es importante para CLI, cloud, contenedores y Ansible,
 	 * porque el proceso termina inmediatamente después.
 	 */
+	private static void salirMonitorCLI(int codigo) {
+		codigoSalidaCLI = codigo;
+		if (devolverResultadoCLI) {
+			System.exit(codigo);
+		}
+	}
+
+	private static boolean esInformeCLIValido(String ruta) {
+		if (ruta == null || ruta.trim().isEmpty()) {
+			return false;
+		}
+		File informe = new File(ruta);
+		if (!informe.isFile() || !informe.canRead() || informe.length() == 0) {
+			return false;
+		}
+		try {
+			String contenido = new String(Files.readAllBytes(informe.toPath()), StandardCharsets.UTF_8);
+			String minusculas = contenido.toLowerCase(java.util.Locale.ROOT);
+			return minusculas.contains("<html") || minusculas.contains("<!doctype") || minusculas.contains("<body");
+		} catch (IOException e) {
+			return false;
+		}
+	}
+
 	private static void imprimirLocalEnStdout() {
 		String rutaLocal = local;
 
@@ -2259,7 +2390,7 @@ public class MonitorDePID {
 		ArchivoDeCodigoError0.delete();
 		// viajo_ultima_mods.toFile().delete();
 		latch.countDown();
-		System.exit(0);
+		System.exit(devolverResultadoCLI ? codigoSalidaCLI : 0);
 	}
 
 	public static void historia_mods() {

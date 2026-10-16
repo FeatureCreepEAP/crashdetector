@@ -1,0 +1,11 @@
+tipo	nombre	ruta del informe	código de salida	duración en segundos
+archivos	000001-null_pointer.log	/Users/macbook/git/crashdetector/mass_verificaciones/archivos/000001-null_pointer.log/informe.html	0	3
+archivos	000002-clase_faltante.log	/Users/macbook/git/crashdetector/mass_verificaciones/archivos/000002-clase_faltante.log/informe.html	0	4
+archivos	000003-memoria.log	/Users/macbook/git/crashdetector/mass_verificaciones/archivos/000003-memoria.log/informe.html	0	3
+archivos	000004-sin_hallazgos.log	/Users/macbook/git/crashdetector/mass_verificaciones/archivos/000004-sin_hallazgos.log/informe.html	0	3
+archivos	000005-texto_utf8.log	/Users/macbook/git/crashdetector/mass_verificaciones/archivos/000005-texto_utf8.log/informe.html	0	3
+enlaces	000001	/Users/macbook/git/crashdetector/mass_verificaciones/enlaces/000001/informe.html	3	4
+enlaces	000002	/Users/macbook/git/crashdetector/mass_verificaciones/enlaces/000002/informe.html	3	4
+enlaces	000003	/Users/macbook/git/crashdetector/mass_verificaciones/enlaces/000003/informe.html	3	4
+enlaces	000004	/Users/macbook/git/crashdetector/mass_verificaciones/enlaces/000004/informe.html	2	3
+enlaces	000005	/Users/macbook/git/crashdetector/mass_verificaciones/enlaces/000005/informe.html	3	4

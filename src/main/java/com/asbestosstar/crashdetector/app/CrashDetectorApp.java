@@ -33,6 +33,10 @@ public class CrashDetectorApp {
 		}
 
 		if (CrashDetectorCli.procesarArgumentos(args)) {
+			int codigo = CrashDetectorCli.obtenerCodigoSalida();
+			if (codigo != CrashDetectorCli.CODIGO_EXITO) {
+				System.exit(codigo);
+			}
 			return;
 		}
 
@@ -43,6 +47,10 @@ public class CrashDetectorApp {
 		MonitorDePID.forzarIdeMode = true;
 
 		inicializarComoModloader();
+		int codigo = CrashDetectorCli.obtenerCodigoSalida();
+		if (codigo != CrashDetectorCli.CODIGO_EXITO) {
+			System.exit(codigo);
+		}
 	}
 
 	/**

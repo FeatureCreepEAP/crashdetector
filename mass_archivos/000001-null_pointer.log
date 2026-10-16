@@ -1,0 +1,4 @@
+[12:00:00] [Server thread/INFO]: Preparing spawn area: 100%
+[12:00:01] [Server thread/ERROR]: java.lang.NullPointerException: Cannot invoke "net.minecraft.server.level.ServerLevel.getLevelData()" because "level" is null
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:1234)
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:987)

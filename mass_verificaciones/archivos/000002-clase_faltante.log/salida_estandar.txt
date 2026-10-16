@@ -1,0 +1,9 @@
+Log preparado para el proceso monitor: /Users/macbook/git/crashdetector/mass_archivos/000002-clase_faltante.log
+PID: 61043
+JVM /Library/Java/JavaVirtualMachines/jdk-25.jdk/Contents/Home/bin/java
+ram 8192
+Log inyectado en el monitor: /Users/macbook/git/crashdetector/mass_archivos/000002-clase_faltante.log
+No se puede abrir la consola: se ha detectado un entorno sin interfaz gráfica.
+Analizando entradas recibidas por CLI...
+<span style='color:#FFFFFF'>Tu Informe de CrashDetector esta aqui <a href='null' style='color:#56CCF2'>ver informe</a></span>
+/Users/macbook/git/crashdetector/crash_detector/.informes/2026-10-16T200820.011210Z.htm

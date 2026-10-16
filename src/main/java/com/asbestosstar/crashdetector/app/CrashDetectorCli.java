@@ -42,6 +42,25 @@ import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 
 public final class CrashDetectorCli {
 
+	public static final int CODIGO_EXITO = MonitorDePID.CODIGO_EXITO;
+	public static final int CODIGO_ENTRADA_INVALIDA = MonitorDePID.CODIGO_ENTRADA_INVALIDA;
+	public static final int CODIGO_FALLO_MONITOR = MonitorDePID.CODIGO_FALLO_MONITOR;
+	public static final int CODIGO_INFORME_INVALIDO = MonitorDePID.CODIGO_INFORME_INVALIDO;
+
+	public static int obtenerCodigoSalida() {
+		return MonitorDePID.obtenerCodigoSalidaCLI();
+	}
+
+	/** Conserva el diagnóstico de salida comunicado por el proceso monitor. */
+	public static void marcarFalloMonitor(int codigo) {
+		MonitorDePID.marcarFalloMonitor(codigo);
+	}
+
+	/** Compatibilidad para integraciones que únicamente comunican fallo. */
+	public static void marcarFalloMonitor() {
+		MonitorDePID.marcarFalloMonitor();
+	}
+
 	private static final String CLASE_ANSIBLE_CLI = "com.asbestosstar.crashdetector.nube.ansible.AnsibleCli";
 
 	private static final String CLASE_CONTAINER_CLI = "com.asbestosstar.crashdetector.nube.container.ContainerCli";
@@ -61,6 +80,7 @@ public final class CrashDetectorCli {
 	 */
 
 	public static boolean procesarArgumentos(String[] args) {
+		MonitorDePID.restablecerCodigoSalidaCLI();
 
 		if (args == null || args.length == 0) {
 
@@ -118,15 +138,27 @@ public final class CrashDetectorCli {
 		}
 
 		if (esComandoAnalizarArchivos(comando)) {
-
-			return !configurarArchivosLog(args, 1);
-
+			if (!configurarArchivosLog(args, 1)) {
+				MonitorDePID.marcarFalloMonitor(CODIGO_ENTRADA_INVALIDA);
+				return true;
+			}
+			return false;
 		}
 
 		if (esComandoAnalizarTexto(comando)) {
+			if (!configurarTextosLog(args, 1)) {
+				MonitorDePID.marcarFalloMonitor(CODIGO_ENTRADA_INVALIDA);
+				return true;
+			}
+			return false;
+		}
 
-			return !configurarTextosLog(args, 1);
-
+		if (esComandoAnalizarMarkdown(comando)) {
+			if (!configurarMarkdown(args, 1)) {
+				MonitorDePID.marcarFalloMonitor(CODIGO_ENTRADA_INVALIDA);
+				return true;
+			}
+			return false;
 		}
 
 		return false;
@@ -147,6 +179,8 @@ public final class CrashDetectorCli {
 
 		System.out.println("  java -jar CrashDetectorApp.jar analizar-texto \"<contenido1>\" [\"<contenido2>\" ...]");
 
+		System.out.println("  java -jar CrashDetectorApp.jar analizar-markdown <archivo.md>");
+
 		System.out.println("  java -jar CrashDetectorApp.jar container <plataforma> logs <objetivo> [opciones]");
 
 		System.out.println("  java -jar CrashDetectorApp.jar ansible <logs|playbook|status> [opciones]");
@@ -162,6 +196,8 @@ public final class CrashDetectorCli {
 		System.out.println("  analizar       Analiza uno o varios logs indicados mediante sus rutas.");
 
 		System.out.println("  analizar-texto Analiza el contenido real de uno o varios logs recibido por CLI.");
+
+		System.out.println("  analizar-markdown Analiza un documento Markdown mediante EnlanceMD.");
 
 		System.out.println("  container      Obtiene y analiza logs de Kubernetes, OpenShift, Rancher, Docker,");
 
@@ -270,6 +306,12 @@ public final class CrashDetectorCli {
 
 				|| "--analyze".equals(comando) || "--logs".equals(comando);
 
+	}
+
+	private static boolean esComandoAnalizarMarkdown(String comando) {
+		return "analizar-markdown".equals(comando) || "analizar-mardown".equals(comando)
+				|| "analyse-markdown".equals(comando) || "markdown".equals(comando)
+				|| "--analizar-markdown".equals(comando) || "--markdown".equals(comando);
 	}
 
 	private static boolean esComandoAnalizarTexto(String comando) {
@@ -468,6 +510,22 @@ public final class CrashDetectorCli {
 
 		return true;
 
+	}
+
+	private static boolean configurarMarkdown(String[] args, int primerIndice) {
+		if (primerIndice >= args.length || args.length != primerIndice + 1) {
+			System.err.println("Error: analizar-markdown requiere exactamente un archivo Markdown.");
+			return false;
+		}
+		File archivo = new File(args[primerIndice]);
+		if (!archivo.isFile() || !archivo.canRead()) {
+			System.err.println("Error: el archivo Markdown no existe o no se puede leer: " + archivo.getAbsolutePath());
+			return false;
+		}
+		MonitorDePID.configurarMarkdownCLI(archivo.getAbsolutePath());
+		MonitorDePID.forzarIdeMode = true;
+		System.out.println("Markdown preparado para el proceso monitor: " + archivo.getAbsolutePath());
+		return true;
 	}
 
 	private static boolean configurarTextosLog(String[] args, int primerIndice) {

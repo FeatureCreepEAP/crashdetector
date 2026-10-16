@@ -1,0 +1,2 @@
+Los fixtures de archivos usan formato normal de Minecraft; los bloques Markdown se ejecutan con EnlanceMD en modo determinista sin red.
+Los códigos 2/3 de Markdown representan ausencia de enlaces compatibles o fallos de descarga; no prueban disponibilidad de mclo.gs.

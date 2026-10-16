@@ -38,6 +38,20 @@
 
 	<build>
 		<plugins>
+			<!-- Ejecucion de las pruebas unitarias (JUnit 5) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.2.5</version>
+				<configuration>
+					<includes>
+						<include>**/Prueba*.java</include>
+						<include>**/Test*.java</include>
+						<include>**/*Tests.java</include>
+						<include>**/*TestCase.java</include>
+					</includes>
+				</configuration>
+			</plugin>
 
 			<!-- Add the Maven Compiler Plugin -->
 			<plugin>
@@ -698,6 +712,14 @@
 			<version>2.0.4</version>
 			<optional>true</optional>
 		</dependency>
+		<!-- Pruebas unitarias (JUnit 5) -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.10.2</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 

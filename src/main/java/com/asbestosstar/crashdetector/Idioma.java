@@ -462,6 +462,22 @@ public interface Idioma {
 
 	public String null_pointer_error(String metodo, String objeto);
 
+	public default String ejemploErrorTitulo() {
+		return "Ejemplo de error";
+	}
+
+	public default String ejemploErrorDetalle() {
+		return "Se detecto el marcador de ejemplo de una causa directa del fallo.";
+	}
+
+	public default String ejemploAdvertenciaTitulo() {
+		return "Ejemplo de advertencia";
+	}
+
+	public default String ejemploAdvertenciaDetalle() {
+		return "Esto casi con seguridad NO es la causa de tu crash actual, es solo un aviso informativo.";
+	}
+
 	public String analisisAvanzado();
 
 	public String seleccionarCarpeta();

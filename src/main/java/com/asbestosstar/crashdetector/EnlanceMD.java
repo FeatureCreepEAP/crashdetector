@@ -51,6 +51,49 @@ public class EnlanceMD {
 			.compile("(?is)<a\\b([^>]*)href\\s*=\\s*(['\"])(.*?)\\2([^>]*)>(.*?)</a>");
 	private static final int LIMITE_HTML_INFORME = 8 * 1024 * 1024;
 
+	/** Propiedad para probar fixtures externas sin acceder a la red. */
+	private static final String PROPIEDAD_SIN_RED = "crashdetector.markdown.sin_red";
+
+	/** Resultado observable de una ejecución de Markdown. */
+	public static final class ResultadoMarkdown {
+		private final int enlacesExtraidos;
+		private final int enlacesCompatibles;
+		private final int grupos;
+		private final int gruposExitosos;
+		private final int gruposFallidos;
+
+		ResultadoMarkdown(int enlacesExtraidos, int enlacesCompatibles, int grupos, int gruposExitosos,
+				int gruposFallidos) {
+			this.enlacesExtraidos = enlacesExtraidos;
+			this.enlacesCompatibles = enlacesCompatibles;
+			this.grupos = grupos;
+			this.gruposExitosos = gruposExitosos;
+			this.gruposFallidos = gruposFallidos;
+		}
+
+		public int obtenerEnlacesExtraidos() {
+			return enlacesExtraidos;
+		}
+
+		public int obtenerEnlacesCompatibles() {
+			return enlacesCompatibles;
+		}
+
+		public int obtenerGrupos() {
+			return grupos;
+		}
+
+		public int obtenerGruposExitosos() {
+			return gruposExitosos;
+		}
+
+		public int obtenerGruposFallidos() {
+			return gruposFallidos;
+		}
+	}
+
+	private static volatile ResultadoMarkdown ultimoResultadoMarkdown = new ResultadoMarkdown(0, 0, 0, 0, 0);
+
 	// INFORME_UN_SOLO_NIVEL_V3
 	private static final int REDIRECCIONES_MAX_INFORME = 8;
 
@@ -70,22 +113,30 @@ public class EnlanceMD {
 	 * @param textoDeMensaje Texto Markdown con enlaces del tipo [texto](url)
 	 */
 	public static void guardar(String textoDeMensaje) {
+		guardarConResultado(textoDeMensaje);
+	}
+
+	/**
+	 * Procesa un documento Markdown y conserva estadísticas para la frontera CLI.
+	 * La extracción y agrupación siguen siendo las de esta clase; ningún llamador
+	 * externo debe intentar interpretar las URL.
+	 */
+	public static ResultadoMarkdown guardarConResultado(String textoDeMensaje) {
 		limpiarCarpetaTemporal();
 		contadorGenerico.set(1);
 
 		List<Enlace> enlaces = extraerEnlacesMarkdown(textoDeMensaje);
 		if (enlaces.isEmpty()) {
-			return;
+			return publicarResultado(new ResultadoMarkdown(0, 0, 0, 0, 0));
 		}
 
-		/*
-		 * Primero se agrupan los enlaces que realmente representan el mismo archivo
-		 * lógico. Después, cada grupo se procesa en paralelo para no perder el
-		 * comportamiento multihilo que ya tenía la clase original.
-		 */
 		Map<String, GrupoDeArchivo> grupos = agruparEnlaces(enlaces);
+		int enlacesCompatibles = 0;
+		for (GrupoDeArchivo grupo : grupos.values()) {
+			enlacesCompatibles += grupo.fragmentos.size();
+		}
 		if (grupos.isEmpty()) {
-			return;
+			return publicarResultado(new ResultadoMarkdown(enlaces.size(), 0, 0, 0, 0));
 		}
 
 		ExecutorService pool = Executors.newFixedThreadPool(Math.min(HILOS_MAX, Math.max(1, grupos.size())));
@@ -96,16 +147,20 @@ public class EnlanceMD {
 		}
 
 		List<Consola> consolasNuevas = new ArrayList<>();
+		int gruposFallidos = 0;
 		for (Future<Consola> f : tareas) {
 			try {
 				Consola c = f.get();
 				if (c != null) {
 					consolasNuevas.add(c);
+				} else {
+					gruposFallidos++;
 				}
 			} catch (InterruptedException ex) {
 				Thread.currentThread().interrupt();
+				gruposFallidos++;
 			} catch (ExecutionException ex) {
-				// Se omite el grupo fallido para no bloquear el resto.
+				gruposFallidos++;
 			}
 		}
 
@@ -115,6 +170,22 @@ public class EnlanceMD {
 			MonitorDePID.consolas.addAll(consolasNuevas);
 			MonitorDePID.consola_de_launcher_inyectado = true;
 		}
+
+		return publicarResultado(new ResultadoMarkdown(enlaces.size(), enlacesCompatibles, grupos.size(),
+				consolasNuevas.size(), gruposFallidos));
+	}
+
+	private static ResultadoMarkdown publicarResultado(ResultadoMarkdown resultado) {
+		ultimoResultadoMarkdown = resultado;
+		return resultado;
+	}
+
+	public static ResultadoMarkdown obtenerUltimoResultadoMarkdown() {
+		return ultimoResultadoMarkdown;
+	}
+
+	public static boolean estaActivadoModoSinRed() {
+		return Boolean.parseBoolean(System.getProperty(PROPIEDAD_SIN_RED, "false"));
 	}
 
 	/** Datos originales de un enlace Markdown. */
@@ -931,6 +1002,10 @@ public class EnlanceMD {
 	 * Descarga el archivo al destino. Usa DescargarRegistors si soporta la URL.
 	 */
 	private static void descargarArchivo(String url, File destino) throws IOException {
+		if (estaActivadoModoSinRed()) {
+			throw new IOException("Descarga omitida por modo sin red: " + url);
+		}
+
 		/*
 		 * Toda la normalización (mclo.gs, GnomeBot, Kostromdan, PastesDev, Bytebin, CD
 		 * Paste, MMD, KDAN y SecureLogger) vive en un solo sitio.

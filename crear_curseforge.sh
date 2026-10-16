@@ -5,7 +5,7 @@ set -euo pipefail
 DIRECTORIO_TARGET="target"
 
 PREFIJO_NUBE="com/asbestosstar/crashdetector/nube/"
-PREFIJO_LANZERMOD="com/asbestosstar/crashdetector/app/"
+PREFIJO_APP="com/asbestosstar/crashdetector/app/"
 
 if [[ ! -d "$DIRECTORIO_TARGET" ]]; then
     echo "Error: no existe '$DIRECTORIO_TARGET'."
@@ -43,10 +43,10 @@ while IFS= read -r -d '' jar_original; do
     # Encontrar todo lo que pertenezca a:
     #
     #   com/asbestosstar/crashdetector/nube/**
-    #   com/asbestosstar/crashdetector/app/lanzermod/**
+    #   com/asbestosstar/crashdetector/app/**
     #
     unzip -Z1 "$jar_curseforge" \
-        | grep -E "^(${PREFIJO_NUBE}|${PREFIJO_LANZERMOD})" \
+        | grep -E "^(${PREFIJO_NUBE}|${PREFIJO_APP})" \
         > "$temporal" || true
 
     if [[ -s "$temporal" ]]; then
@@ -61,7 +61,7 @@ while IFS= read -r -d '' jar_original; do
 
         echo "  Eliminado completamente:"
         echo "    ${PREFIJO_NUBE}**"
-        echo "    ${PREFIJO_LANZERMOD}**"
+        echo "    ${PREFIJO_APP}**"
     else
         echo "  Los paquetes excluidos no estaban presentes."
     fi
@@ -73,7 +73,7 @@ while IFS= read -r -d '' jar_original; do
     #
     restantes="$(
         unzip -Z1 "$jar_curseforge" \
-            | grep -E "^(${PREFIJO_NUBE}|${PREFIJO_LANZERMOD})" || true
+            | grep -E "^(${PREFIJO_NUBE}|${PREFIJO_APP})" || true
     )"
 
     if [[ -n "$restantes" ]]; then
