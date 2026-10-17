@@ -5183,6 +5183,22 @@ public class Indonesia implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Terdeteksi konflik inisialisasi Chunky dan Distant Horizons: Distant Horizons mencoba memakai Chunky sebelum selesai dimuat." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "Konflik inisialisasi Chunky dan Distant Horizons";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "Perbarui Chunky dan Distant Horizons ke versi yang kompatibel. Jika masalah berlanjut, periksa kompatibilitas urutan pemuatan atau hapus salah satu mod.";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError()
 				+ "'>Anda memiliki kelas Minecraft yang hilang. Kemungkinan penyebabnya:</b>" + "<ul>"

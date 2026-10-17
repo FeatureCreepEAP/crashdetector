@@ -5031,6 +5031,22 @@ public class Vietnamita implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Đã phát hiện xung đột khởi tạo giữa Chunky và Distant Horizons: Distant Horizons cố dùng Chunky trước khi tải xong." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "Xung đột khởi tạo Chunky và Distant Horizons";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "Hãy cập nhật Chunky và Distant Horizons lên các phiên bản tương thích. Nếu vẫn lỗi, hãy kiểm tra khả năng tương thích của thứ tự tải hoặc gỡ một trong hai mod.";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError()
 				+ "'>Bạn đang thiếu các lớp của Minecraft. Các lý do có thể là:</b>" + "<ul>"

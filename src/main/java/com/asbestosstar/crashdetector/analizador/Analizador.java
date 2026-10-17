@@ -260,6 +260,7 @@ public class Analizador {
 		verificaciones.add(new ErrorVersionClaseGregTechEasyCore());
 		verificaciones.add(new ConflictoMoniLabsConnectorExtras());
 		verificaciones.add(new ErrorCompatibilidadIrisDH());
+		verificaciones.add(new ConflictoChunkyDistantHorizons());
 		verificaciones.add(new UraniumLag());
 		verificaciones.add(new ErrorFallingAttackVersion());
 

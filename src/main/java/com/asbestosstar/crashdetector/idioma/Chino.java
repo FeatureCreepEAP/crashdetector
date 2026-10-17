@@ -4515,6 +4515,22 @@ public class Chino implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "检测到 Chunky 与 Distant Horizons 的初始化冲突：Distant Horizons 在 Chunky 加载前尝试使用它。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "Chunky 与 Distant Horizons 初始化冲突";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "请将 Chunky 和 Distant Horizons 更新到兼容版本；如果问题仍然存在，请检查加载顺序兼容性或移除其中一个模组。";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 Minecraft 的类文件。可能原因：</b>" + "<ul>"
 				+ "<li>你安装了适用于其他游戏版本的模组。你可以使用 <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a> 来确认该类是否存在于你的版本中。</li>"

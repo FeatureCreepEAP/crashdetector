@@ -5150,6 +5150,22 @@ public class Suajili implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Mzozo wa uanzishaji wa Chunky na Distant Horizons umegunduliwa: Distant Horizons ilijaribu kutumia Chunky kabla haijapakia." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "Mzozo wa uanzishaji wa Chunky na Distant Horizons";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "Sasisha Chunky na Distant Horizons kwa matoleo yanayooana. Tatizo likiendelea, kagua uoanifu wa mpangilio wa upakiaji au ondoa mod moja.";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError()
 				+ "'>Una madarasa yasiyopo ya Minecraft. Sababu zinazowezekana:</b>" + "<ul>"

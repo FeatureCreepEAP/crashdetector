@@ -4772,6 +4772,22 @@ public class Ingles implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "A Chunky and Distant Horizons initialization conflict was detected: Distant Horizons tried to use Chunky before it finished loading." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "Chunky and Distant Horizons Initialization Conflict";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "Update Chunky and Distant Horizons to compatible versions. If the problem persists, check load-order compatibility or remove one of the two mods.";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError()
 				+ "'>You are missing Minecraft classes. Possible reasons:</b>" + "<ul>"

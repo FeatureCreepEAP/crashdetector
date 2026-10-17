@@ -5251,6 +5251,22 @@ public class Frances implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Un conflit d’initialisation entre Chunky et Distant Horizons a été détecté : Distant Horizons a tenté d’utiliser Chunky avant son chargement." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "Conflit d’initialisation entre Chunky et Distant Horizons";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "Mettez Chunky et Distant Horizons à jour vers des versions compatibles. Si le problème persiste, vérifiez la compatibilité de l’ordre de chargement ou retirez l’un des deux mods.";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError()
 				+ "'>Vous avez des classes Minecraft manquantes. Raisons possibles :</b>" + "<ul>"

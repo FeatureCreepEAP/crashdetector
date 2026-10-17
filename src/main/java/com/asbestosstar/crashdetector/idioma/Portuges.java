@@ -4744,6 +4744,22 @@ public class Portuges implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Foi detectado um conflito de inicialização entre Chunky e Distant Horizons: Distant Horizons tentou usar Chunky antes de ele terminar de carregar." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "Conflito de inicialização entre Chunky e Distant Horizons";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "Atualize Chunky e Distant Horizons para versões compatíveis. Se o problema persistir, verifique a compatibilidade da ordem de carregamento ou remova um dos mods.";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError()
 				+ "'>Estão faltando classes do Minecraft. Possíveis razões:</b>" + "<ul>"

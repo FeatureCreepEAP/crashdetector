@@ -5063,6 +5063,22 @@ public class Tailandes implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "ตรวจพบความขัดแย้งในการเริ่มต้นระหว่าง Chunky และ Distant Horizons: Distant Horizons พยายามใช้ Chunky ก่อนโหลดเสร็จ" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "ความขัดแย้งในการเริ่มต้น Chunky และ Distant Horizons";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "อัปเดต Chunky และ Distant Horizons เป็นเวอร์ชันที่เข้ากันได้ หากยังมีปัญหา ให้ตรวจสอบลำดับการโหลดหรือลบม็อดตัวใดตัวหนึ่ง";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>มีคลาสของ Minecraft ขาดหาย:</b>" + "<ul>"
 				+ "<li>ม็อดไม่ตรงเวอร์ชัน</li>" + "<li>การติดตั้งเสียหาย</li>" + "<li>coremod มีปัญหา</li>" + "</ul>";

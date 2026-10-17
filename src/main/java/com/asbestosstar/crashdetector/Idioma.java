@@ -2091,6 +2091,12 @@ public interface Idioma {
 
 	public String errorCompatibilidadIrisDH();
 
+	public String errorConflictoChunkyDistantHorizons();
+
+	public String nombreDeConflictoChunkyDistantHorizons();
+
+	public String pasoConflictoChunkyDistantHorizons();
+
 	public String faltar_de_clases_minecraft();
 
 	public String faltar_de_clases_dangerzone();

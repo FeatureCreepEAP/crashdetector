@@ -5212,6 +5212,22 @@ public class Lao implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "ພົບຄວາມຂັດແຍ້ງໃນການເລີ່ມ Chunky ແລະ Distant Horizons: Distant Horizons ພະຍາຍາມໃຊ້ Chunky ກ່ອນທີ່ຈະໂຫຼດສຳເລັດ." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "ຄວາມຂັດແຍ້ງການເລີ່ມ Chunky ແລະ Distant Horizons";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "ອັບເດດ Chunky ແລະ Distant Horizons ໃຫ້ເປັນລຸ້ນທີ່ເຂົ້າກັນໄດ້. ຖ້າບັນຫາຍັງຢູ່ ໃຫ້ກວດສອບລຳດັບການໂຫຼດ ຫຼືລຶບ mod ໜຶ່ງອອກ.";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError()
 				+ "'>ທ່ານມີ classes ຂອງ Minecraft ທີ່ຂາດຫາຍໄປ. ເຫດຜົນທີ່ເປັນໄປໄດ້:</b>" + "<ul>"

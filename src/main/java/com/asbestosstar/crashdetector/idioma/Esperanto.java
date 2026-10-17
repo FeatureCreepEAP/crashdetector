@@ -4729,6 +4729,22 @@ public class Esperanto implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Detektita komenca konflikto inter Chunky kaj Distant Horizons: Distant Horizons provis uzi Chunky antaŭ ĝia ŝargo." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "Komenca konflikto inter Chunky kaj Distant Horizons";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "Ĝisdatigu Chunky kaj Distant Horizons al kongruaj versioj. Se la problemo daŭras, kontrolu la kongruecon de la ŝarga ordo aŭ forigu unu modon.";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>Vi mankas klasojn de Minecraft. Eblaj kialoj:</b>"
 				+ "<ul>"

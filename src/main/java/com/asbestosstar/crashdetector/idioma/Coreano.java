@@ -4580,6 +4580,22 @@ public class Coreano implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Chunky가 로드되기 전에 Distant Horizons가 Chunky를 사용하려 하여 초기화 충돌이 발생했습니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "Chunky 및 Distant Horizons 초기화 충돌";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "Chunky와 Distant Horizons를 호환되는 버전으로 업데이트하세요. 계속 충돌하면 로드 순서 호환성을 확인하거나 둘 중 하나를 제거하세요.";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>Minecraft의 클래스가 누락되었습니다. 가능한 원인:</b>" + "<ul>"
 				+ "<li>다른 게임 버전용 모드를 사용하고 있습니다. <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a>를 사용하여 해당 클래스가 사용 중인 버전에 존재하는지 확인할 수 있습니다.</li>"

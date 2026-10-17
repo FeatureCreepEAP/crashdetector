@@ -4585,6 +4585,22 @@ public class Japones implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Chunky の読み込みが完了する前に Distant Horizons が使用しようとしたため、初期化の競合が検出されました。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "Chunky と Distant Horizons の初期化競合";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "Chunky と Distant Horizons を互換性のあるバージョンに更新してください。解決しない場合は読み込み順の互換性を確認するか、どちらか一方を削除してください。";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>Minecraft のクラスが不足しています。考えられる原因:</b>" + "<ul>"
 				+ "<li>ゲームの他のバージョン向けの mod を使用しています。<a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a> を使って、そのクラスがあなたのバージョンに存在するか確認できます。</li>"

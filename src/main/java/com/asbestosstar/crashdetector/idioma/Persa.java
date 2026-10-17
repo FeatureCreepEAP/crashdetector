@@ -4718,6 +4718,22 @@ public class Persa implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تعارض راه‌اندازی بین Chunky و Distant Horizons شناسایی شد: Distant Horizons پیش از بارگذاری Chunky تلاش کرد از آن استفاده کند." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "تعارض راه‌اندازی Chunky و Distant Horizons";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "Chunky و Distant Horizons را به نسخه‌های سازگار به‌روزرسانی کنید. اگر مشکل ادامه داشت، سازگاری ترتیب بارگذاری را بررسی کنید یا یکی از دو مود را حذف کنید.";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError()
 				+ "'>شما کلاس‌هایی از Minecraft را از دست داده‌اید. دلایل احتمالی:</b>" + "<ul>"

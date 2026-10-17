@@ -4742,6 +4742,22 @@ public class Ruso implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружен конфликт инициализации Chunky и Distant Horizons: Distant Horizons попытался использовать Chunky до завершения его загрузки." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "Конфликт инициализации Chunky и Distant Horizons";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "Обновите Chunky и Distant Horizons до совместимых версий. Если проблема сохраняется, проверьте совместимость порядка загрузки или удалите один из модов.";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError()
 				+ "'>Отсутствуют классы Minecraft. Возможные причины:</b>" + "<ul>"

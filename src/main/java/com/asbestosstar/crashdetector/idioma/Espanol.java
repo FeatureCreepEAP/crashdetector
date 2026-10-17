@@ -5425,6 +5425,22 @@ public class Espanol implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Se detectó un conflicto de inicialización entre Chunky y Distant Horizons: Distant Horizons intentó usar Chunky antes de que terminara de cargarse." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "Conflicto de inicialización entre Chunky y Distant Horizons";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "Actualiza Chunky y Distant Horizons a versiones compatibles. Si el problema continúa, comprueba la compatibilidad del orden de carga o elimina uno de los dos mods.";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError()
 				+ "'>Tienes clases faltantes de Minecraft. Posibles razones:</b>" + "<ul>"

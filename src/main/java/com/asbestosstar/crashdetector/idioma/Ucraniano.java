@@ -4300,6 +4300,22 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Виявлено конфлікт ініціалізації Chunky і Distant Horizons: Distant Horizons спробував використати Chunky до завершення завантаження." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "Конфлікт ініціалізації Chunky і Distant Horizons";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "Оновіть Chunky і Distant Horizons до сумісних версій. Якщо проблема не зникне, перевірте сумісність порядку завантаження або вилучіть один із модів.";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError() + "'>Відсутні класи Minecraft. Причини:</b><ul>"
 				+ "<li>Моди для іншої версії гри</li>" + "<li>Пошкоджена інсталяція</li>" + "<li>Зламаний coremod</li>"

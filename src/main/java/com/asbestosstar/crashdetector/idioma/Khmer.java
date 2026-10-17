@@ -5096,6 +5096,22 @@ public class Khmer implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "បានរកឃើញការប៉ះទង្គិចពេលចាប់ផ្ដើមរវាង Chunky និង Distant Horizons៖ Distant Horizons ព្យាយាមប្រើ Chunky មុនពេលវាផ្ទុករួច។" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "ការប៉ះទង្គិចពេលចាប់ផ្ដើម Chunky និង Distant Horizons";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "ធ្វើបច្ចុប្បន្នភាព Chunky និង Distant Horizons ទៅកំណែដែលត្រូវគ្នា។ ប្រសិនបើបញ្ហានៅតែមាន សូមពិនិត្យភាពត្រូវគ្នានៃលំដាប់ផ្ទុក ឬលុប mod មួយ។";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError()
 				+ "'>អ្នកមាន classes របស់ Minecraft ខ្វះ។ មូលហេតុអាចជា៖</b>" + "<ul>"

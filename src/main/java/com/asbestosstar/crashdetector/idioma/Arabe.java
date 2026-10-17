@@ -4684,6 +4684,22 @@ public class Arabe implements Idioma {
 	}
 
 	@Override
+	public String errorConflictoChunkyDistantHorizons() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "حدث تعارض في تهيئة Chunky وDistant Horizons: حاول Distant Horizons استخدام Chunky قبل تحميله." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoChunkyDistantHorizons() {
+		return "تعارض تهيئة Chunky وDistant Horizons";
+	}
+
+	@Override
+	public String pasoConflictoChunkyDistantHorizons() {
+		return "حدّث Chunky وDistant Horizons إلى إصدارات متوافقة، أو تحقق من توافق ترتيب التحميل، أو أزل أحدهما.";
+	}
+
+	@Override
 	public String faltar_de_clases_minecraft() {
 		return "<b style='color:#" + config.obtenerColorError()
 				+ "'>لديك فئات (classes) مفقودة من Minecraft. الأسباب المحتملة:</b>" + "<ul>"
