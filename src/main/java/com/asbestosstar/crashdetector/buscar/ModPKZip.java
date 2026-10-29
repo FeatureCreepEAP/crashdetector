@@ -29,6 +29,7 @@ import com.asbestosstar.crashdetector.cargador.CargadorMeddle;
 import com.asbestosstar.crashdetector.cargador.CargadorNilLoader;
 import com.asbestosstar.crashdetector.cargador.CargadorRift;
 import com.asbestosstar.crashdetector.cargador.CargadorSponge;
+import com.asbestosstar.crashdetector.cargador.LectorModuleXmlFC12;
 import com.asbestosstar.crashdetector.cargador.ml.AnalizadorModsTomlForge;
 
 public class ModPKZip implements ArchivoDeMod {
@@ -152,7 +153,8 @@ public class ModPKZip implements ArchivoDeMod {
 					String texto = new String(content, StandardCharsets.UTF_8);
 					parsearTextoMetadata(nombreArchivo, texto, content);
 				}
-			} else if (nombreArchivo.endsWith("modules.xml") || nombreArchivo.endsWith(".mod")) {
+			} else if (LectorModuleXmlFC12.esRutaDescriptor(nombreArchivo) || nombreArchivo.endsWith("modules.xml")
+					|| nombreArchivo.endsWith(".mod")) {
 				byte[] content = leerEntrada(nombreArchivo);
 				if (content != null)
 					parsearBytesMetadata(nombreArchivo, content);
@@ -225,7 +227,11 @@ public class ModPKZip implements ArchivoDeMod {
 	private void parsearBytesMetadata(String nombreArchivo, byte[] content) throws IOException {
 		if (content == null)
 			return;
-		if (nombreArchivo.endsWith("modules.xml")) {
+		if (LectorModuleXmlFC12.esRutaDescriptor(nombreArchivo)) {
+			agregarNombresSinDuplicados(CargadorFeatureCreep.parsearNombresDescriptorFC12(content));
+			if (this.version.isEmpty())
+				this.version = CargadorFeatureCreep.parsearVersionDescriptorFC12(content);
+		} else if (nombreArchivo.endsWith("modules.xml")) {
 			agregarNombresSinDuplicados(CargadorFeatureCreep.parsearNombreModuloJBoss(content));
 			if (this.version.isEmpty())
 				this.version = CargadorFeatureCreep.parsearVersionModuloJBoss(content);

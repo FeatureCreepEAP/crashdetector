@@ -442,7 +442,7 @@ public interface ArchivoDeMod {
 	}
 
 	/**
-	 * Si el archivo (descriptor.mod, modules.xml,fabric.mod.json,mods.toml,etc)
+	 * Si el archivo (descriptor.mod, module.xml, modules.xml,fabric.mod.json,mods.toml,etc)
 	 * tiene String mcreator.
 	 * 
 	 * @return

@@ -17,6 +17,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.cargador.Cargador;
 import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
 import com.asbestosstar.crashdetector.cargador.CargadorMCForge;
+import com.asbestosstar.crashdetector.cargador.LectorModuleXmlFC12;
 
 /**
  * Clase que procesa carpetas para buscar mods y clases dentro de ellas. Soporta
@@ -100,7 +101,18 @@ public class ModCarpeta implements ArchivoDeMod {
 					}
 				} else {
 					// Procesar archivo
-					if (nombre.endsWith("modules.xml") || nombre.endsWith(".mod")) {
+					if (nombre.equals(LectorModuleXmlFC12.NOMBRE_ARCHIVO)) {
+						// El descriptor de la raiz o de modules/ pertenece a este mod; uno dentro de
+						// una subcarpeta define un mod independiente.
+						if (!LectorModuleXmlFC12.esRutaDescriptor(rutaRelativa(entrada))) {
+							contieneDefinicionMod = true;
+						}
+						byte[] mxmlbytes = Files.readAllBytes(entrada);
+						nombres.addAll(CargadorFeatureCreep.parsearNombresDescriptorFC12(mxmlbytes));
+						if (this.version.isEmpty()) {
+							this.version = CargadorFeatureCreep.parsearVersionDescriptorFC12(mxmlbytes);
+						}
+					} else if (nombre.endsWith("modules.xml") || nombre.endsWith(".mod")) {
 						contieneDefinicionMod = true;
 
 						if (nombre.endsWith("modules.xml")) {
@@ -156,6 +168,10 @@ public class ModCarpeta implements ArchivoDeMod {
 		}
 
 		return contieneDefinicionMod;
+	}
+
+	private String rutaRelativa(Path entrada) {
+		return rutaRaiz.relativize(entrada).toString().replace(File.separatorChar, '/');
 	}
 
 	/**

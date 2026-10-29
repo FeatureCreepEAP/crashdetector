@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
@@ -12,8 +13,8 @@ import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
  * Cargador de FeatureCreep.
  *
  * Soporta: - Loader clasico de FeatureCreep - FlatLoader de FeatureCreep -
- * Metadata de JBoss modules.xml - Metadata de HOI4 .mod - Metadata de FlatMods
- * en fcflat.properties
+ * Metadata de FeatureCreep 12 module.xml - Metadata de JBoss modules.xml
+ * (legado) - Metadata de HOI4 .mod - Metadata de FlatMods en fcflat.properties
  */
 public class CargadorFeatureCreep implements Cargador {
 
@@ -61,6 +62,36 @@ public class CargadorFeatureCreep implements Cargador {
 	@Override
 	public String id() {
 		return "featurecreep";
+	}
+
+	/**
+	 * Nombres de un descriptor module.xml de FeatureCreep 12: el identificador
+	 * FeatureCreep y, si difiere, el nombre del modulo JBoss. Si el XML no se puede
+	 * interpretar, usa el parser heredado.
+	 */
+	public static List<String> parsearNombresDescriptorFC12(byte[] contenido) throws IOException {
+		Optional<LectorModuleXmlFC12.Descriptor> descriptor = LectorModuleXmlFC12.leer(contenido);
+		if (!descriptor.isPresent()) {
+			return parsearNombreModuloJBoss(contenido);
+		}
+		List<String> nombres = new ArrayList<>();
+		nombres.add(descriptor.get().getIdMod());
+		if (!descriptor.get().getNombre().equals(descriptor.get().getIdMod())) {
+			nombres.add(descriptor.get().getNombre());
+		}
+		return nombres;
+	}
+
+	/**
+	 * Version de un descriptor module.xml de FeatureCreep 12. Si el XML no se puede
+	 * interpretar, usa el parser heredado.
+	 */
+	public static String parsearVersionDescriptorFC12(byte[] contenido) throws IOException {
+		Optional<LectorModuleXmlFC12.Descriptor> descriptor = LectorModuleXmlFC12.leer(contenido);
+		if (!descriptor.isPresent()) {
+			return parsearVersionModuloJBoss(contenido);
+		}
+		return descriptor.get().getVersion();
 	}
 
 	/**

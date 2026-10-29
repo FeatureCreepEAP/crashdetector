@@ -99,11 +99,17 @@ public class CrashDetectorFCMC {
 	/* ==================== INTEGRACIÓN ==================== */
 	/* ===================================================== */
 
+	/**
+	 * Inicializa la lectura de mods FeatureCreep. Los descriptores FC12 se
+	 * interpretan en el paquete cargador; aqui solo se obtienen las rutas de mods
+	 * a traves del puente, que se invoca por reflexion para que su ausencia nunca
+	 * rompa el arranque.
+	 */
 	private static void inicializarFeatureCreepJBoss() {
 
 		try {
 
-			List<Path> paths = CrashDetectorFeatureCreepJBoss.obtenerPathsDeMods();
+			List<Path> paths = obtenerPathsDelPuente();
 
 			Transformaciones.init();
 
@@ -112,6 +118,16 @@ public class CrashDetectorFCMC {
 		} catch (Throwable t) {
 			// Fallo silencioso: nunca romper el arranque
 		}
+	}
+
+	private static List<Path> obtenerPathsDelPuente() throws ReflectiveOperationException {
+		Class<?> puente = Class.forName(BRIDGE_CLASS, true, CrashDetectorFCMC.class.getClassLoader());
+		List<?> obtenidos = (List<?>) puente.getMethod("obtenerPathsDeMods").invoke(null);
+		List<Path> paths = new ArrayList<>();
+		for (Object p : obtenidos) {
+			paths.add((Path) p);
+		}
+		return paths;
 	}
 
 	/* ===================================================== */

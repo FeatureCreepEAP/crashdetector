@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.9" name="ejemplo.modfc12">
+    <main-class name="ejemplo.modfc12.Principal"/>
+
+    <properties>
+        <property name="FeatureCreep-Mod-Id" value="ejemplo_modfc12"/>
+        <property name="FeatureCreep-Name" value="Ejemplo FC12"/>
+        <property name="FeatureCreep-Visibility" value="public"/>
+        <property name="FeatureCreep-Host-Fallback" value="true"/>
+        <property name="FeatureCreep-Nested-Jars" value="private"/>
+        <property name="Module-Version" value="1.2.3"/>
+        <property name="MixinConfigs" value="ejemplo.mixins.json"/>
+    </properties>
+
+    <entrypoint type="preLaunch" class="ejemplo.modfc12.Temprano"/>
+    <entrypoint type="client" class="ejemplo.modfc12.Cliente"/>
+
+    <dependencies>
+        <module name="some.shared.api" kind="optional" export="false" services="import"/>
+    </dependencies>
+
+    <provides>
+        <service name="ejemplo.api.Servicio">
+            <with-class name="ejemplo.modfc12.ServicioImpl"/>
+        </service>
+    </provides>
+</module>

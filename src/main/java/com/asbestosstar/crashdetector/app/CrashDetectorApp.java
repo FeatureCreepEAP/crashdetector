@@ -1,12 +1,16 @@
 package com.asbestosstar.crashdetector.app;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
+import java.security.CodeSource;
+import java.util.Optional;
 
 import com.asbestosstar.crashdetector.CargadoresComun;
 import com.asbestosstar.crashdetector.CargadoresComun.CDOrigin;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Transformaciones;
+import com.asbestosstar.crashdetector.cargador.LectorModuleXmlFC12;
 
 /**
  * Controlador principal de la aplicación independiente.
@@ -32,6 +36,12 @@ public class CrashDetectorApp {
 			return;
 		}
 
+		if (declaraOtraMainClassFC12()) {
+			System.out.println("El module.xml de FeatureCreep 12 de este JAR declara otra main-class; "
+					+ "CrashDetectorApp no se ejecutará como aplicación independiente.");
+			return;
+		}
+
 		if (CrashDetectorCli.procesarArgumentos(args)) {
 			int codigo = CrashDetectorCli.obtenerCodigoSalida();
 			if (codigo != CrashDetectorCli.CODIGO_EXITO) {
@@ -50,6 +60,28 @@ public class CrashDetectorApp {
 		int codigo = CrashDetectorCli.obtenerCodigoSalida();
 		if (codigo != CrashDetectorCli.CODIGO_EXITO) {
 			System.exit(codigo);
+		}
+	}
+
+	/**
+	 * Un module.xml FC12 del origen tiene precedencia sobre el Main-Class del
+	 * manifiesto: si declara otra clase principal, esa es la que debe ejecutarse.
+	 */
+	private static boolean declaraOtraMainClassFC12() {
+		Optional<LectorModuleXmlFC12.Descriptor> descriptor = LectorModuleXmlFC12.buscarEnOrigen(origenDeCodigo());
+		String mainClass = LectorModuleXmlFC12.resolverMainClass(descriptor, null);
+		return !mainClass.isEmpty() && !mainClass.equals(CrashDetectorApp.class.getName());
+	}
+
+	private static File origenDeCodigo() {
+		try {
+			CodeSource codigo = CrashDetectorApp.class.getProtectionDomain().getCodeSource();
+			if (codigo == null || codigo.getLocation() == null) {
+				return null;
+			}
+			return new File(codigo.getLocation().toURI());
+		} catch (URISyntaxException | SecurityException | IllegalArgumentException e) {
+			return null;
 		}
 	}
 
