@@ -35,6 +35,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.detectorlanzer.DetectorLanzer;
 
 public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
@@ -576,8 +577,7 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 	}
 
 	private void estilizarCombo(JComboBox<?> combo) {
-		combo.setBackground(colorTabla.obtener());
-		combo.setForeground(colorTexto.obtener());
+		CrashDetectorGUI.estilizarComboBox(combo, colorTabla.obtener(), colorTexto.obtener());
 		combo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 	}
 

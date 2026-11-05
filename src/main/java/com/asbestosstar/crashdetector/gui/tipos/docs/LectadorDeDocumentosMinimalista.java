@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 public class LectadorDeDocumentosMinimalista extends LectadorDeDocumentosGUI {
 
@@ -119,8 +120,7 @@ public class LectadorDeDocumentosMinimalista extends LectadorDeDocumentosGUI {
 		}
 
 		if (comboIdiomas != null) {
-			comboIdiomas.setBackground(colorPanel.obtener());
-			comboIdiomas.setForeground(colorTexto.obtener());
+			CrashDetectorGUI.estilizarComboBox(comboIdiomas, colorPanel.obtener(), colorTexto.obtener());
 			comboIdiomas.setFont(comboIdiomas.getFont().deriveFont(Font.PLAIN, 14f));
 		}
 

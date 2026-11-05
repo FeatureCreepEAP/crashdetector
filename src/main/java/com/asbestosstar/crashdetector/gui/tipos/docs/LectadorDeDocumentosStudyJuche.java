@@ -23,6 +23,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 public class LectadorDeDocumentosStudyJuche extends LectadorDeDocumentosGUI {
 
@@ -131,8 +132,7 @@ public class LectadorDeDocumentosStudyJuche extends LectadorDeDocumentosGUI {
 		}
 
 		if (comboIdiomas != null) {
-			comboIdiomas.setBackground(colorPanel.obtener());
-			comboIdiomas.setForeground(colorTexto.obtener());
+			CrashDetectorGUI.estilizarComboBox(comboIdiomas, colorPanel.obtener(), colorTexto.obtener());
 			comboIdiomas.setFont(comboIdiomas.getFont().deriveFont(Font.PLAIN, 14f));
 		}
 

@@ -12,6 +12,7 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 public class MixinsGUIChiarru extends MixinsGUI {
 
@@ -110,8 +111,7 @@ public class MixinsGUIChiarru extends MixinsGUI {
 		}
 
 		if (comboMods != null) {
-			comboMods.setBackground(comboFondo);
-			comboMods.setForeground(texto);
+			CrashDetectorGUI.estilizarComboBox(comboMods, comboFondo, texto);
 			comboMods.setToolTipText(MonitorDePID.idioma.mixinsTooltipCombo());
 		}
 

@@ -18,4 +18,8 @@ build.log
 /target/
 
 .DS_Store
+
+# Downloaded modpacks for unit tests (re-downloaded on demand)
+src/test/resources/modpacks/*.zip
+src/test/resources/modpacks/*.mrpack
 **/.DS_Store

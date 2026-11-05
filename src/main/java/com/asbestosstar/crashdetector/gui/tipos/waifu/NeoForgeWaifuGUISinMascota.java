@@ -15,6 +15,7 @@ import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 /**
  * Implementación visual inicial de NeoForge Waifu.
@@ -149,8 +150,7 @@ public class NeoForgeWaifuGUISinMascota extends NeoForgeWaifuGUI {
 		}
 
 		if (comboConsulta != null) {
-			comboConsulta.setBackground(colorCajaTexto.obtener());
-			comboConsulta.setForeground(colorTexto.obtener());
+			CrashDetectorGUI.estilizarComboBox(comboConsulta, colorCajaTexto.obtener(), colorTexto.obtener());
 		}
 
 		if (checkEditorAvanzado != null) {

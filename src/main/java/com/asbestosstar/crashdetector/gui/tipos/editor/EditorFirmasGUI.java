@@ -53,6 +53,7 @@ import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
 import com.asbestosstar.crashdetector.analizador.firmas.v0.FirmasV0;
 import com.asbestosstar.crashdetector.analizador.firmas.v0.VerificacionFirmasV0;
 import com.asbestosstar.crashdetector.config.ConfigColor;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
@@ -504,8 +505,10 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 		comp.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		if (comp instanceof JTextField)
 			((JTextField) comp).setBackground(fondoCampo.obtener());
-		if (comp instanceof JComboBox)
-			((JComboBox<?>) comp).setBackground(fondoCampo.obtener());
+		if (comp instanceof JComboBox) {
+			JComboBox<?> combo = (JComboBox<?>) comp;
+			CrashDetectorGUI.estilizarComboBox(combo, fondoCampo.obtener(), textoCampo.obtener());
+		}
 	}
 
 	public JButton boton(String texto, Runnable r) {
