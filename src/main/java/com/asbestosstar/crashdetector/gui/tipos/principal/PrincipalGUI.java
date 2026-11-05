@@ -307,24 +307,11 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	public void estilizarBoton(JButton boton) {
 		final int altoBoton = 26;
 
-		if (!CrashDetectorGUI.esMac()) {
-			boton.setBackground(colorBoton.obtener());
-			boton.setForeground(colorTexto.obtener());
-			boton.setOpaque(true);
-			boton.setContentAreaFilled(true);
-			boton.setBorderPainted(false);
-			boton.setFocusPainted(false);
-			boton.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-
-			/*
-			 * Elimina el relleno vertical excesivo de los botones de la barra lateral. Se
-			 * conserva un pequeño margen horizontal para que el texto no toque los bordes.
-			 */
-			boton.setMargin(new java.awt.Insets(0, 0, 0, 0));
-			boton.setBorder(BorderFactory.createEmptyBorder(1, 8, 1, 8));
-		} else {
-			boton.setContentAreaFilled(false);
-		}
+		boton.setFocusPainted(false);
+		boton.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		boton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+		boton.setBorder(BorderFactory.createEmptyBorder(1, 8, 1, 8));
+		CrashDetectorGUI.estilizarBoton(boton, colorBoton.obtener(), colorTexto.obtener());
 
 		/*
 		 * La altura compacta permite mostrar todos los botones en una pantalla de 1024

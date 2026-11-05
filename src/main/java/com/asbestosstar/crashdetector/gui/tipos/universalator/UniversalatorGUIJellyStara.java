@@ -25,6 +25,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 /**
  * Tema JellyStara para Universalator.
@@ -144,9 +145,7 @@ public class UniversalatorGUIJellyStara extends UniversalatorGUI {
 	private void estilizarBoton(JButton boton, Color fondo, Color texto, Color borde) {
 		if (boton == null)
 			return;
-		boton.setOpaque(true);
-		boton.setBackground(fondo);
-		boton.setForeground(texto);
+		CrashDetectorGUI.estilizarBoton(boton, fondo, texto);
 		boton.setBorder(BorderFactory.createLineBorder(borde));
 		boton.setFocusPainted(false);
 	}

@@ -17,6 +17,7 @@ import javax.swing.JTextArea;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
 public class CanarioDeOrdenJudicialGUI1984 extends CanarioDeOrdenJudicialGUI {
@@ -138,8 +139,8 @@ public class CanarioDeOrdenJudicialGUI1984 extends CanarioDeOrdenJudicialGUI {
 		resultado.setForeground(colorTexto.obtener());
 		descripcion.setForeground(colorTexto.obtener());
 
-		botonRevisar.setBackground(colorBoton.obtener());
-		botonCerrar.setBackground(colorBoton.obtener());
+		CrashDetectorGUI.estilizarBoton(botonRevisar, colorBoton.obtener(), colorTexto.obtener());
+		CrashDetectorGUI.estilizarBoton(botonCerrar, colorBoton.obtener(), colorTexto.obtener());
 
 		revalidate();
 		repaint();

@@ -72,12 +72,10 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		// Crear el contenedor de pestañas
 		tabbedPane = new JTabbedPane();
 
-		// Si NO es macOS, oscurecer el fondo de las pestañas para mejorar el contraste
-		if (!CrashDetectorGUI.esMac()) {
-			colorFondoPestanias = colorFondo.obtener().darker().darker();
-			tabbedPane.setBackground(colorFondoPestanias);
-			tabbedPane.setOpaque(true);
-		}
+		// Oscurecer el fondo de las pestañas para mejorar el contraste
+		colorFondoPestanias = colorFondo.obtener().darker().darker();
+		tabbedPane.setBackground(colorFondoPestanias);
+		tabbedPane.setOpaque(true);
 
 		// Configurar las pestañas
 		configurarPestanas();
@@ -98,7 +96,7 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 	}
 
 	public void configurarPestanas() {
-		Color colorTextoPestanias = CrashDetectorGUI.esMac() ? null : colorTexto.obtener();
+		Color colorTextoPestanias = colorTexto.obtener();
 
 		// Pestaña "Inicio de Juego/App"
 		JLabel incicio_del_juego = new JLabel(MonitorDePID.idioma.inicioApp());
@@ -125,14 +123,9 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 	public void configurarBotonGuardar() {
 		JButton guardarButon = new JButton(MonitorDePID.idioma.guardarYCerrar());
 
-		if (CrashDetectorGUI.esMac()) {
-			guardarButon.setContentAreaFilled(false);
-		} else {
-			guardarButon.setForeground(colorTexto.obtener());
-			guardarButon.setBackground(colorBoton.obtener());
-			guardarButon.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-			guardarButon.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-		}
+		guardarButon.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		guardarButon.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+		CrashDetectorGUI.estilizarBoton(guardarButon, colorBoton.obtener(), colorTexto.obtener());
 		guardarButon.setFocusPainted(false);
 
 		guardarButon.addActionListener(e -> {
@@ -141,21 +134,13 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 
 		// Panel para el botón
 		JPanel butonPanel = new JPanel(new BorderLayout());
-		if (!CrashDetectorGUI.esMac()) {
-			butonPanel.setBackground(colorFondo.obtener());
-		} else {
-			butonPanel.setOpaque(false);
-		}
+		butonPanel.setBackground(colorFondo.obtener());
 
 		butonPanel.add(guardarButon, BorderLayout.CENTER);
 		add(butonPanel, BorderLayout.SOUTH);
 	}
 
 	public Component crearComponentePestania(JLabel etiqueta) {
-		if (CrashDetectorGUI.esMac()) {
-			return etiqueta;
-		}
-
 		JPanel envoltura = new JPanel(new BorderLayout());
 		envoltura.setOpaque(true);
 		envoltura.setBackground(colorFondoPestanias != null ? colorFondoPestanias : colorFondo.obtener().darker());
@@ -230,7 +215,6 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		Config config = Config.obtenerInstancia();
 		ConfigMundial munidial = ConfigMundial.obtenerInstancia();
 
-		boolean esMac = CrashDetectorGUI.esMac();
 		Color colorDeTextoDeGui = colorTexto.obtener();
 
 		// ===== Consola de desarrollo (Munidial / Ningun) =====
@@ -254,10 +238,7 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 			}
 		});
 
-		if (!esMac) {
-			comboDev.setBackground(colorCajaTexto.obtener());
-			comboDev.setForeground(colorDeTextoDeGui);
-		}
+		CrashDetectorGUI.estilizarComboBox(comboDev, colorCajaTexto.obtener(), colorDeTextoDeGui);
 
 		panel.add(comboDev);
 
@@ -270,10 +251,8 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 
 		JTextField lookAndFeelField = crearCampoTextoConfig(lookAndFeel.obtener(), lookAndFeel::escribir);
 
-		if (!esMac) {
-			lookAndFeelField.setBackground(colorCajaTexto.obtener());
-			lookAndFeelField.setForeground(colorDeTextoDeGui);
-		}
+		lookAndFeelField.setBackground(colorCajaTexto.obtener());
+		lookAndFeelField.setForeground(colorDeTextoDeGui);
 
 		panel.add(lookAndFeelField);
 
@@ -284,10 +263,9 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 
 		JTextField sitioDeInformesField = crearCampoTextoConfig(config.obtenerSitoDeInformes(),
 				config::guardarSitioDeInformes);
-		if (!esMac) {
-			sitioDeInformesField.setBackground(colorCajaTexto.obtener());
-			sitioDeInformesField.setForeground(colorDeTextoDeGui);
-		}
+		sitioDeInformesField.setBackground(colorCajaTexto.obtener());
+		sitioDeInformesField.setForeground(colorDeTextoDeGui);
+
 		panel.add(sitioDeInformesField);
 
 		// Campo: Clave API mundial de CurseForge
@@ -298,10 +276,8 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		JTextField curseForgeClaveApiMundialField = crearCampoTextoConfig(munidial.obtenerCurseForgeClaveApi(),
 				munidial::guardarCurseForgeClaveApi);
 
-		if (!esMac) {
-			curseForgeClaveApiMundialField.setBackground(colorCajaTexto.obtener());
-			curseForgeClaveApiMundialField.setForeground(colorDeTextoDeGui);
-		}
+		curseForgeClaveApiMundialField.setBackground(colorCajaTexto.obtener());
+		curseForgeClaveApiMundialField.setForeground(colorDeTextoDeGui);
 
 		panel.add(curseForgeClaveApiMundialField);
 
@@ -316,10 +292,8 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		JTextField curseForgeEndpointField = crearCampoTextoConfig(curseForgeEndpoint.obtener(),
 				curseForgeEndpoint::escribir);
 
-		if (!esMac) {
-			curseForgeEndpointField.setBackground(colorCajaTexto.obtener());
-			curseForgeEndpointField.setForeground(colorDeTextoDeGui);
-		}
+		curseForgeEndpointField.setBackground(colorCajaTexto.obtener());
+		curseForgeEndpointField.setForeground(colorDeTextoDeGui);
 
 		panel.add(curseForgeEndpointField);
 
@@ -331,10 +305,8 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		JTextField tlmodsEndpointField = crearCampoTextoConfig(ProveedorModsTlmods.ENDPOINT.obtener(),
 				ProveedorModsTlmods.ENDPOINT::escribir);
 
-		if (!esMac) {
-			tlmodsEndpointField.setBackground(colorCajaTexto.obtener());
-			tlmodsEndpointField.setForeground(colorDeTextoDeGui);
-		}
+		tlmodsEndpointField.setBackground(colorCajaTexto.obtener());
+		tlmodsEndpointField.setForeground(colorDeTextoDeGui);
 
 		panel.add(tlmodsEndpointField);
 
@@ -346,10 +318,8 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		JTextField minecraftStorageEndpointField = crearCampoTextoConfig(
 				ProveedorModsMinecraftStorage.ENDPOINT.obtener(), ProveedorModsMinecraftStorage.ENDPOINT::escribir);
 
-		if (!esMac) {
-			minecraftStorageEndpointField.setBackground(colorCajaTexto.obtener());
-			minecraftStorageEndpointField.setForeground(colorDeTextoDeGui);
-		}
+		minecraftStorageEndpointField.setBackground(colorCajaTexto.obtener());
+		minecraftStorageEndpointField.setForeground(colorDeTextoDeGui);
 
 		panel.add(minecraftStorageEndpointField);
 
@@ -359,10 +329,9 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		panel.add(labelHMCL);
 
 		JTextField carpetaHMCL = crearCampoTextoConfig(config.obtenerCarpetaHMCL(), config::guardarCarpetaHMCL);
-		if (!esMac) {
-			carpetaHMCL.setBackground(colorCajaTexto.obtener());
-			carpetaHMCL.setForeground(colorDeTextoDeGui);
-		}
+		carpetaHMCL.setBackground(colorCajaTexto.obtener());
+		carpetaHMCL.setForeground(colorDeTextoDeGui);
+
 		panel.add(carpetaHMCL);
 
 		// Editor HTML
@@ -371,11 +340,9 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		panel.add(labelEditarColores);
 
 		JButton botonEditarColores = new JButton("HTML WYSIWYG PLANTILLA");
-		if (!esMac) {
-			botonEditarColores.setForeground(colorTexto.obtener());
-			botonEditarColores.setBackground(colorBoton.obtener());
 			botonEditarColores.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-		}
+		CrashDetectorGUI.estilizarBoton(botonEditarColores, colorBoton.obtener(), colorDeTextoDeGui);
+
 		botonEditarColores.setFocusPainted(false);
 		botonEditarColores.addActionListener(e -> {
 			JDialog dialogo = new JDialog(SwingUtilities.getWindowAncestor(this), "HTML WYSIWYG PLANTILLA");
@@ -396,11 +363,9 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		panel.add(labelEditarGUI);
 
 		JButton botonEditarGUIs = new JButton("Editar GUIs");
-		if (!esMac) {
-			botonEditarGUIs.setForeground(colorTexto.obtener());
-			botonEditarGUIs.setBackground(colorBoton.obtener());
 			botonEditarGUIs.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-		}
+		CrashDetectorGUI.estilizarBoton(botonEditarGUIs, colorBoton.obtener(), colorDeTextoDeGui);
+
 		botonEditarGUIs.setFocusPainted(false);
 		botonEditarGUIs.addActionListener(e -> {
 			EditorGUI editor_gui = TipoGUI.EDITOR_GUI.obtenerGUIPredeterminado(CDSkinCape.ID, () -> new CDSkinCape());
@@ -430,10 +395,8 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 					ConfigString.de("guitipo_" + tipo.id(), "ningun").escribir(seleccionado);
 				});
 
-				if (!esMac) {
-					dropdown.setBackground(colorCajaTexto.obtener());
-					dropdown.setForeground(colorDeTextoDeGui);
-				}
+ 				dropdown.setBackground(colorCajaTexto.obtener());
+ 				dropdown.setForeground(colorDeTextoDeGui);
 
 				panel.add(dropdown);
 			}
@@ -480,10 +443,7 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 			CopiaDeSeguridadDeArchivos.autoBackupFrecuencia.escribir(seleccionado);
 		});
 
-		if (!esMac) {
-			comboAutoBackupFrecuencia.setBackground(colorCajaTexto.obtener());
-			comboAutoBackupFrecuencia.setForeground(colorDeTextoDeGui);
-		}
+		CrashDetectorGUI.estilizarComboBox(comboAutoBackupFrecuencia, colorCajaTexto.obtener(), colorDeTextoDeGui);
 
 		panel.add(comboAutoBackupFrecuencia);
 
@@ -501,10 +461,8 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 					}
 				});
 
-		if (!esMac) {
-			autoBackupDiasConservarField.setBackground(colorCajaTexto.obtener());
-			autoBackupDiasConservarField.setForeground(colorDeTextoDeGui);
-		}
+		autoBackupDiasConservarField.setBackground(colorCajaTexto.obtener());
+		autoBackupDiasConservarField.setForeground(colorDeTextoDeGui);
 
 		panel.add(autoBackupDiasConservarField);
 
@@ -522,10 +480,8 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 					}
 				});
 
-		if (!esMac) {
-			autoBackupTamanoMaximoMBField.setBackground(colorCajaTexto.obtener());
-			autoBackupTamanoMaximoMBField.setForeground(colorDeTextoDeGui);
-		}
+		autoBackupTamanoMaximoMBField.setBackground(colorCajaTexto.obtener());
+		autoBackupTamanoMaximoMBField.setForeground(colorDeTextoDeGui);
 
 		panel.add(autoBackupTamanoMaximoMBField);
 

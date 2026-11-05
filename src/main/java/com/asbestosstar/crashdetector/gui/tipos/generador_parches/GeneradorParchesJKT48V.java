@@ -24,6 +24,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 /** Implementación predeterminada inspirada en JKT48V. */
 public final class GeneradorParchesJKT48V extends GeneradorParchesGUI {
@@ -167,10 +168,9 @@ public final class GeneradorParchesJKT48V extends GeneradorParchesGUI {
 			return;
 		}
 		boolean primario = boton == btnCrear || boton == btnCompilar;
-		boton.setBackground(primario ? colorAcento.obtener() : colorAcentoSecundario.obtener());
-		boton.setForeground(colorTexto.obtener());
+		Color bg = primario ? colorAcento.obtener() : colorAcentoSecundario.obtener();
+		CrashDetectorGUI.estilizarBoton(boton, bg, colorTexto.obtener());
 		boton.setFocusPainted(false);
-		boton.setOpaque(true);
 		boton.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(colorBorde.obtener()),
 				BorderFactory.createEmptyBorder(6, 11, 6, 11)));
 	}

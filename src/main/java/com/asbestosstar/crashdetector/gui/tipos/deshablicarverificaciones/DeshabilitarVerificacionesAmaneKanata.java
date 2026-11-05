@@ -458,15 +458,10 @@ public class DeshabilitarVerificacionesAmaneKanata extends DeshablicarVerificaci
 	 * @param btn Botón a estilizar
 	 */
 	private void estilizarBoton(JButton btn) {
-		if (!CrashDetectorGUI.esMac()) {
-			btn.setBackground(colorBoton.obtener());
-			btn.setForeground(Color.WHITE);
-			btn.setFocusPainted(false);
-			btn.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
-		} else {
-			btn.setContentAreaFilled(false);
-		}
+		btn.setFocusPainted(false);
+		btn.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
 		btn.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		CrashDetectorGUI.estilizarBoton(btn, colorBoton.obtener(), Color.WHITE);
 	}
 
 	@Override

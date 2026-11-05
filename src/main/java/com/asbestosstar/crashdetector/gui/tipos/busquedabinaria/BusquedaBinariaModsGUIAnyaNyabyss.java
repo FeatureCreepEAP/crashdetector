@@ -142,10 +142,7 @@ public class BusquedaBinariaModsGUIAnyaNyabyss extends BusquedaBinariaModsGUI {
 		if (lista == null) {
 			return;
 		}
-		lista.setBackground(fondo);
-		lista.setForeground(texto);
-		lista.setSelectionBackground(seleccion);
-		lista.setSelectionForeground(texto);
+		CrashDetectorGUI.estilizarLista(lista, fondo, texto, seleccion);
 		lista.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 	}
 
@@ -167,16 +164,8 @@ public class BusquedaBinariaModsGUIAnyaNyabyss extends BusquedaBinariaModsGUI {
 		}
 		boton.setFocusPainted(false);
 		boton.setFont(boton.getFont().deriveFont(Font.BOLD));
-		if (CrashDetectorGUI.esMac()) {
-			boton.setOpaque(false);
-			boton.setContentAreaFilled(false);
-			return;
-		}
-		boton.setOpaque(true);
-		boton.setContentAreaFilled(true);
-		boton.setBackground(fondo);
-		boton.setForeground(texto);
 		boton.setBorder(BorderFactory.createLineBorder(colorBorde.obtener(), 1));
+		CrashDetectorGUI.estilizarBoton(boton, fondo, texto);
 	}
 
 	private void aplicarTemaRecursivo(Container contenedor, Color fondo, Color panel, Color texto, Color borde) {
@@ -204,12 +193,31 @@ public class BusquedaBinariaModsGUIAnyaNyabyss extends BusquedaBinariaModsGUI {
 				split.setBackground(fondo);
 				split.setDividerSize(6);
 			}
+			if (componente instanceof JTextArea) {
+				JTextArea area = (JTextArea) componente;
+				area.setBackground(panel);
+				area.setForeground(texto);
+				area.setCaretColor(texto);
+			}
 			if (componente instanceof JComponent && !(componente instanceof JTextArea) && !(componente instanceof JList)
 					&& !(componente instanceof JButton)) {
 				((JComponent) componente).setOpaque(true);
 			}
 			if (componente instanceof Container) {
 				aplicarTemaRecursivo((Container) componente, fondo, panel, texto, borde);
+			}
+		}
+		// Re-apply list and area styling after recursive descent to restore colors on GTK
+		for (Component componente : contenedor.getComponents()) {
+			if (componente instanceof JList) {
+				JList<?> lista = (JList<?>) componente;
+				estilizarLista(lista, panel, texto, colorSeleccion.obtener());
+			}
+			if (componente instanceof JTextArea) {
+				JTextArea area = (JTextArea) componente;
+				if (area == areaHistorial) {
+					estilizarArea(area, panel, texto, colorSeleccion.obtener());
+				}
 			}
 		}
 	}

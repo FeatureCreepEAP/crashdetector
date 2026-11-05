@@ -28,6 +28,7 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.RenderizadorBarraSampler;
 
 public class SamplerGUIEineLotta extends SamplerGUI {
@@ -120,8 +121,8 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 		tabla.setSelectionBackground(new Color(205, 218, 240));
 		tabla.setSelectionForeground(colorTexto.obtener());
 
-		tabla.getTableHeader().setBackground(colorBoton.obtener());
-		tabla.getTableHeader().setForeground(colorTexto.obtener());
+		CrashDetectorGUI.estilizarEncabezadoTabla(tabla.getTableHeader(), colorBoton.obtener(),
+				colorTexto.obtener());
 
 		RenderizadorBarraSampler renderizador = new RenderizadorBarraSampler(colorPanel.obtener(), colorBarra.obtener(),
 				Color.WHITE);

@@ -22,6 +22,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 /**
  * Tema del visor de heap dump inspirado en la selección iraní de fútbol.
@@ -94,13 +95,9 @@ public final class VisorHeapDumpIranFifa extends VisorHeapDumpGUI {
 		}
 
 		if (tablaClases != null) {
-			tablaClases.setBackground(tabla);
-			tablaClases.setForeground(texto);
-			tablaClases.setSelectionBackground(seleccion);
-			tablaClases.setSelectionForeground(texto);
+			CrashDetectorGUI.estilizarTabla(tablaClases, tabla, texto, seleccion, texto);
 			tablaClases.setGridColor(borde);
-			tablaClases.getTableHeader().setBackground(verde);
-			tablaClases.getTableHeader().setForeground(textoClaro);
+			CrashDetectorGUI.estilizarEncabezadoTabla(tablaClases.getTableHeader(), verde, textoClaro);
 		}
 
 		if (arbolMods != null) {
@@ -125,6 +122,11 @@ public final class VisorHeapDumpIranFifa extends VisorHeapDumpGUI {
 
 		cargarImagen();
 		aplicarTemaRecursivo(panelRaiz, fondo, panel, texto, textoClaro);
+
+		// Re-apply tab styling after recursive descent to restore native tab text colors on GTK
+		if (pestanas != null) {
+			CrashDetectorGUI.estilizarPestanas(pestanas, panel, texto);
+		}
 
 		/*
 		 * Restauramos componentes cuyo color específico no debe ser sustituido por el
@@ -180,12 +182,8 @@ public final class VisorHeapDumpIranFifa extends VisorHeapDumpGUI {
 			return;
 		}
 		boton.setFocusPainted(false);
-		boton.setOpaque(true);
-		boton.setContentAreaFilled(true);
-		boton.setBorderPainted(false);
 		boton.setBorder(BorderFactory.createEmptyBorder(8, 12, 8, 12));
-		boton.setBackground(fondo);
-		boton.setForeground(texto);
+		CrashDetectorGUI.estilizarBoton(boton, fondo, texto);
 	}
 
 	private void aplicarTemaRecursivo(Container contenedor, Color fondo, Color panel, Color texto, Color textoClaro) {
@@ -209,15 +207,17 @@ public final class VisorHeapDumpIranFifa extends VisorHeapDumpGUI {
 				scroll.setBackground(panel);
 				scroll.getViewport().setBackground(panel);
 			}
-			if (componente instanceof JViewport) {
+ 			if (componente instanceof JViewport) {
 				componente.setBackground(panel);
-			}
-			if (componente instanceof JTabbedPane) {
-				componente.setBackground(panel);
-				componente.setForeground(texto);
 			}
 			if (componente instanceof Container) {
 				aplicarTemaRecursivo((Container) componente, fondo, panel, texto, textoClaro);
+			}
+		}
+		// Re-apply tab styling after recursive descent to restore native tab text colors on GTK
+		for (Component componente : contenedor.getComponents()) {
+			if (componente instanceof JTabbedPane) {
+				CrashDetectorGUI.estilizarPestanas((JTabbedPane) componente, panel, texto);
 			}
 		}
 	}

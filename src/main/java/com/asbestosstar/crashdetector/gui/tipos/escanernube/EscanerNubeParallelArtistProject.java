@@ -214,14 +214,7 @@ public final class EscanerNubeParallelArtistProject extends EscanerNubeGUI {
 		}
 
 		boton.setFocusPainted(false);
-		boton.setBackground(fondo);
-
-		if (!CrashDetectorGUI.esMac()) {
-			boton.setOpaque(true);
-			boton.setContentAreaFilled(true);
-			boton.setBorderPainted(true);
-			boton.setForeground(texto);
-		}
+		CrashDetectorGUI.estilizarBoton(boton, fondo, texto);
 	}
 
 	private void estilizarTabla(JTable tabla, Color fondo, Color texto, Color seleccion, Color seleccionTexto,
@@ -229,13 +222,10 @@ public final class EscanerNubeParallelArtistProject extends EscanerNubeGUI {
 		if (tabla == null) {
 			return;
 		}
-		tabla.setBackground(fondo);
-		tabla.setForeground(texto);
-		tabla.setSelectionBackground(seleccion);
-		tabla.setSelectionForeground(seleccionTexto);
+		CrashDetectorGUI.estilizarTabla(tabla, fondo, texto, seleccion, seleccionTexto);
 		tabla.setGridColor(borde);
-		tabla.getTableHeader().setBackground(colorPanel.obtener());
-		tabla.getTableHeader().setForeground(colorTexto.obtener());
+		CrashDetectorGUI.estilizarEncabezadoTabla(tabla.getTableHeader(), colorPanel.obtener(),
+				colorTexto.obtener());
 	}
 
 	private void cargarImagenProyecto() {

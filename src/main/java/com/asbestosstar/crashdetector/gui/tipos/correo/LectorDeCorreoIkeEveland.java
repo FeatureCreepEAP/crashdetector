@@ -49,6 +49,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 /**
  * Implementación visual inspirada en Ike Eveland, con base estructural similar
@@ -805,8 +806,8 @@ public class LectorDeCorreoIkeEveland extends LectorDeCorreoGUI {
 		tablaMensajes.setForeground(colorTexto.obtener());
 		tablaMensajes.setSelectionBackground(colorSeleccion.obtener());
 		tablaMensajes.setSelectionForeground(colorTextoSeleccion.obtener());
-		tablaMensajes.getTableHeader().setBackground(colorBarra.obtener());
-		tablaMensajes.getTableHeader().setForeground(colorTexto.obtener());
+		CrashDetectorGUI.estilizarEncabezadoTabla(tablaMensajes.getTableHeader(), colorBarra.obtener(),
+				colorTexto.obtener());
 		cuerpoMensaje.setBackground(colorCaja.obtener());
 		cuerpoMensaje.setForeground(colorTexto.obtener());
 

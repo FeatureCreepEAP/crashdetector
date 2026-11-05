@@ -236,16 +236,12 @@ public class EscanerMCreatorGUIRosemiLoveLock extends EscanerMCreatorGUI {
 
 		if (botonEscanear != null) {
 			botonEscanear.setFont(fuenteBoton());
-			botonEscanear.setForeground(colorBotonTexto.obtener());
 			botonEscanear.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			botonEscanear.setBorder(new BordeRedondeado(new Color(255, 235, 242), 1, 10));
 			botonEscanear.setFocusPainted(false);
-
-			if (!CrashDetectorGUI.esMac()) {
-				botonEscanear.setBackground(colorBotonFondo.obtener());
-				botonEscanear.setOpaque(true);
-			}
+			CrashDetectorGUI.estilizarBoton(botonEscanear, colorBotonFondo.obtener(), colorBotonTexto.obtener());
 		}
+
 
 		String titulo = tituloVentanaNoLocalizado();
 

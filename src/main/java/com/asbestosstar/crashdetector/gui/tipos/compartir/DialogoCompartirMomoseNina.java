@@ -54,6 +54,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.canario.CanarioDeOrdenJudicialGUI1984;
@@ -703,8 +704,8 @@ public class DialogoCompartirMomoseNina extends DialogoCompartir {
 		if (!esMacOS()) {
 			boton.setOpaque(true);
 			boton.setContentAreaFilled(true);
-			boton.setBackground(primario ? colorAcento.obtener() : colorBotonSecundario.obtener());
-			boton.setForeground(primario ? Color.WHITE : colorTexto.obtener());
+			CrashDetectorGUI.estilizarBoton(boton, primario ? colorAcento.obtener() : colorBotonSecundario.obtener(),
+					primario ? Color.WHITE : colorTexto.obtener());
 		}
 	}
 
@@ -776,12 +777,10 @@ public class DialogoCompartirMomoseNina extends DialogoCompartir {
 			campoEndpoint.setForeground(colorTexto.obtener());
 		}
 		if (comboAPI != null && !esMacOS()) {
-			comboAPI.setBackground(colorCampo.obtener());
-			comboAPI.setForeground(colorTexto.obtener());
+			CrashDetectorGUI.estilizarComboBox(comboAPI, colorCampo.obtener(), colorTexto.obtener());
 		}
 		if (comboSitioRegistro != null && !esMacOS()) {
-			comboSitioRegistro.setBackground(colorCampo.obtener());
-			comboSitioRegistro.setForeground(colorTexto.obtener());
+			CrashDetectorGUI.estilizarComboBox(comboSitioRegistro, colorCampo.obtener(), colorTexto.obtener());
 		}
 		if (checkAnonimizar != null) {
 			checkAnonimizar.setBackground(colorPanelSecundario.obtener());
@@ -809,8 +808,7 @@ public class DialogoCompartirMomoseNina extends DialogoCompartir {
 		boton.setFocusPainted(false);
 		boton.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 		if (!esMacOS()) {
-			boton.setBackground(colorPanel.obtener());
-			boton.setForeground(colorTexto.obtener());
+			CrashDetectorGUI.estilizarBoton(boton, colorPanel.obtener(), colorTexto.obtener());
 			boton.setOpaque(true);
 		}
 	}
@@ -911,8 +909,7 @@ public class DialogoCompartirMomoseNina extends DialogoCompartir {
 			for (JButton boton : new JButton[] { abrir, compartir }) {
 				boton.setFocusPainted(false);
 				if (!esMacOS()) {
-					boton.setBackground(colorBotonSecundario.obtener());
-					boton.setForeground(colorTexto.obtener());
+					CrashDetectorGUI.estilizarBoton(boton, colorBotonSecundario.obtener(), colorTexto.obtener());
 					boton.setOpaque(true);
 				}
 			}

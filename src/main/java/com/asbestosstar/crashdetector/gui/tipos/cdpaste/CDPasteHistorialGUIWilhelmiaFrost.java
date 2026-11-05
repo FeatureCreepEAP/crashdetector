@@ -305,13 +305,10 @@ public class CDPasteHistorialGUIWilhelmiaFrost extends CDPasteHistorialGUI {
 		if (btn == null)
 			return;
 
-		if (!CrashDetectorGUI.esMac()) {
-			btn.setBackground(colorBoton.obtener());
-			btn.setForeground(Color.WHITE);
-			btn.setFocusPainted(false);
-			btn.setBorder(BorderFactory.createLineBorder(colorBorde.obtener(), 2));
-			btn.setFont(new Font("Segoe UI", Font.BOLD, 13));
-		}
+		btn.setFocusPainted(false);
+		btn.setBorder(BorderFactory.createLineBorder(colorBorde.obtener(), 2));
+		btn.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		CrashDetectorGUI.estilizarBoton(btn, colorBoton.obtener(), Color.WHITE);
 	}
 
 	@Override

@@ -201,17 +201,9 @@ public abstract class DerechosPiratasGUI extends JDialog implements CrashDetecto
 		}
 
 		boton.setFont(fuenteUI(Font.BOLD, 12));
-		boton.setOpaque(true);
-		boton.setBackground(fondo);
-		boton.setForeground(texto);
 		boton.setFocusPainted(false);
 		boton.setBorderPainted(true);
-
-		if (CrashDetectorGUI.esMac()) {
-			boton.setContentAreaFilled(true);
-			boton.setMinimumSize(new Dimension(110, 32));
-			boton.setPreferredSize(new Dimension(130, 34));
-		}
+		CrashDetectorGUI.estilizarBoton(boton, fondo, texto);
 	}
 
 	/**
@@ -240,9 +232,7 @@ public abstract class DerechosPiratasGUI extends JDialog implements CrashDetecto
 		if (c instanceof JButton) {
 			JButton b = (JButton) c;
 			b.setOpaque(true);
-			if (CrashDetectorGUI.esMac()) {
-				b.setContentAreaFilled(true);
-			}
+			b.setContentAreaFilled(true);
 		}
 
 		if (c instanceof JScrollPane) {
@@ -272,12 +262,8 @@ public abstract class DerechosPiratasGUI extends JDialog implements CrashDetecto
 		dialogo.setLayout(new BorderLayout(10, 10));
 
 		// En macOS conviene usar dimensiones algo mayores para evitar recortes.
-		if (CrashDetectorGUI.esMac()) {
-			dialogo.setSize(860, 620);
-			dialogo.setMinimumSize(new Dimension(760, 520));
-		} else {
-			dialogo.setSize(760, 520);
-		}
+					dialogo.setSize(760, 520);
+
 
 		JPanel panelCampos = new JPanel(new GridBagLayout());
 		panelCampos.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

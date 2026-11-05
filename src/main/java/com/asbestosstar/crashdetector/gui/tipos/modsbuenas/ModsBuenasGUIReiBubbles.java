@@ -328,13 +328,6 @@ public class ModsBuenasGUIReiBubbles extends ModsBuenasGUI {
 		JButton[] botones = { botonAgregar, botonQuitar, botonEditarRazones, botonGuardar, botonCancelar };
 		for (JButton b : botones) {
 			estilizarBotonSimple(b, colorBoton.obtener(), Color.WHITE, colorBorde.obtener());
-
-			if (b != null && CrashDetectorGUI.esMac()) {
-				// Refuerzo extra para Aqua/macOS
-				b.setOpaque(true);
-				b.setContentAreaFilled(true);
-				b.setBorderPainted(true);
-			}
 		}
 
 		revalidate();

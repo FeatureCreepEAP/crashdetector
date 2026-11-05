@@ -74,8 +74,7 @@ public abstract class GrepRGUI extends JFrame implements CrashDetectorGUI, Boton
 
 	// Estilo para botones
 	public void estilizarBoton(JButton b) {
-		b.setBackground(colorBoton.obtener());
-		b.setForeground(colorBotonTexto.obtener());
+		CrashDetectorGUI.estilizarBoton(b, colorBoton.obtener(), colorBotonTexto.obtener());
 		b.setFocusPainted(false);
 		b.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(colorBordeDestacado.obtener(), 1),
 				BorderFactory.createEmptyBorder(6, 12, 6, 12)));

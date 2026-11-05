@@ -39,11 +39,10 @@ public class ElementoQuickFix extends JPanel {
 		JLabel etiquetaPrincipal = new JLabel(quickFix.etiqueta);
 		etiquetaPrincipal.setFont(etiquetaPrincipal.getFont().deriveFont(Font.BOLD, 14));
 		etiquetaPrincipal.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-		if (!CrashDetectorGUI.esMac()) {
-			etiquetaPrincipal.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTitulo()));
+					etiquetaPrincipal.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTitulo()));
 			etiquetaPrincipal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 			etiquetaPrincipal.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-		}
+
 
 		panelPrincipal.add(etiquetaPrincipal);
 

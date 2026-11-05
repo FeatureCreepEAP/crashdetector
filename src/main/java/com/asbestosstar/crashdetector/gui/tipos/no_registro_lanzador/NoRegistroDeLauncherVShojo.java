@@ -424,25 +424,14 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 	}
 
 	public void estilizarBoton(JButton btn, int paddingV) {
-		if (!CrashDetectorGUI.esMac()) {
-			// Los colores se aplicarán en la implementación concreta
-			btn.setBackground(colorBoton.obtener());
-			btn.setForeground(colorTexto.obtener());
-			btn.setFocusPainted(false);
-			btn.setBorder(BorderFactory.createEmptyBorder(paddingV, 18, paddingV, 18));
-		} else {
-			// por defecto L&F; la subclase puede forzar opaco/colores
-			btn.setContentAreaFilled(false);
-		}
+		btn.setFocusPainted(false);
+		btn.setBorder(BorderFactory.createEmptyBorder(paddingV, 18, paddingV, 18));
 		btn.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		CrashDetectorGUI.estilizarBoton(btn, colorBoton.obtener(), colorTexto.obtener());
 	}
 
 	public void estilizarCombo(JComboBox<?> combo) {
-		if (!CrashDetectorGUI.esMac()) {
-			combo.setBackground(colorBoton.obtener());
-			combo.setForeground(colorTexto.obtener());
-		}
-
+		CrashDetectorGUI.estilizarComboBox(combo, colorBoton.obtener(), colorTexto.obtener());
 		combo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		combo.setPreferredSize(new Dimension(220, 32));
 

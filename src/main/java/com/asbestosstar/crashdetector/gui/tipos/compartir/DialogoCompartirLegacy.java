@@ -42,6 +42,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.canario.CanarioDeOrdenJudicialGUI1984;
 
@@ -580,22 +581,19 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 			if (botonCompartirTodos != null) {
 				botonCompartirTodos.setOpaque(true);
 				botonCompartirTodos.setContentAreaFilled(true);
-				botonCompartirTodos.setBackground(verdeOscuro);
-				botonCompartirTodos.setForeground(colorTexto);
+				CrashDetectorGUI.estilizarBoton(botonCompartirTodos, verdeOscuro, colorTexto);
 			}
 
 			if (botonCompartirMarkdown != null) {
 				botonCompartirMarkdown.setOpaque(true);
 				botonCompartirMarkdown.setContentAreaFilled(true);
-				botonCompartirMarkdown.setBackground(verdeClaro);
-				botonCompartirMarkdown.setForeground(colorTexto);
+				CrashDetectorGUI.estilizarBoton(botonCompartirMarkdown, verdeClaro, colorTexto);
 			}
 
 			if (botonCompartirInstanciaOModpack != null) {
 				botonCompartirInstanciaOModpack.setOpaque(true);
 				botonCompartirInstanciaOModpack.setContentAreaFilled(true);
-				botonCompartirInstanciaOModpack.setBackground(verdeOscuro);
-				botonCompartirInstanciaOModpack.setForeground(colorTexto);
+				CrashDetectorGUI.estilizarBoton(botonCompartirInstanciaOModpack, verdeOscuro, colorTexto);
 			}
 		}
 	}

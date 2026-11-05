@@ -213,10 +213,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		JComboBox<String> comboIdioma = new ComboIdiomasConIcono(idiomas);
 		comboIdioma.setMaximumSize(new Dimension(200, 30));
 		comboIdioma.setPreferredSize(new Dimension(200, 30));
-		if (!CrashDetectorGUI.esMac()) {
-			comboIdioma.setBackground(colorBoton.obtener());
-			comboIdioma.setForeground(colorTexto.obtener());
-		}
+		CrashDetectorGUI.estilizarComboBox(comboIdioma, colorBoton.obtener(), colorTexto.obtener());
 
 		String codigoActual = MonitorDePID.idioma.codigo();
 		String nombreIdiomaActual = Idioma.nombreDeIdiomaDesdeCodigo(codigoActual);
@@ -342,10 +339,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		JComboBox<String> comboAplicacion = new ComboIdiomasConIcono(etiquetasAIcono);
 		comboAplicacion.setMaximumSize(new Dimension(200, 30));
 		comboAplicacion.setPreferredSize(new Dimension(200, 30));
-		if (!CrashDetectorGUI.esMac()) {
-			comboAplicacion.setBackground(colorBoton.obtener());
-			comboAplicacion.setForeground(colorTexto.obtener());
-		}
+		CrashDetectorGUI.estilizarComboBox(comboAplicacion, colorBoton.obtener(), colorTexto.obtener());
 
 		JCheckBox chkDetectarAuto = new JCheckBox(MonitorDePID.idioma.detectarAutomaticamente());
 		chkDetectarAuto.setForeground(colorTexto.obtener());
@@ -446,15 +440,10 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		botonCDLauncher.setMinimumSize(new Dimension(120, 30));
 		botonCDLauncher.setMaximumSize(new Dimension(180, 40));
 		botonCDLauncher.setPreferredSize(new Dimension(150, 30));
-		if (CrashDetectorGUI.esMac()) {
-			botonCDLauncher.setContentAreaFilled(false);
-		} else {
-			botonCDLauncher.setFont(botonCDLauncher.getFont().deriveFont(Font.BOLD, 16f));
-			botonCDLauncher.setBackground(colorBoton.obtener());
-			botonCDLauncher.setForeground(colorTexto.obtener());
-			botonCDLauncher.setContentAreaFilled(true);
-			botonCDLauncher.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-		}
+		botonCDLauncher.setFont(botonCDLauncher.getFont().deriveFont(Font.BOLD, 16f));
+		botonCDLauncher.setContentAreaFilled(true);
+		botonCDLauncher.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+		CrashDetectorGUI.estilizarBoton(botonCDLauncher, colorBoton.obtener(), colorTexto.obtener());
 		botonCDLauncher.addActionListener(e -> botonCDLauncher(botonCDLauncher));
 
 		// --- Botones de acción (derecha)
@@ -569,10 +558,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			estilizarBoton(boton);
 
 			if (tipo == TipoGUI.TODOS_QUICKFIXES) {
-				if (!CrashDetectorGUI.esMac()) {
-					boton.setBackground(lanzerColorBotonQuickFix.obtener());
-					boton.setForeground(colorTexto.obtener());
-				}
+				CrashDetectorGUI.estilizarBoton(boton, lanzerColorBotonQuickFix.obtener(), colorTexto.obtener());
 				boton.addActionListener(e -> mostrarVentanaQuickFix());
 			} else {
 				boton.addActionListener(e -> gui.init());
@@ -653,16 +639,9 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 	public void añadirBotonBarraLateral(JPanel panel, String texto) {
 		JButton boton = new JButton(texto);
-
-		if (!CrashDetectorGUI.esMac()) {
-			boton.setBackground(colorBotonBaraLateral.obtener().darker());
-			boton.setForeground(colorTexto.obtener());
-			boton.setFont(boton.getFont().deriveFont(Font.BOLD, 14f));
-			boton.setContentAreaFilled(true);
-			boton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-		} else {
-			boton.setContentAreaFilled(false);
-		}
+		boton.setFont(boton.getFont().deriveFont(Font.BOLD, 14f));
+		boton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+		CrashDetectorGUI.estilizarBoton(boton, colorBotonBaraLateral.obtener().darker(), colorTexto.obtener());
 
 		boton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		boton.setMargin(new Insets(10, 20, 10, 20));
@@ -686,35 +665,21 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		boton.setIcon(icon);
 		boton.setText("");
 		boton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
-		boton.setFocusPainted(false);
 		boton.setMargin(new Insets(0, 0, 0, 0));
 
-		if (!CrashDetectorGUI.esMac()) {
-			boton.setBackground(colorFondo.obtener());
-			boton.setBorder(BorderFactory.createLineBorder(colorFondo.obtener(), 1));
-			boton.setOpaque(true);
-			boton.setContentAreaFilled(true);
-		} else {
-			boton.setBorderPainted(false);
-			boton.setContentAreaFilled(false);
-			boton.setOpaque(false);
-			boton.setBackground(javax.swing.UIManager.getColor("Button.background"));
-			boton.setForeground(javax.swing.UIManager.getColor("Button.foreground"));
-		}
+		CrashDetectorGUI.estilizarBotonIcono(boton, colorTexto.obtener());
 
 		boton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				if (!CrashDetectorGUI.esMac()) {
-					boton.setBackground(colorBoton.obtener().brighter());
-				}
+				boton.setContentAreaFilled(true);
+				boton.setBackground(colorBoton.obtener().brighter());
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				if (!CrashDetectorGUI.esMac()) {
-					boton.setBackground(colorFondo.obtener());
-				}
+				boton.setContentAreaFilled(false);
+				boton.setBackground(colorFondo.obtener());
 			}
 		});
 
@@ -763,8 +728,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		aplicarSiempreEncima();
 		// ACTIVAR_GUI_SIEMPRE_ENCIMA_EN_RECARGA_FIN
 
-		boolean esMac = CrashDetectorGUI.esMac();
-
 		// =========================
 		// Colores activos
 		// =========================
@@ -789,17 +752,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		// =========================
 		// Botón Volver
 		// =========================
-		if (!esMac) {
-			botonVolver.setOpaque(true);
-			botonVolver.setContentAreaFilled(true);
-			botonVolver.setBackground(botonBarra);
-			botonVolver.setForeground(texto);
-		} else {
-			botonVolver.setOpaque(false);
-			botonVolver.setContentAreaFilled(false);
-			botonVolver.setBackground(javax.swing.UIManager.getColor("Button.background"));
-			botonVolver.setForeground(javax.swing.UIManager.getColor("Button.foreground"));
-		}
+		CrashDetectorGUI.estilizarBoton(botonVolver, botonBarra, texto);
 
 		// =========================
 		// Barra inferior
@@ -817,21 +770,11 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		// Botón central CDLauncher
 		// =========================
 		if (botonCDLauncherRef != null) {
-			if (!esMac) {
-				botonCDLauncherRef.setOpaque(true);
-				botonCDLauncherRef.setContentAreaFilled(true);
-				botonCDLauncherRef.setBackground(boton);
-				botonCDLauncherRef.setForeground(texto);
-			} else {
-				botonCDLauncherRef.setOpaque(false);
-				botonCDLauncherRef.setContentAreaFilled(false);
-				botonCDLauncherRef.setBackground(javax.swing.UIManager.getColor("Button.background"));
-				botonCDLauncherRef.setForeground(javax.swing.UIManager.getColor("Button.foreground"));
-			}
+			CrashDetectorGUI.estilizarBoton(botonCDLauncherRef, boton, texto);
 		}
 
 		// =========================
-		// Botones inferiores derechos
+		// Botones inferiores derechos (iconos sin fondo)
 		// =========================
 		if (panelBotonesDerechaRef != null) {
 			panelBotonesDerechaRef.setBackground(fondoInferior);
@@ -839,18 +782,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			for (Component c : panelBotonesDerechaRef.getComponents()) {
 				if (c instanceof JButton) {
 					JButton b = (JButton) c;
-
-					if (!esMac) {
-						b.setOpaque(true);
-						b.setContentAreaFilled(true);
-						b.setBackground(fondoInferior);
-						b.setForeground(modolanzer ? Color.BLACK : texto);
-					} else {
-						b.setOpaque(false);
-						b.setContentAreaFilled(false);
-						b.setBackground(javax.swing.UIManager.getColor("Button.background"));
-						b.setForeground(javax.swing.UIManager.getColor("Button.foreground"));
-					}
+					CrashDetectorGUI.estilizarBotonIcono(b, texto);
 				}
 			}
 		}
@@ -879,22 +811,10 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			BotonDeBarraLateralDerecha gui = entry.getKey();
 			JButton btn = entry.getValue();
 
-			if (!esMac) {
-				btn.setOpaque(true);
-				btn.setContentAreaFilled(true);
-
-				if (gui.tipo() == TipoGUI.TODOS_QUICKFIXES) {
-					btn.setBackground(lanzerColorBotonQuickFix.obtener());
-					btn.setForeground(texto);
-				} else {
-					btn.setBackground(botonBarra);
-					btn.setForeground(texto);
-				}
+			if (gui.tipo() == TipoGUI.TODOS_QUICKFIXES) {
+				CrashDetectorGUI.estilizarBoton(btn, lanzerColorBotonQuickFix.obtener(), texto);
 			} else {
-				btn.setOpaque(false);
-				btn.setContentAreaFilled(false);
-				btn.setBackground(javax.swing.UIManager.getColor("Button.background"));
-				btn.setForeground(javax.swing.UIManager.getColor("Button.foreground"));
+				CrashDetectorGUI.estilizarBoton(btn, botonBarra, texto);
 			}
 		}
 
@@ -923,8 +843,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 	private void aplicarColorRecursivo(Component c, Color fondo, Color texto) {
 
-		boolean esMac = CrashDetectorGUI.esMac();
-
 		// No recolorear manualmente el botón grande CDLauncher aquí.
 		// Ese botón se maneja aparte en recargarApariencia().
 		if (c == botonCDLauncherRef) {
@@ -941,18 +859,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		if (c instanceof JButton) {
 			JButton btn = (JButton) c;
-
-			if (!esMac) {
-				btn.setOpaque(true);
-				btn.setContentAreaFilled(true);
-				btn.setBackground(fondo);
-				btn.setForeground(texto);
-			} else {
-				btn.setOpaque(false);
-				btn.setContentAreaFilled(false);
-				btn.setBackground(javax.swing.UIManager.getColor("Button.background"));
-				btn.setForeground(javax.swing.UIManager.getColor("Button.foreground"));
-			}
+			CrashDetectorGUI.estilizarBoton(btn, fondo, texto);
 		}
 
 		if (c instanceof JComponent && !(c instanceof JButton)) {

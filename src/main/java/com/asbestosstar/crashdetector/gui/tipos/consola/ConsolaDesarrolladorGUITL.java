@@ -49,6 +49,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.controljvm.ClienteControlJVM;
 import com.asbestosstar.crashdetector.controljvm.RespuestaControlJVM;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
@@ -711,12 +712,8 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 		}
 
 		boton.setFocusPainted(false);
-		boton.setBackground(barraInferior.obtener());
-		boton.setForeground(texto.obtener());
+		CrashDetectorGUI.estilizarBotonIcono(boton, texto.obtener());
 		boton.setBorder(BorderFactory.createEmptyBorder(7, 7, 7, 7));
-		boton.setOpaque(true);
-		boton.setContentAreaFilled(true);
-		boton.setBorderPainted(false);
 	}
 
 	private JMenuItem crearItem(String nombre, Runnable accion) {

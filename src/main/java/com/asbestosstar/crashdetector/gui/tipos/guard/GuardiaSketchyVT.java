@@ -1,6 +1,9 @@
 package com.asbestosstar.crashdetector.gui.tipos.guard;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,7 +105,7 @@ public class GuardiaSketchyVT extends GuardiaGUI {
 		}
 
 		if (imagenGuard != null) {
-			ImageIcon icon = cargarImagenConFallback(Statics.carpeta.resolve("imagenes/tlguard.png").toString(),
+			ImageIcon icon = cargarImagenEscalada(Statics.carpeta.resolve("imagenes/tlguard.png").toString(),
 					"/mnt/data/tlguard.png");
 			imagenGuard.setIcon(icon);
 			imagenGuard.setText(icon.getIconWidth() > 0 ? "" : "Guard");
@@ -114,10 +117,10 @@ public class GuardiaSketchyVT extends GuardiaGUI {
 			ImageIcon sketchy;
 
 			if (usarModeloOriginal.obtener()) {
-				sketchy = cargarImagenConFallback(Statics.carpeta.resolve("imagenes/sketchyvt_original.png").toString(),
+				sketchy = cargarImagenEscalada(Statics.carpeta.resolve("imagenes/sketchyvt_original.png").toString(),
 						"/mnt/data/sketchyvt_original.png");
 			} else {
-				sketchy = cargarImagenConFallback(Statics.carpeta.resolve("imagenes/sketchyvt.png").toString(),
+				sketchy = cargarImagenEscalada(Statics.carpeta.resolve("imagenes/sketchyvt.png").toString(),
 						"/mnt/data/sketchyvt.png");
 			}
 
@@ -139,29 +142,14 @@ public class GuardiaSketchyVT extends GuardiaGUI {
 		}
 
 		boton.setFocusPainted(false);
-
-		if (CrashDetectorGUI.esMac()) {
-			boton.setOpaque(false);
-			boton.setContentAreaFilled(true);
-			boton.setBorderPainted(true);
-			return;
-		}
-
-		boton.setOpaque(true);
-		boton.setContentAreaFilled(true);
 		boton.setBorderPainted(true);
-		boton.setBackground(panel);
-		boton.setForeground(texto);
+		CrashDetectorGUI.estilizarBoton(boton, panel, texto);
 	}
 
 	private void estilizarTabla(JTable tabla, Color fondo, Color texto, Color seleccion, Color textoSeleccion) {
-		tabla.setBackground(fondo);
-		tabla.setForeground(texto);
-		tabla.setSelectionBackground(seleccion);
-		tabla.setSelectionForeground(textoSeleccion);
+		CrashDetectorGUI.estilizarTabla(tabla, fondo, texto, seleccion, textoSeleccion);
 		tabla.setGridColor(seleccion.darker());
-		tabla.getTableHeader().setBackground(fondo.darker());
-		tabla.getTableHeader().setForeground(texto);
+		CrashDetectorGUI.estilizarEncabezadoTabla(tabla.getTableHeader(), fondo.darker(), texto);
 	}
 
 	private void ajustarTemaRecursivo(java.awt.Container contenedor, Color fondo, Color panel, Color texto) {
@@ -210,7 +198,7 @@ public class GuardiaSketchyVT extends GuardiaGUI {
 		}
 	}
 
-	private ImageIcon cargarImagenConFallback(String... rutas) {
+ private ImageIcon cargarImagenConFallback(String... rutas) {
 		for (String ruta : rutas) {
 			if (ruta == null || ruta.trim().isEmpty()) {
 				continue;
@@ -221,6 +209,29 @@ public class GuardiaSketchyVT extends GuardiaGUI {
 			}
 		}
 		return new ImageIcon();
+	}
+
+	/**
+	 * Carga y escala una imagen para que no sea demasiado grande en pantallas
+	 * pequeñas (por ejemplo 1024px de alto).
+	 */
+	private ImageIcon cargarImagenEscalada(String... rutas) {
+		ImageIcon icon = cargarImagenConFallback(rutas);
+		if (icon.getIconWidth() <= 0) {
+			return icon;
+		}
+
+		int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+		int maxImageHeight = (int) (screenHeight * 0.35);
+		int originalHeight = icon.getIconHeight();
+
+		if (originalHeight > maxImageHeight) {
+			int scaledHeight = maxImageHeight;
+			int scaledWidth = (int) ((double) icon.getIconWidth() / originalHeight * scaledHeight);
+			Image scaled = icon.getImage().getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+			return new ImageIcon(scaled);
+		}
+		return icon;
 	}
 
 	@Override

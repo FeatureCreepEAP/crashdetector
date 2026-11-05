@@ -94,24 +94,19 @@ public class MapaDeDependenciasGUINimu extends MapaDeDependenciasGUI {
 		}
 
 		if (comboModsMapa != null) {
-			comboModsMapa.setBackground(panel);
-			comboModsMapa.setForeground(texto);
+			CrashDetectorGUI.estilizarComboBox(comboModsMapa, panel, texto);
 		}
 		if (comboModDependientes != null) {
-			comboModDependientes.setBackground(panel);
-			comboModDependientes.setForeground(texto);
+			CrashDetectorGUI.estilizarComboBox(comboModDependientes, panel, texto);
 		}
 		if (comboModBaseNoAlineadas != null) {
-			comboModBaseNoAlineadas.setBackground(panel);
-			comboModBaseNoAlineadas.setForeground(texto);
+			CrashDetectorGUI.estilizarComboBox(comboModBaseNoAlineadas, panel, texto);
 		}
 		if (comboModDependienteNoAlineadas != null) {
-			comboModDependienteNoAlineadas.setBackground(panel);
-			comboModDependienteNoAlineadas.setForeground(texto);
+			CrashDetectorGUI.estilizarComboBox(comboModDependienteNoAlineadas, panel, texto);
 		}
 		if (comboPaqueteNoAlineadas != null) {
-			comboPaqueteNoAlineadas.setBackground(panel);
-			comboPaqueteNoAlineadas.setForeground(texto);
+			CrashDetectorGUI.estilizarComboBox(comboPaqueteNoAlineadas, panel, texto);
 		}
 
 		if (areaDetalles != null) {
@@ -201,13 +196,7 @@ public class MapaDeDependenciasGUINimu extends MapaDeDependenciasGUI {
 				c.setForeground(texto);
 			}
 
-			if (c instanceof javax.swing.JTabbedPane) {
-				javax.swing.JTabbedPane tabs = (javax.swing.JTabbedPane) c;
-				tabs.setBackground(panel);
-				tabs.setForeground(texto);
-			}
-
-			if (c instanceof javax.swing.JSplitPane) {
+ 			if (c instanceof javax.swing.JSplitPane) {
 				c.setBackground(fondo);
 				c.setForeground(texto);
 			}
@@ -222,6 +211,12 @@ public class MapaDeDependenciasGUINimu extends MapaDeDependenciasGUI {
 
 			if (c instanceof java.awt.Container) {
 				ajustarTemaRecursivo((java.awt.Container) c, fondo, panel, texto);
+			}
+		}
+		// Re-apply tab styling after recursive descent to restore native tab text colors on GTK
+		for (java.awt.Component c : contenedor.getComponents()) {
+			if (c instanceof javax.swing.JTabbedPane) {
+				CrashDetectorGUI.estilizarPestanas((javax.swing.JTabbedPane) c, panel, texto);
 			}
 		}
 	}
@@ -245,19 +240,8 @@ public class MapaDeDependenciasGUINimu extends MapaDeDependenciasGUI {
 		}
 
 		boton.setFocusPainted(false);
-
-		if (CrashDetectorGUI.esMac()) {
-			boton.setOpaque(false);
-			boton.setContentAreaFilled(true);
-			boton.setBorderPainted(true);
-			return;
-		}
-
-		boton.setOpaque(true);
-		boton.setContentAreaFilled(true);
 		boton.setBorderPainted(true);
-		boton.setBackground(panel);
-		boton.setForeground(texto);
+		CrashDetectorGUI.estilizarBoton(boton, panel, texto);
 	}
 
 	public class RenderizadorCeldasDependenciasNimu extends RenderizadorCeldasDependencias {

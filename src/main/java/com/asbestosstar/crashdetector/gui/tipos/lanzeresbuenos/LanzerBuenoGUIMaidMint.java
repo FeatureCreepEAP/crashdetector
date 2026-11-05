@@ -430,24 +430,15 @@ public class LanzerBuenoGUIMaidMint extends LanzerBuenoGUI {
 	}
 
 	private void estilizarBoton(JButton btn) {
-		if (!CrashDetectorGUI.esMac()) {
-
-			btn.setBackground(colorBoton.obtener());
-			btn.setForeground(Color.WHITE);
-			btn.setFocusPainted(false);
-			btn.setBorder(BorderFactory.createLineBorder(colorBordePanel.obtener(), 1));
-			btn.setFont(new Font("Segoe UI", Font.BOLD, 13));
-		}
+		btn.setFocusPainted(false);
+		btn.setBorder(BorderFactory.createLineBorder(colorBordePanel.obtener(), 1));
+		btn.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		CrashDetectorGUI.estilizarBoton(btn, colorBoton.obtener(), Color.WHITE);
 	}
 
 	private void estilizarCombo(JComboBox<?> combo) {
-		if (!CrashDetectorGUI.esMac()) {
-
-			combo.setBackground(colorTabla.obtener());
-			combo.setForeground(colorTexto.obtener());
-			combo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		}
-
+		CrashDetectorGUI.estilizarComboBox(combo, colorTabla.obtener(), colorTexto.obtener());
+		combo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 	}
 
 	@Override

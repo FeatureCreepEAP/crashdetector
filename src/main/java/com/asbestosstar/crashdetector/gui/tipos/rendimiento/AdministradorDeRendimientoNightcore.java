@@ -12,6 +12,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 public class AdministradorDeRendimientoNightcore extends AdministradorDeRendimientoGUI {
 
@@ -108,17 +109,18 @@ public class AdministradorDeRendimientoNightcore extends AdministradorDeRendimie
 				sp.getViewport().setBackground(panel);
 			}
 
-			if (c instanceof javax.swing.JTabbedPane) {
-				c.setBackground(panel);
-				c.setForeground(texto);
-			}
-
-			if (c instanceof javax.swing.JLabel) {
+ 			if (c instanceof javax.swing.JLabel) {
 				c.setForeground(texto);
 			}
 
 			if (c instanceof java.awt.Container) {
 				ajustarTemaRecursivo((java.awt.Container) c, fondo, panel, texto);
+			}
+		}
+		// Re-apply tab styling after recursive descent to restore native tab text colors on GTK
+		for (java.awt.Component c : contenedor.getComponents()) {
+			if (c instanceof javax.swing.JTabbedPane) {
+				CrashDetectorGUI.estilizarPestanas((javax.swing.JTabbedPane) c, panel, texto);
 			}
 		}
 	}

@@ -42,6 +42,7 @@ import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ConfigDouble;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
@@ -601,8 +602,7 @@ public class DialogoCompartirCentroSoporte extends DialogoCompartir {
 	}
 
 	public void estilizarBotonNormal(JButton boton) {
-		boton.setBackground(colorBoton.obtener());
-		boton.setForeground(colorTexto.obtener());
+		CrashDetectorGUI.estilizarBoton(boton, colorBoton.obtener(), colorTexto.obtener());
 		boton.setFocusPainted(false);
 	}
 
@@ -724,20 +724,17 @@ public class DialogoCompartirCentroSoporte extends DialogoCompartir {
 			aviso.setBorder(BorderFactory.createLineBorder(colorBordeAviso.obtener(), 1));
 		}
 		if (botonUploadTodos != null) {
-			botonUploadTodos.setBackground(colorBotonPrincipal.obtener());
-			botonUploadTodos.setForeground(colorTextoBotonPrincipal.obtener());
+			CrashDetectorGUI.estilizarBoton(botonUploadTodos, colorBotonPrincipal.obtener(), colorTextoBotonPrincipal.obtener());
 		}
 		if (botonAyuda != null) {
-			botonAyuda.setBackground(colorBoton.obtener());
-			botonAyuda.setForeground(colorTexto.obtener());
+			CrashDetectorGUI.estilizarBoton(botonAyuda, colorBoton.obtener(), colorTexto.obtener());
 		}
 
 		if (panelDiffMods != null) {
 			panelDiffMods.setBackground(colorFondo.obtener());
 		}
 		if (botonDiffMods != null) {
-			botonDiffMods.setBackground(colorBoton.obtener());
-			botonDiffMods.setForeground(colorTexto.obtener());
+			CrashDetectorGUI.estilizarBoton(botonDiffMods, colorBoton.obtener(), colorTexto.obtener());
 		}
 		if (etiquetaDiffMods != null) {
 			etiquetaDiffMods.setText(generarTextoDiffModsHtml());

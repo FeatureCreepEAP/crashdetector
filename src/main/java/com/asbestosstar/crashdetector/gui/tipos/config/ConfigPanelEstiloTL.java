@@ -6,12 +6,14 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 public class ConfigPanelEstiloTL<PrincipalGUI> extends ConfigPanel<PrincipalGUI> {
 
@@ -37,8 +39,7 @@ public class ConfigPanelEstiloTL<PrincipalGUI> extends ConfigPanel<PrincipalGUI>
 
 		// Actualizar los colores de los componentes
 		if (tabbedPane != null) {
-			tabbedPane.setBackground(colorFondo.obtener().darker());
-			tabbedPane.setForeground(colorTexto.obtener());
+			CrashDetectorGUI.estilizarPestanas(tabbedPane, colorFondo.obtener().darker(), colorTexto.obtener());
 
 			// Actualizar cada pestaña
 			for (int i = 0; i < tabbedPane.getTabCount(); i++) {
@@ -57,8 +58,7 @@ public class ConfigPanelEstiloTL<PrincipalGUI> extends ConfigPanel<PrincipalGUI>
 				for (Component child : panel.getComponents()) {
 					if (child instanceof JButton) {
 						JButton btn = (JButton) child;
-						btn.setForeground(colorTexto.obtener());
-						btn.setBackground(colorBoton.obtener());
+						CrashDetectorGUI.estilizarBoton(btn, colorBoton.obtener(), colorTexto.obtener());
 					}
 					if (child instanceof JTextField) {
 						JTextField field = (JTextField) child;

@@ -2012,7 +2012,7 @@ public class MonitorDePID {
 		CrashDetectorLogger.log("[EnVivo] Analisis en vivo terminado. Procediendo con el analisis final.");
 	}
 
-	public static void establecerLookAndFeel() {
+ public static void establecerLookAndFeel() {
 		ConfigString configuracionLookAndFeel = ConfigString.de("lf", "nativo");
 
 		String valor = configuracionLookAndFeel.obtener();
@@ -2028,11 +2028,8 @@ public class MonitorDePID {
 		}
 
 		/*
-		 * Cuando el usuario selecciona "nativo", se determina primero cuál sería la
-		 * apariencia nativa del sistema.
-		 *
-		 * Si esa apariencia es GTK, se solicita GTK2. Si GTK2 no está disponible, se
-		 * utiliza Metal en vez de permitir que Java continúe con GTK3.
+		 * Cuando el usuario selecciona "nativo", se carga directamente la apariencia
+		 * nativa del sistema sin restricciones por plataforma.
 		 */
 		if ("nativo".equalsIgnoreCase(valor)) {
 			establecerLookAndFeelNativo();
@@ -2050,10 +2047,6 @@ public class MonitorDePID {
 			/*
 			 * Si la apariencia seleccionada expresamente no puede cargarse, se intenta
 			 * utilizar la apariencia nativa.
-			 *
-			 * La apariencia nativa aplicará también la regla:
-			 *
-			 * GTK2 si está disponible; Metal si GTK2 no está disponible.
 			 */
 			establecerLookAndFeelNativo();
 		}
@@ -2062,73 +2055,14 @@ public class MonitorDePID {
 	/**
 	 * Establece la apariencia nativa del sistema.
 	 *
-	 * Si la apariencia nativa utiliza GTK:
-	 *
-	 * - Solicita GTK2 en las versiones de Java que todavía lo admiten. - Si GTK2 no
-	 * puede cargarse, utiliza Metal. - No intenta cargar GTK3 como alternativa.
-	 *
-	 * Si la apariencia nativa no utiliza GTK, se carga normalmente.
+	 * Carga directamente la apariencia nativa correspondiente al sistema operativo,
+	 * sin evitar ninguna implementación específica (GTK, Windows, macOS, etc.).
+	 * Si no puede cargarse, se utiliza Metal como alternativa.
 	 */
 	private static void establecerLookAndFeelNativo() {
 		String claseNativa = UIManager.getSystemLookAndFeelClassName();
 
-		/*
-		 * La comprobación se realiza sobre la clase nativa obtenida del propio JDK. Por
-		 * eso no es necesario mantener una lista de sistemas operativos como Linux,
-		 * Solaris, FreeBSD, OpenBSD, NetBSD, illumos o AIX.
-		 */
-		if (esLookAndFeelGTK(claseNativa)) {
-
-			/*
-			 * A partir de JDK 24, Swing ya no contiene soporte para GTK2.
-			 *
-			 * En esas versiones, establecer jdk.gtk.version=2.2 no seleccionaría GTK2; Java
-			 * continuaría utilizando GTK3. Como esta aplicación no desea GTK3 como
-			 * alternativa, se selecciona Metal directamente.
-			 */
-			if (obtenerVersionPrincipalJava() >= 24) {
-				establecerLookAndFeelMetal();
-				return;
-			}
-
-			/*
-			 * Se fuerza GTK2, incluso cuando el usuario haya establecido previamente
-			 * jdk.gtk.version=3.
-			 *
-			 * Esta aplicación define la política:
-			 *
-			 * GTK2 o Metal, pero nunca GTK3 cuando se selecciona "nativo".
-			 *
-			 * Esta propiedad debe establecerse antes de que GTK sea cargado por AWT o
-			 * Swing.
-			 */
-			System.setProperty("jdk.gtk.version", "2.2");
-
-			try {
-				/*
-				 * Intenta cargar la apariencia GTK nativa utilizando GTK2.
-				 *
-				 * Si la biblioteca GTK2 no existe, no puede cargarse o no es compatible con
-				 * esta compilación del JDK, el intento fallará y se seleccionará Metal.
-				 */
-				UIManager.setLookAndFeel(claseNativa);
-				return;
-
-			} catch (Exception | LinkageError errorGTK2) {
-				/*
-				 * No se elimina jdk.gtk.version ni se vuelve a intentar la apariencia nativa,
-				 * porque eso podría provocar que Java cargara GTK3.
-				 */
-				establecerLookAndFeelMetal();
-				return;
-			}
-		}
-
 		try {
-			/*
-			 * En Windows, macOS o cualquier sistema cuya apariencia nativa no sea GTK, se
-			 * carga normalmente la apariencia nativa correspondiente.
-			 */
 			UIManager.setLookAndFeel(claseNativa);
 
 		} catch (Exception | LinkageError errorNativo) {
@@ -2138,20 +2072,6 @@ public class MonitorDePID {
 			 */
 			establecerLookAndFeelMetal();
 		}
-	}
-
-	/**
-	 * Determina si la clase que representa la apariencia nativa corresponde al Look
-	 * and Feel GTK.
-	 */
-	private static boolean esLookAndFeelGTK(String nombreClase) {
-		if (nombreClase == null) {
-			return false;
-		}
-
-		String nombreNormalizado = nombreClase.toLowerCase(java.util.Locale.ROOT);
-
-		return nombreNormalizado.contains(".gtk.") || nombreNormalizado.endsWith("gtklookandfeel");
 	}
 
 	/**

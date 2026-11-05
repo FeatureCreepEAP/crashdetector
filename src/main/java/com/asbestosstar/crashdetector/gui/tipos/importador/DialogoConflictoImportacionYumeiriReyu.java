@@ -89,10 +89,9 @@ public class DialogoConflictoImportacionYumeiriReyu extends DialogoConflictoImpo
 			return;
 		}
 
-		if (!CrashDetectorGUI.esMac()) {
-			b.setBackground(fondo);
+					b.setBackground(fondo);
 			b.setForeground(texto);
-		}
+
 
 		b.setFocusPainted(false);
 		b.setBorder(BorderFactory.createEmptyBorder(6, 12, 6, 12));

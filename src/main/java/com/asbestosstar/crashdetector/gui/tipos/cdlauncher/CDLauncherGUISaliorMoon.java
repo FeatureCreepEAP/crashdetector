@@ -27,6 +27,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 import com.asbestosstar.crashdetector.lanzer.ConfigCDLauncher;
 
@@ -133,8 +134,7 @@ public class CDLauncherGUISaliorMoon extends CDLauncherGUI {
 		/* Botón grande consola */
 		JButton botonConsola = new JButton(MonitorDePID.idioma.cdlauncherHabilitarConsola());
 		botonConsola.setFont(botonConsola.getFont().deriveFont(Font.BOLD, 12f));
-		botonConsola.setBackground(colorBoton.obtener());
-		botonConsola.setForeground(colorTexto.obtener());
+		CrashDetectorGUI.estilizarBoton(botonConsola, colorBoton.obtener(), colorTexto.obtener());
 		botonConsola.addActionListener(e -> habilitarConsola());
 
 		centro.add(botonConsola);
@@ -147,8 +147,7 @@ public class CDLauncherGUISaliorMoon extends CDLauncherGUI {
 
 		JButton ok = new JButton("OK");
 		ok.setPreferredSize(new Dimension(80, 30));
-		ok.setBackground(colorBoton.obtener());
-		ok.setForeground(colorTexto.obtener());
+		CrashDetectorGUI.estilizarBoton(ok, colorBoton.obtener(), colorTexto.obtener());
 		ok.addActionListener(e -> dispose());
 
 		inferior.add(ok, BorderLayout.EAST);

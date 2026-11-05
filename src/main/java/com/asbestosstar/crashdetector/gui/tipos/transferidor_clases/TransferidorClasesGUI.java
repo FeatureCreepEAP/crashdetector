@@ -346,10 +346,8 @@ public abstract class TransferidorClasesGUI extends JFrame implements CrashDetec
 			}
 		}
 		for (JButton boton : new JButton[] { transferir, limpiar }) {
-			if (boton != null && !CrashDetectorGUI.esMac()) {
-				boton.setBackground(colorAcento());
-				boton.setForeground(colorTexto());
-				boton.setOpaque(true);
+			if (boton != null) {
+				CrashDetectorGUI.estilizarBoton(boton, colorAcento(), colorTexto());
 			}
 		}
 		repaint();

@@ -417,8 +417,7 @@ public class ConfigsModsGUIYunenoms extends ConfigsModsGUI {
 		}
 
 		if (comboTipo != null) {
-			comboTipo.setBackground(tabla);
-			comboTipo.setForeground(texto);
+			CrashDetectorGUI.estilizarComboBox(comboTipo, tabla, texto);
 		}
 
 		revalidate();
@@ -450,14 +449,10 @@ public class ConfigsModsGUIYunenoms extends ConfigsModsGUI {
 			return;
 		}
 
-		t.setBackground(fondo);
-		t.setForeground(texto);
+		CrashDetectorGUI.estilizarTabla(t, fondo, texto, seleccion, Color.WHITE);
 		t.setGridColor(borde);
-		t.setSelectionBackground(seleccion);
-		t.setSelectionForeground(Color.WHITE);
 		t.setFont(new Font(CrashDetectorGUI.esMac() ? "SansSerif" : "Segoe UI", Font.PLAIN, 12));
-		t.getTableHeader().setBackground(colorPanel.obtener());
-		t.getTableHeader().setForeground(texto);
+		CrashDetectorGUI.estilizarEncabezadoTabla(t.getTableHeader(), colorPanel.obtener(), texto);
 		t.getTableHeader().setFont(new Font(CrashDetectorGUI.esMac() ? "SansSerif" : "Segoe UI", Font.BOLD, 12));
 	}
 

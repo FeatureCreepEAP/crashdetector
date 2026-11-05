@@ -81,20 +81,18 @@ public class CDModsEstiloTL extends PanelAPIBase {
 	// Estilos visuales
 	@Override
 	public void aplicarEstiloVolver(JButton boton) {
-		if (!CrashDetectorGUI.esMac()) {
-			boton.setForeground(colorTexto.obtener());
+					boton.setForeground(colorTexto.obtener());
 			boton.setBackground(colorBoton.obtener());
 			boton.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
 		}
-	}
+
 
 	@Override
 	public void aplicarEstiloBusqueda(JTextField campo) {
-		if (!CrashDetectorGUI.esMac()) {
-			campo.setBackground(colorCajaTexto.obtener());
+					campo.setBackground(colorCajaTexto.obtener());
 			campo.setForeground(colorTexto.obtener());
 		}
-	}
+
 
 	@Override
 	public void aplicarEstiloTarjetaMod(JPanel tarjeta) {
@@ -133,12 +131,11 @@ public class CDModsEstiloTL extends PanelAPIBase {
 
 	@Override
 	public void aplicarEstiloBotonAccion(JButton boton) {
-		if (!CrashDetectorGUI.esMac()) {
-			boton.setBackground(colorBoton.obtener());
+					boton.setBackground(colorBoton.obtener());
 			boton.setForeground(Color.WHITE);
 			boton.setFocusPainted(false);
 		}
-	}
+
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {

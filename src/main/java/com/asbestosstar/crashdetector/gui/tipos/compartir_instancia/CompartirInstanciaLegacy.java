@@ -38,33 +38,21 @@ public class CompartirInstanciaLegacy extends CompartirInstanciaGUI {
 		}
 
 		if (comboFormato != null) {
-			comboFormato.setBackground(colorPanel.obtener());
-			if (!CrashDetectorGUI.esMac()) {
-				comboFormato.setForeground(colorTexto.obtener());
-			}
+			CrashDetectorGUI.estilizarComboBox(comboFormato, colorPanel.obtener(), colorTexto.obtener());
 		}
 
 		if (comboServicio != null) {
-			comboServicio.setBackground(colorPanel.obtener());
-			if (!CrashDetectorGUI.esMac()) {
-				comboServicio.setForeground(colorTexto.obtener());
-			}
+			CrashDetectorGUI.estilizarComboBox(comboServicio, colorPanel.obtener(), colorTexto.obtener());
 		}
 
 		if (botonCompartir != null) {
 			botonCompartir.setText(MonitorDePID.idioma.compartirInstanciaBotonCompartir());
-			botonCompartir.setBackground(colorPanel.obtener());
-			if (!CrashDetectorGUI.esMac()) {
-				botonCompartir.setForeground(colorTexto.obtener());
-			}
+			CrashDetectorGUI.estilizarBoton(botonCompartir, colorPanel.obtener(), colorTexto.obtener());
 		}
 
 		if (botonRefrescar != null) {
 			botonRefrescar.setText(MonitorDePID.idioma.compartirInstanciaBotonRefrescar());
-			botonRefrescar.setBackground(colorPanel.obtener());
-			if (!CrashDetectorGUI.esMac()) {
-				botonRefrescar.setForeground(colorTexto.obtener());
-			}
+			CrashDetectorGUI.estilizarBoton(botonRefrescar, colorPanel.obtener(), colorTexto.obtener());
 		}
 
 		if (etiquetaEstado != null) {

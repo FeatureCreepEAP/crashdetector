@@ -140,18 +140,12 @@ public class CompartirInstanciaIkeEveland extends CompartirInstanciaGUI {
 		}
 		for (JComboBox<?> combo : Arrays.asList(comboFormato, comboServicio)) {
 			if (combo != null) {
-				combo.setBackground(caja);
-				if (!CrashDetectorGUI.esMac()) {
-					combo.setForeground(textoCaja);
-				}
+				CrashDetectorGUI.estilizarComboBox(combo, caja, textoCaja);
 			}
 		}
 		for (JButton boton : Arrays.asList(botonCompartir, botonExportar, botonRefrescar)) {
 			if (boton != null) {
-				boton.setBackground(colorAcento.obtener());
-				if (!CrashDetectorGUI.esMac()) {
-					boton.setForeground(Color.WHITE);
-				}
+				CrashDetectorGUI.estilizarBoton(boton, colorAcento.obtener(), Color.WHITE);
 				boton.setFocusPainted(false);
 				boton.setBorder(
 						BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(colorOro.obtener(), 1),

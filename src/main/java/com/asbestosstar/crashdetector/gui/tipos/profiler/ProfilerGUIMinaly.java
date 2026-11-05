@@ -29,6 +29,7 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.RenderizadorBarraRendimiento;
 
 /**
@@ -127,8 +128,8 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 		tabla.setSelectionBackground(new Color(255, 205, 220));
 		tabla.setSelectionForeground(colorTexto.obtener());
 
-		tabla.getTableHeader().setBackground(colorBoton.obtener());
-		tabla.getTableHeader().setForeground(colorTexto.obtener());
+		CrashDetectorGUI.estilizarEncabezadoTabla(tabla.getTableHeader(), colorBoton.obtener(),
+				colorTexto.obtener());
 
 		RenderizadorBarraRendimiento renderizador = new RenderizadorBarraRendimiento(colorPanel.obtener(),
 				colorBarra.obtener(), Color.WHITE);

@@ -574,15 +574,10 @@ public class CorpoSAO extends CorpoBase {
 	}
 
 	private void estilizarBoton(JButton btn, int paddingV) {
-		if (!CrashDetectorGUI.esMac()) {
-			btn.setBackground(colorBoton.obtener());
-			btn.setForeground(Color.WHITE);
-			btn.setFocusPainted(false);
-			btn.setBorder(BorderFactory.createEmptyBorder(paddingV, 18, paddingV, 18));
-		} else {
-			btn.setContentAreaFilled(false);
-		}
+		btn.setFocusPainted(false);
+		btn.setBorder(BorderFactory.createEmptyBorder(paddingV, 18, paddingV, 18));
 		btn.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		CrashDetectorGUI.estilizarBoton(btn, colorBoton.obtener(), Color.WHITE);
 	}
 
 	private void estilizarCampo(JTextField campo) {

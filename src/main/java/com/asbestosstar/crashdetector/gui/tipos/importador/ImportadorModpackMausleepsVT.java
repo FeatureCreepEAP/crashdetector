@@ -79,11 +79,9 @@ public class ImportadorModpackMausleepsVT extends ImportadorModpackGUI {
 		}
 
 		if (comboFormato != null) {
-			comboFormato.setBackground(panel);
-			if (!CrashDetectorGUI.esMac()) {
-				comboFormato.setForeground(texto);
-			}
+			CrashDetectorGUI.estilizarComboBox(comboFormato, panel, texto);
 		}
+
 
 		estilizarBoton(botonSeleccionar, boton, botonTexto);
 		estilizarBoton(botonImportar, boton, botonTexto);
@@ -103,10 +101,9 @@ public class ImportadorModpackMausleepsVT extends ImportadorModpackGUI {
 			return;
 		}
 
-		if (!CrashDetectorGUI.esMac()) {
-			b.setBackground(fondo);
+					b.setBackground(fondo);
 			b.setForeground(texto);
-		}
+
 
 		b.setFocusPainted(false);
 		b.setBorder(BorderFactory.createEmptyBorder(6, 12, 6, 12));

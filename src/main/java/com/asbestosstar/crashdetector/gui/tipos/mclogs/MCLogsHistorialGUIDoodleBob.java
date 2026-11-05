@@ -307,14 +307,13 @@ public class MCLogsHistorialGUIDoodleBob extends MCLogsHistorialGUI {
 		if (btn == null)
 			return;
 
-		if (!CrashDetectorGUI.esMac()) {
-			btn.setBackground(colorBoton.obtener());
+					btn.setBackground(colorBoton.obtener());
 			btn.setForeground(colorTexto.obtener());
 			btn.setFocusPainted(false);
 			btn.setBorder(BorderFactory.createLineBorder(colorBorde.obtener(), 2));
 			btn.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		}
-	}
+
 
 	@Override
 	public String id() {

@@ -125,12 +125,11 @@ public class QuickFix {
 		}
 
 		private void estilizarBoton(JButton boton) {
-			if (!CrashDetectorGUI.esMac()) {
-				boton.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
-				boton.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
-				boton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-				boton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-			}
+			boton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+			boton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+			CrashDetectorGUI.estilizarBoton(boton,
+					Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()),
+					Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 	}
 
@@ -145,12 +144,10 @@ public class QuickFix {
 		@Override
 		public JComponent crearComponente(Supplier<Boolean> estadoRetener) {
 			JLabel label = new JLabel(texto);
-			if (!CrashDetectorGUI.esMac()) {
-				label.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-				label.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
-				label.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
-				label.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-			}
+			label.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+			label.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
+			label.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
+			label.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 			return label;
 		}
 	}
@@ -161,12 +158,10 @@ public class QuickFix {
 
 		public SelectorGUI(JComboBox<String> comboBox) {
 			this.comboBox = comboBox;
-			if (!CrashDetectorGUI.esMac()) {
-				comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-				comboBox.setBackground(Color.WHITE);
-				comboBox.setForeground(Color.DARK_GRAY);
-				comboBox.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-			}
+			comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+			comboBox.setBackground(Color.WHITE);
+			comboBox.setForeground(Color.DARK_GRAY);
+			comboBox.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 		}
 
 		@Override

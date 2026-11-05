@@ -312,9 +312,8 @@ public class DialogoCompartirPrimitiva extends DialogoCompartir {
 			etiquetaMensaje.setBackground(colorFondo.obtener());
 		}
 
-		if (comboIdioma != null && !CrashDetectorGUI.esMac()) {
-			comboIdioma.setBackground(colorCaja.obtener());
-			comboIdioma.setForeground(colorTexto.obtener());
+		if (comboIdioma != null) {
+			CrashDetectorGUI.estilizarComboBox(comboIdioma, colorCaja.obtener(), colorTexto.obtener());
 		}
 
 		estilizarBoton(botonCompartirMarkdown);
@@ -332,13 +331,7 @@ public class DialogoCompartirPrimitiva extends DialogoCompartir {
 		boton.setMargin(new java.awt.Insets(0, 2, 0, 2));
 		boton.setBorder(BorderFactory.createLineBorder(colorTexto.obtener(), 1));
 		boton.setFont(new Font("Segoe UI", Font.BOLD, 12));
-
-		if (!CrashDetectorGUI.esMac()) {
-			boton.setBackground(colorBoton.obtener());
-			boton.setForeground(colorTexto.obtener());
-			boton.setContentAreaFilled(true);
-			boton.setOpaque(true);
-		}
+		CrashDetectorGUI.estilizarBoton(boton, colorBoton.obtener(), colorTexto.obtener());
 	}
 
 	private void fijarTamanoControl(Component componente) {

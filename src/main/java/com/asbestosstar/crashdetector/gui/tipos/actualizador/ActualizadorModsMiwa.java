@@ -64,19 +64,13 @@ public class ActualizadorModsMiwa extends ActualizadorModsGUI {
 
 		if (botonEscanear != null) {
 			botonEscanear.setText(MonitorDePID.idioma.actualizadorModsBotonEscanear());
-			botonEscanear.setBackground(boton);
-			if (!CrashDetectorGUI.esMac()) {
-				botonEscanear.setForeground(botonTexto);
-			}
+			CrashDetectorGUI.estilizarBoton(botonEscanear, boton, botonTexto);
 			botonEscanear.setFocusPainted(false);
 		}
 
 		if (botonActualizarTodo != null) {
 			botonActualizarTodo.setText(MonitorDePID.idioma.actualizadorModsBotonActualizarTodo());
-			botonActualizarTodo.setBackground(boton);
-			if (!CrashDetectorGUI.esMac()) {
-				botonActualizarTodo.setForeground(botonTexto);
-			}
+			CrashDetectorGUI.estilizarBoton(botonActualizarTodo, boton, botonTexto);
 			botonActualizarTodo.setFocusPainted(false);
 		}
 
@@ -95,13 +89,10 @@ public class ActualizadorModsMiwa extends ActualizadorModsGUI {
 	}
 
 	private void estilizarTabla(JTable tabla) {
-		tabla.setBackground(colorTabla.obtener());
-		tabla.setForeground(colorTexto.obtener());
-		tabla.setSelectionBackground(colorSeleccion.obtener());
-		tabla.setSelectionForeground(colorTexto.obtener());
+		CrashDetectorGUI.estilizarTabla(tabla, colorTabla.obtener(), colorTexto.obtener(), colorSeleccion.obtener(),
+				colorTexto.obtener());
 		tabla.setGridColor(colorPanel.obtener());
-		tabla.getTableHeader().setBackground(colorPanel.obtener());
-		tabla.getTableHeader().setForeground(colorTexto.obtener());
+		CrashDetectorGUI.estilizarEncabezadoTabla(tabla.getTableHeader(), colorPanel.obtener(), colorTexto.obtener());
 	}
 
 	private void ajustarRecursivo(java.awt.Container cont, Color fondo, Color panel, Color texto) {

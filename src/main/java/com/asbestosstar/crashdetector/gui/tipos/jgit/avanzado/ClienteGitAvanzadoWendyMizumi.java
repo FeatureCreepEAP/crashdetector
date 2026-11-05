@@ -134,30 +134,21 @@ public final class ClienteGitAvanzadoWendyMizumi extends ClienteGitAvanzadoGUI {
 			}
 			if (componente instanceof JButton) {
 				JButton b = (JButton) componente;
-				if (!CrashDetectorGUI.esMac()) {
-					b.setBackground(boton);
-					b.setForeground(texto);
-					b.setOpaque(true);
-				}
+				CrashDetectorGUI.estilizarBoton(b, boton, texto);
+				b.setOpaque(true);
 				b.setFocusPainted(false);
 				b.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(borde),
 						BorderFactory.createEmptyBorder(5, 9, 5, 9)));
 			}
 			if (componente instanceof JComboBox) {
 				componente.setBackground(panelSecundario);
-				if (!CrashDetectorGUI.esMac()) {
-					componente.setForeground(texto);
-				}
+				componente.setForeground(texto);
 			}
 			if (componente instanceof JTextField) {
 				componente.setBackground(panelSecundario);
 				componente.setForeground(texto);
 			}
-			if (componente instanceof JTabbedPane) {
-				componente.setBackground(panel);
-				componente.setForeground(texto);
-			}
-			if (componente instanceof JScrollPane) {
+ 			if (componente instanceof JScrollPane) {
 				JScrollPane scroll = (JScrollPane) componente;
 				scroll.setBackground(panel);
 				scroll.getViewport().setBackground(tabla);
@@ -171,19 +162,21 @@ public final class ClienteGitAvanzadoWendyMizumi extends ClienteGitAvanzadoGUI {
 						seleccion, boton);
 			}
 		}
+		// Re-apply tab styling after recursive descent to restore native tab text colors on GTK
+		for (Component componente : contenedor.getComponents()) {
+			if (componente instanceof JTabbedPane) {
+				CrashDetectorGUI.estilizarPestanas((JTabbedPane) componente, panel, texto);
+			}
+		}
 	}
 
 	private void estilizarTabla(JTable tabla, Color fondo, Color texto, Color seleccion, Color cabecera) {
 		if (tabla == null) {
 			return;
 		}
-		tabla.setBackground(fondo);
-		tabla.setForeground(texto);
-		tabla.setSelectionBackground(seleccion);
-		tabla.setSelectionForeground(texto);
+		CrashDetectorGUI.estilizarTabla(tabla, fondo, texto, seleccion, texto);
 		tabla.setGridColor(colorBorde.obtener());
-		tabla.getTableHeader().setBackground(cabecera);
-		tabla.getTableHeader().setForeground(colorTexto.obtener());
+		CrashDetectorGUI.estilizarEncabezadoTabla(tabla.getTableHeader(), cabecera, colorTexto.obtener());
 	}
 
 	private void estilizarArea(JTextArea area, Color fondo, Color texto, Color borde, boolean monoespaciada) {

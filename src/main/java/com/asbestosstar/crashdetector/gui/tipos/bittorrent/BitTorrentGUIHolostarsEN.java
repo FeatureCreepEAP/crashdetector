@@ -27,6 +27,7 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.bittorrent.ConfiguracionBitTorrent;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 /**
  * Tema Holostars EN para el cliente BitTorrent.
@@ -86,13 +87,13 @@ public final class BitTorrentGUIHolostarsEN extends BitTorrentGUI {
 			confirmarPrivacidad.setBackground(panel);
 			confirmarPrivacidad.setForeground(texto);
 		}
-		if (pestanas != null) {
-			pestanas.setBackground(panel);
-			pestanas.setForeground(texto);
-		}
-
 		aplicarRecursivo(panelRaiz, fondo, panel, panelClaro, texto, textoOscuro, acento, acentoSecundario, seleccion,
 				borde);
+
+		// Re-apply tab styling after recursive to restore native tab text colors on GTK
+		if (pestanas != null) {
+			CrashDetectorGUI.estilizarPestanas(pestanas, panel, texto);
+		}
 
 		if (areaPrivacidad != null) {
 			areaPrivacidad.setBackground(panel);
@@ -133,11 +134,8 @@ public final class BitTorrentGUIHolostarsEN extends BitTorrentGUI {
 			}
 			if (componente instanceof JButton) {
 				JButton boton = (JButton) componente;
-				boton.setBackground(acento);
-				boton.setForeground(texto);
+				CrashDetectorGUI.estilizarBoton(boton, acento, texto);
 				boton.setFocusPainted(false);
-				boton.setOpaque(true);
-				boton.setContentAreaFilled(true);
 				boton.setBorder(BorderFactory.createEmptyBorder(7, 12, 7, 12));
 			}
 			if (componente instanceof JCheckBox && componente != confirmarPrivacidad) {
@@ -146,13 +144,9 @@ public final class BitTorrentGUIHolostarsEN extends BitTorrentGUI {
 			}
 			if (componente instanceof JTable) {
 				JTable tabla = (JTable) componente;
-				tabla.setBackground(panelClaro);
-				tabla.setForeground(textoOscuro);
-				tabla.setSelectionBackground(seleccion);
-				tabla.setSelectionForeground(textoOscuro);
+				CrashDetectorGUI.estilizarTabla(tabla, panelClaro, textoOscuro, seleccion, textoOscuro);
 				tabla.setGridColor(borde);
-				tabla.getTableHeader().setBackground(acentoSecundario);
-				tabla.getTableHeader().setForeground(texto);
+				CrashDetectorGUI.estilizarEncabezadoTabla(tabla.getTableHeader(), acentoSecundario, texto);
 			}
 			if (componente instanceof JProgressBar) {
 				JProgressBar barra = (JProgressBar) componente;
@@ -169,13 +163,15 @@ public final class BitTorrentGUIHolostarsEN extends BitTorrentGUI {
 			if (componente instanceof JViewport) {
 				componente.setBackground(panelClaro);
 			}
-			if (componente instanceof JTabbedPane) {
-				componente.setBackground(panel);
-				componente.setForeground(texto);
-			}
 			if (componente instanceof Container) {
 				aplicarRecursivo((Container) componente, fondo, panel, panelClaro, texto, textoOscuro, acento,
 						acentoSecundario, seleccion, borde);
+			}
+		}
+		// Re-apply tab styling after recursive descent to restore native tab text colors on GTK
+		for (Component componente : contenedor.getComponents()) {
+			if (componente instanceof JTabbedPane) {
+				CrashDetectorGUI.estilizarPestanas((JTabbedPane) componente, panel, texto);
 			}
 		}
 	}

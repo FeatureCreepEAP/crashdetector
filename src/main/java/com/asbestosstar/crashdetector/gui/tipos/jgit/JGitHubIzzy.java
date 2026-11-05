@@ -299,11 +299,10 @@ public class JGitHubIzzy extends JGitHubBase {
 		 * Si forzamos background/foreground, los botones pueden verse apagados o como
 		 * deshabilitados. Por eso dejamos que macOS pinte el botón nativo.
 		 */
-		if (!CrashDetectorGUI.esMac()) {
-			b.setBackground(colorBoton.obtener());
+					b.setBackground(colorBoton.obtener());
 			b.setForeground(colorTexto.obtener());
 			b.setOpaque(true);
-		}
+
 
 		return b;
 	}
@@ -315,10 +314,9 @@ public class JGitHubIzzy extends JGitHubBase {
 		 * En macOS es mejor no forzar el foreground del checkbox porque Aqua puede
 		 * mezclar mal el texto con el estado visual del control.
 		 */
-		if (!CrashDetectorGUI.esMac()) {
-			check.setForeground(colorTexto.obtener());
+					check.setForeground(colorTexto.obtener());
 		}
-	}
+
 
 	private void conectarEventos() {
 		botonAbrirCarpetaJGit.addActionListener(e -> abrirCarpetaJGit());

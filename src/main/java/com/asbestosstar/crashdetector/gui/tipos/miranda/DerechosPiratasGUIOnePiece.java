@@ -58,12 +58,8 @@ public class DerechosPiratasGUIOnePiece extends DerechosPiratasGUI {
 		setLayout(new BorderLayout());
 
 		// En macOS damos un poco más de espacio.
-		if (CrashDetectorGUI.esMac()) {
-			setSize(980, 720);
-			setMinimumSize(new Dimension(860, 620));
-		} else {
-			setSize(920, 680);
-		}
+					setSize(920, 680);
+
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
@@ -74,12 +70,8 @@ public class DerechosPiratasGUIOnePiece extends DerechosPiratasGUI {
 		panelIzq.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 		forzarFondo(panelIzq, fondo.obtener());
 
-		if (CrashDetectorGUI.esMac()) {
-			panelIzq.setPreferredSize(new Dimension(290, 0));
-			panelIzq.setMinimumSize(new Dimension(270, 0));
-		} else {
-			panelIzq.setPreferredSize(new Dimension(260, 0));
-		}
+					panelIzq.setPreferredSize(new Dimension(260, 0));
+
 
 		labelImagen = new JLabel();
 		labelImagen.setHorizontalAlignment(SwingConstants.CENTER);
@@ -266,16 +258,10 @@ public class DerechosPiratasGUIOnePiece extends DerechosPiratasGUI {
 				continue;
 			}
 
-			b.setBackground(borde.obtener());
-			b.setForeground(Color.BLACK);
 			b.setFocusPainted(false);
 			b.setFont(fuenteUI(Font.BOLD, 12));
 			b.setBorder(BorderFactory.createEmptyBorder(8, 14, 8, 14));
-			b.setOpaque(true);
-
-			if (CrashDetectorGUI.esMac()) {
-				b.setContentAreaFilled(true);
-			}
+			CrashDetectorGUI.estilizarBoton(b, borde.obtener(), Color.BLACK);
 		}
 
 		aplicarTemaRecursivo(getContentPane());
@@ -315,9 +301,7 @@ public class DerechosPiratasGUIOnePiece extends DerechosPiratasGUI {
 		if (c instanceof JButton) {
 			JButton b = (JButton) c;
 			b.setOpaque(true);
-			if (CrashDetectorGUI.esMac()) {
-				b.setContentAreaFilled(true);
-			}
+			b.setContentAreaFilled(true);
 		}
 
 		if (c instanceof java.awt.Container) {
