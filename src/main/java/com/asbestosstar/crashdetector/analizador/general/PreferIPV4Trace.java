@@ -10,9 +10,11 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 import com.asbestosstar.crashdetector.parches.ConfigDeParches;
 import com.asbestosstar.crashdetector.parches.minecraft.PreferIPv4StackParch;
 
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaMisc"},nota = "Cubre PreferIPV4Trace")
 public class PreferIPV4Trace implements Verificaciones {
 
 	private boolean activado = false;

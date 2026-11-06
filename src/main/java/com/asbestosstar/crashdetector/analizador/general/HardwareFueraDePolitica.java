@@ -18,6 +18,7 @@ import com.asbestosstar.crashdetector.bajo.hw.politica.ModeloPoliticaHardware.Es
 import com.asbestosstar.crashdetector.bajo.hw.politica.PoliticaHardwareConfig;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Advierte únicamente cuando una regla corporativa explícita se incumple.
@@ -26,6 +27,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * todas las plataformas están en SIN_REGLA y los mínimos valen cero, la clase
  * termina sin detectar nada.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaHardwareCPU"},nota = "Cubre HardwareFueraDePolitica")
 public class HardwareFueraDePolitica implements Verificaciones {
 
 	public static final ConfigBoolean config = ConfigBoolean.de("ignorar_politica_hardware_corporativa", false);

@@ -8,10 +8,12 @@ import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.bajo.hw.gpu.HacerVerificacionGPU;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 import com.asbestosstar.crashdetector.gui.tipos.gpu.GPUFixGUI;
 import com.asbestosstar.crashdetector.gui.tipos.gpu.GPUFixOptimusPrime;
 import com.asbestosstar.crashdetector.parches.ConfigDeParches;
 
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaDriversGPU"},nota = "Cubre VerificacionGPU")
 public class VerificacionGPU implements Verificaciones {
 
 	private boolean activado = false;

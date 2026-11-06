@@ -5,11 +5,13 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.seguridad.DetectorMitigacionesCPU;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.seguridad.ResultadoVulnerabilidadCPU;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Advierte cuando el CPU puede estar afectado por Meltdown y no se puede
  * confirmar una mitigación completa del sistema operativo o del hardware.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaHardwareCPU"},nota = "Cubre Meltdown")
 public final class Meltdown extends VerificacionVulnerabilidadCPUBase {
 
 	public static ConfigBoolean config = ConfigBoolean.de("ignorar_meltdown", false);

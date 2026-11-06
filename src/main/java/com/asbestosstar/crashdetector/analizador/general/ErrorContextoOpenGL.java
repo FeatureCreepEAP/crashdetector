@@ -7,6 +7,7 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta "FATAL ERROR in native method … No context is current or a function
@@ -15,6 +16,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * La resolución del origen se hace tarde, en mensaje(), para no depender de
  * VDST antes de finalizarArchivo().
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaErroresJVM"},nota = "Cubre ErrorContextoOpenGL")
 public class ErrorContextoOpenGL implements Verificaciones {
 
 	private boolean activado = false;

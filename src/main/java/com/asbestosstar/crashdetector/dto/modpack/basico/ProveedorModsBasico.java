@@ -170,36 +170,37 @@ public class ProveedorModsBasico implements ProveedorMods, ProveedorConExtension
 	protected ResultadoImportacion instalarEntradaConConflictos(byte[] bytesEntrada, InfoEntradaImportacion info,
 			Path destino, PoliticaImportacion politica, ResolutorConflictosImportacion resolutor) throws IOException {
 
+		ResultadoImportacion resultado = new ResultadoImportacion();
+
+		if (politica == null) {
+			politica = new PoliticaImportacion();
+		}
+
+		if (bytesEntrada == null) {
+			resultado.errores++;
+			resultado.mensajes.add("Entrada sin bytes: " + destino);
+			return resultado;
+		}
+
+		if (destino == null) {
+			resultado.errores++;
+			resultado.mensajes.add("Destino nulo.");
+			return resultado;
+		}
+
+		if (destino.getParent() != null) {
+			Files.createDirectories(destino.getParent());
+		}
+
+		if (!Files.exists(destino)) {
+			Files.write(destino, bytesEntrada, java.nio.file.StandardOpenOption.CREATE,
+					java.nio.file.StandardOpenOption.TRUNCATE_EXISTING);
+			resultado.copiados++;
+			return resultado;
+		}
+
+		// Solo bloquear cuando hay conflicto real, para permitir escrituras paralelas
 		synchronized (ImportadorParalelo.BLOQUEO_CONFLICTOS) {
-			ResultadoImportacion resultado = new ResultadoImportacion();
-
-			if (politica == null) {
-				politica = new PoliticaImportacion();
-			}
-
-			if (bytesEntrada == null) {
-				resultado.errores++;
-				resultado.mensajes.add("Entrada sin bytes: " + destino);
-				return resultado;
-			}
-
-			if (destino == null) {
-				resultado.errores++;
-				resultado.mensajes.add("Destino nulo.");
-				return resultado;
-			}
-
-			if (destino.getParent() != null) {
-				Files.createDirectories(destino.getParent());
-			}
-
-			if (!Files.exists(destino)) {
-				Files.write(destino, bytesEntrada, java.nio.file.StandardOpenOption.CREATE,
-						java.nio.file.StandardOpenOption.TRUNCATE_EXISTING);
-				resultado.copiados++;
-				return resultado;
-			}
-
 			com.asbestosstar.crashdetector.dto.modpack.importar.ConflictoImportacion conflicto = new com.asbestosstar.crashdetector.dto.modpack.importar.ConflictoImportacion();
 
 			conflicto.tipo = info != null && info.esMod
@@ -394,7 +395,7 @@ public class ProveedorModsBasico implements ProveedorMods, ProveedorConExtension
 
 	private static byte[] leerBytes(InputStream is) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
+		byte[] buffer = new byte[65536];
 		int leidos;
 
 		while ((leidos = is.read(buffer)) != -1) {

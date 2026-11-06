@@ -20,6 +20,7 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Renderiza contenido basado en "at ..." de los stacktraces.
@@ -29,6 +30,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * (global). - No duplicar items dentro del mismo log. - CFR siempre basado en
  * la clase de la linea.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaContenidoDeTrazosYDifDeMods"},nota = "Cubre ContenidoDeTrazos")
 public class ContenidoDeTrazos implements Verificaciones {
 
 	public boolean activado = false;

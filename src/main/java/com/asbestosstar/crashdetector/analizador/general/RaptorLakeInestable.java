@@ -13,7 +13,9 @@ import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.intel.ValidadorMicrocodigo;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaHardwareCPU"},nota = "Cubre RaptorLakeInestable")
 public class RaptorLakeInestable implements Verificaciones {
 
 	// Configuración para desactivar la verificación desde la GUI

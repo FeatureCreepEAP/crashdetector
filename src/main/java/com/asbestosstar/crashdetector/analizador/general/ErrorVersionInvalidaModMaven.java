@@ -6,12 +6,14 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta errores de especificación de versión inválida en mods donde la
  * versión no está correctamente rodeada por corchetes, causando un
  * InvalidVersionSpecificationException.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaErroresJar"},nota = "Cubre ErrorVersionInvalidaModMaven")
 public class ErrorVersionInvalidaModMaven implements Verificaciones {
 
 	private boolean activado = false;

@@ -7,12 +7,14 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta el error nativo "StubRoutines::SafeFetch32" relacionado con JDK
  * 17.0.9 en macOS. Este problema se resuelve actualizando a JDK 17.0.10 o
  * superior.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaMisc"},nota = "Cubre ProblemaSafeFetch32JDK17")
 public class ProblemaSafeFetch32JDK17 implements Verificaciones {
 
 	private boolean activado = false;

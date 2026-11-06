@@ -2029,6 +2029,219 @@ public class Coreano implements Idioma {
 	}
 
 	@Override
+	public String problema_mesa_titulo_y_detalle() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Mesa/llvmpipe 소프트웨어 렌더러 감지됨</b><br/><br/>"
+				+ "마인크래프트가 하드웨어 가속 대신 Mesa/llvmpipe 소프트웨어 렌더러를 사용하고 있습니다. "
+				+ "이것은 LWJGL 오류를 유발하며 Solaris/Illumos, SPARC 및 호환 GPU가 없는 시스템에서 흔합니다.<br/><br/>"
+				+ "<i>소프트웨어 렌더러는 매우 느리며 마인크래프트에 필요한 모든 OpenGL 기능을 지원하지 않습니다. "
+				+ "호환 GPU가 있다면 드라이버가 올바르게 설치되어 있는지 확인하세요.</i>";
+	}
+
+	@Override
+	public String nombre_problema_mesa() {
+		return "Mesa/llvmpipe 소프트웨어 렌더러";
+	}
+
+	@Override
+	public String solucion_para_problema_mesa_titulo() {
+		return "<b style='color:#" + config.obtenerColorInfo()
+				+ "'>소프트웨어 렌더러 감지됨. 가능한 해결 방법:<br/><br/>"
+				+ "a) OpenGL 3.2+ 호환 GPU 드라이버를 설치하세요.<br/>"
+				+ "b) 호환 GPU가 없으면 하드웨어 가속이 있는 시스템을 사용하세요.<br/>"
+				+ "c) Solaris/Illumos에서는 Mesa와 llvmpipe가 최신인지 확인하세요.<br/><br/>"
+				+ "소프트웨어 렌더러는 마인크래프트에 적합하지 않습니다.</b>";
+	}
+
+	@Override
+	public String biblioteca_nativa_faltante(String metodoNativo) {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>네이티브 라이브러리 누락: 네이티브 메서드 " + metodoNativo
+				+ "를 연결할 수 없습니다. LWJGL에 플랫폼용 네이티브 라이브러리가 없을 때 발생합니다. "
+				+ "Solaris/Illumos, SPARC 및 LWJGL이 지원하지 않는 플랫폼에서 흔합니다.</b>";
+	}
+
+	@Override
+	public String nombre_biblioteca_nativa_faltante() {
+		return "네이티브 라이브러리 누락";
+	}
+
+	@Override
+	public String solucion_para_biblioteca_nativa_faltante_titulo() {
+		return "<b style='color:#" + config.obtenerColorInfo()
+				+ "'>Native method not available. Possible solutions:<br/><br/>"
+				+ "a) Make sure you are using a Java version compatible with your platform.<br/>"
+				+ "b) For Solaris SPARC, use <a href='https://github.com/SparcSolarisPorts/lwjgl3-sunos-builder'>SparcSolarisPorts/lwjgl3-sunos-builder</a>.<br/>"
+				+ "c) For Haiku, see <a href='https://www.haikuinsider.org/play-minecraft'>HaikuInsider: Play Minecraft</a>.<br/>"
+				+ "d) For FreeBSD, OpenBSD, NetBSD, check your OS ports projects for LWJGL3.<br/>"
+				+ "e) Verify that LWJGL native libraries are present in -Djava.library.path.<br/>"
+				+ "f) Consider building LWJGL native libraries from source for your platform.<br/><br/>"
+				+ "LWJGL does not provide native libraries for all platforms.</b>";
+	}
+
+
+	// ==================== Error Driver DRI ====================
+
+	@Override
+	public String error_driver_dri_titulo_y_detalle() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>DRI software rasterization driver has crashed</b><br/><br/>"
+				+ "The DRI (Direct Rendering Infrastructure) software rasterization driver (swrast_dri.so) "
+				+ "has caused a SIGBUS crash during OpenGL operations. This occurs when no hardware acceleration "
+				+ "is available and the system falls back to Mesa software rasterization.<br/><br/>"
+				+ "<i>Software rasterization is extremely slow and prone to crashes on platforms without a compatible GPU.</i>";
+	}
+
+	@Override
+	public String nombre_error_driver_dri() {
+		return "DRI software rasterization driver crash";
+	}
+
+	@Override
+	public String solucion_para_error_driver_dri_titulo() {
+		return "<b style='color:#" + config.obtenerColorInfo()
+				+ "'>DRI driver crash. Possible solutions:<br/><br/>"
+				+ "a) Install GPU drivers compatible with OpenGL 3.2+.<br/>"
+				+ "b) If you are on SPARC Solaris/Illumos, use the Mesa builds from <a href='https://github.com/SparcSolarisPorts/vulkan'>SparcSolarisPorts/vulkan</a>.<br/>"
+				+ "c) For other platforms, check your OS ports ecosystem or consider building native libraries from source.<br/>"
+				+ "d) Update Mesa and DRI drivers to the latest available version.<br/><br/>"
+				+ "Software rasterization is not suitable for Minecraft.</b>";
+	}
+
+	// ==================== Error GLXBadFBConfig ====================
+
+	@Override
+	public String error_glx_bad_fbconfig_titulo_y_detalle() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Cannot create OpenGL context: invalid framebuffer configuration</b><br/><br/>"
+				+ "The system cannot find a framebuffer configuration compatible with Minecraft's requirements. "
+				+ "This prevents the creation of the OpenGL rendering context.<br/><br/>"
+				+ "<i>Common on platforms without a compatible GPU or with incomplete graphics drivers.</i>";
+	}
+
+	@Override
+	public String nombre_error_glx_bad_fbconfig() {
+		return "Invalid OpenGL framebuffer configuration";
+	}
+
+	@Override
+	public String solucion_para_error_glx_bad_fbconfig_titulo() {
+		return "<b style='color:#" + config.obtenerColorInfo()
+				+ "'>OpenGL framebuffer error. Possible solutions:<br/><br/>"
+				+ "a) Install GPU drivers compatible with OpenGL 3.2+.<br/>"
+				+ "b) Verify that your X11/Wayland server supports 32-bit framebuffer configurations.<br/>"
+				+ "c) If using an unsupported platform, check your OS ports ecosystem or consider building native libraries from source.<br/><br/>"
+				+ "Without a compatible framebuffer, Minecraft cannot render graphics.</b>";
+	}
+
+	// ==================== Error Vulkan Extension ====================
+
+	@Override
+	public String error_vulkan_extension_titulo_y_detalle() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Vulkan extension not available</b><br/><br/>"
+				+ "The Vulkan extensions required by Minecraft are not available on your system. "
+				+ "This prevents using Vulkan as a graphics backend.<br/><br/>"
+				+ "<i>Vulkan may not be supported on your platform or the required extensions may not be available.</i>";
+	}
+
+	@Override
+	public String nombre_error_vulkan_extension() {
+		return "Vulkan extension not available";
+	}
+
+	@Override
+	public String solucion_para_error_vulkan_extension_titulo() {
+		return "<b style='color:#" + config.obtenerColorInfo()
+				+ "'>Vulkan extension error. Possible solutions:<br/><br/>"
+				+ "a) Install or update Vulkan drivers for your GPU.<br/>"
+				+ "b) Verify that Vulkan is supported on your platform.<br/>"
+				+ "c) If using an unsupported platform, check your OS ports ecosystem or consider building native libraries from source.<br/><br/>"
+				+ "Minecraft will try to use OpenGL as a fallback if Vulkan is not available.</b>";
+	}
+
+	// ==================== Error Backend Grafico No Disponible ====================
+
+	@Override
+	public String error_backend_grafico_no_disponible_titulo_y_detalle() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>No supported graphics backend was found</b><br/><br/>"
+				+ "Both OpenGL and Vulkan have failed to create a rendering context. "
+				+ "Minecraft cannot create the game window without a functional graphics backend.<br/><br/>"
+				+ "<i>Common on officially unsupported platforms or systems without functional graphics drivers.</i>";
+	}
+
+	@Override
+	public String nombre_error_backend_grafico_no_disponible() {
+		return "No supported graphics backend";
+	}
+
+	@Override
+	public String solucion_para_error_backend_grafico_no_disponible_titulo() {
+		return "<b style='color:#" + config.obtenerColorInfo()
+				+ "'>No graphics backend. Possible solutions:<br/><br/>"
+				+ "a) Install GPU drivers compatible with OpenGL 3.2+ or Vulkan.<br/>"
+				+ "b) Verify that your system supports at least one graphics backend (OpenGL or Vulkan).<br/>"
+				+ "c) If using an unsupported platform, check your OS ports ecosystem or consider building native libraries from source.<br/><br/>"
+				+ "Without a functional graphics backend, Minecraft cannot run.</b>";
+	}
+
+	// ==================== Error LWJGL Plataforma No Soportada ====================
+
+	@Override
+	public String error_lwjgl_plataforma_no_soportada_titulo_y_detalle() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>LWJGL has no native libraries for your platform</b><br/><br/>"
+				+ "The system platform or architecture does not match the precompiled native libraries of LWJGL. "
+				+ "This prevents Minecraft from loading the libraries needed for graphics and input.<br/><br/>"
+				+ "<i>LWJGL only provides native libraries for officially supported platforms (Windows, macOS, Linux x86_64).</i>";
+	}
+
+	@Override
+	public String nombre_error_lwjgl_plataforma_no_soportada() {
+		return "Platform not supported by LWJGL";
+	}
+
+	@Override
+	public String solucion_para_error_lwjgl_plataforma_no_soportada_titulo() {
+		return "<b style='color:#" + config.obtenerColorInfo()
+				+ "'>LWJGL does not support your platform. Possible solutions:<br/><br/>"
+				+ "a) For Solaris SPARC, use <a href='https://github.com/SparcSolarisPorts/lwjgl3-sunos-builder'>SparcSolarisPorts/lwjgl3-sunos-builder</a>.<br/>"
+				+ "b) For Haiku, see <a href='https://www.haikuinsider.org/play-minecraft'>HaikuInsider: Play Minecraft</a>.<br/>"
+				+ "c) For FreeBSD, OpenBSD, NetBSD, check your OS ports projects for LWJGL3.<br/>"
+				+ "d) Consider building LWJGL native libraries from source for your platform.<br/>"
+				+ "e) Make sure -Djava.library.path points to the directory with compiled native libraries.<br/><br/>"
+				+ "Without LWJGL native libraries, Minecraft cannot run on your platform.</b>";
+	}
+
+	// ==================== Error Cargador Vulkan ====================
+
+	@Override
+	public String error_cargador_vulkan_titulo_y_detalle() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Failed to load Vulkan loader</b><br/><br/>"
+				+ "The Vulkan loader cannot be loaded, preventing the use of Vulkan as a graphics backend. "
+				+ "This may occur if Vulkan is not installed or the loader libraries are not available.<br/><br/>"
+				+ "<i>Minecraft will try to use OpenGL as a fallback if Vulkan is not available.</i>";
+	}
+
+	@Override
+	public String nombre_error_cargador_vulkan() {
+		return "Failed to load Vulkan loader";
+	}
+
+	@Override
+	public String solucion_para_error_cargador_vulkan_titulo() {
+		return "<b style='color:#" + config.obtenerColorInfo()
+				+ "'>Vulkan loader error. Possible solutions:<br/><br/>"
+				+ "a) Install the Vulkan loader for your operating system.<br/>"
+				+ "b) Verify that Vulkan libraries are in PATH or LD_LIBRARY_PATH.<br/>"
+				+ "c) If using an unsupported platform, check your OS ports ecosystem or consider building native libraries from source.<br/><br/>"
+				+ "Minecraft may work with OpenGL if Vulkan is not available.</b>";
+	}
+
+
+	@Override
 	public String conflicto_id_colision_especifico(String id, String modOrigen, String modDestino) {
 		return "<b style='color:#" + config.obtenerColorError() + "'>ID 충돌: <strong>" + id + "</strong> 번 ID가 <strong>"
 				+ modOrigen + "</strong>에 의해 이미 사용 중이며, <strong>" + modDestino
@@ -13869,5 +14082,28 @@ public class Coreano implements Idioma {
 	@Override
 	public String neoforgeWaifuSoloLectura() {
 		return "CrashDetector의 NeoForge Waifu에서는 읽기 전용 GraphQL 쿼리만 허용됩니다.";
+	}
+
+	@Override
+	public String mensajeErrorRenderSystemHiloIncorrectoSodium() {
+		return "<b style='color:#Config.obtenerInstancia().obtenerColorError()'>Sodium이 Minecraft 렌더링 시스템에서 스레드 오류를 발생시켰습니다.</b><p>로그에 오류가 있습니다:</p><code>java.lang.IllegalStateException: Rendersystem called from wrong thread</code><p>Sodium이 잘못된 스레드에서 렌더링 시스템에 접근하려고 할 때 발생합니다. SPARC/Solaris와 llvmpipe에서 흔합니다.</p>";
+	}
+
+	@Override
+	public String nombreErrorRenderSystemHiloIncorrectoSodium() {
+		return "Sodium 스레드 오류";
+	}
+
+	@Override
+	public String mensajeErrorEnlazadorNoSoportado(String biblioteca) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" 
+				+ "플랫폼이 Java 네이티브 링커(FFM)를 지원하지 않습니다.</b>"
+				+ "<p>네이티브 라이브러리를 로드하는 중 오류가 발생했습니다:</p>"
+				+ "<code>java.lang.UnsupportedOperationException: Platform does not support native linker</code>";
+	}
+
+	@Override
+	public String nombreErrorEnlazadorNoSoportado() {
+		return "플랫폼이 네이티브 링커를 지원하지 않음";
 	}
 }

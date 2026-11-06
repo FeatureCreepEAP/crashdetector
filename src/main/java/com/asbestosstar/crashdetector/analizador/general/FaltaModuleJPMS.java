@@ -13,7 +13,9 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaModIncompatible"},nota = "Cubre FaltaModuleJPMS")
 public class FaltaModuleJPMS implements Verificaciones {
 
 	private boolean activado = false;

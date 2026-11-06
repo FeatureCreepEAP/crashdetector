@@ -1074,6 +1074,70 @@ public interface Idioma {
 
 	public String solucion_para_error_enlace_insatisfecho();
 
+	// ==================== Problema Mesa Software Renderer ====================
+
+	public String problema_mesa_titulo_y_detalle();
+
+	public String nombre_problema_mesa();
+
+	public String solucion_para_problema_mesa_titulo();
+
+	// ==================== Biblioteca Nativa Faltante ====================
+
+	public String biblioteca_nativa_faltante(String metodoNativo);
+
+	public String nombre_biblioteca_nativa_faltante();
+
+	public String solucion_para_biblioteca_nativa_faltante_titulo();
+
+	// ==================== Error Driver DRI ====================
+
+	public String error_driver_dri_titulo_y_detalle();
+
+	public String nombre_error_driver_dri();
+
+	public String solucion_para_error_driver_dri_titulo();
+
+	// ==================== Error GLXBadFBConfig ====================
+
+	public String error_glx_bad_fbconfig_titulo_y_detalle();
+
+	public String nombre_error_glx_bad_fbconfig();
+
+	public String solucion_para_error_glx_bad_fbconfig_titulo();
+
+	// ==================== Error Vulkan Extension ====================
+
+	public String error_vulkan_extension_titulo_y_detalle();
+
+	public String nombre_error_vulkan_extension();
+
+	public String solucion_para_error_vulkan_extension_titulo();
+
+	// ==================== Error Backend Gráfico No Disponible ====================
+
+	public String error_backend_grafico_no_disponible_titulo_y_detalle();
+
+	public String nombre_error_backend_grafico_no_disponible();
+
+	public String solucion_para_error_backend_grafico_no_disponible_titulo();
+
+	// ==================== Error LWJGL Plataforma No Soportada ====================
+
+	public String error_lwjgl_plataforma_no_soportada_titulo_y_detalle();
+
+	public String nombre_error_lwjgl_plataforma_no_soportada();
+
+	public String solucion_para_error_lwjgl_plataforma_no_soportada_titulo();
+
+	// ==================== Error Cargador Vulkan ====================
+
+	public String error_cargador_vulkan_titulo_y_detalle();
+
+	public String nombre_error_cargador_vulkan();
+
+	public String solucion_para_error_cargador_vulkan_titulo();
+
 	public String conflicto_id_colision_especifico(String idConflictivo, String modOrigen, String modDestino);
 
 	public String conflicto_id_maximo();
@@ -5600,4 +5664,12 @@ public interface Idioma {
 	public String neoforgeWaifuMostrarEditorAvanzado();
 
 	public String neoforgeWaifuSoloLectura();
+
+	public String mensajeErrorRenderSystemHiloIncorrectoSodium();
+
+	public String nombreErrorRenderSystemHiloIncorrectoSodium();
+
+	public String mensajeErrorEnlazadorNoSoportado(String biblioteca);
+
+	public String nombreErrorEnlazadorNoSoportado();
 }

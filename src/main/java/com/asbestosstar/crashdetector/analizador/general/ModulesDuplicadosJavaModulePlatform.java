@@ -22,7 +22,11 @@ import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
+@ProbadoPor(valor = {
+		"com.asbestosstar.crashdetector.pruebas.PruebaFabricYLWJGL" },
+		nota = "Cubre errores de modulos duplicados en plataforma Java Module")
 public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 
 	private static final Set<String> REPORTADOS_GLOBALMENTE = Collections.synchronizedSet(new HashSet<>());

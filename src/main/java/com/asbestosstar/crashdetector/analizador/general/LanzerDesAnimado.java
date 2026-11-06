@@ -15,6 +15,7 @@ import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta cuando el usuario está usando un launcher explícitamente
@@ -22,6 +23,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * recomendados, a menos que exista y sea no vacío (en cuyo caso muestra la
  * lista al final).
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaSpongeMixinYLanzadores"},nota = "Cubre LanzerDesAnimado")
 public class LanzerDesAnimado implements Verificaciones {
 
 	public static final Path ARCHIVO_DESANIMADOS = Statics.carpeta.resolve("lanzeres_desanimados.json");

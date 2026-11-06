@@ -12,6 +12,7 @@ import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta errores IllegalAccessError donde un mod intenta acceder a un método o
@@ -20,6 +21,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Ejemplo: java.lang.IllegalAccessError: class X tried to access private method
  * Y
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaModIncompatible"},nota = "Cubre AccesoIlegalMod")
 public class AccesoIlegalMod implements Verificaciones {
 
 	private boolean activado = false;

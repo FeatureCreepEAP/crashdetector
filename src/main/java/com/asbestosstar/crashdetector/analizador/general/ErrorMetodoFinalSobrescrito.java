@@ -7,6 +7,7 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta errores IncompatibleClassChangeError donde una clase intenta
@@ -16,6 +17,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * qouteall.imm_ptl.core.portal.Portal overrides final method
  * net.minecraft.world.entity.Entity.m20191()Lnet/minecraft/world/phys/AABB;
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaErroresBytecode"},nota = "Cubre ErrorMetodoFinalSobrescrito")
 public class ErrorMetodoFinalSobrescrito implements Verificaciones {
 
 	private boolean activado = false;

@@ -6,7 +6,9 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaErroresArchivo"},nota = "Cubre RutaCaracteresInvalidos")
 public class RutaCaracteresInvalidos implements Verificaciones {
 
 	// Indica si esta verificación fue activada

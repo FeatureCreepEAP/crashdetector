@@ -1,10 +1,7 @@
 package com.asbestosstar.crashdetector.dto.modpack.bbsmc;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -155,31 +152,7 @@ public class BBSModDesdeJar {
 	}
 
 	protected static Json.Nodo getJson(String url) throws IOException {
-		HttpURLConnection con = null;
-
-		try {
-			URL u = new URL(url);
-			con = (HttpURLConnection) u.openConnection();
-			con.setRequestMethod("GET");
-			con.setConnectTimeout(20000);
-			con.setReadTimeout(30000);
-			con.setRequestProperty("Accept", "application/json");
-			con.setRequestProperty("User-Agent", "CrashDetectorMC/1.0");
-
-			int codigo = con.getResponseCode();
-			InputStream is = codigo >= 200 && codigo < 300 ? con.getInputStream() : con.getErrorStream();
-			String respuesta = leerCompleto(is);
-
-			if (codigo < 200 || codigo >= 300) {
-				throw new IOException("Error BBSMC/Modrinth HTTP " + codigo + ": " + respuesta);
-			}
-
-			return Json.leer(respuesta);
-		} finally {
-			if (con != null) {
-				con.disconnect();
-			}
-		}
+		return com.asbestosstar.crashdetector.dto.modpack.ClienteHTTP.getJson(url);
 	}
 
 	public static Json.Nodo crearEntradaTLauncherDesdeCoincidencia(ArchivoLocalBBS archivo, Json.Nodo version,
@@ -470,7 +443,7 @@ public class BBSModDesdeJar {
 			MessageDigest digest = MessageDigest.getInstance("SHA-1");
 
 			try (InputStream is = Files.newInputStream(archivo)) {
-				byte[] buffer = new byte[8192];
+				byte[] buffer = new byte[65536];
 				int leidos;
 
 				while ((leidos = is.read(buffer)) != -1) {
@@ -489,22 +462,6 @@ public class BBSModDesdeJar {
 		} catch (Exception e) {
 			throw new IOException("No se pudo calcular SHA-1 de " + archivo, e);
 		}
-	}
-
-	private static String leerCompleto(InputStream is) throws IOException {
-		if (is == null) {
-			return "";
-		}
-
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
-		int leidos;
-
-		while ((leidos = is.read(buffer)) != -1) {
-			baos.write(buffer, 0, leidos);
-		}
-
-		return new String(baos.toByteArray(), "UTF-8");
 	}
 
 	protected static String normalizarEndpoint(String endpoint) {

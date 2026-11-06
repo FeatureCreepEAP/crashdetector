@@ -7,12 +7,14 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta específicamente errores ZipException que incluyen el nombre del
  * archivo JAR corrupto. Extrae y muestra el nombre del archivo afectado para
  * facilitar la identificación.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaErroresJar"},nota = "Cubre ErrorJarCorruptoConNombre")
 public class ErrorJarCorruptoConNombre implements Verificaciones {
 
 	private static final String PREFIJO = "Error analyzing [";

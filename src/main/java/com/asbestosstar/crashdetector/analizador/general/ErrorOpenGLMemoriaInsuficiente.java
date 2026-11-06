@@ -6,6 +6,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta errores OpenGL por falta de memoria de video.
@@ -13,6 +14,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Ejemplo: Error has been generated. GL error GL_OUT_OF_MEMORY in (null): (ID:
  * 173538523) Generic error
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaDriversGPU"},nota = "Cubre ErrorOpenGLMemoriaInsuficiente")
 public class ErrorOpenGLMemoriaInsuficiente implements Verificaciones {
 
 	private boolean activado = false;

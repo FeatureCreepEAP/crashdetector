@@ -1661,4 +1661,27 @@ public class Malayo extends Indonesia {
 	public String neoforgeWaifuSoloLectura() {
 		return "NeoForge Waifu dalam CrashDetector hanya membenarkan kueri GraphQL baca sahaja.";
 	}
+
+	@Override
+	public String mensajeErrorRenderSystemHiloIncorrectoSodium() {
+		return "<b style='color:#Config.obtenerInstancia().obtenerColorError()'>Sodium menyebabkan ralat thread dalam sistem rendering Minecraft.</b><p>Log mengandungi ralat:</p><code>java.lang.IllegalStateException: Rendersystem called from wrong thread</code><p>Ini berlaku apabila Sodium cuba mengakses sistem rendering dari thread yang salah.</p>";
+	}
+
+	@Override
+	public String nombreErrorRenderSystemHiloIncorrectoSodium() {
+		return "Ralat thread dengan Sodium";
+	}
+
+	@Override
+	public String mensajeErrorEnlazadorNoSoportado(String biblioteca) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" 
+				+ "Platform tidak menyokong paut asli Java (FFM).</b>"
+				+ "<p>Ralat berlaku semasa cuba memuat pustaka asli:</p>"
+				+ "<code>java.lang.UnsupportedOperationException: Platform does not support native linker</code>";
+	}
+
+	@Override
+	public String nombreErrorEnlazadorNoSoportado() {
+		return "Paut asli tidak disokong oleh platform";
+	}
 }

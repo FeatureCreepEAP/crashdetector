@@ -10,7 +10,9 @@ import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaErroresJar"},nota = "Cubre VersionInvalidaSemver")
 public class VersionInvalidaSemver implements Verificaciones {
 
 	private boolean activado = false;

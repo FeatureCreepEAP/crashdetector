@@ -181,47 +181,7 @@ public class ExportadorModpackModrinth {
 	}
 
 	private static Json.Nodo getJson(String url) throws IOException {
-		java.net.HttpURLConnection con = null;
-
-		try {
-			java.net.URL u = new java.net.URL(url);
-			con = (java.net.HttpURLConnection) u.openConnection();
-			con.setRequestMethod("GET");
-			con.setConnectTimeout(20000);
-			con.setReadTimeout(30000);
-			con.setRequestProperty("Accept", "application/json");
-			con.setRequestProperty("User-Agent", "CrashDetectorMC/1.0");
-
-			int codigo = con.getResponseCode();
-			java.io.InputStream is = codigo >= 200 && codigo < 300 ? con.getInputStream() : con.getErrorStream();
-			String respuesta = leerCompleto(is);
-
-			if (codigo < 200 || codigo >= 300) {
-				throw new IOException("Error Modrinth HTTP " + codigo + ": " + respuesta);
-			}
-
-			return Json.leer(respuesta);
-		} finally {
-			if (con != null) {
-				con.disconnect();
-			}
-		}
-	}
-
-	private static String leerCompleto(java.io.InputStream is) throws IOException {
-		if (is == null) {
-			return "";
-		}
-
-		java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
-		int leidos;
-
-		while ((leidos = is.read(buffer)) != -1) {
-			baos.write(buffer, 0, leidos);
-		}
-
-		return new String(baos.toByteArray(), "UTF-8");
+		return com.asbestosstar.crashdetector.dto.modpack.ClienteHTTP.getJson(url);
 	}
 
 	private static Json.Nodo obtenerArchivoPrimario(Json.Nodo version) {

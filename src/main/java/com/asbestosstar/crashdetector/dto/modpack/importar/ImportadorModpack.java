@@ -23,35 +23,36 @@ public interface ImportadorModpack {
 	default ResultadoImportacion instalarEntradaConConflictos(byte[] bytesEntrada, InfoEntradaImportacion info,
 			Path destino, PoliticaImportacion politica) throws IOException {
 
+		ResultadoImportacion resultado = new ResultadoImportacion();
+
+		if (politica == null) {
+			politica = new PoliticaImportacion();
+		}
+
+		if (bytesEntrada == null) {
+			resultado.errores++;
+			resultado.mensajes.add("Entrada sin bytes: " + destino);
+			return resultado;
+		}
+
+		if (destino == null) {
+			resultado.errores++;
+			resultado.mensajes.add("Destino nulo.");
+			return resultado;
+		}
+
+		if (destino.getParent() != null) {
+			Files.createDirectories(destino.getParent());
+		}
+
+		if (!Files.exists(destino)) {
+			Files.write(destino, bytesEntrada, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+			resultado.copiados++;
+			return resultado;
+		}
+
+		// Solo bloquear cuando hay conflicto real, para permitir escrituras paralelas
 		synchronized (ImportadorParalelo.BLOQUEO_CONFLICTOS) {
-			ResultadoImportacion resultado = new ResultadoImportacion();
-
-			if (politica == null) {
-				politica = new PoliticaImportacion();
-			}
-
-			if (bytesEntrada == null) {
-				resultado.errores++;
-				resultado.mensajes.add("Entrada sin bytes: " + destino);
-				return resultado;
-			}
-
-			if (destino == null) {
-				resultado.errores++;
-				resultado.mensajes.add("Destino nulo.");
-				return resultado;
-			}
-
-			if (destino.getParent() != null) {
-				Files.createDirectories(destino.getParent());
-			}
-
-			if (!Files.exists(destino)) {
-				Files.write(destino, bytesEntrada, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-				resultado.copiados++;
-				return resultado;
-			}
-
 			ConflictoImportacion conflicto = crearConflictoDesdeEntrada(bytesEntrada, info, destino);
 
 			ConflictoImportacion.Decision decision = resolverConflictoConGUI(conflicto, politica);

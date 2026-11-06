@@ -4,10 +4,6 @@ import com.asbestosstar.crashdetector.Statics;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -665,104 +661,24 @@ public class ColaActualizacionesModpack {
 	}
 
 	private static void descargarArchivo(String url, Path destino) throws IOException {
-		HttpURLConnection con = null;
-
-		try {
-			URL u = new URL(url);
-			con = (HttpURLConnection) u.openConnection();
-			con.setRequestMethod("GET");
-			con.setConnectTimeout(20000);
-			con.setReadTimeout(60000);
-			con.setRequestProperty("User-Agent", "CrashDetectorMC/1.0");
-
-			int codigo = con.getResponseCode();
-			if (codigo < 200 || codigo >= 300) {
-				throw new IOException("No se pudo descargar " + url + " HTTP " + codigo);
-			}
-
-			if (destino.getParent() != null) {
-				Files.createDirectories(destino.getParent());
-			}
-
-			try (InputStream is = con.getInputStream()) {
-				Files.copy(is, destino, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-			}
-		} finally {
-			if (con != null) {
-				con.disconnect();
-			}
-		}
+		com.asbestosstar.crashdetector.dto.modpack.ClienteHTTP.descargarArchivo(url, destino);
 	}
 
 	private static Json.Nodo getJson(String url, String claveApi) throws IOException {
-		HttpURLConnection con = null;
-
-		try {
-			URL u = new URL(url);
-			con = (HttpURLConnection) u.openConnection();
-			con.setRequestMethod("GET");
-			con.setConnectTimeout(20000);
-			con.setReadTimeout(30000);
-			con.setRequestProperty("Accept", "application/json");
-			con.setRequestProperty("User-Agent", "CrashDetectorMC/1.0");
-
-			if (claveApi != null && !claveApi.trim().isEmpty()
-					&& !"usar_klauncher_endpoint_si_no_tienes_clave_api".equals(claveApi)) {
-				con.setRequestProperty("x-api-key", claveApi.trim());
-			}
-
-			int codigo = con.getResponseCode();
-			String respuesta = leerCompleto(
-					codigo >= 200 && codigo < 300 ? con.getInputStream() : con.getErrorStream());
-
-			if (codigo < 200 || codigo >= 300) {
-				throw new IOException("HTTP " + codigo + ": " + respuesta);
-			}
-
-			return Json.leer(respuesta);
-		} finally {
-			if (con != null) {
-				con.disconnect();
-			}
+		java.util.Map<String, String> headers = new java.util.HashMap<String, String>();
+		if (claveApi != null && !claveApi.trim().isEmpty()
+				&& !"usar_klauncher_endpoint_si_no_tienes_clave_api".equals(claveApi)) {
+			headers.put("x-api-key", claveApi.trim());
 		}
+		return com.asbestosstar.crashdetector.dto.modpack.ClienteHTTP.getJson(url, headers);
 	}
 
 	private static Json.Nodo postJson(String url, String cuerpo, String claveApi) throws IOException {
-		HttpURLConnection con = null;
-
-		try {
-			URL u = new URL(url);
-			con = (HttpURLConnection) u.openConnection();
-			con.setRequestMethod("POST");
-			con.setDoOutput(true);
-			con.setConnectTimeout(20000);
-			con.setReadTimeout(30000);
-			con.setRequestProperty("Content-Type", "application/json");
-			con.setRequestProperty("Accept", "application/json");
-			con.setRequestProperty("User-Agent", "CrashDetectorMC/1.0");
-
-			if (claveApi != null && !claveApi.trim().isEmpty()) {
-				con.setRequestProperty("x-api-key", claveApi.trim());
-			}
-
-			try (OutputStream os = con.getOutputStream()) {
-				os.write(cuerpo.getBytes(StandardCharsets.UTF_8));
-			}
-
-			int codigo = con.getResponseCode();
-			String respuesta = leerCompleto(
-					codigo >= 200 && codigo < 300 ? con.getInputStream() : con.getErrorStream());
-
-			if (codigo < 200 || codigo >= 300) {
-				throw new IOException("HTTP " + codigo + ": " + respuesta);
-			}
-
-			return Json.leer(respuesta);
-		} finally {
-			if (con != null) {
-				con.disconnect();
-			}
+		java.util.Map<String, String> headers = new java.util.HashMap<String, String>();
+		if (claveApi != null && !claveApi.trim().isEmpty()) {
+			headers.put("x-api-key", claveApi.trim());
 		}
+		return com.asbestosstar.crashdetector.dto.modpack.ClienteHTTP.postJson(url, cuerpo, headers);
 	}
 
 	private static void copiarDatosNuevos(ActualizacionPendiente dst, ActualizacionPendiente src) {
@@ -864,21 +780,6 @@ public class ColaActualizacionesModpack {
 		int idx = limpio.lastIndexOf('/');
 
 		return idx >= 0 && idx + 1 < limpio.length() ? limpio.substring(idx + 1) : limpio;
-	}
-
-	private static String leerCompleto(InputStream is) throws IOException {
-		if (is == null)
-			return "";
-
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
-		int leidos;
-
-		while ((leidos = is.read(buffer)) != -1) {
-			baos.write(buffer, 0, leidos);
-		}
-
-		return new String(baos.toByteArray(), StandardCharsets.UTF_8);
 	}
 
 	private static long parsearFecha(String fecha) {

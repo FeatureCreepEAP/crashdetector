@@ -12,7 +12,9 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaDriversGPU"},nota = "Cubre Drivers")
 public class Drivers implements Verificaciones {
 
 	private static final java.util.Set<String> MENSAJES_GLOBALES_VISTOS = java.util.Collections

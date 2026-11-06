@@ -6,11 +6,13 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta errores NoSuchFieldError que ocurren cuando un mod intenta acceder a
  * un campo que ya no existe en la versión actual del juego u otro mod.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaErroresBytecode"},nota = "Cubre ErrorCampoInexistente")
 public class ErrorCampoInexistente implements com.asbestosstar.crashdetector.analizador.Verificaciones {
 
 	private static final String PREFIJO_ERROR = "java.lang.NoSuchFieldError:";

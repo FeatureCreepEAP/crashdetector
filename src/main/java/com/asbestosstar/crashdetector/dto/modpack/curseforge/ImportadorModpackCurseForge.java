@@ -4,9 +4,6 @@ import com.asbestosstar.crashdetector.Statics;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -211,8 +208,43 @@ public class ImportadorModpackCurseForge implements ImportadorModpack {
 					ResultadoImportacion total = new ResultadoImportacion();
 
 					try {
-						Json.Nodo modCF = solicitarModCurseForge(projectId);
-						Json.Nodo archivoCF = solicitarArchivoCurseForge(projectId, fileId);
+						/*
+						 * Cache las llamadas API de CurseForge para evitar repeticiones.
+						 * Clave: projectId:fileId para archivos, projectId solo para mods.
+						 */
+						String claveMod = "cf_mod:" + projectId;
+						Object cachedMod = ImportadorParalelo.cacheApi.get(claveMod);
+						Json.Nodo modCF;
+						if (cachedMod instanceof Json.Nodo) {
+							modCF = (Json.Nodo) cachedMod;
+						} else {
+							try {
+								modCF = solicitarModCurseForge(projectId);
+								ImportadorParalelo.cacheApi.putIfAbsent(claveMod, modCF);
+							} catch (Throwable t) {
+								modCF = null;
+							}
+						}
+
+						String claveArchivo = "cf_file:" + projectId + ":" + fileId;
+						Object cachedArchivo = ImportadorParalelo.cacheApi.get(claveArchivo);
+						Json.Nodo archivoCF;
+						if (cachedArchivo instanceof Json.Nodo) {
+							archivoCF = (Json.Nodo) cachedArchivo;
+						} else {
+							try {
+								archivoCF = solicitarArchivoCurseForge(projectId, fileId);
+								ImportadorParalelo.cacheApi.putIfAbsent(claveArchivo, archivoCF);
+							} catch (Throwable t) {
+								archivoCF = null;
+							}
+						}
+
+						if (modCF == null || archivoCF == null) {
+							total.saltados++;
+							total.mensajes.add("No se pudo obtener info de CurseForge: " + projectId + "/" + fileId);
+							return total;
+						}
 
 						Json.Nodo dataArchivo = archivoCF.obtener("data");
 
@@ -426,74 +458,28 @@ public class ImportadorModpackCurseForge implements ImportadorModpack {
 	}
 
 	private static Json.Nodo getJson(String url, String claveApi) throws IOException {
-		HttpURLConnection con = null;
-
-		try {
-			URL u = new URL(url);
-			con = (HttpURLConnection) u.openConnection();
-			con.setRequestMethod("GET");
-			con.setConnectTimeout(20000);
-			con.setReadTimeout(30000);
-			con.setRequestProperty("Accept", "application/json");
-
-			if (claveApi != null && !claveApi.trim().isEmpty()
-					&& !"usar_klauncher_endpoint_si_no_tienes_clave_api".equals(claveApi)) {
-				con.setRequestProperty("x-api-key", claveApi.trim());
-			}
-
-			int codigo = con.getResponseCode();
-			InputStream is = codigo >= 200 && codigo < 300 ? con.getInputStream() : con.getErrorStream();
-			String respuesta = new String(leerBytes(is), StandardCharsets.UTF_8);
-
-			if (codigo < 200 || codigo >= 300) {
-				throw new IOException("HTTP " + codigo + ": " + respuesta);
-			}
-
-			return Json.leer(respuesta);
-		} finally {
-			if (con != null) {
-				con.disconnect();
-			}
+		java.util.Map<String, String> headers = new java.util.HashMap<String, String>();
+		if (claveApi != null && !claveApi.trim().isEmpty()
+				&& !"usar_klauncher_endpoint_si_no_tienes_clave_api".equals(claveApi)) {
+			headers.put("x-api-key", claveApi.trim());
 		}
+		return com.asbestosstar.crashdetector.dto.modpack.ClienteHTTP.getJson(url, headers);
 	}
 
 	private static byte[] descargarBytes(String url) throws IOException {
-		HttpURLConnection con = null;
-
-		try {
-			URL u = new URL(url);
-			con = (HttpURLConnection) u.openConnection();
-			con.setRequestMethod("GET");
-			con.setConnectTimeout(20000);
-			con.setReadTimeout(60000);
-			con.setRequestProperty("User-Agent", "CrashDetectorMC/1.0");
-
-			int codigo = con.getResponseCode();
-			if (codigo < 200 || codigo >= 300) {
-				throw new IOException("No se pudo descargar " + url + " HTTP " + codigo);
-			}
-
-			return leerBytes(con.getInputStream());
-		} finally {
-			if (con != null) {
-				con.disconnect();
-			}
-		}
+		return com.asbestosstar.crashdetector.dto.modpack.ClienteHTTP.descargarBytes(url);
 	}
 
-	private static byte[] leerBytes(InputStream is) throws IOException {
+	private static byte[] leerBytes(java.io.InputStream is) throws IOException {
 		if (is == null) {
 			return new byte[0];
 		}
-
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
+		java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+		byte[] buffer = new byte[65536];
 		int leidos;
-
 		while ((leidos = is.read(buffer)) != -1) {
 			baos.write(buffer, 0, leidos);
 		}
-
 		return baos.toByteArray();
 	}
 

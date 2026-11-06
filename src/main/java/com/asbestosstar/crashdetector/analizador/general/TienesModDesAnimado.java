@@ -20,12 +20,14 @@ import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta mods que están en la lista de mods desaconsejados ("desanimados") y
  * que sí están instalados. Usa los 3 métodos disponibles para encontrar mods
  * instalados y elimina duplicados.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaSpongeMixinYLanzadores"},nota = "Cubre TienesModDesAnimado")
 public class TienesModDesAnimado implements Verificaciones {
 
 	public static final Path ARCHIVO_DESANIMADOS = Statics.carpeta.resolve("mods_desanimados.json");

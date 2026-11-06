@@ -1,12 +1,7 @@
 package com.asbestosstar.crashdetector.dto.modpack.modrinth;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 import com.asbestosstar.crashdetector.config.json.Json;
 
@@ -33,34 +28,9 @@ public class SolicitudHTTPModrinth {
 
 		urlStr.append("&facets=").append(URLEncoder.encode(obtenerFacetsMods(), "UTF-8"));
 
-		URL url = new URL(urlStr.toString());
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-		conn.setRequestMethod("GET");
-		conn.setConnectTimeout(20000);
-		conn.setReadTimeout(30000);
-		conn.setRequestProperty("Accept", "application/json");
-		conn.setRequestProperty("User-Agent", "CrashDetectorMC/1.0 (asbestosstar)");
-
-		int status = conn.getResponseCode();
-		if (status != 200) {
-			throw new IOException("HTTP " + status + " desde " + urlStr);
-		}
-
-		try (BufferedReader reader = new BufferedReader(
-				new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
-
-			StringBuilder body = new StringBuilder();
-			String line;
-
-			while ((line = reader.readLine()) != null) {
-				body.append(line);
-			}
-
-			return Json.leer(body.toString());
-		} finally {
-			conn.disconnect();
-		}
+		java.util.Map<String, String> headers = new java.util.HashMap<String, String>();
+		headers.put("User-Agent", "CrashDetectorMC/1.0 (asbestosstar)");
+		return com.asbestosstar.crashdetector.dto.modpack.ClienteHTTP.getJsonSinCache(urlStr.toString(), headers);
 	}
 
 	private static String obtenerFacetsMods() {

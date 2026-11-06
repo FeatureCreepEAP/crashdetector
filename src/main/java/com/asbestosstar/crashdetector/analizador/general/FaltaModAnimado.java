@@ -21,12 +21,14 @@ import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta mods que están en la lista de mods recomendados ("animados") pero que
  * no están instalados. Usa los 3 métodos disponibles para encontrar mods
  * instalados y elimina duplicados.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaSpongeMixinYLanzadores"},nota = "Cubre FaltaModAnimado")
 public class FaltaModAnimado implements Verificaciones {
 
 	public static final Path ARCHIVO_ANIMADOS = Statics.carpeta.resolve("mods_animados.json");

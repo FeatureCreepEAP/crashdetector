@@ -18,6 +18,13 @@ import com.asbestosstar.crashdetector.analizador.general.AccesoDenegadoBackupCon
 import com.asbestosstar.crashdetector.analizador.general.AccesoIlegalMod;
 import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.AntiManipulacion;
+import com.asbestosstar.crashdetector.analizador.general.BibliotecaNativaFaltante;
+import com.asbestosstar.crashdetector.analizador.general.ErrorBackendGraficoNoDisponible;
+import com.asbestosstar.crashdetector.analizador.general.ErrorCargadorVulkan;
+import com.asbestosstar.crashdetector.analizador.general.ErrorDriverDRI;
+import com.asbestosstar.crashdetector.analizador.general.ErrorGLXBadFBConfig;
+import com.asbestosstar.crashdetector.analizador.general.ErrorLWJGLPlataformaNoSoportada;
+import com.asbestosstar.crashdetector.analizador.general.ErrorVulkanExtension;
 import com.asbestosstar.crashdetector.analizador.general.ClassCastExceptionGeneral;
 import com.asbestosstar.crashdetector.analizador.general.ContenidoDeTrazos;
 import com.asbestosstar.crashdetector.analizador.general.DifDeMods;
@@ -29,6 +36,7 @@ import com.asbestosstar.crashdetector.analizador.general.ErrorCaracteresInvalido
 import com.asbestosstar.crashdetector.analizador.general.ErrorClaseFinalExtendida;
 import com.asbestosstar.crashdetector.analizador.general.ErrorContextoOpenGL;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeEnlaceInsatisfecho;
+import com.asbestosstar.crashdetector.analizador.general.ErrorEnlazadorNoSoportado;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeMonitorLWJGL;
 import com.asbestosstar.crashdetector.analizador.general.ErrorEntrypointFabric;
 import com.asbestosstar.crashdetector.analizador.general.ErrorJarCorruptoConNombre;
@@ -57,6 +65,7 @@ import com.asbestosstar.crashdetector.analizador.general.EjemploErrorDePrueba;
 import com.asbestosstar.crashdetector.analizador.general.EjemploAdvertenciaDePrueba;
 import com.asbestosstar.crashdetector.analizador.general.OpcionesJavaGCInvalidas;
 import com.asbestosstar.crashdetector.analizador.general.PreferIPV4Trace;
+import com.asbestosstar.crashdetector.analizador.general.ProblemaMesaSoftwareRenderer;
 import com.asbestosstar.crashdetector.analizador.general.ProblemaSafeFetch32JDK17;
 import com.asbestosstar.crashdetector.analizador.general.RaptorLakeInestable;
 import com.asbestosstar.crashdetector.analizador.general.RutaCaracteresInvalidos;
@@ -186,6 +195,14 @@ public class Analizador {
 
 		verificaciones.add(new MCForgeInstallacionNoEstaCompleta());
 		verificaciones.add(new ErrorDeEnlaceInsatisfecho());
+		verificaciones.add(new BibliotecaNativaFaltante());
+		verificaciones.add(new ProblemaMesaSoftwareRenderer());
+		verificaciones.add(new ErrorDriverDRI());
+		verificaciones.add(new ErrorGLXBadFBConfig());
+		verificaciones.add(new ErrorVulkanExtension());
+		verificaciones.add(new ErrorBackendGraficoNoDisponible());
+		verificaciones.add(new ErrorLWJGLPlataformaNoSoportada());
+		verificaciones.add(new ErrorCargadorVulkan());
 		verificaciones.add(new ConflictoDeIDsMinecraft());
 		verificaciones.add(new ErrorCaracteresInvalidosEnNombre());
 		verificaciones.add(new ErrorDependenciaModFaltante());
@@ -350,6 +367,8 @@ public class Analizador {
 		verificaciones.add(new CrashProvocadoPorComando());
 		verificaciones.add(new ErrorJvmDllC2Sodium());
 		verificaciones.add(new ConflictoOverridesOpcionesSodium());
+		verificaciones.add(new ErrorRenderSystemHiloIncorrectoSodium());
+		verificaciones.add(new ErrorEnlazadorNoSoportado());
 		verificaciones.add(new ErrorJvmDllCurseForgeG1());
 		verificaciones.add(new ErrorArchivoUsadoPorOtroProceso());
 		verificaciones.add(new ErrorBetterEndPaletaChunkAgua());

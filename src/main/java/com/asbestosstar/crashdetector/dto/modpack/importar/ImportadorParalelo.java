@@ -3,6 +3,7 @@ package com.asbestosstar.crashdetector.dto.modpack.importar;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -22,6 +23,13 @@ public class ImportadorParalelo {
 	 */
 	public static final Object BLOQUEO_CONFLICTOS = new Object();
 
+	/*
+	 * Cache compartida para consultas de metadatos (SHA-1 lookups, API calls).
+	 * Evita llamadas HTTP duplicadas cuando multiples archivos comparten el mismo SHA-1.
+	 */
+	public static final java.util.concurrent.ConcurrentHashMap<String, Object> cacheApi =
+			new java.util.concurrent.ConcurrentHashMap<String, Object>();
+
 	public static ResultadoImportacion ejecutar(List<TrabajoImportacion> trabajos) {
 		ResultadoImportacion total = new ResultadoImportacion();
 
@@ -31,30 +39,55 @@ public class ImportadorParalelo {
 
 		int hilos = calcularHilos();
 		ExecutorService executor = Executors.newFixedThreadPool(hilos);
-		List<Future<ResultadoImportacion>> futuros = new ArrayList<Future<ResultadoImportacion>>();
+		List<CompletableFuture<ResultadoImportacion>> futuros = new ArrayList<CompletableFuture<ResultadoImportacion>>();
 
 		for (final TrabajoImportacion trabajo : trabajos) {
 			if (trabajo == null) {
 				continue;
 			}
 
-			futuros.add(executor.submit(new java.util.concurrent.Callable<ResultadoImportacion>() {
+			final TrabajoImportacion t = trabajo;
+			futuros.add(CompletableFuture.supplyAsync(new java.util.function.Supplier<ResultadoImportacion>() {
 				@Override
-				public ResultadoImportacion call() throws Exception {
-					return trabajo.ejecutar();
+				public ResultadoImportacion get() {
+					try {
+						return t.ejecutar();
+					} catch (Exception e) {
+						ResultadoImportacion r = new ResultadoImportacion();
+						r.errores++;
+						r.mensajes.add("Error en trabajo: " + e.getMessage());
+						return r;
+					}
 				}
-			}));
+			}, executor));
 		}
 
 		executor.shutdown();
 
-		for (Future<ResultadoImportacion> futuro : futuros) {
+		/*
+		 * Usar joinAll para esperar todos los futures en paralelo en lugar de
+		 * secuencialmente con futuro.get(). Esto permite que el thread principal
+		 * no sea un cuello de botella.
+		 */
+		CompletableFuture<Void> todos = CompletableFuture.allOf(
+				futuros.toArray(new CompletableFuture[0]));
+
+		try {
+			todos.get();
+		} catch (Throwable t) {
+			CrashDetectorLogger.logException(t);
+		}
+
+		for (CompletableFuture<ResultadoImportacion> futuro : futuros) {
 			try {
-				mezclar(total, futuro.get());
+				ResultadoImportacion r = futuro.getNow(null);
+				if (r != null) {
+					mezclar(total, r);
+				}
 			} catch (Throwable t) {
 				CrashDetectorLogger.logException(t);
 				total.errores++;
-				total.mensajes.add("Error en trabajo paralelo de importacion: " + t.getMessage());
+				total.mensajes.add("Error al recoger resultado: " + t.getMessage());
 			}
 		}
 
@@ -69,10 +102,11 @@ public class ImportadorParalelo {
 		int cpu = Runtime.getRuntime().availableProcessors();
 
 		/*
-		 * Importar modpacks es principalmente I/O + HTTP, no CPU puro. x2 aprovecha
-		 * mejor el tiempo muerto esperando red/disco.
+		 * Importar modpacks es principalmente I/O + HTTP, no CPU puro.
+		 * x4 aprovecha mejor el tiempo muerto esperando red/disco.
+		 * Minimo 8 hilos para modpacks grandes con muchos mods.
 		 */
-		return Math.max(2, cpu * 2);
+		return Math.max(8, cpu * 4);
 	}
 
 	public static void mezclar(ResultadoImportacion total, ResultadoImportacion r) {

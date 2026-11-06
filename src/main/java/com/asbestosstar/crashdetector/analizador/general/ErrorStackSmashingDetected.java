@@ -6,12 +6,14 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta errores de "stack smashing detected" que pueden ser causados por
  * problemas con Early Window en Forge/NeoForge/PillowMC o con LWJGL 3.2.2 y más
  * nuevos.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaErroresJVM"},nota = "Cubre ErrorStackSmashingDetected")
 public class ErrorStackSmashingDetected implements Verificaciones {
 
 	private boolean activado = false;

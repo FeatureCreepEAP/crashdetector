@@ -7,11 +7,15 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta errores de Fabric al cargar entrypoints (ej: ModMenu). Estos errores
  * suelen indicar incompatibilidad del mod.
  */
+@ProbadoPor(valor = {
+		"com.asbestosstar.crashdetector.pruebas.PruebaFabricYLWJGL" },
+		nota = "Cubre errores de entrypoint de Fabric")
 public class ErrorEntrypointFabric implements Verificaciones {
 
 	private boolean activado = false;

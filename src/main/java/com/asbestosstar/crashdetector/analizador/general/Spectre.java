@@ -5,6 +5,7 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.seguridad.DetectorMitigacionesCPU;
 import com.asbestosstar.crashdetector.bajo.hw.cpu.seguridad.ResultadoVulnerabilidadCPU;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Advierte sobre las variantes originales Spectre V1 y Spectre V2.
@@ -12,6 +13,7 @@ import com.asbestosstar.crashdetector.config.ConfigBoolean;
  * El resultado puede ser PARCIAL en sistemas que permiten confirmar V2 pero no
  * ofrecen una interfaz de ejecución equivalente para todas las rutas de V1.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaHardwareCPU"},nota = "Cubre Spectre")
 public final class Spectre extends VerificacionVulnerabilidadCPUBase {
 
 	public static ConfigBoolean config = ConfigBoolean.de("ignorar_spectre", false);

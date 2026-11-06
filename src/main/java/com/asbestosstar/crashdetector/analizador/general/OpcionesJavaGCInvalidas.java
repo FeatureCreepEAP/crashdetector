@@ -7,11 +7,13 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta la opción de GC inválida "Conflicting collector combinations in
  * option list" en Java. Esto genera errores de arranque en la JVM.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaMemoria"},nota = "Cubre OpcionesJavaGCInvalidas")
 public class OpcionesJavaGCInvalidas implements Verificaciones {
 
 	private boolean activado = false;

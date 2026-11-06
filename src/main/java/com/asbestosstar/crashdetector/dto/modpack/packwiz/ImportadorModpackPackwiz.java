@@ -5,8 +5,6 @@ import com.asbestosstar.crashdetector.Statics;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -392,28 +390,7 @@ public class ImportadorModpackPackwiz implements ImportadorModpack {
 	}
 
 	private static byte[] descargarBytes(String url) throws IOException {
-		HttpURLConnection con = null;
-
-		try {
-			URL u = new URL(url);
-			con = (HttpURLConnection) u.openConnection();
-			con.setRequestMethod("GET");
-			con.setConnectTimeout(20000);
-			con.setReadTimeout(60000);
-			con.setRequestProperty("User-Agent", "CrashDetectorMC/1.0");
-
-			int codigo = con.getResponseCode();
-
-			if (codigo < 200 || codigo >= 300) {
-				throw new IOException("No se pudo descargar " + url + " HTTP " + codigo);
-			}
-
-			return leerBytes(con.getInputStream());
-		} finally {
-			if (con != null) {
-				con.disconnect();
-			}
-		}
+		return com.asbestosstar.crashdetector.dto.modpack.ClienteHTTP.descargarBytes(url);
 	}
 
 	private static Map<String, EntradaZipLeida> leerEntradasZip(Path zip) throws IOException {
@@ -461,7 +438,7 @@ public class ImportadorModpackPackwiz implements ImportadorModpack {
 		}
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
+		byte[] buffer = new byte[65536];
 		int leidos;
 
 		while ((leidos = is.read(buffer)) != -1) {

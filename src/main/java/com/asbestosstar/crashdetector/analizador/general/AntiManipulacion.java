@@ -22,6 +22,7 @@ import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.config.json.Json.Nodo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Verificador anti-manipulación: compara hashes de archivos y carpetas contra
@@ -33,6 +34,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * nodo "fantasma". Por eso aquí se valida la existencia real de claves con
  * claves().contains(...) antes de confiar en obtener(...).
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaMisc"},nota = "Cubre AntiManipulacion")
 public class AntiManipulacion implements Verificaciones {
 
 	public static final Path ARCHIVO_ANTIMANIPULACION = Statics.carpeta.resolve("antimanipulacion.json");

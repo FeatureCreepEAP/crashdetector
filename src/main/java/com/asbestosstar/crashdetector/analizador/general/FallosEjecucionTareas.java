@@ -17,7 +17,9 @@ import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaMisc"},nota = "Cubre FallosEjecucionTareas")
 public class FallosEjecucionTareas implements Verificaciones {
 
 	// Mapa para almacenar clases con problemas y sus números de línea

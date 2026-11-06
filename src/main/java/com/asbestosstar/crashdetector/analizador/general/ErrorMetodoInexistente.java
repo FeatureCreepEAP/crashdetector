@@ -8,6 +8,7 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta errores NoSuchMethodError.
@@ -27,6 +28,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * No se recorren todas las líneas del stack trace.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaErroresBytecode"},nota = "Cubre ErrorMetodoInexistente")
 public class ErrorMetodoInexistente implements Verificaciones {
 
 	private static final String PREFIJO_ERROR = "java.lang.NoSuchMethodError:";

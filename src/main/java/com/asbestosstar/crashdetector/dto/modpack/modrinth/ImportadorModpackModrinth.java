@@ -5,8 +5,6 @@ import com.asbestosstar.crashdetector.Statics;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -262,11 +260,28 @@ public class ImportadorModpackModrinth implements ImportadorModpack {
 
 						try {
 							if (!sha1.trim().isEmpty()) {
-								Json.Nodo versionMR = MRModDesdeJar.solicitarVersionPorSha1Modrinth(sha1);
-								info.modrinthProjectId = obtenerCadenaSeguro(versionMR.obtener("project_id"), "");
-								info.modrinthVersionId = obtenerCadenaSeguro(versionMR.obtener("id"), "");
-								info.fechaModificacion = parsearFecha(
-										obtenerCadenaSeguro(versionMR.obtener("date_published"), ""));
+								/*
+								 * Usar cache compartida para evitar llamadas HTTP duplicadas.
+								 * Si ya se consultó este SHA-1, se reutiliza el resultado.
+								 */
+								Object cached = ImportadorParalelo.cacheApi.get(sha1.trim());
+								Json.Nodo versionMR;
+								if (cached instanceof Json.Nodo) {
+									versionMR = (Json.Nodo) cached;
+								} else {
+									try {
+										versionMR = MRModDesdeJar.solicitarVersionPorSha1Modrinth(sha1.trim());
+										ImportadorParalelo.cacheApi.putIfAbsent(sha1.trim(), versionMR);
+									} catch (Throwable t) {
+										versionMR = null;
+									}
+								}
+								if (versionMR != null) {
+									info.modrinthProjectId = obtenerCadenaSeguro(versionMR.obtener("project_id"), "");
+									info.modrinthVersionId = obtenerCadenaSeguro(versionMR.obtener("id"), "");
+									info.fechaModificacion = parsearFecha(
+											obtenerCadenaSeguro(versionMR.obtener("date_published"), ""));
+								}
 							}
 						} catch (Throwable t) {
 							CrashDetectorLogger.logException(t);
@@ -301,27 +316,7 @@ public class ImportadorModpackModrinth implements ImportadorModpack {
 	}
 
 	private static byte[] descargarBytes(String url) throws IOException {
-		HttpURLConnection con = null;
-
-		try {
-			URL u = new URL(url);
-			con = (HttpURLConnection) u.openConnection();
-			con.setRequestMethod("GET");
-			con.setConnectTimeout(20000);
-			con.setReadTimeout(60000);
-			con.setRequestProperty("User-Agent", "CrashDetectorMC/1.0");
-
-			int codigo = con.getResponseCode();
-			if (codigo < 200 || codigo >= 300) {
-				throw new IOException("No se pudo descargar " + url + " HTTP " + codigo);
-			}
-
-			return leerBytes(con.getInputStream());
-		} finally {
-			if (con != null) {
-				con.disconnect();
-			}
-		}
+		return com.asbestosstar.crashdetector.dto.modpack.ClienteHTTP.descargarBytes(url);
 	}
 
 	private static Map<String, EntradaZipLeida> leerEntradasZip(Path zip) throws IOException {
@@ -366,7 +361,7 @@ public class ImportadorModpackModrinth implements ImportadorModpack {
 		}
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
+		byte[] buffer = new byte[65536];
 		int leidos;
 
 		while ((leidos = is.read(buffer)) != -1) {

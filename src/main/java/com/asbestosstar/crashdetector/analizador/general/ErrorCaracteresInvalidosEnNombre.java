@@ -6,6 +6,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Analiza errores cuando los mods contienen caracteres inválidos en sus nombres
@@ -13,6 +14,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * a Java identifier". Incluye el nombre del módulo y la parte inválida en los
  * mensajes.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaErroresArchivo"},nota = "Cubre ErrorCaracteresInvalidosEnNombre")
 public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 
 	private static final String PREFIJO_EXCEPCION = "IllegalArgumentException: ";

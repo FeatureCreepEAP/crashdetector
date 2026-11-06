@@ -6,12 +6,14 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta cuando el servidor no puede iniciar porque un archivo del mundo está
  * bloqueado por otro proceso (por ejemplo: otra instancia del servidor,
  * antivirus, explorador de archivos).
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaErroresArchivo"},nota = "Cubre ErrorArchivoBloqueadoPorOtroProceso")
 public class ErrorArchivoBloqueadoPorOtroProceso implements Verificaciones {
 
 	private static final String TEXTO_ERROR = "java.io.IOException: The process cannot access the file because another process has locked a portion of the file";

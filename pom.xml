@@ -50,6 +50,8 @@
 						<include>**/*Tests.java</include>
 						<include>**/*TestCase.java</include>
 					</includes>
+					<parallel>methods</parallel>
+					<useUnlimitedThreads>true</useUnlimitedThreads>
 				</configuration>
 			</plugin>
 

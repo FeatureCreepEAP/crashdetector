@@ -3,9 +3,6 @@ package com.asbestosstar.crashdetector.dto.modpack.curseforge;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
@@ -146,57 +143,12 @@ public class CFModDesdeJar {
 	}
 
 	private static Json.Nodo postJson(String url, String cuerpo, String claveApi) throws IOException {
-		HttpURLConnection con = null;
-
-		try {
-			URL u = new URL(url);
-			con = (HttpURLConnection) u.openConnection();
-			con.setRequestMethod("POST");
-			con.setConnectTimeout(20000);
-			con.setReadTimeout(30000);
-			con.setDoOutput(true);
-			con.setRequestProperty("Content-Type", "application/json");
-			con.setRequestProperty("Accept", "application/json");
-
-			if (claveApi != null && !claveApi.trim().isEmpty()
-					&& !"usar_klauncher_endpoint_si_no_tienes_clave_api".equals(claveApi)) {
-				con.setRequestProperty("x-api-key", claveApi.trim());
-			}
-
-			try (OutputStream os = con.getOutputStream()) {
-				os.write(cuerpo.getBytes("UTF-8"));
-			}
-
-			int codigo = con.getResponseCode();
-			InputStream is = codigo >= 200 && codigo < 300 ? con.getInputStream() : con.getErrorStream();
-			String respuesta = leerCompleto(is);
-
-			if (codigo < 200 || codigo >= 300) {
-				throw new IOException("Error CurseForge HTTP " + codigo + ": " + respuesta);
-			}
-
-			return Json.leer(respuesta);
-		} finally {
-			if (con != null) {
-				con.disconnect();
-			}
+		java.util.Map<String, String> headers = new java.util.HashMap<String, String>();
+		if (claveApi != null && !claveApi.trim().isEmpty()
+				&& !"usar_klauncher_endpoint_si_no_tienes_clave_api".equals(claveApi)) {
+			headers.put("x-api-key", claveApi.trim());
 		}
-	}
-
-	private static String leerCompleto(InputStream is) throws IOException {
-		if (is == null) {
-			return "";
-		}
-
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
-		int leidos;
-
-		while ((leidos = is.read(buffer)) != -1) {
-			baos.write(buffer, 0, leidos);
-		}
-
-		return new String(baos.toByteArray(), "UTF-8");
+		return com.asbestosstar.crashdetector.dto.modpack.ClienteHTTP.postJson(url, cuerpo, headers);
 	}
 
 	private static Map<Long, Json.Nodo> indexarCoincidenciasPorFingerprint(Json.Nodo respuesta) {
@@ -536,7 +488,7 @@ public class CFModDesdeJar {
 			MessageDigest digest = MessageDigest.getInstance("SHA-1");
 
 			try (InputStream is = Files.newInputStream(archivo)) {
-				byte[] buffer = new byte[8192];
+				byte[] buffer = new byte[65536];
 				int leidos;
 
 				while ((leidos = is.read(buffer)) != -1) {

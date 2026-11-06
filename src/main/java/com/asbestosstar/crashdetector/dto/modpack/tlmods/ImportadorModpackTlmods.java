@@ -4,9 +4,6 @@ import com.asbestosstar.crashdetector.Statics;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -312,37 +309,12 @@ public class ImportadorModpackTlmods implements ImportadorModpack {
 	}
 
 	private static Json.Nodo getJson(String url, String claveApi) throws IOException {
-		HttpURLConnection con = null;
-
-		try {
-			URL u = new URL(url);
-			con = (HttpURLConnection) u.openConnection();
-			con.setRequestMethod("GET");
-			con.setConnectTimeout(20000);
-			con.setReadTimeout(30000);
-			con.setRequestProperty("Accept", "application/json");
-			con.setRequestProperty("User-Agent", "CrashDetectorMC/1.0");
-
-			if (claveApi != null && !claveApi.trim().isEmpty()
-					&& !"usar_klauncher_endpoint_si_no_tienes_clave_api".equals(claveApi)) {
-				con.setRequestProperty("x-api-key", claveApi.trim());
-			}
-
-			int codigo = con.getResponseCode();
-			String respuesta = new String(
-					leerBytes(codigo >= 200 && codigo < 300 ? con.getInputStream() : con.getErrorStream()),
-					StandardCharsets.UTF_8);
-
-			if (codigo < 200 || codigo >= 300) {
-				throw new IOException("HTTP " + codigo + ": " + respuesta);
-			}
-
-			return Json.leer(respuesta);
-		} finally {
-			if (con != null) {
-				con.disconnect();
-			}
+		java.util.Map<String, String> headers = new java.util.HashMap<String, String>();
+		if (claveApi != null && !claveApi.trim().isEmpty()
+				&& !"usar_klauncher_endpoint_si_no_tienes_clave_api".equals(claveApi)) {
+			headers.put("x-api-key", claveApi.trim());
 		}
+		return com.asbestosstar.crashdetector.dto.modpack.ClienteHTTP.getJson(url, headers);
 	}
 
 	private static String normalizarUrlTlmods(String url) {
@@ -691,39 +663,19 @@ public class ImportadorModpackTlmods implements ImportadorModpack {
 	}
 
 	private static byte[] descargarBytes(String url) throws IOException {
-		HttpURLConnection con = null;
-
-		try {
-			URL u = new URL(url);
-			con = (HttpURLConnection) u.openConnection();
-			con.setRequestMethod("GET");
-			con.setConnectTimeout(20000);
-			con.setReadTimeout(60000);
-			con.setRequestProperty("User-Agent", "CrashDetectorMC/1.0");
-
-			int codigo = con.getResponseCode();
-
-			if (codigo < 200 || codigo >= 300) {
-				throw new IOException("No se pudo descargar " + url + " HTTP " + codigo);
-			}
-
-			return leerBytes(con.getInputStream());
-		} finally {
-			if (con != null) {
-				con.disconnect();
-			}
-		}
+		return com.asbestosstar.crashdetector.dto.modpack.ClienteHTTP.descargarBytes(url);
 	}
 
-	private static byte[] leerBytes(InputStream is) throws IOException {
+	private static byte[] leerBytes(java.io.InputStream is) throws IOException {
+		if (is == null) {
+			return new byte[0];
+		}
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
+		byte[] buffer = new byte[65536];
 		int leidos;
-
 		while ((leidos = is.read(buffer)) != -1) {
 			baos.write(buffer, 0, leidos);
 		}
-
 		return baos.toByteArray();
 	}
 

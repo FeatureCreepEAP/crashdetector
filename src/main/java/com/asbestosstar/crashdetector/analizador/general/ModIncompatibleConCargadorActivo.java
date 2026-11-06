@@ -13,6 +13,7 @@ import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.cargador.Cargador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Verifica que todos los mods presentes en la carpeta 'mods' sean compatibles
@@ -24,6 +25,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * https://discord.com/channels/1129059589325852724/1129069799545241703/1418708211636113498
  * ¡Verificación Numero 100!
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaModIncompatible"},nota = "Cubre ModIncompatibleConCargadorActivo")
 public class ModIncompatibleConCargadorActivo implements Verificaciones {
 
 	private boolean activado = false;

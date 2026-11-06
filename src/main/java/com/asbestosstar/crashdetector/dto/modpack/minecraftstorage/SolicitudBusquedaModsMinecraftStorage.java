@@ -1,11 +1,6 @@
 package com.asbestosstar.crashdetector.dto.modpack.minecraftstorage;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
 import com.asbestosstar.crashdetector.config.json.Json;
 import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
@@ -28,37 +23,14 @@ public class SolicitudBusquedaModsMinecraftStorage {
 
 		String urlCompleta = constructorUrl.toString();
 
-		URL url = new URL(urlCompleta);
-		HttpURLConnection conexion = (HttpURLConnection) url.openConnection();
+		java.util.Map<String, String> headers = new java.util.HashMap<String, String>();
+		headers.put("User-Agent", AGENTE_USUARIO);
+		headers.put("Origin", "https://minecraftstorage.com");
+		headers.put("Referer", "https://minecraftstorage.com/");
+		headers.put("Accept-Language", idiomaNormalizado);
 
-		conexion.setRequestMethod("GET");
-		conexion.setRequestProperty("Accept", "application/json");
-		conexion.setRequestProperty("User-Agent", AGENTE_USUARIO);
-		conexion.setRequestProperty("Origin", "https://minecraftstorage.com");
-		conexion.setRequestProperty("Referer", "https://minecraftstorage.com/");
-		conexion.setRequestProperty("Accept-Language", idiomaNormalizado);
-
-		int codigo = conexion.getResponseCode();
-		if (codigo != 200) {
-			throw new IOException("HTTP " + codigo + " desde " + urlCompleta);
-		}
-
-		try (BufferedReader lector = new BufferedReader(
-				new InputStreamReader(conexion.getInputStream(), StandardCharsets.UTF_8))) {
-
-			StringBuilder contenido = new StringBuilder();
-			String linea;
-
-			while ((linea = lector.readLine()) != null) {
-				contenido.append(linea);
-			}
-
-			Json.Nodo raiz = Json.leer(contenido.toString());
-			return new RespuestaPaginadaModsMinecraftStorage(raiz, idiomaNormalizado);
-
-		} finally {
-			conexion.disconnect();
-		}
+		Json.Nodo raiz = com.asbestosstar.crashdetector.dto.modpack.ClienteHTTP.getJsonSinCache(urlCompleta, headers);
+		return new RespuestaPaginadaModsMinecraftStorage(raiz, idiomaNormalizado);
 	}
 
 	private static String normalizarIdioma(String idioma) {

@@ -21,6 +21,7 @@ import com.asbestosstar.crashdetector.analizador.rapido.EstadoAnalisisArchivo;
 import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta configuraciones JSON de Sponge Mixin relacionadas con un fallo.
@@ -39,6 +40,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * porque los crash reports de Forge/NeoForge suelen listar muchos mixins
  * normales dentro de los metadatos de cada frame del stack.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaSpongeMixinYLanzadores"},nota = "Cubre SpongeMixinConfigsProblematicos")
 public class SpongeMixinConfigsProblematicos implements Verificaciones {
 
 	private boolean activado = false;

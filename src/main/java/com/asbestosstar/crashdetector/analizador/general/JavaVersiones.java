@@ -17,6 +17,7 @@ import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta:
@@ -27,6 +28,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * El encabezado "Problematic frame:" por sí solo nunca activa la verificación.
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaJavaVersiones"},nota = "Cubre JavaVersiones")
 public class JavaVersiones implements Verificaciones {
 
 	private static final int MAX_LINEAS_DESPUES_PROBLEMATIC_FRAME = 4;

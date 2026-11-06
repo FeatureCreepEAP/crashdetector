@@ -13,6 +13,7 @@ import com.asbestosstar.crashdetector.analizador.rapido.EventoDeCoincidencia;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscador;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * Detecta errores IncompatibleClassChangeError causados por intentar heredar de
@@ -21,6 +22,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Ejemplo: java.lang.IncompatibleClassChangeError: class A cannot inherit from
  * final class B
  */
+@ProbadoPor(valor = {"com.asbestosstar.crashdetector.pruebas.PruebaErroresBytecode"},nota = "Cubre ErrorClaseFinalExtendida")
 public class ErrorClaseFinalExtendida implements Verificaciones {
 
 	private static final String TEXTO_ERROR = "IncompatibleClassChangeError: class";

@@ -280,7 +280,7 @@ public class ExportadorModpackTlmods {
 	private static byte[] leerBytes(Path archivo) throws IOException {
 		try (InputStream is = Files.newInputStream(archivo); ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
 
-			byte[] buffer = new byte[8192];
+			byte[] buffer = new byte[65536];
 			int leidos;
 
 			while ((leidos = is.read(buffer)) != -1) {

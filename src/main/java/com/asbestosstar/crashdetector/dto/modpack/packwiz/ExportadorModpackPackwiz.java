@@ -330,7 +330,7 @@ public class ExportadorModpackPackwiz {
 
 	private static byte[] leerBytes(InputStream is) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
+		byte[] buffer = new byte[65536];
 		int leidos;
 
 		while ((leidos = is.read(buffer)) != -1) {
