@@ -14500,4 +14500,324 @@ public class Esperanto implements Idioma {
 	public String nombreErrorEnlazadorNoSoportado() {
 		return "Natifa ligilo ne subtenata de la platformo";
 	}
+
+	@Override
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep() {
+		return "<b style='color:#FFAA00;'>FeatureCreep ne povis rekte alhaki la HotSpot-agenton.</b><p>Ĉi tio rare estas problemo ĉar plej multaj modoj ne postulas Instrumentation. FeatureCreep daŭros sen ĝi.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep() {
+		return "FeatureCreep: malsukceso de HotSpot-alhakado (averto)";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep ne povis solvi modulajn dependecojn.</b><p>Modulo deklaras dependecon, kiu ne povas esti plenumita. La ludo eble ne ĝuste startos.</p><p><b>Solvo:</b> Instalu la mankantajn dependecojn aŭ forigu la nesufiĉan modulon.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloFeatureCreep() {
+		return "FeatureCreep: ne solvitaj modulaj dependecoj";
+	}
+
+	@Override
+	public String mensajeErrorVersionModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep detektis versian nesufiĉon inter moduloj.</b><p>Modulo postulas alian version de la ludo aŭ alia modulo. Ĉi tio povas kaŭzi kradojn aŭ mankantajn funkciojn.</p><p><b>Solvo:</b> Ĝisdatigu ĉiujn modulojn al kongruaj versioj.</p>";
+	}
+
+	@Override
+	public String nombreErrorVersionModuloFeatureCreep() {
+		return "FeatureCreep: modula versia nesufiĉo";
+	}
+
+	@Override
+	public String mensajeErrorMixinBootstrapFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep ne povis inicializi la Mixin-runtimen.</b><p>Mixin estas bezonata por klasaj transformoj. Sen ĝi, modoj uzantaj Mixin ne ŝargiĝos kaj la ludo eble kradiĝos.</p><p><b>Solvo:</b> Certigu, ke FeatureCreep estas ĝuste instalita kun Mixin-subteno.</p>";
+	}
+
+	@Override
+	public String nombreErrorMixinBootstrapFeatureCreep() {
+		return "FeatureCreep: malsukceso de Mixin-inicialigo";
+	}
+
+	@Override
+	public String mensajeErrorModDuplicadoRift() {
+		return "<b style='color:#FF4444;'>Rift trovis duoblan modon.</b><p>Du modoj kunhavas la saman mod-ID-on, kio ne estas permesita. Rift ne povas ŝargi ambaŭ modojn.</p><p><b>Solvo:</b> Forigu unu el la duoblaj modoj.</p>";
+	}
+
+	@Override
+	public String nombreErrorModDuplicadoRift() {
+		return "Rift: duobla mod-ID";
+	}
+
+	@Override
+	public String mensajeErrorRiftModJSONRift() {
+		return "<b style='color:#FF4444;'>Rift ne povis legi riftmod.json.</b><p>La manifest-dosiero de modulo estas difektita aŭ mankas. Rift ne povas ŝargi la modon sen valida manifesto.</p><p><b>Solvo:</b> Reinstalu la modon, kiu mankas la riftmod.json-dosieron.</p>";
+	}
+
+	@Override
+	public String nombreErrorRiftModJSONRift() {
+		return "Rift: difektita mod-manifesto";
+	}
+
+	@Override
+	public String mensajeErrorListenerRift() {
+		return "<b style='color:#FF4444;'>Rift ne povis trovi aŭskultilan klason.</b><p>Modo referencas aŭskultilan klason, kiu ne ekzistas. Ĉi tio kutime estas kaŭzita de nesufiĉa aŭ difektita modo.</p><p><b>Solvo:</b> Ĝisdatigu aŭ forigu la modon, kiu referencas la mankantajn klasojn.</p>";
+	}
+
+	@Override
+	public String nombreErrorListenerRift() {
+		return "Rift: aŭskultila klaso ne trovita";
+	}
+
+	@Override
+	public String mensajeErrorTransformadorAccesoRift() {
+		return "<b style='color:#FF4444;'>Rift ne povis inicializi alirajn transformilojn.</b><p>Aliraj transformiloj modifas klasan videblecon por modoj. Sen ili, modoj ne povas aliri privatan kampo kaj metodojn.</p><p><b>Solvo:</b> Reinstalu Rift kaj la tuŝitajn modojn.</p>";
+	}
+
+	@Override
+	public String nombreErrorTransformadorAccesoRift() {
+		return "Rift: malsukceso de alira transformilo";
+	}
+
+	@Override
+	public String mensajeAdvertenciaJarNoValidoRift() {
+		return "<b style='color:#FFAA00;'>Rift trovis nevalidan JAR-dosieron.</b><p>Dosiero en la mod-dosierujo ne estas valida JAR. Rift preteriros ĝin kaj daŭre ŝargos aliajn modojn.</p><p><b>Solvo:</b> Forigu la difektitan dosieron el la mod-dosierujo.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaJarNoValidoRift() {
+		return "Rift: nevalida JAR-dosiero (averto)";
+	}
+
+	@Override
+	public String mensajeErrorJavaVersionM3L() {
+		return "<b style='color:#FF4444;'>M3L postulas Java 7 aŭ poste.</b><p>Via Java-versio estas tro malnova por ruli la M3L-lancilon.</p><p><b>Solvo:</b> Ĝisdatigu al pli nova versio de Java.</p>";
+	}
+
+	@Override
+	public String nombreErrorJavaVersionM3L() {
+		return "M3L: Java-versio tro malnova";
+	}
+
+	@Override
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L() {
+		return "<b style='color:#FF4444;'>M3L postulas, ke Minecraft estu unue instalita.</b><p>Instalu la bazan Minecraft-version antaŭ ol instali M3L.</p>";
+	}
+
+	@Override
+	public String nombreErrorMinecraftVersionNoInstaladaM3L() {
+		return "M3L: Minecraft ne instalita";
+	}
+
+	@Override
+	public String mensajeErrorJSONLauncherM3L() {
+		return "<b style='color:#FF4444;'>M3L ne povis legi la lancilan agordon.</b><p>La dosiero launcher_profiles.json estas difektita aŭ nealirebla. M3L ne povas starti sen valida agordo.</p><p><b>Solvo:</b> Restarigu aŭ rekreas la dosieron launcher_profiles.json.</p>";
+	}
+
+	@Override
+	public String nombreErrorJSONLauncherM3L() {
+		return "M3L: difektita lancila agordo";
+	}
+
+	@Override
+	public String mensajeAdvertenciaOSNoDetectadoM3L() {
+		return "<b style='color:#FFAA00;'>M3L ne povis detekti vian operacian sistemon.</b><p>M3L rekonas nur Windows, Mac kaj Linux. Ĝi eble uzos Linux kiel defaŭlton, kio povas kaŭzi vojaĵajn problemojn.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaOSNoDetectadoM3L() {
+		return "M3L: operacia sistemo ne detektita (averto)";
+	}
+
+	@Override
+	public String mensajeErrorMySQLConexionHMod() {
+		return "<b style='color:#FF4444;'>HMod ne povis konekti al MySQL.</b><p>La konekto al la servila datumbazaro malsukcesis. Ĉiuj datumbazaraj operacioj malsukcesos.</p><p><b>Solvo:</b> Kontrolu, ke la MySQL-servilo funkcias kaj la konektaj agordoj estas ĝustaj.</p>";
+	}
+
+	@Override
+	public String nombreErrorMySQLConexionHMod() {
+		return "HMod: malsukceso de MySQL-konekto";
+	}
+
+	@Override
+	public String mensajeErrorCargaPluginHMod() {
+		return "<b style='color:#FF4444;'>HMod ne povis ŝargi kromprogramon.</b><p>Kromprogramo estas difektita, nesufiĉa aŭ mankas. La kromprogramo ne ŝargiĝos.</p><p><b>Solvo:</b> Kontrolu, ke ĉiuj kromprogramoj estas kongruaj kun via HMod-versio.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaPluginHMod() {
+		return "HMod: malsukceso de kromprograma ŝargo";
+	}
+
+	@Override
+	public String mensajeErrorGrupoPorDefectoHMod() {
+		return "<b style='color:#FF4444;'>HMod ne havas defaŭltan grupon agorditan.</b><p>Almenaŭ unu grupo devas esti markita kiel defaŭlta grupo. Sen ĝi, novaj ludantoj ne povas esti ĝuste asignitaj.</p><p><b>Solvo:</b> Marku grupon kiel DefaultGroup en via HMod-agordo.</p>";
+	}
+
+	@Override
+	public String nombreErrorGrupoPorDefectoHMod() {
+		return "HMod: neniu defaŭlta grupo";
+	}
+
+	@Override
+	public String mensajeAdvertenciaPluginHookHMod() {
+		return "<b style='color:#FFAA00;'>Escepto en HMod-kromprograma gancio.</b><p>Kromprogramo lanĉis escepton dum gancia voko. La servilo daŭre funkcias, sed la funkcio de la tuŝita kromprogramo eble estas difektita.</p><p><b>Solvo:</b> Ĝisdatigu aŭ anstataŭigu la tuŝitan kromprogramon.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaPluginHookHMod() {
+		return "HMod: escepto en kromprograma gancio (averto)";
+	}
+
+	@Override
+	public String mensajeErrorInicializacionModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader ne povis inicialiĝi.</b><p>ModLoader ne povis starti pro reflektaj eraroj, versia nesufiĉo aŭ difektitaj modoj. La ludo ne ŝargos modojn.</p><p><b>Solvo:</b> Kontrolu, ke ModLoader kaj ĉiuj modoj estas kongruaj kun via Minecraft-versio.</p>";
+	}
+
+	@Override
+	public String nombreErrorInicializacionModLoader() {
+		return "ModLoader: malsukceso de inicialigo";
+	}
+
+	@Override
+	public String mensajeErrorCargaModModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader ne povis ŝargi modon.</b><p>Modo estas difektita, nesufiĉa aŭ havas kodajn erarojn. Ĝi ne ŝargiĝos.</p><p><b>Solvo:</b> Forigu aŭ ĝisdatigu la difektitan modon.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaModModLoader() {
+		return "ModLoader: malsukceso de moda ŝargo";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader mankas dependeco.</b><p>Modo postulas alian modon, kiu ne estas instalita. La modo ne ŝargiĝos sen siaj dependecoj.</p><p><b>Solvo:</b> Instalu la necesajn dependecajn modojn.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloModLoader() {
+		return "ModLoader: mankanta dependeco";
+	}
+
+	@Override
+	public String mensajeAdvertenciaCanalInvalidoModLoader() {
+		return "<b style='color:#FFAA00;'>Nevalida kanala nomo en ModLoader.</b><p>Modo registris pakettkanalon kun tro longa nomo (≥ 16 signoj). La pakettkomunikado de ĉi tiu modo eble ne ĝuste funkcios.</p><p><b>Solvo:</b> Ĝisdatigu la modon por uzi pli kortuĝan kanalan nomon.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaCanalInvalidoModLoader() {
+		return "ModLoader: nevalida kanala nomo (averto)";
+	}
+
+	@Override
+	public String mensajeErrorRegistroPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>Malsukceso de ModLoaderMP-paketta registrado.</b><p>La registrado de Packet230 per reflekto malsukcesis, kutime pro versia nesufiĉo. La multluda reto ne funkcios.</p><p><b>Solvo:</b> Certigu, ke ModLoaderMP kongruas kun via Minecraft-versio.</p>";
+	}
+
+	@Override
+	public String nombreErrorRegistroPacketModLoaderMP() {
+		return "ModLoaderMP: malsukceso de paketta registrado";
+	}
+
+	@Override
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP() {
+		return "<b style='color:#FF4444;'>Malsukceso de ModLoaderMP-personigita ento.</b><p>Personigita ento ne povis esti inicializita dum multludado. La ento ne aperos en la ludo.</p><p><b>Solvo:</b> Kontrolu, ke la modo provizanta la enton estas kongrua.</p>";
+	}
+
+	@Override
+	public String nombreErrorEntidadPersonalizadaModLoaderMP() {
+		return "ModLoaderMP: malsukceso de personigita ento";
+	}
+
+	@Override
+	public String mensajeErrorModNuloModLoaderMP() {
+		return "<b style='color:#FF4444;'>Nula moda referenco en ModLoaderMP.</b><p>Modo vokis sendPacket aŭ sendKey per nula referenco. Ĉi tio estas programada eraro en la modo.</p><p><b>Solvo:</b> Ĝisdatigu aŭ anstataŭigu la modon kun la nula referenca eraro.</p>";
+	}
+
+	@Override
+	public String nombreErrorModNuloModLoaderMP() {
+		return "ModLoaderMP: nula moda referenco";
+	}
+
+	@Override
+	public String mensajeErrorDatosPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMP-pakettaj datumoj tro grandaj.</b><p>Paketo enhavas pli ol 65535 elementojn, superante la maksimuman grandon. La paketo ne povas esti sendita.</p><p><b>Solvo:</b> Ĝisdatigu la modon sendantan tro grandajn paketojn.</p>";
+	}
+
+	@Override
+	public String nombreErrorDatosPacketModLoaderMP() {
+		return "ModLoaderMP: pakettaj datumoj tro grandaj";
+	}
+
+	@Override
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "<b style='color:#FFAA00;'>Duobla registrado en ModLoaderMP.</b><p>GUI-inventara tipo aŭ enta ID estis registrita dufoje. La dua registrado estas ignorita.</p><p><b>Solvo:</b> Kontrolu ĉu estas konflikta modoj.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "ModLoaderMP: duobla registrado (averto)";
+	}
+
+	@Override
+	public String mensajeErrorPluginInvalidoCanary() {
+		return "<b style='color:#FF4444;'>Nevalida kromprogramo en Canary/Neptune.</b><p>Canary ne povis ŝargi kromprogramon ĉar ĝi estas difektita, havas malformitan Canary.inf-dosieron aŭ la specifita ĉefa klaso ne ekzistas.</p><p><b>Solvo:</b> Kontrolu, ke la kromprogramo estas kongrua kun via Canary/Neptune-versio kaj ne estas difektita.</p>";
+	}
+
+	@Override
+	public String nombreErrorPluginInvalidoCanary() {
+		return "Canary/Neptune: nevalida kromprogramo";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaPluginCanary() {
+		return "<b style='color:#FF4444;'>Mankanta kromprograma dependeco en Canary/Neptune.</b><p>Kromprogramo deklaras dependecon, kiu ne estas instalita sur la servilo. La kromprogramo ne povas ŝargiĝi sen siaj dependecoj.</p><p><b>Solvo:</b> Instalu la necesajn dependecojn por la kromprogramo.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaPluginCanary() {
+		return "Canary/Neptune: mankanta kromprograma dependeco";
+	}
+
+	@Override
+	public String mensajeErrorConsistenciaHookCanary() {
+		return "<b style='color:#FF4444;'>Eraro de gancia subskribo en Canary/Neptune.</b><p>Kromprogramo registris gancian metodon per malĝusta subskribo. @HookHandler-metodoj devas havi ekzakte 1 parametron, kiu estas subtipo de Hook.</p><p><b>Solvo:</b> Ĝisdatigu aŭ anstataŭigu la kromprogramon kaŭzantan ĉi tiun eraron.</p>";
+	}
+
+	@Override
+	public String nombreErrorConsistenciaHookCanary() {
+		return "Canary/Neptune: malĝusta gancia subskribo";
+	}
+
+	@Override
+	public String mensajeAdvertenciaEjecucionHookCanary() {
+		return "<b style='color:#FFAA00;'>Escepto en gancio de Canary/Neptune.</b><p>Kromprogramo lanĉis escepton dum prilaborado de evento (gancio). La servilo daŭre funkcias, sed la funkcio de la tuŝita kromprogramo eble estas difektita.</p><p><b>Solvo:</b> Ĝisdatigu aŭ anstataŭigu la kromprogramon kaŭzantan ĉi tiun escepton.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaEjecucionHookCanary() {
+		return "Canary/Neptune: escepto en gancio (averto)";
+	}
+
+	@Override
+	public String mensajeErrorBaseDeDatosCanary() {
+		return "<b style='color:#FF4444;'>Datumbara eraro en Canary/Neptune.</b><p>Canary ne povis aliri la datumbaron. Ĉi tio povas esti kaŭzita de malsukcesa konekto, difektita datumbara adaptilo aŭ malĝusta agordo.</p><p><b>Solvo:</b> Kontrolu la datumbaran agordon kaj ke la adaptilo estas kongrua.</p>";
+	}
+
+	@Override
+	public String nombreErrorBaseDeDatosCanary() {
+		return "Canary/Neptune: datumbara eraro";
+	}
+
+	@Override
+	public String mensajeErrorComandoCanary() {
+		return "<b style='color:#FF4444;'>Komanda eraro en Canary/Neptune.</b><p>Komando ne povis registriĝi. Ĉi tio povas esti kaŭzita de mankanta gepatra komando, duobla komando registrita de alia kromprogramo aŭ komanda sistema eraro.</p><p><b>Solvo:</b> Kontrolu komandajn konfliktojn inter kromprogramoj.</p>";
+	}
+
+	@Override
+	public String nombreErrorComandoCanary() {
+		return "Canary/Neptune: komanda eraro";
+	}
 }

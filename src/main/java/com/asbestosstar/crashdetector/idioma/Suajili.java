@@ -14718,4 +14718,324 @@ public class Suajili implements Idioma {
 	public String nombreErrorEnlazadorNoSoportado() {
 		return "Kiunganishi cha asili kisichosaidiwa na jukwaa";
 	}
+
+	@Override
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep() {
+		return "<b style='color:#FFAA00;'>FeatureCreep haikuweza kuambatanisha kiti cha HotSpot moja kwa moja.</b><p>Hii mara chache ni tatizo kwa sababu mod nyingi hazihitaji Instrumentation. FeatureCreep itaendelea bila yake.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep() {
+		return "FeatureCreep: kuambatanisha HotSpot kushindwa (onyo)";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep haikuweza kutatua utegemezi wa moduli.</b><p>Moduli moja inataja utegemezi usioweza kukidhiwa. Mchezo huwezi kuanza vizuri.</p><p><b>Suluhisho:</b> Sakinisha utegemezi unaopotea au ondoa moduli isiyo na ubadilishaji.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloFeatureCreep() {
+		return "FeatureCreep: utegemezi wa moduli haujatatuliwa";
+	}
+
+	@Override
+	public String mensajeErrorVersionModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep imegundua kutokuwa na ubadilishaji wa toleo kati ya moduli.</b><p>Moduli moja inahitaji toleo lingine la mchezo au moduli nyingine. Hii inaweza kusababisha kushindwa au utendaji unaopotea.</p><p><b>Suluhisho:</b> Sasisha moduli zote hadi kwenye toleo lenye ubadilishaji.</p>";
+	}
+
+	@Override
+	public String nombreErrorVersionModuloFeatureCreep() {
+		return "FeatureCreep: kutofautiana kwa toleo la moduli";
+	}
+
+	@Override
+	public String mensajeErrorMixinBootstrapFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep haikuweza kuanzisha mazingira ya Mixin.</b><p>Mixin inahitajika kwa mabadiliko ya darasa. Bila yake, mod zinazotumia Mixin hazitaangazwa na mchezo unaweza kushindwa.</p><p><b>Suluhisho:</b> Hakikisha FeatureCreep imesakinishwa vizuri na msaada wa Mixin.</p>";
+	}
+
+	@Override
+	public String nombreErrorMixinBootstrapFeatureCreep() {
+		return "FeatureCreep: kuanzisha Mixin kushindwa";
+	}
+
+	@Override
+	public String mensajeErrorModDuplicadoRift() {
+		return "<b style='color:#FF4444;'>Rift imepata mod iliyorudiwa.</b><p>Mod mbili zinashiriki ID ileile ya mod, ambayo haiaruhusiwi. Rift haiwezi kufungua mod zote mbili.</p><p><b>Suluhisho:</b> Onda moja ya mod zilizorudiwa.</p>";
+	}
+
+	@Override
+	public String nombreErrorModDuplicadoRift() {
+		return "Rift: ID ya mod iliyorudiwa";
+	}
+
+	@Override
+	public String mensajeErrorRiftModJSONRift() {
+		return "<b style='color:#FF4444;'>Rift haikuweza kusoma riftmod.json.</b><p>Faili ya manifesti ya mod imeharibiwa au imepotea. Rift haiwezi kufungua mod bila manifesti halali.</p><p><b>Suluhisho:</b> Sakinisha tena mod inayopotea faili ya riftmod.json.</p>";
+	}
+
+	@Override
+	public String nombreErrorRiftModJSONRift() {
+		return "Rift: manifesti ya mod imeharibiwa";
+	}
+
+	@Override
+	public String mensajeErrorListenerRift() {
+		return "<b style='color:#FF4444;'>Rift haikuweza kupata darasa la msikilizaji.</b><p>Mod moja inarejelea darasa la msikilizaji ambalo halipo. Hii kwa kawaida husababishwa na mod isiyo na ubadilishaji au imeharibiwa.</p><p><b>Suluhisho:</b> Sasisha au onda mod inayorejelea darasa linalopotea.</p>";
+	}
+
+	@Override
+	public String nombreErrorListenerRift() {
+		return "Rift: darasa la msikilizaji halipatikani";
+	}
+
+	@Override
+	public String mensajeErrorTransformadorAccesoRift() {
+		return "<b style='color:#FF4444;'>Rift haikuweza kuanzisha vibadilishaji vya ufikiaji.</b><p>Vibadilishaji vya ufikiaji hubadilisha uonevu wa darasa kwa mod. Bila yao, mod haziwezi kufikia maeneo na mbinu za siri.</p><p><b>Suluhisho:</b> Sakinisha tena Rift na mod zilizothibitishwa.</p>";
+	}
+
+	@Override
+	public String nombreErrorTransformadorAccesoRift() {
+		return "Rift: kushindwa kwa kibadilishaji cha ufikiaji";
+	}
+
+	@Override
+	public String mensajeAdvertenciaJarNoValidoRift() {
+		return "<b style='color:#FFAA00;'>Rift imepata faili ya JAR isiyo halali.</b><p>Faili moja kwenye folda ya mod si JAR halali. Rift itaipita na kuendelea kufungua mod nyingine.</p><p><b>Suluhisho:</b> Onda faili iliyoharibiwa kutoka kwenye folda ya mod.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaJarNoValidoRift() {
+		return "Rift: faili ya JAR isiyo halali (onyo)";
+	}
+
+	@Override
+	public String mensajeErrorJavaVersionM3L() {
+		return "<b style='color:#FF4444;'>M3L inahitaji Java 7 au mpya zaidi.</b><p>Toleo lako la Java ni la zamani sana kwa ajili ya kufanya kazi na M3L.</p><p><b>Suluhisho:</b> Sasisha hadi kwenye toleo jipya la Java.</p>";
+	}
+
+	@Override
+	public String nombreErrorJavaVersionM3L() {
+		return "M3L: toleo la Java ni la zamani sana";
+	}
+
+	@Override
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L() {
+		return "<b style='color:#FF4444;'>M3L inahitaji Minecraft iwe imesakinishwa kwanza.</b><p>Sakinisha toleo la msingi la Minecraft kabla ya kusakinisha M3L.</p>";
+	}
+
+	@Override
+	public String nombreErrorMinecraftVersionNoInstaladaM3L() {
+		return "M3L: Minecraft haijasakinishwa";
+	}
+
+	@Override
+	public String mensajeErrorJSONLauncherM3L() {
+		return "<b style='color:#FF4444;'>M3L haikuweza kusoma usanidi wa kichapuzi.</b><p>Faili ya launcher_profiles.json imeharibiwa au haifikiwi. M3L haiwezi kuanza bila usanidi halali.</p><p><b>Suluhisho:</b> Rejesha au tengeneza tena faili ya launcher_profiles.json.</p>";
+	}
+
+	@Override
+	public String nombreErrorJSONLauncherM3L() {
+		return "M3L: usanidi wa kichapuzi umeharibiwa";
+	}
+
+	@Override
+	public String mensajeAdvertenciaOSNoDetectadoM3L() {
+		return "<b style='color:#FFAA00;'>M3L haikuweza kutambua mfumo wako wa uendeshaji.</b><p>M3L inatambua Windows, Mac na Linux tu. Inaweza kutumia Linux kama chaguo-msingi, ambayo inaweza kusababisha matatizo ya njia.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaOSNoDetectadoM3L() {
+		return "M3L: mfumo wa uendeshaji haujatambuliwa (onyo)";
+	}
+
+	@Override
+	public String mensajeErrorMySQLConexionHMod() {
+		return "<b style='color:#FF4444;'>HMod haikuweza kuunganisha na MySQL.</b><p>Uunganisho wa hifadhidata ya seva umeshindwa. Operesheni zote za hifadhidata zitashindwa.</p><p><b>Suluhisho:</b> Angalia kuwa seva ya MySQL inafanya kazi na mipangilio ya uunganisho ni sahihi.</p>";
+	}
+
+	@Override
+	public String nombreErrorMySQLConexionHMod() {
+		return "HMod: uunganisho wa MySQL umeshindwa";
+	}
+
+	@Override
+	public String mensajeErrorCargaPluginHMod() {
+		return "<b style='color:#FF4444;'>HMod haikuweza kufungua plugin.</b><p>Plugin moja imeharibiwa, haina ubadilishaji au imepotea. Plugin haitafunguliwa.</p><p><b>Suluhisho:</b> Angalia kuwa plugin zote zina ubadilishaji na toleo lako la HMod.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaPluginHMod() {
+		return "HMod: kufungua plugin kushindwa";
+	}
+
+	@Override
+	public String mensajeErrorGrupoPorDefectoHMod() {
+		return "<b style='color:#FF4444;'>HMod haina kundi la chaguo-msingi lililosanidiwa.</b><p>Kwa angalau kundi moja linapaswa kuashiriwa kama kundi la chaguo-msingi. Bila yake, wachezi wapya hawawezi kuagizwa vizuri.</p><p><b>Suluhisho:</b> Ashiria kundi kama DefaultGroup kwenye usanidi wako wa HMod.</p>";
+	}
+
+	@Override
+	public String nombreErrorGrupoPorDefectoHMod() {
+		return "HMod: hakuna kundi la chaguo-msingi";
+	}
+
+	@Override
+	public String mensajeAdvertenciaPluginHookHMod() {
+		return "<b style='color:#FFAA00;'>Mabadiliko ya plugin ya HMod.</b><p>Plugin moja imetupa mabadiliko wakati wa wito wa hook. Seva inaendelea kufanya kazi, lakini utendaji wa plugin iliyothibitishwa unaweza kuwa umeharibiwa.</p><p><b>Suluhisho:</b> Sasisha au badilisha plugin iliyothibitishwa.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaPluginHookHMod() {
+		return "HMod: mabadiliko ya plugin (onyo)";
+	}
+
+	@Override
+	public String mensajeErrorInicializacionModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader haikuweza kuanzishwa.</b><p>ModLoader haikuweza kuanza kwa sababu ya makosa ya kutazama, kutokuwa na ubadilishaji wa toleo au mod zilizoharibiwa. Mchezo haitafungua mod.</p><p><b>Suluhisho:</b> Angalia kuwa ModLoader na mod zote zina ubadilishaji na toleo lako la Minecraft.</p>";
+	}
+
+	@Override
+	public String nombreErrorInicializacionModLoader() {
+		return "ModLoader: kuanzishwa kushindwa";
+	}
+
+	@Override
+	public String mensajeErrorCargaModModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader haikuweza kufungua mod.</b><p>Mod moja imeharibiwa, haina ubadilishaji au ina makosa ya msimbo. Haitafunguliwa.</p><p><b>Suluhisho:</b> Onda au sasisha mod iliyoharibiwa.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaModModLoader() {
+		return "ModLoader: kufungua mod kushindwa";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader inakosa utegemezi.</b><p>Mod moja inahitaji mod nyingine ambayo bado haijasakinishwa. Mod haitafunguliwa bila utegemezi wake.</p><p><b>Suluhisho:</b> Sakinisha mod za utegemezi zinazohitajika.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloModLoader() {
+		return "ModLoader: utegemezi unaopotea";
+	}
+
+	@Override
+	public String mensajeAdvertenciaCanalInvalidoModLoader() {
+		return "<b style='color:#FFAA00;'>Jina la chaneli lisilo halali kwenye ModLoader.</b><p>Mod moja imesajili chaneli ya paketi yenye jina refu sana (≥ 16 herufi). Mawasiliano ya paketi ya mod hii yanaweza kushindwa kufanya kazi vizuri.</p><p><b>Suluhisho:</b> Sasisha mod ili kutumia jina fupi la chaneli.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaCanalInvalidoModLoader() {
+		return "ModLoader: jina la chaneli lisilo halali (onyo)";
+	}
+
+	@Override
+	public String mensajeErrorRegistroPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>Kusajili paketi ya ModLoaderMP kushindwa.</b><p>Kusajili Packet230 kupitia kutazama kumeshindwa, kwa kawaida kwa sababu ya kutokuwa na ubadilishaji wa toleo. Mtandao wa wachezi wengi hatafanyi kazi.</p><p><b>Suluhisho:</b> Hakikisha ModLoaderMP inalingana na toleo lako la Minecraft.</p>";
+	}
+
+	@Override
+	public String nombreErrorRegistroPacketModLoaderMP() {
+		return "ModLoaderMP: kusajili paketi kushindwa";
+	}
+
+	@Override
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP() {
+		return "<b style='color:#FF4444;'>Kutengeneza kitu cha ModLoaderMP kushindwa.</b><p>Kitu cha kibinafsi haikuweza kuanzishwa wakati wa wachezi wengi. Kitu hakitajionyesha kwenye mchezo.</p><p><b>Suluhisho:</b> Angalia kuwa mod inayotoa kitu ina ubadilishaji.</p>";
+	}
+
+	@Override
+	public String nombreErrorEntidadPersonalizadaModLoaderMP() {
+		return "ModLoaderMP: kitu cha kibinafsi kushindwa";
+	}
+
+	@Override
+	public String mensajeErrorModNuloModLoaderMP() {
+		return "<b style='color:#FF4444;'>Marejeleo ya mod tupu kwenye ModLoaderMP.</b><p>Mod moja imewita sendPacket au sendKey na marejeleo tupu. Hii ni kosa la programu kwenye mod.</p><p><b>Suluhisho:</b> Sasisha au badilisha mod yenye kosa la marejeleo tupu.</p>";
+	}
+
+	@Override
+	public String nombreErrorModNuloModLoaderMP() {
+		return "ModLoaderMP: marejeleo ya mod tupu";
+	}
+
+	@Override
+	public String mensajeErrorDatosPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>Data ya paketi ya ModLoaderMP ni kubwa sana.</b><p>Paketi moja ina zaidi ya vipengele 65535, ikizidi ukubwa wa juu. Paketi haiwezi kutumwa.</p><p><b>Suluhisho:</b> Sasisha mod inayotuma paketi kubwa sana.</p>";
+	}
+
+	@Override
+	public String nombreErrorDatosPacketModLoaderMP() {
+		return "ModLoaderMP: data ya paketi ni kubwa sana";
+	}
+
+	@Override
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "<b style='color:#FFAA00;'>Kusajili mara mbili kwenye ModLoaderMP.</b><p>Aina ya hifadhi ya GUI au ID ya kitu imesajiliwa mara mbili. Kusajili kwa pili kunakataliwa.</p><p><b>Suluhisho:</b> Angalia kuwa kuna mod zinazogongana.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "ModLoaderMP: kusajili mara mbili (onyo)";
+	}
+
+	@Override
+	public String mensajeErrorPluginInvalidoCanary() {
+		return "<b style='color:#FF4444;'>Plugin isiyo halali kwenye Canary/Neptune.</b><p>Canary haikuweza kufungua plugin kwa sababu imeharibiwa, ina faili ya Canary.inf isiyo na umbo sahihi au darasa kuu lililotajwa halipo.</p><p><b>Suluhisho:</b> Thibitisha kuwa plugin ina ubadilishaji na toleo lako la Canary/Neptune na haijaharibiwa.</p>";
+	}
+
+	@Override
+	public String nombreErrorPluginInvalidoCanary() {
+		return "Canary/Neptune: plugin isiyo halali";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaPluginCanary() {
+		return "<b style='color:#FF4444;'>Utegemezi wa plugin unaopotea kwenye Canary/Neptune.</b><p>Plugin moja inataja utegemezi ambau bado haujasakinishwa kwenye seva. Plugin haitafunguliwa bila utegemezi wake.</p><p><b>Suluhisho:</b> Sakinisha utegemezi unaohitajika kwa plugin.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaPluginCanary() {
+		return "Canary/Neptune: utegemezi wa plugin unaopotea";
+	}
+
+	@Override
+	public String mensajeErrorConsistenciaHookCanary() {
+		return "<b style='color:#FF4444;'>Kosa la saini ya hook kwenye Canary/Neptune.</b><p>Plugin moja imesajili mbinu ya hook na saini isiyo sahihi. Mbinu za @HookHandler zinapaswa kuwa na kipengele 1 tu ambacho ni aina ndogo ya Hook.</p><p><b>Suluhisho:</b> Sasisha au badilisha plugin inayosababisha kosa hili.</p>";
+	}
+
+	@Override
+	public String nombreErrorConsistenciaHookCanary() {
+		return "Canary/Neptune: saini ya hook isiyo sahihi";
+	}
+
+	@Override
+	public String mensajeAdvertenciaEjecucionHookCanary() {
+		return "<b style='color:#FFAA00;'>Mabadiliko ya hook kwenye Canary/Neptune.</b><p>Plugin moja imetupa mabadiliko wakati wa kushughulikia tukio (hook). Seva inaendelea kufanya kazi, lakini utendaji wa plugin iliyothibitishwa unaweza kuwa umeharibiwa.</p><p><b>Suluhisho:</b> Sasisha au badilisha plugin inayosababisha mabadiliko haya.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaEjecucionHookCanary() {
+		return "Canary/Neptune: mabadiliko ya hook (onyo)";
+	}
+
+	@Override
+	public String mensajeErrorBaseDeDatosCanary() {
+		return "<b style='color:#FF4444;'>Kosa la hifadhidata kwenye Canary/Neptune.</b><p>Canary haikuweza kufikia hifadhidata. Hii inaweza kusababishwa na uunganisho usiofaulu, adapteri ya hifadhidata iliyoharibiwa au usanidi usio sahihi.</p><p><b>Suluhisho:</b> Thibitisha usanidi wa hifadhidata na adapteri ina ubadilishaji.</p>";
+	}
+
+	@Override
+	public String nombreErrorBaseDeDatosCanary() {
+		return "Canary/Neptune: kosa la hifadhidata";
+	}
+
+	@Override
+	public String mensajeErrorComandoCanary() {
+		return "<b style='color:#FF4444;'>Kosa la amri kwenye Canary/Neptune.</b><p>Amri moja haikuweza kusajiliwa. Hii inaweza kusababishwa na amri ya mzazi inayopotea, amri iliyorudiwa iliyosajiliwa na plugin nyingine au kosa la mfumo wa amri.</p><p><b>Suluhisho:</b> Angalia migongano ya amri kati ya plugin.</p>";
+	}
+
+	@Override
+	public String nombreErrorComandoCanary() {
+		return "Canary/Neptune: kosa la amri";
+	}
 }

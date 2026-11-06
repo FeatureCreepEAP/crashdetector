@@ -14702,4 +14702,324 @@ public class Khmer implements Idioma {
 	public String nombreErrorEnlazadorNoSoportado() {
 		return "Native linker មិនត្រូវបានគាំទ្រដោយប្រព័ន្ធបាន";
 	}
+
+	@Override
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep() {
+		return "<b style='color:#FFAA00;'>FeatureCreep មិនអាចភ្ជាប់ HotSpot agent ដោយផ្ទាល់បានទេ។</b><p>បញ្ហានេះកើតឡើងមិនញឹកញាប់ទេ ព្រោះ mod ភាគច្រើនមិនត្រូវការ Instrumentation។ FeatureCreep នឹងបន្តដំណើរការដោយគ្មានវា។</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep() {
+		return "FeatureCreep: ការភ្ជាប់ HotSpot បរាជ័យ (ការព្រមាន)";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep មិនអាចដោះស្រាយការពឹងផ្អែកម៉ូឌុលបានទេ។</b><p>ម៉ូឌុលមួយប្រកាសពីការពឹងផ្អែកដែលមិនអាចបំពេញបាន។ ហ្គេមអាចមិនចាប់ផ្តើមបានត្រឹមត្រូវ។</p><p><b>ដំណោះស្រាយ:</b> ដំឡើងការពឹងផ្អែកដែលខ្វះ ឬលុបម៉ូឌុលដែលមិនស៊ីគ្នា។</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloFeatureCreep() {
+		return "FeatureCreep: ការពឹងផ្អែកម៉ូឌុលមិនទាន់ដោះស្រាយ";
+	}
+
+	@Override
+	public String mensajeErrorVersionModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep បានរកឃើញភាពមិនស៊ីគ្នានៃកំណែរវាងម៉ូឌុល។</b><p>ម៉ូឌុលមួយត្រូវការកំណែផ្សេងនៃហ្គេម ឬម៉ូឌុលផ្សេង។ នេះអាចបណ្តាលឱ្យកើតការ crash ឬមុខងារខ្វះ។</p><p><b>ដំណោះស្រាយ:</b> ធ្វើបច្ចុប្បន្នភាពម៉ូឌុលទាំងអស់ទៅកាន់កំណែដែលស៊ីគ្នា។</p>";
+	}
+
+	@Override
+	public String nombreErrorVersionModuloFeatureCreep() {
+		return "FeatureCreep: កំណែម៉ូឌុលមិនត្រូវគ្នា";
+	}
+
+	@Override
+	public String mensajeErrorMixinBootstrapFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep មិនអាចចាប់ផ្តើម Mixin runtime បានទេ។</b><p>Mixin ចាំបាច់សម្រាប់ការបំលែងថ្នាក់។ បើគ្មានវា mod ដែលប្រើ Mixin នឹងមិនផ្ទុកទេ ហើយហ្គេមអាច crash។</p><p><b>ដំណោះស្រាយ:</b> ប្រាកដថា FeatureCreep ត្រូវបានដំឡើងត្រឹមត្រូវជាមួយការគាំទ្រ Mixin។</p>";
+	}
+
+	@Override
+	public String nombreErrorMixinBootstrapFeatureCreep() {
+		return "FeatureCreep: ការចាប់ផ្តើម Mixin បរាជ័យ";
+	}
+
+	@Override
+	public String mensajeErrorModDuplicadoRift() {
+		return "<b style='color:#FF4444;'>Rift បានរកឃើញ mod ដែលដូចគ្នា។</b><p>mod ពីរចែករំលែក ID mod ដូចគ្នា ដែលមិនអនុញ្ញាត។ Rift មិនអាចផ្ទុក mod ទាំងពីរបានទេ។</p><p><b>ដំណោះស្រាយ:</b> លុប mod ដែលដូចគ្នាមួយ។</p>";
+	}
+
+	@Override
+	public String nombreErrorModDuplicadoRift() {
+		return "Rift: ID mod ដូចគ្នា";
+	}
+
+	@Override
+	public String mensajeErrorRiftModJSONRift() {
+		return "<b style='color:#FF4444;'>Rift មិនអាចអាន riftmod.json បានទេ។</b><p>ឯកសារ manifest នៃ mod ខូច ឬបាត់។ Rift មិនអាចផ្ទុក mod ដោយគ្មាន manifest ដែលត្រឹមត្រូវបានទេ។</p><p><b>ដំណោះស្រាយ:</b> ដំឡើងម្តងទៀត mod ដែលខ្វះឯកសារ riftmod.json។</p>";
+	}
+
+	@Override
+	public String nombreErrorRiftModJSONRift() {
+		return "Rift: manifest mod ខូច";
+	}
+
+	@Override
+	public String mensajeErrorListenerRift() {
+		return "<b style='color:#FF4444;'>Rift មិនអាចរកឃើញថ្នាក់ listener បានទេ។</b><p>mod មួយយោងទៅកាន់ថ្នាក់ listener ដែលមិនមាន។ នេះជាធម្មតាបណ្តាលមកពី mod ដែលមិនស៊ីគ្នា ឬខូច។</p><p><b>ដំណោះស្រាយ:</b> ធ្វើបច្ចុប្បន្នភាព ឬលុប mod ដែលយោងទៅកាន់ថ្នាក់ដែលខ្វះ។</p>";
+	}
+
+	@Override
+	public String nombreErrorListenerRift() {
+		return "Rift: មិនរកឃើញថ្នាក់ listener";
+	}
+
+	@Override
+	public String mensajeErrorTransformadorAccesoRift() {
+		return "<b style='color:#FF4444;'>Rift មិនអាចចាប់ផ្តើម access transformer បានទេ។</b><p>Access transformer កែប្រែការមើលឃើញនៃថ្នាក់សម្រាប់ mod។ បើគ្មានវា mod មិនអាចចូលដំណើរការទៅកាន់វាល និងវិធីសាស្ត្រឯកជនបានទេ។</p><p><b>ដំណោះស្រាយ:</b> ដំឡើងម្តងទៀត Rift និង mod ដែលរងផលប៉ះពាល់។</p>";
+	}
+
+	@Override
+	public String nombreErrorTransformadorAccesoRift() {
+		return "Rift: access transformer បរាជ័យ";
+	}
+
+	@Override
+	public String mensajeAdvertenciaJarNoValidoRift() {
+		return "<b style='color:#FFAA00;'>Rift បានរកឃើញឯកសារ JAR ដែលមិនត្រឹមត្រូវ។</b><p>ឯកសារមួយក្នុង folder mod មិនមែនជា JAR ត្រឹមត្រូវទេ។ Rift នឹងកាត់បន្ថយ និងបន្តផ្ទុក mod ផ្សេងទៀត។</p><p><b>ដំណោះស្រាយ:</b> លុបឯកសារដែលខូចចេញពី folder mod។</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaJarNoValidoRift() {
+		return "Rift: ឯកសារ JAR មិនត្រឹមត្រូវ (ការព្រមាន)";
+	}
+
+	@Override
+	public String mensajeErrorJavaVersionM3L() {
+		return "<b style='color:#FF4444;'>M3L ត្រូវការ Java 7 ឬថ្មីជាងនេះ។</b><p>កំណែ Java របស់អ្នកចាស់ពេលទៅសម្រាប់ដំណើរការ M3L launcher។</p><p><b>ដំណោះស្រាយ:</b> ធ្វើបច្ចុប្បន្នភាពទៅកាន់កំណែ Java ថ្មីជាងនេះ។</p>";
+	}
+
+	@Override
+	public String nombreErrorJavaVersionM3L() {
+		return "M3L: កំណែ Java ចាស់ពេល";
+	}
+
+	@Override
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L() {
+		return "<b style='color:#FF4444;'>M3L ត្រូវការឱ្យ Minecraft ត្រូវបានដំឡើងជាមុនសិន។</b><p>ដំឡើងកំណែ Minecraft មូលដ្ឋានមុនពេលដំឡើង M3L។</p>";
+	}
+
+	@Override
+	public String nombreErrorMinecraftVersionNoInstaladaM3L() {
+		return "M3L: Minecraft មិនទាន់ដំឡើង";
+	}
+
+	@Override
+	public String mensajeErrorJSONLauncherM3L() {
+		return "<b style='color:#FF4444;'>M3L មិនអាចអានការកំណត់ launcher បានទេ។</b><p>ឯកសារ launcher_profiles.json ខូច ឬមិនអាចចូលដំណើរការបាន។ M3L មិនអាចចាប់ផ្តើមដោយគ្មានការកំណត់ត្រឹមត្រូវបានទេ។</p><p><b>ដំណោះស្រាយ:</b> ងាកមកវិញ ឬបង្កើតឡើងវិញឯកសារ launcher_profiles.json។</p>";
+	}
+
+	@Override
+	public String nombreErrorJSONLauncherM3L() {
+		return "M3L: ការកំណត់ launcher ខូច";
+	}
+
+	@Override
+	public String mensajeAdvertenciaOSNoDetectadoM3L() {
+		return "<b style='color:#FFAA00;'>M3L មិនអាចរកឃើញប្រព័ន្ធប្រតិបត្តិការរបស់អ្នកបានទេ។</b><p>M3L ទទួលស្គាល់តែ Windows, Mac និង Linux។ វាអាចប្រើ Linux ជាលំនាំដើម ដែលអាចបណ្តាលឱ្យកើតបញ្ហាផ្លូវ។</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaOSNoDetectadoM3L() {
+		return "M3L: ប្រព័ន្ធប្រតិបត្តិការមិនទាន់រកឃើញ (ការព្រមាន)";
+	}
+
+	@Override
+	public String mensajeErrorMySQLConexionHMod() {
+		return "<b style='color:#FF4444;'>HMod មិនអាចតភ្ជាប់ទៅ MySQL បានទេ។</b><p>ការតភ្ជាប់ទៅមូលដ្ឋានទិន្នន័យ server បរាជ័យ។ ប្រតិបត្តិការទាំងអស់នៃមូលដ្ឋានទិន្នន័យនឹងបរាជ័យ។</p><p><b>ដំណោះស្រាយ:</b> ពិនិត្យថា server MySQL កំពុងដំណើរការ និងការកំណត់ការតភ្ជាប់ត្រឹមត្រូវ។</p>";
+	}
+
+	@Override
+	public String nombreErrorMySQLConexionHMod() {
+		return "HMod: ការតភ្ជាប់ MySQL បរាជ័យ";
+	}
+
+	@Override
+	public String mensajeErrorCargaPluginHMod() {
+		return "<b style='color:#FF4444;'>HMod មិនអាចផ្ទុក plugin បានទេ។</b><p>plugin មួយខូច មិនស៊ីគ្នា ឬបាត់។ plugin នឹងមិនត្រូវបានផ្ទុកទេ។</p><p><b>ដំណោះស្រាយ:</b> ពិនិត្យថា plugin ទាំងអស់ស៊ីគ្នាជាមួយកំណែ HMod របស់អ្នក។</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaPluginHMod() {
+		return "HMod: ការផ្ទុក plugin បរាជ័យ";
+	}
+
+	@Override
+	public String mensajeErrorGrupoPorDefectoHMod() {
+		return "<b style='color:#FF4444;'>HMod មិនមានក្រុមលំនាំដើមត្រូវបានកំណត់ទេ។</b><p>យ៉ាងហោចណាស់ក្រុមមួយត្រូវតែត្រូវបានសម្គាល់ថាជាក្រុមលំនាំដើម។ បើគ្មានវា អ្នកលេងថ្មីមិនអាចត្រូវបានកំណត់បានត្រឹមត្រូវទេ។</p><p><b>ដំណោះស្រាយ:</b> សម្គាល់ក្រុមមួយជា DefaultGroup ក្នុងការកំណត់ HMod។</p>";
+	}
+
+	@Override
+	public String nombreErrorGrupoPorDefectoHMod() {
+		return "HMod: គ្មានក្រុមលំនាំដើម";
+	}
+
+	@Override
+	public String mensajeAdvertenciaPluginHookHMod() {
+		return "<b style='color:#FFAA00;'>ការលើកលែង hook plugin HMod។</b><p>plugin មួយបានបាញ់ការលើកលែងក្នុងអំឡុងពេលហៅ hook។ server បន្តដំណើរការ ប៉ុន្តែមុខងារនៃ plugin ដែលរងផលប៉ះពាល់អាចខូច។</p><p><b>ដំណោះស្រាយ:</b> ធ្វើបច្ចុប្បន្នភាព ឬជំនួស plugin ដែលរងផលប៉ះពាល់។</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaPluginHookHMod() {
+		return "HMod: ការលើកលែង hook plugin (ការព្រមាន)";
+	}
+
+	@Override
+	public String mensajeErrorInicializacionModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader មិនអាចចាប់ផ្តើមបានទេ។</b><p>ModLoader មិនអាចចាប់ផ្តើមដោយសារកំហុស reflection ភាពមិនស៊ីគ្នានៃកំណែ ឬ mod ខូច។ ហ្គេមនឹងមិនផ្ទុក mod ទេ។</p><p><b>ដំណោះស្រាយ:</b> ពិនិត្យថា ModLoader និង mod ទាំងអស់ស៊ីគ្នាជាមួយកំណែ Minecraft របស់អ្នក។</p>";
+	}
+
+	@Override
+	public String nombreErrorInicializacionModLoader() {
+		return "ModLoader: ការចាប់ផ្តើមបរាជ័យ";
+	}
+
+	@Override
+	public String mensajeErrorCargaModModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader មិនអាចផ្ទុក mod បានទេ។</b><p>mod មួយខូច មិនស៊ីគ្នា ឬមានកំហុសកូដ។ វានឹងមិនត្រូវបានផ្ទុកទេ។</p><p><b>ដំណោះស្រាយ:</b> លុប ឬធ្វើបច្ចុប្បន្នភាព mod ដែលខូច។</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaModModLoader() {
+		return "ModLoader: ការផ្ទុក mod បរាជ័យ";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader ខ្វះការពឹងផ្អែក។</b><p>mod មួយត្រូវការ mod ផ្សេងទៀតដែលមិនទាន់ដំឡើង។ mod នឹងមិនផ្ទុកដោយគ្មានការពឹងផ្អែករបស់វាទេ។</p><p><b>ដំណោះស្រាយ:</b> ដំឡើង mod ពឹងផ្អែកដែលត្រូវការ។</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloModLoader() {
+		return "ModLoader: ការពឹងផ្អែកខ្វះ";
+	}
+
+	@Override
+	public String mensajeAdvertenciaCanalInvalidoModLoader() {
+		return "<b style='color:#FFAA00;'>ឈ្មោះ channel មិនត្រឹមត្រូវក្នុង ModLoader។</b><p>mod មួយបានចុះបញ្ជី channel កញ្ចប់ដែលមានឈ្មោះវែងពេល (≥ 16 តួអក្សរ)។ ការទំនាក់ទំនងកញ្ចប់នៃ mod នេះអាចមិនដំណើរការបានត្រឹមត្រូវទេ។</p><p><b>ដំណោះស្រាយ:</b> ធ្វើបច្ចុប្បន្នភាព mod ដើម្បីប្រើឈ្មោះ channel ខ្លីជាងនេះ។</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaCanalInvalidoModLoader() {
+		return "ModLoader: ឈ្មោះ channel មិនត្រឹមត្រូវ (ការព្រមាន)";
+	}
+
+	@Override
+	public String mensajeErrorRegistroPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>ការចុះបញ្ជីកញ្ចប់ ModLoaderMP បរាជ័យ។</b><p>ការចុះបញ្ជី Packet230 តាមរយៈ reflection បរាជ័យ ជាធម្មតាដោយសារភាពមិនស៊ីគ្នានៃកំណែ។ បណ្តាញអ្នកលេងជាច្រើននឹងមិនដំណើរការទេ។</p><p><b>ដំណោះស្រាយ:</b> ប្រាកដថា ModLoaderMP ត្រូវគ្នាជាមួយកំណែ Minecraft របស់អ្នក។</p>";
+	}
+
+	@Override
+	public String nombreErrorRegistroPacketModLoaderMP() {
+		return "ModLoaderMP: ការចុះបញ្ជីកញ្ចប់បរាជ័យ";
+	}
+
+	@Override
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP() {
+		return "<b style='color:#FF4444;'>ការបង្កើត entity ផ្ទាល់ខ្លួន ModLoaderMP បរាជ័យ។</b><p>entity ផ្ទាល់ខ្លួនមិនអាចចាប់ផ្តើមក្នុងអំឡុងពេលអ្នកលេងជាច្រើនបានទេ។ entity នឹងមិនលេចឡើងក្នុងហ្គេមទេ។</p><p><b>ដំណោះស្រាយ:</b> ពិនិត្យថា mod ដែលផ្តល់ entity ស៊ីគ្នា។</p>";
+	}
+
+	@Override
+	public String nombreErrorEntidadPersonalizadaModLoaderMP() {
+		return "ModLoaderMP: entity ផ្ទាល់ខ្លួនបរាជ័យ";
+	}
+
+	@Override
+	public String mensajeErrorModNuloModLoaderMP() {
+		return "<b style='color:#FF4444;'>ការយោង mod null ក្នុង ModLoaderMP។</b><p>mod មួយបានហៅ sendPacket ឬ sendKey ដោយការយោង null។ នេះជាកំហុសកម្មវិធីក្នុង mod។</p><p><b>ដំណោះស្រាយ:</b> ធ្វើបច្ចុប្បន្នភាព ឬជំនួស mod ដែលមានកំហុសការយោង null។</p>";
+	}
+
+	@Override
+	public String nombreErrorModNuloModLoaderMP() {
+		return "ModLoaderMP: ការយោង mod null";
+	}
+
+	@Override
+	public String mensajeErrorDatosPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>ទិន្នន័យកញ្ចប់ ModLoaderMP ធំពេល។</b><p>កញ្ចប់មួយមានជាង 65535 ធាតុ លើសពីទំហំអតិបរមា។ កញ្ចប់មិនអាចផ្ញើបានទេ។</p><p><b>ដំណោះស្រាយ:</b> ធ្វើបច្ចុប្បន្នភាព mod ដែលផ្ញើកញ្ចប់ធំពេល។</p>";
+	}
+
+	@Override
+	public String nombreErrorDatosPacketModLoaderMP() {
+		return "ModLoaderMP: ទិន្នន័យកញ្ចប់ធំពេល";
+	}
+
+	@Override
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "<b style='color:#FFAA00;'>ការចុះបញ្ជីដដែលក្នុង ModLoaderMP។</b><p>ប្រភេទ inventory GUI ឬ ID entity ត្រូវបានចុះបញ្ជីពីរដង។ ការចុះបញ្ជីលើកទីពីរត្រូវបានមិនអើពើ។</p><p><b>ដំណោះស្រាយ:</b> ពិនិត្យថាមាន mod ដែលផ្ទុយគ្នាឬអត់។</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "ModLoaderMP: ការចុះបញ្ជីដដែល (ការព្រមាន)";
+	}
+
+	@Override
+	public String mensajeErrorPluginInvalidoCanary() {
+		return "<b style='color:#FF4444;'>plugin មិនត្រឹមត្រូវក្នុង Canary/Neptune។</b><p>Canary មិនអាចផ្ទុក plugin បានទេ ព្រោះវាខូច មានឯកសារ Canary.inf ដែលមិនត្រឹមត្រូវ ឬថ្នាក់សំខាន់ដែលបានកំណត់មិនមាន។</p><p><b>ដំណោះស្រាយ:</b> ប្រាកដថា plugin ស៊ីគ្នាជាមួយកំណែ Canary/Neptune របស់អ្នក និងមិនខូច។</p>";
+	}
+
+	@Override
+	public String nombreErrorPluginInvalidoCanary() {
+		return "Canary/Neptune: plugin មិនត្រឹមត្រូវ";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaPluginCanary() {
+		return "<b style='color:#FF4444;'>ការពឹងផ្អែក plugin ខ្វះក្នុង Canary/Neptune។</b><p>plugin មួយប្រកាសពីការពឹងផ្អែកដែលមិនទាន់ដំឡើងលើ server។ plugin មិនអាចផ្ទុកដោយគ្មានការពឹងផ្អែករបស់វាបានទេ។</p><p><b>ដំណោះស្រាយ:</b> ដំឡើងការពឹងផ្អែកដែលត្រូវការសម្រាប់ plugin។</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaPluginCanary() {
+		return "Canary/Neptune: ការពឹងផ្អែក plugin ខ្វះ";
+	}
+
+	@Override
+	public String mensajeErrorConsistenciaHookCanary() {
+		return "<b style='color:#FF4444;'>កំហុសហត្ថលេខា hook ក្នុង Canary/Neptune។</b><p>plugin មួយបានចុះបញ្ជីវិធីសាស្ត្រ hook ដោយហត្ថលេខាមិនត្រឹមត្រូវ។ វិធីសាស្ត្រ @HookHandler ត្រូវតែមានប៉ារ៉ាម៉ែត្រ 1 ដែលជា subtype នៃ Hook។</p><p><b>ដំណោះស្រាយ:</b> ធ្វើបច្ចុប្បន្នភាព ឬជំនួស plugin ដែលបណ្តាលឱ្យកើតកំហុសនេះ។</p>";
+	}
+
+	@Override
+	public String nombreErrorConsistenciaHookCanary() {
+		return "Canary/Neptune: ហត្ថលេខា hook មិនត្រឹមត្រូវ";
+	}
+
+	@Override
+	public String mensajeAdvertenciaEjecucionHookCanary() {
+		return "<b style='color:#FFAA00;'>ការលើកលែង hook ក្នុង Canary/Neptune។</b><p>plugin មួយបានបាញ់ការលើកលែងក្នុងអំឡុងពេលដោះស្រាយព្រឹត្តិការណ៍ (hook)។ server បន្តដំណើរការ ប៉ុន្តែមុខងារនៃ plugin ដែលរងផលប៉ះពាល់អាចខូច។</p><p><b>ដំណោះស្រាយ:</b> ធ្វើបច្ចុប្បន្នភាព ឬជំនួស plugin ដែលបណ្តាលឱ្យកើតការលើកលែងនេះ។</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaEjecucionHookCanary() {
+		return "Canary/Neptune: ការលើកលែង hook (ការព្រមាន)";
+	}
+
+	@Override
+	public String mensajeErrorBaseDeDatosCanary() {
+		return "<b style='color:#FF4444;'>កំហុសមូលដ្ឋានទិន្នន័យក្នុង Canary/Neptune។</b><p>Canary មិនអាចចូលដំណើរការទៅកាន់មូលដ្ឋានទិន្នន័យបានទេ។ នេះអាចបណ្តាលមកពីការតភ្ជាប់បរាជ័យ adapter មូលដ្ឋានទិន្នន័យខូច ឬការកំណត់មិនត្រឹមត្រូវ។</p><p><b>ដំណោះស្រាយ:</b> ប្រាកដថាការកំណត់មូលដ្ឋានទិន្នន័យ និង adapter ស៊ីគ្នា។</p>";
+	}
+
+	@Override
+	public String nombreErrorBaseDeDatosCanary() {
+		return "Canary/Neptune: កំហុសមូលដ្ឋានទិន្នន័យ";
+	}
+
+	@Override
+	public String mensajeErrorComandoCanary() {
+		return "<b style='color:#FF4444;'>កំហុសបញ្ជាក្នុង Canary/Neptune។</b><p>បញ្ជាមួយមិនអាចចុះបញ្ជីបានទេ។ នេះអាចបណ្តាលមកពីបញ្ជាឪពុកម្តាយខ្វះ បញ្ជាដដែលដែលបានចុះបញ្ជីដោយ plugin ផ្សេង ឬកំហុសប្រព័ន្ធបញ្ជា។</p><p><b>ដំណោះស្រាយ:</b> ពិនិត្យការផ្ទុយគ្នានៃបញ្ជារវាង plugin។</p>";
+	}
+
+	@Override
+	public String nombreErrorComandoCanary() {
+		return "Canary/Neptune: កំហុសបញ្ជា";
+	}
 }

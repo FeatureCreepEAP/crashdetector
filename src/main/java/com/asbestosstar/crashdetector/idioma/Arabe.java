@@ -2142,7 +2142,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String nombre_error_driver_dri() {
-		return "DRI software rasterization driver crash";
+		return "تعطل برنامج تشغيل تنقيط برنامج DRI";
 	}
 
 	@Override
@@ -2169,7 +2169,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String nombre_error_glx_bad_fbconfig() {
-		return "Invalid OpenGL framebuffer configuration";
+		return "تكوين مخزن إطار OpenGL غير صالح";
 	}
 
 	@Override
@@ -2195,7 +2195,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String nombre_error_vulkan_extension() {
-		return "Vulkan extension not available";
+		return "ملحق فولكان غير متوفر";
 	}
 
 	@Override
@@ -2221,7 +2221,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String nombre_error_backend_grafico_no_disponible() {
-		return "No supported graphics backend";
+		return "لا توجد واجهة خلفية مدعومة للرسومات";
 	}
 
 	@Override
@@ -2247,7 +2247,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String nombre_error_lwjgl_plataforma_no_soportada() {
-		return "Platform not supported by LWJGL";
+		return "المنصة غير مدعومة من قبل LWJGL";
 	}
 
 	@Override
@@ -2275,7 +2275,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String nombre_error_cargador_vulkan() {
-		return "Failed to load Vulkan loader";
+		return "تعذر تحميل لودر فولكان";
 	}
 
 	@Override
@@ -4716,7 +4716,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String nombreDeErrorMedievalOriginsCast() {
-		return "Error de casteo en Medieval Origins";
+		return "خطأ في الصب في أصول العصور الوسطى";
 	}
 
 	@Override
@@ -11572,7 +11572,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String nombreConflictoOverridesOpcionesSodium() {
-		return "Mod que anulan opciones de Sodium";
+		return "خيارات الصوديوم المهيمنة على وزارة الدفاع";
 	}
 
 	@Override
@@ -13592,12 +13592,12 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String nombreVulnerabilidadMeltdown() {
-		return "Meltdown (CVE-2017-5754)";
+		return "الانهيار (CVE -2017-5754)";
 	}
 
 	@Override
 	public String nombreVulnerabilidadSpectre() {
-		return "Spectre V1/V2 (CVE-2017-5753, CVE-2017-5715)";
+		return "سبيكتر V1/V2 (CVE -2017-5753، CVE -2017-5715)";
 	}
 
 	@Override
@@ -14402,5 +14402,325 @@ public class Arabe implements Idioma {
 	@Override
 	public String nombreErrorEnlazadorNoSoportado() {
 		return "الرابط الأصلي غير مدعوم من قبل المنصة";
+	}
+
+	@Override
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep() {
+		return "<b style='color:#FFAA00;'>لم يتمكن FeatureCreep من إرفاع عامل HotSpot مباشرة.</b><p>هذا نادراً ما يكون مشكلة لأن معظم التعديلات لا تتطلب Instrumentation. سيستمر FeatureCreep بدونه.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep() {
+		return "FeatureCreep: فشل إرفاق HotSpot (تحذير)";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>لم يتمكن FeatureCreep من حل تبعيات الوحدات.</b><p>وحدة تعلن عن تبعية لا يمكن تلبيتها. قد لا يبدأ اللعبة بشكل صحيح.</p><p><b>الحل:</b> قم بتثبيت التبعيات المفقودة أو إزالة الوحدة غير المتوافقة.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloFeatureCreep() {
+		return "FeatureCreep: تبعيات الوحدة غير محلولة";
+	}
+
+	@Override
+	public String mensajeErrorVersionModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>اكتشف FeatureCreep عدم توافق في الإصدارات بين الوحدات.</b><p>وحدة تتطلب إصداراً مختلفاً من اللعبة أو وحدة أخرى. قد يسبب ذلك أعطاباً أو وظائف مفقودة.</p><p><b>الحل:</b> قم بتحديث جميع الوحدات إلى إصدارات متوافقة.</p>";
+	}
+
+	@Override
+	public String nombreErrorVersionModuloFeatureCreep() {
+		return "FeatureCreep: عدم توافق إصدار الوحدة";
+	}
+
+	@Override
+	public String mensajeErrorMixinBootstrapFeatureCreep() {
+		return "<b style='color:#FF4444;'>لم يتمكن FeatureCreep من تهيئة وقت تشغيل Mixin.</b><p>Mixin مطلوب لتحويلات الفئات. بدونه، ستفشل التعديلات التي تستخدم Mixin في التحميل وقد تتعطل اللعبة.</p><p><b>الحل:</b> تأكد من تثبيت FeatureCreep بشكل صحيح مع دعم Mixin.</p>";
+	}
+
+	@Override
+	public String nombreErrorMixinBootstrapFeatureCreep() {
+		return "FeatureCreep: فشل تهيئة Mixin";
+	}
+
+	@Override
+	public String mensajeErrorModDuplicadoRift() {
+		return "<b style='color:#FF4444;'>وجد Rift تعديلاً مكرراً.</b><p>تعديلان يشتركان في نفس المعرف، وهو غير مسموح به. لا يمكن لـ Rift تحميل التعديلين.</p><p><b>الحل:</b> قم بإزالة أحد التعديلات المكررة.</p>";
+	}
+
+	@Override
+	public String nombreErrorModDuplicadoRift() {
+		return "Rift: معرف تعديل مكرر";
+	}
+
+	@Override
+	public String mensajeErrorRiftModJSONRift() {
+		return "<b style='color:#FF4444;'>لم يتمكن Rift من قراءة riftmod.json.</b><p>ملف بيان تعديل تالف أو مفقود. لا يمكن لـ Rift تحميل التعديل بدون بيان صالح.</p><p><b>الحل:</b> أعد تثبيت التعديل الذي يفتقر إلى ملف riftmod.json.</p>";
+	}
+
+	@Override
+	public String nombreErrorRiftModJSONRift() {
+		return "Rift: بيان تعديل تالف";
+	}
+
+	@Override
+	public String mensajeErrorListenerRift() {
+		return "<b style='color:#FF4444;'>لم يتمكن Rift من العثور على فئة المستمع.</b><p>تعديل يشير إلى فئة مستمع غير موجودة. عادة ما يكون سببه تعديل غير متوافق أو تالف.</p><p><b>الحل:</b> قم بتحديث أو إزالة التعديل الذي يشير إلى الفئة المفقودة.</p>";
+	}
+
+	@Override
+	public String nombreErrorListenerRift() {
+		return "Rift: لم يتم العثور على فئة المستمع";
+	}
+
+	@Override
+	public String mensajeErrorTransformadorAccesoRift() {
+		return "<b style='color:#FF4444;'>لم يتمكن Rift من تهيئة محولات الوصول.</b><p>محولات الوصول تعدل رؤية الفئات للتعديلات. بدونها، لا يمكن للتعديلات الوصول إلى الحقول والطرق الخاصة.</p><p><b>الحل:</b> أعد تثبيت Rift والتعديلات المتأثرة.</p>";
+	}
+
+	@Override
+	public String nombreErrorTransformadorAccesoRift() {
+		return "Rift: فشل محول الوصول";
+	}
+
+	@Override
+	public String mensajeAdvertenciaJarNoValidoRift() {
+		return "<b style='color:#FFAA00;'>وجد Rift ملف JAR غير صالح.</b><p>ملف في مجلد التعديلات ليس ملف JAR صالح. سيتخطاه Rift ويستمر في تحميل التعديلات الأخرى.</p><p><b>الحل:</b> قم بإزالة الملف التالف من مجلد التعديلات.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaJarNoValidoRift() {
+		return "Rift: ملف JAR غير صالح (تحذير)";
+	}
+
+	@Override
+	public String mensajeErrorJavaVersionM3L() {
+		return "<b style='color:#FF4444;'>يتطلب M3L Java 7 أو أحدث.</b><p>إصدار Java الخاص بك قديم جداً لتشغيل M3L.</p><p><b>الحل:</b> قم بتحديث Java إلى إصدار أحدث.</p>";
+	}
+
+	@Override
+	public String nombreErrorJavaVersionM3L() {
+		return "M3L: إصدار Java قديم جداً";
+	}
+
+	@Override
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L() {
+		return "<b style='color:#FF4444;'>يتطلب M3L تثبيت Minecraft أولاً.</b><p>قم بتثبيت إصدار Minecraft الأساسي قبل تثبيت M3L.</p>";
+	}
+
+	@Override
+	public String nombreErrorMinecraftVersionNoInstaladaM3L() {
+		return "M3L: Minecraft غير مثبت";
+	}
+
+	@Override
+	public String mensajeErrorJSONLauncherM3L() {
+		return "<b style='color:#FF4444;'>لم يتمكن M3L من قراءة إعدادات المشغل.</b><p>ملف launcher_profiles.json تالف أو غير قابل للوصول. لا يمكن لـ M3L البدء بدون إعدادات صالحة.</p><p><b>الحل:</b> استعد أو أعد إنشاء ملف launcher_profiles.json.</p>";
+	}
+
+	@Override
+	public String nombreErrorJSONLauncherM3L() {
+		return "M3L: إعدادات المشغل تالفة";
+	}
+
+	@Override
+	public String mensajeAdvertenciaOSNoDetectadoM3L() {
+		return "<b style='color:#FFAA00;'>لم يتمكن M3L من اكتشاف نظام التشغيل الخاص بك.</b><p>M3L يتعرف فقط على Windows وMac وLinux. قد يستخدم Linux كافتراضي، مما قد يسبب مشاكل في المسارات.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaOSNoDetectadoM3L() {
+		return "M3L: لم يتم اكتشاف نظام التشغيل (تحذير)";
+	}
+
+	@Override
+	public String mensajeErrorMySQLConexionHMod() {
+		return "<b style='color:#FF4444;'>لم يتمكن HMod من الاتصال بـ MySQL.</b><p>فشل الاتصال بقاعدة بيانات الخادم. ستفشل جميع عمليات قاعدة البيانات.</p><p><b>الحل:</b> تحقق من أن خادم MySQL يعمل وأن إعدادات الاتصال صحيحة.</p>";
+	}
+
+	@Override
+	public String nombreErrorMySQLConexionHMod() {
+		return "HMod: فشل الاتصال بـ MySQL";
+	}
+
+	@Override
+	public String mensajeErrorCargaPluginHMod() {
+		return "<b style='color:#FF4444;'>فشل HMod في تحميل إضافة.</b><p>إضافة تالفة أو غير متوافقة أو مفقودة. لن يتم تحميلها.</p><p><b>الحل:</b> تحقق من أن جميع الإضافات متوافقة مع إصدار HMod الخاص بك.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaPluginHMod() {
+		return "HMod: فشل تحميل الإضافة";
+	}
+
+	@Override
+	public String mensajeErrorGrupoPorDefectoHMod() {
+		return "<b style='color:#FF4444;'>HMod ليس لديه مجموعة افتراضية محددة.</b><p>يجب تحديد مجموعة واحدة على الأقل كمجموعة افتراضية. بدونها، لا يمكن تعيين اللاعبين الجدد بشكل صحيح.</p><p><b>الحل:</b> حدد مجموعة كـ DefaultGroup في إعدادات HMod.</p>";
+	}
+
+	@Override
+	public String nombreErrorGrupoPorDefectoHMod() {
+		return "HMod: لا توجد مجموعة افتراضية";
+	}
+
+	@Override
+	public String mensajeAdvertenciaPluginHookHMod() {
+		return "<b style='color:#FFAA00;'>استثناء في وظيفة إضافة HMod.</b><p>أطلقت إضافة استثناءً أثناء استدعاء وظيفة. يستمر الخادم في العمل، لكن وظيفة الإضافة قد تكون معطلة.</p><p><b>الحل:</b> قم بتحديث أو استبدال الإضافة المتأثرة.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaPluginHookHMod() {
+		return "HMod: استثناء في وظيفة الإضافة (تحذير)";
+	}
+
+	@Override
+	public String mensajeErrorInicializacionModLoader() {
+		return "<b style='color:#FF4444;'>فشل ModLoader في التهيئة.</b><p>لم يتمكن ModLoader من البدء بسبب أخطاء انعكاس أو عدم توافق إصدار أو تعديلات تالفة. لن تحمل اللعبة التعديلات.</p><p><b>الحل:</b> تحقق من أن ModLoader وجميع التعديلات متوافقة مع إصدار Minecraft الخاص بك.</p>";
+	}
+
+	@Override
+	public String nombreErrorInicializacionModLoader() {
+		return "ModLoader: فشل التهيئة";
+	}
+
+	@Override
+	public String mensajeErrorCargaModModLoader() {
+		return "<b style='color:#FF4444;'>فشل ModLoader في تحميل تعديل.</b><p>تعديل تالف أو غير متوافق أو يحتوي على أخطاء برمجة. لن يتم تحميله.</p><p><b>الحل:</b> قم بإزالة أو تحديث التعديل التالف.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaModModLoader() {
+		return "ModLoader: فشل تحميل التعديل";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader يفتقر إلى تبعية.</b><p>تعديل يتطلب تعديلاً آخر غير مثبت. لن يتم تحميله بدون تبعياته.</p><p><b>الحل:</b> قم بتثبيت التعديلات المطلوبة.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloModLoader() {
+		return "ModLoader: تبعية مفقودة";
+	}
+
+	@Override
+	public String mensajeAdvertenciaCanalInvalidoModLoader() {
+		return "<b style='color:#FFAA00;'>اسم قناة غير صالح في ModLoader.</b><p>سجل تعديل قناة حزم باسم طويل جداً (≥ 16 حرفاً). قد لا تعمل اتصالات الحزم لهذا التعديل بشكل صحيح.</p><p><b>الحل:</b> قم بتحديث التعديل لاستخدام اسم قناة أقصر.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaCanalInvalidoModLoader() {
+		return "ModLoader: اسم قناة غير صالح (تحذير)";
+	}
+
+	@Override
+	public String mensajeErrorRegistroPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>فشل تسجيل حزمة ModLoaderMP.</b><p>فشل تسجيل Packet230 عبر الانعكاس، عادة بسبب عدم توافق الإصدار. لن تعمل الشبكة متعددة اللاعبين.</p><p><b>الحل:</b> تأكد من أن ModLoaderMP يطابق إصدار Minecraft الخاص بك.</p>";
+	}
+
+	@Override
+	public String nombreErrorRegistroPacketModLoaderMP() {
+		return "ModLoaderMP: فشل تسجيل الحزمة";
+	}
+
+	@Override
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP() {
+		return "<b style='color:#FF4444;'>فشل إنشاء كيان مخصص في ModLoaderMP.</b><p>لم يتمكن كيان مخصص من التهيئة أثناء اللعب متعدد اللاعبين. لن يظهر الكيان في اللعبة.</p><p><b>الحل:</b> تحقق من أن التعديل الذي يوفر الكيان متوافق.</p>";
+	}
+
+	@Override
+	public String nombreErrorEntidadPersonalizadaModLoaderMP() {
+		return "ModLoaderMP: فشل الكيان المخصص";
+	}
+
+	@Override
+	public String mensajeErrorModNuloModLoaderMP() {
+		return "<b style='color:#FF4444;'>مرجع تعديل فارغ في ModLoaderMP.</b><p>استدعى تعديل sendPacket أو sendKey بمراجع فارغ. هذا خطأ برمجي في التعديل.</p><p><b>الحل:</b> قم بتحديث أو استبدال التعديل الذي يحتوي على خطأ المرجع الفارغ.</p>";
+	}
+
+	@Override
+	public String nombreErrorModNuloModLoaderMP() {
+		return "ModLoaderMP: مرجع تعديل فارغ";
+	}
+
+	@Override
+	public String mensajeErrorDatosPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>بيانات حزمة ModLoaderMP كبيرة جداً.</b><p>حزمة تحتوي على أكثر من 65535 عنصراً، تتجاوز الحجم الأقصى. لا يمكن إرسال الحزمة.</p><p><b>الحل:</b> قم بتحديث التعديل الذي يرسل حزم كبيرة.</p>";
+	}
+
+	@Override
+	public String nombreErrorDatosPacketModLoaderMP() {
+		return "ModLoaderMP: بيانات الحزمة كبيرة جداً";
+	}
+
+	@Override
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "<b style='color:#FFAA00;'>تسجيل مكرر في ModLoaderMP.</b><p>تم تسجيل نوع مخزون GUI أو معرف كيان مرتين. يتم تجاهل التسجيل الثاني.</p><p><b>الحل:</b> تحقق من التعديلات المتضاربة.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "ModLoaderMP: تسجيل مكرر (تحذير)";
+	}
+
+	@Override
+	public String mensajeErrorPluginInvalidoCanary() {
+		return "<b style='color:#FF4444;'>إضافة غير صالحة في Canary/Neptune.</b><p>فشل Canary في تحميل إضافة لأنها تالفة أو تحتوي على ملف Canary.inf غير صالح أو الفئة الرئيسية المحددة غير موجودة.</p><p><b>الحل:</b> تحقق من أن الإضافة متوافقة مع إصدار Canary/Neptune الخاص بك وليست تالفة.</p>";
+	}
+
+	@Override
+	public String nombreErrorPluginInvalidoCanary() {
+		return "Canary/Neptune: إضافة غير صالحة";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaPluginCanary() {
+		return "<b style='color:#FF4444;'>تبعية إضافة مفقودة في Canary/Neptune.</b><p>إضافة تعلن عن تبعية غير مثبتة على الخادم. لا يمكن تحميل الإضافة بدون تبعياتها.</p><p><b>الحل:</b> قم بتثبيت التبعيات المطلوبة للإضافة.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaPluginCanary() {
+		return "Canary/Neptune: تبعية إضافة مفقودة";
+	}
+
+	@Override
+	public String mensajeErrorConsistenciaHookCanary() {
+		return "<b style='color:#FF4444;'>خطأ في توقيع Hook في Canary/Neptune.</b><p>سجل إضافة طريقة Hook بتوقيع غير صحيح. يجب أن تحتوي طرق @HookHandler على معلمة واحدة بالضبط تكون نوعاً فرعياً من Hook.</p><p><b>الحل:</b> قم بتحديث أو استبدال الإضافة التي تسبب هذا الخطأ.</p>";
+	}
+
+	@Override
+	public String nombreErrorConsistenciaHookCanary() {
+		return "Canary/Neptune: توقيع Hook غير صحيح";
+	}
+
+	@Override
+	public String mensajeAdvertenciaEjecucionHookCanary() {
+		return "<b style='color:#FFAA00;'>استثناء في Hook في Canary/Neptune.</b><p>أطلقت إضافة استثناءً أثناء معالجة حدث (Hook). يستمر الخادم في العمل، لكن وظيفة الإضافة المتأثرة قد تكون معطلة.</p><p><b>الحل:</b> قم بتحديث أو استبدال الإضافة التي تسبب هذا الاستثناء.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaEjecucionHookCanary() {
+		return "Canary/Neptune: استثناء في Hook (تحذير)";
+	}
+
+	@Override
+	public String mensajeErrorBaseDeDatosCanary() {
+		return "<b style='color:#FF4444;'>خطأ في قاعدة البيانات في Canary/Neptune.</b><p>لم يتمكن Canary من الوصول إلى قاعدة البيانات. قد يكون سببه فشل الاتصال أو محول قاعدة بيانات تالف أو إعدادات غير صحيحة.</p><p><b>الحل:</b> تحقق من إعدادات قاعدة البيانات وأن المحول متوافق.</p>";
+	}
+
+	@Override
+	public String nombreErrorBaseDeDatosCanary() {
+		return "Canary/Neptune: خطأ في قاعدة البيانات";
+	}
+
+	@Override
+	public String mensajeErrorComandoCanary() {
+		return "<b style='color:#FF4444;'>خطأ في الأمر في Canary/Neptune.</b><p>فشل تسجيل أمر. قد يكون سببه أمر أبوي مفقود أو أمر مكرر مسجل بواسطة إضافة أخرى أو خطأ في نظام الأوامر.</p><p><b>الحل:</b> تحقق من تضارب الأوامر بين الإضافات.</p>";
+	}
+
+	@Override
+	public String nombreErrorComandoCanary() {
+		return "Canary/Neptune: خطأ في الأمر";
 	}
 }

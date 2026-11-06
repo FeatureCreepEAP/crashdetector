@@ -15076,4 +15076,324 @@ public class Frances implements Idioma {
 	public String nombreErrorEnlazadorNoSoportado() {
 		return "Lien natif non pris en charge par la plateforme";
 	}
+
+	@Override
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep() {
+		return "<b style='color:#FFAA00;'>FeatureCreep n'a pas pu attacher l'agent HotSpot directement.</b><p>Cela pose rarement problème car la plupart des mods ne nécessitent pas d'Instrumentation. FeatureCreep continuera sans.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep() {
+		return "FeatureCreep: échec d'attachement HotSpot (avertissement)";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep n'a pas pu résoudre les dépendances des modules.</b><p>Un module déclare une dépendance qui ne peut pas être satisfaite. Le jeu peut ne pas démarrer correctement.</p><p><b>Solution :</b> Installez les dépendances manquantes ou supprimez le module incompatible.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloFeatureCreep() {
+		return "FeatureCreep: dépendances de module non résolues";
+	}
+
+	@Override
+	public String mensajeErrorVersionModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep a détecté une incompatibilité de version entre les modules.</b><p>Un module nécessite une version différente du jeu ou d'un autre module. Cela peut causer des plantages ou des fonctionnalités manquantes.</p><p><b>Solution :</b> Mettez à jour tous les modules vers des versions compatibles.</p>";
+	}
+
+	@Override
+	public String nombreErrorVersionModuloFeatureCreep() {
+		return "FeatureCreep: incompatibilité de version de module";
+	}
+
+	@Override
+	public String mensajeErrorMixinBootstrapFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep n'a pas pu initialiser le runtime Mixin.</b><p>Mixin est requis pour les transformations de classes. Sans lui, les mods utilisant Mixin ne chargeront pas et le jeu peut planter.</p><p><b>Solution :</b> Assurez-vous que FeatureCreep est correctement installé avec le support Mixin.</p>";
+	}
+
+	@Override
+	public String nombreErrorMixinBootstrapFeatureCreep() {
+		return "FeatureCreep: échec d'initialisation Mixin";
+	}
+
+	@Override
+	public String mensajeErrorModDuplicadoRift() {
+		return "<b style='color:#FF4444;'>Rift a trouvé un mod en double.</b><p>Deux mods partagent le même ID de mod, ce qui n'est pas autorisé. Rift ne peut pas charger les deux mods.</p><p><b>Solution :</b> Supprimez l'un des mods en double.</p>";
+	}
+
+	@Override
+	public String nombreErrorModDuplicadoRift() {
+		return "Rift: ID de mod en double";
+	}
+
+	@Override
+	public String mensajeErrorRiftModJSONRift() {
+		return "<b style='color:#FF4444;'>Rift n'a pas pu lire riftmod.json.</b><p>Le fichier manifeste d'un mod est corrompu ou manquant. Rift ne peut pas charger le mod sans un manifeste valide.</p><p><b>Solution :</b> Réinstallez le mod dont le fichier riftmod.json est manquant.</p>";
+	}
+
+	@Override
+	public String nombreErrorRiftModJSONRift() {
+		return "Rift: manifeste de mod corrompu";
+	}
+
+	@Override
+	public String mensajeErrorListenerRift() {
+		return "<b style='color:#FF4444;'>Rift n'a pas pu trouver une classe d'écoute.</b><p>Un mod référence une classe d'écoute qui n'existe pas. Cela est généralement causé par un mod incompatible ou corrompu.</p><p><b>Solution :</b> Mettez à jour ou supprimez le mod qui référence la classe manquante.</p>";
+	}
+
+	@Override
+	public String nombreErrorListenerRift() {
+		return "Rift: classe d'écoute introuvable";
+	}
+
+	@Override
+	public String mensajeErrorTransformadorAccesoRift() {
+		return "<b style='color:#FF4444;'>Rift n'a pas pu initialiser les transformateurs d'accès.</b><p>Les transformateurs d'accès modifient la visibilité des classes pour les mods. Sans eux, les mods ne peuvent pas accéder aux champs et méthodes privés.</p><p><b>Solution :</b> Réinstallez Rift et les mods affectés.</p>";
+	}
+
+	@Override
+	public String nombreErrorTransformadorAccesoRift() {
+		return "Rift: échec du transformateur d'accès";
+	}
+
+	@Override
+	public String mensajeAdvertenciaJarNoValidoRift() {
+		return "<b style='color:#FFAA00;'>Rift a trouvé un fichier JAR invalide.</b><p>Un fichier dans le dossier des mods n'est pas un JAR valide. Rift le ignorera et continuera à charger les autres mods.</p><p><b>Solution :</b> Supprimez le fichier corrompu du dossier des mods.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaJarNoValidoRift() {
+		return "Rift: fichier JAR invalide (avertissement)";
+	}
+
+	@Override
+	public String mensajeErrorJavaVersionM3L() {
+		return "<b style='color:#FF4444;'>M3L nécessite Java 7 ou ultérieur.</b><p>Votre version de Java est trop ancienne pour exécuter le lanceur M3L.</p><p><b>Solution :</b> Mettez à jour Java vers une version plus récente.</p>";
+	}
+
+	@Override
+	public String nombreErrorJavaVersionM3L() {
+		return "M3L: version de Java trop ancienne";
+	}
+
+	@Override
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L() {
+		return "<b style='color:#FF4444;'>M3L nécessite que Minecraft soit installé en premier.</b><p>Installez la version de base de Minecraft avant d'installer M3L.</p>";
+	}
+
+	@Override
+	public String nombreErrorMinecraftVersionNoInstaladaM3L() {
+		return "M3L: Minecraft non installé";
+	}
+
+	@Override
+	public String mensajeErrorJSONLauncherM3L() {
+		return "<b style='color:#FF4444;'>M3L n'a pas pu lire la configuration du lanceur.</b><p>Le fichier launcher_profiles.json est corrompu ou inaccessible. M3L ne peut pas démarrer sans une configuration valide.</p><p><b>Solution :</b> Restaurez ou recréez le fichier launcher_profiles.json.</p>";
+	}
+
+	@Override
+	public String nombreErrorJSONLauncherM3L() {
+		return "M3L: configuration du lanceur corrompue";
+	}
+
+	@Override
+	public String mensajeAdvertenciaOSNoDetectadoM3L() {
+		return "<b style='color:#FFAA00;'>M3L n'a pas pu détecter votre système d'exploitation.</b><p>M3L ne reconnaît que Windows, Mac et Linux. Il peut utiliser Linux par défaut, ce qui pourrait causer des problèmes de chemin.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaOSNoDetectadoM3L() {
+		return "M3L: système d'exploitation non détecté (avertissement)";
+	}
+
+	@Override
+	public String mensajeErrorMySQLConexionHMod() {
+		return "<b style='color:#FF4444;'>HMod n'a pas pu se connecter à MySQL.</b><p>La connexion à la base de données du serveur a échoué. Toutes les opérations de base de données échoueront.</p><p><b>Solution :</b> Vérifiez que le serveur MySQL fonctionne et que les paramètres de connexion sont corrects.</p>";
+	}
+
+	@Override
+	public String nombreErrorMySQLConexionHMod() {
+		return "HMod: échec de connexion MySQL";
+	}
+
+	@Override
+	public String mensajeErrorCargaPluginHMod() {
+		return "<b style='color:#FF4444;'>HMod n'a pas pu charger un plugin.</b><p>Un plugin est corrompu, incompatible ou manquant. Le plugin ne sera pas chargé.</p><p><b>Solution :</b> Vérifiez que tous les plugins sont compatibles avec votre version de HMod.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaPluginHMod() {
+		return "HMod: échec de chargement du plugin";
+	}
+
+	@Override
+	public String mensajeErrorGrupoPorDefectoHMod() {
+		return "<b style='color:#FF4444;'>HMod n'a pas de groupe par défaut configuré.</b><p>Au moins un groupe doit être marqué comme groupe par défaut. Sans lui, les nouveaux joueurs ne peuvent pas être assignés correctement.</p><p><b>Solution :</b> Marquez un groupe comme DefaultGroup dans votre configuration HMod.</p>";
+	}
+
+	@Override
+	public String nombreErrorGrupoPorDefectoHMod() {
+		return "HMod: pas de groupe par défaut";
+	}
+
+	@Override
+	public String mensajeAdvertenciaPluginHookHMod() {
+		return "<b style='color:#FFAA00;'>Exception dans le hook du plugin HMod.</b><p>Un plugin a lancé une exception pendant un appel de hook. Le serveur continue de fonctionner, mais la fonctionnalité du plugin affecté peut être cassée.</p><p><b>Solution :</b> Mettez à jour ou remplacez le plugin affecté.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaPluginHookHMod() {
+		return "HMod: exception dans le hook du plugin (avertissement)";
+	}
+
+	@Override
+	public String mensajeErrorInicializacionModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader n'a pas pu s'initialiser.</b><p>ModLoader n'a pas pu démarrer en raison d'erreurs de réflexion, d'incompatibilité de version ou de mods corrompus. Le jeu ne chargera pas les mods.</p><p><b>Solution :</b> Vérifiez que ModLoader et tous les mods sont compatibles avec votre version de Minecraft.</p>";
+	}
+
+	@Override
+	public String nombreErrorInicializacionModLoader() {
+		return "ModLoader: échec d'initialisation";
+	}
+
+	@Override
+	public String mensajeErrorCargaModModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader n'a pas pu charger un mod.</b><p>Un mod est corrompu, incompatible ou contient des erreurs de code. Il ne sera pas chargé.</p><p><b>Solution :</b> Supprimez ou mettez à jour le mod corrompu.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaModModLoader() {
+		return "ModLoader: échec de chargement du mod";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader a une dépendance manquante.</b><p>Un mod nécessite un autre mod qui n'est pas installé. Le mod ne se chargera pas sans ses dépendances.</p><p><b>Solution :</b> Installez les mods de dépendance requis.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloModLoader() {
+		return "ModLoader: dépendance manquante";
+	}
+
+	@Override
+	public String mensajeAdvertenciaCanalInvalidoModLoader() {
+		return "<b style='color:#FFAA00;'>Nom de canal invalide dans ModLoader.</b><p>Un mod a enregistré un canal de paquets avec un nom trop long (≥ 16 caractères). La communication de paquets de ce mod peut ne pas fonctionner correctement.</p><p><b>Solution :</b> Mettez à jour le mod pour utiliser un nom de canal plus court.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaCanalInvalidoModLoader() {
+		return "ModLoader: nom de canal invalide (avertissement)";
+	}
+
+	@Override
+	public String mensajeErrorRegistroPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>Échec d'enregistrement de paquet ModLoaderMP.</b><p>L'enregistrement de Packet230 via la réflexion a échoué, généralement en raison d'une incompatibilité de version. Le réseau multijoueur ne fonctionnera pas.</p><p><b>Solution :</b> Assurez-vous que ModLoaderMP correspond à votre version de Minecraft.</p>";
+	}
+
+	@Override
+	public String nombreErrorRegistroPacketModLoaderMP() {
+		return "ModLoaderMP: échec d'enregistrement de paquet";
+	}
+
+	@Override
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP() {
+		return "<b style='color:#FF4444;'>Échec de génération d'entité personnalisée ModLoaderMP.</b><p>Une entité personnalisée n'a pas pu être initialisée pendant le multijoueur. L'entité n'apparaîtra pas dans le jeu.</p><p><b>Solution :</b> Vérifiez que le mod fournissant l'entité est compatible.</p>";
+	}
+
+	@Override
+	public String nombreErrorEntidadPersonalizadaModLoaderMP() {
+		return "ModLoaderMP: échec d'entité personnalisée";
+	}
+
+	@Override
+	public String mensajeErrorModNuloModLoaderMP() {
+		return "<b style='color:#FF4444;'>Référence de mod nulle dans ModLoaderMP.</b><p>Un mod a appelé sendPacket ou sendKey avec une référence nulle. C'est une erreur de programmation dans le mod.</p><p><b>Solution :</b> Mettez à jour ou remplacez le mod avec l'erreur de référence nulle.</p>";
+	}
+
+	@Override
+	public String nombreErrorModNuloModLoaderMP() {
+		return "ModLoaderMP: référence de mod nulle";
+	}
+
+	@Override
+	public String mensajeErrorDatosPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>Données de paquet ModLoaderMP trop volumineuses.</b><p>Un paquet contient plus de 65535 éléments, dépassant la taille maximale. Le paquet ne peut pas être envoyé.</p><p><b>Solution :</b> Mettez à jour le mod envoyant des paquets trop volumineux.</p>";
+	}
+
+	@Override
+	public String nombreErrorDatosPacketModLoaderMP() {
+		return "ModLoaderMP: données de paquet trop volumineuses";
+	}
+
+	@Override
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "<b style='color:#FFAA00;'>Enregistrement en double dans ModLoaderMP.</b><p>Un type d'inventaire GUI ou un ID d'entité a été enregistré deux fois. Le deuxième enregistrement est ignoré.</p><p><b>Solution :</b> Vérifiez s'il y a des mods en conflit.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "ModLoaderMP: enregistrement en double (avertissement)";
+	}
+
+	@Override
+	public String mensajeErrorPluginInvalidoCanary() {
+		return "<b style='color:#FF4444;'>Plugin invalide dans Canary/Neptune.</b><p>Canary n'a pas pu charger un plugin car il est corrompu, a un fichier Canary.inf malformé ou la classe principale spécifiée n'existe pas.</p><p><b>Solution :</b> Vérifiez que le plugin est compatible avec votre version de Canary/Neptune et n'est pas corrompu.</p>";
+	}
+
+	@Override
+	public String nombreErrorPluginInvalidoCanary() {
+		return "Canary/Neptune: plugin invalide";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaPluginCanary() {
+		return "<b style='color:#FF4444;'>Dépendance de plugin manquante dans Canary/Neptune.</b><p>Un plugin déclare une dépendance qui n'est pas installée sur le serveur. Le plugin ne peut pas se charger sans ses dépendances.</p><p><b>Solution :</b> Installez les dépendances requises pour le plugin.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaPluginCanary() {
+		return "Canary/Neptune: dépendance de plugin manquante";
+	}
+
+	@Override
+	public String mensajeErrorConsistenciaHookCanary() {
+		return "<b style='color:#FF4444;'>Erreur de signature de hook dans Canary/Neptune.</b><p>Un plugin a enregistré une méthode de hook avec une signature incorrecte. Les méthodes @HookHandler doivent avoir exactement 1 paramètre qui est un sous-type de Hook.</p><p><b>Solution :</b> Mettez à jour ou remplacez le plugin causant cette erreur.</p>";
+	}
+
+	@Override
+	public String nombreErrorConsistenciaHookCanary() {
+		return "Canary/Neptune: signature de hook incorrecte";
+	}
+
+	@Override
+	public String mensajeAdvertenciaEjecucionHookCanary() {
+		return "<b style='color:#FFAA00;'>Exception dans le hook de Canary/Neptune.</b><p>Un plugin a lancé une exception pendant le traitement d'un événement (hook). Le serveur continue de fonctionner, mais la fonctionnalité du plugin affecté peut être cassée.</p><p><b>Solution :</b> Mettez à jour ou remplacez le plugin causant cette exception.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaEjecucionHookCanary() {
+		return "Canary/Neptune: exception dans le hook (avertissement)";
+	}
+
+	@Override
+	public String mensajeErrorBaseDeDatosCanary() {
+		return "<b style='color:#FF4444;'>Erreur de base de données dans Canary/Neptune.</b><p>Canary n'a pas pu accéder à la base de données. Cela peut être causé par une connexion échouée, un adaptateur de base de données corrompu ou une configuration incorrecte.</p><p><b>Solution :</b> Vérifiez la configuration de la base de données et que l'adaptateur est compatible.</p>";
+	}
+
+	@Override
+	public String nombreErrorBaseDeDatosCanary() {
+		return "Canary/Neptune: erreur de base de données";
+	}
+
+	@Override
+	public String mensajeErrorComandoCanary() {
+		return "<b style='color:#FF4444;'>Erreur de commande dans Canary/Neptune.</b><p>Une commande n'a pas pu s'enregistrer. Cela peut être causé par une commande parent manquante, une commande en double enregistrée par un autre plugin ou une erreur du système de commandes.</p><p><b>Solution :</b> Vérifiez les conflits de commandes entre les plugins.</p>";
+	}
+
+	@Override
+	public String nombreErrorComandoCanary() {
+		return "Canary/Neptune: erreur de commande";
+	}
 }

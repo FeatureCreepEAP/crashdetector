@@ -1684,4 +1684,324 @@ public class Malayo extends Indonesia {
 	public String nombreErrorEnlazadorNoSoportado() {
 		return "Paut asli tidak disokong oleh platform";
 	}
+
+	@Override
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep() {
+		return "<b style='color:#FFAA00;'>FeatureCreep tidak dapat melampirkan ejen HotSpot secara langsung.</b><p>Ini jarang menjadi masalah kerana kebanyakan mod tidak memerlukan Instrumentation. FeatureCreep akan meneruskan tanpa ia.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep() {
+		return "FeatureCreep: lampiran HotSpot gagal (amaran)";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep tidak dapat menyelesaikan kebergantungan modul.</b><p>Sebuah modul menyatakan kebergantungan yang tidak dapat dipenuhi. Permainan mungkin tidak bermula dengan betul.</p><p><b>Solución:</b> Pasang kebergantungan yang hilang atau buang modul yang tidak serasi.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloFeatureCreep() {
+		return "FeatureCreep: kebergantungan modul belum diselesaikan";
+	}
+
+	@Override
+	public String mensajeErrorVersionModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep mengesan ketidakserasian versi antara modul.</b><p>Sebuah modul memerlukan versi permainan atau modul lain yang berbeza. Ini boleh menyebabkan kerosakan atau fungsi yang hilang.</p><p><b>Solución:</b> Kemas kini semua modul ke versi yang serasi.</p>";
+	}
+
+	@Override
+	public String nombreErrorVersionModuloFeatureCreep() {
+		return "FeatureCreep: ketidakpadanan versi modul";
+	}
+
+	@Override
+	public String mensajeErrorMixinBootstrapFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep tidak dapat memulakan runtime Mixin.</b><p>Mixin diperlukan untuk transformasi kelas. Tanpanya, mod yang menggunakan Mixin tidak akan dimuat dan permainan mungkin rosak.</p><p><b>Solución:</b> Pastikan FeatureCreep dipasang dengan betul dengan sokongan Mixin.</p>";
+	}
+
+	@Override
+	public String nombreErrorMixinBootstrapFeatureCreep() {
+		return "FeatureCreep: kegagalan permulaan Mixin";
+	}
+
+	@Override
+	public String mensajeErrorModDuplicadoRift() {
+		return "<b style='color:#FF4444;'>Rift menemui mod duplikat.</b><p>Dua mod berkongsi ID mod yang sama, yang tidak dibenarkan. Rift tidak dapat memuat kedua-dua mod.</p><p><b>Solución:</b> Buang salah satu mod duplikat.</p>";
+	}
+
+	@Override
+	public String nombreErrorModDuplicadoRift() {
+		return "Rift: ID mod duplikat";
+	}
+
+	@Override
+	public String mensajeErrorRiftModJSONRift() {
+		return "<b style='color:#FF4444;'>Rift tidak dapat membaca riftmod.json.</b><p>Fail manifest mod rosak atau hilang. Rift tidak dapat memuat mod tanpa manifest yang sah.</p><p><b>Solución:</b> Pasang semula mod yang kehilangan fail riftmod.json.</p>";
+	}
+
+	@Override
+	public String nombreErrorRiftModJSONRift() {
+		return "Rift: manifest mod rosak";
+	}
+
+	@Override
+	public String mensajeErrorListenerRift() {
+		return "<b style='color:#FF4444;'>Rift tidak dapat menemui kelas pendengar.</b><p>Sebuah mod merujuk kepada kelas pendengar yang tidak wujud. Ini biasanya disebabkan oleh mod yang tidak serasi atau rosak.</p><p><b>Solución:</b> Kemas kini atau buang mod yang merujuk kepada kelas yang hilang.</p>";
+	}
+
+	@Override
+	public String nombreErrorListenerRift() {
+		return "Rift: kelas pendengar tidak ditemui";
+	}
+
+	@Override
+	public String mensajeErrorTransformadorAccesoRift() {
+		return "<b style='color:#FF4444;'>Rift tidak dapat memulakan penukar akses.</b><p>Penukar akses mengubah keterlihatan kelas untuk mod. Tanpanya, mod tidak dapat mengakses medan dan kaedah peribadi.</p><p><b>Solución:</b> Pasang semula Rift dan mod yang terjejas.</p>";
+	}
+
+	@Override
+	public String nombreErrorTransformadorAccesoRift() {
+		return "Rift: penukar akses gagal";
+	}
+
+	@Override
+	public String mensajeAdvertenciaJarNoValidoRift() {
+		return "<b style='color:#FFAA00;'>Rift menemui fail JAR yang tidak sah.</b><p>Sebuah fail dalam folder mod bukan JAR yang sah. Rift akan melangkau dan terus memuat mod lain.</p><p><b>Solución:</b> Buang fail yang rosak dari folder mod.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaJarNoValidoRift() {
+		return "Rift: fail JAR tidak sah (amaran)";
+	}
+
+	@Override
+	public String mensajeErrorJavaVersionM3L() {
+		return "<b style='color:#FF4444;'>M3L memerlukan Java 7 atau lebih baru.</b><p>Versi Java anda terlalu lama untuk menjalankan pelancar M3L.</p><p><b>Solución:</b> Kemas kini ke versi Java yang lebih baru.</p>";
+	}
+
+	@Override
+	public String nombreErrorJavaVersionM3L() {
+		return "M3L: versi Java terlalu lama";
+	}
+
+	@Override
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L() {
+		return "<b style='color:#FF4444;'>M3L memerlukan Minecraft dipasang terlebih dahulu.</b><p>Pasang versi Minecraft asas sebelum memasang M3L.</p>";
+	}
+
+	@Override
+	public String nombreErrorMinecraftVersionNoInstaladaM3L() {
+		return "M3L: Minecraft belum dipasang";
+	}
+
+	@Override
+	public String mensajeErrorJSONLauncherM3L() {
+		return "<b style='color:#FF4444;'>M3L tidak dapat membaca konfigurasi pelancar.</b><p>Fail launcher_profiles.json rosak atau tidak dapat diakses. M3L tidak dapat bermula tanpa konfigurasi yang sah.</p><p><b>Solución:</b> Pulihkan atau cipta semula fail launcher_profiles.json.</p>";
+	}
+
+	@Override
+	public String nombreErrorJSONLauncherM3L() {
+		return "M3L: konfigurasi pelancar rosak";
+	}
+
+	@Override
+	public String mensajeAdvertenciaOSNoDetectadoM3L() {
+		return "<b style='color:#FFAA00;'>M3L tidak dapat mengesan sistem operasi anda.</b><p>M3L hanya mengenali Windows, Mac dan Linux. Ia mungkin menggunakan Linux sebagai lalai, yang boleh menyebabkan masalah laluan.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaOSNoDetectadoM3L() {
+		return "M3L: sistem operasi tidak dikesan (amaran)";
+	}
+
+	@Override
+	public String mensajeErrorMySQLConexionHMod() {
+		return "<b style='color:#FF4444;'>HMod tidak dapat menyambung ke MySQL.</b><p>Sambungan pangkalan data pelayan gagal. Semua operasi pangkalan data akan gagal.</p><p><b>Solución:</b> Semak sama ada pelayan MySQL berjalan dan tetapan sambungan betul.</p>";
+	}
+
+	@Override
+	public String nombreErrorMySQLConexionHMod() {
+		return "HMod: sambungan MySQL gagal";
+	}
+
+	@Override
+	public String mensajeErrorCargaPluginHMod() {
+		return "<b style='color:#FF4444;'>HMod gagal memuat plugin.</b><p>Sebuah plugin rosak, tidak serasi atau hilang. Plugin tidak akan dimuat.</p><p><b>Solución:</b> Semak sama ada semua plugin serasi dengan versi HMod anda.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaPluginHMod() {
+		return "HMod: kegagalan memuat plugin";
+	}
+
+	@Override
+	public String mensajeErrorGrupoPorDefectoHMod() {
+		return "<b style='color:#FF4444;'>HMod tidak mempunyai kumpulan lalai yang dikonfigurasi.</b><p>Sekurang-kurangnya satu kumpulan mesti ditandakan sebagai kumpulan lalai. Tanpanya, pemain baru tidak dapat ditugaskan dengan betul.</p><p><b>Solución:</b> Tandakan satu kumpulan sebagai DefaultGroup dalam konfigurasi HMod anda.</p>";
+	}
+
+	@Override
+	public String nombreErrorGrupoPorDefectoHMod() {
+		return "HMod: tiada kumpulan lalai";
+	}
+
+	@Override
+	public String mensajeAdvertenciaPluginHookHMod() {
+		return "<b style='color:#FFAA00;'>Pengecualian hook plugin HMod.</b><p>Sebuah plugin membuang pengecualian semasa panggilan hook. Pelayan terus berjalan, tetapi fungsi plugin yang terjejas mungkin rosak.</p><p><b>Solución:</b> Kemas kini atau gantikan plugin yang terjejas.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaPluginHookHMod() {
+		return "HMod: pengecualian hook plugin (amaran)";
+	}
+
+	@Override
+	public String mensajeErrorInicializacionModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader gagal dimulakan.</b><p>ModLoader tidak dapat bermula kerana ralat refleksi, ketidakserasian versi atau mod yang rosak. Permainan tidak akan memuat mod.</p><p><b>Solución:</b> Semak sama ada ModLoader dan semua mod serasi dengan versi Minecraft anda.</p>";
+	}
+
+	@Override
+	public String nombreErrorInicializacionModLoader() {
+		return "ModLoader: kegagalan permulaan";
+	}
+
+	@Override
+	public String mensajeErrorCargaModModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader gagal memuat mod.</b><p>Sebuah mod rosak, tidak serasi atau mempunyai ralat kod. Ia tidak akan dimuat.</p><p><b>Solución:</b> Buang atau kemas kini mod yang rosak.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaModModLoader() {
+		return "ModLoader: kegagalan memuat mod";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader kehilangan kebergantungan.</b><p>Sebuah mod memerlukan mod lain yang belum dipasang. Mod tidak akan dimuat tanpa kebergantungannya.</p><p><b>Solución:</b> Pasang mod kebergantungan yang diperlukan.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloModLoader() {
+		return "ModLoader: kebergantungan hilang";
+	}
+
+	@Override
+	public String mensajeAdvertenciaCanalInvalidoModLoader() {
+		return "<b style='color:#FFAA00;'>Nama saluran tidak sah dalam ModLoader.</b><p>Sebuah mod mendaftar saluran pakej dengan nama yang terlalu panjang (≥ 16 aksara). Komunikasi pakej mod ini mungkin tidak berfungsi dengan betul.</p><p><b>Solución:</b> Kemas kini mod untuk menggunakan nama saluran yang lebih pendek.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaCanalInvalidoModLoader() {
+		return "ModLoader: nama saluran tidak sah (amaran)";
+	}
+
+	@Override
+	public String mensajeErrorRegistroPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>Pendaftaran pakej ModLoaderMP gagal.</b><p>Pendaftaran Packet230 melalui refleksi gagal, biasanya kerana ketidakserasian versi. Rangkaian berbilang pemain tidak akan berfungsi.</p><p><b>Solución:</b> Pastikan ModLoaderMP sepadan dengan versi Minecraft anda.</p>";
+	}
+
+	@Override
+	public String nombreErrorRegistroPacketModLoaderMP() {
+		return "ModLoaderMP: pendaftaran pakej gagal";
+	}
+
+	@Override
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP() {
+		return "<b style='color:#FF4444;'>Penciptaan entiti tersuai ModLoaderMP gagal.</b><p>Entiti tersuai tidak dapat dimulakan semasa berbilang pemain. Entiti tidak akan muncul dalam permainan.</p><p><b>Solución:</b> Semak sama ada mod yang menyediakan entiti serasi.</p>";
+	}
+
+	@Override
+	public String nombreErrorEntidadPersonalizadaModLoaderMP() {
+		return "ModLoaderMP: entiti tersuai gagal";
+	}
+
+	@Override
+	public String mensajeErrorModNuloModLoaderMP() {
+		return "<b style='color:#FF4444;'>Rujukan mod null dalam ModLoaderMP.</b><p>Sebuah mod memanggil sendPacket atau sendKey dengan rujukan null. Ini adalah ralat pengaturcaraan dalam mod.</p><p><b>Solución:</b> Kemas kini atau gantikan mod dengan ralat rujukan null.</p>";
+	}
+
+	@Override
+	public String nombreErrorModNuloModLoaderMP() {
+		return "ModLoaderMP: rujukan mod null";
+	}
+
+	@Override
+	public String mensajeErrorDatosPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>Data pakej ModLoaderMP terlalu besar.</b><p>Sebuah pakej mengandungi lebih daripada 65535 elemen, melebihi saiz maksimum. Pakej tidak dapat dihantar.</p><p><b>Solución:</b> Kemas kini mod yang menghantar pakej terlalu besar.</p>";
+	}
+
+	@Override
+	public String nombreErrorDatosPacketModLoaderMP() {
+		return "ModLoaderMP: data pakej terlalu besar";
+	}
+
+	@Override
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "<b style='color:#FFAA00;'>Pendaftaran duplikat dalam ModLoaderMP.</b><p>Jenis inventori GUI atau ID entiti didaftarkan dua kali. Pendaftaran kedua diabaikan.</p><p><b>Solución:</b> Semak sama ada terdapat mod yang konflik.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "ModLoaderMP: pendaftaran duplikat (amaran)";
+	}
+
+	@Override
+	public String mensajeErrorPluginInvalidoCanary() {
+		return "<b style='color:#FF4444;'>Plugin tidak sah dalam Canary/Neptune.</b><p>Canary gagal memuat plugin kerana ia rosak, mempunyai fail Canary.inf yang tidak terbentuk dengan baik atau kelas utama yang ditentukan tidak wujud.</p><p><b>Solución:</b> Sahkan bahawa plugin serasi dengan versi Canary/Neptune anda dan tidak rosak.</p>";
+	}
+
+	@Override
+	public String nombreErrorPluginInvalidoCanary() {
+		return "Canary/Neptune: plugin tidak sah";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaPluginCanary() {
+		return "<b style='color:#FF4444;'>Kebergantungan plugin hilang dalam Canary/Neptune.</b><p>Sebuah plugin menyatakan kebergantungan yang belum dipasang pada pelayan. Plugin tidak dapat dimuat tanpa kebergantungannya.</p><p><b>Solución:</b> Pasang kebergantungan yang diperlukan untuk plugin.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaPluginCanary() {
+		return "Canary/Neptune: kebergantungan plugin hilang";
+	}
+
+	@Override
+	public String mensajeErrorConsistenciaHookCanary() {
+		return "<b style='color:#FF4444;'>Ralat tandatangan hook dalam Canary/Neptune.</b><p>Sebuah plugin mendaftar kaedah hook dengan tandatangan yang salah. Kaedah @HookHandler mesti mempunyai tepat 1 parameter yang merupakan subjenis Hook.</p><p><b>Solución:</b> Kemas kini atau gantikan plugin yang menyebabkan ralat ini.</p>";
+	}
+
+	@Override
+	public String nombreErrorConsistenciaHookCanary() {
+		return "Canary/Neptune: tandatangan hook salah";
+	}
+
+	@Override
+	public String mensajeAdvertenciaEjecucionHookCanary() {
+		return "<b style='color:#FFAA00;'>Pengecualian hook dalam Canary/Neptune.</b><p>Sebuah plugin membuang pengecualian semasa mengendalikan acara (hook). Pelayan terus berjalan, tetapi fungsi plugin yang terjejas mungkin rosak.</p><p><b>Solución:</b> Kemas kini atau gantikan plugin yang menyebabkan pengecualian ini.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaEjecucionHookCanary() {
+		return "Canary/Neptune: pengecualian hook (amaran)";
+	}
+
+	@Override
+	public String mensajeErrorBaseDeDatosCanary() {
+		return "<b style='color:#FF4444;'>Ralat pangkalan data dalam Canary/Neptune.</b><p>Canary tidak dapat mengakses pangkalan data. Ini boleh disebabkan oleh sambungan yang gagal, penyesuai pangkalan data yang rosak atau konfigurasi yang salah.</p><p><b>Solución:</b> Sahkan konfigurasi pangkalan data dan bahawa penyesuai serasi.</p>";
+	}
+
+	@Override
+	public String nombreErrorBaseDeDatosCanary() {
+		return "Canary/Neptune: ralat pangkalan data";
+	}
+
+	@Override
+	public String mensajeErrorComandoCanary() {
+		return "<b style='color:#FF4444;'>Ralat arahan dalam Canary/Neptune.</b><p>Sebuah arahan gagal mendaftar. Ini boleh disebabkan oleh arahan induk yang hilang, arahan duplikat yang didaftarkan oleh plugin lain atau ralat sistem arahan.</p><p><b>Solución:</b> Semak konflik arahan antara plugin.</p>";
+	}
+
+	@Override
+	public String nombreErrorComandoCanary() {
+		return "Canary/Neptune: ralat arahan";
+	}
 }

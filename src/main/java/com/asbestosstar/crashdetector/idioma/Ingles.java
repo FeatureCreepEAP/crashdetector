@@ -14579,4 +14579,533 @@ public class Ingles implements Idioma {
 	public String nombreErrorEnlazadorNoSoportado() {
 		return "Native linker not supported by platform";
 	}
+
+	@Override
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>FeatureCreep could not attach the HotSpot agent directly.</b>"
+				+ "<p>FeatureCreep's native attach mechanism failed to connect to the current JVM.</p>"
+				+ "<p>In most cases, the game can continue without Instrumentation; only some mods require it.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>If the game works correctly, you can ignore this warning.</li>"
+				+ "<li>If a mod fails, check if it requires Instrumentation and consider using a launcher that provides -javaagent.</li>"
+				+ "<li>On uncommon platforms (Solaris, SPARC), direct attach may not be supported.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep() {
+		return "FeatureCreep: HotSpot attach failed (warning)";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloFeatureCreep() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>FeatureCreep could not resolve module dependencies.</b>"
+				+ "<p>FeatureCreep's dependency graph contains incompatible, cyclic, or unmet module dependencies.</p>"
+				+ "<p>When the graph cannot be resolved, the affected modules cannot load correctly.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Verify that all FeatureCreep modules are compatible with each other.</li>"
+				+ "<li>Remove or update the modules causing the conflict.</li>"
+				+ "<li>Check the logs to identify which specific module causes the problem.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloFeatureCreep() {
+		return "FeatureCreep: module dependencies unresolved";
+	}
+
+	@Override
+	public String mensajeErrorVersionModuloFeatureCreep() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>FeatureCreep detected a version incompatibility between modules.</b>"
+				+ "<p>The game or module version does not meet the requirements of another loaded module.</p>"
+				+ "<p>This can cause ClassNotFoundException or NoSuchMethodError at runtime.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Verify that all module versions are compatible with your Minecraft version.</li>"
+				+ "<li>Update or downgrade the incompatible modules.</li>"
+				+ "<li>Check the logs to identify which specific version is incompatible.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorVersionModuloFeatureCreep() {
+		return "FeatureCreep: module version incompatible";
+	}
+
+	@Override
+	public String mensajeErrorMixinBootstrapFeatureCreep() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>FeatureCreep could not initialize the Mixin runtime.</b>"
+				+ "<p>The Mixin transformation system failed during FeatureCreep startup.</p>"
+				+ "<p>When Mixin cannot initialize, mods depending on Mixin injection cannot load.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Verify that the FeatureCreep installer ran correctly.</li>"
+				+ "<li>Ensure the launcher provides the -javaagent argument.</li>"
+				+ "<li>If using an uncommon platform, Mixin may not be available.</li>"
+				+ "<li>Reinstall FeatureCreep using the official installer.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMixinBootstrapFeatureCreep() {
+		return "FeatureCreep: Mixin initialization failure";
+	}
+
+	@Override
+	public String mensajeErrorModDuplicadoRift() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Rift found two mods with the same ID.</b>"
+				+ "<p>A duplicate mod was detected:</p>"
+				+ "<code>Duplicate mod &lt;mod_id&gt;:</code>"
+				+ "<p>When two mods share the same ID, Rift cannot load both and the game fails to start.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Remove one of the duplicate mods from the mods folder.</li>"
+				+ "<li>Verify there are no duplicate versions of the same mod.</li>"
+				+ "<li>Check the logs to identify the conflicting files.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorModDuplicadoRift() {
+		return "Rift: duplicate mod";
+	}
+
+	@Override
+	public String mensajeErrorRiftModJSONRift() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Rift could not read the riftmod.json file for a mod.</b>"
+				+ "<p>The mod manifest file is corrupted or malformed:</p>"
+				+ "<code>Could not read riftmod.json in &lt;file&gt;</code>"
+				+ "<p>When riftmod.json cannot be read, Rift cannot load the mod.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Verify the mod JAR file is not corrupted.</li>"
+				+ "<li>Re-download the mod from the official source.</li>"
+				+ "<li>If the mod is not compatible with Rift, remove it from the mods folder.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorRiftModJSONRift() {
+		return "Rift: invalid riftmod.json";
+	}
+
+	@Override
+	public String mensajeErrorListenerRift() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Rift could not load a listener class from a mod.</b>"
+				+ "<p>A class referenced in riftmod.json does not exist:</p>"
+				+ "<code>Failed to find listener class &lt;class_name&gt;</code>"
+				+ "<p>When a listener class is not found, the mod cannot initialize.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Verify the mod is compatible with your version of Rift.</li>"
+				+ "<li>Re-download the mod from the official source.</li>"
+				+ "<li>If the mod is corrupted, remove it from the mods folder.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorListenerRift() {
+		return "Rift: listener class not found";
+	}
+
+	@Override
+	public String mensajeErrorTransformadorAccesoRift() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Rift could not initialize access transformers.</b>"
+				+ "<p>The access transformation system failed during startup:</p>"
+				+ "<code>Failed to initialize access transformers</code>"
+				+ "<p>When access transformers don't work, classes needing modified access cannot be loaded.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Verify Rift is correctly installed.</li>"
+				+ "<li>Reinstall Rift using the official installer.</li>"
+				+ "<li>Check for conflicts with other mods using access transformers.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorTransformadorAccesoRift() {
+		return "Rift: access transformer failure";
+	}
+
+	@Override
+	public String mensajeAdvertenciaJarNoValidoRift() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>Rift could not read a JAR file in the mods folder.</b>"
+				+ "<p>A file in the mods folder is not a valid JAR:</p>"
+				+ "<code>Could not read file &lt;file&gt; as a jar file</code>"
+				+ "<p>Rift logs the error but continues with the other mods.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Remove the corrupted file from the mods folder.</li>"
+				+ "<li>Verify only valid JAR files are in the folder.</li>"
+				+ "<li>If the file is not a mod, move it to another location.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreAdvertenciaJarNoValidoRift() {
+		return "Rift: invalid JAR file (warning)";
+	}
+
+	@Override
+	public String mensajeErrorJavaVersionM3L() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>M3L requires Java 7 or later.</b>"
+				+ "<p>The M3L installer detected that the installed Java version is too old:</p>"
+				+ "<code>Java 7 or later is required to run M3L</code>"
+				+ "<p>M3L cannot run with Java versions older than 7.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Update Java to version 7 or later.</li>"
+				+ "<li>Verify that JAVA_PATH points to the correct version.</li>"
+				+ "<li>Restart the installer after updating Java.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorJavaVersionM3L() {
+		return "M3L: Java version too old";
+	}
+
+	@Override
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>M3L cannot install because the Minecraft version is not installed.</b>"
+				+ "<p>The M3L installer requires the base Minecraft version to be installed first:</p>"
+				+ "<code>Install Minecraft &lt;version&gt; before installing M3L</code>"
+				+ "<p>M3L modifies the Minecraft profile, so it needs the original JAR as a base.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Install the required Minecraft version using the official launcher.</li>"
+				+ "<li>Play at least once with that version to download the files.</li>"
+				+ "<li>Then run the M3L installer again.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMinecraftVersionNoInstaladaM3L() {
+		return "M3L: Minecraft version not installed";
+	}
+
+	@Override
+	public String mensajeErrorJSONLauncherM3L() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>M3L cannot read or write the launcher profiles file.</b>"
+				+ "<p>The launcher_profiles.json file is corrupted or inaccessible:</p>"
+				+ "<code>Unable to read M3L installs!</code>"
+				+ "<p>M3L needs to modify this file to add the mod profile.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Verify that launcher_profiles.json is not corrupted.</li>"
+				+ "<li>If the file is damaged, back it up and reinstall the launcher.</li>"
+				+ "<li>Check write permissions in the .minecraft directory.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorJSONLauncherM3L() {
+		return "M3L: corrupted profiles file";
+	}
+
+	@Override
+	public String mensajeAdvertenciaOSNoDetectadoM3L() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>M3L does not correctly detect your operating system.</b>"
+				+ "<p>M3L uses commons-lang3 to detect the operating system, but only recognizes Windows, Mac, and Linux.</p>"
+				+ "<p>On Solaris/SPARC, M3L is classified as Linux, which may cause issues with directory paths or native files.</p>"
+				+ "<p><b>Impact:</b> M3L may work partially, but paths may be incorrect.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Manually verify that .minecraft paths are correct.</li>"
+				+ "<li>If M3L does not work, consider using an alternative launcher compatible with Solaris.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreAdvertenciaOSNoDetectadoM3L() {
+		return "M3L: operating system not detected (warning)";
+	}
+
+	@Override
+	public String mensajeErrorMySQLConexionHMod() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>HMod cannot connect to the MySQL database.</b>"
+				+ "<p>The MySQL connection failed, so HMod cannot load users, groups, kits, or warps. "
+				+ "Verify that the MySQL server is running and that the credentials in mysql.properties are correct.</p>";
+	}
+
+	@Override
+	public String nombreErrorMySQLConexionHMod() {
+		return "HMod: MySQL connection failed";
+	}
+
+	@Override
+	public String mensajeErrorCargaPluginHMod() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>HMod cannot load a plugin.</b>"
+				+ "<p>A plugin in the plugins/ directory is corrupted, incompatible, or its JAR file is missing. "
+				+ "Verify that the plugin is compatible with this version of HMod.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaPluginHMod() {
+		return "HMod: plugin load error";
+	}
+
+	@Override
+	public String mensajeErrorGrupoPorDefectoHMod() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>HMod cannot find a default group.</b>"
+				+ "<p>The HMod groups table has no group marked as DefaultGroup. "
+				+ "New players will not be assigned to any group, causing permission errors.</p>";
+	}
+
+	@Override
+	public String nombreErrorGrupoPorDefectoHMod() {
+		return "HMod: missing default group";
+	}
+
+	@Override
+	public String mensajeAdvertenciaPluginHookHMod() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>An HMod plugin threw an exception during an event.</b>"
+				+ "<p>A registered plugin failed while processing an event (hook). The server continues running, "
+				+ "but the affected plugin will not work correctly until it is restarted or fixed.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaPluginHookHMod() {
+		return "HMod: plugin hook exception (warning)";
+	}
+
+	@Override
+	public String mensajeErrorInicializacionModLoader() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>ModLoader cannot initialize.</b>"
+				+ "<p>ModLoader failed during initialization, so the game cannot load mods. "
+				+ "This can be caused by reflection errors, version incompatibility, or corrupted mods.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Verify you are using the correct ModLoader version for your Minecraft version.</li>"
+				+ "<li>Remove recently added mods to identify the culprit.</li>"
+				+ "<li>Reinstall ModLoader from a trusted source.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorInicializacionModLoader() {
+		return "ModLoader: initialization failed";
+	}
+
+	@Override
+	public String mensajeErrorCargaModModLoader() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>ModLoader cannot load a mod.</b>"
+				+ "<p>A mod failed to load because it is corrupted, incompatible, or has code errors. "
+				+ "The mod will not work even if the game can continue.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Verify the mod is compatible with your Minecraft and ModLoader version.</li>"
+				+ "<li>Reinstall the mod from a trusted source.</li>"
+				+ "<li>Check the full log to identify the affected mod.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorCargaModModLoader() {
+		return "ModLoader: mod load error";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloModLoader() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>ModLoader finds a missing dependency between mods.</b>"
+				+ "<p>A mod declares a dependency (required-before/required-after) that is not present. "
+				+ "The game cannot start without all required mods.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Install the missing mod mentioned in the error message.</li>"
+				+ "<li>Verify all mods are in the mods/ folder.</li>"
+				+ "<li>Check the mod's page for its required dependencies.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloModLoader() {
+		return "ModLoader: missing dependency";
+	}
+
+	@Override
+	public String mensajeAdvertenciaCanalInvalidoModLoader() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>A mod registered an invalid packet channel name in ModLoader.</b>"
+				+ "<p>ModLoader requires custom packet channels to have names shorter than 16 characters. "
+				+ "A mod tried to register a channel with a name that is too long.</p>"
+				+ "<p><b>Impact:</b> The affected mod may not work correctly for client-server communication.</p>"
+				+ "<p><b>Recommended solution:</b></p>"
+				+ "<ul>"
+				+ "<li>Update the affected mod to a fixed version.</li>"
+				+ "<li>If the problem persists, contact the mod author.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreAdvertenciaCanalInvalidoModLoader() {
+		return "ModLoader: invalid packet channel (warning)";
+	}
+
+	@Override
+	public String mensajeErrorRegistroPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMP Packet230 registration error</b>"
+				+ "<p>ModLoaderMP failed to register Packet230ModLoader with the game's packet system. "
+				+ "This occurs when the Minecraft version is incompatible with the ModLoaderMP version, "
+				+ "or when the required reflection methods are not available.</p>"
+				+ "<p><b>Solution:</b> Ensure you are using a compatible version of ModLoaderMP with your Minecraft version.</p>";
+	}
+
+	@Override
+	public String nombreErrorRegistroPacketModLoaderMP() {
+		return "ModLoaderMP: Packet230 registration failed";
+	}
+
+	@Override
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMP custom entity error</b>"
+				+ "<p>ModLoaderMP failed to initialize a custom entity during multiplayer spawn. "
+				+ "This can be caused by a missing constructor, a class not found, "
+				+ "or a reflection error when creating the entity.</p>"
+				+ "<p><b>Solution:</b> Verify that the mod defining the entity is installed and compatible.</p>";
+	}
+
+	@Override
+	public String nombreErrorEntidadPersonalizadaModLoaderMP() {
+		return "ModLoaderMP: custom entity initialization failed";
+	}
+
+	@Override
+	public String mensajeErrorModNuloModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMP null mod error</b>"
+				+ "<p>A mod attempted to send a packet or key through ModLoaderMP without providing "
+				+ "a valid BaseModMp reference. This indicates a bug in the mod's code.</p>"
+				+ "<p><b>Solution:</b> Update or replace the mod causing this error.</p>";
+	}
+
+	@Override
+	public String nombreErrorModNuloModLoaderMP() {
+		return "ModLoaderMP: null mod when sending packet";
+	}
+
+	@Override
+	public String mensajeErrorDatosPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMP packet data overflow error</b>"
+				+ "<p>A mod attempted to send a packet with more than 65535 data elements through ModLoaderMP. "
+				+ "The Packet230ModLoader limit is 65535 elements per data type.</p>"
+				+ "<p><b>Solution:</b> Update the mod sending excessive data.</p>";
+	}
+
+	@Override
+	public String nombreErrorDatosPacketModLoaderMP() {
+		return "ModLoaderMP: packet data size exceeded";
+	}
+
+	@Override
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "<b style='color:#FFAA00;'>ModLoaderMP duplicate registration warning</b>"
+				+ "<p>A mod attempted to register a GUI inventory type or entity ID that was already registered. "
+				+ "The duplicate registration is ignored, but the mod's functionality may be affected.</p>"
+				+ "<p><b>Solution:</b> Check for conflicting mods using the same IDs.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "ModLoaderMP: duplicate registration (warning)";
+	}
+
+	@Override
+	public String mensajeErrorPluginInvalidoCanary() {
+		return "<b style='color:#FF4444;'>Invalid plugin in Canary/Neptune</b>"
+				+ "<p>Canary failed to load a plugin because it is corrupted, has a malformed Canary.inf file, "
+				+ "or the specified main class does not exist.</p>"
+				+ "<p><b>Solution:</b> Verify that the plugin is compatible with your version of Canary/Neptune and is not corrupted.</p>";
+	}
+
+	@Override
+	public String nombreErrorPluginInvalidoCanary() {
+		return "Canary/Neptune: invalid plugin";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaPluginCanary() {
+		return "<b style='color:#FF4444;'>Missing plugin dependency in Canary/Neptune</b>"
+				+ "<p>A plugin declares a dependency that is not installed on the server. "
+				+ "The plugin cannot load without its dependencies.</p>"
+				+ "<p><b>Solution:</b> Install the required dependencies for the plugin.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaPluginCanary() {
+		return "Canary/Neptune: missing plugin dependency";
+	}
+
+	@Override
+	public String mensajeErrorConsistenciaHookCanary() {
+		return "<b style='color:#FF4444;'>Hook signature error in Canary/Neptune</b>"
+				+ "<p>A plugin registered a hook method with an incorrect signature. "
+				+ "@HookHandler methods must have exactly 1 parameter that is a subtype of Hook.</p>"
+				+ "<p><b>Solution:</b> Update or replace the plugin causing this error.</p>";
+	}
+
+	@Override
+	public String nombreErrorConsistenciaHookCanary() {
+		return "Canary/Neptune: incorrect hook signature";
+	}
+
+	@Override
+	public String mensajeAdvertenciaEjecucionHookCanary() {
+		return "<b style='color:#FFAA00;'>Hook exception in Canary/Neptune</b>"
+				+ "<p>A plugin threw an exception while handling an event (hook). "
+				+ "The server continues running, but the affected plugin's functionality may be broken.</p>"
+				+ "<p><b>Solution:</b> Update or replace the plugin causing this exception.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaEjecucionHookCanary() {
+		return "Canary/Neptune: hook exception (warning)";
+	}
+
+	@Override
+	public String mensajeErrorBaseDeDatosCanary() {
+		return "<b style='color:#FF4444;'>Database error in Canary/Neptune</b>"
+				+ "<p>Canary could not access the database. This may be caused by a failed connection, "
+				+ "a corrupted database adapter, or incorrect configuration.</p>"
+				+ "<p><b>Solution:</b> Verify the database configuration and that the adapter is compatible.</p>";
+	}
+
+	@Override
+	public String nombreErrorBaseDeDatosCanary() {
+		return "Canary/Neptune: database error";
+	}
+
+	@Override
+	public String mensajeErrorComandoCanary() {
+		return "<b style='color:#FF4444;'>Command error in Canary/Neptune</b>"
+				+ "<p>A command failed to register. This may be caused by a missing parent command, "
+				+ "a duplicate command registered by another plugin, or a command system error.</p>"
+				+ "<p><b>Solution:</b> Check for command conflicts between plugins.</p>";
+	}
+
+	@Override
+	public String nombreErrorComandoCanary() {
+		return "Canary/Neptune: command error";
+	}
 }

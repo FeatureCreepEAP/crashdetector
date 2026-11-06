@@ -14454,4 +14454,324 @@ public class Tailandes implements Idioma {
 	public String nombreErrorEnlazadorNoSoportado() {
 		return "Native linker ไม่รองรับโดยแพลตฟอร์ม";
 	}
+
+	@Override
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep() {
+		return "<b style='color:#FFAA00;'>FeatureCreep ไม่สามารถแนบ HotSpot agent โดยตรงได้</b><p>ปัญหานี้เกิดขึ้นไม่บ่อยเพราะมอดส่วนใหญ่ไม่ต้องการ Instrumentation FeatureCreep จะทำงานต่อได้โดยไม่ต้องมี</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep() {
+		return "FeatureCreep: แนบ HotSpot ล้มเหลว (คำเตือน)";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep ไม่สามารถแก้ไขการพึ่งพามอดูลได้</b><p>มอดูลหนึ่งประกาศการพึ่งพาที่ไม่สามารถตอบสนองได้ เกมอาจไม่เริ่มต้นอย่างถูกต้อง</p><p><b>วิธีแก้ไข:</b> ติดตั้งการพึ่งพาที่ขาดหายไปหรือลบมอดูลที่ไม่เข้ากัน</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloFeatureCreep() {
+		return "FeatureCreep: การพึ่งพามอดูลยังไม่แก้ไข";
+	}
+
+	@Override
+	public String mensajeErrorVersionModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep ตรวจพบความไม่เข้ากันของเวอร์ชันระหว่างมอดูล</b><p>มอดูลหนึ่งต้องการเวอร์ชันอื่นของเกมหรือมอดูลอื่น อาจทำให้เกิดการแครชหรือฟังก์ชันที่ขาดหาย</p><p><b>วิธีแก้ไข:</b> อัปเดตมอดูลทั้งหมดเป็นเวอร์ชันที่เข้ากัน</p>";
+	}
+
+	@Override
+	public String nombreErrorVersionModuloFeatureCreep() {
+		return "FeatureCreep: เวอร์ชันมอดูลไม่ตรงกัน";
+	}
+
+	@Override
+	public String mensajeErrorMixinBootstrapFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep ไม่สามารถเริ่มต้น Mixin runtime ได้</b><p>Mixin จำเป็นสำหรับการแปลงคลาส หากไม่มี มอดที่ใช้ Mixin จะไม่โหลดและเกมอาจแครช</p><p><b>วิธีแก้ไข:</b> ตรวจสอบให้แน่ใจว่า FeatureCreep ติดตั้งอย่างถูกต้องพร้อมการรองรับ Mixin</p>";
+	}
+
+	@Override
+	public String nombreErrorMixinBootstrapFeatureCreep() {
+		return "FeatureCreep: เริ่มต้น Mixin ล้มเหลว";
+	}
+
+	@Override
+	public String mensajeErrorModDuplicadoRift() {
+		return "<b style='color:#FF4444;'>Rift พบมอดซ้ำ</b><p>มอดสองมอดใช้ ID เดียวกันซึ่งไม่ได้รับอนุญาต Rift ไม่สามารถโหลดมอดทั้งสองได้</p><p><b>วิธีแก้ไข:</b> ลบมอดซ้ำออกหนึ่งมอด</p>";
+	}
+
+	@Override
+	public String nombreErrorModDuplicadoRift() {
+		return "Rift: ID มอดซ้ำ";
+	}
+
+	@Override
+	public String mensajeErrorRiftModJSONRift() {
+		return "<b style='color:#FF4444;'>Rift ไม่สามารถอ่าน riftmod.json ได้</b><p>ไฟล์ manifest ของมอดเสียหายหรือหายไป Rift ไม่สามารถโหลดมอดได้หากไม่มี manifest ที่ถูกต้อง</p><p><b>วิธีแก้ไข:</b> ติดตั้งมอดที่ขาดไฟล์ riftmod.json ใหม่</p>";
+	}
+
+	@Override
+	public String nombreErrorRiftModJSONRift() {
+		return "Rift: manifest มอดเสียหาย";
+	}
+
+	@Override
+	public String mensajeErrorListenerRift() {
+		return "<b style='color:#FF4444;'>Rift ไม่สามารถหาคลาส listener ได้</b><p>มอดหนึ่งอ้างอิงถึงคลาส listener ที่ไม่มีอยู่ มักเกิดจากมอดที่ไม่เข้ากันหรือเสียหาย</p><p><b>วิธีแก้ไข:</b> อัปเดตหรือลบมอดที่อ้างอิงคลาสที่ขาดหาย</p>";
+	}
+
+	@Override
+	public String nombreErrorListenerRift() {
+		return "Rift: ไม่พบคลาส listener";
+	}
+
+	@Override
+	public String mensajeErrorTransformadorAccesoRift() {
+		return "<b style='color:#FF4444;'>Rift ไม่สามารถเริ่มต้น access transformer ได้</b><p>Access transformer แก้ไขการมองเห็นของคลาสสำหรับมอด หากไม่มี มอดไม่สามารถเข้าถึงฟิลด์และเมธอดส่วนตัวได้</p><p><b>วิธีแก้ไข:</b> ติดตั้ง Rift และมอดที่ได้รับผลกระทบใหม่</p>";
+	}
+
+	@Override
+	public String nombreErrorTransformadorAccesoRift() {
+		return "Rift: access transformer ล้มเหลว";
+	}
+
+	@Override
+	public String mensajeAdvertenciaJarNoValidoRift() {
+		return "<b style='color:#FFAA00;'>Rift พบไฟล์ JAR ที่ไม่ถูกต้อง</b><p>ไฟล์ในโฟลเดอร์มอดไม่ใช่ JAR ที่ถูกต้อง Rift จะข้ามและโหลดมอดอื่นต่อ</p><p><b>วิธีแก้ไข:</b> ลบไฟล์ที่เสียหายออกจากโฟลเดอร์มอด</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaJarNoValidoRift() {
+		return "Rift: ไฟล์ JAR ไม่ถูกต้อง (คำเตือน)";
+	}
+
+	@Override
+	public String mensajeErrorJavaVersionM3L() {
+		return "<b style='color:#FF4444;'>M3L ต้องการ Java 7 หรือใหม่กว่า</b><p>เวอร์ชัน Java ของคุณเก่าเกินไปสำหรับรัน M3L launcher</p><p><b>วิธีแก้ไข:</b> อัปเดต Java เป็นเวอร์ชันใหม่กว่า</p>";
+	}
+
+	@Override
+	public String nombreErrorJavaVersionM3L() {
+		return "M3L: เวอร์ชัน Java เก่าเกินไป";
+	}
+
+	@Override
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L() {
+		return "<b style='color:#FF4444;'>M3L ต้องการให้ติดตั้ง Minecraft ก่อน</b><p>ติดตั้งเวอร์ชัน Minecraft พื้นฐานก่อนติดตั้ง M3L</p>";
+	}
+
+	@Override
+	public String nombreErrorMinecraftVersionNoInstaladaM3L() {
+		return "M3L: ยังไม่ได้ติดตั้ง Minecraft";
+	}
+
+	@Override
+	public String mensajeErrorJSONLauncherM3L() {
+		return "<b style='color:#FF4444;'>M3L ไม่สามารถอ่านการตั้งค่า launcher ได้</b><p>ไฟล์ launcher_profiles.json เสียหายหรือไม่สามารถเข้าถึงได้ M3L ไม่สามารถเริ่มต้นได้หากไม่มี การตั้งค่าที่ถูกต้อง</p><p><b>วิธีแก้ไข:</b> กู้คืนหรือสร้างไฟล์ launcher_profiles.json ใหม่</p>";
+	}
+
+	@Override
+	public String nombreErrorJSONLauncherM3L() {
+		return "M3L: การตั้งค่า launcher เสียหาย";
+	}
+
+	@Override
+	public String mensajeAdvertenciaOSNoDetectadoM3L() {
+		return "<b style='color:#FFAA00;'>M3L ไม่สามารถตรวจจับระบบปฏิบัติการของคุณได้</b><p>M3L รู้จักเฉพาะ Windows Mac และ Linux อาจใช้ Linux เป็นค่าเริ่มต้นซึ่งอาจทำให้เกิดปัญหาเส้นทาง</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaOSNoDetectadoM3L() {
+		return "M3L: ไม่ตรวจจับระบบปฏิบัติการ (คำเตือน)";
+	}
+
+	@Override
+	public String mensajeErrorMySQLConexionHMod() {
+		return "<b style='color:#FF4444;'>HMod ไม่สามารถเชื่อมต่อกับ MySQL ได้</b><p>การเชื่อมต่อฐานข้อมูลเซิร์ฟเวอร์ล้มเหลว การดำเนินการฐานข้อมูลทั้งหมดจะล้มเหลว</p><p><b>วิธีแก้ไข:</b> ตรวจสอบว่าเซิร์ฟเวอร์ MySQL ทำงานอยู่และการตั้งค่าการเชื่อมต่อถูกต้อง</p>";
+	}
+
+	@Override
+	public String nombreErrorMySQLConexionHMod() {
+		return "HMod: เชื่อมต่อ MySQL ล้มเหลว";
+	}
+
+	@Override
+	public String mensajeErrorCargaPluginHMod() {
+		return "<b style='color:#FF4444;'>HMod โหลดปลั๊กอินล้มเหลว</b><p>ปลั๊กอินเสียหาย ไม่เข้ากัน หรือหายไป ปลั๊กอินจะไม่ถูกโหลด</p><p><b>วิธีแก้ไข:</b> ตรวจสอบว่าปลั๊กอินทั้งหมดเข้ากันได้กับเวอร์ชัน HMod ของคุณ</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaPluginHMod() {
+		return "HMod: โหลดปลั๊กอินล้มเหลว";
+	}
+
+	@Override
+	public String mensajeErrorGrupoPorDefectoHMod() {
+		return "<b style='color:#FF4444;'>HMod ไม่มีกลุ่มเริ่มต้นที่กำหนดค่า</b><p>อย่างน้อยหนึ่งกลุ่มต้องถูกทำเครื่องหมายเป็นกลุ่มเริ่มต้น หากไม่มี ผู้เล่นใหม่ไม่สามารถถูกกำหนดได้อย่างถูกต้อง</p><p><b>วิธีแก้ไข:</b> ทำเครื่องหมายกลุ่มเป็น DefaultGroup ในการตั้งค่า HMod</p>";
+	}
+
+	@Override
+	public String nombreErrorGrupoPorDefectoHMod() {
+		return "HMod: ไม่มีกลุ่มเริ่มต้น";
+	}
+
+	@Override
+	public String mensajeAdvertenciaPluginHookHMod() {
+		return "<b style='color:#FFAA00;'>ข้อยกเว้น hook ปลั๊กอิน HMod</b><p>ปลั๊กอินหนึ่งส่งข้อยกเว้นระหว่างการเรียก hook เซิร์ฟเวอร์ทำงานต่อ แต่ฟังก์ชันของปลั๊กอินที่ได้รับผลกระทบอาจเสียหาย</p><p><b>วิธีแก้ไข:</b> อัปเดตหรือแทนที่ปลั๊กอินที่ได้รับผลกระทบ</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaPluginHookHMod() {
+		return "HMod: ข้อยกเว้น hook ปลั๊กอิน (คำเตือน)";
+	}
+
+	@Override
+	public String mensajeErrorInicializacionModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader เริ่มต้นล้มเหลว</b><p>ModLoader ไม่สามารถเริ่มต้นได้เนื่องจากข้อผิดพลาด reflection ความไม่เข้ากันของเวอร์ชัน หรือมอดเสียหาย เกมจะไม่โหลดมอด</p><p><b>วิธีแก้ไข:</b> ตรวจสอบว่า ModLoader และมอดทั้งหมดเข้ากันได้กับเวอร์ชัน Minecraft ของคุณ</p>";
+	}
+
+	@Override
+	public String nombreErrorInicializacionModLoader() {
+		return "ModLoader: เริ่มต้นล้มเหลว";
+	}
+
+	@Override
+	public String mensajeErrorCargaModModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader โหลดมอดล้มเหลว</b><p>มอดเสียหาย ไม่เข้ากัน หรือมีข้อผิดพลาดโค้ด จะไม่ถูกโหลด</p><p><b>วิธีแก้ไข:</b> ลบหรืออัปเดตมอดที่เสียหาย</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaModModLoader() {
+		return "ModLoader: โหลดมอดล้มเหลว";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader ขาดการพึ่งพา</b><p>มอดหนึ่งต้องการมอดอื่นที่ยังไม่ได้ติดตั้ง มอดจะไม่โหลดหากไม่มี การพึ่งพา</p><p><b>วิธีแก้ไข:</b> ติดตั้งมอดการพึ่งพาที่จำเป็น</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloModLoader() {
+		return "ModLoader: ขาดการพึ่งพา";
+	}
+
+	@Override
+	public String mensajeAdvertenciaCanalInvalidoModLoader() {
+		return "<b style='color:#FFAA00;'>ชื่อช่องไม่ถูกต้องใน ModLoader</b><p>มอดหนึ่งลงทะเบียนช่องแพ็กเก็ตด้วยชื่อที่ยาวเกินไป (≥ 16 ตัวอักษร) การสื่อสารแพ็กเก็ตของมอดนี้อาจไม่ทำงานอย่างถูกต้อง</p><p><b>วิธีแก้ไข:</b> อัปเดตมอดเพื่อใช้ชื่อช่องที่สั้นกว่า</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaCanalInvalidoModLoader() {
+		return "ModLoader: ชื่อช่องไม่ถูกต้อง (คำเตือน)";
+	}
+
+	@Override
+	public String mensajeErrorRegistroPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>ลงทะเบียนแพ็กเก็ต ModLoaderMP ล้มเหลว</b><p>การลงทะเบียน Packet230 ผ่าน reflection ล้มเหลว มักเกิดจากความไม่เข้ากันของเวอร์ชัน เครือข่ายผู้เล่นหลายคนจะไม่ทำงาน</p><p><b>วิธีแก้ไข:</b> ตรวจสอบว่า ModLoaderMP ตรงกับเวอร์ชัน Minecraft ของคุณ</p>";
+	}
+
+	@Override
+	public String nombreErrorRegistroPacketModLoaderMP() {
+		return "ModLoaderMP: ลงทะเบียนแพ็กเก็ตล้มเหลว";
+	}
+
+	@Override
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP() {
+		return "<b style='color:#FF4444;'>สร้างเอนทิตีกำหนดเอง ModLoaderMP ล้มเหลว</b><p>เอนทิตีกำหนดเองไม่สามารถเริ่มต้นได้ระหว่างผู้เล่นหลายคน เอนทิตีจะไม่ปรากฏในเกม</p><p><b>วิธีแก้ไข:</b> ตรวจสอบว่ามอดที่ให้เอนทิตีเข้ากันได้</p>";
+	}
+
+	@Override
+	public String nombreErrorEntidadPersonalizadaModLoaderMP() {
+		return "ModLoaderMP: เอนทิตีกำหนดเองล้มเหลว";
+	}
+
+	@Override
+	public String mensajeErrorModNuloModLoaderMP() {
+		return "<b style='color:#FF4444;'>การอ้างอิงมอด null ใน ModLoaderMP</b><p>มอดหนึ่งเรียก sendPacket หรือ sendKey ด้วยการอ้างอิง null นี่คือข้อผิดพลาดการเขียนโปรแกรมในมอด</p><p><b>วิธีแก้ไข:</b> อัปเดตหรือแทนที่มอดที่มีข้อผิดพลาดการอ้างอิง null</p>";
+	}
+
+	@Override
+	public String nombreErrorModNuloModLoaderMP() {
+		return "ModLoaderMP: การอ้างอิงมอด null";
+	}
+
+	@Override
+	public String mensajeErrorDatosPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>ข้อมูลแพ็กเก็ต ModLoaderMP ใหญ่เกินไป</b><p>แพ็กเก็ตหนึ่งมีมากกว่า 65535 องค์ประกอบ เกินขนาดสูงสุด แพ็กเก็ตไม่สามารถส่งได้</p><p><b>วิธีแก้ไข:</b> อัปเดตมอดที่ส่งแพ็กเก็ตใหญ่เกินไป</p>";
+	}
+
+	@Override
+	public String nombreErrorDatosPacketModLoaderMP() {
+		return "ModLoaderMP: ข้อมูลแพ็กเก็ตใหญ่เกินไป";
+	}
+
+	@Override
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "<b style='color:#FFAA00;'>ลงทะเบียนซ้ำใน ModLoaderMP</b><p>ประเภท GUI inventory หรือ ID เอนทิตีถูกลงทะเบียนสองครั้ง การลงทะเบียนครั้งที่สองถูกเพิกเฉย</p><p><b>วิธีแก้ไข:</b> ตรวจสอบว่ามีมอดที่ขัดแย้งหรือไม่</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "ModLoaderMP: ลงทะเบียนซ้ำ (คำเตือน)";
+	}
+
+	@Override
+	public String mensajeErrorPluginInvalidoCanary() {
+		return "<b style='color:#FF4444;'>ปลั๊กอินไม่ถูกต้องใน Canary/Neptune</b><p>Canary ไม่สามารถโหลดปลั๊กอินได้เพราะเสียหาย มีไฟล์ Canary.inf ที่ไม่ถูกต้อง หรือคลาสหลักที่ระบุไม่มีอยู่</p><p><b>วิธีแก้ไข:</b> ตรวจสอบว่าปลั๊กอินเข้ากันได้กับเวอร์ชัน Canary/Neptune ของคุณและไม่เสียหาย</p>";
+	}
+
+	@Override
+	public String nombreErrorPluginInvalidoCanary() {
+		return "Canary/Neptune: ปลั๊กอินไม่ถูกต้อง";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaPluginCanary() {
+		return "<b style='color:#FF4444;'>ขาดการพึ่งพาปลั๊กอินใน Canary/Neptune</b><p>ปลั๊กอินหนึ่งประกาศการพึ่งพาที่ยังไม่ได้ติดตั้งบนเซิร์ฟเวอร์ ปลั๊กอินไม่สามารถโหลดได้หากไม่มี การพึ่งพา</p><p><b>วิธีแก้ไข:</b> ติดตั้งการพึ่งพาที่จำเป็นสำหรับปลั๊กอิน</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaPluginCanary() {
+		return "Canary/Neptune: ขาดการพึ่งพาปลั๊กอิน";
+	}
+
+	@Override
+	public String mensajeErrorConsistenciaHookCanary() {
+		return "<b style='color:#FF4444;'>ข้อผิดพลาดลายเซ็น hook ใน Canary/Neptune</b><p>ปลั๊กอินหนึ่งลงทะเบียนเมธอด hook ด้วยลายเซ็นที่ไม่ถูกต้อง เมธอด @HookHandler ต้องมีพารามิเตอร์ 1 ตัวที่เป็น subtype ของ Hook</p><p><b>วิธีแก้ไข:</b> อัปเดตหรือแทนที่ปลั๊กอินที่ทำให้เกิดข้อผิดพลาดนี้</p>";
+	}
+
+	@Override
+	public String nombreErrorConsistenciaHookCanary() {
+		return "Canary/Neptune: ลายเซ็น hook ไม่ถูกต้อง";
+	}
+
+	@Override
+	public String mensajeAdvertenciaEjecucionHookCanary() {
+		return "<b style='color:#FFAA00;'>ข้อยกเว้น hook ใน Canary/Neptune</b><p>ปลั๊กอินหนึ่งส่งข้อยกเว้นขณะจัดการเหตุการณ์ (hook) เซิร์ฟเวอร์ทำงานต่อ แต่ฟังก์ชันของปลั๊กอินที่ได้รับผลกระทบอาจเสียหาย</p><p><b>วิธีแก้ไข:</b> อัปเดตหรือแทนที่ปลั๊กอินที่ทำให้เกิดข้อยกเว้นนี้</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaEjecucionHookCanary() {
+		return "Canary/Neptune: ข้อยกเว้น hook (คำเตือน)";
+	}
+
+	@Override
+	public String mensajeErrorBaseDeDatosCanary() {
+		return "<b style='color:#FF4444;'>ข้อผิดพลาดฐานข้อมูลใน Canary/Neptune</b><p>Canary ไม่สามารถเข้าถึงฐานข้อมูลได้ อาจเกิดจากการเชื่อมต่อล้มเหลว ตัวเชื่อมต่อฐานข้อมูลเสียหาย หรือการตั้งค่าไม่ถูกต้อง</p><p><b>วิธีแก้ไข:</b> ตรวจสอบการตั้งค่าฐานข้อมูลและตัวเชื่อมต่อเข้ากันได้</p>";
+	}
+
+	@Override
+	public String nombreErrorBaseDeDatosCanary() {
+		return "Canary/Neptune: ข้อผิดพลาดฐานข้อมูล";
+	}
+
+	@Override
+	public String mensajeErrorComandoCanary() {
+		return "<b style='color:#FF4444;'>ข้อผิดพลาดคำสั่งใน Canary/Neptune</b><p>คำสั่งหนึ่งไม่สามารถลงทะเบียนได้ อาจเกิดจากคำสั่งหลักที่ขาดหาย คำสั่งซ้ำที่ลงทะเบียนโดยปลั๊กอินอื่น หรือข้อผิดพลาดระบบคำสั่ง</p><p><b>วิธีแก้ไข:</b> ตรวจสอบความขัดแย้งของคำสั่งระหว่างปลั๊กอิน</p>";
+	}
+
+	@Override
+	public String nombreErrorComandoCanary() {
+		return "Canary/Neptune: ข้อผิดพลาดคำสั่ง";
+	}
 }

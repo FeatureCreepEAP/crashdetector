@@ -14229,4 +14229,324 @@ public class Persa implements Idioma {
 	public String nombreErrorEnlazadorNoSoportado() {
 		return "لینکر بومی توسط پلتفرم پشتیبانی نمی‌شود";
 	}
+
+	@Override
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep() {
+		return "<b style='color:#FFAA00;'>FeatureCreep نتوانست عامل HotSpot را مستقیماً متصل کند.</b><p>این به ندرت مشکلی ایجاد می‌کند زیرا بیشتر مادها به Instrumentation نیاز ندارند. FeatureCreep بدون آن ادامه خواهد داد.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep() {
+		return "FeatureCreep: اتصال HotSpot ناموفق (هشدار)";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep نتوانست وابستگی‌های ماژول را حل کند.</b><p>یک ماژول وابستگی‌ای را اعلام می‌کند که قابل برآورده نیست. بازی ممکن است به درستی شروع نشود.</p><p><b>راه‌حل:</b> وابستگی‌های گمشده را نصب کنید یا ماژول ناسازگار را حذف کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloFeatureCreep() {
+		return "FeatureCreep: وابستگی‌های ماژول حل نشده";
+	}
+
+	@Override
+	public String mensajeErrorVersionModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep ناسازگاری نسخه بین ماژول‌ها را تشخیص داد.</b><p>یک ماژول به نسخه متفاوتی از بازی یا ماژول دیگر نیاز دارد. این ممکن است باعث خرابی یا عملکرد گمشده شود.</p><p><b>راه‌حل:</b> تمام ماژول‌ها را به نسخه‌های سازگار به‌روزرسانی کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorVersionModuloFeatureCreep() {
+		return "FeatureCreep: عدم تطابق نسخه ماژول";
+	}
+
+	@Override
+	public String mensajeErrorMixinBootstrapFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep نتوانست محیط اجرای Mixin را راه‌اندازی کند.</b><p>Mixin برای تبدیل کلاس‌ها لازم است. بدون آن، مادهایی که از Mixin استفاده می‌کنند بارگذاری نخواهند شد و بازی ممکن است خراب شود.</p><p><b>راه‌حل:</b> مطمئن شوید FeatureCreep با پشتیبانی Mixin به درستی نصب شده است.</p>";
+	}
+
+	@Override
+	public String nombreErrorMixinBootstrapFeatureCreep() {
+		return "FeatureCreep: راه‌اندازی Mixin ناموفق";
+	}
+
+	@Override
+	public String mensajeErrorModDuplicadoRift() {
+		return "<b style='color:#FF4444;'>Rift ماد تکراری یافت.</b><p>دو ماد همان شناسه ماد را به اشتراک می‌گذارند که مجاز نیست. Rift نمی‌تواند هر دو ماد را بارگذاری کند.</p><p><b>راه‌حل:</b> یکی از مادها را حذف کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorModDuplicadoRift() {
+		return "Rift: شناسه ماد تکراری";
+	}
+
+	@Override
+	public String mensajeErrorRiftModJSONRift() {
+		return "<b style='color:#FF4444;'>Rift نتوانست riftmod.json را بخواند.</b><p>فایل مانیفست ماد خراب یا گم شده است. Rift نمی‌تواند بدون مانیفست معتبر ماد را بارگذاری کند.</p><p><b>راه‌حل:</b> مادی که فایل riftmod.json آن گم شده را مجدداً نصب کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorRiftModJSONRift() {
+		return "Rift: مانیفست ماد خراب";
+	}
+
+	@Override
+	public String mensajeErrorListenerRift() {
+		return "<b style='color:#FF4444;'>Rift نتوانست کلاس شنونده را پیدا کند.</b><p>مادی به کلاس شنونده‌ای اشاره می‌کند که وجود ندارد. این معمولاً توسط ماد ناسازگار یا خراب ایجاد می‌شود.</p><p><b>راه‌حل:</b> مادی که به کلاس گمشده اشاره می‌کند را به‌روزرسانی یا حذف کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorListenerRift() {
+		return "Rift: کلاس شنونده یافت نشد";
+	}
+
+	@Override
+	public String mensajeErrorTransformadorAccesoRift() {
+		return "<b style='color:#FF4444;'>Rift نتوانست تبدیل‌کننده‌های دسترسی را راه‌اندازی کند.</b><p>تبدیل‌کننده‌های دسترسی قابلیت مشاهده کلاس‌ها را برای مادها تغییر می‌دهند. بدون آن‌ها، مادها نمی‌توانند به فیلدها و روش‌های خصوصی دسترسی پیدا کنند.</p><p><b>راه‌حل:</b> Rift و مادهای تحت تأثیر را مجدداً نصب کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorTransformadorAccesoRift() {
+		return "Rift: تبدیل‌کننده دسترسی ناموفق";
+	}
+
+	@Override
+	public String mensajeAdvertenciaJarNoValidoRift() {
+		return "<b style='color:#FFAA00;'>Rift فایل JAR نامعتبری یافت.</b><p>فایلی در پوشه مادها JAR معتبری نیست. Rift آن را رد کرده و بارگذاری سایر مادها را ادامه می‌دهد.</p><p><b>راه‌حل:</b> فایل خراب را از پوشه مادها حذف کنید.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaJarNoValidoRift() {
+		return "Rift: فایل JAR نامعتبر (هشدار)";
+	}
+
+	@Override
+	public String mensajeErrorJavaVersionM3L() {
+		return "<b style='color:#FF4444;'>M3L به Java 7 یا جدیدتر نیاز دارد.</b><p>نسخه Java شما برای اجرای راه‌انداز M3L خیلی قدیمی است.</p><p><b>راه‌حل:</b> Java را به نسخه جدیدتر به‌روزرسانی کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorJavaVersionM3L() {
+		return "M3L: نسخه Java خیلی قدیمی";
+	}
+
+	@Override
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L() {
+		return "<b style='color:#FF4444;'>M3L نیاز دارد که Minecraft ابتدا نصب شود.</b><p>قبل از نصب M3L، نسخه پایه Minecraft را نصب کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorMinecraftVersionNoInstaladaM3L() {
+		return "M3L: Minecraft نصب نشده";
+	}
+
+	@Override
+	public String mensajeErrorJSONLauncherM3L() {
+		return "<b style='color:#FF4444;'>M3L نتوانست پیکربندی راه‌انداز را بخواند.</b><p>فایل launcher_profiles.json خراب یا غیرقابل دسترسی است. M3L بدون پیکربندی معتبر نمی‌تواند شروع شود.</p><p><b>راه‌حل:</b> فایل launcher_profiles.json را بازیابی یا دوباره ایجاد کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorJSONLauncherM3L() {
+		return "M3L: پیکربندی راه‌انداز خراب";
+	}
+
+	@Override
+	public String mensajeAdvertenciaOSNoDetectadoM3L() {
+		return "<b style='color:#FFAA00;'>M3L نتوانست سیستم‌عامل شما را تشخیص دهد.</b><p>M3L فقط Windows، Mac و Linux را تشخیص می‌دهد. ممکن است Linux را به عنوان پیش‌فرض استفاده کند که می‌تواند باعث مشکلات مسیر شود.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaOSNoDetectadoM3L() {
+		return "M3L: سیستم‌عامل تشخیص داده نشد (هشدار)";
+	}
+
+	@Override
+	public String mensajeErrorMySQLConexionHMod() {
+		return "<b style='color:#FF4444;'>HMod نتوانست به MySQL متصل شود.</b><p>اتصال به پایگاه داده سرور ناموفق بود. تمام عملیات پایگاه داده ناموفق خواهند بود.</p><p><b>راه‌حل:</b> بررسی کنید که سرور MySQL در حال اجراست و تنظیمات اتصال صحیح است.</p>";
+	}
+
+	@Override
+	public String nombreErrorMySQLConexionHMod() {
+		return "HMod: اتصال MySQL ناموفق";
+	}
+
+	@Override
+	public String mensajeErrorCargaPluginHMod() {
+		return "<b style='color:#FF4444;'>HMod نتوانست پلاگین را بارگذاری کند.</b><p>یک پلاگین خراب، ناسازگار یا گم شده است. پلاگین بارگذاری نخواهد شد.</p><p><b>راه‌حل:</b> بررسی کنید که تمام پلاگین‌ها با نسخه HMod شما سازگار باشند.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaPluginHMod() {
+		return "HMod: بارگذاری پلاگین ناموفق";
+	}
+
+	@Override
+	public String mensajeErrorGrupoPorDefectoHMod() {
+		return "<b style='color:#FF4444;'>HMod گروه پیش‌فرضی پیکربندی نشده است.</b><p>حداقل یک گروه باید به عنوان گروه پیش‌فرض علامت‌گذاری شود. بدون آن، بازیکنان جدید نمی‌توانند به درستی اختصاص یابند.</p><p><b>راه‌حل:</b> یک گروه را به عنوان DefaultGroup در پیکربندی HMod علامت‌گذاری کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorGrupoPorDefectoHMod() {
+		return "HMod: بدون گروه پیش‌فرض";
+	}
+
+	@Override
+	public String mensajeAdvertenciaPluginHookHMod() {
+		return "<b style='color:#FFAA00;'>استثنا در هوک پلاگین HMod.</b><p>یک پلاگین در حین فراخوانی هوک استثنا ایجاد کرد. سرور ادامه می‌دهد، اما عملکرد پلاگین تحت تأثیر ممکن است خراب باشد.</p><p><b>راه‌حل:</b> پلاگین تحت تأثیر را به‌روزرسانی یا جایگزین کنید.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaPluginHookHMod() {
+		return "HMod: استثنا در هوک پلاگین (هشدار)";
+	}
+
+	@Override
+	public String mensajeErrorInicializacionModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader نتوانست راه‌اندازی شود.</b><p>ModLoader به دلیل خطاهای بازتاب، ناسازگاری نسخه یا مادهای خراب نتوانست شروع شود. بازی مادها را بارگذاری نخواهد کرد.</p><p><b>راه‌حل:</b> بررسی کنید که ModLoader و تمام مادها با نسخه Minecraft شما سازگار باشند.</p>";
+	}
+
+	@Override
+	public String nombreErrorInicializacionModLoader() {
+		return "ModLoader: راه‌اندازی ناموفق";
+	}
+
+	@Override
+	public String mensajeErrorCargaModModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader نتوانست ماد را بارگذاری کند.</b><p>یک ماد خراب، ناسازگار یا دارای خطای کد است. بارگذاری نخواهد شد.</p><p><b>راه‌حل:</b> ماد خراب را حذف یا به‌روزرسانی کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaModModLoader() {
+		return "ModLoader: بارگذاری ماد ناموفق";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader وابستگی گمشده دارد.</b><p>یک ماد به ماد دیگری نیاز دارد که نصب نشده است. ماد بدون وابستگی‌هایش بارگذاری نخواهد شد.</p><p><b>راه‌حل:</b> مادهای وابستگی مورد نیاز را نصب کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloModLoader() {
+		return "ModLoader: وابستگی گمشده";
+	}
+
+	@Override
+	public String mensajeAdvertenciaCanalInvalidoModLoader() {
+		return "<b style='color:#FFAA00;'>نام کانال نامعتبر در ModLoader.</b><p>یک ماد کانال بسته‌ای با نام خیلی طولانی (≥ 16 کاراکتر) ثبت کرد. ارتباط بسته این ماد ممکن است به درستی کار نکند.</p><p><b>راه‌حل:</b> ماد را برای استفاده از نام کانال کوتاه‌تر به‌روزرسانی کنید.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaCanalInvalidoModLoader() {
+		return "ModLoader: نام کانال نامعتبر (هشدار)";
+	}
+
+	@Override
+	public String mensajeErrorRegistroPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>ثبت بسته ModLoaderMP ناموفق بود.</b><p>ثبت Packet230 از طریق بازتاب ناموفق بود، معمولاً به دلیل ناسازگاری نسخه. شبکه چندبازیکن کار نخواهد کرد.</p><p><b>راه‌حل:</b> مطمئن شوید ModLoaderMP با نسخه Minecraft شما مطابقت دارد.</p>";
+	}
+
+	@Override
+	public String nombreErrorRegistroPacketModLoaderMP() {
+		return "ModLoaderMP: ثبت بسته ناموفق";
+	}
+
+	@Override
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP() {
+		return "<b style='color:#FF4444;'>ایجاد موجودیت سفارشی ModLoaderMP ناموفق بود.</b><p>موجودیت سفارشی در حین چندبازیکنی راه‌اندازی نشد. موجودیت در بازی ظاهر نخواهد شد.</p><p><b>راه‌حل:</b> بررسی کنید که مادی که موجودیت را ارائه می‌دهد سازگار باشد.</p>";
+	}
+
+	@Override
+	public String nombreErrorEntidadPersonalizadaModLoaderMP() {
+		return "ModLoaderMP: موجودیت سفارشی ناموفق";
+	}
+
+	@Override
+	public String mensajeErrorModNuloModLoaderMP() {
+		return "<b style='color:#FF4444;'>اشاره ماد null در ModLoaderMP.</b><p>یک ماد sendPacket یا sendKey را با اشاره null فراخوانی کرد. این یک خطای برنامه‌نویسی در ماد است.</p><p><b>راه‌حل:</b> مادی که خطای اشاره null دارد را به‌روزرسانی یا جایگزین کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorModNuloModLoaderMP() {
+		return "ModLoaderMP: اشاره ماد null";
+	}
+
+	@Override
+	public String mensajeErrorDatosPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>داده‌های بسته ModLoaderMP خیلی بزرگ است.</b><p>یک بسته بیش از 65535 عنصر دارد که از حداکثر اندازه فراتر می‌رود. بسته نمی‌تواند ارسال شود.</p><p><b>راه‌حل:</b> مادی که بسته‌های خیلی بزرگ ارسال می‌کند را به‌روزرسانی کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorDatosPacketModLoaderMP() {
+		return "ModLoaderMP: داده‌های بسته خیلی بزرگ";
+	}
+
+	@Override
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "<b style='color:#FFAA00;'>ثبت تکراری در ModLoaderMP.</b><p>نوع مخزن GUI یا شناسه موجودیت دو بار ثبت شد. ثبت دوم نادیده گرفته می‌شود.</p><p><b>راه‌حل:</b> بررسی کنید که ماد متضاد وجود داشته باشد یا نه.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "ModLoaderMP: ثبت تکراری (هشدار)";
+	}
+
+	@Override
+	public String mensajeErrorPluginInvalidoCanary() {
+		return "<b style='color:#FF4444;'>پلاگین نامعتبر در Canary/Neptune.</b><p>Canary نتوانست پلاگینی را بارگذاری کند زیرا خراب است، فایل Canary.inf آن شکل‌گیری نادرست دارد یا کلاس اصلی مشخص‌شده وجود ندارد.</p><p><b>راه‌حل:</b> بررسی کنید که پلاگین با نسخه Canary/Neptune شما سازگار باشد و خراب نباشد.</p>";
+	}
+
+	@Override
+	public String nombreErrorPluginInvalidoCanary() {
+		return "Canary/Neptune: پلاگین نامعتبر";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaPluginCanary() {
+		return "<b style='color:#FF4444;'>وابستگی پلاگین گمشده در Canary/Neptune.</b><p>یک پلاگین وابستگی‌ای را اعلام می‌کند که روی سرور نصب نشده است. پلاگین بدون وابستگی‌هایش بارگذاری نمی‌شود.</p><p><b>راه‌حل:</b> وابستگی‌های مورد نیاز پلاگین را نصب کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaPluginCanary() {
+		return "Canary/Neptune: وابستگی پلاگین گمشده";
+	}
+
+	@Override
+	public String mensajeErrorConsistenciaHookCanary() {
+		return "<b style='color:#FF4444;'>خطای امضای هوک در Canary/Neptune.</b><p>یک پلاگین روش هوکی با امضای نادرست ثبت کرد. روش‌های @HookHandler باید دقیقاً 1 پارامتر داشته باشند که زیرمجموعه Hook باشد.</p><p><b>راه‌حل:</b> پلاگینی که این خطا را ایجاد می‌کند به‌روزرسانی یا جایگزین کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorConsistenciaHookCanary() {
+		return "Canary/Neptune: امضای هوک نادرست";
+	}
+
+	@Override
+	public String mensajeAdvertenciaEjecucionHookCanary() {
+		return "<b style='color:#FFAA00;'>استثنا در هوک Canary/Neptune.</b><p>یک پلاگین در حین مدیریت رویداد (هوک) استثنا ایجاد کرد. سرور ادامه می‌دهد، اما عملکرد پلاگین تحت تأثیر ممکن است خراب باشد.</p><p><b>راه‌حل:</b> پلاگینی که این استثنا را ایجاد می‌کند به‌روزرسانی یا جایگزین کنید.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaEjecucionHookCanary() {
+		return "Canary/Neptune: استثنا در هوک (هشدار)";
+	}
+
+	@Override
+	public String mensajeErrorBaseDeDatosCanary() {
+		return "<b style='color:#FF4444;'>خطای پایگاه داده در Canary/Neptune.</b><p>Canary نتوانست به پایگاه داده دسترسی پیدا کند. این ممکن است به دلیل اتصال ناموفق، سازگارنده پایگاه داده خراب یا پیکربندی نادرست باشد.</p><p><b>راه‌حل:</b> پیکربندی پایگاه داده و سازگاری سازگارنده را بررسی کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorBaseDeDatosCanary() {
+		return "Canary/Neptune: خطای پایگاه داده";
+	}
+
+	@Override
+	public String mensajeErrorComandoCanary() {
+		return "<b style='color:#FF4444;'>خطای دستور در Canary/Neptune.</b><p>یک دستور نتوانست ثبت شود. این ممکن است به دلیل دستور والد گمشده، دستور تکراری ثبت‌شده توسط پلاگین دیگر یا خطای سیستم دستور باشد.</p><p><b>راه‌حل:</b> تضاد دستورات بین پلاگین‌ها را بررسی کنید.</p>";
+	}
+
+	@Override
+	public String nombreErrorComandoCanary() {
+		return "Canary/Neptune: خطای دستور";
+	}
 }

@@ -14490,4 +14490,324 @@ public class Vietnamita implements Idioma {
 	public String nombreErrorEnlazadorNoSoportado() {
 		return "Native linker không được hỗ trợ bởi nền tảng";
 	}
+
+	@Override
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep() {
+		return "<b style='color:#FFAA00;'>FeatureCreep không thể đính kèm trực tiếp tác nhân HotSpot.</b><p>Điều này hiếm khi là vấn đề vì hầu hết mod không yêu cầu Instrumentation. FeatureCreep sẽ tiếp tục mà không có nó.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep() {
+		return "FeatureCreep: đính kèm HotSpot thất bại (cảnh báo)";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep không thể giải quyết phụ thuộc mô-đun.</b><p>Một mô-đun khai báo phụ thuộc không thể đáp ứng. Trò chơi có thể không khởi động đúng cách.</p><p><b>Giải pháp:</b> Cài đặt các phụ thuộc thiếu hoặc loại bỏ mô-đun không tương thích.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloFeatureCreep() {
+		return "FeatureCreep: phụ thuộc mô-đun chưa giải quyết";
+	}
+
+	@Override
+	public String mensajeErrorVersionModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep phát hiện không tương thích phiên bản giữa các mô-đun.</b><p>Một mô-đun yêu cầu phiên bản khác của trò chơi hoặc mô-đun khác. Điều này có thể gây ra lỗi hoặc thiếu chức năng.</p><p><b>Giải pháp:</b> Cập nhật tất cả mô-đun lên phiên bản tương thích.</p>";
+	}
+
+	@Override
+	public String nombreErrorVersionModuloFeatureCreep() {
+		return "FeatureCreep: không khớp phiên bản mô-đun";
+	}
+
+	@Override
+	public String mensajeErrorMixinBootstrapFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep không thể khởi tạo runtime Mixin.</b><p>Mixin cần thiết cho biến đổi lớp. Không có nó, mod sử dụng Mixin sẽ không tải và trò chơi có thể bị lỗi.</p><p><b>Giải pháp:</b> Đảm bảo FeatureCreep được cài đặt đúng với hỗ trợ Mixin.</p>";
+	}
+
+	@Override
+	public String nombreErrorMixinBootstrapFeatureCreep() {
+		return "FeatureCreep: khởi tạo Mixin thất bại";
+	}
+
+	@Override
+	public String mensajeErrorModDuplicadoRift() {
+		return "<b style='color:#FF4444;'>Rift tìm thấy mod trùng lặp.</b><p>Hai mod chia sẻ cùng ID mod, điều này không được phép. Rift không thể tải cả hai mod.</p><p><b>Giải pháp:</b> Loại bỏ một trong các mod trùng lặp.</p>";
+	}
+
+	@Override
+	public String nombreErrorModDuplicadoRift() {
+		return "Rift: ID mod trùng lặp";
+	}
+
+	@Override
+	public String mensajeErrorRiftModJSONRift() {
+		return "<b style='color:#FF4444;'>Rift không thể đọc riftmod.json.</b><p>Tệp kê khai của mod bị hỏng hoặc thiếu. Rift không thể tải mod mà không có kê khai hợp lệ.</p><p><b>Giải pháp:</b> Cài đặt lại mod thiếu tệp riftmod.json.</p>";
+	}
+
+	@Override
+	public String nombreErrorRiftModJSONRift() {
+		return "Rift: kê khai mod bị hỏng";
+	}
+
+	@Override
+	public String mensajeErrorListenerRift() {
+		return "<b style='color:#FF4444;'>Rift không thể tìm thấy lớp listener.</b><p>Một mod tham chiếu đến lớp listener không tồn tại. Điều này thường do mod không tương thích hoặc bị hỏng.</p><p><b>Giải pháp:</b> Cập nhật hoặc loại bỏ mod tham chiếu đến lớp thiếu.</p>";
+	}
+
+	@Override
+	public String nombreErrorListenerRift() {
+		return "Rift: không tìm thấy lớp listener";
+	}
+
+	@Override
+	public String mensajeErrorTransformadorAccesoRift() {
+		return "<b style='color:#FF4444;'>Rift không thể khởi tạo bộ chuyển đổi truy cập.</b><p>Bộ chuyển đổi truy cập sửa đổi tính khả kiến của lớp cho mod. Không có chúng, mod không thể truy cập trường và phương thức riêng.</p><p><b>Giải pháp:</b> Cài đặt lại Rift và các mod bị ảnh hưởng.</p>";
+	}
+
+	@Override
+	public String nombreErrorTransformadorAccesoRift() {
+		return "Rift: bộ chuyển đổi truy cập thất bại";
+	}
+
+	@Override
+	public String mensajeAdvertenciaJarNoValidoRift() {
+		return "<b style='color:#FFAA00;'>Rift tìm thấy tệp JAR không hợp lệ.</b><p>Một tệp trong thư mục mod không phải là JAR hợp lệ. Rift sẽ bỏ qua và tiếp tục tải các mod khác.</p><p><b>Giải pháp:</b> Loại bỏ tệp bị hỏng khỏi thư mục mod.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaJarNoValidoRift() {
+		return "Rift: tệp JAR không hợp lệ (cảnh báo)";
+	}
+
+	@Override
+	public String mensajeErrorJavaVersionM3L() {
+		return "<b style='color:#FF4444;'>M3L yêu cầu Java 7 hoặc mới hơn.</b><p>Phiên bản Java của bạn quá cũ để chạy trình khởi động M3L.</p><p><b>Giải pháp:</b> Cập nhật lên phiên bản Java mới hơn.</p>";
+	}
+
+	@Override
+	public String nombreErrorJavaVersionM3L() {
+		return "M3L: phiên bản Java quá cũ";
+	}
+
+	@Override
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L() {
+		return "<b style='color:#FF4444;'>M3L yêu cầu Minecraft được cài đặt trước.</b><p>Cài đặt phiên bản Minecraft cơ bản trước khi cài đặt M3L.</p>";
+	}
+
+	@Override
+	public String nombreErrorMinecraftVersionNoInstaladaM3L() {
+		return "M3L: Minecraft chưa cài đặt";
+	}
+
+	@Override
+	public String mensajeErrorJSONLauncherM3L() {
+		return "<b style='color:#FF4444;'>M3L không thể đọc cấu hình trình khởi động.</b><p>Tệp launcher_profiles.json bị hỏng hoặc không thể truy cập. M3L không thể khởi động mà không có cấu hình hợp lệ.</p><p><b>Giải pháp:</b> Khôi phục hoặc tạo lại tệp launcher_profiles.json.</p>";
+	}
+
+	@Override
+	public String nombreErrorJSONLauncherM3L() {
+		return "M3L: cấu hình trình khởi động bị hỏng";
+	}
+
+	@Override
+	public String mensajeAdvertenciaOSNoDetectadoM3L() {
+		return "<b style='color:#FFAA00;'>M3L không thể phát hiện hệ điều hành của bạn.</b><p>M3L chỉ nhận diện Windows, Mac và Linux. Có thể mặc định là Linux, điều này có thể gây ra vấn đề đường dẫn.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaOSNoDetectadoM3L() {
+		return "M3L: không phát hiện hệ điều hành (cảnh báo)";
+	}
+
+	@Override
+	public String mensajeErrorMySQLConexionHMod() {
+		return "<b style='color:#FF4444;'>HMod không thể kết nối đến MySQL.</b><p>Kết nối cơ sở dữ liệu máy chủ thất bại. Tất cả hoạt động cơ sở dữ liệu sẽ thất bại.</p><p><b>Giải pháp:</b> Kiểm tra máy chủ MySQL đang chạy và cài đặt kết nối đúng.</p>";
+	}
+
+	@Override
+	public String nombreErrorMySQLConexionHMod() {
+		return "HMod: kết nối MySQL thất bại";
+	}
+
+	@Override
+	public String mensajeErrorCargaPluginHMod() {
+		return "<b style='color:#FF4444;'>HMod không thể tải plugin.</b><p>Một plugin bị hỏng, không tương thích hoặc thiếu. Plugin sẽ không được tải.</p><p><b>Giải pháp:</b> Kiểm tra tất cả plugin tương thích với phiên bản HMod của bạn.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaPluginHMod() {
+		return "HMod: tải plugin thất bại";
+	}
+
+	@Override
+	public String mensajeErrorGrupoPorDefectoHMod() {
+		return "<b style='color:#FF4444;'>HMod không có nhóm mặc định được cấu hình.</b><p>Ít nhất một nhóm phải được đánh dấu là nhóm mặc định. Không có nó, người chơi mới không thể được gán đúng cách.</p><p><b>Giải pháp:</b> Đánh dấu một nhóm là DefaultGroup trong cấu hình HMod.</p>";
+	}
+
+	@Override
+	public String nombreErrorGrupoPorDefectoHMod() {
+		return "HMod: không có nhóm mặc định";
+	}
+
+	@Override
+	public String mensajeAdvertenciaPluginHookHMod() {
+		return "<b style='color:#FFAA00;'>Ngoại lệ hook plugin HMod.</b><p>Một plugin ném ngoại lệ trong khi gọi hook. Máy chủ tiếp tục chạy, nhưng chức năng của plugin bị ảnh hưởng có thể bị hỏng.</p><p><b>Giải pháp:</b> Cập nhật hoặc thay thế plugin bị ảnh hưởng.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaPluginHookHMod() {
+		return "HMod: ngoại lệ hook plugin (cảnh báo)";
+	}
+
+	@Override
+	public String mensajeErrorInicializacionModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader không thể khởi tạo.</b><p>ModLoader không thể khởi động do lỗi phản chiếu, không tương thích phiên bản hoặc mod bị hỏng. Trò chơi sẽ không tải mod.</p><p><b>Giải pháp:</b> Kiểm tra ModLoader và tất cả mod tương thích với phiên bản Minecraft của bạn.</p>";
+	}
+
+	@Override
+	public String nombreErrorInicializacionModLoader() {
+		return "ModLoader: khởi tạo thất bại";
+	}
+
+	@Override
+	public String mensajeErrorCargaModModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader không thể tải mod.</b><p>Một mod bị hỏng, không tương thích hoặc có lỗi mã. Nó sẽ không được tải.</p><p><b>Giải pháp:</b> Loại bỏ hoặc cập nhật mod bị hỏng.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaModModLoader() {
+		return "ModLoader: tải mod thất bại";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader thiếu phụ thuộc.</b><p>Một mod yêu cầu mod khác không được cài đặt. Mod sẽ không tải mà không có phụ thuộc của nó.</p><p><b>Giải pháp:</b> Cài đặt các mod phụ thuộc cần thiết.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloModLoader() {
+		return "ModLoader: thiếu phụ thuộc";
+	}
+
+	@Override
+	public String mensajeAdvertenciaCanalInvalidoModLoader() {
+		return "<b style='color:#FFAA00;'>Tên kênh không hợp lệ trong ModLoader.</b><p>Một mod đăng ký kênh gói với tên quá dài (≥ 16 ký tự). Truyền thông gói của mod này có thể không hoạt động đúng.</p><p><b>Giải pháp:</b> Cập nhật mod để sử dụng tên kênh ngắn hơn.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaCanalInvalidoModLoader() {
+		return "ModLoader: tên kênh không hợp lệ (cảnh báo)";
+	}
+
+	@Override
+	public String mensajeErrorRegistroPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>Đăng ký gói ModLoaderMP thất bại.</b><p>Đăng ký Packet230 qua phản chiếu thất bại, thường do không tương thích phiên bản. Mạng đa người chơi sẽ không hoạt động.</p><p><b>Giải pháp:</b> Đảm bảo ModLoaderMP khớp với phiên bản Minecraft của bạn.</p>";
+	}
+
+	@Override
+	public String nombreErrorRegistroPacketModLoaderMP() {
+		return "ModLoaderMP: đăng ký gói thất bại";
+	}
+
+	@Override
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP() {
+		return "<b style='color:#FF4444;'>Tạo thực thể tùy chỉnh ModLoaderMP thất bại.</b><p>Thực thể tùy chỉnh không thể khởi tạo trong khi đa người chơi. Thực thể sẽ không xuất hiện trong trò chơi.</p><p><b>Giải pháp:</b> Kiểm tra mod cung cấp thực thể có tương thích không.</p>";
+	}
+
+	@Override
+	public String nombreErrorEntidadPersonalizadaModLoaderMP() {
+		return "ModLoaderMP: thực thể tùy chỉnh thất bại";
+	}
+
+	@Override
+	public String mensajeErrorModNuloModLoaderMP() {
+		return "<b style='color:#FF4444;'>Tham chiếu mod null trong ModLoaderMP.</b><p>Một mod gọi sendPacket hoặc sendKey với tham chiếu null. Đây là lỗi lập trình trong mod.</p><p><b>Giải pháp:</b> Cập nhật hoặc thay thế mod có lỗi tham chiếu null.</p>";
+	}
+
+	@Override
+	public String nombreErrorModNuloModLoaderMP() {
+		return "ModLoaderMP: tham chiếu mod null";
+	}
+
+	@Override
+	public String mensajeErrorDatosPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>Dữ liệu gói ModLoaderMP quá lớn.</b><p>Một gói chứa hơn 65535 phần tử, vượt quá kích thước tối đa. Gói không thể gửi.</p><p><b>Giải pháp:</b> Cập nhật mod gửi gói quá lớn.</p>";
+	}
+
+	@Override
+	public String nombreErrorDatosPacketModLoaderMP() {
+		return "ModLoaderMP: dữ liệu gói quá lớn";
+	}
+
+	@Override
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "<b style='color:#FFAA00;'>Đăng ký trùng lặp trong ModLoaderMP.</b><p>Loại kho GUI hoặc ID thực thể được đăng ký hai lần. Đăng ký thứ hai bị bỏ qua.</p><p><b>Giải pháp:</b> Kiểm tra xem có mod xung đột không.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "ModLoaderMP: đăng ký trùng lặp (cảnh báo)";
+	}
+
+	@Override
+	public String mensajeErrorPluginInvalidoCanary() {
+		return "<b style='color:#FF4444;'>Plugin không hợp lệ trong Canary/Neptune.</b><p>Canary không thể tải plugin vì nó bị hỏng, có tệp Canary.inf bị lỗi hoặc lớp chính được chỉ định không tồn tại.</p><p><b>Giải pháp:</b> Xác minh plugin tương thích với phiên bản Canary/Neptune của bạn và không bị hỏng.</p>";
+	}
+
+	@Override
+	public String nombreErrorPluginInvalidoCanary() {
+		return "Canary/Neptune: plugin không hợp lệ";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaPluginCanary() {
+		return "<b style='color:#FF4444;'>Thiếu phụ thuộc plugin trong Canary/Neptune.</b><p>Một plugin khai báo phụ thuộc không được cài đặt trên máy chủ. Plugin không thể tải mà không có phụ thuộc của nó.</p><p><b>Giải pháp:</b> Cài đặt các phụ thuộc cần thiết cho plugin.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaPluginCanary() {
+		return "Canary/Neptune: thiếu phụ thuộc plugin";
+	}
+
+	@Override
+	public String mensajeErrorConsistenciaHookCanary() {
+		return "<b style='color:#FF4444;'>Lỗi chữ ký hook trong Canary/Neptune.</b><p>Một plugin đăng ký phương thức hook với chữ ký không đúng. Phương thức @HookHandler phải có đúng 1 tham số là kiểu con của Hook.</p><p><b>Giải pháp:</b> Cập nhật hoặc thay thế plugin gây ra lỗi này.</p>";
+	}
+
+	@Override
+	public String nombreErrorConsistenciaHookCanary() {
+		return "Canary/Neptune: chữ ký hook không đúng";
+	}
+
+	@Override
+	public String mensajeAdvertenciaEjecucionHookCanary() {
+		return "<b style='color:#FFAA00;'>Ngoại lệ hook trong Canary/Neptune.</b><p>Một plugin ném ngoại lệ khi xử lý sự kiện (hook). Máy chủ tiếp tục chạy, nhưng chức năng của plugin bị ảnh hưởng có thể bị hỏng.</p><p><b>Giải pháp:</b> Cập nhật hoặc thay thế plugin gây ra ngoại lệ này.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaEjecucionHookCanary() {
+		return "Canary/Neptune: ngoại lệ hook (cảnh báo)";
+	}
+
+	@Override
+	public String mensajeErrorBaseDeDatosCanary() {
+		return "<b style='color:#FF4444;'>Lỗi cơ sở dữ liệu trong Canary/Neptune.</b><p>Canary không thể truy cập cơ sở dữ liệu. Điều này có thể do kết nối thất bại, bộ thích hợp cơ sở dữ liệu bị hỏng hoặc cấu hình không đúng.</p><p><b>Giải pháp:</b> Xác minh cấu hình cơ sở dữ liệu và bộ thích hợp tương thích.</p>";
+	}
+
+	@Override
+	public String nombreErrorBaseDeDatosCanary() {
+		return "Canary/Neptune: lỗi cơ sở dữ liệu";
+	}
+
+	@Override
+	public String mensajeErrorComandoCanary() {
+		return "<b style='color:#FF4444;'>Lỗi lệnh trong Canary/Neptune.</b><p>Một lệnh không thể đăng ký. Điều này có thể do lệnh cha thiếu, lệnh trùng lặp được đăng ký bởi plugin khác hoặc lỗi hệ thống lệnh.</p><p><b>Giải pháp:</b> Kiểm tra xung đột lệnh giữa các plugin.</p>";
+	}
+
+	@Override
+	public String nombreErrorComandoCanary() {
+		return "Canary/Neptune: lỗi lệnh";
+	}
 }

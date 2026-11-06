@@ -14106,4 +14106,324 @@ public class Coreano implements Idioma {
 	public String nombreErrorEnlazadorNoSoportado() {
 		return "플랫폼이 네이티브 링커를 지원하지 않음";
 	}
+
+	@Override
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep() {
+		return "<b style='color:#FFAA00;'>FeatureCreep이 HotSpot 에이전트를 직접 연결할 수 없습니다.</b><p>대부분의 모드에서 Instrumentation이 필요하지 않으므로 이는 드물게 문제입니다. FeatureCreep은 계속 실행됩니다.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep() {
+		return "FeatureCreep: HotSpot 연결 실패 (경고)";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep이 모듈 종속성을 해결할 수 없습니다.</b><p>모듈이 충족할 수 없는 종속성을 선언했습니다. 게임이 제대로 시작되지 않을 수 있습니다.</p><p><b>해결 방법:</b> 누락된 종속성을 설치하거나 호환되지 않는 모듈을 제거하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloFeatureCreep() {
+		return "FeatureCreep: 모듈 종속성 미해결";
+	}
+
+	@Override
+	public String mensajeErrorVersionModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep이 모듈 간 버전 불일치를 감지했습니다.</b><p>모듈이 다른 버전의 게임이나 다른 모듈을 필요로 합니다. 충돌이나 기능 누락이 발생할 수 있습니다.</p><p><b>해결 방법:</b> 모든 모듈을 호환되는 버전으로 업데이트하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorVersionModuloFeatureCreep() {
+		return "FeatureCreep: 모듈 버전 불일치";
+	}
+
+	@Override
+	public String mensajeErrorMixinBootstrapFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep이 Mixin 런타임을 초기화할 수 없습니다.</b><p>Mixin은 클래스 변환에 필요합니다. 없으면 Mixin을 사용하는 모드가 로드되지 않고 게임이 충돌할 수 있습니다.</p><p><b>해결 방법:</b> FeatureCreep이 Mixin 지원과 함께 제대로 설치되었는지 확인하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorMixinBootstrapFeatureCreep() {
+		return "FeatureCreep: Mixin 초기화 실패";
+	}
+
+	@Override
+	public String mensajeErrorModDuplicadoRift() {
+		return "<b style='color:#FF4444;'>Rift에서 중복 모드를 발견했습니다.</b><p>두 모드가 동일한 모드 ID를 공유하는데 이는 허용되지 않습니다. Rift는 두 모드를 모두 로드할 수 없습니다.</p><p><b>해결 방법:</b> 중복 모드 중 하나를 제거하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorModDuplicadoRift() {
+		return "Rift: 중복 모드 ID";
+	}
+
+	@Override
+	public String mensajeErrorRiftModJSONRift() {
+		return "<b style='color:#FF4444;'>Rift가 riftmod.json을 읽을 수 없습니다.</b><p>모드의 매니페스트 파일이 손상되었거나 없습니다. Rift는 유효한 매니페스트 없이 모드를 로드할 수 없습니다.</p><p><b>해결 방법:</b> riftmod.json 파일이 없는 모드를 다시 설치하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorRiftModJSONRift() {
+		return "Rift: 모드 매니페스트 손상";
+	}
+
+	@Override
+	public String mensajeErrorListenerRift() {
+		return "<b style='color:#FF4444;'>Rift가 리스너 클래스를 찾을 수 없습니다.</b><p>모드가 존재하지 않는 리스너 클래스를 참조합니다. 일반적으로 호환되지 않거나 손상된 모드 때문입니다.</p><p><b>해결 방법:</b> 누락된 클래스를 참조하는 모드를 업데이트하거나 제거하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorListenerRift() {
+		return "Rift: 리스너 클래스 없음";
+	}
+
+	@Override
+	public String mensajeErrorTransformadorAccesoRift() {
+		return "<b style='color:#FF4444;'>Rift가 액세스 변환기를 초기화할 수 없습니다.</b><p>액세스 변환기는 모드의 클래스 가시성을 수정합니다. 없으면 모드가 사설 필드와 메서드에 액세스할 수 없습니다.</p><p><b>해결 방법:</b> Rift와 영향을 받은 모드를 다시 설치하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorTransformadorAccesoRift() {
+		return "Rift: 액세스 변환기 실패";
+	}
+
+	@Override
+	public String mensajeAdvertenciaJarNoValidoRift() {
+		return "<b style='color:#FFAA00;'>Rift에서 유효하지 않은 JAR 파일을 발견했습니다.</b><p>모드 폴더의 파일이 유효한 JAR가 아닙니다. Rift는 이를 건너뛰고 다른 모드를 계속 로드합니다.</p><p><b>해결 방법:</b> 손상된 파일을 모드 폴더에서 제거하세요.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaJarNoValidoRift() {
+		return "Rift: 유효하지 않은 JAR 파일 (경고)";
+	}
+
+	@Override
+	public String mensajeErrorJavaVersionM3L() {
+		return "<b style='color:#FF4444;'>M3L은 Java 7 이상이 필요합니다.</b><p>Java 버전이 M3L 런처를 실행하기 위해 너무 오래되었습니다.</p><p><b>해결 방법:</b> Java를 새 버전으로 업데이트하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorJavaVersionM3L() {
+		return "M3L: Java 버전 너무 오래됨";
+	}
+
+	@Override
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L() {
+		return "<b style='color:#FF4444;'>M3L은 먼저 Minecraft가 설치되어 있어야 합니다.</b><p>M3L을 설치하기 전에 기본 Minecraft 버전을 설치하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorMinecraftVersionNoInstaladaM3L() {
+		return "M3L: Minecraft 미설치";
+	}
+
+	@Override
+	public String mensajeErrorJSONLauncherM3L() {
+		return "<b style='color:#FF4444;'>M3L이 런처 구성을 읽을 수 없습니다.</b><p>launcher_profiles.json 파일이 손상되었거나 액세스할 수 없습니다. M3L은 유효한 구성 없이 시작할 수 없습니다.</p><p><b>해결 방법:</b> launcher_profiles.json 파일을 복원하거나 다시 생성하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorJSONLauncherM3L() {
+		return "M3L: 런처 구성 손상";
+	}
+
+	@Override
+	public String mensajeAdvertenciaOSNoDetectadoM3L() {
+		return "<b style='color:#FFAA00;'>M3L이 운영 체제를 감지할 수 없습니다.</b><p>M3L은 Windows, Mac, Linux만 인식합니다. Linux로 기본 설정되어 경로 문제가 발생할 수 있습니다.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaOSNoDetectadoM3L() {
+		return "M3L: 운영 체제 감지 안됨 (경고)";
+	}
+
+	@Override
+	public String mensajeErrorMySQLConexionHMod() {
+		return "<b style='color:#FF4444;'>HMod가 MySQL에 연결할 수 없습니다.</b><p>서버 데이터베이스 연결이 실패했습니다. 모든 데이터베이스 작업이 실패합니다.</p><p><b>해결 방법:</b> MySQL 서버가 실행 중이고 연결 설정이 올바른지 확인하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorMySQLConexionHMod() {
+		return "HMod: MySQL 연결 실패";
+	}
+
+	@Override
+	public String mensajeErrorCargaPluginHMod() {
+		return "<b style='color:#FF4444;'>HMod가 플러그인을 로드하지 못했습니다.</b><p>플러그인이 손상되었거나 호환되지 않거나 없습니다. 플러그인이 로드되지 않습니다.</p><p><b>해결 방법:</b> 모든 플러그인이 HMod 버전과 호환되는지 확인하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaPluginHMod() {
+		return "HMod: 플러그인 로드 실패";
+	}
+
+	@Override
+	public String mensajeErrorGrupoPorDefectoHMod() {
+		return "<b style='color:#FF4444;'>HMod에 기본 그룹이 구성되어 있지 않습니다.</b><p>최소한 하나의 그룹이 기본 그룹으로 표시되어야 합니다. 없으면 새 플레이어를 제대로 할당할 수 없습니다.</p><p><b>해결 방법:</b> HMod 구성에서 그룹을 DefaultGroup으로 표시하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorGrupoPorDefectoHMod() {
+		return "HMod: 기본 그룹 없음";
+	}
+
+	@Override
+	public String mensajeAdvertenciaPluginHookHMod() {
+		return "<b style='color:#FFAA00;'>HMod 플러그인 훅 예외.</b><p>플러그인이 훅 호출 중 예외를 발생시켰습니다. 서버는 계속 실행되지만 영향을 받은 플러그인의 기능이 손상될 수 있습니다.</p><p><b>해결 방법:</b> 영향을 받은 플러그인을 업데이트하거나 교체하세요.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaPluginHookHMod() {
+		return "HMod: 플러그인 훅 예외 (경고)";
+	}
+
+	@Override
+	public String mensajeErrorInicializacionModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader 초기화 실패.</b><p>반사 오류, 버전 불일치 또는 모드 손상으로 인해 ModLoader가 시작할 수 없습니다. 게임이 모드를 로드하지 않습니다.</p><p><b>해결 방법:</b> ModLoader와 모든 모드가 Minecraft 버전과 호환되는지 확인하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorInicializacionModLoader() {
+		return "ModLoader: 초기화 실패";
+	}
+
+	@Override
+	public String mensajeErrorCargaModModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader가 모드를 로드하지 못했습니다.</b><p>모드가 손상되었거나 호환되지 않거나 코드 오류가 있습니다. 로드되지 않습니다.</p><p><b>해결 방법:</b> 손상된 모드를 제거하거나 업데이트하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaModModLoader() {
+		return "ModLoader: 모드 로드 실패";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader 종속성 누락.</b><p>모드가 설치되지 않은 다른 모드를 필요로 합니다. 종속성 없이 모드가 로드되지 않습니다.</p><p><b>해결 방법:</b> 필요한 종속성 모드를 설치하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloModLoader() {
+		return "ModLoader: 종속성 누락";
+	}
+
+	@Override
+	public String mensajeAdvertenciaCanalInvalidoModLoader() {
+		return "<b style='color:#FFAA00;'>ModLoader 유효하지 않은 채널 이름.</b><p>모드가 너무 긴 이름(≥16자)의 패킷 채널을 등록했습니다. 패킷 통신이 제대로 작동하지 않을 수 있습니다.</p><p><b>해결 방법:</b> 더 짧은 채널 이름을 사용하도록 모드를 업데이트하세요.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaCanalInvalidoModLoader() {
+		return "ModLoader: 유효하지 않은 채널 이름 (경고)";
+	}
+
+	@Override
+	public String mensajeErrorRegistroPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMP 패킷 등록 실패.</b><p>반사를 통한 Packet230 등록이 실패했습니다. 일반적으로 버전 불일치 때문입니다. 멀티플레이어 네트워킹이 작동하지 않습니다.</p><p><b>해결 방법:</b> ModLoaderMP가 Minecraft 버전과 일치하는지 확인하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorRegistroPacketModLoaderMP() {
+		return "ModLoaderMP: 패킷 등록 실패";
+	}
+
+	@Override
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMP 사용자 정의 엔티티 생성 실패.</b><p>멀티플레이어 중 사용자 정의 엔티티를 초기화할 수 없습니다. 엔티티가 게임에 표시되지 않습니다.</p><p><b>해결 방법:</b> 엔티티를 제공하는 모드가 호환되는지 확인하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorEntidadPersonalizadaModLoaderMP() {
+		return "ModLoaderMP: 사용자 정의 엔티티 실패";
+	}
+
+	@Override
+	public String mensajeErrorModNuloModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMP null 모드 참조.</b><p>모드가 null 참조로 sendPacket 또는 sendKey를 호출했습니다. 이는 모드에서 프로그래밍 오류입니다.</p><p><b>해결 방법:</b> null 참조 오류가 있는 모드를 업데이트하거나 교체하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorModNuloModLoaderMP() {
+		return "ModLoaderMP: null 모드 참조";
+	}
+
+	@Override
+	public String mensajeErrorDatosPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMP 패킷 데이터 너무 큼.</b><p>패킷이 최대 크기를 초과하는 65535개 이상의 요소를 포함합니다. 패킷을 보낼 수 없습니다.</p><p><b>해결 방법:</b> 과도한 패킷을 보내는 모드를 업데이트하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorDatosPacketModLoaderMP() {
+		return "ModLoaderMP: 패킷 데이터 너무 큼";
+	}
+
+	@Override
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "<b style='color:#FFAA00;'>ModLoaderMP 중복 등록.</b><p>GUI 인벤토리 유형 또는 엔티티 ID가 두 번 등록되었습니다. 두 번째 등록은 무시됩니다.</p><p><b>해결 방법:</b> 충돌하는 모드를 확인하세요.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "ModLoaderMP: 중복 등록 (경고)";
+	}
+
+	@Override
+	public String mensajeErrorPluginInvalidoCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptune에서 유효하지 않은 플러그인.</b><p>Canary가 플러그인을 로드하지 못했습니다. 손상되었거나 Canary.inf 파일이 잘못되었거나 지정된 주요 클래스가 없습니다.</p><p><b>해결 방법:</b> 플러그인이 Canary/Neptune 버전과 호환되고 손상되지 않았는지 확인하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorPluginInvalidoCanary() {
+		return "Canary/Neptune: 유효하지 않은 플러그인";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaPluginCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptune에서 플러그인 종속성 누락.</b><p>플러그인이 서버에 설치되지 않은 종속성을 선언했습니다. 종속성 없이 플러그인을 로드할 수 없습니다.</p><p><b>해결 방법:</b> 플러그인에 필요한 종속성을 설치하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaPluginCanary() {
+		return "Canary/Neptune: 플러그인 종속성 누락";
+	}
+
+	@Override
+	public String mensajeErrorConsistenciaHookCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptune에서 훅 서명 오류.</b><p>플러그인이 잘못된 서명으로 훅 메서드를 등록했습니다. @HookHandler 메서드는 Hook의 하위 유형인 매개변수가 정확히 1개여야 합니다.</p><p><b>해결 방법:</b> 이 오류를 발생시키는 플러그인을 업데이트하거나 교체하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorConsistenciaHookCanary() {
+		return "Canary/Neptune: 훅 서명 불일치";
+	}
+
+	@Override
+	public String mensajeAdvertenciaEjecucionHookCanary() {
+		return "<b style='color:#FFAA00;'>Canary/Neptune에서 훅 예외.</b><p>플러그인이 이벤트(Hook) 처리 중 예외를 발생시켰습니다. 서버는 계속 실행되지만 영향을 받은 플러그인의 기능이 손상될 수 있습니다.</p><p><b>해결 방법:</b> 이 예외를 발생시키는 플러그인을 업데이트하거나 교체하세요.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaEjecucionHookCanary() {
+		return "Canary/Neptune: 훅 예외 (경고)";
+	}
+
+	@Override
+	public String mensajeErrorBaseDeDatosCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptune에서 데이터베이스 오류.</b><p>Canary가 데이터베이스에 액세스할 수 없습니다. 연결 실패, 손상된 데이터베이스 어댑터 또는 잘못된 구성 때문일 수 있습니다.</p><p><b>해결 방법:</b> 데이터베이스 구성과 어댑터 호환성을 확인하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorBaseDeDatosCanary() {
+		return "Canary/Neptune: 데이터베이스 오류";
+	}
+
+	@Override
+	public String mensajeErrorComandoCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptune에서 명령 오류.</b><p>명령을 등록하지 못했습니다. 누락된 상위 명령, 다른 플러그인이 등록한 중복 명령 또는 명령 시스템 오류 때문일 수 있습니다.</p><p><b>해결 방법:</b> 플러그인 간 명령 충돌을 확인하세요.</p>";
+	}
+
+	@Override
+	public String nombreErrorComandoCanary() {
+		return "Canary/Neptune: 명령 오류";
+	}
 }

@@ -5672,4 +5672,146 @@ public interface Idioma {
 	public String mensajeErrorEnlazadorNoSoportado(String biblioteca);
 
 	public String nombreErrorEnlazadorNoSoportado();
+
+	// FeatureCreep verificaciones
+
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep();
+
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep();
+
+	public String mensajeErrorDependenciaModuloFeatureCreep();
+
+	public String nombreErrorDependenciaModuloFeatureCreep();
+
+	public String mensajeErrorVersionModuloFeatureCreep();
+
+	public String nombreErrorVersionModuloFeatureCreep();
+
+	public String mensajeErrorMixinBootstrapFeatureCreep();
+
+	public String nombreErrorMixinBootstrapFeatureCreep();
+
+	// Rift verificaciones
+
+	public String mensajeErrorModDuplicadoRift();
+
+	public String nombreErrorModDuplicadoRift();
+
+	public String mensajeErrorRiftModJSONRift();
+
+	public String nombreErrorRiftModJSONRift();
+
+	public String mensajeErrorListenerRift();
+
+	public String nombreErrorListenerRift();
+
+	public String mensajeErrorTransformadorAccesoRift();
+
+	public String nombreErrorTransformadorAccesoRift();
+
+	public String mensajeAdvertenciaJarNoValidoRift();
+
+	public String nombreAdvertenciaJarNoValidoRift();
+
+	// M3L verificaciones
+
+	public String mensajeErrorJavaVersionM3L();
+
+	public String nombreErrorJavaVersionM3L();
+
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L();
+
+	public String nombreErrorMinecraftVersionNoInstaladaM3L();
+
+	public String mensajeErrorJSONLauncherM3L();
+
+	public String nombreErrorJSONLauncherM3L();
+
+	public String mensajeAdvertenciaOSNoDetectadoM3L();
+
+	public String nombreAdvertenciaOSNoDetectadoM3L();
+
+	// HMod verificaciones
+
+	public String mensajeErrorMySQLConexionHMod();
+
+	public String nombreErrorMySQLConexionHMod();
+
+	public String mensajeErrorCargaPluginHMod();
+
+	public String nombreErrorCargaPluginHMod();
+
+	public String mensajeErrorGrupoPorDefectoHMod();
+
+	public String nombreErrorGrupoPorDefectoHMod();
+
+	public String mensajeAdvertenciaPluginHookHMod();
+
+	public String nombreAdvertenciaPluginHookHMod();
+
+	// ModLoader verificaciones
+
+	public String mensajeErrorInicializacionModLoader();
+
+	public String nombreErrorInicializacionModLoader();
+
+	public String mensajeErrorCargaModModLoader();
+
+	public String nombreErrorCargaModModLoader();
+
+	public String mensajeErrorDependenciaModuloModLoader();
+
+	public String nombreErrorDependenciaModuloModLoader();
+
+	public String mensajeAdvertenciaCanalInvalidoModLoader();
+
+	public String nombreAdvertenciaCanalInvalidoModLoader();
+
+	// ModLoaderMP verificaciones
+
+	public String mensajeErrorRegistroPacketModLoaderMP();
+
+	public String nombreErrorRegistroPacketModLoaderMP();
+
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP();
+
+	public String nombreErrorEntidadPersonalizadaModLoaderMP();
+
+	public String mensajeErrorModNuloModLoaderMP();
+
+	public String nombreErrorModNuloModLoaderMP();
+
+	public String mensajeErrorDatosPacketModLoaderMP();
+
+	public String nombreErrorDatosPacketModLoaderMP();
+
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP();
+
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP();
+
+	// Canary/Neptune verificaciones
+
+	public String mensajeErrorPluginInvalidoCanary();
+
+	public String nombreErrorPluginInvalidoCanary();
+
+	public String mensajeErrorDependenciaPluginCanary();
+
+	public String nombreErrorDependenciaPluginCanary();
+
+	public String mensajeErrorConsistenciaHookCanary();
+
+	public String nombreErrorConsistenciaHookCanary();
+
+	public String mensajeAdvertenciaEjecucionHookCanary();
+
+	public String nombreAdvertenciaEjecucionHookCanary();
+
+	public String mensajeErrorBaseDeDatosCanary();
+
+	public String nombreErrorBaseDeDatosCanary();
+
+	public String mensajeErrorComandoCanary();
+
+	public String nombreErrorComandoCanary();
 }

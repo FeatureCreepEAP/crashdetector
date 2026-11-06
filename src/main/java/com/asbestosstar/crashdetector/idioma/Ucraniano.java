@@ -13599,4 +13599,324 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String nombreErrorEnlazadorNoSoportado() {
 		return "Нативний лінкер не підтримується платформою";
 	}
+
+	@Override
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep() {
+		return "<b style='color:#FFAA00;'>FeatureCreep не зміг безпосередньо підключити агент HotSpot.</b><p>Це рідко є проблемою, оскільки більшості модів не потрібна Instrumentation. FeatureCreep продовжить роботу без нього.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep() {
+		return "FeatureCreep: помилка підключення HotSpot (попередження)";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep не зміг вирішити залежності модулів.</b><p>Модуль оголошує залежність, яку неможливо задовольнити. Гра може не запуститися коректно.</p><p><b>Рішення:</b> Встановіть відсутні залежності або видаліть несумісний модуль.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloFeatureCreep() {
+		return "FeatureCreep: невирішені залежності модулів";
+	}
+
+	@Override
+	public String mensajeErrorVersionModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep виявив несумісність версій між модулями.</b><p>Модуль вимагає іншу версію гри або іншого модуля. Це може викликати збої або відсутність функціональності.</p><p><b>Рішення:</b> Оновіть усі модулі до сумісних версій.</p>";
+	}
+
+	@Override
+	public String nombreErrorVersionModuloFeatureCreep() {
+		return "FeatureCreep: невідповідність версій модулів";
+	}
+
+	@Override
+	public String mensajeErrorMixinBootstrapFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep не зміг ініціалізувати середовище виконання Mixin.</b><p>Mixin необхідний для перетворення класів. Без нього моди, що використовують Mixin, не завантажаться, і гра може завершитися помилкою.</p><p><b>Рішення:</b> Переконайтеся, що FeatureCreep правильно встановлено з підтримкою Mixin.</p>";
+	}
+
+	@Override
+	public String nombreErrorMixinBootstrapFeatureCreep() {
+		return "FeatureCreep: помилка ініціалізації Mixin";
+	}
+
+	@Override
+	public String mensajeErrorModDuplicadoRift() {
+		return "<b style='color:#FF4444;'>Rift виявив дубльований мод.</b><p>Два моди мають однаковий ID, що не дозволяється. Rift не може завантажити обидва моди.</p><p><b>Рішення:</b> Видаліть один із дубльованих модів.</p>";
+	}
+
+	@Override
+	public String nombreErrorModDuplicadoRift() {
+		return "Rift: дубльований ID мода";
+	}
+
+	@Override
+	public String mensajeErrorRiftModJSONRift() {
+		return "<b style='color:#FF4444;'>Rift не зміг прочитати riftmod.json.</b><p>Файл маніфеста мода пошкоджено або відсутній. Rift не може завантажити мод без дійсного маніфеста.</p><p><b>Рішення:</b> Перевстановіть мод, у якого відсутній файл riftmod.json.</p>";
+	}
+
+	@Override
+	public String nombreErrorRiftModJSONRift() {
+		return "Rift: пошкоджений маніфест мода";
+	}
+
+	@Override
+	public String mensajeErrorListenerRift() {
+		return "<b style='color:#FF4444;'>Rift не зміг знайти клас слухача.</b><p>Мод посилається на клас слухача, якого не існує. Зазвичай це викликано несумісним або пошкодженим модом.</p><p><b>Рішення:</b> Оновіть або видаліть мод, який посилається на відсутній клас.</p>";
+	}
+
+	@Override
+	public String nombreErrorListenerRift() {
+		return "Rift: клас слухача не знайдено";
+	}
+
+	@Override
+	public String mensajeErrorTransformadorAccesoRift() {
+		return "<b style='color:#FF4444;'>Rift не зміг ініціалізувати трансформатори доступу.</b><p>Трансформатори доступу змінюють видимість класів для модів. Без них моди не можуть отримати доступ до приватних полів і методів.</p><p><b>Рішення:</b> Перевстановіть Rift і зачеплені моди.</p>";
+	}
+
+	@Override
+	public String nombreErrorTransformadorAccesoRift() {
+		return "Rift: помилка трансформатора доступу";
+	}
+
+	@Override
+	public String mensajeAdvertenciaJarNoValidoRift() {
+		return "<b style='color:#FFAA00;'>Rift виявив недійсний JAR-файл.</b><p>Файл у папці модів не є дійсним JAR. Rift пропустить його і продовжить завантаження інших модів.</p><p><b>Рішення:</b> Видаліть пошкоджений файл із папки модів.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaJarNoValidoRift() {
+		return "Rift: недійсний JAR-файл (попередження)";
+	}
+
+	@Override
+	public String mensajeErrorJavaVersionM3L() {
+		return "<b style='color:#FF4444;'>M3L вимагає Java 7 або новішої.</b><p>Ваша версія Java занадто стара для запуску M3L.</p><p><b>Рішення:</b> Оновіть Java до новішої версії.</p>";
+	}
+
+	@Override
+	public String nombreErrorJavaVersionM3L() {
+		return "M3L: версія Java занадто стара";
+	}
+
+	@Override
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L() {
+		return "<b style='color:#FF4444;'>M3L вимагає попереднього встановлення Minecraft.</b><p>Встановіть базову версію Minecraft перед встановленням M3L.</p>";
+	}
+
+	@Override
+	public String nombreErrorMinecraftVersionNoInstaladaM3L() {
+		return "M3L: Minecraft не встановлено";
+	}
+
+	@Override
+	public String mensajeErrorJSONLauncherM3L() {
+		return "<b style='color:#FF4444;'>M3L не зміг прочитати конфігурацію лаунчера.</b><p>Файл launcher_profiles.json пошкоджено або недоступний. M3L не може запуститися без дійсної конфігурації.</p><p><b>Рішення:</b> Відновіть або створіть заново файл launcher_profiles.json.</p>";
+	}
+
+	@Override
+	public String nombreErrorJSONLauncherM3L() {
+		return "M3L: пошкоджена конфігурація лаунчера";
+	}
+
+	@Override
+	public String mensajeAdvertenciaOSNoDetectadoM3L() {
+		return "<b style='color:#FFAA00;'>M3L не зміг визначити вашу операційну систему.</b><p>M3L розпізнає лише Windows, Mac і Linux. Він може використовувати Linux за замовчуванням, що може викликати проблеми з шляхами.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaOSNoDetectadoM3L() {
+		return "M3L: операційна система не визначена (попередження)";
+	}
+
+	@Override
+	public String mensajeErrorMySQLConexionHMod() {
+		return "<b style='color:#FF4444;'>HMod не зміг підключитися до MySQL.</b><p>Підключення до бази даних сервера не вдалося. Усі операції з базою даних завершаться помилкою.</p><p><b>Рішення:</b> Перевірте, що сервер MySQL працює і налаштування підключення правильні.</p>";
+	}
+
+	@Override
+	public String nombreErrorMySQLConexionHMod() {
+		return "HMod: помилка підключення до MySQL";
+	}
+
+	@Override
+	public String mensajeErrorCargaPluginHMod() {
+		return "<b style='color:#FF4444;'>HMod не зміг завантажити плагін.</b><p>Плагін пошкоджено, несумісний або відсутній. Плагін не буде завантажено.</p><p><b>Рішення:</b> Перевірте, що всі плагіни сумісні з вашою версією HMod.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaPluginHMod() {
+		return "HMod: помилка завантаження плагіна";
+	}
+
+	@Override
+	public String mensajeErrorGrupoPorDefectoHMod() {
+		return "<b style='color:#FF4444;'>У HMod не налаштовано групу за замовчуванням.</b><p>Принаймні одна група повинна бути позначена як група за замовчуванням. Без неї нових гравців неможливо правильно призначити.</p><p><b>Рішення:</b> Позначте групу як DefaultGroup у конфігурації HMod.</p>";
+	}
+
+	@Override
+	public String nombreErrorGrupoPorDefectoHMod() {
+		return "HMod: немає групи за замовчуванням";
+	}
+
+	@Override
+	public String mensajeAdvertenciaPluginHookHMod() {
+		return "<b style='color:#FFAA00;'>Виняток у хуку плагіна HMod.</b><p>Плагін викликав виняток під час виклику хука. Сервер продовжує роботу, але функціональність зачепленого плагіна може бути порушена.</p><p><b>Рішення:</b> Оновіть або замініть зачеплений плагін.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaPluginHookHMod() {
+		return "HMod: виняток у хуку плагіна (попередження)";
+	}
+
+	@Override
+	public String mensajeErrorInicializacionModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader не зміг ініціалізуватися.</b><p>ModLoader не зміг запуститися через помилки рефлексії, несумісність версій або пошкоджені моди. Гра не завантажить моди.</p><p><b>Рішення:</b> Перевірте, що ModLoader і всі моди сумісні з вашою версією Minecraft.</p>";
+	}
+
+	@Override
+	public String nombreErrorInicializacionModLoader() {
+		return "ModLoader: помилка ініціалізації";
+	}
+
+	@Override
+	public String mensajeErrorCargaModModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader не зміг завантажити мод.</b><p>Мод пошкоджено, несумісний або містить помилки коду. Він не буде завантажено.</p><p><b>Рішення:</b> Видаліть або оновіть пошкоджений мод.</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaModModLoader() {
+		return "ModLoader: помилка завантаження мода";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloModLoader() {
+		return "<b style='color:#FF4444;'>У ModLoader відсутня залежність.</b><p>Мод вимагає інший мод, який не встановлено. Мод не завантажиться без своїх залежностей.</p><p><b>Рішення:</b> Встановіть необхідні моди-залежності.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloModLoader() {
+		return "ModLoader: відсутня залежність";
+	}
+
+	@Override
+	public String mensajeAdvertenciaCanalInvalidoModLoader() {
+		return "<b style='color:#FFAA00;'>Недійсний назва каналу в ModLoader.</b><p>Мод зареєстрував канал пакетів із назвою, яка занадто довга (≥ 16 символів). Передача пакетів цього мода може працювати некоректно.</p><p><b>Рішення:</b> Оновіть мод, щоб використовувати коротшу назву каналу.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaCanalInvalidoModLoader() {
+		return "ModLoader: недійсна назва каналу (попередження)";
+	}
+
+	@Override
+	public String mensajeErrorRegistroPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>Помилка реєстрації пакета ModLoaderMP.</b><p>Реєстрація Packet230 через рефлексію не вдалася, зазвичай через несумісність версій. Сітьовий мультиплеєр не буде працювати.</p><p><b>Рішення:</b> Переконайтеся, що ModLoaderMP відповідає вашій версії Minecraft.</p>";
+	}
+
+	@Override
+	public String nombreErrorRegistroPacketModLoaderMP() {
+		return "ModLoaderMP: помилка реєстрації пакета";
+	}
+
+	@Override
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP() {
+		return "<b style='color:#FF4444;'>Помилка створення користувацької сутності ModLoaderMP.</b><p>Користувацька сутність не могла бути ініціалізована під час мультиплеєра. Сутність не з'явиться в грі.</p><p><b>Рішення:</b> Перевірте, що мод, що надає сутність, сумісний.</p>";
+	}
+
+	@Override
+	public String nombreErrorEntidadPersonalizadaModLoaderMP() {
+		return "ModLoaderMP: помилка користувацької сутності";
+	}
+
+	@Override
+	public String mensajeErrorModNuloModLoaderMP() {
+		return "<b style='color:#FF4444;'>Нульове посилання на мод у ModLoaderMP.</b><p>Мод викликав sendPacket або sendKey з нульовим посиланням. Це помилка програмування в моді.</p><p><b>Рішення:</b> Оновіть або замініть мод з помилкою нульового посилання.</p>";
+	}
+
+	@Override
+	public String nombreErrorModNuloModLoaderMP() {
+		return "ModLoaderMP: нульове посилання на мод";
+	}
+
+	@Override
+	public String mensajeErrorDatosPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>Дані пакета ModLoaderMP занадто великі.</b><p>Пакет містить більше 65535 елементів, перевищуючи максимальний розмір. Пакет не може бути відправлений.</p><p><b>Рішення:</b> Оновіть мод, що надсилає пакети занадто великого розміру.</p>";
+	}
+
+	@Override
+	public String nombreErrorDatosPacketModLoaderMP() {
+		return "ModLoaderMP: дані пакета занадто великі";
+	}
+
+	@Override
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "<b style='color:#FFAA00;'>Дубльована реєстрація в ModLoaderMP.</b><p>Тип інвентаря GUI або ID сутності був зареєстрований двічі. Друга реєстрація ігнорується.</p><p><b>Рішення:</b> Перевірте наявність конфліктуючих модів.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "ModLoaderMP: дубльована реєстрація (попередження)";
+	}
+
+	@Override
+	public String mensajeErrorPluginInvalidoCanary() {
+		return "<b style='color:#FF4444;'>Недійсний плагін у Canary/Neptune.</b><p>Canary не зміг завантажити плагін, оскільки він пошкоджено, має некоректний файл Canary.inf або вказаний основний клас не існує.</p><p><b>Рішення:</b> Перевірте, що плагін сумісний з вашою версією Canary/Neptune і не пошкоджено.</p>";
+	}
+
+	@Override
+	public String nombreErrorPluginInvalidoCanary() {
+		return "Canary/Neptune: недійсний плагін";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaPluginCanary() {
+		return "<b style='color:#FF4444;'>Відсутня залежність плагіна в Canary/Neptune.</b><p>Плагін оголошує залежність, яка не встановлена на сервері. Плагін не може завантажитися без своїх залежностей.</p><p><b>Рішення:</b> Встановіть необхідні залежності для плагіна.</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaPluginCanary() {
+		return "Canary/Neptune: відсутня залежність плагіна";
+	}
+
+	@Override
+	public String mensajeErrorConsistenciaHookCanary() {
+		return "<b style='color:#FF4444;'>Помилка підпису хука в Canary/Neptune.</b><p>Плагін зареєстрував метод хука з некоректним підписом. Методи @HookHandler повинні мати рівно 1 параметр, який є підтипом Hook.</p><p><b>Рішення:</b> Оновіть або замініть плагін, що викликає цю помилку.</p>";
+	}
+
+	@Override
+	public String nombreErrorConsistenciaHookCanary() {
+		return "Canary/Neptune: некоректний підпис хука";
+	}
+
+	@Override
+	public String mensajeAdvertenciaEjecucionHookCanary() {
+		return "<b style='color:#FFAA00;'>Виняток у хуку Canary/Neptune.</b><p>Плагін викликав виняток під час обробки події (хука). Сервер продовжує роботу, але функціональність зачепленого плагіна може бути порушена.</p><p><b>Рішення:</b> Оновіть або замініть плагін, що викликає цей виняток.</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaEjecucionHookCanary() {
+		return "Canary/Neptune: виняток у хуку (попередження)";
+	}
+
+	@Override
+	public String mensajeErrorBaseDeDatosCanary() {
+		return "<b style='color:#FF4444;'>Помилка бази даних у Canary/Neptune.</b><p>Canary не зміг отримати доступ до бази даних. Це може бути викликано невдалим підключенням, пошкодженим адаптером бази даних або некоректною конфігурацією.</p><p><b>Рішення:</b> Перевірте конфігурацію бази даних і сумісність адаптера.</p>";
+	}
+
+	@Override
+	public String nombreErrorBaseDeDatosCanary() {
+		return "Canary/Neptune: помилка бази даних";
+	}
+
+	@Override
+	public String mensajeErrorComandoCanary() {
+		return "<b style='color:#FF4444;'>Помилка команди в Canary/Neptune.</b><p>Команда не змогла зареєструватися. Це може бути викликано відсутньою батьківською командою, дубльованою командою, зареєстрованою іншим плагіном, або помилкою системи команд.</p><p><b>Рішення:</b> Перевірте конфлікти команд між плагінами.</p>";
+	}
+
+	@Override
+	public String nombreErrorComandoCanary() {
+		return "Canary/Neptune: помилка команди";
+	}
 }

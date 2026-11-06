@@ -2078,7 +2078,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String nombre_error_driver_dri() {
-		return "DRI software rasterization driver crash";
+		return "DRI软件光栅化驱动程序崩溃";
 	}
 
 	@Override
@@ -2105,7 +2105,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String nombre_error_glx_bad_fbconfig() {
-		return "Invalid OpenGL framebuffer configuration";
+		return "OpenGL帧缓冲区配置无效";
 	}
 
 	@Override
@@ -2131,7 +2131,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String nombre_error_vulkan_extension() {
-		return "Vulkan extension not available";
+		return "Vulkan扩展不可用";
 	}
 
 	@Override
@@ -2157,7 +2157,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String nombre_error_backend_grafico_no_disponible() {
-		return "No supported graphics backend";
+		return "没有支持的图形后端";
 	}
 
 	@Override
@@ -2183,7 +2183,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String nombre_error_lwjgl_plataforma_no_soportada() {
-		return "Platform not supported by LWJGL";
+		return "LWJGL不支持的平台";
 	}
 
 	@Override
@@ -2211,7 +2211,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String nombre_error_cargador_vulkan() {
-		return "Failed to load Vulkan loader";
+		return "加载Vulkan加载器失败";
 	}
 
 	@Override
@@ -11062,7 +11062,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String nombreConflictoOverridesOpcionesSodium() {
-		return "Mod que anulan opciones de Sodium";
+		return "改装配件覆盖钠选项";
 	}
 
 	@Override
@@ -13070,12 +13070,12 @@ public class Chino implements Idioma {
 
 	@Override
 	public String nombreVulnerabilidadMeltdown() {
-		return "Meltdown (CVE-2017-5754)";
+		return "熔毁（ CVE-2017-5754 ）";
 	}
 
 	@Override
 	public String nombreVulnerabilidadSpectre() {
-		return "Spectre V1/V2 (CVE-2017-5753, CVE-2017-5715)";
+		return "Spectre V1/V2 （ CVE-2017-5753 ， CVE-2017-5715 ）";
 	}
 
 	@Override
@@ -13874,5 +13874,325 @@ public class Chino implements Idioma {
 	@Override
 	public String nombreErrorEnlazadorNoSoportado() {
 		return "平台不支持原生链接器";
+	}
+
+	@Override
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep() {
+		return "<b style='color:#FFAA00;'>FeatureCreep无法直接附加HotSpot代理。</b><p>这很少是个问题，因为大多数模组不需要Instrumentation。FeatureCreep将继续运行。</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep() {
+		return "FeatureCreep: HotSpot附加失败（警告）";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep无法解析模块依赖关系。</b><p>一个模块声明了无法满足的依赖。游戏可能无法正确启动。</p><p><b>解决方案：</b>安装缺失的依赖或移除不兼容的模块。</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloFeatureCreep() {
+		return "FeatureCreep: 模块依赖未解析";
+	}
+
+	@Override
+	public String mensajeErrorVersionModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep检测到模块版本不兼容。</b><p>一个模块需要不同版本的游戏或其他模块。这可能导致崩溃或功能缺失。</p><p><b>解决方案：</b>更新所有模块到兼容版本。</p>";
+	}
+
+	@Override
+	public String nombreErrorVersionModuloFeatureCreep() {
+		return "FeatureCreep: 模块版本不匹配";
+	}
+
+	@Override
+	public String mensajeErrorMixinBootstrapFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreep无法初始化Mixin运行时。</b><p>Mixin是类转换所必需的。没有它，使用Mixin的模组将无法加载，游戏可能会崩溃。</p><p><b>解决方案：</b>确保FeatureCreep已正确安装并支持Mixin。</p>";
+	}
+
+	@Override
+	public String nombreErrorMixinBootstrapFeatureCreep() {
+		return "FeatureCreep: Mixin初始化失败";
+	}
+
+	@Override
+	public String mensajeErrorModDuplicadoRift() {
+		return "<b style='color:#FF4444;'>Rift发现重复的模组。</b><p>两个模组共享相同的模组ID，这是不允许的。Rift无法加载这两个模组。</p><p><b>解决方案：</b>移除其中一个重复的模组。</p>";
+	}
+
+	@Override
+	public String nombreErrorModDuplicadoRift() {
+		return "Rift: 重复的模组ID";
+	}
+
+	@Override
+	public String mensajeErrorRiftModJSONRift() {
+		return "<b style='color:#FF4444;'>Rift无法读取riftmod.json。</b><p>模组的清单文件已损坏或丢失。Rift无法在没有有效清单的情况下加载模组。</p><p><b>解决方案：</b>重新安装缺少riftmod.json文件的模组。</p>";
+	}
+
+	@Override
+	public String nombreErrorRiftModJSONRift() {
+		return "Rift: 模组清单损坏";
+	}
+
+	@Override
+	public String mensajeErrorListenerRift() {
+		return "<b style='color:#FF4444;'>Rift找不到监听器类。</b><p>一个模组引用了一个不存在的监听器类。这通常是由不兼容或损坏的模组引起的。</p><p><b>解决方案：</b>更新或移除引用缺失类的模组。</p>";
+	}
+
+	@Override
+	public String nombreErrorListenerRift() {
+		return "Rift: 监听器类未找到";
+	}
+
+	@Override
+	public String mensajeErrorTransformadorAccesoRift() {
+		return "<b style='color:#FF4444;'>Rift无法初始化访问转换器。</b><p>访问转换器修改模组的类可见性。没有它们，模组无法访问私有字段和方法。</p><p><b>解决方案：</b>重新安装Rift和受影响的模组。</p>";
+	}
+
+	@Override
+	public String nombreErrorTransformadorAccesoRift() {
+		return "Rift: 访问转换器失败";
+	}
+
+	@Override
+	public String mensajeAdvertenciaJarNoValidoRift() {
+		return "<b style='color:#FFAA00;'>Rift发现无效的JAR文件。</b><p>模组文件夹中的一个文件不是有效的JAR。Rift将跳过它并继续加载其他模组。</p><p><b>解决方案：</b>从模组文件夹中移除损坏的文件。</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaJarNoValidoRift() {
+		return "Rift: 无效的JAR文件（警告）";
+	}
+
+	@Override
+	public String mensajeErrorJavaVersionM3L() {
+		return "<b style='color:#FF4444;'>M3L需要Java 7或更高版本。</b><p>您的Java版本太旧，无法运行M3L启动器。</p><p><b>解决方案：</b>更新到更新版本的Java。</p>";
+	}
+
+	@Override
+	public String nombreErrorJavaVersionM3L() {
+		return "M3L: Java版本太旧";
+	}
+
+	@Override
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L() {
+		return "<b style='color:#FF4444;'>M3L需要先安装Minecraft。</b><p>在安装M3L之前，请先安装基础Minecraft版本。</p>";
+	}
+
+	@Override
+	public String nombreErrorMinecraftVersionNoInstaladaM3L() {
+		return "M3L: Minecraft未安装";
+	}
+
+	@Override
+	public String mensajeErrorJSONLauncherM3L() {
+		return "<b style='color:#FF4444;'>M3L无法读取启动器配置。</b><p>launcher_profiles.json文件已损坏或无法访问。M3L无法在没有有效配置的情况下启动。</p><p><b>解决方案：</b>恢复或重新创建launcher_profiles.json文件。</p>";
+	}
+
+	@Override
+	public String nombreErrorJSONLauncherM3L() {
+		return "M3L: 启动器配置损坏";
+	}
+
+	@Override
+	public String mensajeAdvertenciaOSNoDetectadoM3L() {
+		return "<b style='color:#FFAA00;'>M3L无法检测您的操作系统。</b><p>M3L只识别Windows、Mac和Linux。它可能默认为Linux，这可能导致路径问题。</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaOSNoDetectadoM3L() {
+		return "M3L: 操作系统未检测到（警告）";
+	}
+
+	@Override
+	public String mensajeErrorMySQLConexionHMod() {
+		return "<b style='color:#FF4444;'>HMod无法连接到MySQL。</b><p>服务器数据库连接失败。所有数据库操作都将失败。</p><p><b>解决方案：</b>检查MySQL服务器是否正在运行且连接设置正确。</p>";
+	}
+
+	@Override
+	public String nombreErrorMySQLConexionHMod() {
+		return "HMod: MySQL连接失败";
+	}
+
+	@Override
+	public String mensajeErrorCargaPluginHMod() {
+		return "<b style='color:#FF4444;'>HMod加载插件失败。</b><p>一个插件已损坏、不兼容或丢失。该插件将不会被加载。</p><p><b>解决方案：</b>检查所有插件是否与您的HMod版本兼容。</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaPluginHMod() {
+		return "HMod: 插件加载失败";
+	}
+
+	@Override
+	public String mensajeErrorGrupoPorDefectoHMod() {
+		return "<b style='color:#FF4444;'>HMod没有配置默认组。</b><p>至少需要一个组被标记为默认组。没有它，新玩家无法正确分配。</p><p><b>解决方案：</b>在HMod配置中将一个组标记为DefaultGroup。</p>";
+	}
+
+	@Override
+	public String nombreErrorGrupoPorDefectoHMod() {
+		return "HMod: 没有默认组";
+	}
+
+	@Override
+	public String mensajeAdvertenciaPluginHookHMod() {
+		return "<b style='color:#FFAA00;'>HMod插件钩子异常。</b><p>一个插件在钩子调用期间抛出异常。服务器继续运行，但受影响插件的功能可能已损坏。</p><p><b>解决方案：</b>更新或替换受影响的插件。</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaPluginHookHMod() {
+		return "HMod: 插件钩子异常（警告）";
+	}
+
+	@Override
+	public String mensajeErrorInicializacionModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader初始化失败。</b><p>由于反射错误、版本不兼容或模组损坏，ModLoader无法启动。游戏不会加载模组。</p><p><b>解决方案：</b>检查ModLoader和所有模组是否与您的Minecraft版本兼容。</p>";
+	}
+
+	@Override
+	public String nombreErrorInicializacionModLoader() {
+		return "ModLoader: 初始化失败";
+	}
+
+	@Override
+	public String mensajeErrorCargaModModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader加载模组失败。</b><p>一个模组已损坏、不兼容或有代码错误。它不会被加载。</p><p><b>解决方案：</b>移除或更新损坏的模组。</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaModModLoader() {
+		return "ModLoader: 模组加载失败";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloModLoader() {
+		return "<b style='color:#FF4444;'>ModLoader缺少依赖。</b><p>一个模组需要另一个未安装的模组。没有依赖关系，该模组不会加载。</p><p><b>解决方案：</b>安装所需的依赖模组。</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloModLoader() {
+		return "ModLoader: 缺少依赖";
+	}
+
+	@Override
+	public String mensajeAdvertenciaCanalInvalidoModLoader() {
+		return "<b style='color:#FFAA00;'>ModLoader无效的通道名称。</b><p>一个模组注册了一个太长的数据包通道名称（≥16个字符）。该模组的数据包通信可能无法正常工作。</p><p><b>解决方案：</b>更新模组以使用更短的通道名称。</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaCanalInvalidoModLoader() {
+		return "ModLoader: 无效的通道名称（警告）";
+	}
+
+	@Override
+	public String mensajeErrorRegistroPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMP数据包注册失败。</b><p>通过反射注册Packet230失败，通常是由于版本不兼容。多人网络将无法工作。</p><p><b>解决方案：</b>确保ModLoaderMP与您的Minecraft版本匹配。</p>";
+	}
+
+	@Override
+	public String nombreErrorRegistroPacketModLoaderMP() {
+		return "ModLoaderMP: 数据包注册失败";
+	}
+
+	@Override
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMP自定义实体生成失败。</b><p>在多人游戏中，自定义实体无法初始化。该实体不会出现在游戏中。</p><p><b>解决方案：</b>检查提供实体的模组是否兼容。</p>";
+	}
+
+	@Override
+	public String nombreErrorEntidadPersonalizadaModLoaderMP() {
+		return "ModLoaderMP: 自定义实体失败";
+	}
+
+	@Override
+	public String mensajeErrorModNuloModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMP空模组引用。</b><p>一个模组使用空引用调用sendPacket或sendKey。这是模组中的编程错误。</p><p><b>解决方案：</b>更新或替换有空引用错误的模组。</p>";
+	}
+
+	@Override
+	public String nombreErrorModNuloModLoaderMP() {
+		return "ModLoaderMP: 空模组引用";
+	}
+
+	@Override
+	public String mensajeErrorDatosPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMP数据包数据过大。</b><p>一个数据包包含超过65535个元素，超过了最大大小。该数据包无法发送。</p><p><b>解决方案：</b>更新发送过大数据包的模组。</p>";
+	}
+
+	@Override
+	public String nombreErrorDatosPacketModLoaderMP() {
+		return "ModLoaderMP: 数据包数据过大";
+	}
+
+	@Override
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "<b style='color:#FFAA00;'>ModLoaderMP重复注册。</b><p>GUI库存类型或实体ID被注册了两次。第二次注册被忽略。</p><p><b>解决方案：</b>检查是否有冲突的模组。</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "ModLoaderMP: 重复注册（警告）";
+	}
+
+	@Override
+	public String mensajeErrorPluginInvalidoCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptune中的无效插件。</b><p>Canary无法加载插件，因为它已损坏、Canary.inf文件格式错误或指定的主类不存在。</p><p><b>解决方案：</b>验证插件是否与您的Canary/Neptune版本兼容且未损坏。</p>";
+	}
+
+	@Override
+	public String nombreErrorPluginInvalidoCanary() {
+		return "Canary/Neptune: 无效插件";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaPluginCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptune中缺少插件依赖。</b><p>一个插件声明了服务器上未安装的依赖。没有依赖关系，插件无法加载。</p><p><b>解决方案：</b>安装插件所需的依赖。</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaPluginCanary() {
+		return "Canary/Neptune: 缺少插件依赖";
+	}
+
+	@Override
+	public String mensajeErrorConsistenciaHookCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptune中的Hook签名错误。</b><p>一个插件注册了一个签名不正确的Hook方法。@HookHandler方法必须恰好有1个参数，该参数是Hook的子类型。</p><p><b>解决方案：</b>更新或替换导致此错误的插件。</p>";
+	}
+
+	@Override
+	public String nombreErrorConsistenciaHookCanary() {
+		return "Canary/Neptune: Hook签名不正确";
+	}
+
+	@Override
+	public String mensajeAdvertenciaEjecucionHookCanary() {
+		return "<b style='color:#FFAA00;'>Canary/Neptune中的Hook异常。</b><p>一个插件在处理事件（Hook）时抛出异常。服务器继续运行，但受影响插件的功能可能已损坏。</p><p><b>解决方案：</b>更新或替换导致此异常的插件。</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaEjecucionHookCanary() {
+		return "Canary/Neptune: Hook异常（警告）";
+	}
+
+	@Override
+	public String mensajeErrorBaseDeDatosCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptune中的数据库错误。</b><p>Canary无法访问数据库。这可能是由于连接失败、数据库适配器损坏或配置不正确。</p><p><b>解决方案：</b>验证数据库配置且适配器兼容。</p>";
+	}
+
+	@Override
+	public String nombreErrorBaseDeDatosCanary() {
+		return "Canary/Neptune: 数据库错误";
+	}
+
+	@Override
+	public String mensajeErrorComandoCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptune中的命令错误。</b><p>一个命令无法注册。这可能是由于缺少父命令、另一个插件注册的重复命令或命令系统错误。</p><p><b>解决方案：</b>检查插件之间的命令冲突。</p>";
+	}
+
+	@Override
+	public String nombreErrorComandoCanary() {
+		return "Canary/Neptune: 命令错误";
 	}
 }

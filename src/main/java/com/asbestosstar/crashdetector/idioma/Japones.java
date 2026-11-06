@@ -14110,4 +14110,324 @@ public class Japones implements Idioma {
 	public String nombreErrorEnlazadorNoSoportado() {
 		return "プラットフォームがネイティブリンカーをサポートしていません";
 	}
+
+	@Override
+	public String mensajeAdvertenciaHotSpotAttachFeatureCreep() {
+		return "<b style='color:#FFAA00;'>FeatureCreepがHotSpotエージェントを直接アタッチできませんでした。</b><p>ほとんどのモッドはInstrumentationを必要としないため、これは稀に問題です。FeatureCreepは続行します。</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaHotSpotAttachFeatureCreep() {
+		return "FeatureCreep: HotSpotアタッチ失敗（警告）";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreepがモジュール依存関係を解決できませんでした。</b><p>モジュールが満たせない依存関係を宣言しています。ゲームが正しく起動しない可能性があります。</p><p><b>解決方法:</b> 欠落している依存関係をインストールするか、互換性のないモジュールを削除してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloFeatureCreep() {
+		return "FeatureCreep: モジュール依存関係未解決";
+	}
+
+	@Override
+	public String mensajeErrorVersionModuloFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreepがモジュール間のバージョン不整合を検出しました。</b><p>モジュールが異なるバージョンのゲームや他のモジュールを必要としています。クラッシュや機能欠落の原因になる可能性があります。</p><p><b>解決方法:</b> すべてのモジュールを互換性のあるバージョンに更新してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorVersionModuloFeatureCreep() {
+		return "FeatureCreep: モジュールバージョン不整合";
+	}
+
+	@Override
+	public String mensajeErrorMixinBootstrapFeatureCreep() {
+		return "<b style='color:#FF4444;'>FeatureCreepがMixinランタイムを初期化できませんでした。</b><p>Mixinはクラス変換に必要です。ないと、Mixinを使用するモッドがロードされず、ゲームがクラッシュする可能性があります。</p><p><b>解決方法:</b> FeatureCreepがMixinサポートと共に正しくインストールされていることを確認してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorMixinBootstrapFeatureCreep() {
+		return "FeatureCreep: Mixin初期化失敗";
+	}
+
+	@Override
+	public String mensajeErrorModDuplicadoRift() {
+		return "<b style='color:#FF4444;'>Riftが重複したモッドを見つけました。</b><p>2つのモッドが同じモッドIDを共有していますが、これは許可されていません。Riftは両方のモッドをロードできません。</p><p><b>解決方法:</b> 重複したモッドのいずれかを削除してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorModDuplicadoRift() {
+		return "Rift: 重複したモッドID";
+	}
+
+	@Override
+	public String mensajeErrorRiftModJSONRift() {
+		return "<b style='color:#FF4444;'>Riftがriftmod.jsonを読み込めませんでした。</b><p>モッドのマニフェストファイルが破損しているか欠落しています。Riftは有効なマニフェストなしでモッドをロードできません。</p><p><b>解決方法:</b> riftmod.jsonファイルが欠落しているモッドを再インストールしてください。</p>";
+	}
+
+	@Override
+	public String nombreErrorRiftModJSONRift() {
+		return "Rift: モッドマニフェスト破損";
+	}
+
+	@Override
+	public String mensajeErrorListenerRift() {
+		return "<b style='color:#FF4444;'>Riftがリスナークラスを見つけられませんでした。</b><p>モッドが存在しないリスナークラスを参照しています。通常は互換性がないか破損したモッドが原因です。</p><p><b>解決方法:</b> 欠落したクラスを参照するモッドを更新または削除してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorListenerRift() {
+		return "Rift: リスナークラスが見つかりません";
+	}
+
+	@Override
+	public String mensajeErrorTransformadorAccesoRift() {
+		return "<b style='color:#FF4444;'>Riftがアクセストランスフォーマーを初期化できませんでした。</b><p>アクセストランスフォーマーはモッドのクラス可視性を修正します。ないと、モッドはプライベートフィールドとメソッドにアクセスできません。</p><p><b>解決方法:</b> Riftと影響を受けたモッドを再インストールしてください。</p>";
+	}
+
+	@Override
+	public String nombreErrorTransformadorAccesoRift() {
+		return "Rift: アクセストランスフォーマー失敗";
+	}
+
+	@Override
+	public String mensajeAdvertenciaJarNoValidoRift() {
+		return "<b style='color:#FFAA00;'>Riftが無効なJARファイルを見つけました。</b><p>モッドフォルダのファイルが有効なJARではありません。Riftはそれをスキップして他のモッドのロードを続行します。</p><p><b>解決方法:</b> 破損したファイルをモッドフォルダから削除してください。</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaJarNoValidoRift() {
+		return "Rift: 無効なJARファイル（警告）";
+	}
+
+	@Override
+	public String mensajeErrorJavaVersionM3L() {
+		return "<b style='color:#FF4444;'>M3LにはJava 7以降が必要です。</b><p>Javaのバージョンが古すぎてM3Lランチャーを実行できません。</p><p><b>解決方法:</b> Javaを新しいバージョンに更新してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorJavaVersionM3L() {
+		return "M3L: Javaバージョンが古すぎます";
+	}
+
+	@Override
+	public String mensajeErrorMinecraftVersionNoInstaladaM3L() {
+		return "<b style='color:#FF4444;'>M3LにはまずMinecraftのインストールが必要です。</b><p>M3Lをインストールする前に、ベースのMinecraftバージョンをインストールしてください。</p>";
+	}
+
+	@Override
+	public String nombreErrorMinecraftVersionNoInstaladaM3L() {
+		return "M3L: Minecraft未インストール";
+	}
+
+	@Override
+	public String mensajeErrorJSONLauncherM3L() {
+		return "<b style='color:#FF4444;'>M3Lがランチャー設定を読み込めませんでした。</b><p>launcher_profiles.jsonファイルが破損しているかアクセスできません。M3Lは有効な設定なしで起動できません。</p><p><b>解決方法:</b> launcher_profiles.jsonファイルを復元または再作成してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorJSONLauncherM3L() {
+		return "M3L: ランチャー設定破損";
+	}
+
+	@Override
+	public String mensajeAdvertenciaOSNoDetectadoM3L() {
+		return "<b style='color:#FFAA00;'>M3Lがオペレーティングシステムを検出できませんでした。</b><p>M3LはWindows、Mac、Linuxのみを認識します。Linuxがデフォルトになり、パスの問題が発生する可能性があります。</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaOSNoDetectadoM3L() {
+		return "M3L: OS未検出（警告）";
+	}
+
+	@Override
+	public String mensajeErrorMySQLConexionHMod() {
+		return "<b style='color:#FF4444;'>HModがMySQLに接続できませんでした。</b><p>サーバーデータベース接続に失敗しました。すべてのデータベース操作が失敗します。</p><p><b>解決方法:</b> MySQLサーバーが実行中で接続設定が正しいことを確認してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorMySQLConexionHMod() {
+		return "HMod: MySQL接続失敗";
+	}
+
+	@Override
+	public String mensajeErrorCargaPluginHMod() {
+		return "<b style='color:#FF4444;'>HModがプラグインをロードできませんでした。</b><p>プラグインが破損しているか、互換性がないか、欠落しています。プラグインはロードされません。</p><p><b>解決方法:</b> すべてのプラグインがHModバージョンと互換性があることを確認してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaPluginHMod() {
+		return "HMod: プラグインロード失敗";
+	}
+
+	@Override
+	public String mensajeErrorGrupoPorDefectoHMod() {
+		return "<b style='color:#FF4444;'>HModにデフォルトグループが設定されていません。</b><p>少なくとも1つのグループをデフォルトグループとしてマークする必要があります。ないと、新しいプレイヤーを正しく割り当てられません。</p><p><b>解決方法:</b> HMod設定でグループをDefaultGroupとしてマークしてください。</p>";
+	}
+
+	@Override
+	public String nombreErrorGrupoPorDefectoHMod() {
+		return "HMod: デフォルトグループなし";
+	}
+
+	@Override
+	public String mensajeAdvertenciaPluginHookHMod() {
+		return "<b style='color:#FFAA00;'>HModプラグインフック例外。</b><p>プラグインがフック呼び出し中に例外をスローしました。サーバーは続行しますが、影響を受けたプラグインの機能が破損している可能性があります。</p><p><b>解決方法:</b> 影響を受けたプラグインを更新または置き換えてください。</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaPluginHookHMod() {
+		return "HMod: プラグインフック例外（警告）";
+	}
+
+	@Override
+	public String mensajeErrorInicializacionModLoader() {
+		return "<b style='color:#FF4444;'>ModLoaderの初期化に失敗しました。</b><p>リフレクションエラー、バージョン不整合、またはモッドの破損により、ModLoaderが起動できません。ゲームはモッドをロードしません。</p><p><b>解決方法:</b> ModLoaderとすべてのモッドがMinecraftバージョンと互換性があることを確認してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorInicializacionModLoader() {
+		return "ModLoader: 初期化失敗";
+	}
+
+	@Override
+	public String mensajeErrorCargaModModLoader() {
+		return "<b style='color:#FF4444;'>ModLoaderがモッドをロードできませんでした。</b><p>モッドが破損しているか、互換性がないか、コードエラーがあります。ロードされません。</p><p><b>解決方法:</b> 破損したモッドを削除または更新してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorCargaModModLoader() {
+		return "ModLoader: モッドロード失敗";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaModuloModLoader() {
+		return "<b style='color:#FF4444;'>ModLoaderの依存関係が欠落しています。</b><p>モッドがインストールされていない他のモッドを必要としています。依存関係なしでモッドはロードされません。</p><p><b>解決方法:</b> 必要な依存モッドをインストールしてください。</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaModuloModLoader() {
+		return "ModLoader: 依存関係欠落";
+	}
+
+	@Override
+	public String mensajeAdvertenciaCanalInvalidoModLoader() {
+		return "<b style='color:#FFAA00;'>ModLoaderの無効なチャンネル名。</b><p>モッドが長すぎる名前のパケットチャンネル（≥16文字）を登録しました。パケット通信が正しく動作しない可能性があります。</p><p><b>解決方法:</b> より短いチャンネル名を使用するようにモッドを更新してください。</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaCanalInvalidoModLoader() {
+		return "ModLoader: 無効なチャンネル名（警告）";
+	}
+
+	@Override
+	public String mensajeErrorRegistroPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMPのパケット登録に失敗しました。</b><p>リフレクションによるPacket230の登録に失敗しました。通常はバージョン不整合が原因です。マルチプレイヤーネットワークが動作しません。</p><p><b>解決方法:</b> ModLoaderMPがMinecraftバージョンと一致していることを確認してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorRegistroPacketModLoaderMP() {
+		return "ModLoaderMP: パケット登録失敗";
+	}
+
+	@Override
+	public String mensajeErrorEntidadPersonalizadaModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMPのカスタムエンティティ生成に失敗しました。</b><p>マルチプレイヤー中にカスタムエンティティを初期化できませんでした。エンティティはゲームに表示されません。</p><p><b>解決方法:</b> エンティティを提供するモッドが互換性があることを確認してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorEntidadPersonalizadaModLoaderMP() {
+		return "ModLoaderMP: カスタムエンティティ失敗";
+	}
+
+	@Override
+	public String mensajeErrorModNuloModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMPのnullモッド参照。</b><p>モッドがnull参照でsendPacketまたはsendKeyを呼び出しました。これはモッドのプログラミングエラーです。</p><p><b>解決方法:</b> null参照エラーがあるモッドを更新または置き換えてください。</p>";
+	}
+
+	@Override
+	public String nombreErrorModNuloModLoaderMP() {
+		return "ModLoaderMP: nullモッド参照";
+	}
+
+	@Override
+	public String mensajeErrorDatosPacketModLoaderMP() {
+		return "<b style='color:#FF4444;'>ModLoaderMPのパケットデータが大きすぎます。</b><p>パケットが最大サイズを超える65535以上の要素を含んでいます。パケットを送信できません。</p><p><b>解決方法:</b> 大きなパケットを送信するモッドを更新してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorDatosPacketModLoaderMP() {
+		return "ModLoaderMP: パケットデータが大きすぎます";
+	}
+
+	@Override
+	public String mensajeAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "<b style='color:#FFAA00;'>ModLoaderMPの重複登録。</b><p>GUIインベントリタイプまたはエンティティIDが2回登録されました。2回目の登録は無視されます。</p><p><b>解決方法:</b> 競合するモッドを確認してください。</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaRegistroDuplicadoModLoaderMP() {
+		return "ModLoaderMP: 重複登録（警告）";
+	}
+
+	@Override
+	public String mensajeErrorPluginInvalidoCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptuneで無効なプラグイン。</b><p>Canaryがプラグインをロードできませんでした。破損しているか、Canary.infファイルが不正な形式か、指定されたメインクラスが存在しません。</p><p><b>解決方法:</b> プラグインがCanary/Neptuneバージョンと互換性があり、破損していないことを確認してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorPluginInvalidoCanary() {
+		return "Canary/Neptune: 無効なプラグイン";
+	}
+
+	@Override
+	public String mensajeErrorDependenciaPluginCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptuneでプラグイン依存関係が欠落しています。</b><p>プラグインがサーバーにインストールされていない依存関係を宣言しています。依存関係なしでプラグインをロードできません。</p><p><b>解決方法:</b> プラグインに必要な依存関係をインストールしてください。</p>";
+	}
+
+	@Override
+	public String nombreErrorDependenciaPluginCanary() {
+		return "Canary/Neptune: プラグイン依存関係欠落";
+	}
+
+	@Override
+	public String mensajeErrorConsistenciaHookCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptuneでフック署名エラー。</b><p>プラグインが不正な署名でフックメソッドを登録しました。@HookHandlerメソッドはHookのサブタイプであるパラメータを正確に1つ持つ必要があります。</p><p><b>解決方法:</b> このエラーを引き起こすプラグインを更新または置き換えてください。</p>";
+	}
+
+	@Override
+	public String nombreErrorConsistenciaHookCanary() {
+		return "Canary/Neptune: フック署名不正";
+	}
+
+	@Override
+	public String mensajeAdvertenciaEjecucionHookCanary() {
+		return "<b style='color:#FFAA00;'>Canary/Neptuneでフック例外。</b><p>プラグインがイベント（フック）処理中に例外をスローしました。サーバーは続行しますが、影響を受けたプラグインの機能が破損している可能性があります。</p><p><b>解決方法:</b> この例外を引き起こすプラグインを更新または置き換えてください。</p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaEjecucionHookCanary() {
+		return "Canary/Neptune: フック例外（警告）";
+	}
+
+	@Override
+	public String mensajeErrorBaseDeDatosCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptuneでデータベースエラー。</b><p>Canaryがデータベースにアクセスできませんでした。接続失敗、破損したデータベースアダプター、または不正な設定が原因かもしれません。</p><p><b>解決方法:</b> データベース設定とアダプターの互換性を確認してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorBaseDeDatosCanary() {
+		return "Canary/Neptune: データベースエラー";
+	}
+
+	@Override
+	public String mensajeErrorComandoCanary() {
+		return "<b style='color:#FF4444;'>Canary/Neptuneでコマンドエラー。</b><p>コマンドの登録に失敗しました。欠落した親コマンド、他のプラグインが登録した重複コマンド、またはコマンドシステムエラーが原因かもしれません。</p><p><b>解決方法:</b> プラグイン間のコマンド競合を確認してください。</p>";
+	}
+
+	@Override
+	public String nombreErrorComandoCanary() {
+		return "Canary/Neptune: コマンドエラー";
+	}
 }
