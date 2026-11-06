@@ -1,5 +1,10 @@
 package com.asbestosstar.crashdetector.waifu;
 
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
+
+@ProbadoPor(valor = {
+		"com.asbestosstar.crashdetector.pruebas.PruebaWaifuAPI" },
+		nota = "Cubre constructor de VersionWaifu con diferentes cargadores")
 public class VersionWaifu {
 
 	public String cargador;

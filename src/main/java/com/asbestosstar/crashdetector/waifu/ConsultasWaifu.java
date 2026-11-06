@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
+
 /**
  * Catálogo de consultas GraphQL de NeoForge Waifu.
  *
@@ -17,6 +19,9 @@ import java.util.Map;
  * superficie del esquema: cualquier consulta GraphQL válida puede enviarse
  * aunque no tenga un preset dedicado.
  */
+@ProbadoPor(valor = {
+		"com.asbestosstar.crashdetector.pruebas.PruebaWaifuAPI" },
+		nota = "Cubre catalogo de consultas predefinidas y ejecucion de presets")
 public final class ConsultasWaifu {
 
 	public static final String ID_GAME_VERSIONS = "gameVersions";

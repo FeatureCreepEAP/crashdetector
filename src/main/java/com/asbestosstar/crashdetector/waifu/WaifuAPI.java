@@ -13,6 +13,7 @@ import java.util.List;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.json.Json;
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
 
 /**
  * API de Waifu/NeoForged para buscar mods por clase.
@@ -21,6 +22,9 @@ import com.asbestosstar.crashdetector.config.json.Json;
  * resultados.
  * https://github.com/ChiefArug/MinecraftDiscordHelperBot/blob/main/src/commands/classCommand.ts
  */
+@ProbadoPor(valor = {
+		"com.asbestosstar.crashdetector.pruebas.PruebaWaifuAPI" },
+		nota = "Cubre esConsultaGraphQLSoloLectura, validaciones de entrada, y ejecucion de consultas")
 public class WaifuAPI {
 
 	private static final String GRAPHQL_URL = "https://waifu.neoforged.net/api/graphql";

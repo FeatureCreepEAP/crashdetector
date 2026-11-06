@@ -2,6 +2,8 @@ package com.asbestosstar.crashdetector.waifu;
 
 import java.util.List;
 
+import com.asbestosstar.crashdetector.pruebas.ProbadoPor;
+
 /**
  * Clase principal para mapear toda la respuesta nueva de la API Waifu.
  *
@@ -10,6 +12,9 @@ import java.util.List;
  * data gameVersions[] version loader mods count edges[] node
  * curseforgeProjectId modrinthProjectId modIds[] classes[] name
  */
+@ProbadoPor(valor = {
+		"com.asbestosstar.crashdetector.pruebas.PruebaWaifuAPI" },
+		nota = "Cubre clases de datos de respuesta: Mod, Datos, VersionDelJuego, Mods, Arista, Nodo, ClaseEncontrada")
 public class RespuestaWaifu {
 
 	public Datos data;
